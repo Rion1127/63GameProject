@@ -39,12 +39,6 @@ private:
 
 
 	std::unique_ptr<Object3d> cube_;
-
-	WorldTransform testWT_;
-
-	AssimpModel testModel_;
-
-	AssimpObject3D assimpObj_;
 public:
 	~GameScene();
 

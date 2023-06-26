@@ -7,7 +7,7 @@ class DebugCamera
 private:
 	MouseInput* mInput_ = nullptr;
 
-	Camera viewProjection_;
+	Camera camera_;
 
 	Vector3 dist_{};
 	Vector3 moveDist_{};	//ãÖñ ç¿ïW
@@ -26,6 +26,6 @@ public:
 private:
 	void CameraMove();
 public:
-	Camera* GetViewProjection();
+	Camera* GetCamera() { return &camera_; }
 };
 

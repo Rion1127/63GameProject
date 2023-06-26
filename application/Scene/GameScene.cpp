@@ -28,35 +28,18 @@ void GameScene::Ini()
 	cube_ = std::move(std::make_unique<Object3d>());
 	cube_->SetModel(Model::CreateOBJ_uniptr("cube", true));
 
-	//const wchar_t* modelFile = L"Resources/Alicia/FBX/Alicia_solid_Unity.FBX";
-	const wchar_t* modelFile = L"Resources/boneTest/moveCube/moveCube.gltf";
-	//  L"Resources/FBX/Alica/Alicia_solid_Unity.FBX"
-	//  L"Resources/FBX/untitled.glb"
-	std::vector<Mesh> meshes;
-	ImportSettings importSetting = {
-		modelFile,
-		meshes,
-		false,
-		true
-	};
-	testModel_.Create(modelFile);
-	assimpObj_.SetModel(&testModel_);
+	
 }
 
 void GameScene::Update()
 {
-	Camera::scurrent_.eye_ = debugCamera_.GetViewProjection()->eye_;
-	Camera::scurrent_.up_ = debugCamera_.GetViewProjection()->up_;
-	Camera::scurrent_.target_ = debugCamera_.GetViewProjection()->target_;
+	Camera::scurrent_.eye_ = debugCamera_.GetCamera()->eye_;
+	Camera::scurrent_.up_ = debugCamera_.GetCamera()->up_;
+	Camera::scurrent_.target_ = debugCamera_.GetCamera()->target_;
 	Camera::scurrent_.Update();
 
 	//カメラ更新
 	debugCamera_.Update();
-
-	//gameCamera_.Update();
-
-	assimpObj_.SetPos({ 0,0,0 });
-	assimpObj_.Update();
 
 	static float rotY = 0;
 	rotY += 0.01f;
@@ -84,12 +67,12 @@ void GameScene::Draw()
 	////////////////
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	cube_->Draw();
-	//skyDome_->Draw();
+	
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 	skyDome_->Draw();
 	
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-	//assimpObj_.Draw();
+	
 
 	////////////
 	//スプライト//
