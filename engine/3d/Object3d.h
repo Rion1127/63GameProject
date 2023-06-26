@@ -1,11 +1,5 @@
 #pragma once
-#include <wrl.h>
-#include <map>
-#include <string>
-#include "Vertices.h"
-#include "DirectX.h"
-#include "PipelineManager.h"
-#include <unordered_map>
+#include "REngine.h"
 #include "LightGroup.h"
 #include "Model.h"
 
@@ -13,11 +7,11 @@ using namespace Microsoft::WRL;
 class Object3d
 {
 private:
-	Model* model_ = nullptr;
+	std::unique_ptr<Model> model_ = nullptr;
 
-	Vector3 pos;
-	Vector3 rot;
-	Vector3 scale;
+	Vector3 pos_;
+	Vector3 rot_;
+	Vector3 scale_;
 
 	WorldTransform WT_;
 
@@ -33,10 +27,10 @@ public:
 
 public:
 	//セッター
-	void SetModel(Model* model) { model_ = model; }
-	void SetPos(Vector3 pos) { this->pos = pos; }
-	void SetScale(Vector3 scale) { this->scale = scale; }
-	void SetRot(Vector3 rot) { this->rot = rot; }
+	void SetModel(std::unique_ptr<Model> model) { model_ = std::move(model); }
+	void SetPos(const Vector3& pos) { pos_ = pos; }
+	void SetScale(const Vector3& scale) { scale_ = scale; }
+	void SetRot(const Vector3& rot) { rot_ = rot; }
 
 public:
 	//ゲッター

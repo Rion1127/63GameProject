@@ -5,80 +5,16 @@
 #include <cassert>
 #include "AssimpLoader.h"
 #include "Util.h"
-#include <filesystem>
 
-namespace fs = std::filesystem;
 
-std::wstring GetDirectoryPath(const std::wstring& origin)
-{
-	std::wstring name = origin;
-
-	fs::path p = origin.c_str();
-	return p.remove_filename().c_str();
-}
 
 AssimpLoader* AssimpLoader::GetInstance()
 {
 	static AssimpLoader instance;
 	return &instance;
 }
-//拡張子を入れ替える
-std::wstring ReplaceExtension(const std::wstring& origin, const char* ext)
-{
-	fs::path p = origin.c_str();
-	return p.replace_extension(ext).c_str();
-}
-//wstringをstd::string(マルチバイト文字列)に変換
-std::string ToUTF8(const std::wstring& value)
-{
-	auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
-	auto buffer = new char[length];
 
-	WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, buffer, length, nullptr, nullptr);
 
-	std::string result(buffer);
-	delete[] buffer;
-	buffer = nullptr;
-
-	return result;
-}
-
-// std::string(マルチバイト文字列)からstd::wstring(ワイド文字列)を得る
-std::wstring ToWideString(const std::string& str)
-{
-	auto num1 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, nullptr, 0);
-
-	std::wstring wstr;
-	wstr.resize(num1);
-
-	auto num2 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, &wstr[0], num1);
-
-	assert(num1 == num2);
-	return wstr;
-}
-// std::wstring(ワイド文字列)からstd::string(マルチバイト文字列)を得る
-std::string WStringToString(std::wstring oWString)
-{
-	// wstring → SJIS
-	int iBufferSize = WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str()
-		, -1, (char*)NULL, 0, NULL, NULL);
-
-	// バッファの取得
-	CHAR* cpMultiByte = new CHAR[iBufferSize];
-
-	// wstring → SJIS
-	WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str(), -1, cpMultiByte
-		, iBufferSize, NULL, NULL);
-
-	// stringの生成
-	std::string oRet(cpMultiByte, cpMultiByte + iBufferSize - 1);
-
-	// バッファの破棄
-	delete[] cpMultiByte;
-
-	// 変換結果を返す
-	return(oRet);
-}
 
 bool AssimpLoader::Load(ImportSettings* setting)
 {
@@ -92,12 +28,15 @@ bool AssimpLoader::Load(ImportSettings* setting)
 
 	Assimp::Importer importer;
 	//以下のフラグの数値を代入していく
-	int flag = 0;
+	uint32_t flag = 0;
+
 	/*flag |= aiProcess_Triangulate;
 	flag |= aiProcess_PreTransformVertices;
+	flag |= aiProcess_JoinIdenticalVertices;
 	flag |= aiProcess_CalcTangentSpace;
 	flag |= aiProcess_GenSmoothNormals;
 	flag |= aiProcess_GenUVCoords;
+	flag |= aiProcess_TransformUVCoords;
 	flag |= aiProcess_RemoveRedundantMaterials;
 	flag |= aiProcess_OptimizeMeshes;
 	flag |= aiProcess_LimitBoneWeights;*/
@@ -126,34 +65,19 @@ bool AssimpLoader::Load(ImportSettings* setting)
 	// 読み込んだデータを自分で定義したMesh構造体に変換する
 	meshes.clear();
 	meshes.resize(scene->mNumMeshes);
-	for (size_t i = 0; i < meshes.size(); ++i)
+	for (uint32_t i = 0; i < meshes.size(); ++i)
 	{
 		const auto pMesh = scene->mMeshes[i];
 		LoadMesh(meshes[i], pMesh, inverseU, inverseV);
 		const auto pMaterial = scene->mMaterials[i];
-		LoadTexture(setting->filename, meshes[i], pMaterial);
+		if (scene->mNumMaterials > i) {
+			LoadTexture(setting->filename, meshes[i], pMaterial);
+		}
+		LoadBones(i, scene->mMeshes[i], setting);
 
-		LoadBones(i, scene->mMeshes[i],setting);
-		//if (scene->mMeshes[i]->mBones != nullptr)
-		//{
-		//	//ボーンの情報を生成
-		//	setting->bones_.emplace_back(new aiBone(**scene->mMeshes[i]->mBones));
-		//	//Matrixを転置
-		//	setting->boneMtrix_.emplace_back();
-		//	DirectX::XMMATRIX& mt = setting->boneMtrix_.back();
-		//	aiMatrix4x4& m = setting->bones_.at(i)->mOffsetMatrix;
-		//	mt = {
-		//		m.a1, m.b1, m.c1, m.d1,	// 転置
-		//		m.a2, m.b2, m.c2, m.d2,
-		//		m.a3, m.b3, m.c3, m.d3,
-		//		m.a4, m.b4, m.c4, m.d4
-		//	};
-		//	
-		//}
-		
 	}
 
-	
+
 
 	scene = nullptr;
 
@@ -165,15 +89,17 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
 	aiVector3D zero3D(0.0f, 0.0f, 0.0f);
 	aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	dst.Vertices.vertices.resize(src->mNumVertices);
+	dst.Vertices.vertices_.resize(src->mNumVertices);
+
+	std::array<float, 4> bWeightList;
+	std::vector<std::array<uint32_t, 4>> bIndexList;
 
 	for (auto i = 0u; i < src->mNumVertices; ++i)
 	{
 		auto position = &(src->mVertices[i]);
 		auto normal = &(src->mNormals[i]);
 		auto uv = (src->HasTextureCoords(0)) ? &(src->mTextureCoords[0][i]) : &zero3D;
-		//auto tangent = (src->HasTangentsAndBitangents()) ? &(src->mTangents[i]) : &zero3D;
-		//auto color = (src->HasVertexColors(0)) ? &(src->mColors[0][i]) : &zeroColor;
+
 
 		// 反転オプションがあったらUVを反転させる
 		if (inverseU)
@@ -186,23 +112,91 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
 		}
 
 		Vertices::VertexPosNormalUv vertex = {};
-		vertex.pos = DirectX::XMFLOAT3(position->x, position->y, position->z);
-		vertex.normal = DirectX::XMFLOAT3(normal->x, normal->y, normal->z);
-		vertex.uv = DirectX::XMFLOAT2(uv->x, uv->y);
+		vertex.pos = Vector3(position->x, position->y, position->z);
+		vertex.normal = Vector3(normal->x, normal->y, normal->z);
+		vertex.uv = Vector2(uv->x, uv->y);
 
+		//Bone
+		if (src->HasBones() || !src->mNumBones)
+		{
+			struct BoneData {
+				int32_t index;
+				float weight;
+			};
 
-		dst.Vertices.vertices[i] = vertex;
+			std::vector<BoneData> bdlist;
+
+			for (uint32_t j = 0; j < src->mNumBones; j++)
+			{
+				BoneData bd;
+
+				bd.index = j;
+
+				for (uint32_t h = 0; h < src->mBones[j]->mNumWeights; h++)
+				{
+					if (src->mBones[j]->mWeights[h].mVertexId == i)
+					{
+						bd.weight = src->mBones[j]->mWeights[h].mWeight;
+					}
+				}
+
+				bdlist.push_back(bd);
+			}
+
+			sort(bdlist.begin(), bdlist.end(), [](const auto& lhs, const auto& rhs) {
+				return lhs.weight > rhs.weight;
+				});
+
+			std::array<uint32_t, 4> bInd;
+			std::array<float, 4> bWeight;
+
+			for (size_t j = 0; j < 4; j++)
+			{
+				if (j < bdlist.size())
+				{
+					bInd[j] = bdlist.at(j).index;
+					bWeight[j] = bdlist.at(j).weight;
+				}
+				else
+				{
+					bInd[j] = 0;
+					bWeight[j] = 0.f;
+				}
+			}
+			bIndexList.push_back({ bInd[0], bInd[1], bInd[2], bInd[3] });
+			bWeightList.at(0) = bWeight[0];
+			bWeightList.at(1) = bWeight[1];
+			bWeightList.at(2) = bWeight[2];
+			bWeightList.at(3) = bWeight[3];
+		}
+		else
+		{
+			bIndexList.push_back({ 0, 0, 0, 0 });
+			bWeightList.at(0) = 0.f;
+			bWeightList.at(1) = 0.f;
+			bWeightList.at(2) = 0.f;
+			bWeightList.at(3) = 0.f;
+		}
+
+		//vertices.emplace_back(Vertex{ posList.back(), normalList.back(), tcList.back(), bIndexList.back(), bWeightList.back() });
+		for (uint32_t j = 0; j < bIndexList.size(); j++) {
+			for (uint32_t i = 0; i < 4; i++) {
+				vertex.m_BoneIDs.at(i) = bIndexList.at(j).at(i);
+				vertex.m_Weights.at(i) = bWeightList.at(i);
+			}
+		}
+		dst.Vertices.vertices_[i] = vertex;
 	}
 
-	dst.Vertices.indices.resize(src->mNumFaces * 3);
+	dst.Vertices.indices_.resize(src->mNumFaces * 3);
 
 	for (auto i = 0u; i < src->mNumFaces; ++i)
 	{
 		const auto& face = src->mFaces[i];
 
-		dst.Vertices.indices[i * 3 + 0] = (uint16_t)face.mIndices[0];
-		dst.Vertices.indices[i * 3 + 1] = (uint16_t)face.mIndices[1];
-		dst.Vertices.indices[i * 3 + 2] = (uint16_t)face.mIndices[2];
+		dst.Vertices.indices_[i * 3 + 0] = (uint16_t)face.mIndices[0];
+		dst.Vertices.indices_[i * 3 + 1] = (uint16_t)face.mIndices[1];
+		dst.Vertices.indices_[i * 3 + 2] = (uint16_t)face.mIndices[2];
 	}
 }
 
@@ -214,41 +208,64 @@ void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMater
 		// テクスチャパスは相対パスで入っているので、ファイルの場所とくっつける
 		auto dir = GetDirectoryPath(filename);
 		auto file = std::string(path.C_Str());
-		
-		std::wstring filename = dir + ToWideString(file);
 
-		filename = ReplaceExtension(filename,"tga");
-		dst.diffuseMap = filename;
+		std::wstring filename_ = dir + ToWideString(file);
+
+		filename_ = ReplaceExtension(filename_, "tga");
+		dst.diffuseMap = filename_;
 	}
 	else
 	{
 		dst.diffuseMap.clear();
 	}
-	
+
 }
 
 void AssimpLoader::LoadBones(uint32_t MeshIndex, const aiMesh* pMesh, ImportSettings* setting)
 {
-	
-	for (int i = 0; i < pMesh->mNumBones; i++) {
+	uint32_t m_NumBones = 0;
+	for (uint32_t i = 0; i < pMesh->mNumBones; i++)
+	{
 		uint32_t BoneIndex = 0;
 		std::string BoneName(pMesh->mBones[i]->mName.data);
 
 		setting->boneData.emplace_back();
-		BoneData& b_data = setting->boneData.back();
-		
+		BoneIndex = m_NumBones;
+		m_NumBones++;
+
 		aiMatrix4x4& m = pMesh->mBones[i]->mOffsetMatrix;
-		b_data.boneMatrix_ = {
+		aiBone& bone = *pMesh->mBones[i];
+
+		for (size_t j = 0; j < bone.mNumWeights; j++)
+		{
+			auto& weight = bone.mWeights[j];
+		}
+		setting->boneData[BoneIndex].boneMatrix_ = {
 			m.a1, m.b1, m.c1, m.d1,	// 転置
 			m.a2, m.b2, m.c2, m.d2,
 			m.a3, m.b3, m.c3, m.d3,
 			m.a4, m.b4, m.c4, m.d4
 		};
-		/*for (int j = 0; j < pMesh->mBones[i]->; j++) {
-			b_data.IDs[i] = pMesh->mBones[i]->mWeights[i].mVertexId;
-		}*/
 
-
-		int a = 0;
 	}
+
+	//for (uint32_t i = 0; i < pMesh->mNumBones; i++)
+	//{
+
+	//	int32_t index = (pMesh->mNumBones - 1) - i;
+
+	//	aiMatrix4x4& m = pMesh->mBones[index]->mOffsetMatrix;
+
+	//	setting->boneData.emplace_back();
+
+	//	setting->boneData[i].boneMatrix_ = {
+	//		m.a1, m.b1, m.c1, m.d1,	// 転置
+	//		m.a2, m.b2, m.c2, m.d2,
+	//		m.a3, m.b3, m.c3, m.d3,
+	//		m.a4, m.b4, m.c4, m.d4
+	//	};
+
+	//}
+
 }
+

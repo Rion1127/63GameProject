@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdint.h>
 class EmptyScene
 {
 public:
@@ -10,10 +10,10 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	int GetIsNext() { return isNext_; }
-	void SetIsNext(int isnext) { isNext_ = isnext; }
+	uint32_t GetIsNext() { return isNext_; }
+	void SetIsNext(uint32_t isnext) { isNext_ = isnext; }
 
-	int isNext_ = false;
+	uint32_t isNext_ = false;
 
 	virtual ~EmptyScene() {
 	};

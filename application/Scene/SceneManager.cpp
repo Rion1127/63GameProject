@@ -12,12 +12,12 @@ void SceneManager::Ini()
 	Transition<GameScene>();
 	
 
-	sceneChangeGraph = TextureManager::GetInstance()->LoadGraph("white1~1.png");
+	
 }
 
 void SceneManager::Update()
 {
-	currentScene->Update();
+	scurrentScene_->Update();
 
 	
 }
@@ -25,17 +25,8 @@ void SceneManager::Update()
 void SceneManager::Draw()
 {
 	//ƒQ[ƒ€•`‰æ
-	currentScene->Draw();
+	scurrentScene_->Draw();
 }
 
-std::unique_ptr<EmptyScene> SceneManager::currentScene = nullptr;
+std::unique_ptr<EmptyScene> SceneManager::scurrentScene_ = nullptr;
 
-Sprite SceneManager::sceneChangeSprite;
-Vector2  SceneManager::sceneChangePos;
-uint32_t SceneManager::sceneChangeGraph;
-int SceneManager::changeStartCount_;
-int SceneManager::sceneNum_;
-bool SceneManager::isNext_;
-int SceneManager::continueScene = SceneNum::STAGE1_;
-bool SceneManager::isDifferent = true;
-int SceneManager::different = 0;

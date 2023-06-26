@@ -1,6 +1,5 @@
-#include <DirectXMath.h>
 #include "Easing.h"
-
+#include <math.h>
 /// 元のコード
 //t 経過時間    b最初の位置    c移動量    d移動時間 
 #pragma region Back

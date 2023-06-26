@@ -4,6 +4,7 @@ using namespace Microsoft::WRL;
 #include <string>
 #include "Util.h"
 #include "DirectX.h"
+#include <filesystem>
 
 void DisplayWarningInfo(ID3D12Device* device)
 {
@@ -49,58 +50,79 @@ void ShaderCompileFromFile(
 	}
 }
 
-wchar_t* ConvertStrToWchar(const std::string string)
+namespace fs = std::filesystem;
+std::wstring GetDirectoryPath(const std::wstring& origin)
 {
-	// SJIS → wstring	std::string型のサイズを取得
-	int iBufferSize = MultiByteToWideChar(CP_ACP, 0, string.c_str(), -1, (wchar_t*)NULL, 0);
+	std::wstring name = origin;
 
-	// バッファの取得		HandleNameのサイズ分のwchara_tを用意する
-	wchar_t* result = new wchar_t[iBufferSize];
+	fs::path p = origin.c_str();
+	return p.remove_filename().c_str();
+}
+//拡張子を入れ替える (const char* ext)は「.」をぬいた拡張子を入力
+std::wstring ReplaceExtension(const std::wstring& origin, const char* ext)
+{
+	fs::path p = origin.c_str();
+	return p.replace_extension(ext).c_str();
+}
+//wstringをstd::string(マルチバイト文字列)に変換
+std::string ToUTF8(const std::wstring& value)
+{
+	auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
+	std::vector<char> buffer;
+	buffer.resize(length);
+	WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, buffer.data(), length, nullptr, nullptr);
 
-	// SJIS → wstring	std::string型からwchara_t型に変換する
-	MultiByteToWideChar(CP_ACP, 0, string.c_str(), -1, result, iBufferSize);
+	std::string result(buffer.data());
+
 	return result;
 }
+// std::string(マルチバイト文字列)からstd::wstring(ワイド文字列)を得る
+std::wstring ToWideString(const std::string& str)
+{
+	auto num1 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, nullptr, 0);
 
-using namespace std::chrono;
+	std::wstring wstr;
+	wstr.resize(num1);
 
-int GetNowCount(void) {
-	return static_cast<int>(duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count());
+	auto num2 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, &wstr[0], num1);
+
+	assert(num1 == num2);
+	return wstr;
+}
+// std::wstring(ワイド文字列)からstd::string(マルチバイト文字列)を得る
+std::string WStringToString(std::wstring oWString)
+{
+	// wstring → SJIS
+	uint32_t iBufferSize = WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str()
+		, -1, (char*)NULL, 0, NULL, NULL);
+
+	// バッファの取得
+	std::vector<CHAR> cpMultiByte;
+	cpMultiByte.resize(iBufferSize);
+	// wstring → SJIS
+	WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str(), -1, cpMultiByte.data()
+		, iBufferSize, NULL, NULL);
+
+	// stringの生成
+	std::string oRet(cpMultiByte.data(), cpMultiByte.data() + iBufferSize - 1);
+
+	// バッファの破棄
+
+
+	// 変換結果を返す
+	return(oRet);
 }
 
-float GetNowTime(int startCount)
+
+void MoveTo(const Vector3& goal, float speed, WorldTransform& WT)
 {
-	// 経過時間
-	float nowTime = 0.0f;
-
-	// 現在の時間
-	int nowCount = GetNowCount();
-
-	// 経過時間
-	return nowTime = (nowCount - startCount) / 1000.0f;
-}
-
-float Clamp(float value, float max, float min)
-{
-	// 値が最大値を上回っていたら最大値を返す
-	if (value >= max) return max;
-
-	// 値が最小値を下回っていたら最小値を返す
-	if (value <= min) return min;
-
-	// どちらにも当てはまらなかったら値をそのまま返す
-	return value;
-}
-
-void MoveTo(Vector3 goal, float speed, WorldTransform& WT)
-{
-	Vector3 dir = goal - WT.position;
+	Vector3 dir = goal - WT.position_;
 	float dirLength = dir.length2();
 	if (dirLength < speed * speed)
 	{
-		WT.position = goal;
+		WT.position_ = goal;
 		return;
 	}
-	WT.position =
-		WT.position + dir.SetLength(speed);
+	WT.position_ =
+		WT.position_ + dir.SetLength(speed);
 }

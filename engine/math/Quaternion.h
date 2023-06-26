@@ -1,15 +1,14 @@
 #pragma once
-#include <DirectXMath.h>
 #include "Vector3.h"
+#include "myMath.h"
 struct Quaternion
 {
-	
 	float x;
 	float y;
 	float z;
 	float w;
 
-	DirectX::XMMATRIX UpdateMatrix() {
+	Matrix4 UpdateMatrix() {
 		Quaternion q1 = {
 		(float)(x * sin(w / 2)),
 		(float)(y * sin(w / 2)),
@@ -17,34 +16,25 @@ struct Quaternion
 		(float)(cos(w / 2))
 		};
 
-		DirectX::XMVECTOR vectorX = {
-			(float)(pow(q1.w,2) + pow(q1.x,2) - pow(q1.y,2) - pow(q1.z,2)),
-			2 * (q1.x * q1.y + q1.w * q1.z),
-			2 * (q1.x * q1.z - q1.w * q1.y),
-			0
-		};
-		DirectX::XMVECTOR vectorY = {
-			2 * (q1.x * q1.y - q1.w * q1.z),
+		Matrix4 matRot = {
+			(powf(q1.w,2) + powf(q1.x,2) - powf(q1.y,2) - powf(q1.z,2)),
+			2.f * (q1.x * q1.y + q1.w * q1.z),
+			2.f * (q1.x * q1.z - q1.w * q1.y),
+			0.f,
+
+			2.f * (q1.x * q1.y - q1.w * q1.z),
 			(float)(pow(q1.w,2) - pow(q1.x,2) + pow(q1.y,2) - pow(q1.z,2)),
-			2 * (q1.y * q1.z + q1.w * q1.x),
-			0
-		};
-		DirectX::XMVECTOR vectorZ = {
-			2 * (q1.x * q1.z + q1.w * q1.y),
-			2 * (q1.y * q1.z - q1.w * q1.x),
+			2.f * (q1.y * q1.z + q1.w * q1.x),
+			0.f,
+
+			2.f * (q1.x * q1.z + q1.w * q1.y),
+			2.f * (q1.y * q1.z - q1.w * q1.x),
 			(float)(pow(q1.w,2) - pow(q1.x,2) - pow(q1.y,2) + pow(q1.z,2)),
-			0
-		};
-		DirectX::XMVECTOR vectorW = {
+			0.f,
+
 			0,0,0,1
 		};
-
-		DirectX::XMMATRIX matRot;
-
-		matRot.r[0] = vectorX;
-		matRot.r[1] = vectorY;
-		matRot.r[2] = vectorZ;
-		matRot.r[3] = vectorW;
+		
 
 		return matRot;
 	};
@@ -63,8 +53,6 @@ struct Quaternion
 	
 	Quaternion Slerp(const Quaternion& q1, float t);
 
-	
-	
 };
 	
 

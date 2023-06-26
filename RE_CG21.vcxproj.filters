@@ -112,6 +112,42 @@
     <Filter Include="engine\ヘッダー ファイル\assimp">
       <UniqueIdentifier>{d85c7fc1-539a-4ded-b84a-8486aa926023}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\ヘッダー ファイル\PostEffect">
+      <UniqueIdentifier>{ac564593-04b7-48aa-bcf5-4059bcdbdf49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\ソース ファイル\PostEffect">
+      <UniqueIdentifier>{1aa0e441-a190-4a2c-a6af-9dce2d862a06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Engine">
+      <UniqueIdentifier>{a8234e7f-040a-441e-aa1f-2b539dc63e70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application">
+      <UniqueIdentifier>{73efd602-39ab-4be3-8b9a-dc3999c56683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect">
+      <UniqueIdentifier>{400a5ff4-6532-44aa-ae09-556e6e7ef4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\Bloom">
+      <UniqueIdentifier>{5283aeb3-0a3b-4a93-bcdb-4da7c402d2a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\HighLumi">
+      <UniqueIdentifier>{ac2b1a84-b5d8-494c-a703-af0e46cb752f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\GaussianBlur">
+      <UniqueIdentifier>{be1f59c9-c0bc-41bb-95a6-1ec832e10bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\Noise">
+      <UniqueIdentifier>{8f2ea94b-8a4c-4b65-b32b-10c4f314b96a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\LineBlur">
+      <UniqueIdentifier>{efa5e8c6-02f0-46a2-9fee-a0321ebfd425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\CrossFilter">
+      <UniqueIdentifier>{1fee2866-7a6c-4eaf-a197-5caf786e6086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\application\postEffect\RadialBlur">
+      <UniqueIdentifier>{bedf3eb6-229c-4312-91d2-c1f601c80ad5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -222,17 +258,59 @@
     <ClCompile Include="application\Particle\ParticleManager.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="engine\3d\assimp\AssimpLoader.cpp">
       <Filter>engine\ソース ファイル\assimp</Filter>
     </ClCompile>
     <ClCompile Include="engine\3d\assimp\AssimpObject3D.cpp">
       <Filter>engine\ソース ファイル\assimp</Filter>
     </ClCompile>
-    <ClCompile Include="engine\3d\assimp\AssinpModel.cpp">
+    <ClCompile Include="engine\3d\assimp\AssimpModel.cpp">
       <Filter>engine\ソース ファイル\assimp</Filter>
+    </ClCompile>
+    <ClCompile Include="application\LoadManager.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\2d\MultiTexture.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\2d\MultipleRenderTarget.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\3d\Model.cpp">
+      <Filter>engine\ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\3d\light\LightManager.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\RRandom.cpp">
+      <Filter>engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\Color.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\Timer.cpp">
+      <Filter>engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Shader\Bloom.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Shader\Noise.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\2d\IPostEffect.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Shader\GaussianBlur.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Shader\CrossFilter.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Shader\LineBlur.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Shader\HighLumi.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -341,10 +419,7 @@
     <ClInclude Include="application\Particle\ParticleManager.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\3d\assimp\AssinpModel.h">
+    <ClInclude Include="engine\3d\assimp\AssimpModel.h">
       <Filter>engine\ヘッダー ファイル\assimp</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\assimp\AssimpLoader.h">
@@ -353,58 +428,196 @@
     <ClInclude Include="engine\3d\assimp\AssimpObject3D.h">
       <Filter>engine\ヘッダー ファイル\assimp</Filter>
     </ClInclude>
+    <ClInclude Include="application\LoadManager.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\MultipleRenderTarget.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\MultiTexture.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\3d\Model.h">
+      <Filter>engine\ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\3d\light\LightManager.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\RRandom.h">
+      <Filter>engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\Color.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\base\REngine.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\Timer.h">
+      <Filter>engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Shader\Bloom.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Shader\Noise.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\IPostEffect.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Shader\GaussianBlur.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Shader\CrossFilter.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Shader\HighLumi.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Shader\LineBlur.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shader\Sprite.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
-    <None Include="Resources\shader\Basic.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
-    <None Include="Resources\shader\Particle.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
     <None Include="packages.config" />
-    <None Include="Resources\shader\Toon.hlsli">
-      <Filter>シェーダーファイル</Filter>
+    <None Include="application\Resources\shader\Sprite.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
     </None>
-    <None Include="Resources\shader\assimp.hlsli">
-      <Filter>シェーダーファイル</Filter>
+    <None Include="application\Resources\shader\Toon.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </None>
+    <None Include="application\Resources\shader\assimp.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </None>
+    <None Include="application\Resources\shader\Basic.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </None>
+    <None Include="application\Resources\shader\Particle.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </None>
+    <None Include="application\Resources\shader\PostEffect.hlsli">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </None>
+    <None Include="application\Resources\shader\Noise.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\Noise</Filter>
+    </None>
+    <None Include="application\Resources\shader\LineBlur.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\LineBlur</Filter>
+    </None>
+    <None Include="application\Resources\shader\HighLumi.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\HighLumi</Filter>
+    </None>
+    <None Include="application\Resources\shader\Gaussian.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\GaussianBlur</Filter>
+    </None>
+    <None Include="application\Resources\shader\CrossFilter.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\CrossFilter</Filter>
+    </None>
+    <None Include="application\Resources\shader\Bloom.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\Bloom</Filter>
+    </None>
+    <None Include="application\Resources\shader\MultiTexture.hlsli">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </None>
+    <None Include="application\Resources\shader\MultiRenderTexture.hlsli">
+      <Filter>シェーダーファイル\application</Filter>
+    </None>
+    <None Include="application\Resources\shader\RadialBlur.hlsli">
+      <Filter>シェーダーファイル\application\postEffect\RadialBlur</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\shader\SpritePS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\ParticlePS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\SpriteVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\ParticleVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\BasicPS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\SpritePS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\BasicVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\SpriteVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\ParticlePS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\ToonPS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\ParticleVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\ToonVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\ParticleGS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\assimpPS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\ToonPS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\assimpVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\ToonVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\BasicPS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\assimpVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\BasicVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shader\assimpPS.hlsl">
-      <Filter>シェーダーファイル</Filter>
+    <FxCompile Include="application\Resources\shader\ParticleGS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\PostEffectPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\PostEffectVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\NoisePS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\Noise</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\NoiseVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\Noise</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\LineBlurPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\LineBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\LineBlurVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\LineBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\HighLumiPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\HighLumi</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\HighLumiVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\HighLumi</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\GaussianPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\GaussianBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\GaussianVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\GaussianBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\CrossFilterVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\CrossFilter</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\CrossFilterPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\CrossFilter</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\BloomPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\BloomVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\MultiTexturePS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\MultiTextureVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\MultiRenderTexturePS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\MultiRenderTextureVS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\RadialBlurPS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\RadialBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\RadialBlurVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect\RadialBlur</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

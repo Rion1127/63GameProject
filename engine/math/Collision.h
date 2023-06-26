@@ -7,7 +7,7 @@ struct Sphere {
 	//”¼Œa
 	float radius = 1.0f;
 
-	void SetPos(Vector3 pos) {
+	void SetPos(const Vector3& pos) {
 		center.m128_f32[0] = pos.x;
 		center.m128_f32[1] = pos.y;
 		center.m128_f32[2] = pos.z;
@@ -33,7 +33,7 @@ struct Triangle {
 	DirectX::XMVECTOR normal;
 };
 
-bool RayCollision(WorldTransform ray, WorldTransform obj);
+bool RayCollision(const WorldTransform& ray, const WorldTransform& obj);
 
 bool BallCollision(const WorldTransform& a, const WorldTransform& b);
 

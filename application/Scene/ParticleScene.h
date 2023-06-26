@@ -29,9 +29,6 @@ public:
 
 	void Draw()override;
 private:
-	DirectXCommon* directX = nullptr;
-	WinAPI* winApi_ = nullptr;
-	DirectXInput* input_ = nullptr;
 	Controller* controller_ = nullptr;
 	TextureManager* textureM = nullptr;
 	SoundManager* sound_ = nullptr;
@@ -48,7 +45,7 @@ private:
 	uint32_t whiteTexture_;
 
 
-	LightGroup* lightGroup = nullptr;
+	std::shared_ptr<LightGroup> lightGroup = nullptr;
 
 	
 	std::vector<Mesh> meshes;
@@ -57,7 +54,7 @@ private:
 
 	WorldTransform testWT_;
 
-	AssinpModel testModel_;
+	AssimpModel testModel_;
 
 	AssimpObject3D assimpObj_;
 };

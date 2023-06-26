@@ -1,13 +1,9 @@
 #pragma once
-#include <string>
-#include <vector>
-
-#include "Vertices.h"
+#include "REngine.h"
 
 struct aiMesh;
 struct aiMaterial;
 struct aiBone;
-
 
 struct Mesh {
 	Vertices Vertices; // 頂点データの配列
@@ -15,11 +11,11 @@ struct Mesh {
 };
 
 struct BoneData {
-	static const int NUM_BONES_PER_VERTEX = 4;
+	static const uint32_t NUM_BONES_PER_VERTEX = 4;
 
 	uint32_t IDs[NUM_BONES_PER_VERTEX];
 	float Weights[NUM_BONES_PER_VERTEX];
-	DirectX::XMMATRIX boneMatrix_;
+	Matrix4 boneMatrix_;
 };
 
 struct ImportSettings // インポートするときのパラメータ
@@ -52,5 +48,3 @@ private:
 private:
 	
 };
-
-std::string WStringToString(std::wstring oWString);

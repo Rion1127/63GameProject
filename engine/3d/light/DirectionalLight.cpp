@@ -1,7 +1,6 @@
 #include "DirectionalLight.h"
 #include <cassert>
 
-DirectXCommon* DirectionalLight::directX = nullptr;
 
 DirectionalLight* DirectionalLight::Create()
 {
@@ -14,7 +13,6 @@ DirectionalLight* DirectionalLight::Create()
 
 void DirectionalLight::StaticInit()
 {
-	DirectionalLight::directX = DirectXCommon::GetInstance();
 }
 
 void DirectionalLight::Init()
@@ -27,9 +25,10 @@ void DirectionalLight::Init()
 
 	HRESULT result;
 	// 定数バッファの生成
-	result = directX->GetDevice()->CreateCommittedResource(
+	result = RDirectX::GetInstance()->GetDevice()->
+		CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuff));
+		IID_PPV_ARGS(&constBuff_));
 	assert(SUCCEEDED(result));
 
 	
@@ -40,39 +39,40 @@ void DirectionalLight::Init()
 void DirectionalLight::Update()
 {
 	//値の変更があった時だけ定数ばっがに転送する
-	if (dirty) {
+	if (dirty_) {
 		TransferConstBuffer();
-		dirty = false;
+		dirty_ = false;
 	}
 }
 
 void DirectionalLight::Draw(UINT rootParameterIndex)
 {
-	directX->GetCommandList()->SetGraphicsRootConstantBufferView(3, constBuff->GetGPUVirtualAddress());
+	RDirectX::GetInstance()->GetCommandList()->
+		SetGraphicsRootConstantBufferView(3, constBuff_->GetGPUVirtualAddress());
 }
 
 void DirectionalLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファのマッピング
-	result = constBuff->Map(0, nullptr, (void**)&constMap);
+	result = constBuff_->Map(0, nullptr, (void**)&constMap_);
 	if (SUCCEEDED(result)) {
-		constMap->lightv = -lightdir;
-		constMap->lightColor = lightcolor;
-		constBuff->Unmap(0, nullptr);
+		constMap_->lightv = -lightdir_;
+		constMap_->lightColor = lightcolor_;
+		constBuff_->Unmap(0, nullptr);
 	}
 }
 
 void DirectionalLight::SetLightDir(const Vector3& lightdir)
 {
 	//正規化する
-	this->lightdir = lightdir;
-	this->lightdir.normalize();
-	dirty = true;
+	this->lightdir_ = lightdir;
+	this->lightdir_.normalize();
+	dirty_ = true;
 }
 
 void DirectionalLight::SetLightColor(const Vector3& color)
 {
-	this->lightcolor = color;
-	dirty = true;
+	this->lightcolor_ = color;
+	dirty_ = true;
 }

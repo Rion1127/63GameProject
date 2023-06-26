@@ -6,10 +6,12 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #include "DirectX.h"
 
-#define BLEND_ALPHA		0x0000
-#define BLEND_SUB		0x0001
-#define BLEND_NEGA		0x0002
-#define BLEND_NORMAL	0x0003
+enum BlendNum {
+	ADD,
+	SUB,
+	NEGA,
+	ALPHA,
+};
 
 //サンプラーデスクを設定
 D3D12_STATIC_SAMPLER_DESC SetSAMPLER_DESC();
@@ -21,119 +23,76 @@ D3D12_STATIC_SAMPLER_DESC SetSAMPLER_DESC();
 /// <param name="BLEND_SUB">減算合成</param>
 /// <param name="BLEND_NEGA">色反転合成</param>
 /// <param name="BLEND_NORMAL">半透明合成</param>
-void SetBlend(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc,int blend);
+void SetBlend(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc, uint32_t blend);
 
-class Pipeline
+enum CULL_MODE {
+	NONE = 1,
+	FRONT = 2,
+	BACK = 3
+};
+enum TOPOLOGY_TYPE
 {
-public:
-	//エイリアステンプレート
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//object3d初期化
-	void Object3dIni(int blend);
-private:
-#pragma region object3D
-	void object3DSetInputLayout();
-
-	void object3DSetRasterizer();
-
-	void object3DSetShader();
-
-	void object3DSetRootSignature();
-
-	void object3DSetOther();
-
-#pragma endregion
-public:
-	//Sprite初期化
-	void SpriteIni(int blend);
-private:
-#pragma region Sprite
-	void SpriteSetInputLayout();
-
-	void SpriteSetRasterizer();
-
-	void SpriteSetShader();
-
-	void SpriteSetRootSignature();
-
-	void SpriteSetOther();
-
-
-#pragma endregion
-public:
-	//Sprite初期化
-	void ToonIni(int blend);
-private:
-#pragma region Sprite
-	void ToonSetInputLayout();
-
-	void ToonSetRasterizer();
-
-	void ToonSetShader();
-
-	void ToonSetRootSignature();
-
-	void ToonSetOther();
-public:
-	ID3D12RootSignature* GetRootSignature() { return rootSignature.Get(); }
-
-	ID3D12PipelineState* gerPipelineState() { return pipelineState.Get(); }
-
-private:
-	
-
-	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootSignature;
-	// パイプランステートの生成
-	ComPtr<ID3D12PipelineState> pipelineState;
-	// グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
-	//コマンドリストを格納する
-	static DirectXCommon* directX_;
-
-	std::vector<D3D12_INPUT_ELEMENT_DESC>inputLayout;
-
-	ComPtr < ID3DBlob> vsBlob = nullptr; // 頂点シェーダオブジェクト
-	ComPtr < ID3DBlob> psBlob = nullptr; // ピクセルシェーダオブジェクト
-	ComPtr < ID3DBlob> errorBlob = nullptr; // エラーオブジェクト
+	TOPOLOGY_UNDEFINED = 0,
+	TOPOLOGY_POINT = 1,
+	TOPOLOGY_LINE = 2,
+	TOPOLOGY_TRIANGLE = 3,
+	TOPOLOGY_PATCH = 4
+};
+enum WRIGHT_MASK {
+	DEPTH_WRITE_MASK_ZERO = 0,
+	DEPTH_WRITE_MASK_ALL = 1
+};
+enum TEXTURE_ADDRESS_MODE {	//https://learn.microsoft.com/ja-jp/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_address_mode
+	MODE_WRAP = 1,		//繰り返し（タイリング）
+	MODE_MIRROR = 2,	//0 ~ 1は通常, 1 ~ 2は反転 , 2 ~ 3 は通常
+	MODE_CLAMP = 3,		//0 ~ 1の間でCLAMPされる
+	MODE_BORDER = 4,	//HLSL コードで指定された境界線の色に設定されます。
+	MODE_MIRROR_ONCE = 5//
 };
 
-
-class ParticlePipeline {
-public:
+enum ShaderType {
+	VS,
+	PS,
+	GS
+};
+class PipelineObject {
+private:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
-	void Init(int blend);
-
-	ID3D12RootSignature* GetRootSignature() { return rootSignature.Get(); }
-
-	ID3D12PipelineState* gerPipelineState() { return pipelineState.Get(); }
-
-private:
-	void SetInputLayout();
-
-	void SetRasterizer();
-
-	void SetShader();
-
-	void SetRootSignature();
-
-	void SetOther();
-
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootSignature;
-	// パイプランステートの生成
-	ComPtr<ID3D12PipelineState> pipelineState;
-	// グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
-	//コマンドリストを格納する
-	static DirectXCommon* directX_;
+	ComPtr<ID3D12RootSignature> rootSignature_;
+	// パイプランステート
+	ComPtr<ID3D12PipelineState> pipelineStateAdd_;
+	ComPtr<ID3D12PipelineState> pipelineStateSub_;
+	ComPtr<ID3D12PipelineState> pipelineStateNega_;
+	ComPtr<ID3D12PipelineState> pipelineStateAlpha_;
 
-	std::vector<D3D12_INPUT_ELEMENT_DESC>inputLayout;
+	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout_;
+	std::vector<D3D12_ROOT_PARAMETER> rootParams_;
 
-	ComPtr < ID3DBlob> vsBlob = nullptr; // 頂点シェーダオブジェクト
-	ComPtr < ID3DBlob> gsBlob = nullptr; // 頂点シェーダオブジェクト
-	ComPtr < ID3DBlob> psBlob = nullptr; // ピクセルシェーダオブジェクト
-	ComPtr < ID3DBlob> errorBlob = nullptr; // エラーオブジェクト
+	ComPtr<ID3DBlob> vsBlob_ = nullptr; // 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> psBlob_ = nullptr; // ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> gsBlob_ = nullptr; // ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> errorBlob_ = nullptr; // エラーオブジェクト
+public:
+
+public:
+	std::string name_;
+
+	void Create(BlendNum blendNum, CULL_MODE cullmode,
+		TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
+		TEXTURE_ADDRESS_MODE uvMode);
+
+	void Setshader(std::string fileName,ShaderType shadertype);
+
+	void AddrootParams(size_t addNum);
+	void AddrootParamsMultiTexture(size_t addTexnum,size_t addNum);
+	void AddInputLayout(const char* semanticName, DXGI_FORMAT format,uint32_t index = 0);
+public:
+	ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }
+
+	ID3D12PipelineState* GetPipelineStateAdd() { return pipelineStateAdd_.Get(); }
+	ID3D12PipelineState* GetPipelineStateSub() { return pipelineStateSub_.Get(); }
+	ID3D12PipelineState* GetPipelineStateNega() { return pipelineStateNega_.Get(); }
+	ID3D12PipelineState* GetPipelineStateAlpha() { return pipelineStateAlpha_.Get(); }
 };

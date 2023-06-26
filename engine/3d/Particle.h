@@ -1,6 +1,7 @@
 #pragma once
 #include <wrl.h>
 #include "Camera.h"
+#include "myMath.h"
 
 using namespace Microsoft::WRL;
 class Particle
@@ -16,25 +17,11 @@ public:
 
 	static void PreDraw();
 
-	/// <summary>
-	/// ブレンド設定
-	/// </summary>
-	/// <param name="BLEND_ALPHA">アルファブレンド</param>
-	/// <param name="BLEND_SUB">減算合成</param>
-	/// <param name="BLEND_NEGA">色反転合成</param>
-	/// <param name="BLEND_NORMAL">半透明合成</param>
-	static void SetBlend(int blend);
-
 	void Update(Camera VP);
-
-
-	void ChangeColor(float x, float y, float z, float w);
-	void ChangeColor(XMFLOAT4 color_);
 
 	void Draw(uint32_t descriptorSize);
 
 private:
-	static DirectXCommon* directX_;
 
 	struct Vertex {
 		Vector3 pos;
@@ -42,19 +29,19 @@ private:
 		DirectX::XMFLOAT4 color;
 	};
 
-	const int vertexCount = 1024;
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	ComPtr<ID3D12Resource> vertBuff = nullptr;
+	const uint32_t CVERTEX_COUNT = 1024;
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 	Vertex* vertMap_ = nullptr;
 
 	struct ConstBufferData {
-		DirectX::XMMATRIX mat;
-		DirectX::XMMATRIX billBoardMat;
+		Matrix4 mat;
+		Matrix4 billBoardMat;
 	};
 
-	ComPtr<ID3D12Resource> constBuff = nullptr;
+	ComPtr<ID3D12Resource> constBuff_ = nullptr;
 	ConstBufferData* constMatMap_ = nullptr;
 
-	int activeCount = 2;
+	uint32_t activeCount_ = 2;
 };
 

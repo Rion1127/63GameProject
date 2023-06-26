@@ -9,29 +9,43 @@
 #pragma comment(lib, "Xinput.lib")
 
 //キーボード
-class DirectXInput
+class Key
 {
-public:
-	static DirectXInput* GetInstance();
-
-	void InputIni();
-	void InputUpdata();
-
-	bool PushKey(UINT8 key);		//押しっぱなし
-	bool TriggerKey(UINT8 key);		//押した瞬間
-	bool GetKeyReleased(UINT8 key);
-
 private:
-	IDirectInputDevice8* keyboard = nullptr;
+	static IDirectInputDevice8* skeyboard_;
 	//全キーの入力状態を取得する
-	BYTE keys[256] = {};
+	static BYTE skeys_[256];
 	//全キーの入力状態を取得する
-	BYTE oldkeys[256] = {};
+	static BYTE soldkeys_[256];
+public:
+	static void InputIni();
+	static void InputUpdata();
 
-	WinAPI* winapi_ = nullptr;
+	static bool PushKey(UINT8 key);		//押しっぱなし
+	static bool TriggerKey(UINT8 key);		//押した瞬間
+	static bool GetKeyReleased(UINT8 key);
 };
 //マウス
+enum {
+	MOUSE_LEFT,
+	MOUSE_RIGHT,
+	MOUSE_WHEEL
+};
+
 class MouseInput {
+private:
+	IDirectInputDevice8* mouse_ = nullptr;
+
+	DIMOUSESTATE mouseState_;
+	DIMOUSESTATE prevmouseState_;
+public:
+	POINT p_;
+	//現フレームのマウスの位置
+	Vector3 mPos_;
+	//前フレームのマウスの位置
+	Vector3 prevmPos_;
+	//マウスが動いた方向のベクトル
+	Vector3 mouseVec_;
 public:
 	static MouseInput* GetInstance();
 
@@ -51,7 +65,7 @@ public:
 	//[1] MOUSE_RIGHT= 右ボタン
 	//[2] MOUSE_WHEEL= マウスホイール
 	bool IsMouseReleas(BYTE button);
-	int IsMouseWheel();
+	int32_t IsMouseWheel();
 	
 	//マウスが1フレームに移動したベクトルを取得する
 	Vector3 GetCursorMove();
@@ -59,51 +73,12 @@ public:
 	float GetCursorMoveX();
 	float GetCursorMoveY();
 	float GetCursorMoveZ();
-	
-	POINT p;
-	//現フレームのマウスの位置
-	Vector3 mPos;
-	//前フレームのマウスの位置
-	Vector3 prevmPos;
-	//マウスが動いた方向のベクトル
-	Vector3 mouseVec;
 private:
 	//マウスの座標を取得する
 	void GetCursorPosition();
-
-	IDirectInputDevice8* mouse = nullptr;
-
-	DIMOUSESTATE mouseState;
-	DIMOUSESTATE prevmouseState;
-	//HWND* hwnd_ = nullptr;
-	WinAPI* winapi_ = nullptr;
-};
-enum {
-	MOUSE_LEFT,
-	MOUSE_RIGHT,
-	MOUSE_WHEEL
 };
 //コントローラ
 class Controller {
-public:
-	static Controller* GetInstance();
-
-	void Ini();
-
-	void Update();
-
-	bool GetActive() { return isConnect; }
-
-	WORD GetButtons(WORD button);
-	WORD GetTriggerButtons(WORD button);
-	WORD GetReleasButtons(WORD button);
-	//false	右スティック
-	//true	左スティック
-	Vector2 GetLStick();
-	Vector2 GetRStick();
-
-	BYTE GetRTrigger();
-	BYTE GetLTrigger();
 private:
 #define PAD_UP				0x0001
 #define PAD_DOWN			0x0002
@@ -120,12 +95,31 @@ private:
 #define PAD_X				0x4000
 #define PAD_Y				0x8000
 
-	XINPUT_STATE state;
-	XINPUT_STATE preState;
-	bool isConnect;
+	XINPUT_STATE state_;
+	XINPUT_STATE preState_;
+	bool isConnect_;
 
 	//バイブレーション
-	XINPUT_VIBRATION vibration;
+	XINPUT_VIBRATION vibration_;
 
+public:
+	static Controller* GetInstance();
+
+	void Ini();
+
+	void Update();
+
+	bool GetActive() { return isConnect_; }
+
+	WORD GetButtons(WORD button);
+	WORD GetTriggerButtons(WORD button);
+	WORD GetReleasButtons(WORD button);
+	//false	右スティック
+	//true	左スティック
+	Vector2 GetLStick();
+	Vector2 GetRStick();
+
+	BYTE GetRTrigger();
+	BYTE GetLTrigger();
 };
 

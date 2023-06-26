@@ -1,17 +1,16 @@
 #pragma once
-#include <DirectXMath.h>
-using namespace DirectX;
 #include "math.h"
 #include <d3d12.h>
 #include <wrl.h>
 
 #include "DirectX.h"
 #include "Quaternion.h"
+#include "myMath.h"
 
 //定数バッファ用データ構造体（３D変換行列）
 struct ConstBufferDataTransform {
-	XMMATRIX mat; //3D変換行列
-	XMMATRIX viewProj;	//ビューとプロジェクション合成行列
+	Matrix4 mat; //3D変換行列
+	Matrix4 viewProj;	//ビューとプロジェクション合成行列
 	Vector3 cameraPos;
 };
 
@@ -35,24 +34,24 @@ public:
 	/// </summary>
 	/// <param name="viewProjection">カメラ</param>
 	/// <param name="isBillboard">0 = 無し; 1 = ビルボードあり; 2 = Y軸ビルボード</param>
-	void Update(int isBillboard = 0);
+	void Update(uint32_t isBillboard = 0);
 
 	//定数バッファ（行列用）
-	ComPtr<ID3D12Resource> constBuffTransform;
+	ComPtr<ID3D12Resource> constBuffTransform_;
 	//定数バッファマップ（行列用）
-	ConstBufferDataTransform* constMapTransform;
+	ConstBufferDataTransform* constMapTransform_;
 	//親オブジェクトへのポインタ
-	WorldTransform* parent = nullptr;
+	WorldTransform* parent_ = nullptr;
 	
 	//アフィン変換情報
-	Vector3 scale = { 1,1,1 };
-	Vector3 rotation = { 0,0,0 };
-	Vector3 position = { 0,0,0 };
+	Vector3 scale_ = { 1,1,1 };
+	Vector3 rotation_ = { 0,0,0 };
+	Vector3 position_ = { 0,0,0 };
 private:
 	//ワールド変換行列
-	XMMATRIX matWorld;
+	Matrix4 matWorld_;
 
 	//クォータニオン
-	Quaternion q = { 0,1,0,0 };
+	Quaternion quaternion_ = { 0,1,0,0 };
 };
 

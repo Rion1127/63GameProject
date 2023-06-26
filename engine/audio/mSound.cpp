@@ -1,9 +1,9 @@
 #include <cassert>
 #include "mSound.h"
 
-Microsoft::WRL::ComPtr<IXAudio2> SoundManager::xAudio2;
-IXAudio2MasteringVoice* SoundManager::masterVoice;
-std::map<SoundKey, SoundData> SoundManager::sndMap;
+Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
+IXAudio2MasteringVoice* SoundManager::smasterVoice_;
+std::map<SoundKey, SoundData> SoundManager::ssndMap_;
 
 std::string directoryPath_ = "Resources/BGM_SE/";
 
@@ -13,18 +13,18 @@ SoundManager::~SoundManager()
 
 SoundManager* SoundManager::GetInstance()
 {
-	static SoundManager obj;
-	return &obj;
+	static SoundManager instance;
+	return &instance;
 }
 
 void SoundManager::Init()
 {
-	XAudio2Create(&xAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
-	xAudio2->CreateMasteringVoice(&masterVoice);
-	sndMap.clear();
+	XAudio2Create(&sxAudio2_, 0, XAUDIO2_DEFAULT_PROCESSOR);
+	sxAudio2_->CreateMasteringVoice(&smasterVoice_);
+	ssndMap_.clear();
 }
 
-SoundKey SoundManager::LoadWave(std::string path, SoundKey key)
+SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
 {
 	std::ifstream file;
 	
@@ -34,7 +34,7 @@ SoundKey SoundManager::LoadWave(std::string path, SoundKey key)
 
 	assert(file.is_open());
 
-	RiffHeader riff;
+	RiffHeader riff{};
 	file.read((char*)&riff, sizeof(riff));
 
 	if (strncmp(riff.chunk.id, "RIFF", 4) != 0)
@@ -47,7 +47,7 @@ SoundKey SoundManager::LoadWave(std::string path, SoundKey key)
 		assert(0);
 	}
 
-	FormatChunk format = {};
+	FormatChunk format{};
 
 	file.read((char*)&format, sizeof(ChunkHeader));
 	if (strncmp(format.chunk.id, "fmt ", 4) != 0)
@@ -58,7 +58,7 @@ SoundKey SoundManager::LoadWave(std::string path, SoundKey key)
 	assert(format.chunk.size <= sizeof(format.fmt));
 	file.read((char*)&format.fmt, format.chunk.size);
 
-	ChunkHeader data;
+	ChunkHeader data{};
 	file.read((char*)&data, sizeof(data));
 
 	if (strncmp(data.id, "JUNK", 4) == 0)
@@ -72,48 +72,50 @@ SoundKey SoundManager::LoadWave(std::string path, SoundKey key)
 		assert(0);
 	}
 
-	char* pBuffer = new char[data.size];
-	file.read(pBuffer, data.size);
+	std::vector<BYTE> pBuffer_;
+	pBuffer_.resize(data.size);
+	
+	file.read((char*)pBuffer_.data(), data.size);
 
 	file.close();
 
 	SoundData soundData = {};
 
-	soundData.wfex = format.fmt;
-	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
-	soundData.bufferSize = data.size;
+	soundData.wfex_ = format.fmt;
+	soundData.pBuffer_ = pBuffer_;
+	soundData.bufferSize_ = data.size;
 
-	sndMap.emplace(key, soundData);
+	ssndMap_.emplace(key, soundData);
 
 	return key;
 }
 
-bool SoundManager::IsPlaying(SoundKey key) {
+bool SoundManager::IsPlaying(const SoundKey& key) {
 	IXAudio2SourceVoice* pSourceVoice = nullptr;//これ保存しとくと止められる
-	SoundData* pSnd = &sndMap[key];
+	SoundData* pSnd = &ssndMap_[key];
 
-	xAudio2->CreateSourceVoice(&pSourceVoice, &pSnd->wfex);
+	sxAudio2_->CreateSourceVoice(&pSourceVoice, &pSnd->wfex_);
 	XAUDIO2_VOICE_STATE state{};
 	pSourceVoice->GetState(&state);
 	return false;
 }
 
-void SoundManager::Play(SoundKey key, bool loopFlag, float volum)
+void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum)
 {
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	SoundData* pSnd = &sndMap[key];
+	SoundData* pSnd = &ssndMap_[key];
 
-	if (pSnd->sound != nullptr)
+	if (pSnd->sound_ != nullptr)
 	{
-		pSnd->sound->Stop();
+		pSnd->sound_->Stop();
 	}
 
-	xAudio2->CreateSourceVoice(&pSourceVoice, &pSnd->wfex);
+	sxAudio2_->CreateSourceVoice(&pSourceVoice, &pSnd->wfex_);
 
 	XAUDIO2_BUFFER buf{};
 
-	buf.pAudioData = pSnd->pBuffer;
-	buf.AudioBytes = pSnd->bufferSize;
+	buf.pAudioData = pSnd->pBuffer_.data();
+	buf.AudioBytes = pSnd->bufferSize_;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 	if (loopFlag) buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 	//ボリュームセット
@@ -121,33 +123,33 @@ void SoundManager::Play(SoundKey key, bool loopFlag, float volum)
 	pSourceVoice->SubmitSourceBuffer(&buf);
 	pSourceVoice->Start();
 
-	pSnd->sound = pSourceVoice;
+	pSnd->sound_ = pSourceVoice;
 }
 
-SoundData* SoundManager::GetSoundData(SoundKey key)
+SoundData* SoundManager::GetSoundData(const SoundKey& key)
 {
 	
-	return &sndMap.at(key);
+	return &ssndMap_.at(key);
 }
 
-void SoundManager::Stop(SoundKey key)
+void SoundManager::Stop(const SoundKey& key)
 {
-	SoundData* pSnd = &sndMap[key];
-	if (pSnd->sound != nullptr) {
-		pSnd->sound->Stop();
+	SoundData* pSnd = &ssndMap_[key];
+	if (pSnd->sound_ != nullptr) {
+		pSnd->sound_->Stop();
 	}
 }
 
 void SoundManager::ReleaseAllSounds()
 {
-	for (auto itr = sndMap.begin(); itr != sndMap.end(); itr++)
+	for (auto itr = ssndMap_.begin(); itr != ssndMap_.end(); itr++)
 	{
 		//中身が入っていたらすべて止める
-		if (itr->second.sound != nullptr) {
-			itr->second.sound->Stop();
+		if (itr->second.sound_ != nullptr) {
+			itr->second.sound_->Stop();
 		}
 		itr->second.Release();
 	}
-	sndMap.clear();
+	ssndMap_.clear();
 }
 

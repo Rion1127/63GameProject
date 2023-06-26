@@ -24,13 +24,13 @@ public:
 
 	void SetLightColor(const Vector3& color);
 	//有効フラグ
-	void SetActive(bool active) { this->active = active; }
+	void SetActive(bool active) { this->active_ = active; }
 	//有効フラグチェック
-	bool IsAvtive() { return active; }
+	bool IsAvtive() { return active_; }
 
-	Vector3 GetLightDir() { return lightdir; }
+	Vector3 GetLightDir() { return lightdir_; }
 
-	Vector3 GetLightColor() { return lightcolor; }
+	Vector3 GetLightColor() { return lightcolor_; }
 
 	struct ConstBufferData {
 		Vector3 lightv;		//ライトの方向を表すベクトル
@@ -40,19 +40,16 @@ public:
 		bool active;
 	};
 private:
-
-	static DirectXCommon* directX;
-
-	ComPtr<ID3D12Resource> constBuff;
-	ConstBufferData* constMap;
+	ComPtr<ID3D12Resource> constBuff_;
+	ConstBufferData* constMap_;
 	//ライト光線方向（単位ベクトル）
-	Vector3 lightdir = { 1,0,0 };
+	Vector3 lightdir_ = { 1,0,0 };
 	//ライトの色
-	Vector3 lightcolor = { 1,1,1 };
+	Vector3 lightcolor_ = { 1,1,1 };
 	//ダーティフラグ
-	bool dirty;
+	bool dirty_;
 
 	//有効フラグ
-	bool active = false;
+	bool active_ = false;
 };
 

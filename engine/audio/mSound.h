@@ -4,6 +4,8 @@
 #include <map>
 #include <wrl.h>
 #include <fstream>
+#include <memory>
+#include <vector>
 
 typedef std::string SoundKey;
 
@@ -28,24 +30,23 @@ struct FormatChunk
 class SoundData
 {
 public:
-	WAVEFORMATEX wfex;
+	WAVEFORMATEX wfex_;
 
-	BYTE* pBuffer;
+	std::vector<BYTE> pBuffer_;
 
-	unsigned int bufferSize;
+	uint32_t bufferSize_;
 
-	IXAudio2SourceVoice* sound;
+	IXAudio2SourceVoice* sound_;
 
 	void Release() {
-		delete[] pBuffer;
 
-		this->pBuffer = 0;
-		this->bufferSize = 0;
-		this->wfex = {};
+		pBuffer_.clear();
+		bufferSize_ = 0;
+		wfex_ = {};
 
-		if (sound != nullptr)
+		if (sound_ != nullptr)
 		{
-			sound->Stop();
+			sound_->Stop();
 		}
 	}
 };
@@ -64,13 +65,13 @@ public:
 	/// <param name="path">ファイル名</param>
 	/// <param name="key">キーワード
 	/// </param>
-	static SoundKey LoadWave(std::string path, SoundKey key);
+	static SoundKey LoadWave(const std::string& path, const SoundKey& key);
 	/// <summary>
 	/// 音声再生中かどうか
 	/// </summary>
 	/// <param name="key">設定したキーワード</param>
 	/// <returns>音声再生中かどうか</returns>
-	static bool IsPlaying(SoundKey key);
+	static bool IsPlaying(const SoundKey& key);
 	/// <summary>
 	/// 再生
 	/// </summary>
@@ -78,20 +79,20 @@ public:
 	/// <param name="loopFlag">ループ</param>
 	/// <param name="volum">音量
 	/// </param>
-	static void Play(SoundKey key, bool loopFlag = false, float volum = 1.0f);
+	static void Play(const SoundKey& key, bool loopFlag = false, float volum = 1.0f);
 	/// <summary>
 	/// すでに読み込んだ音源を返す
 	/// </summary>
 	/// <param name="key">キーワード</param>
-	static SoundData* GetSoundData(SoundKey key);
+	static SoundData* GetSoundData(const SoundKey& key);
 
-	static void Stop(SoundKey key);
+	static void Stop(const SoundKey& key);
 	
 	static void ReleaseAllSounds();
 
 private:
-	static ComPtr<IXAudio2> xAudio2;
-	static IXAudio2MasteringVoice* masterVoice;
-	static std::map<SoundKey, SoundData> sndMap;
+	static ComPtr<IXAudio2> sxAudio2_;
+	static IXAudio2MasteringVoice* smasterVoice_;
+	static std::map<SoundKey, SoundData> ssndMap_;
 
 };

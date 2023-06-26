@@ -4,38 +4,37 @@
 #include "mInput.h"
 
 //DirectInputの初期化
-static IDirectInput8* directInput = nullptr;
+static IDirectInput8* sdirectInput = nullptr;
+
+IDirectInputDevice8* Key::skeyboard_ = nullptr;
+//の入力状態を取得する
+BYTE Key::skeys_[256] = {};
+//の入力状態を取得する
+BYTE Key::soldkeys_[256] = {};
 
 #pragma region キーボード
 
-DirectXInput* DirectXInput::GetInstance()
-{
-	static DirectXInput instance;
-	return &instance;
-}
-void DirectXInput::InputIni()	//初期化
+void Key::InputIni()	//初期化
 {
 	HRESULT result;
 
-	winapi_ = WinAPI::GetInstance();
-
 	//DirectInputの初期化
 	result = DirectInput8Create(
-		winapi_->w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
-		(void**)&directInput, nullptr);
+		WinAPI::GetInstance()->w_.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
+		(void**)&sdirectInput, nullptr);
 	assert(SUCCEEDED(result));
 
 	//キーボードデバイスの生成
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	result = sdirectInput->CreateDevice(GUID_SysKeyboard, &skeyboard_, NULL);
 	assert(SUCCEEDED(result));
 
 	//入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//標準形式
+	result = skeyboard_->SetDataFormat(&c_dfDIKeyboard);	//標準形式
 	assert(SUCCEEDED(result));
 
 	//排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(
-		winapi_->hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = skeyboard_->SetCooperativeLevel(
+		WinAPI::GetInstance()->hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 	//使っているフラグについて
 	//DISCL_FOREGROUND		画面が手前にある場合のみ入力を受け付ける
@@ -43,33 +42,33 @@ void DirectXInput::InputIni()	//初期化
 	//DISCL_NOWINKEY		Windowsキーを無効化する 
 	
 	//キーボード情報の取得開始
-	keyboard->Acquire();
+	skeyboard_->Acquire();
 }
 
-void DirectXInput::InputUpdata()	//アップデート
+void Key::InputUpdata()	//アップデート
 {
-	for (int i = 0; i < 256; ++i)
+	for (uint32_t i = 0; i < 256; ++i)
 	{
-		oldkeys[i] = keys[i];
+		soldkeys_[i] = skeys_[i];
 	}
 	//キーボード情報の取得開始
-	keyboard->Acquire();
-	keyboard->GetDeviceState(sizeof(keys), keys);
+	skeyboard_->Acquire();
+	skeyboard_->GetDeviceState(sizeof(skeys_), skeys_);
 }
 //押しっぱなし
-bool DirectXInput::PushKey(UINT8 key)
+bool Key::PushKey(UINT8 key)
 {
-	return keys[key];
+	return skeys_[key];
 }
 //押した瞬間
-bool DirectXInput::TriggerKey(UINT8 key)
+bool Key::TriggerKey(UINT8 key)
 {
-	return keys[key] && !oldkeys[key];
+	return skeys_[key] && !soldkeys_[key];
 }
 //離した瞬間
-bool DirectXInput::GetKeyReleased(UINT8 key)
+bool Key::GetKeyReleased(UINT8 key)
 {
-	return !keys[key] && oldkeys[key];
+	return !skeys_[key] && soldkeys_[key];
 }
 #pragma endregion
 
@@ -85,18 +84,17 @@ MouseInput* MouseInput::GetInstance()
 void MouseInput::MouseIni()
 {
 	HRESULT result;
-	winapi_ = WinAPI::GetInstance();
 	
 	//キーボードデバイスの生成
-	result = directInput->CreateDevice(GUID_SysMouse, &mouse, NULL);
+	result = sdirectInput->CreateDevice(GUID_SysMouse, &mouse_, NULL);
 	assert(SUCCEEDED(result));
 	//入力データ形式のセット
-	result = mouse->SetDataFormat(&c_dfDIMouse);	//標準形式
+	result = mouse_->SetDataFormat(&c_dfDIMouse);	//標準形式
 	assert(SUCCEEDED(result));
 
 	//排他制御レベルのセット
-	result = mouse->SetCooperativeLevel(
-		winapi_->hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = mouse_->SetCooperativeLevel(
+		WinAPI::GetInstance()->hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 	//使っているフラグについて
 	//DISCL_FOREGROUND		画面が手前にある場合のみ入力を受け付ける
@@ -104,22 +102,22 @@ void MouseInput::MouseIni()
 	//DISCL_NOWINKEY		Windowsキーを無効化する 
 
 	//マウス情報の取得開始
-	mouse->Acquire();
+	mouse_->Acquire();
 }
 
 void MouseInput::GetCursorPosition()
 {
 	//スクリーンから見たマウスの座標を取得する
-	GetCursorPos(&p);
+	GetCursorPos(&p_);
 	//ウィンドウから見たマウスの座標を取得する
-	ScreenToClient(winapi_->hwnd, &p);
+	ScreenToClient(WinAPI::GetInstance()->hwnd_, &p_);
 	//前フレームの状態を代入する
-	prevmPos = mPos;
+	prevmPos_ = mPos_;
 	//現フレームの座標を代入する
-	mPos.x = (float)p.x;
-	mPos.y = (float)p.y;
+	mPos_.x = (float)p_.x;
+	mPos_.y = (float)p_.y;
 	//マウスがどの方向に動いたかのベクトルを取得
-	mouseVec = mPos - prevmPos;
+	mouseVec_ = mPos_ - prevmPos_;
 	//ベクトル正規化
 	//mouseVec.normalize();
 }
@@ -129,27 +127,27 @@ void MouseInput::Updata()
 	HRESULT result;
 	
 	//マウス情報の取得開始
-	mouse->Acquire();	//ここに置いたことで解決
+	mouse_->Acquire();	//ここに置いたことで解決
 
 	//std::string str = "OK\n";
 	//前フレームの状態を代入
-	prevmouseState = mouseState;
+	prevmouseState_ = mouseState_;
 	//マウス情報の取得開始
-	result = mouse->Poll();
+	result = mouse_->Poll();
 	if (result == DIERR_INPUTLOST) {
 		//str = "NG\n";
 	}
 	
-	result = mouse->GetDeviceState(sizeof(DIMOUSESTATE), &mouseState);
+	result = mouse_->GetDeviceState(sizeof(DIMOUSESTATE), &mouseState_);
 	//ウィンドウの外をクリックしたら入力情報を無効にする
 	if (FAILED(result)) {
-		mouseState.lX = 0;
-		mouseState.lY = 0;
-		mouseState.lZ = 0;
-		mouseState.rgbButtons[0] = 0;
-		mouseState.rgbButtons[1] = 0;
-		mouseState.rgbButtons[2] = 0;
-		mouseState.rgbButtons[3] = 0;
+		mouseState_.lX = 0;
+		mouseState_.lY = 0;
+		mouseState_.lZ = 0;
+		mouseState_.rgbButtons[0] = 0;
+		mouseState_.rgbButtons[1] = 0;
+		mouseState_.rgbButtons[2] = 0;
+		mouseState_.rgbButtons[3] = 0;
 	}
 	//OutputDebugStringA(str.c_str());
 	//座標取得
@@ -158,8 +156,8 @@ void MouseInput::Updata()
 //左クリックされたら
 bool MouseInput::IsMouseTrigger(BYTE button)
 {
-	if (!prevmouseState.rgbButtons[button] &&
-		mouseState.rgbButtons[button]) {
+	if (!prevmouseState_.rgbButtons[button] &&
+		mouseState_.rgbButtons[button]) {
 		return true;
 	}
 	return false;
@@ -167,7 +165,7 @@ bool MouseInput::IsMouseTrigger(BYTE button)
 
 bool MouseInput::IsMouseDown(BYTE button)
 {
-	if (prevmouseState.rgbButtons[button]) {
+	if (prevmouseState_.rgbButtons[button]) {
 		return true;
 	}
 	return false;
@@ -175,36 +173,36 @@ bool MouseInput::IsMouseDown(BYTE button)
 
 bool MouseInput::IsMouseReleas(BYTE button)
 {
-	if ((prevmouseState.rgbButtons[button]) &&
-		!(mouseState.rgbButtons[button])) {
+	if ((prevmouseState_.rgbButtons[button]) &&
+		!(mouseState_.rgbButtons[button])) {
 		return true;
 	}
 	return false;
 }
 
-int MouseInput::IsMouseWheel()
+int32_t MouseInput::IsMouseWheel()
 {
-	return mouseState.lZ;
+	return mouseState_.lZ;
 }
 
 Vector3 MouseInput::GetCursorMove()
 {
-	return mouseVec;
+	return mouseVec_;
 }
 
 float MouseInput::GetCursorMoveX()
 {
-	return mouseVec.x;
+	return mouseVec_.x;
 }
 
 float MouseInput::GetCursorMoveY()
 {
-	return mouseVec.y;
+	return mouseVec_.y;
 }
 
 float MouseInput::GetCursorMoveZ()
 {
-	return mouseVec.z;
+	return mouseVec_.z;
 }
 #pragma endregion
 
@@ -223,22 +221,22 @@ void Controller::Ini()
 void Controller::Update()
 {
 	DWORD result = S_OK;
-	preState = state;
+	preState_ = state_;
 	result = XInputGetState(
 		0,       // DWORD         dwUserIndex
-		&state);
+		&state_);
 
 	if (result == ERROR_SUCCESS) {
-		isConnect = true;
+		isConnect_ = true;
 	}
 	else {
-		isConnect = false;
+		isConnect_ = false;
 	}
 }
 
 WORD Controller::GetButtons(WORD button)
 {
-	if (state.Gamepad.wButtons == button) {
+	if (state_.Gamepad.wButtons == button) {
 		return true;
 	}
 
@@ -247,8 +245,8 @@ WORD Controller::GetButtons(WORD button)
 
 WORD Controller::GetTriggerButtons(WORD button)
 {
-	if ((state.Gamepad.wButtons == button) &&
-		(preState.Gamepad.wButtons != button))
+	if ((state_.Gamepad.wButtons == button) &&
+		(preState_.Gamepad.wButtons != button))
 	{
 		return true;
 	}
@@ -258,8 +256,8 @@ WORD Controller::GetTriggerButtons(WORD button)
 
 WORD Controller::GetReleasButtons(WORD button)
 {
-	if ((state.Gamepad.wButtons != button) &&
-		(preState.Gamepad.wButtons == button))
+	if ((state_.Gamepad.wButtons != button) &&
+		(preState_.Gamepad.wButtons == button))
 	{
 		return true;
 	}
@@ -272,17 +270,17 @@ Vector2 Controller::GetLStick()
 	Vector2 stickPos;
 	
 	//左スティック
-	stickPos.x = state.Gamepad.sThumbLX;
-	stickPos.y = state.Gamepad.sThumbLY;
+	stickPos.x = state_.Gamepad.sThumbLX;
+	stickPos.y = state_.Gamepad.sThumbLY;
 	//デッドゾーンを設定
-	if ((state.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/ &&
-		state.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/))
+	if ((state_.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/ &&
+		state_.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/))
 	{
 		stickPos.x = 0;
 	}
 
-	if ((state.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/ &&
-		state.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/))
+	if ((state_.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/ &&
+		state_.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/))
 	{
 		stickPos.y = 0;
 	}
@@ -295,13 +293,13 @@ Vector2 Controller::GetRStick()
 	Vector2 stickPos;
 	//右スティック
 		//returnする変数に値を代入
-	stickPos.x = state.Gamepad.sThumbRX;
-	stickPos.y = state.Gamepad.sThumbRY;
+	stickPos.x = state_.Gamepad.sThumbRX;
+	stickPos.y = state_.Gamepad.sThumbRY;
 	//デッドゾーンを設定
-	if ((state.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		state.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
-		(state.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-			state.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+	if ((state_.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		state_.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
+		(state_.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+			state_.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
 	{
 		return Vector2(0, 0);
 	}
@@ -311,12 +309,12 @@ Vector2 Controller::GetRStick()
 
 BYTE Controller::GetRTrigger()
 {
-	return state.Gamepad.bRightTrigger;
+	return state_.Gamepad.bRightTrigger;
 }
 
 BYTE Controller::GetLTrigger()
 {
-	return state.Gamepad.bLeftTrigger;
+	return state_.Gamepad.bLeftTrigger;
 }
 
 #pragma endregion

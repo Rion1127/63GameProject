@@ -15,13 +15,13 @@ void ImGuiManager::Init()
 	HRESULT result;
 
 	winApi_ = WinAPI::GetInstance();
-	directX_ = DirectXCommon::GetInstance();
+	directX_ = RDirectX::GetInstance();
 	//ImGuiのコンテキストを生成
 	ImGui::CreateContext();
 	//ImGuiのスタイルを設定
 	ImGui::StyleColorsDark();
 
-	ImGui_ImplWin32_Init(winApi_->hwnd);
+	ImGui_ImplWin32_Init(winApi_->hwnd_);
 
 	//デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
@@ -35,7 +35,7 @@ void ImGuiManager::Init()
 
 	ImGui_ImplDX12_Init(
 		directX_->GetDevice(),
-		static_cast<int>(directX_->GetBackBufferCount()),
+		static_cast<uint32_t>(directX_->GetBackBufferCount()),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, srvHeap_.Get(),
 		srvHeap_->GetCPUDescriptorHandleForHeapStart(),
 		srvHeap_->GetGPUDescriptorHandleForHeapStart()
@@ -75,8 +75,8 @@ void ImGuiManager::Draw()
 	ID3D12GraphicsCommandList* commandList = directX_->GetCommandList();
 
 	//デスクリプタヒープの配列をセットするコマンド
-	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get() };
-	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	std::vector<ID3D12DescriptorHeap*> ppHeaps = { srvHeap_.Get() };
+	commandList->SetDescriptorHeaps((UINT)ppHeaps.size(), &ppHeaps.at(0));
 	//描画コマンドを発行
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }
