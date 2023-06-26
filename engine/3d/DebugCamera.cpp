@@ -53,7 +53,7 @@ void DebugCamera::Update()
 void DebugCamera::CameraMove()
 {
 	Vector3 proviUpVec = { 0,1,0 };
-	
+
 	float speedRate = frontdist_ * 0.002f;
 	Vector2 speed = {
 		mInput_->GetCursorMoveX() * speedRate,
@@ -69,10 +69,8 @@ void DebugCamera::CameraMove()
 	frontVec_.normalize();
 
 	sideVec_ = proviUpVec.cross(frontVec_);
-	//sideVec_.normalize();
 
 	upVec_ = sideVec_.cross(frontVec_);
-	//upVec_.normalize();
 
 	//平行移動
 	if (mInput_->IsMouseDown(MOUSE_WHEEL)) {
@@ -90,19 +88,20 @@ void DebugCamera::CameraMove()
 	//球面座標移動
 	if (mInput_->IsMouseDown(MOUSE_LEFT)) {
 		//カメラが上を向いてるとき通常通りに座標を足す
+		Vector3 moveDistVec{};
 		if (camera_.up_.y >= 0) {
-			moveDist_ += mInput_->GetCursorMove() * 0.005f;
+			moveDistVec += mInput_->GetCursorMove() * 0.005f;
 		}
 		//カメラが逆さまになった時X.Z座標を反転させる
-		else if (camera_.up_.y <= 0) {
-			Vector3 moveDistVec = {
+		else {
+			moveDistVec = {
 				-mInput_->GetCursorMoveX() * 0.005f,
 				mInput_->GetCursorMoveY() * 0.005f,
 				-mInput_->GetCursorMoveZ() * 0.005f
 			};
 
-			moveDist_ += moveDistVec;
 		}
+		moveDist_ += moveDistVec;
 	}
 
 	//カメラup_変換
