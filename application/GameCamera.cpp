@@ -7,7 +7,7 @@ GameCamera::GameCamera()
 	controller_ = Controller::GetInstance();
 }
 
-void GameCamera::Update()
+void GameCamera::CUpdate()
 {
 	Vector3 cameraTrans = {
 		player_->GetWorldTransform().position_.x,

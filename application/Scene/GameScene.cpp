@@ -29,7 +29,7 @@ void GameScene::Ini()
 
 void GameScene::Update()
 {
-	gameCamera_.Update();
+	gameCamera_.CUpdate();
 	Camera::scurrent_.eye_ = gameCamera_.GetCamera()->eye_;
 	Camera::scurrent_.up_ = gameCamera_.GetCamera()->up_;
 	Camera::scurrent_.target_ = gameCamera_.GetCamera()->target_;
