@@ -28,6 +28,7 @@ void GameScene::Ini()
 	cube_ = std::move(std::make_unique<Object3d>());
 	cube_->SetModel(Model::CreateOBJ_uniptr("cube", true));
 
+	player_ = std::move(std::make_unique<Player>());
 	
 }
 
@@ -55,6 +56,8 @@ void GameScene::Update()
 	sphere_->Update();
 	cube_->Update();
 
+	player_->Update();
+
 	lightManager_->DebugUpdate();
 }
 
@@ -67,7 +70,7 @@ void GameScene::Draw()
 	////////////////
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	cube_->Draw();
-	
+	player_->Draw();
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 	skyDome_->Draw();
 	

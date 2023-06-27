@@ -123,3 +123,5 @@ const Vector3 operator-(const DirectX::XMFLOAT3 v1, const Vector3 v2);
 const Vector3 operator-(const Vector3 v1, const DirectX::XMFLOAT3 v2);
 const Vector3 operator+(const Vector3 v1, const DirectX::XMFLOAT3 v2);
 const Vector3 operator+(const DirectX::XMFLOAT3 v1, const Vector3 v2);
+
+float Vec2Angle(Vector2 vec);

@@ -20,6 +20,8 @@
 #include "AssimpObject3D.h"
 #include "AssimpLoader.h"
 
+#include "Player.h"
+
 class GameScene :
 	public EmptyScene
 {
@@ -39,6 +41,8 @@ private:
 
 
 	std::unique_ptr<Object3d> cube_;
+
+	std::unique_ptr<Player> player_;
 public:
 	~GameScene();
 

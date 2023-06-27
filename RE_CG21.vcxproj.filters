@@ -148,6 +148,12 @@
     <Filter Include="シェーダーファイル\application\postEffect\RadialBlur">
       <UniqueIdentifier>{bedf3eb6-229c-4312-91d2-c1f601c80ad5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Player">
+      <UniqueIdentifier>{7b2fb611-eba6-444d-af82-cda24bf9ad22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player">
+      <UniqueIdentifier>{47131581-8fb0-4bb1-bd84-2ada8f953650}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -315,6 +321,9 @@
     <ClCompile Include="application\CollisionManager.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Player\Player.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -481,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="application\CollisionManager.h">
       <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\Player.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

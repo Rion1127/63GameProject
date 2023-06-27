@@ -469,3 +469,21 @@ const Vector3 operator+(const DirectX::XMFLOAT3 v1, const Vector3 v2)
 	return result;
 }
 
+
+float Vec2Angle(Vector2 vec) {
+	float angle;
+	angle = vec.dot({ 0.0f, 1.0f }) / (vec.length() * Vector2(0.0f, 1.0f).length());
+	angle = acos(angle);
+	angle = Angle(angle);
+
+	// 180度までしか計算できないので360度までの値に修正
+	if (vec.x < 0) angle = 180.0f + (180.0f - angle);
+
+	// 計算結果がオーバーフローしていなかったら値を更新
+	if (angle < 0)
+	{
+		return -1;
+	}
+
+	return angle;
+}
