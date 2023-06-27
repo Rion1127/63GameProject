@@ -22,9 +22,10 @@ Player::Player()
 	moveSpeed_ = 0.3f;
 
 	model_ = std::move(std::make_unique<Object3d>());
-	model_->SetModel(Model::CreateOBJ_uniptr("cube", true));
+	model_->SetModel(Model::CreateOBJ_uniptr("player", true));
 
 	//attack_.Init();
+	scale_ = { 1,1,1 };
 }
 
 void Player::Update()
@@ -45,9 +46,12 @@ void Player::Update()
 	//attack_.Update(VP, &worldTransform_);
 
 	// ‰ñ“]‘ã“ü
-	model_->GetTransform().SetRotation(0,Radian(inputAngle_) ,0);
+	rot_ = { 0,Radian(inputAngle_) ,0 };
 
-	worldTransform_.Update();
+	model_->SetRot(rot_);
+	model_->SetPos(pos_);
+	model_->SetScale(scale_);
+	model_->Update();
 }
 void Player::ColPosUpdate()
 {
@@ -89,13 +93,13 @@ void Player::InputVecUpdate()
 		else isLeftStick_ = false;
 	}
 
-	model_->GetTransform().AddPosition(moveVec2.x,0, moveVec2.y);
+	pos_ += {moveVec2.x, 0, moveVec2.y};
 	
-	model_->SetPos(
-		{ Clamp(model_->GetTransform().position_.x, 77.f, -77.f),
-		Clamp(model_->GetTransform().position_.y, 0.f, 100.f),
-		Clamp(model_->GetTransform().position_.z, 77.f, -77.f) }
-	);
+	pos_ = { 
+		Clamp(pos_.x, -77.f, 77.f),
+		Clamp(pos_.y, 0.f, 100.f),
+		Clamp(pos_.z, -77.f, 77.f)
+	};
 
 	// “ü—Í‚µ‚Ä‚¢‚éƒxƒNƒgƒ‹‚ÌŠp“x‚ð‹‚ß‚é
 	float inputAngle = Vec2Angle(moveVec2);
@@ -184,6 +188,17 @@ void Player::DrawImGui()
 		float rot = model_->GetTransform().rotation_.y;
 		ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
 		//rot_ = rot;
+	}
+
+	if (ImGui::CollapsingHeader("Scale"))
+	{
+		float x = model_->GetTransform().scale_.x;
+		float y = model_->GetTransform().scale_.y;
+		float z = model_->GetTransform().scale_.z;
+		ImGui::SliderFloat("scale.x", &x, 0.0f, 2000.0f, "x = %.3f");
+		ImGui::SliderFloat("scale.y", &y, 0.0f, 2000.0f, "y = %.3f");
+		ImGui::SliderFloat("scale.y", &z, 0.0f, 2000.0f, "y = %.3f");
+
 	}
 
 	ImGui::SliderFloat("Max X", &MaxMinX.x, 0.f, 80.f, "x = %.3f");

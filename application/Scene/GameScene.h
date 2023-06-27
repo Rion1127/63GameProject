@@ -21,6 +21,7 @@
 #include "AssimpLoader.h"
 
 #include "Player.h"
+#include "GameCamera.h"
 
 class GameScene :
 	public EmptyScene
@@ -30,17 +31,12 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 	
-	Camera gameCamera_;
+	GameCamera gameCamera_;
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
 
-	std::unique_ptr<Object3d> skyDome_;
-
-	std::unique_ptr<Object3d> sphere_;
-
-
-	std::unique_ptr<Object3d> cube_;
+	std::unique_ptr<Object3d> floor_;
 
 	std::unique_ptr<Player> player_;
 public:

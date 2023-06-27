@@ -324,6 +324,9 @@
     <ClCompile Include="application\Player\Player.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="application\GameCamera.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -493,6 +496,9 @@
     </ClInclude>
     <ClInclude Include="application\Player\Player.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\GameCamera.h">
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

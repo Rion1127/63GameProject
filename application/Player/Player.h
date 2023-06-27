@@ -1,6 +1,5 @@
 #pragma once
 #include "mInput.h"
-#include "WorldTransform.h"
 #include "Object3d.h"
 #include "Vector3.h"
 #include <memory>
@@ -9,37 +8,12 @@
 //#include "PlayerAttack.h"
 class Player
 {
-public:
-	Player();
-	void Update();
-
-	void ColPosUpdate();
 private:
-	//移動
-	void InputVecUpdate();
-	void InputAngleUpdate();
-	//重力
-	void GravityUpdate();
-	//ジャンプ
-	void JumpUpdate();
-	bool isJump_;
-	int jumpTime;
-public:
-	void Draw();
+	Vector3 pos_;
+	Vector3 rot_;
+	Vector3 scale_;
 
-	void DrawImGui();
 
-	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-private:
-	Controller* controller_ = nullptr;
-	//モデル
-	std::unique_ptr<Object3d> model_;
-	WorldTransform worldTransform_;
-public:
-
-	void floorColision();
-	Sphere GetColPos() { return colPos_; }
-private:
 	Sphere colPos_;
 	bool isFloorCollision = false;
 	float gravity_;
@@ -65,5 +39,34 @@ private:
 
 	//PlayerAttack attack_;
 
+	bool isJump_;
+	int jumpTime;
+private:
+	Controller* controller_ = nullptr;
+	//モデル
+	std::unique_ptr<Object3d> model_;
+public:
+	Player();
+	void Update();
+
+	void ColPosUpdate();
+private:
+	//移動
+	void InputVecUpdate();
+	void InputAngleUpdate();
+	//重力
+	void GravityUpdate();
+	//ジャンプ
+	void JumpUpdate();
+public:
+	void Draw();
+
+	void DrawImGui();
+
+public:
+
+	void floorColision();
+	Sphere GetColPos() { return colPos_; }
+	WorldTransform GetWorldTransform() { return model_->GetTransform(); }
 };
 
