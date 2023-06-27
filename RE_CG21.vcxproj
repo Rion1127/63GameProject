@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="application\CollisionManager.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
     <ClCompile Include="application\Particle\ParticleManager.cpp" />
     <ClCompile Include="application\Scene\GameScene.cpp" />
@@ -67,6 +68,7 @@
     <ClCompile Include="engine\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\CollisionManager.h" />
     <ClInclude Include="application\LoadManager.h" />
     <ClInclude Include="application\Particle\ParticleManager.h" />
     <ClInclude Include="application\Scene\GameScene.h" />

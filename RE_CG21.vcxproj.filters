@@ -312,6 +312,9 @@
     <ClCompile Include="application\Shader\HighLumi.cpp">
       <Filter>engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="application\CollisionManager.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -475,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="application\Shader\LineBlur.h">
       <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\CollisionManager.h">
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
