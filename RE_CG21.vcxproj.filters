@@ -327,6 +327,9 @@
     <ClCompile Include="application\GameCamera.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -498,6 +501,9 @@
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="application\GameCamera.h">
+      <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Floor.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,7 @@
 #pragma once
-
+#include <DirectXMath.h>
+#include "Vector3.h"
+#include "WorldTransform.h"
 //‹…
 struct Sphere {
 	//’†SÀ•W

@@ -68,9 +68,11 @@
     <ClCompile Include="engine\util\Color.cpp" />
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
+    <ClCompile Include="Floor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\CollisionManager.h" />
+    <ClInclude Include="application\Floor.h" />
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\LoadManager.h" />
     <ClInclude Include="application\Particle\ParticleManager.h" />

@@ -20,6 +20,7 @@
 #include "AssimpObject3D.h"
 #include "AssimpLoader.h"
 
+#include "Floor.h"
 #include "Player.h"
 #include "GameCamera.h"
 
@@ -31,12 +32,12 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 	
-	//GameCamera gameCamera_;
+	GameCamera gameCamera_;
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
 
-	std::unique_ptr<Object3d> floor_;
+	std::unique_ptr<Floor> floor_;
 
 	std::unique_ptr<Player> player_;
 public:
