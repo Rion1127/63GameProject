@@ -330,6 +330,9 @@
     <ClCompile Include="application\Floor.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Player\PlayerAttack.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="application\Floor.h">
       <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\PlayerAttack.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

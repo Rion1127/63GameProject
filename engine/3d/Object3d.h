@@ -34,6 +34,6 @@ public:
 
 public:
 	//ƒQƒbƒ^[
-	WorldTransform GetTransform() { return WT_; }
+	WorldTransform* GetTransform() { return &WT_; }
 };
 

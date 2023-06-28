@@ -7,7 +7,7 @@ Player::Player()
 {
 	controller_ = Controller::GetInstance();
 
-	colPos_.radius = 3;
+	colPos_.radius = 1;
 
 	// 入力されているベクトル
 	inputVec_ = { 0.0f, 0.0f };
@@ -24,26 +24,26 @@ Player::Player()
 	model_ = std::move(std::make_unique<Object3d>());
 	model_->SetModel(Model::CreateOBJ_uniptr("player", true));
 
-	//attack_.Init();
+	attack_.Init();
 	scale_ = { 1,1,1 };
 }
 
 void Player::Update()
 {
-	//if (attack_.GetStep() == 0) {
+	if (attack_.GetStep() == 0) {
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
 		// 入力方向の角度を更新
 		InputAngleUpdate();
 		//ジャンプ
 		JumpUpdate();
-	//}
+	}
 	//重力
 	GravityUpdate();
 
 	ColPosUpdate();
 
-	//attack_.Update(VP, &worldTransform_);
+	attack_.Update(model_->GetTransform());
 
 	// 回転代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
@@ -60,7 +60,14 @@ void Player::ColPosUpdate()
 	model_->SetScale(scale_);
 	model_->Update();
 
-	colPos_.SetPos(model_->GetTransform().position_);
+	//モデルの原点を下にしているためその分ずらす
+	Vector3 colPos = {
+		model_->GetTransform()->position_.x,
+		model_->GetTransform()->position_.y + 1.0f,
+		model_->GetTransform()->position_.z,
+	};
+	
+	colPos_.SetPos(colPos);
 }
 #pragma region 入力
 void Player::InputVecUpdate()
@@ -132,11 +139,11 @@ void Player::GravityUpdate()
 		gravity_ += gravitySpeed;
 	}
 
-	//if (attack_.GetStep() != 0) {
+	if (attack_.GetStep() != 0) {
 		gravity_ = 0;
-	//}
+	}
 
-	model_->GetTransform().AddPosition(0, gravity_,0);
+	//model_->GetTransform()->AddPosition(0, gravity_,0);
 	//通常時はfalseにしておく
 	isFloorCollision = false;
 }
@@ -159,7 +166,7 @@ void Player::JumpUpdate()
 	if (controller_->GetReleasButtons(PAD_A)) {
 		isJump_ = true;
 	}
-	model_->GetTransform().AddPosition(0, gravity_, 0);
+	pos_ += { 0,gravity_ ,0 };
 }
 
 void Player::Draw()
@@ -168,7 +175,7 @@ void Player::Draw()
 
 	DrawImGui();
 
-	//attack_.DrawCol();
+	attack_.DrawCol();
 }
 
 void Player::DrawImGui()
@@ -178,9 +185,9 @@ void Player::DrawImGui()
 	// Menu Bar
 	if (ImGui::CollapsingHeader("Posision"))
 	{
-		float x = model_->GetTransform().position_.x;
-		float y = model_->GetTransform().position_.y;
-		float z = model_->GetTransform().position_.z;
+		float x = model_->GetTransform()->position_.x;
+		float y = model_->GetTransform()->position_.y;
+		float z = model_->GetTransform()->position_.z;
 		ImGui::SliderFloat("pos.x", &x, 0.0f, 2000.0f, "x = %.3f");
 		ImGui::SliderFloat("pos.y", &y, 0.0f, 2000.0f, "y = %.3f");
 		ImGui::SliderFloat("pos.y", &z, 0.0f, 2000.0f, "y = %.3f");
@@ -190,16 +197,16 @@ void Player::DrawImGui()
 	//回転
 	if (ImGui::CollapsingHeader("Rotation"))
 	{
-		float rot = model_->GetTransform().rotation_.y;
+		float rot = model_->GetTransform()->rotation_.y;
 		ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
 		//rot_ = rot;
 	}
 
 	if (ImGui::CollapsingHeader("Scale"))
 	{
-		float x = model_->GetTransform().scale_.x;
-		float y = model_->GetTransform().scale_.y;
-		float z = model_->GetTransform().scale_.z;
+		float x = model_->GetTransform()->scale_.x;
+		float y = model_->GetTransform()->scale_.y;
+		float z = model_->GetTransform()->scale_.z;
 		ImGui::SliderFloat("scale.x", &x, 0.0f, 2000.0f, "x = %.3f");
 		ImGui::SliderFloat("scale.y", &y, 0.0f, 2000.0f, "y = %.3f");
 		ImGui::SliderFloat("scale.y", &z, 0.0f, 2000.0f, "y = %.3f");
@@ -221,7 +228,7 @@ void Player::DrawImGui()
 
 	ImGui::End();
 
-	//attack_.DrawImGui();
+	attack_.DrawImGui();
 }
 
 void Player::floorColision()

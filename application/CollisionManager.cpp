@@ -11,11 +11,10 @@ void CollisionManager::Update()
 		while (true)
 		{
 			Sphere col = player_->GetColPos();
-			col.radius -= 0.2f;
 			//’n–Ê‚É“–‚½‚Á‚Ä‚¢‚½‚çã‚É‰Ÿ‚µo‚µ‚Ä‚¢‚­
 			if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
 			{
-				Vector3 playerPos = player_->GetWorldTransform().position_;
+				Vector3 playerPos = player_->GetWorldTransform()->position_;
 				float upDist = 0.01f;
 
 				playerPos.y += upDist;

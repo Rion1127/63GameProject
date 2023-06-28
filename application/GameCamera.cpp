@@ -10,24 +10,24 @@ GameCamera::GameCamera()
 void GameCamera::Update()
 {
 	Vector3 cameraTrans = {
-		player_->GetWorldTransform().position_.x,
-		player_->GetWorldTransform().position_.y + 20,
-		player_->GetWorldTransform().position_.z
+		player_->GetWorldTransform()->position_.x,
+		player_->GetWorldTransform()->position_.y + 20,
+		player_->GetWorldTransform()->position_.z
 	};
 
 	float frontdist = 25;
 
 	static Vector3 moveDist{};	//‹…–ÊÀ•W
 
-	camera_->eye_.x = player_->GetWorldTransform().position_.x;
-	camera_->eye_.y = player_->GetWorldTransform().position_.y + 10;
-	camera_->eye_.z = player_->GetWorldTransform().position_.z - 25;
+	camera_->eye_.x = player_->GetWorldTransform()->position_.x;
+	camera_->eye_.y = player_->GetWorldTransform()->position_.y + 10;
+	camera_->eye_.z = player_->GetWorldTransform()->position_.z - 25;
 
-	camera_->target_.x = player_->GetWorldTransform().position_.x;
-	camera_->target_.y = player_->GetWorldTransform().position_.y;
-	camera_->target_.z = player_->GetWorldTransform().position_.z;
+	camera_->target_.x = player_->GetWorldTransform()->position_.x;
+	camera_->target_.y = player_->GetWorldTransform()->position_.y;
+	camera_->target_.z = player_->GetWorldTransform()->position_.z;
 
-	if (camera_->eye_.y < player_->GetWorldTransform().position_.y + 30)
+	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
 		moveDist.x -= controller_->GetRStick().x * 0.0000015f;
 		moveDist.y += controller_->GetRStick().y * 0.0000015f;
@@ -40,7 +40,7 @@ void GameCamera::Update()
 	camera_->eye_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
 	camera_->eye_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
 
-	float maxGamecameraY = player_->GetWorldTransform().position_.y + 25;
+	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
 	float minGamecameraY = 0.5f;
 
 	
