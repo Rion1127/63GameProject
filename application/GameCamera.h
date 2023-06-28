@@ -8,7 +8,7 @@ private:
 	Controller* controller_ = nullptr;
 public:
 	GameCamera();
-	void CUpdate();
+	void Update();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 public:
