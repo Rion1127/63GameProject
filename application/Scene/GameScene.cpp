@@ -16,6 +16,7 @@ void GameScene::Ini()
 	Model::Ini();
 	
 	lightManager_ = std::make_shared<LightManager>();
+	colManager_ = std::make_unique<CollisionManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
 	AssimpModel::SetLightGroup(lightManager_->GetLightGroup().get());
 
@@ -24,27 +25,21 @@ void GameScene::Ini()
 
 	player_ = std::move(std::make_unique<Player>());
 	gameCamera_.SetPlayer(player_.get());
+
+	colManager_->SetPlayer(player_.get());
+	colManager_->SetFloor(floor_.get());
 }
 
 void GameScene::Update()
 {
-	gameCamera_.Update();
-	Camera::scurrent_.eye_ = gameCamera_.GetCamera()->eye_;
-	Camera::scurrent_.up_ = gameCamera_.GetCamera()->up_;
-	Camera::scurrent_.target_ = gameCamera_.GetCamera()->target_;
-	Camera::scurrent_.Update();
-
-	//カメラ更新
-	debugCamera_.Update();
-
-	static float rotY = 0;
-	rotY += 0.01f;
+	CameraUpdate();
 	
 	floor_->Update();
 
 	player_->Update();
 
 	lightManager_->DebugUpdate();
+	colManager_->Update();
 }
 
 void GameScene::Draw()
@@ -66,5 +61,27 @@ void GameScene::Draw()
 	////////////
 	//スプライト//
 	////////////
+	
+}
+
+void GameScene::CameraUpdate()
+{
+	if (Key::PushKey(DIK_LCONTROL) == false)
+	{
+		gameCamera_.Update();
+		Camera::scurrent_.eye_ = gameCamera_.GetCamera()->eye_;
+		Camera::scurrent_.up_ = gameCamera_.GetCamera()->up_;
+		Camera::scurrent_.target_ = gameCamera_.GetCamera()->target_;
+	}
+	else
+	{
+		//カメラ更新
+		debugCamera_.Update();
+		Camera::scurrent_.eye_ = debugCamera_.GetCamera()->eye_;
+		Camera::scurrent_.up_ = debugCamera_.GetCamera()->up_;
+		Camera::scurrent_.target_ = debugCamera_.GetCamera()->target_;
+	}
+	Camera::scurrent_.Update();
+
 	
 }

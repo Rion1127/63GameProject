@@ -23,6 +23,7 @@
 #include "Floor.h"
 #include "Player.h"
 #include "GameCamera.h"
+#include "CollisionManager.h"
 
 class GameScene :
 	public EmptyScene
@@ -36,10 +37,12 @@ private:
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
-
+	//è∞
 	std::unique_ptr<Floor> floor_;
-
+	//ÉvÉåÉCÉÑÅ[
 	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<CollisionManager> colManager_;
 public:
 	~GameScene();
 
@@ -48,5 +51,7 @@ public:
 	void Update()override;
 
 	void Draw()override;
+private:
+	void CameraUpdate();
 };
 

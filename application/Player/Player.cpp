@@ -55,6 +55,11 @@ void Player::Update()
 }
 void Player::ColPosUpdate()
 {
+	model_->SetRot(rot_);
+	model_->SetPos(pos_);
+	model_->SetScale(scale_);
+	model_->Update();
+
 	colPos_.SetPos(model_->GetTransform().position_);
 }
 #pragma region “ü—Í

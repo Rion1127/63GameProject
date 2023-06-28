@@ -68,5 +68,8 @@ public:
 	void floorColision();
 	Sphere GetColPos() { return colPos_; }
 	WorldTransform GetWorldTransform() { return model_->GetTransform(); }
+	void SetPos(Vector3 pos) { pos_ = pos; }
+	void SetRot(Vector3 rot) { rot_ = rot; }
+	void Setscale(Vector3 scale) { scale_ = scale; }
 };
 
