@@ -37,8 +37,6 @@ private:
 
 	float moveSpeed_;
 
-	PlayerAttack attack_;
-
 	bool isJump_;
 	int jumpTime;
 private:

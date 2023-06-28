@@ -24,26 +24,23 @@ Player::Player()
 	model_ = std::move(std::make_unique<Object3d>());
 	model_->SetModel(Model::CreateOBJ_uniptr("player", true));
 
-	attack_.Init();
 	scale_ = { 1,1,1 };
 }
 
 void Player::Update()
 {
-	if (attack_.GetStep() == 0) {
-		// 入力方向ベクトルを更新
-		InputVecUpdate();
-		// 入力方向の角度を更新
-		InputAngleUpdate();
-		//ジャンプ
-		JumpUpdate();
-	}
+
+	// 入力方向ベクトルを更新
+	InputVecUpdate();
+	// 入力方向の角度を更新
+	InputAngleUpdate();
+	//ジャンプ
+	JumpUpdate();
+
 	//重力
 	GravityUpdate();
 
 	ColPosUpdate();
-
-	attack_.Update(model_->GetTransform());
 
 	// 回転代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
@@ -66,7 +63,7 @@ void Player::ColPosUpdate()
 		model_->GetTransform()->position_.y + 1.0f,
 		model_->GetTransform()->position_.z,
 	};
-	
+
 	colPos_.SetPos(colPos);
 }
 #pragma region 入力
@@ -88,7 +85,8 @@ void Player::InputVecUpdate()
 	sideVec.normalize();
 
 	// コントローラーが接続されていたら
-	if (controller_->GetActive()) {
+	if (controller_->GetActive())
+	{
 		// 左スティックの入力方向ベクトル取得
 		inputVec_ = controller_->GetLStick() / 3276.8f;
 		//カメラから見た左右手前奥移動
@@ -106,8 +104,8 @@ void Player::InputVecUpdate()
 	}
 
 	pos_ += {moveVec2.x, 0, moveVec2.y};
-	
-	pos_ = { 
+
+	pos_ = {
 		Clamp(pos_.x, -77.f, 77.f),
 		Clamp(pos_.y, 0.f, 100.f),
 		Clamp(pos_.z, -77.f, 77.f)
@@ -117,7 +115,8 @@ void Player::InputVecUpdate()
 	float inputAngle = Vec2Angle(moveVec2);
 
 	// 計算結果がオーバーフローしていなかったら値を更新
-	if (inputAngle >= 0) {
+	if (inputAngle >= 0)
+	{
 		inputAngle_ = inputAngle;
 	}
 }
@@ -131,16 +130,14 @@ void Player::GravityUpdate()
 {
 	float gravitySpeed = -0.01f;
 	//床に触れていたら
-	if (isFloorCollision) {
+	if (isFloorCollision)
+	{
 		gravity_ = 0;
 	}
 	//空中にいたら重力を足す
-	else {
+	else
+	{
 		gravity_ += gravitySpeed;
-	}
-
-	if (attack_.GetStep() != 0) {
-		gravity_ = 0;
 	}
 
 	//model_->GetTransform()->AddPosition(0, gravity_,0);
@@ -152,9 +149,12 @@ void Player::JumpUpdate()
 {
 	float jumpSpeed = 0.2f;
 	int Maxjumptimer = 20;
-	if (controller_->GetButtons(PAD_A)) {
-		if (isJump_ == false) {
-			if (jumpTime < Maxjumptimer) {
+	if (controller_->GetButtons(PAD_A))
+	{
+		if (isJump_ == false)
+		{
+			if (jumpTime < Maxjumptimer)
+			{
 				jumpTime++;
 				//重力をマイナスにする
 				gravity_ = jumpSpeed;
@@ -163,10 +163,11 @@ void Player::JumpUpdate()
 	}
 	//押し戻し処理がまだ
 
-	if (controller_->GetReleasButtons(PAD_A)) {
+	if (controller_->GetReleasButtons(PAD_A))
+	{
 		isJump_ = true;
 	}
-	pos_ += { 0,gravity_ ,0 };
+	pos_ += { 0, gravity_, 0 };
 }
 
 void Player::Draw()
@@ -174,8 +175,6 @@ void Player::Draw()
 	model_->Draw();
 
 	DrawImGui();
-
-	attack_.DrawCol();
 }
 
 void Player::DrawImGui()
@@ -228,7 +227,6 @@ void Player::DrawImGui()
 
 	ImGui::End();
 
-	attack_.DrawImGui();
 }
 
 void Player::floorColision()
