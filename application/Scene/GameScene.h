@@ -31,7 +31,7 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 	
-	GameCamera gameCamera_;
+	//GameCamera gameCamera_;
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 

@@ -24,15 +24,15 @@ void GameScene::Ini()
 	floor_->SetModel(Model::CreateOBJ_uniptr("cube", true));
 
 	player_ = std::move(std::make_unique<Player>());
-	gameCamera_.SetPlayer(player_.get());
+	//gameCamera_.SetPlayer(player_.get());
 }
 
 void GameScene::Update()
 {
-	gameCamera_.Update();
-	Camera::scurrent_.eye_ = gameCamera_.GetCamera()->eye_;
-	Camera::scurrent_.up_ = gameCamera_.GetCamera()->up_;
-	Camera::scurrent_.target_ = gameCamera_.GetCamera()->target_;
+	//gameCamera_.Update();
+	Camera::scurrent_.eye_ = debugCamera_.GetCamera()->eye_;
+	Camera::scurrent_.up_ = debugCamera_.GetCamera()->up_;
+	Camera::scurrent_.target_ = debugCamera_.GetCamera()->target_;
 	Camera::scurrent_.Update();
 
 	//ƒJƒƒ‰XV
