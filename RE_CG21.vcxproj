@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\CollisionManager.cpp" />
+    <ClCompile Include="application\Floor.cpp" />
     <ClCompile Include="application\GameCamera.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
     <ClCompile Include="application\Particle\ParticleManager.cpp" />
@@ -68,7 +69,6 @@
     <ClCompile Include="engine\util\Color.cpp" />
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="Floor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\CollisionManager.h" />

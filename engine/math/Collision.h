@@ -1,18 +1,15 @@
 #pragma once
-#include <DirectXMath.h>
 #include "Vector3.h"
 #include "WorldTransform.h"
 //球
 struct Sphere {
 	//中心座標
-	DirectX::XMVECTOR center = { 0,0,0,1 };
+	Vector3 center = {0,0,0};
 	//半径
 	float radius = 1.0f;
 
-	void SetPos(const Vector3& pos) {
-		center.m128_f32[0] = pos.x;
-		center.m128_f32[1] = pos.y;
-		center.m128_f32[2] = pos.z;
+	void SetPos(Vector3 pos) {
+		center = pos;
 	};
 
 	// フラグ
@@ -21,21 +18,30 @@ struct Sphere {
 //平面
 struct Plane {
 	//法線ベクトル
-	DirectX::XMVECTOR normal = { 0,1,0,0 };
-	//原点(0,0,0)空の距離
+	Vector3 normal = { 0,1,0};
+	//原点(0,0,0)からの距離
 	float distance = 0.0f;
 };
 //法線付き三角形(時計回りが表面)
 struct Triangle {
 	//頂点座標３つ
-	DirectX::XMVECTOR p0;
-	DirectX::XMVECTOR p1;
-	DirectX::XMVECTOR p2;
+	Vector3 p0;
+	Vector3 p1;
+	Vector3 p2;
 	//法線ベクトル
-	DirectX::XMVECTOR normal;
+	Vector3 normal;
+	//法背の計算
+	void ComputeNormal();
+};
+//レイ(半直線)
+struct Ray {
+	//始点座標
+	Vector3 start = { 0,0,0};
+	//方向
+	Vector3 dir = { 1,0,0};
 };
 
-bool RayCollision(const WorldTransform& ray, const WorldTransform& obj);
+bool RayCollision(WorldTransform ray, WorldTransform obj);
 
 bool BallCollision(const WorldTransform& a, const WorldTransform& b);
 
@@ -45,9 +51,19 @@ bool BallCollision(const Vector3& a, const float& aSize, const Vector3& b, const
 bool BallCollision(const Sphere& a, const Sphere& b);
 //平面と球
 bool Sphere2PlaneCol(const Sphere& sphere, const Plane& plane,
-	DirectX::XMVECTOR* inter = nullptr);
+	Vector3* inter = nullptr);
 //点と三角形
-void ClosestPtPoint2Triangle(const DirectX::XMVECTOR& point, const Triangle& triangle, DirectX::XMVECTOR* closest);
-//弾と法線付き三角形の当たり判定チェック
+void ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle, Vector3* closest);
+//球と法線付き三角形の当たり判定チェック
 bool Sphere2TriangleCol(const Sphere& sphere, const Triangle& triangle,
-	DirectX::XMVECTOR* inter = nullptr);
+	Vector3* inter = nullptr);
+//レイと平面
+bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, Vector3* inter = nullptr);
+
+//レイと法線付き三角形の当たり判定
+bool CheckRay2Traiangle(const Ray& ray, const Triangle& triangle,
+	float* distance = nullptr, Vector3* inter = nullptr);
+
+//レイと級の当たり判定
+bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere,
+	float* distance = nullptr, Vector3* inter = nullptr);
