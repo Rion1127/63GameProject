@@ -1,9 +1,10 @@
 #pragma once
-#include "FirstAttack.h"
 #include "IAttack.h"
 #include <vector>
 #include <map>
 #include "mInput.h"
+#include "FirstAttack.h"
+#include "SecondAttack.h"
 class AttackManager
 {
 private:

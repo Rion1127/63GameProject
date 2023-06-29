@@ -12,18 +12,24 @@ void AttackManager::Update()
 {
 	if (controller_->GetTriggerButtons(PAD::INPUT_B))
 	{
-		if(comboNum < MAX_COMBO)
-		//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
-		if (nowAttack_ == nullptr)
+		if (comboNum < MAX_COMBO)
 		{
-			nowAttack_ = std::move(std::make_unique<FirstAttack>());
-			timer_ = 0;
-			comboNum++;
-		}
-		else
-		{
-			//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-			nextAttack_ = std::move(std::make_unique<FirstAttack>());
+			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
+			if (nowAttack_ == nullptr)
+			{
+				nowAttack_ = std::move(std::make_unique<FirstAttack>());
+
+				timer_ = 0;
+				comboNum++;
+			}
+			else
+			{
+				//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
+				nextAttack_ = std::move(std::make_unique<SecondAttack>());
+				if (comboNum == 1)nextAttack_ = std::move(std::make_unique<SecondAttack>());
+				if (comboNum == 2)nextAttack_ = std::move(std::make_unique<SecondAttack>());
+				if (comboNum == 3)nextAttack_ = std::move(std::make_unique<SecondAttack>());
+			}
 		}
 	}
 

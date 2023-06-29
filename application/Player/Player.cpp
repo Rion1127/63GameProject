@@ -49,6 +49,7 @@ void Player::Update()
 	model_->SetPos(pos_);
 	model_->SetScale(scale_);
 	model_->Update();
+	attack_.Update();
 }
 void Player::ColPosUpdate()
 {
@@ -66,7 +67,7 @@ void Player::ColPosUpdate()
 
 	colPos_.SetPos(colPos);
 
-	attack_.Update();
+	
 }
 #pragma region “ü—Í
 void Player::InputVecUpdate()

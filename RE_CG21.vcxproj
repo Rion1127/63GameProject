@@ -21,6 +21,7 @@
     <ClCompile Include="application\Player\IAttack.cpp" />
     <ClCompile Include="application\Player\Player.cpp" />
     <ClCompile Include="application\Player\PlayerAttack.cpp" />
+    <ClCompile Include="application\Player\SecondAttack.cpp" />
     <ClCompile Include="application\Scene\GameScene.cpp" />
     <ClCompile Include="application\Scene\ParticleScene.cpp" />
     <ClCompile Include="application\Scene\SceneManager.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="application\Player\IAttack.h" />
     <ClInclude Include="application\Player\Player.h" />
     <ClInclude Include="application\Player\PlayerAttack.h" />
+    <ClInclude Include="application\Player\SecondAttack.h" />
     <ClInclude Include="application\Scene\GameScene.h" />
     <ClInclude Include="application\Scene\ParticleScene.h" />
     <ClInclude Include="application\Scene\SceneManager.h" />
