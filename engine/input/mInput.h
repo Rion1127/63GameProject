@@ -77,24 +77,26 @@ private:
 	//マウスの座標を取得する
 	void GetCursorPosition();
 };
+
+enum class PAD{
+	INPUT_UP				= 0x0001,
+	INPUT_DOWN				= 0x0002,
+	INPUT_LEFT				= 0x0004,
+	INPUT_RIGHT				= 0x0008,
+	INPUT_START				= 0x0010,
+	INPUT_BACK				= 0x0020,
+	INPUT_LEFT_THUMB		= 0x0040,
+	INPUT_RIGHT_THUMB		= 0x0080,
+	INPUT_LEFT_SHOULDER		= 0x0100,
+	INPUT_RIGHT_SHOULDER	= 0x0200,
+	INPUT_A					= 0x1000,
+	INPUT_B					= 0x2000,
+	INPUT_X					= 0x4000,
+	INPUT_Y					= 0x8000,
+};
 //コントローラ
 class Controller {
 private:
-#define PAD_UP				0x0001
-#define PAD_DOWN			0x0002
-#define PAD_LEFT			0x0004
-#define PAD_RIGHT			0x0008
-#define PAD_START			0x0010
-#define PAD_BACK			0x0020
-#define PAD_LEFT_THUMB		0x0040
-#define PAD_RIGHT_THUMB		0x0080
-#define PAD_LEFT_SHOULDER	0x0100
-#define PAD_RIGHT_SHOULDER	0x0200
-#define PAD_A				0x1000
-#define PAD_B				0x2000
-#define PAD_X				0x4000
-#define PAD_Y				0x8000
-
 	XINPUT_STATE state_;
 	XINPUT_STATE preState_;
 	bool isConnect_;
@@ -111,9 +113,9 @@ public:
 
 	bool GetActive() { return isConnect_; }
 
-	WORD GetButtons(WORD button);
-	WORD GetTriggerButtons(WORD button);
-	WORD GetReleasButtons(WORD button);
+	WORD GetButtons(PAD button);
+	WORD GetTriggerButtons(PAD button);
+	WORD GetReleasButtons(PAD button);
 	//false	右スティック
 	//true	左スティック
 	Vector2 GetLStick();

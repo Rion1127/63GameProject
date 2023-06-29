@@ -16,6 +16,7 @@
     <ClCompile Include="application\GameCamera.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
     <ClCompile Include="application\Particle\ParticleManager.cpp" />
+    <ClCompile Include="application\Player\AttackManager.cpp" />
     <ClCompile Include="application\Player\FirstAttack.cpp" />
     <ClCompile Include="application\Player\IAttack.cpp" />
     <ClCompile Include="application\Player\Player.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\LoadManager.h" />
     <ClInclude Include="application\Particle\ParticleManager.h" />
+    <ClInclude Include="application\Player\AttackManager.h" />
     <ClInclude Include="application\Player\FirstAttack.h" />
     <ClInclude Include="application\Player\IAttack.h" />
     <ClInclude Include="application\Player\Player.h" />

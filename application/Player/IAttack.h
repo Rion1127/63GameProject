@@ -4,22 +4,27 @@
 #include "Collision.h"
 #include "mInput.h"
 
-
 struct AttackCol {
 	Object3d colObj_;
 	Sphere col_;
+};
+
+struct AttackInfo {
+	size_t maxTime;	//çUåÇÇÃÉtÉåÅ[ÉÄêî
 };
 
 class IAttack
 {
 protected:
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
-	Controller* controller_ = nullptr;
+	AttackInfo attackInfo_;
 public:
-	IAttack(size_t colNum);
+	IAttack(size_t colNum,size_t maxTime);
 
-	virtual void Update();
-	virtual void DrawCol();
+	void Update();
+	void DrawCol();
+public:
+	AttackInfo GetInfo() { return attackInfo_; }
 protected:
 	virtual void MoveUpdate() = 0;
 };

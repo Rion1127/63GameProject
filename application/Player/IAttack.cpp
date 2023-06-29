@@ -1,6 +1,6 @@
 #include "IAttack.h"
 
-IAttack::IAttack(size_t colNum)
+IAttack::IAttack(size_t colNum, size_t maxTime)
 {
 	attackCol_.resize(colNum);
 	for (auto& col : attackCol_)
@@ -8,7 +8,7 @@ IAttack::IAttack(size_t colNum)
 		col = std::move(std::make_unique<AttackCol>());
 		col->colObj_.SetModel(Model::CreateOBJ_uniptr("cube", false));
 	}
-	controller_ = Controller::GetInstance();
+	attackInfo_.maxTime = maxTime;
 }
 
 void IAttack::Update()

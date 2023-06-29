@@ -7,7 +7,7 @@
 #include "Collision.h"
 #include "PlayerAttack.h"
 
-#include "FirstAttack.h"
+#include "AttackManager.h"
 class Player
 {
 private:
@@ -42,7 +42,7 @@ private:
 	bool isJump_;
 	int jumpTime;
 
-	FirstAttack attack_;
+	AttackManager attack_;
 private:
 	Controller* controller_ = nullptr;
 	//ƒ‚ƒfƒ‹

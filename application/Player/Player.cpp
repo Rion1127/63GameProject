@@ -151,7 +151,7 @@ void Player::JumpUpdate()
 {
 	float jumpSpeed = 0.2f;
 	int Maxjumptimer = 20;
-	if (controller_->GetButtons(PAD_A))
+	if (controller_->GetButtons(PAD::INPUT_A))
 	{
 		if (isJump_ == false)
 		{
@@ -165,7 +165,7 @@ void Player::JumpUpdate()
 	}
 	//‰Ÿ‚µ–ß‚µˆ—‚ª‚Ü‚¾
 
-	if (controller_->GetReleasButtons(PAD_A))
+	if (controller_->GetReleasButtons(PAD::INPUT_A))
 	{
 		isJump_ = true;
 	}
@@ -178,7 +178,7 @@ void Player::Draw()
 
 	DrawImGui();
 
-	attack_.DrawCol();
+	attack_.DrawDebug();
 }
 
 void Player::DrawImGui()
