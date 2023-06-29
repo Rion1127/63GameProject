@@ -6,6 +6,8 @@
 #include "Texture.h"
 #include "Collision.h"
 #include "PlayerAttack.h"
+
+#include "FirstAttack.h"
 class Player
 {
 private:
@@ -39,6 +41,8 @@ private:
 
 	bool isJump_;
 	int jumpTime;
+
+	FirstAttack attack_;
 private:
 	Controller* controller_ = nullptr;
 	//ƒ‚ƒfƒ‹

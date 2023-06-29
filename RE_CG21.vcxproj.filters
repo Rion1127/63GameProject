@@ -154,6 +154,12 @@
     <Filter Include="application\ヘッダーファイル\Player">
       <UniqueIdentifier>{47131581-8fb0-4bb1-bd84-2ada8f953650}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Player\Attack">
+      <UniqueIdentifier>{dd478bb5-40c0-4429-ae16-2054bb554f30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player\Attack">
+      <UniqueIdentifier>{58eaa20c-82ec-4e05-9c52-44040d287a3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -333,6 +339,12 @@
     <ClCompile Include="application\Player\PlayerAttack.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="application\Player\FirstAttack.cpp">
+      <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\IAttack.cpp">
+      <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -511,6 +523,12 @@
     </ClInclude>
     <ClInclude Include="application\Player\PlayerAttack.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\FirstAttack.h">
+      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\IAttack.h">
+      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

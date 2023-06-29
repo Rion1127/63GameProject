@@ -65,6 +65,8 @@ void Player::ColPosUpdate()
 	};
 
 	colPos_.SetPos(colPos);
+
+	attack_.Update();
 }
 #pragma region “ü—Í
 void Player::InputVecUpdate()
@@ -175,6 +177,8 @@ void Player::Draw()
 	model_->Draw();
 
 	DrawImGui();
+
+	attack_.DrawCol();
 }
 
 void Player::DrawImGui()
