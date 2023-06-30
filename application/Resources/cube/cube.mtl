@@ -1,7 +1,7 @@
 # Blender MTL File: 'None'
 # Material Count: 1
 
-newmtl Material
+newmtl cube
 Ns 359.999993
 Ka 0.600000 0.600000 0.600000
 Kd 0.800000 0.800000 0.800000

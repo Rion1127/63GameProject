@@ -1,4 +1,4 @@
-newmtl initialShadingGroup
+newmtl uvSphere
 illum 4
 Ka 0.50 0.50 0.50
 Kd 1.00 1.00 1.00

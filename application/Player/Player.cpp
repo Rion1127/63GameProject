@@ -9,14 +9,8 @@ Player::Player()
 
 	colPos_.radius = 1;
 
-	// 入力されているベクトル
-	inputVec_ = { 0.0f, 0.0f };
 	// 入力されている方向の角度
 	inputAngle_ = 0.0f;
-	//左スティックが倒されているか
-	isLeftStick_ = false;
-	//1フレーム前の左スティックが倒されているか
-	isOldLeftStick_ = false;
 
 	//移動速度
 	moveSpeed_ = 0.3f;
@@ -25,6 +19,9 @@ Player::Player()
 	model_->SetModel(Model::CreateOBJ_uniptr("player", true));
 
 	scale_ = { 1,1,1 };
+
+	info_.frontVec = &frontVec_;
+	info_.WT = model_->GetTransform();
 }
 
 void Player::Update()
@@ -72,19 +69,20 @@ void Player::ColPosUpdate()
 #pragma region 入力
 void Player::InputVecUpdate()
 {
+	Vector2 moveVec2;
+	Vector3 sideVec;
+	Vector3 upVec = { 0,1,0 };
+	Vector2 inputVec_;// -> 入力されているベクトル
+
 	//プレイヤーの正面ベクトル
-	resultVec = {
+	frontVec_ = {
 		Camera::scurrent_.target_.x - Camera::scurrent_.eye_.x,
 		Camera::scurrent_.target_.y - Camera::scurrent_.eye_.y,
 		Camera::scurrent_.target_.z - Camera::scurrent_.eye_.z
 	};
-	resultVec.normalize();
-	resultVec2 = {
-		resultVec.x,
-		resultVec.z,
-	};
+	frontVec_.normalize();
 
-	sideVec = upVec.cross(resultVec);
+	sideVec = upVec.cross(frontVec_);
 	sideVec.normalize();
 
 	// コントローラーが接続されていたら
@@ -93,17 +91,10 @@ void Player::InputVecUpdate()
 		// 左スティックの入力方向ベクトル取得
 		inputVec_ = controller_->GetLStick() / 3276.8f;
 		//カメラから見た左右手前奥移動
-		moveVec2.x = (resultVec2.y * -inputVec_.x) + (sideVec.z * inputVec_.y);
-		moveVec2.y = (resultVec2.y * inputVec_.y) + (sideVec.z * inputVec_.x);
+		moveVec2.x = (frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y);
+		moveVec2.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
 		moveVec2.x = -moveVec2.x;
 		moveVec2 *= 0.03f;
-
-		// 1フレーム前の情報として保存
-		isOldLeftStick_ = isLeftStick_;
-
-		// 左スティックが倒されていたら
-		if (inputVec_.length() >= 0.5f) isLeftStick_ = true;
-		else isLeftStick_ = false;
 	}
 
 	pos_ += {moveVec2.x, 0, moveVec2.y};
@@ -133,7 +124,7 @@ void Player::GravityUpdate()
 {
 	float gravitySpeed = -0.01f;
 	//床に触れていたら
-	if (isFloorCollision)
+	if (isFloorCollision_)
 	{
 		gravity_ = 0;
 	}
@@ -145,7 +136,7 @@ void Player::GravityUpdate()
 
 	//model_->GetTransform()->AddPosition(0, gravity_,0);
 	//通常時はfalseにしておく
-	isFloorCollision = false;
+	isFloorCollision_ = false;
 }
 
 void Player::JumpUpdate()
@@ -156,9 +147,9 @@ void Player::JumpUpdate()
 	{
 		if (isJump_ == false)
 		{
-			if (jumpTime < Maxjumptimer)
+			if (jumpTime_ < Maxjumptimer)
 			{
-				jumpTime++;
+				jumpTime_++;
 				//重力をマイナスにする
 				gravity_ = jumpSpeed;
 			}
@@ -217,18 +208,18 @@ void Player::DrawImGui()
 
 	}
 
-	ImGui::SliderFloat("Max X", &MaxMinX.x, 0.f, 80.f, "x = %.3f");
-	ImGui::SliderFloat("Min X", &MaxMinX.y, -80.f, 0.f, "y = %.3f");
+	ImGui::SliderFloat("Max X", &MaxMinX_.x, 0.f, 80.f, "x = %.3f");
+	ImGui::SliderFloat("Min X", &MaxMinX_.y, -80.f, 0.f, "y = %.3f");
 
-	ImGui::SliderFloat("Max Y", &MaxMinY.x, 0.f, 80.f, "x = %.3f");
-	ImGui::SliderFloat("Min Y", &MaxMinY.y, -80.f, 0.f, "y = %.3f");
+	ImGui::SliderFloat("Max Y", &MaxMinY_.x, 0.f, 80.f, "x = %.3f");
+	ImGui::SliderFloat("Min Y", &MaxMinY_.y, -80.f, 0.f, "y = %.3f");
 
 
-	ImGui::SliderFloat("front.x", &resultVec2.x, 0.0f, 2000.0f, "x = %.3f");
-	ImGui::SliderFloat("front.y", &resultVec2.y, 0.0f, 2000.0f, "y = %.3f");
+	//ImGui::SliderFloat("front.x", &resultVec2.x, 0.0f, 2000.0f, "x = %.3f");
+	//ImGui::SliderFloat("front.y", &resultVec2.y, 0.0f, 2000.0f, "y = %.3f");
 
-	ImGui::SliderFloat("input.x", &inputVec_.x, -10.0f, 10.0f, "x = %.3f");
-	ImGui::SliderFloat("input.y", &inputVec_.y, -10.0f, 10.0f, "y = %.3f");
+	//ImGui::SliderFloat("input.x", &inputVec_.x, -10.0f, 10.0f, "x = %.3f");
+	//ImGui::SliderFloat("input.y", &inputVec_.y, -10.0f, 10.0f, "y = %.3f");
 
 	ImGui::End();
 
@@ -236,7 +227,7 @@ void Player::DrawImGui()
 
 void Player::floorColision()
 {
-	isFloorCollision = true;
+	isFloorCollision_ = true;
 	isJump_ = false;
-	jumpTime = 0;
+	jumpTime_ = 0;
 }

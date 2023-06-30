@@ -1,5 +1,7 @@
 #include "IAttack.h"
 
+PlayerInfo* IAttack::playerInfo_ = nullptr;
+
 IAttack::IAttack(size_t colNum, size_t maxTime)
 {
 	attackCol_.resize(colNum);
@@ -7,6 +9,7 @@ IAttack::IAttack(size_t colNum, size_t maxTime)
 	{
 		col = std::move(std::make_unique<AttackCol>());
 		col->colObj_.SetModel(Model::CreateOBJ_uniptr("cube", false));
+		col->colObj_.SetAmbient("cube",{ 1.0f, 0, 0 });
 	}
 	attackInfo_.maxTime = maxTime;
 }

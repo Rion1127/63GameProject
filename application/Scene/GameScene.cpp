@@ -28,6 +28,7 @@ void GameScene::Ini()
 
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(floor_.get());
+	IAttack::SetPlayerInfo(player_->GetPlayerInfo());
 }
 
 void GameScene::Update()

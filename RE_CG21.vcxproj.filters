@@ -351,6 +351,9 @@
     <ClCompile Include="application\Player\SecondAttack.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="application\Player\PlayerInfo.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -541,6 +544,9 @@
     </ClInclude>
     <ClInclude Include="application\Player\SecondAttack.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\PlayerInfo.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
