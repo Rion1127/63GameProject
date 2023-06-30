@@ -7,5 +7,6 @@ public:
 	SecondAttack();
 private:
 	void MoveUpdate() override;
+	void PlayerMoveUpdate() override;
 };
 

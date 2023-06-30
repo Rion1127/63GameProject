@@ -10,3 +10,7 @@ void SecondAttack::MoveUpdate()
 	
 	attackCol_.at(0)->col_.center.x += 0.15f;
 }
+
+void SecondAttack::PlayerMoveUpdate()
+{
+}

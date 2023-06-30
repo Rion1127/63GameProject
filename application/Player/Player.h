@@ -10,6 +10,13 @@
 
 #include "AttackManager.h"
 
+enum class PlayerState{
+	Idle,
+	Jump,
+	Attack,
+
+};
+
 class Player
 {
 private:

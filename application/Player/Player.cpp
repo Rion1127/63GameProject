@@ -22,6 +22,7 @@ Player::Player()
 
 	info_.frontVec = &frontVec_;
 	info_.WT = model_->GetTransform();
+	info_.addVec_ = &addVec_;
 }
 
 void Player::Update()
@@ -33,6 +34,8 @@ void Player::Update()
 	InputAngleUpdate();
 	//ƒWƒƒƒ“ƒv
 	JumpUpdate();
+
+	attack_.Update();
 
 	//d—Í
 	GravityUpdate();
@@ -46,7 +49,7 @@ void Player::Update()
 	model_->WT_.position_ += addVec_;
 	model_->WT_.scale_ = scale_;
 	model_->Update();
-	attack_.Update();
+	
 }
 void Player::ColPosUpdate()
 {

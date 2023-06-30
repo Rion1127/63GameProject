@@ -6,5 +6,6 @@ struct PlayerInfo
 {
 	WorldTransform* WT;
 	Vector3* frontVec;
+	Vector3* addVec_;
 };
 

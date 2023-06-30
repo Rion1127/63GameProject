@@ -9,14 +9,18 @@ IAttack::IAttack(size_t colNum, size_t maxTime)
 	{
 		col = std::move(std::make_unique<AttackCol>());
 		col->colObj_.SetModel(Model::CreateOBJ_uniptr("cube", false));
-		col->colObj_.SetAmbient("cube",{ 1.0f, 0, 0 });
+		col->colObj_.SetAmbient("cube", { 1.0f, 0, 0 });
 	}
 	attackInfo_.maxTime = maxTime;
 }
 
 void IAttack::Update()
 {
-	MoveUpdate();
+	if (playerInfo_ != nullptr) {
+		MoveUpdate();
+
+		PlayerMoveUpdate();
+	}
 
 	for (auto& col : attackCol_)
 	{

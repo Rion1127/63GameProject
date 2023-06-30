@@ -37,6 +37,7 @@ void AttackManager::Update()
 	{
 		//攻撃更新
 		nowAttack_->Update();
+		nowAttack_->SetNowTime(timer_);
 		//攻撃中カウントを進める
 		timer_++;
 		//maxTimeを超えたらnextAttack_をnowAttack_に代入する

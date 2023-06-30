@@ -12,6 +12,7 @@ struct AttackCol {
 
 struct AttackInfo {
 	size_t maxTime;	//UŒ‚‚ÌƒtƒŒ[ƒ€”
+	size_t nowTime;
 };
 
 class IAttack
@@ -26,9 +27,12 @@ public:
 	void Update();
 	void DrawCol();
 public:
+	void SetNowTime(size_t time) { attackInfo_.nowTime = time; }
+public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	static void SetPlayerInfo(PlayerInfo* info) { playerInfo_ = info; }
 protected:
 	virtual void MoveUpdate() = 0;
+	virtual void PlayerMoveUpdate() = 0;
 };
 
