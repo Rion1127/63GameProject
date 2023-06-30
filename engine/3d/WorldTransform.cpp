@@ -13,40 +13,34 @@ WorldTransform::WorldTransform()
 	constBuffTransform_ = CreateBuff(constMapTransform_);
 }
 
-void WorldTransform::SetScale(float x, float y, float z)
+void WorldTransform::SetScale(Vector3 scale)
 {
-	scale_ = { x,y,z };
+	scale_ = scale;
 }
 
-void WorldTransform::SetRotation(float x, float y, float z)
+void WorldTransform::SetRotation(Vector3 rot)
 {
-	rotation_ = { x,y,z };
+	rotation_ = rot;
 }
 
-void WorldTransform::SetPosition(float x, float y, float z)
+void WorldTransform::SetPosition(Vector3 pos)
 {
-	position_ = { x,y,z };
+	position_ = pos;
 }
 
-void WorldTransform::AddScale(float x, float y, float z)
+void WorldTransform::AddScale(Vector3 scale)
 {
-	scale_.x += x;
-	scale_.y += y;
-	scale_.z += z;
+	scale_ += scale;
 }
 
-void WorldTransform::AddRotation(float x, float y, float z)
+void WorldTransform::AddRotation(Vector3 rot)
 {
-	rotation_.x += x;
-	rotation_.y += y;
-	rotation_.z += z;
+	rotation_ +=rot;
 }
 
-void WorldTransform::AddPosition(float x, float y, float z)
+void WorldTransform::AddPosition(Vector3 pos)
 {
-	position_.x += x;
-	position_.y += y;
-	position_.z += z;
+	position_ += pos;
 }
 
 

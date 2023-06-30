@@ -26,7 +26,7 @@ Player::Player()
 
 void Player::Update()
 {
-
+	addVec_ = { 0,0,0 };
 	// 入力方向ベクトルを更新
 	InputVecUpdate();
 	// 入力方向の角度を更新
@@ -42,17 +42,17 @@ void Player::Update()
 	// 回転代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
 
-	model_->SetRot(rot_);
-	model_->SetPos(pos_);
-	model_->SetScale(scale_);
+	model_->WT_.rotation_ = rot_;
+	model_->WT_.position_ += addVec_;
+	model_->WT_.scale_ = scale_;
 	model_->Update();
 	attack_.Update();
 }
 void Player::ColPosUpdate()
 {
-	model_->SetRot(rot_);
-	model_->SetPos(pos_);
-	model_->SetScale(scale_);
+	model_->WT_.rotation_ = rot_;
+	model_->WT_.position_ += addVec_;
+	model_->WT_.scale_ = scale_;
 	model_->Update();
 
 	//モデルの原点を下にしているためその分ずらす
@@ -97,12 +97,12 @@ void Player::InputVecUpdate()
 		moveVec2 *= 0.03f;
 	}
 
-	pos_ += {moveVec2.x, 0, moveVec2.y};
+	addVec_ += {moveVec2.x, 0, moveVec2.y};
 
-	pos_ = {
-		Clamp(pos_.x, -77.f, 77.f),
-		Clamp(pos_.y, 0.f, 100.f),
-		Clamp(pos_.z, -77.f, 77.f)
+	model_->GetTransform()->position_ = {
+		Clamp(model_->GetTransform()->position_.x, -77.f, 77.f),
+		Clamp(model_->GetTransform()->position_.y, 0.f, 100.f),
+		Clamp(model_->GetTransform()->position_.z, -77.f, 77.f)
 	};
 
 	// 入力しているベクトルの角度を求める
@@ -122,7 +122,7 @@ void Player::InputAngleUpdate()
 
 void Player::GravityUpdate()
 {
-	float gravitySpeed = -0.01f;
+	float gravitySpeed = -0.015f;
 	//床に触れていたら
 	if (isFloorCollision_)
 	{
@@ -161,7 +161,7 @@ void Player::JumpUpdate()
 	{
 		isJump_ = true;
 	}
-	pos_ += { 0, gravity_, 0 };
+	addVec_ += { 0, gravity_, 0 };
 }
 
 void Player::Draw()

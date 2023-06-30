@@ -13,7 +13,7 @@
 class Player
 {
 private:
-	Vector3 pos_;
+	Vector3 addVec_;
 	Vector3 rot_;
 	Vector3 scale_;
 
@@ -63,9 +63,12 @@ public:
 
 	void floorColision();
 public:
-	void SetPos(Vector3 pos) { pos_ = pos; }
-	void SetRot(Vector3 rot) { rot_ = rot; }
-	void Setscale(Vector3 scale) { scale_ = scale; }
+	void SetPos(Vector3 pos) { model_->GetTransform()->SetPosition(pos); }
+	void SetRot(Vector3 rot) { model_->GetTransform()->SetRotation(rot); }
+	void Setscale(Vector3 scale) { model_->GetTransform()->SetScale(scale); }
+
+	void AddPos(Vector3 pos) { addVec_ += pos; }
+	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 public:
 	Sphere GetColPos() { return colPos_; }
 	WorldTransform* GetWorldTransform() { return model_->GetTransform(); }

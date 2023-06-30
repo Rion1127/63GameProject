@@ -19,7 +19,7 @@ void CollisionManager::Update()
 
 				playerPos.y += upDist;
 
-				player_->SetPos(playerPos);
+				player_->SetAddPos({ 0,upDist,0 });
 				player_->ColPosUpdate();
 			}
 			else

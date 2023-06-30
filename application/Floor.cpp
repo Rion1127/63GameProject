@@ -8,9 +8,9 @@ Floor::Floor()
 	model_ = std::move(std::make_unique<Object3d>());
 	model_->SetModel(Model::CreateOBJ_uniptr("cube", true));
 
-	model_->SetPos({ 0,-1.f,0 });
-	model_->SetRot({ 0,0,0 });
-	model_->SetScale({ 30,1,30 });
+	model_->WT_.position_ = { 0,-1.f,0 };
+	model_->WT_.rotation_ = { 0,0,0 };
+	model_->WT_.scale_ = { 30,1,30 };
 	model_->Update();
 }
 

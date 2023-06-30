@@ -20,7 +20,7 @@ void IAttack::Update()
 
 	for (auto& col : attackCol_)
 	{
-		col->colObj_.SetPos(col->col_.center);
+		col->colObj_.WT_.position_ = col->col_.center;
 		col->colObj_.Update();
 	}
 }
