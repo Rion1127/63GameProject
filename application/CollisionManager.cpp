@@ -21,6 +21,7 @@ void CollisionManager::Update()
 
 				player_->SetAddPos({ 0,upDist,0 });
 				player_->ColPosUpdate();
+				
 			}
 			else
 			{
@@ -28,4 +29,5 @@ void CollisionManager::Update()
 			}
 		}
 	}
+		
 }

@@ -50,6 +50,8 @@ void Player::Update()
 	model_->WT_.scale_ = scale_;
 	model_->Update();
 	
+	/*Model::lightGroup_->SetCircleShadowAtten(0,
+		)*/
 }
 void Player::ColPosUpdate()
 {
@@ -169,6 +171,7 @@ void Player::JumpUpdate()
 
 void Player::Draw()
 {
+	Model::lightGroup_->SetCircleShadowCasterPos(0, model_->WT_.position_);
 	model_->Draw();
 
 	DrawImGui();

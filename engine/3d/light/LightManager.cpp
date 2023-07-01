@@ -31,6 +31,8 @@ LightManager::LightManager()
 	{
 		lightGroup->SetSpotLightActive(0, true);
 	}
+
+	lightGroup->SetCircleShadowActive(0, true);
 }
 
 void LightManager::DebugUpdate()
@@ -154,6 +156,10 @@ void LightManager::DirectionalLightUpdate()
 	else lightGroup->SetDirLightActive(2, false);
 	ImGui::SliderFloat3("lightDir2", lightDir2, -1.f, 1.0f);
 	ImGui::ColorEdit3("lightColor2", lightColor2, ImGuiColorEditFlags_Float);
+
+	ImGui::SliderFloat3("ShadowDir", circleShadowDir, -1.f, 1.0f);
+	ImGui::SliderFloat3("ShadowDirAtten", circleShadowAtten, -1.f, 2.0f);
+	ImGui::SliderFloat3("ShadowFacrotAngle", circleShadowFactorAngle, -1.f, 2.0f);
 
 	ImGui::End();
 }
