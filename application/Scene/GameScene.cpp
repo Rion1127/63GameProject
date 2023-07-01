@@ -29,6 +29,7 @@ void GameScene::Ini()
 
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(floor_.get());
+	colManager_->SetEnemys(enemyManager_.get());
 	IAttack::SetPlayerInfo(player_->GetPlayerInfo());
 }
 
@@ -37,13 +38,15 @@ void GameScene::Update()
 	CameraUpdate();
 	
 	floor_->Update();
-
 	player_->PreUpdate();
+	enemyManager_->PreUpdate();
+
+	colManager_->Update();
+
+	enemyManager_->PostUpdate();
+	player_->PostUpdate();
 
 	lightManager_->DebugUpdate();
-	enemyManager_->Update();
-	colManager_->Update();
-	player_->PostUpdate();
 }
 
 void GameScene::Draw()

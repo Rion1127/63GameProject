@@ -6,10 +6,17 @@ EnemyManager::EnemyManager()
 	
 }
 
-void EnemyManager::Update()
+void EnemyManager::PreUpdate()
 {
 	for (auto& enemy : enemys_) {
-		enemy->Update();
+		enemy->PreUpdate();
+	}
+}
+
+void EnemyManager::PostUpdate()
+{
+	for (auto& enemy : enemys_) {
+		enemy->PostUpdate();
 	}
 }
 

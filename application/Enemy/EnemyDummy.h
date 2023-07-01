@@ -3,8 +3,10 @@
 class EnemyDummy :
     public IEnemy
 {
+private:
+    float time_ = 0.f;
 public:
-    EnemyDummy() : IEnemy() {};
+    EnemyDummy();
 private:
     void MoveUpdate() override;
 };
