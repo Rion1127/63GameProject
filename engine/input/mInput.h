@@ -94,6 +94,14 @@ enum class PAD{
 	INPUT_X					= 0x4000,
 	INPUT_Y					= 0x8000,
 };
+
+enum DeadZone {
+	Half = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE / 2,
+	Default = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE,
+	Mul_2 = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE * 2,
+	Mul_3 = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE * 3,
+};
+
 //コントローラ
 class Controller {
 private:
@@ -118,8 +126,8 @@ public:
 	WORD GetReleasButtons(PAD button);
 	//false	右スティック
 	//true	左スティック
-	Vector2 GetLStick();
-	Vector2 GetRStick();
+	Vector2 GetLStick(size_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+	Vector2 GetRStick(size_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 
 	BYTE GetRTrigger();
 	BYTE GetLTrigger();

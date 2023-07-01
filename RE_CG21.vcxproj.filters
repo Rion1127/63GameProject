@@ -339,7 +339,7 @@
     <ClCompile Include="application\Player\PlayerAttack.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\FirstAttack.cpp">
+    <ClCompile Include="application\Player\Attack1.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
     <ClCompile Include="application\Player\IAttack.cpp">
@@ -348,7 +348,7 @@
     <ClCompile Include="application\Player\AttackManager.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\SecondAttack.cpp">
+    <ClCompile Include="application\Player\Attack2.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
     <ClCompile Include="application\Player\PlayerInfo.cpp">
@@ -533,7 +533,7 @@
     <ClInclude Include="application\Player\PlayerAttack.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\FirstAttack.h">
+    <ClInclude Include="application\Player\Attack1.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
     <ClInclude Include="application\Player\IAttack.h">
@@ -542,7 +542,7 @@
     <ClInclude Include="application\Player\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\SecondAttack.h">
+    <ClInclude Include="application\Player\Attack2.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
     <ClInclude Include="application\Player\PlayerInfo.h">

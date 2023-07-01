@@ -5,7 +5,7 @@ AttackManager::AttackManager()
 {
 	controller_ = Controller::GetInstance();
 	comboNum = 0;
-	attacks_.insert(std::pair("First",std::move(std::make_unique<FirstAttack>())));
+	attacks_.insert(std::pair("First",std::move(std::make_unique<Attack1>())));
 }
 
 void AttackManager::Update()
@@ -17,7 +17,7 @@ void AttackManager::Update()
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
 			if (nowAttack_ == nullptr)
 			{
-				nowAttack_ = std::move(std::make_unique<FirstAttack>());
+				nowAttack_ = std::move(std::make_unique<Attack1>());
 
 				timer_ = 0;
 				comboNum++;
@@ -25,10 +25,10 @@ void AttackManager::Update()
 			else
 			{
 				//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-				nextAttack_ = std::move(std::make_unique<SecondAttack>());
-				if (comboNum == 1)nextAttack_ = std::move(std::make_unique<SecondAttack>());
-				if (comboNum == 2)nextAttack_ = std::move(std::make_unique<SecondAttack>());
-				if (comboNum == 3)nextAttack_ = std::move(std::make_unique<SecondAttack>());
+				nextAttack_ = std::move(std::make_unique<Attack2>());
+				if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
+				if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack2>());
+				if (comboNum == 3)nextAttack_ = std::move(std::make_unique<Attack2>());
 			}
 		}
 	}
@@ -45,7 +45,7 @@ void AttackManager::Update()
 		{
 			timer_ = 0;
 			nowAttack_.swap(nextAttack_);
-
+			//nextAttack_‚ğ‰ğ•ú‚·‚é
 			nextAttack_.reset();
 			nextAttack_ = nullptr;
 			comboNum++;

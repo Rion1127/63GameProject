@@ -3,8 +3,8 @@
 #include <vector>
 #include <map>
 #include "mInput.h"
-#include "FirstAttack.h"
-#include "SecondAttack.h"
+#include "Attack1.h"
+#include "Attack2.h"
 
 
 class AttackManager

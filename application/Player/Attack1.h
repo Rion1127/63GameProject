@@ -1,13 +1,13 @@
 #pragma once
 #include "IAttack.h"
 
-class FirstAttack :
+class Attack1 :
 	public IAttack
 {
 private:
 	float frontDist_;
 public:
-	FirstAttack();
+	Attack1();
 private:
 	void MoveUpdate() override;
 	void PlayerMoveUpdate() override;

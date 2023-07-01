@@ -5,6 +5,11 @@ GameCamera::GameCamera()
 {
 	camera_ = std::move(std::make_unique<Camera>());
 	controller_ = Controller::GetInstance();
+
+	deadZone_ = {
+		DeadZone::Mul_2,
+		DeadZone::Default
+	};
 }
 
 void GameCamera::Update()
@@ -23,15 +28,14 @@ void GameCamera::Update()
 	camera_->eye_.y = player_->GetWorldTransform()->position_.y + 10;
 	camera_->eye_.z = player_->GetWorldTransform()->position_.z - 25;
 
-	camera_->target_.x = player_->GetWorldTransform()->position_.x;
-	camera_->target_.y = player_->GetWorldTransform()->position_.y;
-	camera_->target_.z = player_->GetWorldTransform()->position_.z;
+	camera_->target_ = player_->GetWorldTransform()->position_;
 
 	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
-		moveDist.x -= controller_->GetRStick().x * 0.0000015f;
-		moveDist.y += controller_->GetRStick().y * 0.0000015f;
-		moveDist.y = Clamp(moveDist.y, -1.3f, 1.3f);
+		moveDist.x -= controller_->GetRStick(deadZone_.x).x * 0.0000015f;
+		moveDist.y += controller_->GetRStick(deadZone_.y).y * 0.0000015f;
+		//カメラがどのくらいプレイヤーに近づくかClampをする
+		moveDist.y = Clamp(moveDist.y, -0.8f, 0.8f);
 	}
 	/*moveDist.y += mInput_->GetCursorMoveY() * 0.005f;
 	moveDist.z -= mInput_->GetCursorMoveZ() * 0.005f;*/
@@ -41,7 +45,7 @@ void GameCamera::Update()
 	camera_->eye_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
 
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
-	float minGamecameraY = 0.5f;
+	float minGamecameraY = 3.5f;
 
 	
 	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY,maxGamecameraY);

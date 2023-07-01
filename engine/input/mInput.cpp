@@ -265,7 +265,7 @@ WORD Controller::GetReleasButtons(PAD button)
 	return false;
 }
 
-Vector2 Controller::GetLStick()
+Vector2 Controller::GetLStick(size_t deadZone)
 {
 	Vector2 stickPos;
 	
@@ -273,14 +273,14 @@ Vector2 Controller::GetLStick()
 	stickPos.x = state_.Gamepad.sThumbLX;
 	stickPos.y = state_.Gamepad.sThumbLY;
 	//デッドゾーンを設定
-	if ((state_.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/ &&
-		state_.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/))
+	if ((state_.Gamepad.sThumbLX < (SHORT)deadZone &&
+		state_.Gamepad.sThumbLX > -(SHORT)deadZone))
 	{
 		stickPos.x = 0;
 	}
 
-	if ((state_.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/ &&
-		state_.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE/* * 2.0f*/))
+	if ((state_.Gamepad.sThumbLY < (SHORT)deadZone &&
+		state_.Gamepad.sThumbLY > -(SHORT)deadZone))
 	{
 		stickPos.y = 0;
 	}
@@ -288,20 +288,23 @@ Vector2 Controller::GetLStick()
 	return stickPos;
 }
 
-Vector2 Controller::GetRStick()
+Vector2 Controller::GetRStick(size_t deadZone)
 {
 	Vector2 stickPos;
 	//右スティック
 		//returnする変数に値を代入
 	stickPos.x = state_.Gamepad.sThumbRX;
 	stickPos.y = state_.Gamepad.sThumbRY;
-	//デッドゾーンを設定
-	if ((state_.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		state_.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
-		(state_.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-			state_.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+	if ((state_.Gamepad.sThumbRX < (SHORT)deadZone &&
+		state_.Gamepad.sThumbRX > -(SHORT)deadZone))
 	{
-		return Vector2(0, 0);
+		stickPos.x = 0;
+	}
+
+	if ((state_.Gamepad.sThumbRY < (SHORT)deadZone &&
+		state_.Gamepad.sThumbRY > -(SHORT)deadZone))
+	{
+		stickPos.y = 0;
 	}
 	//デッドゾーンに入らなかったら値を返す
 	return stickPos;

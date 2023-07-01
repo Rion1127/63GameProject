@@ -1,10 +1,10 @@
 #pragma once
 #include "IAttack.h"
-class SecondAttack :
+class Attack2 :
     public IAttack
 {
 public:
-	SecondAttack();
+	Attack2();
 private:
 	void MoveUpdate() override;
 	void PlayerMoveUpdate() override;
