@@ -20,7 +20,8 @@ class IAttack
 protected:
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;
-	static PlayerInfo* playerInfo_;
+	static PlayerInfo* splayerInfo_;
+	size_t timer_;
 public:
 	IAttack(size_t colNum,size_t maxTime);
 
@@ -30,8 +31,8 @@ public:
 	void SetNowTime(size_t time) { attackInfo_.nowTime = time; }
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
-	static PlayerInfo* GetPlayerInfo() { return playerInfo_; }
-	static void SetPlayerInfo(PlayerInfo* info) { playerInfo_ = info; }
+	static PlayerInfo* GetPlayerInfo() { return splayerInfo_; }
+	static void SetPlayerInfo(PlayerInfo* info) { splayerInfo_ = info; }
 protected:
 	virtual void MoveUpdate() = 0;
 };
