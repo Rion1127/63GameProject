@@ -2,6 +2,11 @@
 
 void CollisionManager::Update()
 {
+	PlayerToFloor();
+}
+
+void CollisionManager::PlayerToFloor()
+{
 	//°‚ÆƒvƒŒƒCƒ„[
 	if (Sphere2PlaneCol(player_->GetCol(), floor_->GetPlaneCol()))
 	{
@@ -25,7 +30,6 @@ void CollisionManager::Update()
 			player_->SetAddPos({ 0,upDist,0 });
 			player_->ColPosUpdate();
 		}
-		
+
 	}
-		
 }

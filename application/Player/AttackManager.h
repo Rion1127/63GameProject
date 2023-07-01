@@ -16,7 +16,7 @@ class AttackManager
 private:
 	Controller* controller_ = nullptr;
 	//攻撃のデータ・プール
-	std::map<std::string,std::unique_ptr<IAttack>> attacks_;
+	std::vector<std::unique_ptr<IAttack>> attacks_;
 
 	std::unique_ptr<IAttack> nowAttack_;	//現在処理している攻撃
 	std::unique_ptr<IAttack> nextAttack_;	//次に処理する攻撃

@@ -2,4 +2,5 @@
 
 void EnemyDummy::MoveUpdate()
 {
+	
 }

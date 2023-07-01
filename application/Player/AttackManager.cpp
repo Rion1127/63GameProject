@@ -5,7 +5,7 @@ AttackManager::AttackManager()
 {
 	controller_ = Controller::GetInstance();
 	comboNum = 0;
-	attacks_.insert(std::pair("First",std::move(std::make_unique<Attack1>())));
+	attacks_.emplace_back(std::move(std::make_unique<Attack1>()));
 	isAttacking = false;
 }
 

@@ -44,7 +44,7 @@ private:
 private:
 	Controller* controller_ = nullptr;
 	//ƒ‚ƒfƒ‹
-	std::unique_ptr<Object3d> model_;
+	std::unique_ptr<Object3d> obj_;
 public:
 	Player();
 	void PreUpdate();
@@ -67,15 +67,15 @@ public:
 
 	void floorColision();
 public:
-	void SetPos(Vector3 pos) { model_->GetTransform()->SetPosition(pos); }
-	void SetRot(Vector3 rot) { model_->GetTransform()->SetRotation(rot); }
-	void Setscale(Vector3 scale) { model_->GetTransform()->SetScale(scale); }
+	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
+	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
+	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
 
 	void AddPos(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 public:
 	Sphere GetCol() { return colPos_; }
-	WorldTransform* GetWorldTransform() { return model_->GetTransform(); }
+	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerInfo* GetPlayerInfo() { return &info_; }
 };

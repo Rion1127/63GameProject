@@ -12,5 +12,7 @@ public:
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetFloor(Floor* floor) { floor_ = floor; }
+private:
+	void PlayerToFloor();
 };
 

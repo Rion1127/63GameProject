@@ -7,8 +7,10 @@ class IEnemy
 protected:
 	static Player* splayer_;
 	//ƒ‚ƒfƒ‹
-	std::unique_ptr<Object3d> model_;
+	std::unique_ptr<Object3d> obj_;
+	Sphere col_;
 public:
+	IEnemy();
 	static void SetPlayer(Player* player) { splayer_ = player; }
 
 	void Update();

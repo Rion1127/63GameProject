@@ -17,6 +17,7 @@ void GameScene::Ini()
 	
 	lightManager_ = std::make_shared<LightManager>();
 	colManager_ = std::make_unique<CollisionManager>();
+	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
 	AssimpModel::SetLightGroup(lightManager_->GetLightGroup().get());
 
@@ -40,6 +41,7 @@ void GameScene::Update()
 	player_->PreUpdate();
 
 	lightManager_->DebugUpdate();
+	enemyManager_->Update();
 	colManager_->Update();
 	player_->PostUpdate();
 }
@@ -54,6 +56,7 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	floor_->Draw();
 	player_->Draw();
+	enemyManager_->Draw();
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 	//skyDome_->Draw();
 	

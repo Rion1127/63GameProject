@@ -24,6 +24,7 @@
 #include "Player.h"
 #include "GameCamera.h"
 #include "CollisionManager.h"
+#include "EnemyManager.h"
 
 class GameScene :
 	public EmptyScene
@@ -43,6 +44,7 @@ private:
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<CollisionManager> colManager_;
+	std::unique_ptr<EnemyManager> enemyManager_;
 public:
 	~GameScene();
 

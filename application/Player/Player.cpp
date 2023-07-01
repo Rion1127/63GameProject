@@ -15,13 +15,13 @@ Player::Player()
 	//移動速度
 	moveSpeed_ = 0.3f;
 
-	model_ = std::move(std::make_unique<Object3d>());
-	model_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	obj_ = std::move(std::make_unique<Object3d>());
+	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 
 	scale_ = { 1,1,1 };
 
 	info_.frontVec = &frontVec_;
-	info_.WT = model_->GetTransform();
+	info_.WT = obj_->GetTransform();
 	info_.addVec_ = &addVec_;
 	info_.gravity = &gravity_;
 	info_.state = &state_;
@@ -62,10 +62,10 @@ void Player::PostUpdate()
 	// 回転代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
 
-	model_->WT_.rotation_ = rot_;
-	model_->WT_.position_ += addVec_;
-	model_->WT_.scale_ = scale_;
-	model_->Update();
+	obj_->WT_.rotation_ = rot_;
+	obj_->WT_.position_ += addVec_;
+	obj_->WT_.scale_ = scale_;
+	obj_->Update();
 }
 
 void Player::GravityUpdate()
@@ -79,16 +79,16 @@ void Player::GravityUpdate()
 }
 void Player::ColPosUpdate()
 {
-	model_->WT_.rotation_ = rot_;
-	model_->WT_.position_ += addVec_;
-	model_->WT_.scale_ = scale_;
-	model_->Update();
+	obj_->WT_.rotation_ = rot_;
+	obj_->WT_.position_ += addVec_;
+	obj_->WT_.scale_ = scale_;
+	obj_->Update();
 
 	//モデルの原点を下にしているためその分ずらす
 	Vector3 colPos = {
-		model_->GetTransform()->position_.x,
-		model_->GetTransform()->position_.y + 1.0f,
-		model_->GetTransform()->position_.z,
+		obj_->GetTransform()->position_.x,
+		obj_->GetTransform()->position_.y + 1.0f,
+		obj_->GetTransform()->position_.z,
 	};
 
 	colPos_.SetPos(colPos);
@@ -128,10 +128,10 @@ void Player::InputVecUpdate()
 
 	addVec_ += {moveVec2.x, 0, moveVec2.y};
 
-	model_->GetTransform()->position_ = {
-		Clamp(model_->GetTransform()->position_.x, -77.f, 77.f),
-		Clamp(model_->GetTransform()->position_.y, 0.f, 100.f),
-		Clamp(model_->GetTransform()->position_.z, -77.f, 77.f)
+	obj_->GetTransform()->position_ = {
+		Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
+		Clamp(obj_->GetTransform()->position_.y, 0.f, 100.f),
+		Clamp(obj_->GetTransform()->position_.z, -77.f, 77.f)
 	};
 
 	// 入力しているベクトルの角度を求める
@@ -185,8 +185,8 @@ void Player::StateUpdate()
 
 void Player::Draw()
 {
-	Model::lightGroup_->SetCircleShadowCasterPos(0, model_->WT_.position_);
-	model_->Draw();
+	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
+	obj_->Draw();
 
 	DrawImGui();
 
@@ -200,9 +200,9 @@ void Player::DrawImGui()
 	// Menu Bar
 	if (ImGui::CollapsingHeader("Posision"))
 	{
-		float x = model_->GetTransform()->position_.x;
-		float y = model_->GetTransform()->position_.y;
-		float z = model_->GetTransform()->position_.z;
+		float x = obj_->GetTransform()->position_.x;
+		float y = obj_->GetTransform()->position_.y;
+		float z = obj_->GetTransform()->position_.z;
 		ImGui::SliderFloat("pos.x", &x, 0.0f, 2000.0f, "x = %.3f");
 		ImGui::SliderFloat("pos.y", &y, 0.0f, 2000.0f, "y = %.3f");
 		ImGui::SliderFloat("pos.y", &z, 0.0f, 2000.0f, "y = %.3f");
@@ -212,16 +212,16 @@ void Player::DrawImGui()
 	//回転
 	if (ImGui::CollapsingHeader("Rotation"))
 	{
-		float rot = model_->GetTransform()->rotation_.y;
+		float rot = obj_->GetTransform()->rotation_.y;
 		ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
 		//rot_ = rot;
 	}
 
 	if (ImGui::CollapsingHeader("Scale"))
 	{
-		float x = model_->GetTransform()->scale_.x;
-		float y = model_->GetTransform()->scale_.y;
-		float z = model_->GetTransform()->scale_.z;
+		float x = obj_->GetTransform()->scale_.x;
+		float y = obj_->GetTransform()->scale_.y;
+		float z = obj_->GetTransform()->scale_.z;
 		ImGui::SliderFloat("scale.x", &x, 0.0f, 2000.0f, "x = %.3f");
 		ImGui::SliderFloat("scale.y", &y, 0.0f, 2000.0f, "y = %.3f");
 		ImGui::SliderFloat("scale.y", &z, 0.0f, 2000.0f, "y = %.3f");

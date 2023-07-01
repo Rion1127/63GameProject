@@ -1,5 +1,11 @@
 #include "EnemyManager.h"
 
+EnemyManager::EnemyManager()
+{
+	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>()));
+	
+}
+
 void EnemyManager::Update()
 {
 	for (auto& enemy : enemys_) {
