@@ -1,6 +1,6 @@
 #include "AttackAir3.h"
 
-AttackAir3::AttackAir3() : IAttack(1, 20)
+AttackAir3::AttackAir3() : IAttack(1, 30)
 {
 	frontDist_ = 5.f;
 	if (splayerInfo_ != nullptr) {
@@ -18,7 +18,7 @@ AttackAir3::AttackAir3() : IAttack(1, 20)
 
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		splayerInfo_->gravity->SetGrabity({0,0 ,0});
+		splayerInfo_->gravity->SetGrabity({ 0,0 ,0 });
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 3.f;
 	}
@@ -33,11 +33,11 @@ void AttackAir3::MoveUpdate()
 		cosf(splayerInfo_->WT->rotation_.y),
 	};
 	frontVec.normalize();
-	Vector3 speed = frontVec * 0.1f;
+	Vector3 speed = frontVec * 0.15f;
 
-	//maxTime - 10の時間分プレイヤーを前に進める
-	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
-		*splayerInfo_->addVec_ += speed;
-		attackCol_.at(0)->col_.center += *splayerInfo_->addVec_;
-	}
+
+	*splayerInfo_->addVec_ += speed;
+	attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + frontVec * 5.f;
+	attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y;
+
 }

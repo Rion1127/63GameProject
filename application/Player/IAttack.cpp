@@ -1,6 +1,6 @@
 #include "IAttack.h"
 
-PlayerInfo* IAttack::playerInfo_ = nullptr;
+PlayerInfo* IAttack::splayerInfo_ = nullptr;
 
 IAttack::IAttack(size_t colNum, size_t maxTime)
 {
@@ -16,7 +16,7 @@ IAttack::IAttack(size_t colNum, size_t maxTime)
 
 void IAttack::Update()
 {
-	if (playerInfo_ != nullptr) {
+	if (splayerInfo_ != nullptr) {
 		MoveUpdate();
 	}
 

@@ -38,6 +38,7 @@ void Attack3::MoveUpdate()
 	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
 		*splayerInfo_->addVec_ += speed;
 		attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + frontVec * 5.f;
+		attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y * 2.f;
 	}
 }
 

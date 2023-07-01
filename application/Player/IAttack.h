@@ -21,7 +21,6 @@ protected:
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;
 	static PlayerInfo* splayerInfo_;
-	size_t timer_;
 public:
 	IAttack(size_t colNum,size_t maxTime);
 

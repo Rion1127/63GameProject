@@ -1,6 +1,6 @@
 #include "Attack1.h"
 
-Attack1::Attack1() : IAttack(1, 30)
+Attack1::Attack1() : IAttack(1, 25)
 {
 	frontDist_ = 5.f;
 	if (splayerInfo_ != nullptr) {
@@ -37,6 +37,7 @@ void Attack1::MoveUpdate()
 	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
 		*splayerInfo_->addVec_ += speed;
 		attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + frontVec * 5.f;
+		attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y * 2.f;
 	}
 }
 

@@ -390,6 +390,12 @@
     <ClCompile Include="application\Enemy\IEnemy.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="application\Enemy\EnemyManager.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\EnemyDummy.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -600,6 +606,12 @@
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="application\Enemy\IEnemy.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\EnemyManager.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\EnemyDummy.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

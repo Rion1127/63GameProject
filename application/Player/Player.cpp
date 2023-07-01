@@ -39,7 +39,7 @@ void Player::PreUpdate()
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
 		//ジャンプ
-		JumpUpdate();
+		//JumpUpdate();
 	}
 
 	attack_.Update();
@@ -52,6 +52,12 @@ void Player::PreUpdate()
 
 void Player::PostUpdate()
 {
+	if (state_ != PlayerState::Attack &&
+		state_ != PlayerState::AirAttack)
+	{
+		JumpUpdate();
+	}
+
 	addVec_ += gravity_.GetGravityValue();
 	// 回転代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
@@ -141,7 +147,7 @@ void Player::InputVecUpdate()
 
 void Player::JumpUpdate()
 {
-	float jumpSpeed = 0.2f;
+	float jumpSpeed = 0.3f;
 	int Maxjumptimer = 20;
 	if (controller_->GetButtons(PAD::INPUT_A))
 	{
@@ -161,8 +167,6 @@ void Player::JumpUpdate()
 	{
 		isJump_ = true;
 	}
-
-	addVec_ += gravity_.GetGravityValue();
 }
 
 void Player::StateUpdate()
@@ -231,12 +235,8 @@ void Player::DrawImGui()
 	if (state_ == PlayerState::AirAttack)text = "AirAttack";
 
 	ImGui::Text(text.c_str());
-
-	ImGui::SliderFloat("Max X", &MaxMinX_.x, 0.f, 80.f, "x = %.3f");
-	ImGui::SliderFloat("Min X", &MaxMinX_.y, -80.f, 0.f, "y = %.3f");
-
-	ImGui::SliderFloat("Max Y", &MaxMinY_.x, 0.f, 80.f, "x = %.3f");
-	ImGui::SliderFloat("Min Y", &MaxMinY_.y, -80.f, 0.f, "y = %.3f");
+	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
+	ImGui::SliderFloat3("addvec", addvec, 0.f, 80.f, "x = %.3f");
 
 	float gravity = gravity_.GetGravityValue().y;
 	ImGui::SliderFloat("gravity", &gravity, -80.f, 0.f, "y = %.3f");
