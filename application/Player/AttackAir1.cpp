@@ -38,7 +38,7 @@ void AttackAir1::MoveUpdate()
 	//maxTime - 10の時間分プレイヤーを前に進める
 	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
 		*playerInfo_->addVec_ += speed;
-		playerInfo_->gravity = 0;
+		playerInfo_->gravity->SetGrabity({ 0,0.1f ,0 });
 		attackCol_.at(0)->col_.center += *playerInfo_->addVec_;
 	}
 }

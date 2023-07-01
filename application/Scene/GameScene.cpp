@@ -37,10 +37,11 @@ void GameScene::Update()
 	
 	floor_->Update();
 
-	player_->Update();
+	player_->PreUpdate();
 
 	lightManager_->DebugUpdate();
 	colManager_->Update();
+	player_->PostUpdate();
 }
 
 void GameScene::Draw()

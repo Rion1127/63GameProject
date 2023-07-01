@@ -18,7 +18,7 @@ AttackAir3::AttackAir3() : IAttack(1, 20)
 
 		colPos = playerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		playerInfo_->gravity = 0;
+		playerInfo_->gravity->SetGrabity({0,0.1f ,0});
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 3.f;
 	}

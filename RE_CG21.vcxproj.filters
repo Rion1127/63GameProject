@@ -172,6 +172,12 @@
     <Filter Include="application\ヘッダーファイル\Player\Attack\AirAttack">
       <UniqueIdentifier>{1f099e0c-248c-44d0-aff0-e238adaee1ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ヘッダーファイル\Enemy">
+      <UniqueIdentifier>{6d5d5fba-7c35-43dc-b42b-3f7639f33c20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Enemy">
+      <UniqueIdentifier>{9b32727c-1fe6-4cbd-aa32-4e05e4027ad7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -309,9 +315,6 @@
     <ClCompile Include="engine\util\RRandom.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="engine\util\Color.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="engine\util\Timer.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
@@ -357,9 +360,6 @@
     <ClCompile Include="application\Player\AttackManager.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\PlayerInfo.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\Attack1.cpp">
       <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
     </ClCompile>
@@ -377,6 +377,18 @@
     </ClCompile>
     <ClCompile Include="application\Player\AttackAir3.cpp">
       <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\Gravity.cpp">
+      <Filter>engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\Color.cpp">
+      <Filter>engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\PlayerInfo.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\IEnemy.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -512,12 +524,6 @@
     <ClInclude Include="engine\util\RRandom.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="engine\util\Color.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\base\REngine.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="engine\util\Timer.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
@@ -563,9 +569,6 @@
     <ClInclude Include="application\Player\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\PlayerInfo.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\Attack1.h">
       <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
     </ClInclude>
@@ -583,6 +586,21 @@
     </ClInclude>
     <ClInclude Include="application\Player\AttackAir3.h">
       <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\Gravity.h">
+      <Filter>engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\Color.h">
+      <Filter>engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\PlayerInfo.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\base\REngine.h">
+      <Filter>engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\IEnemy.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
 #include "Collision.h"
 #include "PlayerAttack.h"
 #include "PlayerInfo.h"
-
+#include "Gravity.h"
 #include "AttackManager.h"
 
 
@@ -21,8 +21,7 @@ private:
 
 	Sphere colPos_;
 	bool isFloorCollision_ = false;
-	float gravity_;
-
+	Gravity gravity_;
 	//ベクトル
 	Vector3 move_;
 	Vector3 frontVec_;
@@ -48,13 +47,13 @@ private:
 	std::unique_ptr<Object3d> model_;
 public:
 	Player();
-	void Update();
+	void PreUpdate();
+	void PostUpdate();
 
 	void ColPosUpdate();
 private:
 	//移動
 	void InputVecUpdate();
-	void InputAngleUpdate();
 	//重力
 	void GravityUpdate();
 	//ジャンプ
@@ -75,7 +74,7 @@ public:
 	void AddPos(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 public:
-	Sphere GetColPos() { return colPos_; }
+	Sphere GetCol() { return colPos_; }
 	WorldTransform* GetWorldTransform() { return model_->GetTransform(); }
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerInfo* GetPlayerInfo() { return &info_; }

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\CollisionManager.cpp" />
+    <ClCompile Include="application\Enemy\IEnemy.cpp" />
     <ClCompile Include="application\Floor.cpp" />
     <ClCompile Include="application\GameCamera.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
@@ -77,11 +78,13 @@
     <ClCompile Include="engine\base\WinAPI.cpp" />
     <ClCompile Include="engine\3d\WorldTransform.cpp" />
     <ClCompile Include="engine\util\Color.cpp" />
+    <ClCompile Include="engine\util\Gravity.cpp" />
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\CollisionManager.h" />
+    <ClInclude Include="application\Enemy\IEnemy.h" />
     <ClInclude Include="application\Floor.h" />
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\LoadManager.h" />
@@ -147,6 +150,7 @@
     <ClInclude Include="engine\base\WinAPI.h" />
     <ClInclude Include="engine\3d\WorldTransform.h" />
     <ClInclude Include="engine\util\Color.h" />
+    <ClInclude Include="engine\util\Gravity.h" />
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\Timer.h" />
   </ItemGroup>

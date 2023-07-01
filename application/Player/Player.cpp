@@ -27,7 +27,7 @@ Player::Player()
 	info_.state = &state_;
 }
 
-void Player::Update()
+void Player::PreUpdate()
 {
 	addVec_ = { 0,0,0 };
 	//プレイヤーの状態更新
@@ -38,8 +38,6 @@ void Player::Update()
 	{
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
-		// 入力方向の角度を更新
-		InputAngleUpdate();
 		//ジャンプ
 		JumpUpdate();
 	}
@@ -50,7 +48,11 @@ void Player::Update()
 	GravityUpdate();
 
 	ColPosUpdate();
+}
 
+void Player::PostUpdate()
+{
+	addVec_ += gravity_.GetGravityValue();
 	// 回転代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
 
@@ -58,9 +60,16 @@ void Player::Update()
 	model_->WT_.position_ += addVec_;
 	model_->WT_.scale_ = scale_;
 	model_->Update();
+}
 
-	/*Model::lightGroup_->SetCircleShadowAtten(0,
-		)*/
+void Player::GravityUpdate()
+{
+	gravity_.SetAddValue({ 0,-0.01f,0 });
+	gravity_.Update();
+
+	//通常時はfalseにしておく
+	isFloorCollision_ = false;
+	
 }
 void Player::ColPosUpdate()
 {
@@ -129,31 +138,6 @@ void Player::InputVecUpdate()
 	}
 }
 
-void Player::InputAngleUpdate()
-{
-
-}
-
-void Player::GravityUpdate()
-{
-	float gravitySpeed = -0.015f;
-
-	//床に触れていたら
-	if (isFloorCollision_)
-	{
-		gravity_ = 0;
-	}
-	//空中にいたら重力を足す
-	else
-	{
-		gravity_ += gravitySpeed;
-	}
-
-	//model_->GetTransform()->AddPosition(0, gravity_,0);
-	//通常時はfalseにしておく
-	isFloorCollision_ = false;
-	addVec_ += { 0, gravity_, 0 };
-}
 
 void Player::JumpUpdate()
 {
@@ -167,7 +151,7 @@ void Player::JumpUpdate()
 			{
 				jumpTime_++;
 				//重力をマイナスにする
-				gravity_ = jumpSpeed;
+				gravity_.SetGrabity({0, jumpSpeed ,0});
 			}
 		}
 	}
@@ -177,7 +161,8 @@ void Player::JumpUpdate()
 	{
 		isJump_ = true;
 	}
-	
+
+	addVec_ += gravity_.GetGravityValue();
 }
 
 void Player::StateUpdate()
@@ -253,6 +238,9 @@ void Player::DrawImGui()
 	ImGui::SliderFloat("Max Y", &MaxMinY_.x, 0.f, 80.f, "x = %.3f");
 	ImGui::SliderFloat("Min Y", &MaxMinY_.y, -80.f, 0.f, "y = %.3f");
 
+	float gravity = gravity_.GetGravityValue().y;
+	ImGui::SliderFloat("gravity", &gravity, -80.f, 0.f, "y = %.3f");
+
 
 	//ImGui::SliderFloat("front.x", &resultVec2.x, 0.0f, 2000.0f, "x = %.3f");
 	//ImGui::SliderFloat("front.y", &resultVec2.y, 0.0f, 2000.0f, "y = %.3f");
@@ -269,4 +257,5 @@ void Player::floorColision()
 	isFloorCollision_ = true;
 	isJump_ = false;
 	jumpTime_ = 0;
+	gravity_.SetGrabity({0,0,0});
 }

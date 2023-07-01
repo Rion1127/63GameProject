@@ -1,6 +1,6 @@
 #pragma once
 #include "IAttack.h"
-class Attack2 :
+class Attack2 final :
     public IAttack
 {
 private:

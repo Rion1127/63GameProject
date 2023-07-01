@@ -1,7 +1,7 @@
 #pragma once
 #include "IAttack.h"
 
-class Attack1 :
+class Attack1 final :
 	public IAttack
 {
 private:
