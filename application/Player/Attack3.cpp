@@ -1,6 +1,6 @@
-#include "Attack2.h"
+#include "Attack3.h"
 
-Attack2::Attack2() : IAttack(1, 20)
+Attack3::Attack3() : IAttack(1, 20)
 {
 	frontDist_ = 5.f;
 	if (playerInfo_ != nullptr) {
@@ -19,11 +19,11 @@ Attack2::Attack2() : IAttack(1, 20)
 		colPos = playerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
 		attackCol_.at(0)->col_.center = colPos;
-		attackCol_.at(0)->col_.radius = 2.f;
+		attackCol_.at(0)->col_.radius = 3.f;
 	}
 }
 
-void Attack2::MoveUpdate()
+void Attack3::MoveUpdate()
 {
 	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
 	Vector3 frontVec = {
@@ -40,5 +40,4 @@ void Attack2::MoveUpdate()
 		attackCol_.at(0)->col_.center += *playerInfo_->addVec_;
 	}
 }
-
 

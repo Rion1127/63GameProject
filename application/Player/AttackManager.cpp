@@ -6,6 +6,7 @@ AttackManager::AttackManager()
 	controller_ = Controller::GetInstance();
 	comboNum = 0;
 	attacks_.insert(std::pair("First",std::move(std::make_unique<Attack1>())));
+	isAttacking = false;
 }
 
 void AttackManager::Update()
@@ -17,24 +18,36 @@ void AttackManager::Update()
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
 			if (nowAttack_ == nullptr)
 			{
-				nowAttack_ = std::move(std::make_unique<Attack1>());
+				
+				if (*IAttack::GetPlayerInfo()->state == PlayerState::Idle) {
+					nowAttack_ = std::move(std::make_unique<Attack1>());
+				}
+				else if (*IAttack::GetPlayerInfo()->state == PlayerState::Jump) {
+					nowAttack_ = std::move(std::make_unique<AttackAir1>());
+				}
 
 				timer_ = 0;
 				comboNum++;
 			}
 			else
 			{
-				//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-				nextAttack_ = std::move(std::make_unique<Attack2>());
-				if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
-				if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack2>());
-				if (comboNum == 3)nextAttack_ = std::move(std::make_unique<Attack2>());
+				if (*IAttack::GetPlayerInfo()->state == PlayerState::Attack) {
+					//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
+					if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
+					if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>());
+				}
+				else if (*IAttack::GetPlayerInfo()->state == PlayerState::AirAttack) {
+					if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>());
+					if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>());
+				}
 			}
 		}
 	}
 
 	if (nowAttack_ != nullptr)
 	{
+		//UŒ‚’†ƒtƒ‰ƒO
+		isAttacking = true;
 		//UŒ‚XV
 		nowAttack_->Update();
 		nowAttack_->SetNowTime(timer_);
@@ -53,6 +66,7 @@ void AttackManager::Update()
 	}
 	else if (nowAttack_ == nullptr)
 	{
+		isAttacking = false;
 		comboNum = 0;
 	}
 
@@ -68,9 +82,9 @@ void AttackManager::DrawDebug()
 
 	ImGui::Begin("Attack");
 	int num = (int)comboNum;
-	ImGui::SliderInt("combo %d", &num, 0, 10, "%d");
+	ImGui::SliderInt("combo", &num, 0, 10, "%d");
 	int time = (int)timer_;
-	ImGui::SliderInt("time %d", &time, 0, 120, "%d");
+	ImGui::SliderInt("time", &time, 0, 120, "%d");
 
 	ImGui::End();
 }

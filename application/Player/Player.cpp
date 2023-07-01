@@ -23,17 +23,26 @@ Player::Player()
 	info_.frontVec = &frontVec_;
 	info_.WT = model_->GetTransform();
 	info_.addVec_ = &addVec_;
+	info_.gravity = &gravity_;
+	info_.state = &state_;
 }
 
 void Player::Update()
 {
 	addVec_ = { 0,0,0 };
-	// 入力方向ベクトルを更新
-	InputVecUpdate();
-	// 入力方向の角度を更新
-	InputAngleUpdate();
-	//ジャンプ
-	JumpUpdate();
+	//プレイヤーの状態更新
+	StateUpdate();
+
+	if (state_ != PlayerState::Attack &&
+		state_ != PlayerState::AirAttack)
+	{
+		// 入力方向ベクトルを更新
+		InputVecUpdate();
+		// 入力方向の角度を更新
+		InputAngleUpdate();
+		//ジャンプ
+		JumpUpdate();
+	}
 
 	attack_.Update();
 
@@ -49,7 +58,7 @@ void Player::Update()
 	model_->WT_.position_ += addVec_;
 	model_->WT_.scale_ = scale_;
 	model_->Update();
-	
+
 	/*Model::lightGroup_->SetCircleShadowAtten(0,
 		)*/
 }
@@ -69,7 +78,7 @@ void Player::ColPosUpdate()
 
 	colPos_.SetPos(colPos);
 
-	
+
 }
 #pragma region 入力
 void Player::InputVecUpdate()
@@ -128,6 +137,7 @@ void Player::InputAngleUpdate()
 void Player::GravityUpdate()
 {
 	float gravitySpeed = -0.015f;
+
 	//床に触れていたら
 	if (isFloorCollision_)
 	{
@@ -142,6 +152,7 @@ void Player::GravityUpdate()
 	//model_->GetTransform()->AddPosition(0, gravity_,0);
 	//通常時はfalseにしておく
 	isFloorCollision_ = false;
+	addVec_ += { 0, gravity_, 0 };
 }
 
 void Player::JumpUpdate()
@@ -166,7 +177,21 @@ void Player::JumpUpdate()
 	{
 		isJump_ = true;
 	}
-	addVec_ += { 0, gravity_, 0 };
+	
+}
+
+void Player::StateUpdate()
+{
+	state_ = PlayerState::Idle;
+	if (isFloorCollision_ == false) {
+		state_ = PlayerState::Jump;
+	}
+	if (attack_.GetIsAttacking()) {
+		state_ = PlayerState::Attack;
+	}
+	if (isFloorCollision_ == false && attack_.GetIsAttacking()) {
+		state_ = PlayerState::AirAttack;
+	}
 }
 
 void Player::Draw()
@@ -213,6 +238,14 @@ void Player::DrawImGui()
 		ImGui::SliderFloat("scale.y", &z, 0.0f, 2000.0f, "y = %.3f");
 
 	}
+
+	std::string text;
+	if (state_ == PlayerState::Idle)text = "Idle";
+	if (state_ == PlayerState::Jump)text = "Jump";
+	if (state_ == PlayerState::Attack)text = "Attack";
+	if (state_ == PlayerState::AirAttack)text = "AirAttack";
+
+	ImGui::Text(text.c_str());
 
 	ImGui::SliderFloat("Max X", &MaxMinX_.x, 0.f, 80.f, "x = %.3f");
 	ImGui::SliderFloat("Min X", &MaxMinX_.y, -80.f, 0.f, "y = %.3f");

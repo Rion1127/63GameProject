@@ -18,13 +18,16 @@ void IAttack::Update()
 {
 	if (playerInfo_ != nullptr) {
 		MoveUpdate();
-
-		PlayerMoveUpdate();
 	}
 
 	for (auto& col : attackCol_)
 	{
 		col->colObj_.WT_.position_ = col->col_.center;
+		col->colObj_.WT_.scale_ = {
+			col->col_.radius,
+			col->col_.radius,
+			col->col_.radius,
+		};
 		col->colObj_.Update();
 	}
 }

@@ -1,6 +1,6 @@
-#include "Attack2.h"
+#include "AttackAir1.h"
 
-Attack2::Attack2() : IAttack(1, 20)
+AttackAir1::AttackAir1() : IAttack(1, 20)
 {
 	frontDist_ = 5.f;
 	if (playerInfo_ != nullptr) {
@@ -18,12 +18,13 @@ Attack2::Attack2() : IAttack(1, 20)
 
 		colPos = playerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
+		
 		attackCol_.at(0)->col_.center = colPos;
-		attackCol_.at(0)->col_.radius = 2.f;
+		attackCol_.at(0)->col_.radius = 1.f;
 	}
 }
 
-void Attack2::MoveUpdate()
+void AttackAir1::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
 	Vector3 frontVec = {
@@ -37,8 +38,7 @@ void Attack2::MoveUpdate()
 	//maxTime - 10の時間分プレイヤーを前に進める
 	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
 		*playerInfo_->addVec_ += speed;
+		playerInfo_->gravity = 0;
 		attackCol_.at(0)->col_.center += *playerInfo_->addVec_;
 	}
 }
-
-

@@ -1,12 +1,12 @@
 #pragma once
 #include "IAttack.h"
-class Attack2 :
-    public IAttack
+class AttackAir3 :
+	public IAttack
 {
 private:
 	float frontDist_;
 public:
-	Attack2();
+	AttackAir3();
 private:
 	void MoveUpdate() override;
 };

@@ -24,11 +24,6 @@ Attack1::Attack1() : IAttack(1, 20)
 
 void Attack1::MoveUpdate()
 {
-	//attackCol_.at(0)->col_.center.z += 0.02f;
-}
-
-void Attack1::PlayerMoveUpdate()
-{
 	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
 	Vector3 frontVec = {
 		sinf(playerInfo_->WT->rotation_.y),

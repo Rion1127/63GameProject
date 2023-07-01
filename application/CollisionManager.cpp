@@ -5,7 +5,7 @@ void CollisionManager::Update()
 	//床とプレイヤー
 	if (Sphere2PlaneCol(player_->GetColPos(), floor_->GetPlaneCol()))
 	{
-		player_->floorColision();
+		
 
 		//地面にめり込まないように押し出し処理
 		while (true)
@@ -28,6 +28,7 @@ void CollisionManager::Update()
 				break;
 			}
 		}
+		player_->floorColision();
 	}
 		
 }

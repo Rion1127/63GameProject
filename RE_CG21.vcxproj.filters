@@ -160,6 +160,18 @@
     <Filter Include="application\ヘッダーファイル\Player\Attack">
       <UniqueIdentifier>{58eaa20c-82ec-4e05-9c52-44040d287a3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Player\Attack\GroundAttack">
+      <UniqueIdentifier>{5bd00da9-8df1-495c-b110-035cd0905794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player\Attack\GroundAttack">
+      <UniqueIdentifier>{f6366b01-728c-40a4-8f3a-b6698adb5814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Player\Attack\AirAttack">
+      <UniqueIdentifier>{a8ac29e1-937c-407c-a209-ee686230474b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player\Attack\AirAttack">
+      <UniqueIdentifier>{1f099e0c-248c-44d0-aff0-e238adaee1ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -339,20 +351,32 @@
     <ClCompile Include="application\Player\PlayerAttack.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\Attack1.cpp">
-      <Filter>application\ソースファイル\Player\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\IAttack.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
     <ClCompile Include="application\Player\AttackManager.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\Attack2.cpp">
-      <Filter>application\ソースファイル\Player\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\PlayerInfo.cpp">
       <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\Attack1.cpp">
+      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\Attack2.cpp">
+      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\Attack3.cpp">
+      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\AttackAir1.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\AttackAir2.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\AttackAir3.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,20 +557,32 @@
     <ClInclude Include="application\Player\PlayerAttack.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\Attack1.h">
-      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\IAttack.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
     <ClInclude Include="application\Player\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\Attack2.h">
-      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\PlayerInfo.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\Attack1.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\Attack2.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\Attack3.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\AttackAir1.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\AttackAir2.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\AttackAir3.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

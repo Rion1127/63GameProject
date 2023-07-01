@@ -10,12 +10,7 @@
 
 #include "AttackManager.h"
 
-enum class PlayerState{
-	Idle,
-	Jump,
-	Attack,
 
-};
 
 class Player
 {
@@ -46,6 +41,7 @@ private:
 
 	AttackManager attack_;
 	PlayerInfo info_;
+	PlayerState state_;
 private:
 	Controller* controller_ = nullptr;
 	//モデル
@@ -63,6 +59,8 @@ private:
 	void GravityUpdate();
 	//ジャンプ
 	void JumpUpdate();
+	//ステータス更新
+	void StateUpdate();
 public:
 	void Draw();
 

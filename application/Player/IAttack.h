@@ -30,9 +30,9 @@ public:
 	void SetNowTime(size_t time) { attackInfo_.nowTime = time; }
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
+	static PlayerInfo* GetPlayerInfo() { return playerInfo_; }
 	static void SetPlayerInfo(PlayerInfo* info) { playerInfo_ = info; }
 protected:
 	virtual void MoveUpdate() = 0;
-	virtual void PlayerMoveUpdate() = 0;
 };
 

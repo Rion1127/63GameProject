@@ -10,6 +10,5 @@ public:
 	Attack1();
 private:
 	void MoveUpdate() override;
-	void PlayerMoveUpdate() override;
 };
 

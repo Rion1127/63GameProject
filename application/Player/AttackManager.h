@@ -5,7 +5,11 @@
 #include "mInput.h"
 #include "Attack1.h"
 #include "Attack2.h"
+#include "Attack3.h"
 
+#include "AttackAir1.h"
+#include "AttackAir2.h"
+#include "AttackAir3.h"
 
 class AttackManager
 {
@@ -21,11 +25,15 @@ private:
 	size_t comboNum;
 
 	size_t timer_ = 0;
+
+	bool isAttacking;
 public:
 	AttackManager();
 
 	void Update();
 
 	void DrawDebug();
+public:
+	bool GetIsAttacking() { return isAttacking; }
 };
 
