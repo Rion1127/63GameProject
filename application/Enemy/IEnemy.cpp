@@ -16,7 +16,7 @@ void IEnemy::PostUpdate()
 	addVec_ += gravity_.GetGravityValue();
 	addVec_ += knockVec_;
 	//ノックバックのベクトルを0にしていく
-	MoveTo({0,0,0},0.1f, knockVec_);
+	MoveTo({0,0,0},0.05f, knockVec_);
 	obj_->WT_.position_ += addVec_;
 
 	ColPosUpdate();

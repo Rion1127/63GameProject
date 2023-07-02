@@ -134,9 +134,9 @@ void CollisionManager::PlayerAttackToEnemy()
 					if (BallCollision(col->col_, enemy->GetCol()))
 					{
 						Vector3 PtoEVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
-						PtoEVec.y = 0.3f;
+						PtoEVec.y = 0.6f;
 						PtoEVec.normalize();
-						enemy->HitPlayerAttack(PtoEVec * 0.6f, col->damage, col->damageCoolTime);
+						enemy->HitPlayerAttack(PtoEVec * 0.3f, col->damage, col->damageCoolTime);
 					}
 				}
 			}
