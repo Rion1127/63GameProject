@@ -107,12 +107,15 @@ void CollisionManager::PlayerToEnemy()
 		if (BallCollision(player_->GetCol(), enemy->GetCol()))
 		{
 			Vector3 PtoEVec = player_->GetCol().center - enemy->GetCol().center;
+			//ベクトルの長さを取得
 			float length = PtoEVec.length();
 			PtoEVec.normalize();
 			//Y成分を無効にして押し出す
 			PtoEVec.y = 0;
+			//二つの当たり判定の半径の長さを足す
 			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
-			backLength -= length * 0.97f;
+			//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
+			backLength -= length;
 			
 			player_->SetAddPos(PtoEVec * backLength);
 		}
