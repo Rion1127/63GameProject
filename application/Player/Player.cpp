@@ -25,6 +25,7 @@ Player::Player()
 	info_.addVec_ = &addVec_;
 	info_.gravity = &gravity_;
 	info_.state = &state_;
+	info_.rot_ = &rot_;
 }
 
 void Player::PreUpdate()
@@ -59,7 +60,7 @@ void Player::PostUpdate()
 	//PostUpdate‚ÅaddVec_‚É‘ã“ü‚µ‚Ä‚¢‚é
 	addVec_ += gravity_.GetGravityValue();
 	// “ü—Í‚µ‚½•ûŒü‚É‰ñ“]î•ñ‘ã“ü
-	rot_ = { 0,Radian(inputAngle_) ,0 };
+	
 
 	obj_->WT_.rotation_ = rot_;
 	obj_->WT_.position_ += addVec_;
@@ -122,7 +123,7 @@ void Player::InputVecUpdate()
 		moveVec2.x = (frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y);
 		moveVec2.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
 		moveVec2.x = -moveVec2.x;
-		moveVec2 *= 0.03f;
+		moveVec2 *= 0.01f;
 	}
 
 	addVec_ += {moveVec2.x, 0, moveVec2.y};
@@ -141,12 +142,13 @@ void Player::InputVecUpdate()
 	{
 		inputAngle_ = inputAngle;
 	}
+	rot_ = { 0,Radian(inputAngle_) ,0 };
 }
 
 
 void Player::JumpUpdate()
 {
-	float jumpSpeed = 0.3f;
+	float jumpSpeed = 0.2f;
 	int Maxjumptimer = 20;
 	if (controller_->GetButtons(PAD::INPUT_A))
 	{

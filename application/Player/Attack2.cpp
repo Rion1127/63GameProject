@@ -2,11 +2,12 @@
 
 Attack2::Attack2() : IAttack(1, 25)
 {
-	frontDist_ = 5.f;
+	
 	Vector3 frontVec{};
 	Vector3 colPos{};
 	Vector3 frontDist{};
 	if (splayerInfo_ != nullptr) {
+		frontDist_ = splayerInfo_->WT->scale_.x;
 		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
 		if (IAttack::lockOnActor_) {
 			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
@@ -30,6 +31,7 @@ Attack2::Attack2() : IAttack(1, 25)
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
 		attackCol_.at(0)->col_.center = colPos;
+		attackCol_.at(0)->col_.radius = 2.f;
 	}
 
 	attackVec_ = frontVec;

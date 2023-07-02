@@ -2,6 +2,7 @@
 
 EnemyManager::EnemyManager()
 {
+	lockOnobjTimer_.SetLimitTime(360);
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(20, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(-20, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, -20))));
@@ -28,8 +29,11 @@ void EnemyManager::PreUpdate()
 		}
 	}
 	if (lockOnEnemy_ != nullptr) {
+		lockOnobjTimer_.AddTime(1);
 		lockOnObj_->GetTransform()->SetPosition(lockOnEnemy_->GetWorldTransform()->position_);
-		lockOnObj_->GetTransform()->AddPosition({ 0,2,0 });
+		//ロックオンオブジェを上下に揺らす
+		float posy = 4 + sinf((float)lockOnobjTimer_.GetTimer() / 15.f) * 0.4f;
+		lockOnObj_->GetTransform()->AddPosition({ 0,posy,0});
 		lockOnObj_->GetTransform()->AddRotation({ 0,0.03f,0 });
 		lockOnObj_->Update();
 	}

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "EnemyDummy.h"
+#include "Timer.h"
 class EnemyManager
 {
 private:
@@ -11,6 +12,7 @@ private:
 
 	std::unique_ptr<Object3d> lockOnObj_;
 	IEnemy* lockOnEnemy_;
+	Timer lockOnobjTimer_;
 public:
 	EnemyManager();
 	void PreUpdate();

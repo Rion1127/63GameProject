@@ -2,45 +2,35 @@
 
 Attack3::Attack3() : IAttack(1, 30)
 {
-	frontDist_ = 5.f;
 	Vector3 frontVec{};
+	Vector3 colPos{};
+	Vector3 frontDist{};
 	if (splayerInfo_ != nullptr) {
+		frontDist_ = splayerInfo_->WT->scale_.x;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_) {
-			Vector3 colPos;
-			//回転情報から正面ベクトル(2D)を取得
 			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
-
+			//ロックオンしている敵へのベクトルをとる
 			frontVec = {
 				 lockOnPos.x - splayerInfo_->WT->position_.x,
 				0,
 				lockOnPos.z - splayerInfo_->WT->position_.z,
 			};
-
-			Vector3 frontDist = frontVec * frontDist_;
-			frontDist.y = 0;
-
-			colPos = splayerInfo_->WT->position_ + frontDist;
-			colPos.y += 1;
-			attackCol_.at(0)->col_.center = colPos;
 		}
 		else {
-			Vector3 colPos;
-
 			//回転情報から正面ベクトル(2D)を取得
 			frontVec = {
 				sinf(splayerInfo_->WT->rotation_.y),
 				0,
 				cosf(splayerInfo_->WT->rotation_.y),
 			};
-
-			Vector3 frontDist = frontVec * frontDist_;
-			frontDist.y = 0;
-
-			colPos = splayerInfo_->WT->position_ + frontDist;
-			colPos.y += 1;
-			attackCol_.at(0)->col_.center = colPos;
 		}
+		frontDist = frontVec * frontDist_;
+		frontDist.y = 0;
+		colPos = splayerInfo_->WT->position_ + frontDist;
+		colPos.y += 1;
+		attackCol_.at(0)->col_.center = colPos;
+		attackCol_.at(0)->col_.radius = 3.f;
 	}
 
 	attackVec_ = frontVec;

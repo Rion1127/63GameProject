@@ -15,6 +15,7 @@ struct PlayerInfo
 	WorldTransform* WT;
 	Vector3* frontVec;
 	Vector3* addVec_;
+	Vector3* rot_;
 	Gravity* gravity;
 	PlayerState* state;
 };

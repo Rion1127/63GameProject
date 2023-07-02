@@ -20,7 +20,7 @@ void GameCamera::Update()
 		player_->GetWorldTransform()->position_.z
 	};
 
-	float frontdist = 35;
+	float frontdist = 25;
 
 	static Vector3 moveDist{};	//‹…–ÊÀ•W
 

@@ -2,11 +2,14 @@
 
 void CollisionManager::Update()
 {
+	//床とプレイヤー
 	PlayerToFloor();
-
+	//床と敵
 	EnemyToFloor();
-
+	//ロックオンする敵
 	EnemyLockOn();
+	//プレイヤーと敵押し出し
+	PlayerToEnemy();
 }
 
 void CollisionManager::PlayerToFloor()
@@ -64,7 +67,6 @@ void CollisionManager::EnemyToFloor()
 
 				enemy->ColPosUpdate();
 			}
-
 		}
 	}
 }
@@ -89,6 +91,7 @@ void CollisionManager::EnemyLockOn()
 			}
 		}
 	}
+
 	if (lockOnEnemy != nullptr) {
 		lockOnEnemy->SetIsLockOn(true);
 	}
@@ -96,4 +99,17 @@ void CollisionManager::EnemyLockOn()
 	//AttackManagerへlockOnEnemyのアドレスを渡す
 	player_->SetLockOnEnemy(lockOnEnemy);
 
+}
+
+void CollisionManager::PlayerToEnemy()
+{
+	for (auto& enemy : *enemyManager_->GetEnemy()) {
+		if (BallCollision(player_->GetCol(), enemy->GetCol()))
+		{
+			Vector3 PtoEVec = player_->GetCol().center - enemy->GetCol().center;
+			//Y成分を無効にして押し出す
+			PtoEVec.y = 0;
+			player_->AddPos(PtoEVec * 0.1f);
+		}
+	}
 }
