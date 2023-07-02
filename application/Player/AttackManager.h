@@ -1,5 +1,6 @@
 #pragma once
 #include "IAttack.h"
+#include "IEnemy.h"
 #include <vector>
 #include <map>
 #include "mInput.h"
@@ -27,6 +28,7 @@ private:
 	size_t timer_ = 0;
 
 	bool isAttacking;
+	IEnemy* lockOnEnemy_;
 public:
 	AttackManager();
 
@@ -35,5 +37,7 @@ public:
 	void DrawDebug();
 public:
 	bool GetIsAttacking() { return isAttacking; }
+public:
+	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
 };
 

@@ -7,7 +7,7 @@ Player::Player()
 {
 	controller_ = Controller::GetInstance();
 
-	colPos_.radius = 1;
+	col_.radius = 1;
 
 	// 入力されている方向の角度
 	inputAngle_ = 0.0f;
@@ -38,8 +38,6 @@ void Player::PreUpdate()
 	{
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
-		//ジャンプ
-		//JumpUpdate();
 	}
 
 	attack_.Update();
@@ -57,9 +55,10 @@ void Player::PostUpdate()
 	{
 		JumpUpdate();
 	}
-
+	//当たり判定でgravityの値を変化させてから
+	//PostUpdateでaddVec_に代入している
 	addVec_ += gravity_.GetGravityValue();
-	// 回転代入
+	// 入力した方向に回転情報代入
 	rot_ = { 0,Radian(inputAngle_) ,0 };
 
 	obj_->WT_.rotation_ = rot_;
@@ -87,11 +86,11 @@ void Player::ColPosUpdate()
 	//モデルの原点を下にしているためその分ずらす
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
-		obj_->GetTransform()->position_.y + 1.0f,
+		obj_->GetTransform()->position_.y + obj_->WT_.scale_.y,
 		obj_->GetTransform()->position_.z,
 	};
 
-	colPos_.SetPos(colPos);
+	col_.SetPos(colPos);
 
 
 }
@@ -156,7 +155,7 @@ void Player::JumpUpdate()
 			if (jumpTime_ < Maxjumptimer)
 			{
 				jumpTime_++;
-				//重力をマイナスにする
+				
 				gravity_.SetGrabity({0, jumpSpeed ,0});
 			}
 		}

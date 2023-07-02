@@ -1,20 +1,19 @@
 #pragma once
 #include "Object3d.h"
-#include "Player.h"
+#include "IActor.h"
 #include "Collision.h"
 #include "Gravity.h"
-class IEnemy
+class IEnemy : public IActor
 {
 protected:
-	static Player* splayer_;
+	static IActor* splayer_;
 	//ƒ‚ƒfƒ‹
-	std::unique_ptr<Object3d> obj_;
-	Sphere col_;
 	Gravity gravity_;
 	Vector3 addVec_;
+
+	bool isLockOn;
 public:
-	IEnemy();
-	static void SetPlayer(Player* player) { splayer_ = player; }
+	static void SetPlayer(IActor* player) { splayer_ = player; }
 
 	void PreUpdate();
 	void PostUpdate();
@@ -22,9 +21,8 @@ public:
 	void FloorColision();
 	void ColPosUpdate();
 public:
-	Sphere GetCol() { return col_; }
 	Gravity GetGravity() { return gravity_; }
-	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
+	bool GetIsLockOn() { return isLockOn; }
 protected:
 	virtual void MoveUpdate() = 0;
 };

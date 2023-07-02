@@ -1,25 +1,23 @@
 #pragma once
 #include "mInput.h"
-#include "Object3d.h"
 #include "Vector3.h"
 #include <memory>
 #include "Texture.h"
-#include "Collision.h"
 #include "PlayerAttack.h"
 #include "PlayerInfo.h"
 #include "Gravity.h"
 #include "AttackManager.h"
+#include "IActor.h"
 
 
-
-class Player
+class Player :
+	public IActor
 {
 private:
 	Vector3 addVec_;
 	Vector3 rot_;
 	Vector3 scale_;
 
-	Sphere colPos_;
 	bool isFloorCollision_ = false;
 	Gravity gravity_;
 	//ベクトル
@@ -43,8 +41,6 @@ private:
 	PlayerState state_;
 private:
 	Controller* controller_ = nullptr;
-	//モデル
-	std::unique_ptr<Object3d> obj_;
 public:
 	Player();
 	void PreUpdate();
@@ -73,9 +69,9 @@ public:
 
 	void AddPos(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
+	void SetLockOnEnemy(IEnemy* enemy) { attack_.SetLockOnEnemy(enemy); }
 public:
-	Sphere GetCol() { return colPos_; }
-	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
+	
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerInfo* GetPlayerInfo() { return &info_; }
 };

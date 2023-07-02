@@ -1,19 +1,12 @@
 #include "IEnemy.h"
 
-IEnemy::IEnemy()
-{
-	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
-	obj_->SetAmbient("cube", { 0,0,1.0f });
-	obj_->GetTransform()->AddPosition({ 0,6,0 });
-}
-
 void IEnemy::PreUpdate()
 {
 	addVec_ = { 0,0,0 };
-	
 
 	gravity_.Update();
+
+	
 }
 
 void IEnemy::PostUpdate()

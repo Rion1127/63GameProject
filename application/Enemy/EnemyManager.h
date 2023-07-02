@@ -8,6 +8,9 @@ class EnemyManager
 private:
 	std::vector<std::unique_ptr<IEnemy>> enemys_;
 	std::vector<std::unique_ptr<IEnemy>> AirEnemys_;
+
+	std::unique_ptr<Object3d> lockOnObj_;
+	IEnemy* lockOnEnemy_;
 public:
 	EnemyManager();
 	void PreUpdate();

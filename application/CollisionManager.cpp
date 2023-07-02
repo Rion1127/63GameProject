@@ -66,3 +66,7 @@ void CollisionManager::EnemyToFloor()
 		}
 	}
 }
+
+void CollisionManager::EnemyLockOn()
+{
+}

@@ -6,7 +6,7 @@ class EnemyDummy :
 private:
     float time_ = 0.f;
 public:
-    EnemyDummy();
+    EnemyDummy(Vector3 pos);
 private:
     void MoveUpdate() override;
 };

@@ -20,6 +20,7 @@ private:
 	void PlayerToFloor();
 	//“G‚Æ°
 	void EnemyToFloor();
-	
+	//“GƒƒbƒNƒIƒ“
+	void EnemyLockOn();
 };
 
