@@ -16,6 +16,7 @@ void ShaderCompileFromFile(
 	ID3DBlob** blob, ID3DBlob* errorBlob);
 
 void MoveTo(const Vector3& goal, float speed,WorldTransform& WT);
+void MoveTo(const Vector3& goal, float speed, Vector3& value);
 
 //定数バッファ
 template <class MapClass>

@@ -126,3 +126,16 @@ void MoveTo(const Vector3& goal, float speed, WorldTransform& WT)
 	WT.position_ =
 		WT.position_ + dir.SetLength(speed);
 }
+
+void MoveTo(const Vector3& goal, float speed, Vector3& value)
+{
+	Vector3 dir = goal - value;
+	float dirLength = dir.length();
+	if (dirLength < speed * speed)
+	{
+		value = goal;
+		return;
+	}
+	value =
+		value + dir.SetLength(speed);
+}

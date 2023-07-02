@@ -11,6 +11,7 @@ protected:
 	//ƒ‚ƒfƒ‹
 	Gravity gravity_;
 	Vector3 addVec_;
+	Vector3 knockVec_;
 
 	bool isLockOn_;
 	Timer damegeCoolTime_;

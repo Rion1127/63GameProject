@@ -14,6 +14,9 @@ void IEnemy::PostUpdate()
 	MoveUpdate();
 
 	addVec_ += gravity_.GetGravityValue();
+	addVec_ += knockVec_;
+	//ノックバックのベクトルを0にしていく
+	MoveTo({0,0,0},0.01f, knockVec_);
 	obj_->WT_.position_ += addVec_;
 
 	ColPosUpdate();
@@ -39,7 +42,7 @@ void IEnemy::ColPosUpdate()
 void IEnemy::HitPlayerAttack(Vector3 knockVec, float damageValue, int32_t cooltime)
 {
 	if (damegeCoolTime_.GetIsEnd()) {
-		addVec_ += knockVec;
+		knockVec_ = knockVec;
 		damegeCoolTime_.SetLimitTime(cooltime);
 		damegeCoolTime_.Reset();
 	}
