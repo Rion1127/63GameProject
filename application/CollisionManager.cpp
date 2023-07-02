@@ -114,7 +114,7 @@ void CollisionManager::PlayerToEnemy()
 			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
 			backLength -= length * 0.97f;
 			
-			player_->AddPos(PtoEVec * backLength);
+			player_->SetAddPos(PtoEVec * backLength);
 		}
 	}
 }
