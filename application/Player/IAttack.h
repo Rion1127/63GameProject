@@ -26,7 +26,7 @@ protected:
 	Vector3 attackVec_;
 public:
 	IAttack(size_t colNum,size_t maxTime);
-
+	
 	void Update();
 	void DrawCol();
 public:
@@ -36,6 +36,8 @@ public:
 	static PlayerInfo* GetPlayerInfo() { return splayerInfo_; }
 	static void SetPlayerInfo(PlayerInfo* info) { splayerInfo_ = info; }
 	static void SetLockOnActor(IActor* info) { lockOnActor_ = info; }
+public:
+	virtual void Init() = 0;
 protected:
 	virtual void MoveUpdate() = 0;
 };

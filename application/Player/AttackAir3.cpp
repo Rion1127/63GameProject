@@ -2,6 +2,10 @@
 
 AttackAir3::AttackAir3() : IAttack(1, 30)
 {
+}
+
+void AttackAir3::Init()
+{
 	Vector3 frontVec{};
 	Vector3 colPos{};
 	Vector3 frontDist{};
@@ -37,7 +41,7 @@ AttackAir3::AttackAir3() : IAttack(1, 30)
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		splayerInfo_->gravity->SetGrabity({ 0,0.06f,0 });
+		splayerInfo_->gravity->SetGrabity({ 0,0.07f,0 });
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.f;
 	}

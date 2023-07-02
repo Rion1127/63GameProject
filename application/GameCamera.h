@@ -15,6 +15,7 @@ private:
 	DeadZoneValue deadZone_;
 	//カメラの最終地点
 	Vector3 endEyePos_;
+	Vector3 endTargetPos_;
 public:
 	GameCamera();
 	void Update();

@@ -8,6 +8,7 @@ private:
 public:
 	Attack2();
 private:
+	void Init() override;
 	void MoveUpdate() override;
 };
 

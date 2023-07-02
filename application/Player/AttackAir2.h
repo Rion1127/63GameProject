@@ -8,6 +8,7 @@ private:
 public:
 	AttackAir2();
 private:
+	void Init() override;
 	void MoveUpdate() override;
 };
 

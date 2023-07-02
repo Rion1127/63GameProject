@@ -26,7 +26,7 @@ void AttackManager::Update()
 				else if (*IAttack::GetPlayerInfo()->state == PlayerState::Jump) {
 					nowAttack_ = std::move(std::make_unique<AttackAir1>());
 				}
-
+				if (nowAttack_ != nullptr) nowAttack_->Init();
 				timer_ = 0;
 				comboNum++;
 			}
@@ -61,6 +61,8 @@ void AttackManager::Update()
 		{
 			timer_ = 0;
 			nowAttack_.swap(nextAttack_);
+			//UŒ‚‰Šú‰»
+			if (nowAttack_ != nullptr) nowAttack_->Init();
 			//nextAttack_‚ð‰ð•ú‚·‚é
 			nextAttack_.reset();
 			nextAttack_ = nullptr;

@@ -24,11 +24,7 @@ void GameCamera::Update()
 
 	static Vector3 moveDist{};	//‹…–ÊÀ•W
 
-	/*camera_->eye_.x = player_->GetWorldTransform()->position_.x;
-	camera_->eye_.y = player_->GetWorldTransform()->position_.y + 10;
-	camera_->eye_.z = player_->GetWorldTransform()->position_.z - 25;*/
-
-	camera_->target_ = player_->GetWorldTransform()->position_;
+	endTargetPos_ = player_->GetWorldTransform()->position_;
 
 	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
@@ -42,7 +38,8 @@ void GameCamera::Update()
 	endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
 	endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
 
-	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.1f;
+	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.2f;
+	camera_->target_ += (endTargetPos_ - camera_->target_) * 0.2f;
 
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
 	float minGamecameraY = 3.5f;

@@ -1,6 +1,10 @@
 #include "AttackAir2.h"
 
-AttackAir2::AttackAir2() : IAttack(1, 20)
+AttackAir2::AttackAir2() : IAttack(1, 25)
+{
+}
+
+void AttackAir2::Init()
 {
 	Vector3 frontVec{};
 	Vector3 colPos{};
@@ -36,7 +40,7 @@ AttackAir2::AttackAir2() : IAttack(1, 20)
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		splayerInfo_->gravity->SetGrabity({ 0,0.06f,0 });
+		splayerInfo_->gravity->SetGrabity({ 0,0.04f,0 });
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.f;
 	}

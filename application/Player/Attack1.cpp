@@ -2,11 +2,15 @@
 
 Attack1::Attack1() : IAttack(1, 25)
 {
+}
+
+void Attack1::Init()
+{
 	Vector3 frontVec{};
 	Vector3 colPos{};
 	Vector3 frontDist{};
 	if (splayerInfo_ != nullptr) {
-		frontDist_ = splayerInfo_->WT->scale_.x;
+		frontDist_ = 0;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_) {
 			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
@@ -16,13 +20,12 @@ Attack1::Attack1() : IAttack(1, 25)
 				0,
 				lockOnPos.z - splayerInfo_->WT->position_.z,
 			};
-			frontVec.normalize();
 			Vector2 frontVec2 = {
 				frontVec.x,
 				frontVec.z
 			};
 			float rotY = Radian(Vec2Angle(frontVec2));
-			*splayerInfo_->rot_ = {0,rotY ,0};
+			*splayerInfo_->rot_ = { 0,rotY ,0 };
 		}
 		else {
 			//回転情報から正面ベクトル(2D)を取得
@@ -32,6 +35,7 @@ Attack1::Attack1() : IAttack(1, 25)
 				cosf(splayerInfo_->WT->rotation_.y),
 			};
 		}
+		frontVec.normalize();
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
@@ -47,13 +51,14 @@ void Attack1::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
 	attackVec_.normalize();
-	Vector3 speed = attackVec_ * 0.1f;
+	Vector3 speed = attackVec_ * 0.04f;
 
 	//maxTime - 10の時間分プレイヤーを前に進める
-	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
+	if (attackInfo_.nowTime < attackInfo_.maxTime - 5) {
 		*splayerInfo_->addVec_ += speed;
-		attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + attackVec_ * 5.f;
-		attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y * 2.f;
+		Vector3 attackVec = attackVec_ * (splayerInfo_->WT->scale_.x * 2.f);
+		attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + attackVec;
+		attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y;
 	}
 }
 
