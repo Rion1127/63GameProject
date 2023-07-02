@@ -46,13 +46,13 @@ void CollisionManager::PlayerToFloor()
 void CollisionManager::EnemyToFloor()
 {
 	for (auto& enemy : *enemyManager_->GetEnemy()) {
-		//床とプレイヤー
+		//床と敵
 		if (Sphere2PlaneCol(enemy->GetCol(), floor_->GetPlaneCol()))
 		{
 			//地面にめり込まないように押し出し処理
 			while (true)
 			{
-				float checkValue = 0.01f;
+				float checkValue = 1.5f;
 				Sphere col = enemy->GetCol();
 				col.center.y -= checkValue;
 				col.radius = enemy->GetCol().radius;
@@ -113,7 +113,7 @@ void CollisionManager::PlayerToEnemy()
 			float length = PtoEVec.length();
 			PtoEVec.normalize();
 			//Y成分を無効にして押し出す
-			PtoEVec.y = 0;
+			//PtoEVec.y = 0;
 			//二つの当たり判定の半径の長さを足す
 			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
 			//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
@@ -134,9 +134,9 @@ void CollisionManager::PlayerAttackToEnemy()
 					if (BallCollision(col->col_, enemy->GetCol()))
 					{
 						Vector3 PtoEVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+						PtoEVec.y = 0.3f;
 						PtoEVec.normalize();
-						PtoEVec.y = 1.f;
-						enemy->HitPlayerAttack(PtoEVec, col->damage, col->damageCoolTime);
+						enemy->HitPlayerAttack(PtoEVec * 0.6f, col->damage, col->damageCoolTime);
 					}
 				}
 			}

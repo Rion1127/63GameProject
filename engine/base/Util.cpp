@@ -130,7 +130,7 @@ void MoveTo(const Vector3& goal, float speed, WorldTransform& WT)
 void MoveTo(const Vector3& goal, float speed, Vector3& value)
 {
 	Vector3 dir = goal - value;
-	float dirLength = dir.length();
+	float dirLength = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
 	if (dirLength < speed * speed)
 	{
 		value = goal;
