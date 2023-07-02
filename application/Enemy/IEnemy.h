@@ -11,9 +11,10 @@ protected:
 	Gravity gravity_;
 	Vector3 addVec_;
 
-	bool isLockOn;
+	bool isLockOn_;
 public:
 	static void SetPlayer(IActor* player) { splayer_ = player; }
+	void SetIsLockOn(bool flag) { isLockOn_ = flag; }
 
 	void PreUpdate();
 	void PostUpdate();
@@ -22,7 +23,7 @@ public:
 	void ColPosUpdate();
 public:
 	Gravity GetGravity() { return gravity_; }
-	bool GetIsLockOn() { return isLockOn; }
+	bool GetIsLockOn() { return isLockOn_; }
 protected:
 	virtual void MoveUpdate() = 0;
 };

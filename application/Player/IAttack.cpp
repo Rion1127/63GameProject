@@ -1,6 +1,7 @@
 #include "IAttack.h"
 
 PlayerInfo* IAttack::splayerInfo_ = nullptr;
+IActor* IAttack::lockOnActor_ = nullptr;
 
 IAttack::IAttack(size_t colNum, size_t maxTime)
 {

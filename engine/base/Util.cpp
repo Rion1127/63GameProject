@@ -117,7 +117,7 @@ std::string WStringToString(std::wstring oWString)
 void MoveTo(const Vector3& goal, float speed, WorldTransform& WT)
 {
 	Vector3 dir = goal - WT.position_;
-	float dirLength = dir.length2();
+	float dirLength = dir.length();
 	if (dirLength < speed * speed)
 	{
 		WT.position_ = goal;

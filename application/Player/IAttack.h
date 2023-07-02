@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include "mInput.h"
 #include "PlayerInfo.h"
+#include "IActor.h"
 
 struct AttackCol {
 	Object3d colObj_;
@@ -21,6 +22,8 @@ protected:
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;
 	static PlayerInfo* splayerInfo_;
+	static IActor* lockOnActor_;
+	Vector3 attackVec_;
 public:
 	IAttack(size_t colNum,size_t maxTime);
 
@@ -32,6 +35,7 @@ public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	static PlayerInfo* GetPlayerInfo() { return splayerInfo_; }
 	static void SetPlayerInfo(PlayerInfo* info) { splayerInfo_ = info; }
+	static void SetLockOnActor(IActor* info) { lockOnActor_ = info; }
 protected:
 	virtual void MoveUpdate() = 0;
 };

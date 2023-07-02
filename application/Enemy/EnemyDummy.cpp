@@ -5,7 +5,7 @@ EnemyDummy::EnemyDummy(Vector3 pos) : IEnemy()
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
 	obj_->SetAmbient("cube", { 0,0,1.0f });
-	isLockOn = false;
+	isLockOn_ = false;
 
 	obj_->GetTransform()->SetPosition(pos);
 	time_ = 60.f;

@@ -68,7 +68,7 @@ void Camera::SetUpVec(Vector3 upVec)
 void Camera::MoveTo(Vector3 goal, float speed)
 {
 	Vector3 dir = goal - eye_;
-	float dirLength = dir.length2();
+	float dirLength = dir.length();
 	if (dirLength < speed * speed)
 	{
 		eye_.x = goal.x;

@@ -5,6 +5,8 @@ void CollisionManager::Update()
 	PlayerToFloor();
 
 	EnemyToFloor();
+
+	EnemyLockOn();
 }
 
 void CollisionManager::PlayerToFloor()
@@ -59,7 +61,7 @@ void CollisionManager::EnemyToFloor()
 				Vector3* enemyPos = &enemy->GetWorldTransform()->position_;
 				float upDist = 0.01f;
 				enemyPos->y += upDist;
-	
+
 				enemy->ColPosUpdate();
 			}
 
@@ -69,4 +71,29 @@ void CollisionManager::EnemyToFloor()
 
 void CollisionManager::EnemyLockOn()
 {
+	IEnemy* lockOnEnemy = nullptr;
+	float dist = 1000.f;
+	for (auto& enemy : *enemyManager_->GetEnemy()) {
+		//ロックオン用の大きい当たり判定
+		enemy->SetIsLockOn(false);
+		Sphere serchCol = player_->GetCol();
+		serchCol.radius *= 20.f;
+		if (BallCollision(serchCol, enemy->GetCol()))
+		{
+			Vector3 PtoEVec = serchCol.center - enemy->GetCol().center;
+			float length = PtoEVec.length();
+			//ベクトルの長さを測ってdistよりも小さければ
+			if (dist > length) {
+				dist = length;
+				lockOnEnemy = enemy.get();
+			}
+		}
+	}
+	if (lockOnEnemy != nullptr) {
+		lockOnEnemy->SetIsLockOn(true);
+	}
+	enemyManager_->SetLockOnEnemy(lockOnEnemy);
+	//AttackManagerへlockOnEnemyのアドレスを渡す
+	player_->SetLockOnEnemy(lockOnEnemy);
+
 }

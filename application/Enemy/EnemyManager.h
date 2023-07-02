@@ -18,5 +18,7 @@ public:
 	void Draw();
 public:
 	std::vector<std::unique_ptr<IEnemy>>* GetEnemy() { return &enemys_; };
+public:
+	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; };
 };
 

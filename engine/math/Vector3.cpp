@@ -9,10 +9,10 @@ float Vector3::length() const
 {
 	return sqrt(x * x + y * y + z * z);
 }
-float Vector3::length2() const
-{
-	return x * x + y * y + z * z;
-}
+//float Vector3::length() const
+//{
+//	return x * x + y * y + z * z;
+//}
 // ƒxƒNƒgƒ‹‚ğ³‹K‰»
 Vector3& Vector3::normalize()
 {
