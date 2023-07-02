@@ -32,14 +32,16 @@ void AttackManager::Update()
 			}
 			else
 			{
-				if (*IAttack::GetPlayerInfo()->state == PlayerState::Attack) {
-					//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-					if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
-					if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>());
-				}
-				else if (*IAttack::GetPlayerInfo()->state == PlayerState::AirAttack) {
-					if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>());
-					if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>());
+				if (nextAttack_ != nullptr) {
+					if (*IAttack::GetPlayerInfo()->state == PlayerState::Attack) {
+						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
+						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
+						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>());
+					}
+					else if (*IAttack::GetPlayerInfo()->state == PlayerState::AirAttack) {
+						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>());
+						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>());
+					}
 				}
 			}
 		}

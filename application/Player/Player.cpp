@@ -8,6 +8,7 @@ Player::Player()
 	controller_ = Controller::GetInstance();
 
 	col_.radius = 1;
+	gravity_.SetAddValue({0,-0.01f,0});
 
 	// “ü—Í‚³‚ê‚Ä‚¢‚é•ûŒü‚ÌŠp“x
 	inputAngle_ = 0.0f;

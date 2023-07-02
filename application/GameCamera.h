@@ -13,6 +13,8 @@ private:
 	Controller* controller_ = nullptr;
 
 	DeadZoneValue deadZone_;
+	//カメラの最終地点
+	Vector3 endEyePos_;
 public:
 	GameCamera();
 	void Update();

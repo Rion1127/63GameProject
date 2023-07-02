@@ -6,7 +6,7 @@ AttackAir3::AttackAir3() : IAttack(1, 30)
 	Vector3 colPos{};
 	Vector3 frontDist{};
 	if (splayerInfo_ != nullptr) {
-		frontDist_ = splayerInfo_->WT->scale_.x;
+		frontDist_ = 5.f;
 		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
 		if (IAttack::lockOnActor_) {
 			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
@@ -17,6 +17,7 @@ AttackAir3::AttackAir3() : IAttack(1, 30)
 				lockOnPos.z - splayerInfo_->WT->position_.z,
 			};
 			frontVec.normalize();
+			//“G‚Ö‚ÌƒxƒNƒgƒ‹‚©‚çŠp“x‚ğŒvZ‚·‚é
 			Vector2 frontVec2 = {
 				frontVec.x,
 				frontVec.z
@@ -36,7 +37,7 @@ AttackAir3::AttackAir3() : IAttack(1, 30)
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		splayerInfo_->gravity->SetGrabity({ 0,0,0 });
+		splayerInfo_->gravity->SetGrabity({ 0,0.06f,0 });
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.f;
 	}

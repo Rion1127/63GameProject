@@ -24,9 +24,9 @@ void GameCamera::Update()
 
 	static Vector3 moveDist{};	//球面座標
 
-	camera_->eye_.x = player_->GetWorldTransform()->position_.x;
+	/*camera_->eye_.x = player_->GetWorldTransform()->position_.x;
 	camera_->eye_.y = player_->GetWorldTransform()->position_.y + 10;
-	camera_->eye_.z = player_->GetWorldTransform()->position_.z - 25;
+	camera_->eye_.z = player_->GetWorldTransform()->position_.z - 25;*/
 
 	camera_->target_ = player_->GetWorldTransform()->position_;
 
@@ -37,12 +37,12 @@ void GameCamera::Update()
 		//カメラがどのくらいプレイヤーに近づくかClampをする
 		moveDist.y = Clamp(moveDist.y, -0.8f, 0.8f);
 	}
-	/*moveDist.y += mInput_->GetCursorMoveY() * 0.005f;
-	moveDist.z -= mInput_->GetCursorMoveZ() * 0.005f;*/
 
-	camera_->eye_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
-	camera_->eye_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
-	camera_->eye_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
+	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
+	endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
+	endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
+
+	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.1f;
 
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
 	float minGamecameraY = 3.5f;

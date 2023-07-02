@@ -36,7 +36,7 @@ AttackAir1::AttackAir1() : IAttack(1, 20)
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		splayerInfo_->gravity->SetGrabity({ 0,0,0 });
+		splayerInfo_->gravity->SetGrabity({ 0,0.06f,0 });
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.f;
 	}
