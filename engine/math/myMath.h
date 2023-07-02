@@ -92,8 +92,8 @@ template <class T>
 inline T Min(T value, T min)
 {
 	// ’l‚ªÅ¬’l‚ğ‰º‰ñ‚Á‚Ä‚¢‚½‚çÅ¬’l‚ğ•Ô‚·
-	if (value <= min) return min;
-	else return value;
+	if (value <= min) return value;
+	else return min;
 }
 template <class T>
 inline T Clamp(T value, T min, T max)

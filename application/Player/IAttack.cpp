@@ -3,7 +3,7 @@
 PlayerInfo* IAttack::splayerInfo_ = nullptr;
 IActor* IAttack::lockOnActor_ = nullptr;
 
-IAttack::IAttack(size_t colNum, size_t maxTime)
+IAttack::IAttack(size_t colNum, size_t maxTime, float damage, int32_t damageCoolTime)
 {
 	attackCol_.resize(colNum);
 	for (auto& col : attackCol_)
@@ -11,6 +11,8 @@ IAttack::IAttack(size_t colNum, size_t maxTime)
 		col = std::move(std::make_unique<AttackCol>());
 		col->colObj_.SetModel(Model::CreateOBJ_uniptr("cube", false));
 		col->colObj_.SetAmbient("cube", { 1.0f, 0, 0 });
+		col->damageCoolTime = damageCoolTime;
+		col->damage = damage;
 	}
 	attackInfo_.maxTime = maxTime;
 }

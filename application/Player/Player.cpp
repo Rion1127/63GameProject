@@ -35,8 +35,7 @@ void Player::PreUpdate()
 	//プレイヤーの状態更新
 	StateUpdate();
 
-	if (state_ != PlayerState::Attack &&
-		state_ != PlayerState::AirAttack)
+	if (GetIsCanMove())
 	{
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
@@ -52,8 +51,7 @@ void Player::PreUpdate()
 
 void Player::PostUpdate()
 {
-	if (state_ != PlayerState::Attack &&
-		state_ != PlayerState::AirAttack)
+	if (GetIsCanMove())
 	{
 		JumpUpdate();
 	}
@@ -261,4 +259,13 @@ void Player::floorColision()
 	isJump_ = false;
 	jumpTime_ = 0;
 	gravity_.SetGrabity({0,0,0});
+}
+
+bool Player::GetIsCanMove()
+{
+	if (state_ != PlayerState::Attack &&
+		state_ != PlayerState::AirAttack) {
+		return true;
+	}
+	return false;
 }

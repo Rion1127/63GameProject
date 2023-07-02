@@ -10,6 +10,8 @@ void CollisionManager::Update()
 	EnemyLockOn();
 	//プレイヤーと敵押し出し
 	PlayerToEnemy();
+	//プレイヤーの攻撃と敵
+	PlayerAttackToEnemy();
 }
 
 void CollisionManager::PlayerToFloor()
@@ -79,7 +81,7 @@ void CollisionManager::EnemyLockOn()
 		//ロックオン用の大きい当たり判定
 		enemy->SetIsLockOn(false);
 		Sphere serchCol = player_->GetCol();
-		serchCol.radius *= 20.f;
+		serchCol.radius *= 15.f;
 		if (BallCollision(serchCol, enemy->GetCol()))
 		{
 			Vector3 PtoEVec = serchCol.center - enemy->GetCol().center;
@@ -116,8 +118,29 @@ void CollisionManager::PlayerToEnemy()
 			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
 			//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
 			backLength -= length;
-			
+
 			player_->SetAddPos(PtoEVec * backLength);
 		}
 	}
+}
+
+void CollisionManager::PlayerAttackToEnemy()
+{
+	IAttack* attackCol = player_->GetAttackManager()->GetNowAttack();
+	if (attackCol != nullptr) {
+		for (auto& enemy : *enemyManager_->GetEnemy()) {
+			for (auto& col : *attackCol->GetAttackCol()) {
+				if (enemy->GetDamageCoolTime().GetIsEnd()) {
+					if (BallCollision(col->col_, enemy->GetCol()))
+					{
+						Vector3 PtoEVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+						PtoEVec.normalize();
+						PtoEVec.y = 1.f;
+						enemy->HitPlayerAttack(PtoEVec, col->damage, col->damageCoolTime);
+					}
+				}
+			}
+		}
+	}
+
 }

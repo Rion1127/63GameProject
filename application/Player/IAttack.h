@@ -9,6 +9,9 @@
 struct AttackCol {
 	Object3d colObj_;
 	Sphere col_;
+	float damage = 10;
+	//ìGÇÃçUåÇìñÇΩÇËîªíËóLå¯Ç‹Ç≈ÇÃéûä‘
+	int32_t damageCoolTime = 20;
 };
 
 struct AttackInfo {
@@ -25,7 +28,7 @@ protected:
 	static IActor* lockOnActor_;
 	Vector3 attackVec_;
 public:
-	IAttack(size_t colNum,size_t maxTime);
+	IAttack(size_t colNum = 1,size_t maxTime = 20,float damage = 10,int32_t damageCoolTime = 25);
 	
 	void Update();
 	void DrawCol();
@@ -33,7 +36,9 @@ public:
 	void SetNowTime(size_t time) { attackInfo_.nowTime = time; }
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
+	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
 	static PlayerInfo* GetPlayerInfo() { return splayerInfo_; }
+public:
 	static void SetPlayerInfo(PlayerInfo* info) { splayerInfo_ = info; }
 	static void SetLockOnActor(IActor* info) { lockOnActor_ = info; }
 public:

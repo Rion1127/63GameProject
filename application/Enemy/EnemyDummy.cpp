@@ -8,7 +8,7 @@ EnemyDummy::EnemyDummy(Vector3 pos) : IEnemy()
 	isLockOn_ = false;
 
 	obj_->GetTransform()->SetPosition(pos);
-	time_ = 60.f;
+	damegeCoolTime_.SetLimitTime(30);
 }
 
 void EnemyDummy::MoveUpdate()

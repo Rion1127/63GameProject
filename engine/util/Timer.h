@@ -15,6 +15,7 @@ public:
 	void AddTime(int32_t addValue);
 	//カウントダウン
 	void SubTime(int32_t addValue);
+	void Reset();
 public:
 	//セッター
 	void SetLimitTime(int32_t limitTime) { limitTime_ = limitTime; }

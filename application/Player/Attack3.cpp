@@ -1,6 +1,6 @@
 #include "Attack3.h"
 
-Attack3::Attack3() : IAttack(1, 30)
+Attack3::Attack3() : IAttack(1, 30, 10, 31)
 {
 }
 

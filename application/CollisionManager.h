@@ -24,5 +24,7 @@ private:
 	void EnemyLockOn();
 	//プレイヤーと敵押し出し
 	void PlayerToEnemy();
+	//プレイヤー攻撃と敵
+	void PlayerAttackToEnemy();
 };
 

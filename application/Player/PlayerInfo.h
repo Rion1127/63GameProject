@@ -7,7 +7,8 @@ enum class PlayerState {
 	Idle,
 	Jump,
 	Attack,
-	AirAttack
+	AirAttack,
+	Landing
 };
 
 struct PlayerInfo

@@ -39,5 +39,7 @@ public:
 	bool GetIsAttacking() { return isAttacking; }
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
+public:
+	IAttack* GetNowAttack() { return nowAttack_.get(); }
 };
 

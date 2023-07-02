@@ -24,3 +24,9 @@ void Timer::SubTime(int32_t addValue)
 	//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
 	if (timer_ <= limitTime_) isEnd_ = true;
 }
+
+void Timer::Reset()
+{
+	timer_ = 0;
+	isEnd_ = false;
+}

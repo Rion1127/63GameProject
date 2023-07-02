@@ -1,6 +1,6 @@
 #include "AttackAir1.h"
 
-AttackAir1::AttackAir1() : IAttack(1, 20)
+AttackAir1::AttackAir1() : IAttack(1, 20,10,21)
 {
 }
 
@@ -63,6 +63,7 @@ void AttackAir1::MoveUpdate()
 
 	
 	*splayerInfo_->addVec_ += speed;
-	attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + frontVec * 5.f;
+	Vector3 attackVec = attackVec_ * (splayerInfo_->WT->scale_.x * 2.f);
+	attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + attackVec;
 	attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y;
 }

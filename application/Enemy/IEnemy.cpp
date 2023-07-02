@@ -6,7 +6,7 @@ void IEnemy::PreUpdate()
 
 	gravity_.Update();
 
-	
+	damegeCoolTime_.AddTime(1);
 }
 
 void IEnemy::PostUpdate()
@@ -34,4 +34,14 @@ void IEnemy::ColPosUpdate()
 	obj_->Update();
 	col_.center = obj_->GetTransform()->position_;
 	col_.radius = obj_->GetTransform()->scale_.x;
+}
+
+void IEnemy::HitPlayerAttack(Vector3 knockVec, float damageValue, int32_t cooltime)
+{
+	if (damegeCoolTime_.GetIsEnd()) {
+		addVec_ += knockVec;
+		damegeCoolTime_.SetLimitTime(cooltime);
+		damegeCoolTime_.Reset();
+	}
+	
 }
