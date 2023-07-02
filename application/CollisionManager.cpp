@@ -107,9 +107,14 @@ void CollisionManager::PlayerToEnemy()
 		if (BallCollision(player_->GetCol(), enemy->GetCol()))
 		{
 			Vector3 PtoEVec = player_->GetCol().center - enemy->GetCol().center;
+			float length = PtoEVec.length();
+			PtoEVec.normalize();
 			//Y¬•ª‚ð–³Œø‚É‚µ‚Ä‰Ÿ‚µo‚·
 			PtoEVec.y = 0;
-			player_->AddPos(PtoEVec * 0.1f);
+			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
+			backLength -= length * 0.97f;
+			
+			player_->AddPos(PtoEVec * backLength);
 		}
 	}
 }
