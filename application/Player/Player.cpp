@@ -142,7 +142,11 @@ void Player::InputVecUpdate()
 	{
 		inputAngle_ = inputAngle;
 	}
-	rot_ = { 0,Radian(inputAngle_) ,0 };
+	if (controller_->GetLStick().x != 0 ||
+		controller_->GetLStick().y != 0)
+	{
+		rot_ = { 0,Radian(inputAngle_) ,0 };
+	}
 }
 
 
