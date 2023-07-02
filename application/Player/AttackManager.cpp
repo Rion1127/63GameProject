@@ -32,7 +32,7 @@ void AttackManager::Update()
 			}
 			else
 			{
-				if (nextAttack_ != nullptr) {
+				if (nextAttack_ == nullptr) {
 					if (*IAttack::GetPlayerInfo()->state == PlayerState::Attack) {
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
 						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
