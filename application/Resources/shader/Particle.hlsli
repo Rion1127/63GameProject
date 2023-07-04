@@ -1,25 +1,31 @@
-//ƒ}ƒeƒŠƒAƒ‹
-cbuffer Transform : register(b0)
+cbuffer ConstantBuffer : register(b0)
 {
-    matrix mat;
-    matrix matBillboard; //ƒrƒ‹ƒ{[ƒhs—ñ
-}
-
-//’¸“_ƒVƒF[ƒ_‚Ìo—Í\‘¢‘Ì
-//i’¸“_ƒVƒF[ƒ_[‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö‚Ì‚â‚èæ‚è‚Ég—p‚·‚éj
-struct VSOutput
-{
-	//ƒVƒXƒeƒ€—p’¸“_À•W
-    float4 pos : POSITION; //’¸“_À•W
-    float scale : TEXCOORD;
-    float4 color : COLOR;
+    matrix viewProjMat; //ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+    matrix worldMat;
+    float3 cameraPos;
 };
 
+struct VSInput
+{
+    float4 pos : POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float scale : TEXCOORD0; // ã‚¹ã‚±ãƒ¼ãƒ«
+    float3 rot : TEXCOORD1; // è§’åº¦
+    float2 ancorPoint : TEXCOORD2;
+    float4 color : COLOR; //è‰²
+};
 
-//ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö‚Ìo—Í
+struct VSOutput
+{
+    float4 pos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float scale : TEXCOORD; // ã‚¹ã‚±ãƒ¼ãƒ«
+    float3 rot : TEXCOORD1; // è§’åº¦
+    float2 ancorPoint : TEXCOORD2;
+    float4 color : COLOR; //è‰²
+};
+
 struct GSOutput
 {
-    float4 svpos : SV_POSITION; //ƒVƒXƒeƒ€—p’¸“_À•W
-    float2 uv : TEXCOORD; //uvÀ•W
-    float4 color : COLOR;
+    float4 svpos : SV_POSITION; //ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float2 uv : TEXCOORD; //uvå€¤
+    float4 color : COLOR; //è‰²
 };

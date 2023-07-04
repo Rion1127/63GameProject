@@ -28,6 +28,7 @@ public:
 private:
 	static void ObjShaderIni();
 	static void PostEffectIni();
+	static void ParticleShaderIni();
 public:
 	//ÉQÉbÉ^Å[
 	static PipelineObject* GetPipelineObjects(const std::string& name) { return pipelineObjects_[name].get(); }

@@ -1,12 +1,12 @@
 #include "Particle.hlsli"
 
-
-VSOutput main(float4 pos : POSITION, float scale : TEXCOORD, float4 color : COLOR)
+VSOutput main(VSInput vsInput)
 {
-	//ピクセルシェーダーに渡す値
-    VSOutput output;
-    output.pos = pos;
-    output.scale = scale;
-    output.color = color;
+    VSOutput output; // 繝斐け繧ｻ繝ｫ繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｫ貂｡縺吝､
+    output.pos = vsInput.pos;
+    output.scale = vsInput.scale;
+    output.rot = vsInput.rot;
+    output.ancorPoint = vsInput.ancorPoint;
+    output.color = vsInput.color;
     return output;
 }

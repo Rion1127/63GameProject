@@ -51,6 +51,7 @@
     <ClCompile Include="engine\3d\light\LightManager.cpp" />
     <ClCompile Include="engine\3d\Model.cpp" />
     <ClCompile Include="engine\3d\Particle.cpp" />
+    <ClCompile Include="engine\IParticle.cpp" />
     <ClCompile Include="engine\math\Collision.cpp" />
     <ClCompile Include="engine\3d\DebugCamera.cpp" />
     <ClCompile Include="engine\base\DirectX.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="engine\3d\Model.h" />
     <ClInclude Include="engine\3d\Particle.h" />
     <ClInclude Include="engine\base\REngine.h" />
+    <ClInclude Include="engine\IParticle.h" />
     <ClInclude Include="engine\math\Collision.h" />
     <ClInclude Include="engine\3d\DebugCamera.h" />
     <ClInclude Include="engine\base\DirectX.h" />
