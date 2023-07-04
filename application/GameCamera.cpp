@@ -31,7 +31,7 @@ void GameCamera::Update()
 		moveDist.x -= controller_->GetRStick(deadZone_.x).x * 0.0000015f;
 		moveDist.y += controller_->GetRStick(deadZone_.y).y * 0.0000015f;
 		//カメラがどのくらいプレイヤーに近づくかClampをする
-		moveDist.y = Clamp(moveDist.y, -1.0f, 1.2f);
+		moveDist.y = Clamp(moveDist.y, -0.8f, 1.2f);
 	}
 
 	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
