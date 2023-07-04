@@ -7,83 +7,8 @@ using namespace DirectX;
 void Vertices::Ini(ID3D12Device* device)
 {
 	HRESULT result;
-#pragma region 頂点データ
-	//前
-	//vertices_.push_back({ {-5.0f,-5.0f, 0.0f },{}, { 0.0f,1.0f } });//左下
-	//vertices_.push_back({ {-5.0f, 5.0f, 0.0f },{}, { 0.0f,0.0f } });//左上
-	//vertices_.push_back({ { 5.0f,-5.0f, 0.0f },{}, { 1.0f,1.0f } });//右下
-	//vertices_.push_back({ { 5.0f, 5.0f, 0.0f },{}, { 1.0f,0.0f } });//右上
+
 	vertices_.push_back({ { 0.0f, 0.0f, 0.0f },{0,0,1}, { 0,1 } });//右上
-	//後ろ
-	//vertices_.push_back({ {-5.0f,  5.0f, 5.0f},{}, { 0.0f,0.0f} });//左上
-	//vertices_.push_back({ {-5.0f, -5.0f, 5.0f},{}, { 0.0f,1.0f} });//左下
-	//vertices_.push_back({ { 5.0f,  5.0f, 5.0f},{}, { 1.0f,0.0f} });//右上
-	//vertices_.push_back({ { 5.0f, -5.0f, 5.0f},{}, { 1.0f,1.0f} });//右下
-	////左
-	//vertices_.push_back({ {-5.0f,-5.0f,-5.0f} ,{},{0.0f,1.0f} });//左下
-	//vertices_.push_back({ {-5.0f,-5.0f, 5.0f} ,{},{0.0f,0.0f} });//左上
-	//vertices_.push_back({ {-5.0f, 5.0f,-5.0f} ,{},{1.0f,1.0f} });//右下
-	//vertices_.push_back({ {-5.0f, 5.0f, 5.0f} ,{},{1.0f,0.0f} });//右上
-	////右				 
-	//vertices_.push_back({ {5.0f,-5.0f, 5.0f} ,{},{0.0f,0.0f} });//左上
-	//vertices_.push_back({ {5.0f,-5.0f,-5.0f} ,{},{0.0f,1.0f} });//左下
-	//vertices_.push_back({ {5.0f, 5.0f, 5.0f} ,{},{1.0f,0.0f} });//右上
-	//vertices_.push_back({ {5.0f, 5.0f,-5.0f} ,{},{1.0f,1.0f} });//右下
-	////下				 
-	//vertices_.push_back({ { 5.0f,-5.0f,-5.0f} ,{},{0.0f,1.0f} });//左下
-	//vertices_.push_back({ { 5.0f,-5.0f, 5.0f} ,{},{0.0f,0.0f} });//左上
-	//vertices_.push_back({ {-5.0f,-5.0f,-5.0f} ,{},{1.0f,1.0f} });//右下
-	//vertices_.push_back({ {-5.0f,-5.0f, 5.0f} ,{},{1.0f,0.0f} });//右上
-	////上				 
-	//vertices_.push_back({ { 5.0f, 5.0f, 5.0f} ,{},{0.0f,0.0f} });//左上
-	//vertices_.push_back({ { 5.0f, 5.0f,-5.0f} ,{},{0.0f,1.0f} });//左下
-	//vertices_.push_back({ {-5.0f, 5.0f, 5.0f} ,{},{1.0f,0.0f} });//右上
-	//vertices_.push_back({ {-5.0f, 5.0f,-5.0f} ,{},{1.0f,1.0f} });//右下
-#pragma endregion
-#pragma region 頂点インデックス
-	//前
-	/*indices_.push_back(0);
-	indices_.push_back(1);
-	indices_.push_back(2);
-	indices_.push_back(2);
-	indices_.push_back(1);
-	indices_.push_back(3);*/
-	//後ろ
-	//indices_.push_back(4);
-	//indices_.push_back(5);
-	//indices_.push_back(6);
-	//indices_.push_back(6);
-	//indices_.push_back(5);
-	//indices_.push_back(7);
-	////左
-	//indices_.push_back(8);
-	//indices_.push_back(9);
-	//indices_.push_back(10);
-	//indices_.push_back(10);
-	//indices_.push_back(9);
-	//indices_.push_back(11);
-	////右
-	//indices_.push_back(12);
-	//indices_.push_back(13);
-	//indices_.push_back(14);
-	//indices_.push_back(14);
-	//indices_.push_back(13);
-	//indices_.push_back(15);
-	////下
-	//indices_.push_back(16);
-	//indices_.push_back(17);
-	//indices_.push_back(18);
-	//indices_.push_back(18);
-	//indices_.push_back(17);
-	//indices_.push_back(19);
-	////上
-	//indices_.push_back(20);
-	//indices_.push_back(21);
-	//indices_.push_back(22);
-	//indices_.push_back(22);
-	//indices_.push_back(21);
-	//indices_.push_back(23);
-#pragma endregion
 
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB;

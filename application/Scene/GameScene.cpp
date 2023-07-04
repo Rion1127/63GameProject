@@ -2,6 +2,7 @@
 #include "Easing.h"
 #include "SceneManager.h"
 #include "Collision.h"
+#include "ParticleManager.h"
 
 GameScene::~GameScene()
 {
@@ -47,6 +48,7 @@ void GameScene::Update()
 	player_->PostUpdate();
 
 	lightManager_->DebugUpdate();
+	ParticleManager::GetInstance()->Update();
 }
 
 void GameScene::Draw()
@@ -69,7 +71,8 @@ void GameScene::Draw()
 	////////////
 	//スプライト//
 	////////////
-	
+	PipelineManager::PreDraw("Particle", POINTLIST);
+	ParticleManager::GetInstance()->Draw();
 }
 
 void GameScene::CameraUpdate()

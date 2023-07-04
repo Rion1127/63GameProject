@@ -7,7 +7,23 @@ ParticleManager* ParticleManager::GetInstance()
 	return &instance;
 }
 
+void ParticleManager::Update()
+{
+	for (auto& particle : particles_)
+	{
+		particle->Update();
+	}
+}
+
 void ParticleManager::PreDraw()
 {
-	PipelineManager::PreDraw("particle",POINTLIST);
+	
+}
+
+void ParticleManager::Draw()
+{
+	for (auto& particle : particles_)
+	{
+		particle->Draw();
+	}
 }

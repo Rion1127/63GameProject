@@ -20,6 +20,7 @@
     <ClCompile Include="application\IActor.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
     <ClCompile Include="application\Particle\ParticleManager.cpp" />
+    <ClCompile Include="application\Particle\ParticleTest.cpp" />
     <ClCompile Include="application\Player\Attack3.cpp" />
     <ClCompile Include="application\Player\AttackAir1.cpp" />
     <ClCompile Include="application\Player\AttackAir2.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="application\IActor.h" />
     <ClInclude Include="application\LoadManager.h" />
     <ClInclude Include="application\Particle\ParticleManager.h" />
+    <ClInclude Include="application\Particle\ParticleTest.h" />
     <ClInclude Include="application\Player\Attack3.h" />
     <ClInclude Include="application\Player\AttackAir1.h" />
     <ClInclude Include="application\Player\AttackAir2.h" />
@@ -423,7 +425,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;$(ProjectDir)engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -444,7 +446,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;$(ProjectDir)engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
