@@ -10,7 +10,8 @@ enum class PlayerState {
 	AirAttack,
 	Landing
 };
-
+//外部のファイル(IAttack,Enemy)などでプレイヤーの情報に
+//アクセスできるようにする
 struct PlayerInfo
 {
 	WorldTransform* WT;

@@ -8,7 +8,7 @@ Player::Player()
 	controller_ = Controller::GetInstance();
 
 	col_.radius = 1;
-	gravity_.SetAddValue({0,-0.01f,0});
+	gravity_.SetAddValue({ 0,-0.01f,0 });
 
 	// 入力されている方向の角度
 	inputAngle_ = 0.0f;
@@ -18,6 +18,8 @@ Player::Player()
 
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	//着地硬直時間
+	landingTimer_.SetLimitTime(7);
 
 	scale_ = { 1,1,1 };
 
@@ -34,8 +36,9 @@ void Player::PreUpdate()
 	addVec_ = { 0,0,0 };
 	//プレイヤーの状態更新
 	StateUpdate();
-
-	if (GetIsCanMove())
+	//攻撃しているとき　&& 着地しているとき
+	if (GetIsCanMove() &&
+		state_ != PlayerState::Landing)
 	{
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
@@ -59,7 +62,7 @@ void Player::PostUpdate()
 	//PostUpdateでaddVec_に代入している
 	addVec_ += gravity_.GetGravityValue();
 	// 入力した方向に回転情報代入
-	
+
 
 	obj_->WT_.rotation_ = rot_;
 	obj_->WT_.position_ += addVec_;
@@ -71,10 +74,6 @@ void Player::GravityUpdate()
 {
 	gravity_.SetAddValue({ 0,-0.01f,0 });
 	gravity_.Update();
-
-	//通常時はfalseにしておく
-	isFloorCollision_ = false;
-	
 }
 void Player::ColPosUpdate()
 {
@@ -104,7 +103,7 @@ void Player::InputVecUpdate()
 
 	//プレイヤーの正面ベクトル
 	frontVec_ =
-		Camera::scurrent_.target_- Camera::scurrent_.eye_;
+		Camera::scurrent_.target_ - Camera::scurrent_.eye_;
 	frontVec_.normalize();
 
 	sideVec = upVec.cross(frontVec_);
@@ -157,8 +156,8 @@ void Player::JumpUpdate()
 			if (jumpTime_ < Maxjumptimer)
 			{
 				jumpTime_++;
-				
-				gravity_.SetGrabity({0, jumpSpeed ,0});
+
+				gravity_.SetGrabity({ 0, jumpSpeed ,0 });
 			}
 		}
 	}
@@ -173,14 +172,25 @@ void Player::JumpUpdate()
 void Player::StateUpdate()
 {
 	state_ = PlayerState::Idle;
-	if (isFloorCollision_ == false) {
-		state_ = PlayerState::Jump;
+	landingTimer_.AddTime(1);
+	if (landingTimer_.GetIsEnd())
+	{
+		if (isFloorCollision_ == false)
+		{
+			state_ = PlayerState::Jump;
+		}
+		if (attack_.GetIsAttacking())
+		{
+			state_ = PlayerState::Attack;
+		}
+		if (isFloorCollision_ == false && attack_.GetIsAttacking())
+		{
+			state_ = PlayerState::AirAttack;
+		}
 	}
-	if (attack_.GetIsAttacking()) {
-		state_ = PlayerState::Attack;
-	}
-	if (isFloorCollision_ == false && attack_.GetIsAttacking()) {
-		state_ = PlayerState::AirAttack;
+	else
+	{
+		state_ = PlayerState::Landing;
 	}
 }
 
@@ -234,6 +244,7 @@ void Player::DrawImGui()
 	if (state_ == PlayerState::Jump)text = "Jump";
 	if (state_ == PlayerState::Attack)text = "Attack";
 	if (state_ == PlayerState::AirAttack)text = "AirAttack";
+	if (state_ == PlayerState::Landing)text = "Landing";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
@@ -255,16 +266,25 @@ void Player::DrawImGui()
 
 void Player::floorColision()
 {
+	//前フレームで地面に接していなかったとき
+	if (isFloorCollision_ == false)
+	{
+		state_ = PlayerState::Landing;
+		landingTimer_.Reset();
+		addVec_ = { 0,0,0 };
+	}
 	isFloorCollision_ = true;
 	isJump_ = false;
 	jumpTime_ = 0;
-	gravity_.SetGrabity({0,0,0});
+	
+	gravity_.SetGrabity({ 0,0,0 });
 }
 
 bool Player::GetIsCanMove()
 {
 	if (state_ != PlayerState::Attack &&
-		state_ != PlayerState::AirAttack) {
+		state_ != PlayerState::AirAttack)
+	{
 		return true;
 	}
 	return false;

@@ -39,6 +39,8 @@ private:
 	AttackManager attack_;
 	PlayerInfo info_;
 	PlayerState state_;
+	//íÖínçdíºéûä‘
+	Timer landingTimer_;
 private:
 	Controller* controller_ = nullptr;
 public:
@@ -72,6 +74,7 @@ public:
 	void AddPos(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 	void SetLockOnEnemy(IEnemy* enemy) { attack_.SetLockOnEnemy(enemy); }
+	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
 public:
 	AttackManager* GetAttackManager() { return &attack_; }
 	Vector3 GetFrontVec() { return frontVec_; }

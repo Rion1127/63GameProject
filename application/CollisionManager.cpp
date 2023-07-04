@@ -41,6 +41,10 @@ void CollisionManager::PlayerToFloor()
 		}
 
 	}
+	else
+	{
+		player_->SetIsFloorCollision(false);
+	}
 }
 
 void CollisionManager::EnemyToFloor()
@@ -113,7 +117,7 @@ void CollisionManager::PlayerToEnemy()
 			float length = PtoEVec.length();
 			PtoEVec.normalize();
 			//Y成分を無効にして押し出す
-			//PtoEVec.y = 0;
+			PtoEVec.y = 0;
 			//二つの当たり判定の半径の長さを足す
 			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
 			//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
@@ -133,14 +137,15 @@ void CollisionManager::PlayerAttackToEnemy()
 				if (enemy->GetDamageCoolTime().GetIsEnd()) {
 					if (BallCollision(col->col_, enemy->GetCol()))
 					{
-						Vector3 PtoEVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
-						PtoEVec.y = 0.6f;
-						PtoEVec.normalize();
-						enemy->HitPlayerAttack(PtoEVec * 0.3f, col->damage, col->damageCoolTime);
+						//プレイヤーの反対方向にノックバックする
+						Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+						knockVec.y = col->knockVecY;
+						knockVec.normalize();
+						knockVec = knockVec * col->knockPower;
+						enemy->HitPlayerAttack(knockVec, col->damage, col->damageCoolTime);
 					}
 				}
 			}
 		}
 	}
-
 }

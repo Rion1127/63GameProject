@@ -16,11 +16,11 @@ void GameCamera::Update()
 {
 	Vector3 cameraTrans = {
 		player_->GetWorldTransform()->position_.x,
-		player_->GetWorldTransform()->position_.y + 20,
+		player_->GetWorldTransform()->position_.y /*+ 20*/,
 		player_->GetWorldTransform()->position_.z
 	};
 
-	float frontdist = 25;
+	float frontdist = 15;
 
 	static Vector3 moveDist{};	//球面座標
 
@@ -31,7 +31,7 @@ void GameCamera::Update()
 		moveDist.x -= controller_->GetRStick(deadZone_.x).x * 0.0000015f;
 		moveDist.y += controller_->GetRStick(deadZone_.y).y * 0.0000015f;
 		//カメラがどのくらいプレイヤーに近づくかClampをする
-		moveDist.y = Clamp(moveDist.y, -0.8f, 0.8f);
+		moveDist.y = Clamp(moveDist.y, -1.0f, 1.2f);
 	}
 
 	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
@@ -40,9 +40,10 @@ void GameCamera::Update()
 
 	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.2f;
 	camera_->target_ += (endTargetPos_ - camera_->target_) * 0.2f;
+	camera_->target_.y += 0.1f;
 
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
-	float minGamecameraY = 3.5f;
+	float minGamecameraY = 0.5f;
 
 	
 	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY,maxGamecameraY);

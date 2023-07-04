@@ -12,6 +12,10 @@ struct AttackCol {
 	float damage = 10;
 	//敵の攻撃当たり判定有効までの時間
 	int32_t damageCoolTime = 20;
+	//ノックバックの強さ
+	Vector3 knockPower = { 0.5f,0.5f,0.5f };
+	//上方向のノックバック
+	float knockVecY = 0.5f;
 };
 
 struct AttackInfo {

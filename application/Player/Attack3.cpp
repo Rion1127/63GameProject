@@ -42,6 +42,9 @@ void Attack3::Init()
 		colPos.y += 1;
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.2f;
+		//ノックバック力
+		attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
+		attackCol_.at(0)->knockVecY = 0.8f;
 	}
 
 	attackVec_ = frontVec;
@@ -51,14 +54,15 @@ void Attack3::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
 	attackVec_.normalize();
-	Vector3 speed = attackVec_ * 0.04f;
 
-	//maxTime - 10の時間分プレイヤーを前に進める
-	if (attackInfo_.nowTime < attackInfo_.maxTime - 10) {
-		*splayerInfo_->addVec_ += speed;
-		Vector3 attackVec = attackVec_ * (splayerInfo_->WT->scale_.x * 2.f);
-		attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + attackVec;
-		attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y;
-	}
+	Vector3 speed = attackVec_ * 0.1f;
+	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	speed *= timerate;
+
+
+	*splayerInfo_->addVec_ += speed;
+	Vector3 attackVec = attackVec_ * (splayerInfo_->WT->scale_.x * 2.f);
+	attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + attackVec;
+	attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y;
 }
 
