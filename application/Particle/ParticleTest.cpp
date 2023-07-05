@@ -5,6 +5,7 @@ ParticleTest::ParticleTest() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("uv");
+	//以下テスト用
 	particles.resize(vertexCount);
 	for (size_t i = 0; i < particles.size(); i++)
 	{

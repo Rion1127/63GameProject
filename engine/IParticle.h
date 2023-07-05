@@ -50,6 +50,7 @@ protected:
 protected:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	//頂点データ
 	std::vector<VertexParticle> vertices_;
 	
 	// 頂点バッファビューの作成
@@ -61,7 +62,8 @@ protected:
 	WorldTransform transform_;
 
 	size_t maxParticleNum_;
-	std::vector<Particle> particles;
+	//パーティクルデータ
+	std::vector<Particle> particles_;
 public:
 	IParticle() {};
 	~IParticle();

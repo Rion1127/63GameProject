@@ -66,7 +66,7 @@ void IParticle::Draw()
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture.textureHandle);
 
-	cmdList.DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
+	cmdList.DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
 }
 
 void IParticle::TransferBuff()
@@ -77,18 +77,18 @@ void IParticle::TransferBuff()
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	for (size_t i = 0; i < particles.size(); i++)
+	for (size_t i = 0; i < particles_.size(); i++)
 	{
-		vertMap->pos = particles[i].position;
+		vertMap->pos = particles_[i].position;
 
-		vertMap->scale = particles[i].scale;
+		vertMap->scale = particles_[i].scale;
 
-		vertMap->rot = particles[i].rot;
+		vertMap->rot = particles_[i].rot;
 
-		vertMap->ancorPoint = particles[i].ancorPoint_;
+		vertMap->ancorPoint = particles_[i].ancorPoint_;
 
-		vertMap->color = particles[i].color /*/ 255.0f*/;
-		vertMap->color.a = particles[i].color.a;
+		vertMap->color = particles_[i].color /*/ 255.0f*/;
+		vertMap->color.a = particles_[i].color.a;
 
 		vertices_.at(i) = *vertMap;
 	}
@@ -103,11 +103,11 @@ void IParticle::TransferBuff()
 
 void IParticle::DeleteUpdate()
 {
-	for (size_t i = 0; i < particles.size(); i++)
+	for (size_t i = 0; i < particles_.size(); i++)
 	{
-		if (particles[i].frame >= particles[i].end_frame)
+		if (particles_[i].frame >= particles_[i].end_frame)
 		{
-			particles.erase(particles.begin() + i);
+			particles_.erase(particles_.begin() + i);
 			vertices_.at(i).scale = 0;
 			i = -1;
 		}
