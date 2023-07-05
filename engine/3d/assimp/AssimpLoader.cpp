@@ -73,11 +73,11 @@ bool AssimpLoader::Load(ImportSettings* setting)
 		if (scene->mNumMaterials > i) {
 			LoadTexture(setting->filename, meshes[i], pMaterial);
 		}
-		LoadBones(i, scene->mMeshes[i], setting);
+		
 
 	}
 
-
+	LoadBones(*scene->mMeshes, setting);
 
 	scene = nullptr;
 
@@ -221,51 +221,19 @@ void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMater
 
 }
 
-void AssimpLoader::LoadBones(uint32_t MeshIndex, const aiMesh* pMesh, ImportSettings* setting)
+void AssimpLoader::LoadBones(const aiMesh* pMesh, ImportSettings* setting)
 {
-	uint32_t m_NumBones = 0;
-	for (uint32_t i = 0; i < pMesh->mNumBones; i++)
+	//ボーン情報を持っていた時
+	if (pMesh->HasBones())
 	{
-		uint32_t BoneIndex = 0;
-		std::string BoneName(pMesh->mBones[i]->mName.data);
-
-		setting->boneData.emplace_back();
-		BoneIndex = m_NumBones;
-		m_NumBones++;
-
-		aiMatrix4x4& m = pMesh->mBones[i]->mOffsetMatrix;
-		aiBone& bone = *pMesh->mBones[i];
-
-		for (size_t j = 0; j < bone.mNumWeights; j++)
-		{
-			auto& weight = bone.mWeights[j];
-		}
-		setting->boneData[BoneIndex].boneMatrix_ = {
-			m.a1, m.b1, m.c1, m.d1,	// 転置
-			m.a2, m.b2, m.c2, m.d2,
-			m.a3, m.b3, m.c3, m.d3,
-			m.a4, m.b4, m.c4, m.d4
+		struct WeightSet {
+			uint32_t index;
+			float weight;
 		};
 
+		//二次元配列 list 頂点が影響を受けるボーンのリスト vector全頂点分
+		std::vector<std::list<WeightSet>> weightList()
+
 	}
-
-	//for (uint32_t i = 0; i < pMesh->mNumBones; i++)
-	//{
-
-	//	int32_t index = (pMesh->mNumBones - 1) - i;
-
-	//	aiMatrix4x4& m = pMesh->mBones[index]->mOffsetMatrix;
-
-	//	setting->boneData.emplace_back();
-
-	//	setting->boneData[i].boneMatrix_ = {
-	//		m.a1, m.b1, m.c1, m.d1,	// 転置
-	//		m.a2, m.b2, m.c2, m.d2,
-	//		m.a3, m.b3, m.c3, m.d3,
-	//		m.a4, m.b4, m.c4, m.d4
-	//	};
-
-	//}
-
 }
 

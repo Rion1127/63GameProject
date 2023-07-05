@@ -44,7 +44,7 @@ private:
 	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
 	void LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src);
 
-	void LoadBones(uint32_t MeshIndex, const aiMesh* pMesh, ImportSettings* setting);
+	void LoadBones(const aiMesh* pMesh, ImportSettings* setting);
 private:
 	
 };
