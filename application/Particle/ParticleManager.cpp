@@ -10,14 +10,14 @@ ParticleManager* ParticleManager::GetInstance()
 
 ParticleManager::ParticleManager()
 {
-	particles_.emplace_back(std::move(std::make_unique<ParticleTest>()));
+	particles_.insert(std::make_pair("Test",std::move(std::make_unique<ParticleTest>())));
 }
 
 void ParticleManager::Update()
 {
 	for (auto& particle : particles_)
 	{
-		particle->Update();
+		particle.second->Update();
 	}
 }
 
@@ -25,6 +25,11 @@ void ParticleManager::Draw()
 {
 	for (auto& particle : particles_)
 	{
-		particle->Draw();
+		particle.second->Draw();
 	}
+}
+
+void ParticleManager::AddTestParticle(std::string particleName, size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale)
+{
+	particles_.find(particleName)->second->Add(addNum, time, pos, addVec, scale);
 }

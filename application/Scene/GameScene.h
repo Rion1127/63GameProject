@@ -45,6 +45,8 @@ private:
 
 	std::unique_ptr<CollisionManager> colManager_;
 	std::unique_ptr<EnemyManager> enemyManager_;
+
+	Timer particleTimer_;
 public:
 	~GameScene();
 

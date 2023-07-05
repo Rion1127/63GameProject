@@ -232,7 +232,7 @@ void AssimpLoader::LoadBones(const aiMesh* pMesh, ImportSettings* setting)
 		};
 
 		//二次元配列 list 頂点が影響を受けるボーンのリスト vector全頂点分
-		std::vector<std::list<WeightSet>> weightList()
+		//std::vector<std::list<WeightSet>> weightList()
 
 	}
 }

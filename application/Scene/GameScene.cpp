@@ -32,6 +32,8 @@ void GameScene::Ini()
 	colManager_->SetFloor(floor_.get());
 	colManager_->SetEnemys(enemyManager_.get());
 	IAttack::SetPlayerInfo(player_->GetPlayerInfo());
+
+	particleTimer_.SetLimitTime(30);
 }
 
 void GameScene::Update()
@@ -49,6 +51,12 @@ void GameScene::Update()
 
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
+
+	particleTimer_.AddTime(1);
+	if (particleTimer_.GetIsEnd()) {
+		particleTimer_.Reset();
+		ParticleManager::GetInstance()->AddTestParticle("Test", 3, 40, { 0,4,0 }, { 1,1,1 }, 2.f);
+	}
 }
 
 void GameScene::Draw()

@@ -66,11 +66,13 @@ protected:
 	std::vector<Particle> particles_;
 public:
 	IParticle() {};
-	~IParticle();
+	virtual ~IParticle();
 
 	void Update();
 
 	void Draw();
+
+	virtual void Add(size_t addNum,size_t time,Vector3 pos,Vector3 addVec,float scale) = 0;
 private:
 	//ÉfÅ[É^ì]ëó
 	void TransferBuff();

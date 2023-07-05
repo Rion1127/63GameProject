@@ -409,7 +409,7 @@
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="application\Particle\ParticleTest.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,7 +636,7 @@
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="application\Particle\ParticleTest.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

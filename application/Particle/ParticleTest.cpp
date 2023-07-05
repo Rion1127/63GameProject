@@ -1,26 +1,28 @@
 #include "ParticleTest.h"
 #include "Easing.h"
+#include "RRandom.h"
+#include "Util.h"
 ParticleTest::ParticleTest() :
-	vertexCount(6)
+	vertexCount(16)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("uv");
-	//以下テスト用
-	particles_.resize(vertexCount);
-	for (size_t i = 0; i < particles_.size(); i++)
-	{
-		particles_[i].end_frame = 30 * (1 * i);
+	////以下テスト用
+	//particles_.resize(vertexCount);
+	//for (size_t i = 0; i < particles_.size(); i++)
+	//{
+	//	particles_[i].end_frame = 30 * (1 * i);
 
-		particles_[i].position = {
-			0 + i * -5.f,
-			4,
-			0
-		};
-		particles_[i].scale = 1.f * i;
-	}
+	//	particles_[i].position = {
+	//		0 + i * -5.f,
+	//		4,
+	//		0
+	//	};
+	//	particles_[i].scale = 1.f * i;
+	//}
 }
 
-void ParticleTest::Add(size_t addNum, size_t life, Vector3 pos, float scale)
+void ParticleTest::Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale)
 {
 	for (int i = 0; i < addNum; i++)
 	{
@@ -34,18 +36,17 @@ void ParticleTest::Add(size_t addNum, size_t life, Vector3 pos, float scale)
 		//追加した要素の参照
 		Particle& p = particles_.back();
 		//進む角度を求める
-		float rad = i * 3.1415f / 180.f;
-		Vector2 vec = { sinf(rad),cosf(rad) };
-		vec = vec.normalize();
+		
+		Vector3 vec = {
+			RRandom::RandF(-addVec.x,addVec.x),
+			RRandom::RandF(-addVec.y,addVec.y),
+			RRandom::RandF(-addVec.z,addVec.z)
+		};
 
 		p.position = pos;
 		p.basePos = pos;
-		p.end_frame = life;
-		p.velocity = {
-			vec.x * (scale * 2.f),
-			vec.y * (scale * 2.f),
-			0
-		};
+		p.end_frame = time;
+		p.velocity = vec;
 		p.scale = scale;
 		p.baseScale = scale;
 	}
@@ -53,19 +54,19 @@ void ParticleTest::Add(size_t addNum, size_t life, Vector3 pos, float scale)
 
 void ParticleTest::MoveUpdate()
 {
-
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (auto& p : particles_)
 	{
-		//particles_[i].frame++;
-		float f = 0;
+		p.frame++;
 
-		f = (float)particles_[i].frame / particles_[i].end_frame;
+		float f = (float)p.frame / p.end_frame;
+
+		p.position += p.velocity;
 		
-		
-		particles_[i].rot += {
+		MoveTo({ 0,0,0 }, 0.01f, p.velocity);
+		/*particles_[i].rot += {
 			0.01f,
 			-0.02f,
 			0.005f
-		};
+		};*/
 	}
 }

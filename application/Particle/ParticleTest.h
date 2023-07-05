@@ -6,7 +6,7 @@ class ParticleTest :
 public:
 	ParticleTest();
 
-	void Add(size_t addNum = 1,size_t life = 60, Vector3 pos = { 1,1,1 }, float scale = 1.f);
+	void Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale) override;
 private:
 	void MoveUpdate() override;
 
