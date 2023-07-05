@@ -2,12 +2,11 @@
 #include <cassert>
 #include <vector>
 #include <thread>
-
-#pragma comment(lib, "d3d12.lib")
-#pragma comment(lib, "dxgi.lib")
-#pragma comment(lib, "dxguid.lib")
-
 #include "DirectX.h"
+#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "d3d12.lib")
+#pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "dxgi.lib")
 
 RDirectX* RDirectX::GetInstance()
 {

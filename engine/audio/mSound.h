@@ -1,6 +1,6 @@
 #pragma once
 #include <xaudio2.h>
-#pragma comment(lib, "xaudio2.lib")
+
 #include <map>
 #include <wrl.h>
 #include <fstream>

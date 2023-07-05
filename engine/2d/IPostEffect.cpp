@@ -1,7 +1,7 @@
 #include "IPostEffect.h"
 #include "WinAPI.h"
 #include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
+
 #include "DirectX.h"
 #include "PipelineManager.h"
 

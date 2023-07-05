@@ -1,5 +1,6 @@
 #include <cassert>
 #include "mSound.h"
+#pragma comment(lib, "xaudio2.lib")
 
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
 IXAudio2MasteringVoice* SoundManager::smasterVoice_;

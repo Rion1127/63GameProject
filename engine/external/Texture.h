@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include <d3d12.h>
-#pragma comment(lib, "d3d12.lib")
+
 #include "DirectXTex/d3dx12.h"
 #include <cassert>
 #include <vector>

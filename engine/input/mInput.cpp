@@ -1,7 +1,8 @@
 #include <cassert>
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
+
 #include "mInput.h"
+#pragma comment(lib, "Xinput.lib")
+#pragma comment(lib, "dinput8.lib")
 
 //DirectInput‚Ì‰Šú‰»
 static IDirectInput8* sdirectInput = nullptr;

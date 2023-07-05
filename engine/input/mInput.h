@@ -6,7 +6,7 @@
 #include "WinAPI.h"
 //コントローラ
 #include <Xinput.h>
-#pragma comment(lib, "Xinput.lib")
+
 
 //キーボード
 class Key

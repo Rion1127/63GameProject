@@ -1,5 +1,5 @@
 #include <d3dcompiler.h>
-#pragma comment(lib, "d3dcompiler.lib")
+
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <cassert>
