@@ -1,5 +1,6 @@
 #include "Util.h"
 #include "Texture.h"
+using namespace DirectX;
 
 #pragma region TextureManager
 

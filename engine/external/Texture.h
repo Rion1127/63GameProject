@@ -10,7 +10,6 @@
 #include <vector>
 #include <DirectXTex.h>
 #include "Vector2.h"
-using namespace DirectX;
 
 struct Texture {
 	//テクスチャバッファの生成

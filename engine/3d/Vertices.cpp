@@ -1,5 +1,4 @@
 #include <DirectXMath.h>
-using namespace DirectX;
 
 #include "DirectX.h"
 #include "Vertices.h"

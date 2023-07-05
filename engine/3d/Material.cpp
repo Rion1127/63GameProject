@@ -1,8 +1,8 @@
 #include <DirectXTex.h>
-using namespace DirectX;
 #include "Texture.h"
 #include "Material.h"
 #include "DirectX.h"
+using namespace DirectX;
 
 Material::Material()
 {

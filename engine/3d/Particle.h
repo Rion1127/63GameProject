@@ -3,7 +3,6 @@
 #include "Camera.h"
 #include "myMath.h"
 
-using namespace Microsoft::WRL;
 class Particle
 {
 public:

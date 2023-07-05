@@ -3,10 +3,11 @@
 #include "LightGroup.h"
 #include "Model.h"
 
-using namespace Microsoft::WRL;
 class Object3d
 {
 private:
+	//エイリアステンプレート
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	std::unique_ptr<Model> model_ = nullptr;
 public:
 	WorldTransform WT_;
