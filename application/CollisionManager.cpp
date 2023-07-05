@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include "ParticleManager.h"
 
 void CollisionManager::Update()
 {
@@ -143,6 +144,9 @@ void CollisionManager::PlayerAttackToEnemy()
 						knockVec.normalize();
 						knockVec = knockVec * col->knockPower;
 						enemy->HitPlayerAttack(knockVec, col->damage, col->damageCoolTime);
+
+						Vector3 addVec = { 0.2f,0.2f,0.2f };
+						ParticleManager::GetInstance()->AddTestParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 1.f);
 					}
 				}
 			}

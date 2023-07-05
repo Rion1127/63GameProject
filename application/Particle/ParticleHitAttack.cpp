@@ -1,15 +1,14 @@
-#include "ParticleTest.h"
-#include "Easing.h"
+#include "ParticleHitAttack.h"
 #include "RRandom.h"
 #include "Util.h"
-ParticleTest::ParticleTest() :
+ParticleHitAttack::ParticleHitAttack() :
 	vertexCount(16)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("uv");
 }
 
-void ParticleTest::Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleHitAttack::Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale)
 {
 	for (int i = 0; i < addNum; i++)
 	{
@@ -28,6 +27,12 @@ void ParticleTest::Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, 
 			RRandom::RandF(-addVec.y,addVec.y),
 			RRandom::RandF(-addVec.z,addVec.z)
 		};
+		Vector3 addrot = {
+			RRandom::RandF(-addVec.x,addVec.x),
+			RRandom::RandF(-addVec.y,addVec.y),
+			RRandom::RandF(-addVec.z,addVec.z)
+		};
+		float scale_ = RRandom::RandF(0.3f, scale);
 
 		p.position = pos;
 		p.basePos = pos;
@@ -35,10 +40,11 @@ void ParticleTest::Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, 
 		p.velocity = vec;
 		p.scale = scale;
 		p.baseScale = scale;
+		p.addRot = addrot;
 	}
 }
 
-void ParticleTest::MoveUpdate()
+void ParticleHitAttack::MoveUpdate()
 {
 	for (auto& p : particles_)
 	{
@@ -47,7 +53,9 @@ void ParticleTest::MoveUpdate()
 		float f = (float)p.frame / p.end_frame;
 
 		p.position += p.velocity;
-		
-		MoveTo({ 0,0,0 }, 0.01f, p.velocity);
+		p.rot += p.addRot;
+
+		MoveTo({ 0,0,0 }, 0.005f, p.velocity);
+		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
 	}
 }

@@ -19,6 +19,7 @@
     <ClCompile Include="application\GameCamera.cpp" />
     <ClCompile Include="application\IActor.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
+    <ClCompile Include="application\Particle\ParticleHitAttack.cpp" />
     <ClCompile Include="application\Particle\ParticleManager.cpp" />
     <ClCompile Include="application\Particle\ParticleTest.cpp" />
     <ClCompile Include="application\Player\Attack3.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\IActor.h" />
     <ClInclude Include="application\LoadManager.h" />
+    <ClInclude Include="application\Particle\ParticleHitAttack.h" />
     <ClInclude Include="application\Particle\ParticleManager.h" />
     <ClInclude Include="application\Particle\ParticleTest.h" />
     <ClInclude Include="application\Player\Attack3.h" />
