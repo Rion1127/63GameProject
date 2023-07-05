@@ -1,14 +1,14 @@
 cbuffer ConstantBuffer : register(b0)
 {
-    matrix viewProjMat; //ビュープロジェクション行列
     matrix worldMat;
+    matrix viewProjMat; //ビュープロジェクション行列
     float3 cameraPos;
 };
 
 struct VSInput
 {
     float4 pos : POSITION; // システム用頂点座標
-    float scale : TEXCOORD0; // スケール
+    float scale : SCALE; // スケール
     float3 rot : TEXCOORD1; // 角度
     float2 ancorPoint : TEXCOORD2;
     float4 color : COLOR; //色

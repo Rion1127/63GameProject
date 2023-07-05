@@ -4,31 +4,19 @@
 #include "Color.h"
 #include "WorldTransform.h"
 
-struct VertexParticle
-{
-	Vector3 pos;
-	float scale;
-	Vector3 rot;
-	Vector2 ancorPoint = { 0.0f,0.0f };
-	Color color;
-};
+
 
 class IParticle
 {
-public:
-	//エイリアステンプレート
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
-	IParticle();
-	~IParticle();
-	void Init(int vertexCount);
-
-	inline void SetTexture(const Texture& texture) { this->texture = texture; }
-
-	void Update();
-
-	void Draw();
-
+protected:
+	struct VertexParticle
+	{
+		Vector3 pos;
+		float scale;
+		Vector3 rot;
+		Vector2 ancorPoint = { 0.0f,0.0f };
+		Color color;
+	};
 	struct Particle
 	{
 		//座標
@@ -44,9 +32,9 @@ public:
 		Vector3 rot = {};
 		Vector3 addRot = {};
 		//現在フレーム
-		int frame = 0;
+		size_t frame = 0;
 		//終了フレーム
-		int end_frame = 0;
+		size_t end_frame = 0;
 		// ローカルスケール
 		float scale = 1.0f;			//スケール
 		float maxScale = 1.f;
@@ -59,33 +47,38 @@ public:
 		int particleType = 0;
 		Vector2 ancorPoint_ = { 0,0 };
 	};
+protected:
+	//エイリアステンプレート
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	std::vector<VertexParticle> vertices_;
+	
+	// 頂点バッファビューの作成
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+	ComPtr<ID3D12Resource> vertBuff_;
+
+	Texture texture;
+
+	WorldTransform transform_;
+
+	size_t maxParticleNum_;
+	std::vector<Particle> particles;
+public:
+	IParticle() {};
+	~IParticle();
+
+	void Update();
+
+	void Draw();
 private:
 	//データ転送
 	void TransferBuff();
 	//end_frameを超えたら削除
 	void DeleteUpdate();
-
-	//void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
-
-public:
+protected:
+	void Init(size_t vertexCount);
 	//継承先のパーティクルの処理
 	//動き更新
 	virtual void MoveUpdate() = 0;
-public:
-
-	std::vector<VertexParticle> vertices_;
-	// 頂点バッファビューの作成
-	D3D12_VERTEX_BUFFER_VIEW vbView_{};
-	ComPtr<ID3D12Resource> vertBuff_;
-
-	WorldTransform transform;
-
-	Vector3 pos;
-	Vector3 scale;
-	Vector3 rot;
-	Texture texture;
-
-	std::vector<Particle> particles;
 };
 
 

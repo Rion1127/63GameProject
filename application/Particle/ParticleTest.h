@@ -6,10 +6,10 @@ class ParticleTest :
 public:
 	ParticleTest();
 
-	void Add(int life = 60, Vector3 pos = { 1,1,1 }, float scale = 1.f);
+	void Add(size_t addNum = 1,size_t life = 60, Vector3 pos = { 1,1,1 }, float scale = 1.f);
 private:
 	void MoveUpdate() override;
 
-	const int vertexCount = 6;
+	size_t vertexCount = 6;
 };
 

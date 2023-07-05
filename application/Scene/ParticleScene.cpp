@@ -86,7 +86,5 @@ void ParticleScene::Draw()
 	///////////////////
 	/////パーティクル////
 	///////////////////
-	ParticleManager::GetInstance()->PreDraw();
-
-	object_.Draw(whiteTexture_);
+	
 }

@@ -5,10 +5,10 @@ class ParticleManager
 {
 public:
 	static ParticleManager* GetInstance();
+	ParticleManager();
 
 	void Update();
 
-	void PreDraw();
 	void Draw();
 
 private:

@@ -1,18 +1,20 @@
 #include "ParticleTest.h"
 #include "Easing.h"
-ParticleTest::ParticleTest()
+ParticleTest::ParticleTest() :
+	vertexCount(6)
 {
 	Init(vertexCount);
+	texture = *TextureManager::GetInstance()->GetTexture("uv");
+	particles.resize(vertexCount);
+	for (size_t i = 0; i < particles.size(); i++)
+	{
+		particles[i].end_frame = 30 * (1 * i);
+	}
 }
 
-void ParticleTest::Add(int life, Vector3 pos, float scale)
+void ParticleTest::Add(size_t addNum, size_t life, Vector3 pos, float scale)
 {
-	//パーティクルをaddNum分追加
-	int addNum = 6;
-	//360度 / パーティクルの数
-	int degree = 360 / addNum;
-
-	for (int i = 0; i < 360; i += degree)
+	for (int i = 0; i < addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
 		if (particles.size() >= vertexCount)
@@ -43,25 +45,24 @@ void ParticleTest::Add(int life, Vector3 pos, float scale)
 
 void ParticleTest::MoveUpdate()
 {
+
 	for (size_t i = 0; i < particles.size(); i++)
 	{
 		particles[i].frame++;
-
 		float f = 0;
 
 		f = (float)particles[i].frame / particles[i].end_frame;
-		//イージングで描く方向に進む
-		Vector2 pos = {
-			Easing::Circ::easeInOut(particles[i].basePos.x,particles[i].basePos.x + particles[i].velocity.x,f),
-			Easing::Circ::easeInOut(particles[i].basePos.y,particles[i].basePos.y + particles[i].velocity.y,f),
-		};
+		
 		particles[i].position = {
-			pos.x,
-			pos.y,
+			0 + i * -5.f,
+			4,
 			0
 		};
-		//スケール変化
-		float scale = Easing::Back::easeInOut(particles[i].baseScale, 0.f, f);
-		particles[i].scale = scale;
+		particles[i].scale = 1.f * i;
+		particles[i].rot += {
+			0.01f,
+			-0.02f,
+			0.005f
+		};
 	}
 }
