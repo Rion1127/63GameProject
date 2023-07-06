@@ -24,11 +24,12 @@ protected:
 
 	bool isLockOn_;
 	bool isGravityImpact_;	//d—Í‚ğ—LŒø‚É‚·‚é
+	bool isDead_;
 	Timer damegeCoolTime_;
 	//‘Ì—Í
 	float health_;
 public:
-	IEnemy(EnemyType type,bool isGravityImpact);
+	IEnemy(EnemyType type,bool isGravityImpact,float health);
 	virtual ~IEnemy() {};
 	static void SetPlayer(IActor* player) { splayer_ = player; }
 	void SetIsLockOn(bool flag) { isLockOn_ = flag; }
@@ -42,6 +43,7 @@ public:
 public:
 	Gravity GetGravity() { return gravity_; }
 	bool GetIsLockOn() { return isLockOn_; }
+	bool GetIsDead() { return isDead_; }
 	Timer GetDamageCoolTime() { return damegeCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }
 protected:

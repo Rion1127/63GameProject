@@ -1,6 +1,6 @@
 #include "EnemyAirDummy.h"
 
-EnemyAirDummy::EnemyAirDummy(Vector3 pos) : IEnemy(EnemyType::Air, false)
+EnemyAirDummy::EnemyAirDummy(Vector3 pos) : IEnemy(EnemyType::Air, false, 100)
 {
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));

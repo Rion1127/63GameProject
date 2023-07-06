@@ -1,9 +1,11 @@
 #include "IEnemy.h"
 
-IEnemy::IEnemy(EnemyType type, bool isGravityImpact)
+IEnemy::IEnemy(EnemyType type, bool isGravityImpact, float health)
 {
 	enemyType_ = type;
 	isGravityImpact_ = isGravityImpact;
+	health_ = health;
+	isDead_ = false;
 }
 
 void IEnemy::PreUpdate()
@@ -15,6 +17,11 @@ void IEnemy::PreUpdate()
 	}
 
 	damegeCoolTime_.AddTime(1);
+
+	if (health_ <= 0)
+	{
+		isDead_ = true;
+	}
 }
 
 void IEnemy::PostUpdate()
@@ -55,6 +62,7 @@ void IEnemy::HitPlayerAttack(Vector3 knockVec, float damageValue, int32_t coolti
 		knockVec_ = knockVec;
 		damegeCoolTime_.SetLimitTime(cooltime);
 		damegeCoolTime_.Reset();
+		health_ -= damageValue;
 	}
 
 }
