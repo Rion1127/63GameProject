@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
-
+#include "EnemyDummy.h"
+#include "EnemyAirDummy.h"
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
@@ -11,7 +12,11 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(10, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(-10, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, 10))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, -10))));
+
+	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(5, 3, -10))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(10, 3, -10))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));
 
 	lockOnObj_ = std::move(std::make_unique<Object3d>());
 	lockOnObj_->SetModel(Model::CreateOBJ_uniptr("LockOn", true));

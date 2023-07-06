@@ -2,7 +2,7 @@
 #include "IEnemy.h"
 #include <vector>
 
-#include "EnemyDummy.h"
+
 #include "Timer.h"
 class EnemyManager
 {

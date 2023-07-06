@@ -4,20 +4,32 @@
 #include "Collision.h"
 #include "Gravity.h"
 #include "Timer.h"
+
+enum class EnemyType {
+	Ground,	
+	Air
+};
+
 class IEnemy : public IActor
 {
 protected:
 	static IActor* splayer_;
+
+	EnemyType enemyType_;
 	//ƒ‚ƒfƒ‹
 	Gravity gravity_;
 	Vector3 addVec_;
 	Vector3 knockVec_;
+	Vector3 knockResist_;
 
 	bool isLockOn_;
+	bool isGravityImpact_;	//d—Í‚ğ—LŒø‚É‚·‚é
 	Timer damegeCoolTime_;
 	//‘Ì—Í
 	float health_;
 public:
+	IEnemy(EnemyType type,bool isGravityImpact);
+	virtual ~IEnemy() {};
 	static void SetPlayer(IActor* player) { splayer_ = player; }
 	void SetIsLockOn(bool flag) { isLockOn_ = flag; }
 
@@ -31,6 +43,7 @@ public:
 	Gravity GetGravity() { return gravity_; }
 	bool GetIsLockOn() { return isLockOn_; }
 	Timer GetDamageCoolTime() { return damegeCoolTime_; }
+	Vector3 GetKnockResist() { return knockResist_; }
 protected:
 	virtual void MoveUpdate() = 0;
 };

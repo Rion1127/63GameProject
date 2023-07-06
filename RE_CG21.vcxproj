@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\CollisionManager.cpp" />
+    <ClCompile Include="application\Enemy\EnemyAirDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Enemy\IEnemy.cpp" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\CollisionManager.h" />
+    <ClInclude Include="application\Enemy\EnemyAirDummy.h" />
     <ClInclude Include="application\Enemy\EnemyDummy.h" />
     <ClInclude Include="application\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Enemy\IEnemy.h" />
