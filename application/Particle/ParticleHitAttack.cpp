@@ -2,7 +2,7 @@
 #include "RRandom.h"
 #include "Util.h"
 ParticleHitAttack::ParticleHitAttack() :
-	vertexCount(16)
+	vertexCount(32)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("uv");

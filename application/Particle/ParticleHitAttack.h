@@ -10,6 +10,6 @@ public:
 private:
 	void MoveUpdate() override;
 
-	size_t vertexCount = 6;
+	size_t vertexCount;
 };
 
