@@ -54,7 +54,7 @@ public:
 
 	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 private:
-	TextureManager();
+	TextureManager() {};
 };
 
 std::string FileExtension(const std::string& path);

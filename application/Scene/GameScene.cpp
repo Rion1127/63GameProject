@@ -13,8 +13,6 @@ void GameScene::Ini()
 {
 	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
-
-	Model::Ini();
 	
 	lightManager_ = std::make_shared<LightManager>();
 	colManager_ = std::make_unique<CollisionManager>();

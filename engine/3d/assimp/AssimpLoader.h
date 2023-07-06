@@ -41,7 +41,7 @@ public:
 	bool Load(ImportSettings* setting); // ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
 
 private:
-	AssimpLoader();
+	AssimpLoader(){};
 	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
 	void LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src);
 

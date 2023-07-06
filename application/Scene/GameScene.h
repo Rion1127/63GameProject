@@ -2,7 +2,6 @@
 #include <memory>
 #include "Model.h"
 #include "Sprite.h"
-#include "Particle.h"
 #include "WorldTransform.h"
 #include "WinAPI.h"
 #include "DirectX.h"

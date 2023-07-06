@@ -97,5 +97,5 @@ public:
 	static void ReleaseAllSounds();
 
 private:
-	SoundManager();
+	SoundManager() {};
 };

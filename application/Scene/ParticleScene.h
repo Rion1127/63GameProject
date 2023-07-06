@@ -2,7 +2,6 @@
 #include <memory>
 #include "Object3d.h"
 #include "Sprite.h"
-#include "Particle.h"
 #include "WorldTransform.h"
 #include "WinAPI.h"
 #include "DirectX.h"
@@ -38,7 +37,6 @@ private:
 	//g‚¤ƒJƒƒ‰À•W
 	Camera* useVP = nullptr;
 
-	Particle object_;
 	WorldTransform WT_;
 
 	uint32_t texture_;

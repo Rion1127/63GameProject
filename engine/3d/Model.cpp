@@ -10,9 +10,6 @@
 #include "Util.h"
 const std::string kBaseDirectory = "application/Resources/";
 
-//コマンドリストを格納する
-static RDirectX* directX_ = nullptr;
-
 std::shared_ptr<LightGroup> Model::lightGroup_ = nullptr;
 
 Model::~Model()
@@ -28,10 +25,6 @@ Model* Model::GetInstance()
 	return &instance;
 }
 
-void Model::Ini()
-{
-	directX_ = RDirectX::GetInstance();
-}
 
 Model* Model::CreateOBJ(const std::string& modelname, bool smoothing)
 {

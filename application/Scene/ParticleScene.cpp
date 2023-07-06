@@ -60,8 +60,6 @@ void ParticleScene::Update()
 
 	WT_.Update();
 
-	object_.Update(*useVP);
-
 
 	testWT_.Update();
 

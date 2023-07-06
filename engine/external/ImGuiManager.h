@@ -22,6 +22,6 @@ public:
 	void End();
 	void Draw();
 private:
-	ImGuiManager();
+	ImGuiManager() {};
 };
 

@@ -41,15 +41,13 @@ public:
 	static std::shared_ptr<LightGroup> lightGroup_;
 public:
 	Model() {};
-	~Model() {};
+	~Model();
 
 	static Model* GetInstance();
 
-	static void Ini();
 	//ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
 	static Model* CreateOBJ(const std::string& modelname, bool smoothing = false);
-	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false);
-	
+	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false);	
 
 	void SetModel(const Model* model);
 

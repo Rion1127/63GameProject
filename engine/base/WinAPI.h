@@ -31,7 +31,7 @@ private:
 	static const uint32_t win_width_ = 1280; // ‰¡•
 	static const uint32_t win_height_ = 720; // c•
 private:
-	WinAPI();
+	WinAPI(){};
 };
 
 
