@@ -30,6 +30,8 @@ private:
 	// ウィンドウサイズ
 	static const uint32_t win_width_ = 1280; // 横幅
 	static const uint32_t win_height_ = 720; // 縦幅
+private:
+	WinAPI();
 };
 
 

@@ -46,6 +46,7 @@ public:
 	//深度バッファのクリア
 	void ClearDepthBuffer();
 private:
+	RDirectX();
 	//DXGIデバイス初期化
 	void DXGIDeviceIni();
 	//スワップチェーンの生成

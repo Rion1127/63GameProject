@@ -6,7 +6,7 @@
 class Particle
 {
 public:
-	Particle();
+	
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
@@ -21,7 +21,7 @@ public:
 	void Draw(uint32_t descriptorSize);
 
 private:
-
+	Particle();
 	struct Vertex {
 		Vector3 pos;
 		float scale;

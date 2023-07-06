@@ -74,6 +74,7 @@ public:
 	float GetCursorMoveY();
 	float GetCursorMoveZ();
 private:
+	MouseInput();
 	//マウスの座標を取得する
 	void GetCursorPosition();
 };
@@ -131,5 +132,7 @@ public:
 
 	BYTE GetRTrigger();
 	BYTE GetLTrigger();
+private:
+	Controller();
 };
 

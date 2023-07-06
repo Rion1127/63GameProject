@@ -52,9 +52,15 @@ public:
 };
 
 class SoundManager {
-public:
+private:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+
+	static ComPtr<IXAudio2> sxAudio2_;
+	static IXAudio2MasteringVoice* smasterVoice_;
+	static std::map<SoundKey, SoundData> ssndMap_;
+public:
+	
 	~SoundManager();
 	static SoundManager* GetInstance();
 	static void Init();
@@ -91,8 +97,5 @@ public:
 	static void ReleaseAllSounds();
 
 private:
-	static ComPtr<IXAudio2> sxAudio2_;
-	static IXAudio2MasteringVoice* smasterVoice_;
-	static std::map<SoundKey, SoundData> ssndMap_;
-
+	SoundManager();
 };

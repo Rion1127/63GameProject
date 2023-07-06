@@ -21,5 +21,7 @@ public:
 	void Begin();
 	void End();
 	void Draw();
+private:
+	ImGuiManager();
 };
 

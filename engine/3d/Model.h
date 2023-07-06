@@ -40,7 +40,8 @@ public:
 	//ƒ‰ƒCƒg
 	static std::shared_ptr<LightGroup> lightGroup_;
 public:
-	~Model();
+	Model() {};
+	~Model() {};
 
 	static Model* GetInstance();
 
