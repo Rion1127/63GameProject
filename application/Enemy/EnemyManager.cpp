@@ -31,8 +31,6 @@ void EnemyManager::PreUpdate()
 		//ロックオンしている敵のアドレスを代入
 		if (enemy->GetIsLockOn()) {
 			lockOnEnemy_ = enemy.get();
-			//hpゲージにロックオン中の敵をセット
-			hpGauge_.SetLockOnEnemy(lockOnEnemy_);
 		}
 	}
 	//ロックオンオブジェ
@@ -44,6 +42,8 @@ void EnemyManager::PreUpdate()
 		lockOnObj_->GetTransform()->AddRotation({ 0,0.03f,0 });
 		lockOnObj_->Update();
 	}
+	//hpゲージにロックオン中の敵をセット
+	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
 	hpGauge_.Update();
 }
 

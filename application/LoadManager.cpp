@@ -20,4 +20,5 @@ void LoadManager::LoadTexture()
 	LoadGraph("keyBlade2.png", "key");
 	//HPÉoÅ[
 	LoadGraph("hpBarBack.png", "HpBarBack");
+	LoadGraph("gauge.png", "Gauge");
 }

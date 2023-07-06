@@ -40,12 +40,14 @@ void Attack3::Init()
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
 		colPos.y += 1;
-		attackCol_.at(0)->col_.center = colPos;
-		attackCol_.at(0)->col_.radius = 1.2f;
-		//ノックバック力
-		attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
-		attackCol_.at(0)->knockVecY = 0.8f;
 	}
+
+	attackCol_.at(0)->col_.center = colPos;
+	attackCol_.at(0)->col_.radius = 1.2f;
+	attackCol_.at(0)->damage = 20;
+	//ノックバック力
+	attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
+	attackCol_.at(0)->knockVecY = 0.8f;
 
 	attackVec_ = frontVec;
 }

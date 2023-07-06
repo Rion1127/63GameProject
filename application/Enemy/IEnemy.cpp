@@ -5,6 +5,7 @@ IEnemy::IEnemy(EnemyType type, bool isGravityImpact, size_t health)
 	enemyType_ = type;
 	isGravityImpact_ = isGravityImpact;
 	health_ = health;
+	maxHealth_ = health;
 	isDead_ = false;
 }
 

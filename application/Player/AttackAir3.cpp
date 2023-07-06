@@ -44,6 +44,7 @@ void AttackAir3::Init()
 		splayerInfo_->gravity->SetGrabity({ 0,0.07f,0 });
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.f;
+		attackCol_.at(0)->damage = 20;
 		//ノックバック力
 		attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
 		attackCol_.at(0)->knockVecY = 0.8f;

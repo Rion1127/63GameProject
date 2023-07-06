@@ -7,6 +7,11 @@ private:
 	std::unique_ptr<Sprite> hpBar_;
 	std::unique_ptr<Sprite> hpBarBack_;
 
+	Vector2 offsetPos_;
+	Vector2 offsetRate_;
+	Vector2 pos_;
+	Vector2 scale_;
+
 	IEnemy* lockOnEnemy_;
 	size_t maxHp_;
 	size_t nowHp_;

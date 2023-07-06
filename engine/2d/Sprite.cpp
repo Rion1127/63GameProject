@@ -233,8 +233,8 @@ void Sprite::DrawImGui()
 	{
 		float scalex = Scale_.x;
 		float scaley = Scale_.y;
-		ImGui::SliderFloat("scale.x", &scalex, 0.0f, 1.0f, "x = %.3f");
-		ImGui::SliderFloat("scale.y", &scaley, 0.0f, 1.0f, "y = %.3f");
+		ImGui::DragFloat("scale.x", &scalex,1.0f, 0.0f, 10.0f);
+		ImGui::DragFloat("scale.y", &scaley,1.0f, 0.0f, 10.0f);
 		Scale_.x = scalex;
 		Scale_.y = scaley;
 	}

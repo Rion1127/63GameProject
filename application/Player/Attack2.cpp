@@ -42,6 +42,7 @@ void Attack2::Init()
 		colPos.y += 1;
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.1f;
+		attackCol_.at(0)->damage = 10;
 		//ノックバック力
 		attackCol_.at(0)->knockPower = { 0.3f,0.5f,0.3f };
 		attackCol_.at(0)->knockVecY = 0.5f;

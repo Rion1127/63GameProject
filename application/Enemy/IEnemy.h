@@ -28,6 +28,7 @@ protected:
 	Timer damegeCoolTime_;
 	//‘Ì—Í
 	size_t health_;
+	size_t maxHealth_;
 public:
 	IEnemy(EnemyType type,bool isGravityImpact, size_t health);
 	virtual ~IEnemy() {};
@@ -46,6 +47,8 @@ public:
 	bool GetIsDead() { return isDead_; }
 	Timer GetDamageCoolTime() { return damegeCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }
+	size_t GetHealth() { return health_; }
+	size_t GetMaxHealth() { return maxHealth_; }
 protected:
 	virtual void MoveUpdate() = 0;
 };
