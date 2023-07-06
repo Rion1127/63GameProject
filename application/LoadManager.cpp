@@ -18,4 +18,6 @@ void LoadManager::LoadTexture()
 	LoadGraph("test.png", "Test");
 	LoadGraph("uv.png", "uv");
 	LoadGraph("keyBlade2.png", "key");
+	//HPÉoÅ[
+	LoadGraph("hpBarBack.png", "HpBarBack");
 }

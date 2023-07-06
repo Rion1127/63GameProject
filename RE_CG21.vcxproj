@@ -14,6 +14,7 @@
     <ClCompile Include="application\CollisionManager.cpp" />
     <ClCompile Include="application\Enemy\EnemyAirDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyDummy.cpp" />
+    <ClCompile Include="application\Enemy\EnemyHPGauge.cpp" />
     <ClCompile Include="application\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Enemy\IEnemy.cpp" />
     <ClCompile Include="application\Floor.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="application\CollisionManager.h" />
     <ClInclude Include="application\Enemy\EnemyAirDummy.h" />
     <ClInclude Include="application\Enemy\EnemyDummy.h" />
+    <ClInclude Include="application\Enemy\EnemyHPGauge.h" />
     <ClInclude Include="application\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Enemy\IEnemy.h" />
     <ClInclude Include="application\Floor.h" />

@@ -69,6 +69,9 @@ void GameScene::Draw()
 	////////////
 	//スプライト//
 	////////////
+	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	enemyManager_->SpriteDraw();
+
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
 }

@@ -9,7 +9,7 @@
 struct AttackCol {
 	Object3d colObj_;
 	Sphere col_;
-	float damage = 10;
+	size_t damage = 10;
 	//敵の攻撃当たり判定有効までの時間
 	int32_t damageCoolTime = 20;
 	//ノックバックの強さ
@@ -32,7 +32,7 @@ protected:
 	static IActor* lockOnActor_;
 	Vector3 attackVec_;
 public:
-	IAttack(size_t colNum = 1,size_t maxTime = 20,float damage = 10,int32_t damageCoolTime = 25);
+	IAttack(size_t colNum = 1,size_t maxTime = 20, size_t damage = 10,int32_t damageCoolTime = 25);
 	
 	void Update();
 	void DrawCol();

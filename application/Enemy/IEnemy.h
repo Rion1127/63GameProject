@@ -27,9 +27,9 @@ protected:
 	bool isDead_;
 	Timer damegeCoolTime_;
 	//‘Ì—Í
-	float health_;
+	size_t health_;
 public:
-	IEnemy(EnemyType type,bool isGravityImpact,float health);
+	IEnemy(EnemyType type,bool isGravityImpact, size_t health);
 	virtual ~IEnemy() {};
 	static void SetPlayer(IActor* player) { splayer_ = player; }
 	void SetIsLockOn(bool flag) { isLockOn_ = flag; }
@@ -39,7 +39,7 @@ public:
 	void Draw();
 	void FloorColision();
 	void ColPosUpdate();
-	void HitPlayerAttack(Vector3 knockVec,float damageValue,int32_t cooltime);
+	void HitPlayerAttack(Vector3 knockVec, size_t damageValue,int32_t cooltime);
 public:
 	Gravity GetGravity() { return gravity_; }
 	bool GetIsLockOn() { return isLockOn_; }
