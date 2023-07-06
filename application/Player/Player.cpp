@@ -44,8 +44,6 @@ void Player::PreUpdate()
 		InputVecUpdate();
 	}
 
-	attack_.Update();
-
 	//d—Í
 	GravityUpdate();
 
@@ -61,8 +59,7 @@ void Player::PostUpdate()
 	//“–‚½‚è”»’è‚Ågravity‚Ì’l‚ð•Ï‰»‚³‚¹‚Ä‚©‚ç
 	//PostUpdate‚ÅaddVec_‚É‘ã“ü‚µ‚Ä‚¢‚é
 	addVec_ += gravity_.GetGravityValue();
-	// “ü—Í‚µ‚½•ûŒü‚É‰ñ“]î•ñ‘ã“ü
-
+	attack_.Update();
 
 	obj_->WT_.rotation_ = rot_;
 	obj_->WT_.position_ += addVec_;

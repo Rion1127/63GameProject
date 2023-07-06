@@ -12,7 +12,7 @@ void Attack1::Init()
 	if (splayerInfo_ != nullptr) {
 		frontDist_ = 0;
 		//ロックオンしている敵がいるなら
-		if (IAttack::lockOnActor_) {
+		if (IAttack::lockOnActor_ != nullptr) {
 			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
 			//ロックオンしている敵へのベクトルをとる
 			frontVec = {

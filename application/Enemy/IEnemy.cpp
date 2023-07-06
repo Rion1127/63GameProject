@@ -21,6 +21,7 @@ void IEnemy::PreUpdate()
 
 	if (health_ <= 0)
 	{
+		health_ = 0;
 		isDead_ = true;
 	}
 }
