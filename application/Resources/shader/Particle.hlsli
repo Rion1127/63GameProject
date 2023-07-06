@@ -9,17 +9,17 @@ struct VSInput
 {
     float4 pos : POSITION; // システム用頂点座標
     float scale : SCALE; // スケール
-    float3 rot : TEXCOORD1; // 角度
-    float2 ancorPoint : TEXCOORD2;
+    float3 rot : ROTATION; // 角度
+    float2 ancorPoint : ANCORPOINT;
     float4 color : COLOR; //色
 };
 
 struct VSOutput
 {
     float4 pos : SV_POSITION; // システム用頂点座標
-    float scale : TEXCOORD; // スケール
-    float3 rot : TEXCOORD1; // 角度
-    float2 ancorPoint : TEXCOORD2;
+    float scale : SCALE; // スケール
+    float3 rot : ROTATION; // 角度
+    float2 ancorPoint : ANCORPOINT;
     float4 color : COLOR; //色
 };
 

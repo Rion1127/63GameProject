@@ -206,8 +206,8 @@ void PipelineManager::ParticleShaderIni()
 	AddPipeline("Particle");
 	GetPipelineObjects("Particle")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	GetPipelineObjects("Particle")->AddInputLayout("SCALE", DXGI_FORMAT_R32_FLOAT, 0);
-	GetPipelineObjects("Particle")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT, 1);
-	GetPipelineObjects("Particle")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 2);
+	GetPipelineObjects("Particle")->AddInputLayout("ROTATION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Particle")->AddInputLayout("ANCORPOINT", DXGI_FORMAT_R32G32_FLOAT);
 	GetPipelineObjects("Particle")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
 
 	GetPipelineObjects("Particle")->Setshader("ParticleGS.hlsl", ShaderType::GS);
