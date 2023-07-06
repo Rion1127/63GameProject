@@ -16,6 +16,8 @@ struct Quaternion
 		(float)(cos(w / 2))
 		};
 
+		q1.Normalize();
+
 		Matrix4 matRot = {
 			(powf(q1.w,2) + powf(q1.x,2) - powf(q1.y,2) - powf(q1.z,2)),
 			2.f * (q1.x * q1.y + q1.w * q1.z),
