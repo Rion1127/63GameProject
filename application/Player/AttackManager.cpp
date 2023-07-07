@@ -74,7 +74,7 @@ void AttackManager::Update()
 			comboNum++;
 		}
 	}
-	else if (nowAttack_ == nullptr)
+	else
 	{
 		isAttacking = false;
 		comboNum = 0;
