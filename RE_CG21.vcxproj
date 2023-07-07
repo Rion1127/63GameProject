@@ -422,6 +422,9 @@
     <OutDir>$(SolutionDir)..\63GamePrjGenerated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\63GamePrjGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -440,6 +443,9 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalDependencies>assimp-vc143-mtd.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Debug\assimp-vc142-mtd.dll" "$(TargetDir)assimp-vc142-mtd.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -464,6 +470,9 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalDependencies>assimp-vc143-mt.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Release\assimp-vc142-mt.dll" "$(TargetDir)assimp-vc142-mt.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
