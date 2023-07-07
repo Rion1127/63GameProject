@@ -4,7 +4,7 @@
 IParticle::~IParticle() {
 }
 
-void IParticle::Init(size_t vertexCount)
+void IParticle::Init(int32_t vertexCount)
 {
 	HRESULT result;
 	vertices_.resize(vertexCount);
@@ -77,7 +77,7 @@ void IParticle::TransferBuff()
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (int32_t i = 0; i < particles_.size(); i++)
 	{
 		vertMap->pos = particles_[i].position;
 
@@ -103,7 +103,7 @@ void IParticle::TransferBuff()
 
 void IParticle::DeleteUpdate()
 {
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (int32_t i = 0; i < particles_.size(); i++)
 	{
 		if (particles_[i].frame >= particles_[i].end_frame)
 		{

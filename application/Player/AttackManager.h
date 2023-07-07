@@ -22,10 +22,10 @@ private:
 	std::unique_ptr<IAttack> nowAttack_;	//Œ»İˆ—‚µ‚Ä‚¢‚éUŒ‚
 	std::unique_ptr<IAttack> nextAttack_;	//Ÿ‚Éˆ—‚·‚éUŒ‚
 
-	const size_t MAX_COMBO = 3;
-	size_t comboNum;
+	const int32_t MAX_COMBO = 3;
+	int32_t comboNum;
 
-	size_t timer_ = 0;
+	int32_t timer_ = 0;
 
 	bool isAttacking;
 	IEnemy* lockOnEnemy_;

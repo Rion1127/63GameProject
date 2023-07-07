@@ -85,8 +85,8 @@ public:
 
 	void Setshader(std::string fileName,ShaderType shadertype);
 
-	void AddrootParams(size_t addNum);
-	void AddrootParamsMultiTexture(size_t addTexnum,size_t addNum);
+	void AddrootParams(int32_t addNum);
+	void AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum);
 	void AddInputLayout(const char* semanticName, DXGI_FORMAT format,uint32_t index = 0);
 public:
 	ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }

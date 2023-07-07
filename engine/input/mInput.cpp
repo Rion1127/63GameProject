@@ -266,7 +266,7 @@ WORD Controller::GetReleasButtons(PAD button)
 	return false;
 }
 
-Vector2 Controller::GetLStick(size_t deadZone)
+Vector2 Controller::GetLStick(int32_t deadZone)
 {
 	Vector2 stickPos;
 	
@@ -289,7 +289,7 @@ Vector2 Controller::GetLStick(size_t deadZone)
 	return stickPos;
 }
 
-Vector2 Controller::GetRStick(size_t deadZone)
+Vector2 Controller::GetRStick(int32_t deadZone)
 {
 	Vector2 stickPos;
 	//右スティック

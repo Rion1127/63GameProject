@@ -13,8 +13,8 @@ private:
 	Vector2 scale_;
 
 	IEnemy* lockOnEnemy_;
-	size_t maxHp_;
-	size_t nowHp_;
+	int32_t maxHp_;
+	int32_t nowHp_;
 public:
 	EnemyHPGauge();
 	void Update();

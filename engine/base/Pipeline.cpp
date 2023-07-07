@@ -191,12 +191,12 @@ void PipelineObject::Setshader(std::string fileName, ShaderType shadertype)
 	}
 }
 
-void PipelineObject::AddrootParams(size_t addNum)
+void PipelineObject::AddrootParams(int32_t addNum)
 {
 	rootParams_.clear();
-	uint32_t size = 0;
+	int32_t size = 0;
 	//inputLayout + 1の数分rootParams_を作る
-	for (uint32_t i = 0; i < addNum; i++)
+	for (int32_t i = 0; i < addNum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};
 		//配列の最初にテクスチャ
@@ -232,13 +232,13 @@ void PipelineObject::AddrootParams(size_t addNum)
 	}
 }
 
-void PipelineObject::AddrootParamsMultiTexture(size_t addTexnum, size_t addNum)
+void PipelineObject::AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum)
 {
 	rootParams_.clear();
-	uint32_t size = 0;
+	int32_t size = 0;
 
 	
-	for (uint32_t i = 0; i < addTexnum; i++)
+	for (int32_t i = 0; i < addTexnum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};
 		//デスクリプタレンジの設定
@@ -255,7 +255,7 @@ void PipelineObject::AddrootParamsMultiTexture(size_t addTexnum, size_t addNum)
 		rootParams_.emplace_back(rootParams);
 	}
 
-	for (uint32_t i = 0; i < addNum; i++)
+	for (int32_t i = 0; i < addNum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};
 		//定数バッファ

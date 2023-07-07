@@ -380,11 +380,11 @@ float Radian(float angle) {
 
 #pragma endregion
 
-const Vector3 SplinePosition(const std::vector<Vector3>& point, size_t startIndex, const float t)
+const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t)
 {
 	////•âŠ®‚·‚×‚«“_‚Ì”
 	size_t n = point.size() - 2;
-
+	
 	if (startIndex > n)return point[n];//Pn‚Ì’l‚ð•Ô‚·
 	if (startIndex < 1)return point[1];//P1‚Ì’l‚ð•Ô‚·
 

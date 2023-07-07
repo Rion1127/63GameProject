@@ -9,7 +9,7 @@
 struct AttackCol {
 	Object3d colObj_;
 	Sphere col_;
-	size_t damage = 10;
+	int32_t damage = 10;
 	//敵の攻撃当たり判定有効までの時間
 	int32_t damageCoolTime = 20;
 	//ノックバックの強さ
@@ -19,8 +19,8 @@ struct AttackCol {
 };
 
 struct AttackInfo {
-	size_t maxTime;	//攻撃のフレーム数
-	size_t nowTime;
+	int32_t maxTime;	//攻撃のフレーム数
+	int32_t nowTime;
 };
 
 class IAttack
@@ -32,12 +32,12 @@ protected:
 	static IActor* lockOnActor_;
 	Vector3 attackVec_;
 public:
-	IAttack(size_t colNum = 1,size_t maxTime = 20, size_t damage = 10,int32_t damageCoolTime = 25);
+	IAttack(int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	
 	void Update();
 	void DrawCol();
 public:
-	void SetNowTime(size_t time) { attackInfo_.nowTime = time; }
+	void SetNowTime(int32_t time) { attackInfo_.nowTime = time; }
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }

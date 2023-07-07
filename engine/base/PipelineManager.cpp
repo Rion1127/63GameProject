@@ -224,7 +224,7 @@ void PipelineManager::Create(
 	TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
 	TEXTURE_ADDRESS_MODE uvMode)
 {
-	for (size_t i = 0; i < 4; i++)
+	for (int32_t i = 0; i < 4; i++)
 	{
 		pipelineObjects_[pipelinename]->
 			Create(BlendNum(i), cullmode, topologytype, depthWriteMasc, uvMode);

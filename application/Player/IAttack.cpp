@@ -3,7 +3,7 @@
 PlayerInfo* IAttack::splayerInfo_ = nullptr;
 IActor* IAttack::lockOnActor_ = nullptr;
 
-IAttack::IAttack(size_t colNum, size_t maxTime, size_t damage, int32_t damageCoolTime)
+IAttack::IAttack(int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime)
 {
 	attackCol_.resize(colNum);
 	for (auto& col : attackCol_)

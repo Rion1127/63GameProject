@@ -38,7 +38,7 @@ private:
 	//画面クリアカラー
 	static const float clearColor_[4];
 public:
-	MultiTexture(size_t texNum);
+	MultiTexture(int32_t texNum);
 
 	void PUpdate();
 

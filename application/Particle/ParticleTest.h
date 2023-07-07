@@ -6,10 +6,10 @@ class ParticleTest :
 public:
 	ParticleTest();
 
-	void Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale) override;
+	void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale) override;
 private:
 	void MoveUpdate() override;
 
-	size_t vertexCount = 6;
+	int32_t vertexCount = 6;
 };
 

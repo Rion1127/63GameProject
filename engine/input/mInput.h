@@ -127,8 +127,8 @@ public:
 	WORD GetReleasButtons(PAD button);
 	//false	右スティック
 	//true	左スティック
-	Vector2 GetLStick(size_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-	Vector2 GetRStick(size_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+	Vector2 GetLStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+	Vector2 GetRStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 
 	BYTE GetRTrigger();
 	BYTE GetLTrigger();

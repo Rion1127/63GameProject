@@ -10,7 +10,7 @@ CrossFilter::CrossFilter()
 
 void CrossFilter::Update() {
 	highLumi_->PUpdate();
-	for (size_t i = 0; i < lineBlurs_.size(); i++) {
+	for (int32_t i = 0; i < lineBlurs_.size(); i++) {
 		lineBlurs_[i]->PUpdate();
 	}
 	lineBlurs_[0]->SetRadian(45.f);
@@ -24,7 +24,7 @@ void CrossFilter::PreDraw()
 	SceneManager::Draw();
 	highLumi_->PostDrawScene();
 
-	for (size_t i = 0; i < lineBlurs_.size(); i++) {
+	for (int32_t i = 0; i < lineBlurs_.size(); i++) {
 		lineBlurs_[i]->PreDrawScene();
 		highLumi_->Draw("HighLumi");
 		lineBlurs_[i]->PostDrawScene();

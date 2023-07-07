@@ -57,7 +57,7 @@ void MultiRenderTarget::Draw()
 
 	if (Key::TriggerKey(DIK_V)) {
 		//デスクリプタヒープにSRV作成
-		static size_t tex = 0;
+		static uint32_t tex = 0;
 		//テクスチャ番号を0と1で切り替え
 		tex = (tex == 0) ? 1 : 0;
 
@@ -99,7 +99,7 @@ void MultiRenderTarget::Draw()
 void MultiRenderTarget::PreDrawScene()
 {
 	ID3D12GraphicsCommandList& cmdList = *RDirectX::GetInstance()->GetCommandList();
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		auto bariier = CD3DX12_RESOURCE_BARRIER::Transition(texBuff_[i].Get(),
 			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 			D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -110,7 +110,7 @@ void MultiRenderTarget::PreDrawScene()
 
 	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2]{};
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		rtvHs[i] =
 			CD3DX12_CPU_DESCRIPTOR_HANDLE(
 				descHeapRTV_->GetCPUDescriptorHandleForHeapStart(), (INT)i,
@@ -126,7 +126,7 @@ void MultiRenderTarget::PreDrawScene()
 	CD3DX12_VIEWPORT viewPorts[2]{};
 	//シザリング矩形の設定
 	CD3DX12_RECT rects[2]{};
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		viewPorts[i] = CD3DX12_VIEWPORT(0.0f, 0.0f,
 			WinAPI::GetWindowSize().x, WinAPI::GetWindowSize().y);
 		rects[i] = CD3DX12_RECT(0, 0,
@@ -137,7 +137,7 @@ void MultiRenderTarget::PreDrawScene()
 	cmdList.RSSetScissorRects(2, rects);
 
 	//全画面クリア
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		cmdList.ClearRenderTargetView(rtvHs[i], clearColor_, 0, nullptr);
 	}
 	//深度バッファのクリア
@@ -147,7 +147,7 @@ void MultiRenderTarget::PreDrawScene()
 void MultiRenderTarget::PostDrawScene()
 {
 	//リソースバリアを変更（描画可能→シェーダーリソース）
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		auto barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(texBuff_[i].Get(),
 				D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
@@ -280,7 +280,7 @@ void MultiRenderTarget::CreateTexBuff()
 			D3D12_MEMORY_POOL_L0);
 	CD3DX12_CLEAR_VALUE clear_Value =
 		CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor_);
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		//テクスチャバッファの生成
 		result =
 			RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
@@ -301,7 +301,7 @@ void MultiRenderTarget::CreateTexBuff()
 		//画像イメージ
 		std::vector<UINT> img;
 		img.resize(pixelCount);
-		for (uint32_t j = 0; j < pixelCount; j++)
+		for (size_t j = 0; j < pixelCount; j++)
 		{
 			img[j] = 0xff0000ff;
 		}
@@ -354,7 +354,7 @@ void MultiRenderTarget::CreateRTV()
 	//シェーダーの計算結果をSRGBに変換して書き込む
 	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-	for (size_t i = 0; i < 2; i++) {
+	for (int32_t i = 0; i < 2; i++) {
 		//デスクリプタヒープにRTV作成
 		RDirectX::GetInstance()->GetDevice()
 			->CreateRenderTargetView(texBuff_[i].Get(),

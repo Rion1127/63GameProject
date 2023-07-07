@@ -83,7 +83,7 @@ void AttackManager::Update()
 
 void AttackManager::DrawDebug()
 {
-	static size_t isColDisplay = 1;
+	static int32_t isColDisplay = 1;
 	if (isColDisplay)
 	{
 		if (nowAttack_ != nullptr)

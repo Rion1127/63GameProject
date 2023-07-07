@@ -6,10 +6,10 @@ class ParticleHitAttack :
 public:
 	ParticleHitAttack();
 
-	void Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale) override;
+	void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale) override;
 private:
 	void MoveUpdate() override;
 
-	size_t vertexCount;
+	int32_t vertexCount;
 };
 

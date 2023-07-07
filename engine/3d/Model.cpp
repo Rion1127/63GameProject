@@ -48,12 +48,12 @@ void Model::SetModel(const Model* model)
 	vert_.emplace_back(std::move(std::make_unique<Vertices>()));	//空の頂点データを入れる
 	Vertices& vert = *vert_.back();		//空のvert_のアドレスをvertに入れる
 
-	for (size_t i = 0; i < model->vert_[0]->vertices_.size(); i++)
+	for (int32_t i = 0; i < model->vert_[0]->vertices_.size(); i++)
 	{
 		vert.AddVertices(model->vert_[0]->vertices_[i]);
 	}
 
-	for (size_t i = 0; i < model->vert_[0]->indices_.size(); i++)
+	for (int32_t i = 0; i < model->vert_[0]->indices_.size(); i++)
 	{
 		vert.AddIndex(model->vert_[0]->indices_[i]);
 	}
@@ -71,7 +71,7 @@ void Model::SetModel(const Model* model)
 
 	//materials_.insert(model->materials_.begin(), model->materials_.end());
 
-	for (size_t i = 0; i < model->texture_.size(); i++)
+	for (int32_t i = 0; i < model->texture_.size(); i++)
 	{
 		texture_.push_back(model->texture_[i]);
 	}

@@ -3,8 +3,8 @@
 #include "player.h"
 
 struct DeadZoneValue {
-	size_t x;
-	size_t y;
+	int32_t x;
+	int32_t y;
 };
 class GameCamera {
 private:

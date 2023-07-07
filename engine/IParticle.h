@@ -32,9 +32,9 @@ protected:
 		Vector3 rot = {};
 		Vector3 addRot = {};
 		//現在フレーム
-		size_t frame = 0;
+		int32_t frame = 0;
 		//終了フレーム
-		size_t end_frame = 0;
+		int32_t end_frame = 0;
 		// ローカルスケール
 		float scale = 1.0f;			//スケール
 		float maxScale = 1.f;
@@ -61,7 +61,7 @@ protected:
 
 	WorldTransform transform_;
 
-	size_t maxParticleNum_;
+	int32_t maxParticleNum_;
 	//パーティクルデータ
 	std::vector<Particle> particles_;
 public:
@@ -72,14 +72,14 @@ public:
 
 	void Draw();
 
-	virtual void Add(size_t addNum,size_t time,Vector3 pos,Vector3 addVec,float scale) = 0;
+	virtual void Add(int32_t addNum, int32_t time,Vector3 pos,Vector3 addVec,float scale) = 0;
 private:
 	//データ転送
 	void TransferBuff();
 	//end_frameを超えたら削除
 	void DeleteUpdate();
 protected:
-	void Init(size_t vertexCount);
+	void Init(int32_t vertexCount);
 	//継承先のパーティクルの処理
 	//動き更新
 	virtual void MoveUpdate() = 0;

@@ -150,7 +150,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
 			std::array<uint32_t, 4> bInd;
 			std::array<float, 4> bWeight;
 
-			for (size_t j = 0; j < 4; j++)
+			for (int32_t j = 0; j < 4; j++)
 			{
 				if (j < bdlist.size())
 				{

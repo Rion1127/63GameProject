@@ -8,7 +8,7 @@ ParticleHitAttack::ParticleHitAttack() :
 	texture = *TextureManager::GetInstance()->GetTexture("uv");
 }
 
-void ParticleHitAttack::Add(size_t addNum, size_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
 	for (int i = 0; i < addNum; i++)
 	{

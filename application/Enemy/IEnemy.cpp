@@ -1,6 +1,6 @@
 #include "IEnemy.h"
 
-IEnemy::IEnemy(EnemyType type, bool isGravityImpact, size_t health)
+IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 {
 	enemyType_ = type;
 	isGravityImpact_ = isGravityImpact;
@@ -57,7 +57,7 @@ void IEnemy::ColPosUpdate()
 	col_.radius = obj_->GetTransform()->scale_.x;
 }
 
-void IEnemy::HitPlayerAttack(Vector3 knockVec, size_t damageValue, int32_t cooltime)
+void IEnemy::HitPlayerAttack(Vector3 knockVec, int32_t damageValue, int32_t cooltime)
 {
 	if (damegeCoolTime_.GetIsEnd())
 	{
