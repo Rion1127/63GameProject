@@ -147,8 +147,9 @@ void CollisionManager::PlayerAttackToEnemy()
 						knockVec = knockVec * enemy->GetKnockResist();
 						enemy->HitPlayerAttack(knockVec, col->damage, col->damageCoolTime);
 
-						Vector3 addVec = { 0.2f,0.2f,0.2f };
-						ParticleManager::GetInstance()->AddTestParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 1.f);
+						Vector3 addVec = { 0.15f,0.15f,0.15f };
+	
+						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 0.7f);
 					}
 				}
 			}

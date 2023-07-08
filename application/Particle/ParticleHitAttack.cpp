@@ -41,7 +41,7 @@ void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		p.scale = scale;
 		p.baseScale = scale;
 		p.addRot = addrot;
-		p.color = { 255,0,0,255 };
+		p.color = { 200,200,0,255 };
 	}
 }
 

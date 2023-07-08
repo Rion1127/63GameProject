@@ -31,7 +31,7 @@ void ParticleManager::Draw()
 	}
 }
 
-void ParticleManager::AddTestParticle(std::string particleName, int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleManager::AddParticle(std::string particleName, int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
 	particles_.find(particleName)->second->Add(addNum, time, pos, addVec, scale);
 }

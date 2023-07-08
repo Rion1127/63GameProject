@@ -16,15 +16,13 @@ void GameCamera::Update()
 {
 	Vector3 cameraTrans = {
 		player_->GetWorldTransform()->position_.x,
-		player_->GetWorldTransform()->position_.y /*+ 20*/,
+		player_->GetWorldTransform()->position_.y,
 		player_->GetWorldTransform()->position_.z
 	};
 
 	float frontdist = 15;
 
 	static Vector3 moveDist{};	//球面座標
-
-	endTargetPos_ = player_->GetWorldTransform()->position_;
 
 	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
@@ -34,14 +32,33 @@ void GameCamera::Update()
 		moveDist.y = Clamp(moveDist.y, -0.8f, 1.2f);
 	}
 
-	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
-	endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
-	endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
+	
+	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
+	if (player_->GetAttackManager()->GetLockOnEnemy()) {
+		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
+		Vector3 ptoEVec = enemy->GetWorldTransform()->position_ - player_->GetWorldTransform()->position_;
+		ptoEVec /= 2.f;
+
+		endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
+		endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
+		endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
+
+		//endTargetPos_ = enemy->GetWorldTransform()->position_ + ptoEVec;
+		endTargetPos_ = player_->GetWorldTransform()->position_;
+	}
+	//ロックオンしている敵がいない時のカメラ
+	else {
+		
+		endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
+		endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
+		endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
+
+		endTargetPos_ = player_->GetWorldTransform()->position_;
+	}
 
 	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.2f;
 	camera_->target_ += (endTargetPos_ - camera_->target_) * 0.2f;
-	camera_->target_.y += 0.1f;
-
+	
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
 	float minGamecameraY = 0.5f;
 

@@ -28,6 +28,7 @@ private:
 	int32_t timer_ = 0;
 
 	bool isAttacking;
+	bool isHardLock_;	//false 近い敵をロックオン, true ロックオンを固定
 	IEnemy* lockOnEnemy_;
 public:
 	AttackManager();
@@ -41,5 +42,6 @@ public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
 public:
 	IAttack* GetNowAttack() { return nowAttack_.get(); }
+	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
 };
 

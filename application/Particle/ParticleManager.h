@@ -12,7 +12,7 @@ public:
 
 	void Draw();
 
-	void AddTestParticle(std::string particleName, int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale);
+	void AddParticle(std::string particleName, int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale);
 
 private:
 	ParticleManager();
