@@ -20,4 +20,6 @@ void LoadManager::LoadTexture()
 	//HPバー
 	LoadGraph("hpBarBack.png", "HpBarBack");
 	LoadGraph("gauge.png", "Gauge");
+	//パーティクル
+	LoadGraph("starParticle.png", "StarParticle");
 }

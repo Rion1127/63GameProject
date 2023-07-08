@@ -17,6 +17,18 @@ public:
 		a = col.a;
 	};
 
-	
+	//単項演算子オーバーロード
+	Color operator+() const;
+	Color operator-() const;
+	Color operator*(const Color& c);
+	Color operator/(const Color& c);
+
+	//代入演算子オーバーロード
+	Color& operator+=(const Color& v);
+	Color& operator-=(const Color& v);
+	Color& operator*=(float s);
+	Color& operator/=(float s);
 };
 
+const Color operator*(const Color& c, float s);
+const Color operator/(const Color& c, float s);

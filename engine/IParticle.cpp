@@ -87,7 +87,7 @@ void IParticle::TransferBuff()
 
 		vertMap->ancorPoint = particles_[i].ancorPoint_;
 
-		vertMap->color = particles_[i].color /*/ 255.0f*/;
+		vertMap->color = particles_[i].color / 255.f;
 		vertMap->color.a = particles_[i].color.a;
 
 		vertices_.at(i) = *vertMap;

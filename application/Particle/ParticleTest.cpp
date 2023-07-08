@@ -6,7 +6,7 @@ ParticleTest::ParticleTest() :
 	vertexCount(16)
 {
 	Init(vertexCount);
-	texture = *TextureManager::GetInstance()->GetTexture("uv");
+	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
 }
 
 void ParticleTest::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)

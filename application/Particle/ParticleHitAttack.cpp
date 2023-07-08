@@ -5,7 +5,7 @@ ParticleHitAttack::ParticleHitAttack() :
 	vertexCount(32)
 {
 	Init(vertexCount);
-	texture = *TextureManager::GetInstance()->GetTexture("uv");
+	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
 }
 
 void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
@@ -41,6 +41,7 @@ void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		p.scale = scale;
 		p.baseScale = scale;
 		p.addRot = addrot;
+		p.color = { 255,0,0,255 };
 	}
 }
 
