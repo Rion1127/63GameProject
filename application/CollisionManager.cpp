@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include "ParticleManager.h"
+#include "mSound.h"
 
 void CollisionManager::Update()
 {
@@ -150,6 +151,7 @@ void CollisionManager::PlayerAttackToEnemy()
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 	
 						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 0.7f);
+						SoundManager::Play("HitSE", false, 0.2f);
 					}
 				}
 			}

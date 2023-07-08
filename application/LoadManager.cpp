@@ -5,6 +5,7 @@ void LoadManager::LoadAllResources()
 {
 	LoadTexture();
 	LoadModel();
+	LoadSound();
 }
 
 void LoadManager::LoadModel()
@@ -22,4 +23,10 @@ void LoadManager::LoadTexture()
 	LoadGraph("gauge.png", "Gauge");
 	//パーティクル
 	LoadGraph("starParticle.png", "StarParticle");
+}
+
+void LoadManager::LoadSound()
+{
+	LoadWave("swingSE.wav", "SwingSE");
+	LoadWave("hitSE.wav", "HitSE");
 }

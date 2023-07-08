@@ -6,7 +6,7 @@ Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
 IXAudio2MasteringVoice* SoundManager::smasterVoice_;
 std::map<SoundKey, SoundData> SoundManager::ssndMap_;
 
-std::string directoryPath_ = "Resources/BGM_SE/";
+std::string directoryPath_ = "application/Resources/BGM_SE/";
 
 SoundManager::~SoundManager()
 {
@@ -101,7 +101,7 @@ bool SoundManager::IsPlaying(const SoundKey& key) {
 	return false;
 }
 
-void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum)
+void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float picth)
 {
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 	SoundData* pSnd = &ssndMap_[key];
@@ -122,6 +122,7 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum)
 	//ボリュームセット
 	pSourceVoice->SetVolume(volum);
 	pSourceVoice->SubmitSourceBuffer(&buf);
+	pSourceVoice->SetFrequencyRatio(picth);
 	pSourceVoice->Start();
 
 	pSnd->sound_ = pSourceVoice;
