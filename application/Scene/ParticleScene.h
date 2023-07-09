@@ -48,7 +48,6 @@ private:
 	
 	std::vector<Mesh> meshes;
 	std::vector <uint32_t> texHandle_;
-	std::unique_ptr<ImportSettings> importSetting_;
 
 	WorldTransform testWT_;
 

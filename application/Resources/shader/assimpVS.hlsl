@@ -8,29 +8,35 @@ SkinOutput ComputeSkin(VSInput input)
     
     uint iBone;
     float weight;
-    matrix m;
+    matrix m =
+    {
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        0,0,0,1
+    };
     
     iBone = input.bIndex.x;
     weight = input.bWeight.x;
-    m = bmatrix[iBone];
+    //m = bmatrix[iBone];
     output.pos += weight * mul(m, input.pos);
     output.normal += weight * mul((float3x3) m, input.normal);
     
     iBone = input.bIndex.y;
     weight = input.bWeight.y;
-    m = bmatrix[iBone];
+   // m = bmatrix[iBone];
     output.pos += weight * mul(m, input.pos);
     output.normal += weight * mul((float3x3) m, input.normal);
     
     iBone = input.bIndex.z;
     weight = input.bWeight.z;
-    m = bmatrix[iBone];
+    //m = bmatrix[iBone];
     output.pos += weight * mul(m, input.pos);
     output.normal += weight * mul((float3x3) m, input.normal);
     
     iBone = input.bIndex.w;
     weight = input.bWeight.w;
-    m = bmatrix[iBone];
+    //m = bmatrix[iBone];
     output.pos += weight * mul(m, input.pos);
     output.normal += weight * mul((float3x3) m, input.normal);
     

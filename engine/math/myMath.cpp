@@ -312,6 +312,19 @@ Matrix4 Matrix4::Inverse()
 	return inverseMat;
 }
 
+Matrix4 Matrix4::Transpose()
+{
+	Matrix4 result;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.m[i][j] = m[j][i];
+		}
+	}
+	return result;
+}
+
 Matrix4 ConvertScalingMat(Vector3 scale)
 {
 	return

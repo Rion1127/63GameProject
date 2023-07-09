@@ -7,6 +7,10 @@
 #include "Vertices.h"
 #include "myMath.h"
 #include "Timer.h"
+//#include <assimp/Importer.hpp>
+//#include <assimp/scene.h>
+//#include <assimp/cimport.h>
+
 struct Bone
 {
 	std::string name;
@@ -25,6 +29,8 @@ struct Node
 	Node* parent = nullptr;
 };
 
+struct aiScene;
+
 struct Animation
 {
 	uint32_t index = 0;
@@ -37,6 +43,8 @@ struct AssimpModel
 	std::vector<Bone> bones;
 	std::vector<Node> nodes;
 	Animation animation;
+
+	const aiScene* scene;
 
 	std::vector<std::unique_ptr<Vertices>> vertices_;
 	std::vector<std::unique_ptr<Material>> materials_;

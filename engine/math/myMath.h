@@ -73,6 +73,7 @@ struct Matrix4 {
 	Matrix4& operator*=(const Matrix4& m2);
 	Matrix4 operator*(const Matrix4& m2);
 	Matrix4 Inverse();			// 逆行列を返す関数
+	Matrix4 Transpose();
 };
 
 Matrix4 ConvertScalingMat(Vector3 scale);		// スケーリング行列を返す関数
