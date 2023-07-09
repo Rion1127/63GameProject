@@ -60,7 +60,10 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpMode
 		}
 	}
 	LoadSkin(result.get(), *scene->mMeshes);
-
+	for (uint32_t i = 0; i < scene->mNumMeshes; ++i)
+	{
+		result->vertices_[i]->Map();
+	}
 	//LoadNode(result.get(), nullptr, model->scene->mRootNode);
 
 	return std::move(result);
