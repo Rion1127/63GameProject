@@ -44,29 +44,33 @@ void IParticle::Init(int32_t vertexCount)
 
 void IParticle::Update()
 {
-	//end_frameを超えたら削除
-	DeleteUpdate();
-	//動き更新
-	MoveUpdate();
-	//データ転送
-	TransferBuff();
+	if (particles_.size() > 0) {
+		//end_frameを超えたら削除
+		DeleteUpdate();
+		//動き更新
+		MoveUpdate();
+		//データ転送
+		TransferBuff();
+	}
 }
 
 void IParticle::Draw()
 {
-	auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
+	if (particles_.size() > 0) {
+		auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
 
-	// 頂点データ転送
-	cmdList.IASetVertexBuffers(0, 1, &vbView_);
+		// 頂点データ転送
+		cmdList.IASetVertexBuffers(0, 1, &vbView_);
 
-	// 定数バッファ転送
-	cmdList.SetGraphicsRootConstantBufferView(
-		1, transform_.constBuffTransform_->GetGPUVirtualAddress());
+		// 定数バッファ転送
+		cmdList.SetGraphicsRootConstantBufferView(
+			1, transform_.constBuffTransform_->GetGPUVirtualAddress());
 
-	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture.textureHandle);
+		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+		TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture.textureHandle);
 
-	cmdList.DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
+		cmdList.DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
+	}
 }
 
 void IParticle::TransferBuff()

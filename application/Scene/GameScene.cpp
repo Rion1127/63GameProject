@@ -44,7 +44,8 @@ void GameScene::Ini()
 	//};
 	//
 	//assimpObj_.SetModel(&testModel_);
-	testModel_ = AssimpLoader::GetInstance()->Load("application/Resources/boneTest/moveCube.gltf");
+	//testModel_ = AssimpLoader::GetInstance()->Load("application/Resources/boneTest/TestCube.fbx");
+	assimpObj_.SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/boneTest.fbx"));
 }
 
 void GameScene::Update()
@@ -78,12 +79,13 @@ void GameScene::Draw()
 	floor_->Draw();
 	player_->Draw();
 	enemyManager_->Draw();
+	assimpObj_.Draw();
 	
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 	//skyDome_->Draw();
 	
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-
+	
 	////////////
 	//スプライト//
 	////////////

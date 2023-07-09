@@ -39,6 +39,7 @@ public:
 private:
 	void LoadVertices(Vertices* vert, const aiMesh* aimesh);
 	void LoadMaterial(std::string fileName,Material* material, const aiMaterial* aimaterial);
+	void LoadSkin(AssimpModel model, const aiMesh* aimesh);
 	AssimpLoader(){};
 	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
 	void LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src);

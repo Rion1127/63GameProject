@@ -91,15 +91,17 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName)
 	//以下のフラグの数値を代入していく
 	uint32_t flag = 0;
 
+	
 	flag |= aiProcess_Triangulate;
-	flag |= aiProcess_JoinIdenticalVertices;
-	flag |= aiProcess_CalcTangentSpace;
 	flag |= aiProcess_GenSmoothNormals;
-	flag |= aiProcess_GenUVCoords;
-	flag |= aiProcess_TransformUVCoords;
+	flag |= aiProcess_FlipUVs;
+	//flag |= aiProcess_GenUVCoords;
+	/*flag |= aiProcess_TransformUVCoords;
+	flag |= aiProcess_GenSmoothNormals;
 	flag |= aiProcess_RemoveRedundantMaterials;
 	flag |= aiProcess_OptimizeMeshes;
-	flag |= aiProcess_LimitBoneWeights;
+	flag |= aiProcess_LimitBoneWeights;*/
+	
 
 	auto scene = importer.ReadFile(fileName, flag);
 
@@ -117,10 +119,12 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName)
 	{
 		result->vertices_[i] = std::move(std::make_unique<Vertices>());
 		result->materials_[i] = std::move(std::make_unique<Material>());
+		//各種情報読み込み
 		LoadVertices(result->vertices_[i].get(), *scene->mMeshes);
 		if (scene->HasMaterials()) {
 			LoadMaterial(fileName,result->materials_[i].get(), *scene->mMaterials);
 		}
+		
 	}
 
 	return std::move(result);
@@ -156,11 +160,12 @@ void AssimpLoader::LoadVertices(Vertices* vert, const aiMesh* aimesh)
 		vert->indices_[i * 3 + 2] = (uint16_t)face.mIndices[2];
 	}
 
-
+	vert->CreateBuffer();
 }
 
 void AssimpLoader::LoadMaterial(std::string fileName, Material* material, const aiMaterial* aimaterial)
 {
+	//テクスチャ
 	aiString path;
 	if (aimaterial->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
 	{
@@ -171,14 +176,18 @@ void AssimpLoader::LoadMaterial(std::string fileName, Material* material, const 
 
 		std::wstring filename_ = wFileName + ToWideString(file);
 
-		filename_ = ReplaceExtension(filename_, "tga");
+		filename_ = ReplaceExtension(filename_, "png");
 		material->textureFilename_ = ToUTF8(filename_);
+		TextureManager::GetInstance()->
+			LoadGraph(material->textureFilename_, material->textureFilename_);
+		material->texture_ = *TextureManager::GetInstance()->GetTexture(material->textureFilename_);
 	}
-	else
-	{
-		
-	}
-	
+}
+
+void AssimpLoader::LoadSkin(AssimpModel model, const aiMesh* aimesh)
+{
+
+
 }
 
 void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV)

@@ -9,5 +9,5 @@ void AssimpObject3D::Update()
 
 void AssimpObject3D::Draw()
 {
-	
+	model_->Draw(worldTransform_);
 }

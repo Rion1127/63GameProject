@@ -17,5 +17,6 @@ public:
 	void SetPos(Vector3 pos) { worldTransform_.position_ = pos; }
 	void SetScale(Vector3 scale) { worldTransform_.scale_ = scale; }
 	void SetRot(Vector3 rot) { worldTransform_.rotation_ = rot; }
+	void SetModel(std::unique_ptr<AssimpModel> model) { model_ = std::move(model); }
 };
 
