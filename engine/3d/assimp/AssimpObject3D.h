@@ -4,14 +4,13 @@
 class AssimpObject3D
 {
 public:
-	void SetModel(AssimpModel* model) { model_ = model; }
 
 	void Update();
 
 	void Draw();
 
 private:
-	AssimpModel* model_ = nullptr;
+	std::unique_ptr<AssimpModel> model_;
 	WorldTransform worldTransform_;
 
 public:

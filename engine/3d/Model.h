@@ -34,7 +34,6 @@ private:
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData_;
 public:
 	std::vector<std::unique_ptr<Vertices>> vert_;
-	std::vector<Texture> texture_;
 	// マテリアルコンテナ
 	std::map<std::string, std::unique_ptr<Material>> materials_;
 	//ライト

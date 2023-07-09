@@ -261,7 +261,7 @@ void Vertices::Draw(uint32_t indexSize,
 		DrawIndexedInstanced((UINT)indexSize, 1, 0, 0, 0);
 }
 
-void Vertices::Draw(const WorldTransform& worldTransform, UINT descriptorSize)
+void Vertices::Draw(const WorldTransform& worldTransform)
 {
 	// 頂点バッファビューの設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);

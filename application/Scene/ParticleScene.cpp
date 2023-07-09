@@ -25,24 +25,24 @@ void ParticleScene::Ini()
 	lightGroup = std::make_shared<LightGroup>();
 	lightGroup->Init();
 	Model::SetLight(lightGroup);
-	AssimpModel::SetLightGroup(lightGroup.get());
+	
 	lightGroup->SetDirLightActive(0, true);
 	lightGroup->SetDirLightActive(1, true);
 	lightGroup->SetDirLightActive(2, true);
 
 	
 
-	const wchar_t* modelFile = L"Resources/boneTest/testCube.gltf";
-	//  L"Resources/FBX/Alica/Alicia_solid_Unity.FBX"
-	//  L"Resources/FBX/untitled.glb"
-	ImportSettings importSetting = {
-		modelFile,
-		meshes,
-		false,
-		true
-	};
-	testModel_.Create(modelFile);
-	assimpObj_.SetModel(&testModel_);
+	//const wchar_t* modelFile = L"Resources/boneTest/testCube.gltf";
+	////  L"Resources/FBX/Alica/Alicia_solid_Unity.FBX"
+	////  L"Resources/FBX/untitled.glb"
+	//ImportSettings importSetting = {
+	//	modelFile,
+	//	meshes,
+	//	false,
+	//	true
+	//};
+	//testModel_.Create(modelFile);
+	//assimpObj_.SetModel(&testModel_);
 }
 
 void ParticleScene::Update()

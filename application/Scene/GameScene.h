@@ -44,6 +44,10 @@ private:
 
 	std::unique_ptr<CollisionManager> colManager_;
 	std::unique_ptr<EnemyManager> enemyManager_;
+
+	std::unique_ptr<AssimpModel> testModel_;
+
+	AssimpObject3D assimpObj_;
 public:
 	~GameScene();
 

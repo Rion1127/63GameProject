@@ -1,5 +1,7 @@
 #pragma once
 #include "REngine.h"
+#include "myMath.h"
+#include "AssimpModel.h"
 
 struct aiMesh;
 struct aiMaterial;
@@ -8,14 +10,6 @@ struct aiBone;
 struct Mesh {
 	Vertices Vertices; // 頂点データの配列
 	std::wstring diffuseMap; // テクスチャのファイルパス
-};
-
-struct BoneData {
-	static const uint32_t NUM_BONES_PER_VERTEX = 4;
-
-	uint32_t IDs[NUM_BONES_PER_VERTEX];
-	float Weights[NUM_BONES_PER_VERTEX];
-	Matrix4 boneMatrix_;
 };
 
 struct ImportSettings // インポートするときのパラメータ
@@ -27,7 +21,7 @@ public:
 	bool inverseU = false; // U座標を反転させるか
 	bool inverseV = false; // V座標を反転させるか
 
-	std::vector<BoneData> boneData;
+
 };
 
 class AssimpLoader
@@ -39,13 +33,17 @@ public:
 	static AssimpLoader* GetInstance();
 
 	bool Load(ImportSettings* setting); // モデルをロードする
+	
 
+	std::unique_ptr<AssimpModel> Load(std::string fileName);
 private:
+	void LoadVertices(Vertices* vert, const aiMesh* aimesh);
+	void LoadMaterial(std::string fileName,Material* material, const aiMaterial* aimaterial);
 	AssimpLoader(){};
 	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
 	void LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src);
 
-	void LoadBones(const aiMesh* pMesh, ImportSettings* setting);
+	void LoadBones(Mesh& dst,const aiMesh* pMesh);
 private:
 	
 };

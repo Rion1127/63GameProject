@@ -14,8 +14,8 @@ void LoadManager::LoadModel()
 
 void LoadManager::LoadTexture()
 {
-	LoadGraph("white1x1.png", "White");
 	LoadGraph("white1280x720.png", "White1280x720");
+	LoadGraph("white1x1.png", "White");
 	LoadGraph("test.png", "Test");
 	LoadGraph("uv.png", "uv");
 	//HPÉoÅ[

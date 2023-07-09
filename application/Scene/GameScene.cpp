@@ -18,7 +18,7 @@ void GameScene::Ini()
 	colManager_ = std::make_unique<CollisionManager>();
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
-	AssimpModel::SetLightGroup(lightManager_->GetLightGroup().get());
+	
 
 	
 	floor_ = std::move(std::make_unique<Floor>());
@@ -30,6 +30,21 @@ void GameScene::Ini()
 	colManager_->SetFloor(floor_.get());
 	colManager_->SetEnemys(enemyManager_.get());
 	IAttack::SetPlayerInfo(player_->GetPlayerInfo());
+
+	////const wchar_t* modelFile = L"Resources/Alicia/FBX/Alicia_solid_Unity.FBX";
+	//const wchar_t* modelFile = L"application/Resources/boneTest/boneTest.fbx";
+	////  L"Resources/FBX/Alica/Alicia_solid_Unity.FBX"
+	////  L"Resources/FBX/untitled.glb"
+	//std::vector<Mesh> meshes;
+	//ImportSettings importSetting = {
+	//	modelFile,
+	//	meshes,
+	//	false,
+	//	true
+	//};
+	//
+	//assimpObj_.SetModel(&testModel_);
+	testModel_ = AssimpLoader::GetInstance()->Load("application/Resources/boneTest/moveCube.gltf");
 }
 
 void GameScene::Update()
@@ -47,6 +62,9 @@ void GameScene::Update()
 
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
+
+	assimpObj_.SetPos({ -2,2,0 });
+	assimpObj_.Update();
 }
 
 void GameScene::Draw()
@@ -60,11 +78,11 @@ void GameScene::Draw()
 	floor_->Draw();
 	player_->Draw();
 	enemyManager_->Draw();
+	
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 	//skyDome_->Draw();
 	
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-	
 
 	////////////
 	//スプライト//

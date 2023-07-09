@@ -60,3 +60,11 @@ void Material::Draw(UINT descriptorSize)
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(2, constBufferMat_->GetGPUVirtualAddress());
 }
+
+void Material::Draw()
+{
+	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
+	//ルートパラメータ配列2番目を指定
+	RDirectX::GetInstance()->GetCommandList()->
+		SetGraphicsRootConstantBufferView(2, constBufferMat_->GetGPUVirtualAddress());
+}

@@ -34,6 +34,7 @@ public:
 	
 
 	void Draw(UINT descriptorSize);
+	void Draw();
 
 	std::string name_;            // マテリアル名
 	std::string textureFilename_; // テクスチャファイル名
