@@ -4,10 +4,13 @@
 #include "Util.h"
 #include "DirectX.h"
 #include "AssimpLoader.h"
+#include "mInput.h"
 
 AssimpObject3D::AssimpObject3D()
 {
 	constBuff_ = CreateBuff(constMap_);
+	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/boneTest.fbx", nullptr));
+	
 }
 
 void AssimpObject3D::Update()
@@ -15,6 +18,8 @@ void AssimpObject3D::Update()
 	HRESULT result;
 
 	std::vector<Bone>& bones = model_->bones;
+
+	PlayAnimation();
 
 	ConstBuffDataSkin* constMap = nullptr;
 	result = constBuff_->Map(0, nullptr, (void**)&constMap);
@@ -27,11 +32,12 @@ void AssimpObject3D::Update()
 		assimpCurrentPose.UnitMatrix();
 		auto& test = model_->scene;
 
-		constMap->bones[i] = /*bones[i].currentMat * */matCurrentPose;
+		constMap->bones[i] = bones[i].currentMat * matCurrentPose;
 	}
 	constBuff_->Unmap(0, nullptr);
 
 	worldTransform_.Update();
+	
 }
 
 void AssimpObject3D::Draw()
@@ -41,6 +47,36 @@ void AssimpObject3D::Draw()
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(4, constBuff_->GetGPUVirtualAddress());
 	model_->Draw(worldTransform_);
+}
+
+void AssimpObject3D::PlayAnimation()
+{
+	Matrix4 identity;
+	identity.UnitMatrix();
+	// アニメーション再生しない
+	animation_.isPlay = true;
+	if (animation_.isPlay == false)
+	{
+		
+		ParseNodeHeirarchy(0.f, 0, identity, model_->scene->mRootNode);
+		return;
+	}
+	
+	// 現在のフレーム
+	float endTime = (float)model_->scene->mAnimations[animation_.index]->mDuration;
+	float currentTime = animation_.timer.GetTimeRate() * endTime;
+	ParseNodeHeirarchy(currentTime, animation_.index, identity, model_->scene->mRootNode);
+
+	if (endTime == currentTime)animation_.timer.Reset();
+
+	animation_.timer.SetLimitTime(60);
+	static bool animeStart = true;
+
+	if (Key::TriggerKey(DIK_Z)) {
+		animeStart = (animeStart == true) ? false : true;
+	}
+
+	if(animeStart)animation_.timer.AddTime(1);
 }
 
 void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t index, const Matrix4& parentMat, const aiNode* rootNode)

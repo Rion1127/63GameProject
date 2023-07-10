@@ -6,6 +6,13 @@
 
 struct aiNode;
 
+struct Animation
+{
+	uint32_t index = 0;
+	Timer timer;
+	bool isPlay = false;
+};
+
 class AssimpObject3D
 {
 private:
@@ -23,6 +30,7 @@ private:
 	//定数バッファのマッピング
 	ConstBuffDataSkin* constMap_ = nullptr;
 
+	Animation animation_;
 public:
 	AssimpObject3D();
 
@@ -30,6 +38,7 @@ public:
 
 	void Draw();
 public:
+	void PlayAnimation();
 	void ParseNodeHeirarchy(const float currentTime, const uint32_t index, const Matrix4& parentMat, const aiNode* rootNode);
 	aiNodeAnim* FindNodeAnim(const std::string& nodeName, aiAnimation* animation);
 

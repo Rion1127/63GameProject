@@ -7,7 +7,7 @@
 #include "Vertices.h"
 #include "myMath.h"
 #include "Timer.h"
-//#include <assimp/Importer.hpp>
+#include <assimp/Importer.hpp>
 //#include <assimp/scene.h>
 //#include <assimp/cimport.h>
 
@@ -31,19 +31,12 @@ struct Node
 
 struct aiScene;
 
-struct Animation
-{
-	uint32_t index = 0;
-	Timer timer;
-	bool isPlay = false;
-};
-
 struct AssimpModel
 {
 	std::vector<Bone> bones;
 	std::vector<Node> nodes;
-	Animation animation;
 
+	Assimp::Importer importer;
 	const aiScene* scene;
 
 	std::vector<std::unique_ptr<Vertices>> vertices_;

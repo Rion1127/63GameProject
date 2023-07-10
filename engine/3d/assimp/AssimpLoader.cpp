@@ -19,7 +19,7 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpMode
 	std::unique_ptr<AssimpModel> result =
 		std::move(std::make_unique<AssimpModel>());
 
-	Assimp::Importer importer;
+	
 	//以下のフラグの数値を代入していく
 	uint32_t flag = 0;
 
@@ -35,12 +35,12 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpMode
 	flag |= aiProcess_LimitBoneWeights;*/
 
 
-	result->scene = importer.ReadFile(fileName, flag);
+	result->scene = result->importer.ReadFile(fileName, flag);
 
 	if (result->scene == nullptr)
 	{
 		// もし読み込みエラーがでたら表示する
-		printf(importer.GetErrorString());
+		printf(result->importer.GetErrorString());
 		printf("\n");
 		OutputDebugStringA("scene = nullptr");
 		return nullptr;

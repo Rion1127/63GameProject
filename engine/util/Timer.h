@@ -26,4 +26,5 @@ public:
 	int32_t GetTimer() { return timer_; }
 	int32_t GetLimitTimer() { return limitTime_; }
 	bool GetIsEnd() { return isEnd_; }
+	float GetTimeRate() { return (float)timer_ / limitTime_; }
 };

@@ -45,7 +45,7 @@ void GameScene::Ini()
 	//
 	//assimpObj_.SetModel(&testModel_);
 	//testModel_ = AssimpLoader::GetInstance()->Load("application/Resources/boneTest/TestCube.fbx");
-	assimpObj_.SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/boneTest.fbx",nullptr));
+	//assimpObj_.SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/boneTest.fbx",nullptr));
 }
 
 void GameScene::Update()
