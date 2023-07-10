@@ -121,6 +121,7 @@ void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t 
 	{
 		if (model_->bones[i].name == nodeName)
 		{
+			//ƒXƒP[ƒ‹‚ğ–³—‚â‚è¬‚³‚­‚µ‚Ä‚¢‚é
 			Matrix4 scale = {
 				0.001f,0,0,0,
 				0,0.001f,0,0,
