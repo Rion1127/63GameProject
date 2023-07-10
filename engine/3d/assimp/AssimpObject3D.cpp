@@ -9,7 +9,7 @@
 AssimpObject3D::AssimpObject3D()
 {
 	constBuff_ = CreateBuff(constMap_);
-	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/boneTest.fbx", nullptr));
+	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/moveCube.fbx", nullptr));
 	
 }
 
@@ -27,10 +27,6 @@ void AssimpObject3D::Update()
 		//¡‚ÌŽp¨s—ñ
 		Matrix4 matCurrentPose;
 		matCurrentPose.UnitMatrix();
-		//¡‚ÌŽp¨s—ñ‚ðŽæ“¾
-		Matrix4 assimpCurrentPose;
-		assimpCurrentPose.UnitMatrix();
-		auto& test = model_->scene;
 
 		constMap->bones[i] = bones[i].currentMat * matCurrentPose;
 	}
@@ -67,16 +63,19 @@ void AssimpObject3D::PlayAnimation()
 	float currentTime = animation_.timer.GetTimeRate() * endTime;
 	ParseNodeHeirarchy(currentTime, animation_.index, identity, model_->scene->mRootNode);
 
-	if (endTime == currentTime)animation_.timer.Reset();
+	if (currentTime >= endTime)animation_.timer.Reset();
 
-	animation_.timer.SetLimitTime(60);
+	animation_.timer.SetLimitTime(1200);
 	static bool animeStart = true;
 
 	if (Key::TriggerKey(DIK_Z)) {
 		animeStart = (animeStart == true) ? false : true;
 	}
-
 	if(animeStart)animation_.timer.AddTime(1);
+
+	if (Key::TriggerKey(DIK_T)) {
+		animation_.timer.AddTime(1);
+	}
 }
 
 void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t index, const Matrix4& parentMat, const aiNode* rootNode)

@@ -65,6 +65,7 @@ void GameScene::Update()
 	ParticleManager::GetInstance()->Update();
 
 	assimpObj_.SetPos({ -2,2,0 });
+	assimpObj_.SetScale({ 0.1f,0.1f,0.1f });
 	assimpObj_.Update();
 }
 
@@ -98,7 +99,11 @@ void GameScene::Draw()
 
 void GameScene::CameraUpdate()
 {
-	if (Key::PushKey(DIK_LCONTROL) == false)
+	static bool isDebug = true;
+	if (Key::TriggerKey(DIK_Q)) {
+		isDebug = isDebug == false ? true : false;
+	}
+	if (isDebug)
 	{
 		gameCamera_.Update();
 		Camera::scurrent_.eye_ = gameCamera_.GetCamera()->eye_;
