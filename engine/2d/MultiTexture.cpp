@@ -1,11 +1,10 @@
 #include "MultiTexture.h"
-
 #include "WinAPI.h"
 #include <d3dcompiler.h>
-
 #include "DirectX.h"
 #include "PipelineManager.h"
 #include "mInput.h"
+#include <cassert>
 
 
 const float MultiTexture::clearColor_[4] = { 0.25f,0.5f,0.1f,0.0f };

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Vector3.h"
 #include "myMath.h"
 struct Quaternion
@@ -40,17 +40,17 @@ struct Quaternion
 
 		return matRot;
 	};
-	//’PˆÊQuaternion‚ğ•Ô‚·
+	//å˜ä½Quaternionã‚’è¿”ã™
 	Quaternion IdentityQuaternion();
-	//‹¤–ğQuaternion‚ğ•Ô‚·
+	//å…±å½¹Quaternionã‚’è¿”ã™
 	Quaternion Conjugate() const;
-	//Quaternion‚Ìnorm‚ğ•Ô‚·
+	//Quaternionã®normã‚’è¿”ã™
 	float Norm();
-	//³‹K‰»‚µ‚½Quaternion‚ğ•Ô‚·
+	//æ­£è¦åŒ–ã—ãŸQuaternionã‚’è¿”ã™
 	Quaternion Normalize();
-	//‹tQuaternion‚ğ•Ô‚·
+	//é€†Quaternionã‚’è¿”ã™
 	Quaternion Inverse();
-	//Quaternion‚ÌÏ 
+	//Quaternionã®ç© 
 	Quaternion Multiply(const Quaternion& rhs)const ;
 	
 	Quaternion Slerp(const Quaternion& q1, float t);
@@ -58,10 +58,12 @@ struct Quaternion
 };
 	
 
-//”CˆÓ²‰ñ“]‚ğ•\‚·Quaternion‚Ì¶¬
+//ä»»æ„è»¸å›è»¢ã‚’è¡¨ã™Quaternionã®ç”Ÿæˆ
 Quaternion MakeAxisAngle(const Vector3& axis, float angle);
-//ƒxƒNƒgƒ‹‚ğQuaternion‚Å‰ñ“]‚³‚¹‚½Œ‹‰Ê‚ÌƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+//ãƒ™ã‚¯ãƒˆãƒ«ã‚’Quaternionã§å›è»¢ã•ã›ãŸçµæœã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹
 Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
-//u‚©‚çv‚Ö‚Ì‰ñ“]‚ğ¶¬
+//uã‹ã‚‰vã¸ã®å›è»¢ã‚’ç”Ÿæˆ
 Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
 
+Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Quaternion rot);
+Matrix4 ConvertRotationMat(const Quaternion q); // ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã§å›è»¢è¡Œåˆ—ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°

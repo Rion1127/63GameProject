@@ -6,6 +6,7 @@
 #include <chrono>
 #include "Vector3.h"
 #include "WorldTransform.h"
+#include <cassert>
 
 //WARNING‚ÌÚ×•\¦
 void DisplayWarningInfo(ID3D12Device* device);

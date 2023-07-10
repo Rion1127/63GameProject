@@ -441,47 +441,15 @@ Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const 
 	return c0 * t3 + c1 * t2 + c2 * t + c3;
 }
 
+float UpAndDown(float oneRoundTime, float range)
+{
+	return 0.0f;
+}
+
 //float UpAndDown(float oneRoundTime, float range)
 //{
 //	return (float)(sin(PI * 2 / oneRoundTime * GetNowCount()) * range);
 //}
-
-const Vector3 operator-(const DirectX::XMFLOAT3 v1, const Vector3 v2)
-{
-	Vector3 result;
-	result.x = v1.x - v2.x;
-	result.y = v1.y - v2.y;
-	result.z = v1.z - v2.z;
-	return result;
-}
-
-const Vector3 operator-(const Vector3 v1, DirectX::XMFLOAT3 v2)
-{
-	Vector3 result;
-	result.x = v1.x - v2.x;
-	result.y = v1.y - v2.y;
-	result.z = v1.z - v2.z;
-	return result;
-}
-
-const Vector3 operator+(const Vector3 v1, const DirectX::XMFLOAT3 v2)
-{
-	Vector3 result;
-	result.x = v1.x + v2.x;
-	result.y = v1.y + v2.y;
-	result.z = v1.z + v2.z;
-	return result;
-}
-
-const Vector3 operator+(const DirectX::XMFLOAT3 v1, const Vector3 v2)
-{
-	Vector3 result;
-	result.x = v1.x + v2.x;
-	result.y = v1.y + v2.y;
-	result.z = v1.z + v2.z;
-	return result;
-}
-
 
 float Vec2Angle(Vector2 vec) {
 	float angle;
@@ -499,4 +467,27 @@ float Vec2Angle(Vector2 vec) {
 	}
 
 	return angle;
+}
+
+Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 rot)
+{
+	Matrix4 result;
+	result.UnitMatrix();
+	// 平行移動、スケーリング、回転行列作成
+	Matrix4 transMat;
+	Matrix4 scaleMat;
+	Matrix4 rotMat;
+	transMat.UnitMatrix();
+	scaleMat.UnitMatrix();
+	rotMat.UnitMatrix();
+
+	transMat = ConvertTranslationMat(pos);	// 平行移動
+	scaleMat = ConvertScalingMat(scale);		// スケーリング
+	rotMat *= ConvertRotationZAxisMat(rot.z);	// z軸回転
+	rotMat *= ConvertRotationXAxisMat(rot.x);	// x軸回転
+	rotMat *= ConvertRotationYAxisMat(rot.y);	// y軸回転
+
+	result = scaleMat * rotMat * transMat;
+
+	return result;
 }

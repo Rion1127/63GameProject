@@ -56,8 +56,8 @@ void GameCamera::Update()
 		endTargetPos_ = player_->GetWorldTransform()->position_;
 	}
 
-	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.2f;
-	camera_->target_ += (endTargetPos_ - camera_->target_) * 0.2f;
+	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.15f;
+	camera_->target_ += (endTargetPos_ - camera_->target_) * 0.15f;
 	
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
 	float minGamecameraY = 0.5f;

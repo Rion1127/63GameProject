@@ -6,7 +6,7 @@
 #include "AssimpLoader.h"
 #include "Util.h"
 
-Matrix4 ConvertAiMatrixToMatrix(const aiMatrix4x4 aimat);
+
 
 AssimpLoader* AssimpLoader::GetInstance()
 {
@@ -23,7 +23,7 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpMode
 	//以下のフラグの数値を代入していく
 	uint32_t flag = 0;
 
-	
+
 	flag |= aiProcess_Triangulate;
 	flag |= aiProcess_GenSmoothNormals;
 	flag |= aiProcess_FlipUVs;
@@ -33,13 +33,11 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpMode
 	flag |= aiProcess_RemoveRedundantMaterials;
 	flag |= aiProcess_OptimizeMeshes;
 	flag |= aiProcess_LimitBoneWeights;*/
-	
 
-	auto scene = importer.ReadFile(fileName, flag);
 
-	result->scene = scene;
+	result->scene = importer.ReadFile(fileName, flag);
 
-	if (scene == nullptr)
+	if (result->scene == nullptr)
 	{
 		// もし読み込みエラーがでたら表示する
 		printf(importer.GetErrorString());
@@ -47,24 +45,25 @@ std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpMode
 		OutputDebugStringA("scene = nullptr");
 		return nullptr;
 	}
-	result->vertices_.resize(scene->mNumMeshes);
-	result->materials_.resize(scene->mNumMeshes);
-	for (uint32_t i = 0; i < scene->mNumMeshes; ++i)
+	result->vertices_.resize(result->scene->mNumMeshes);
+	result->materials_.resize(result->scene->mNumMeshes);
+	for (uint32_t i = 0; i < result->scene->mNumMeshes; ++i)
 	{
 		result->vertices_[i] = std::move(std::make_unique<Vertices>());
 		result->materials_[i] = std::move(std::make_unique<Material>());
 		//各種情報読み込み
-		LoadVertices(result->vertices_[i].get(), *scene->mMeshes);
-		if (scene->HasMaterials()) {
-			LoadMaterial(fileName,result->materials_[i].get(), *scene->mMaterials);
+		LoadVertices(result->vertices_[i].get(), *result->scene->mMeshes);
+		if (result->scene->HasMaterials()) {
+			LoadMaterial(fileName, result->materials_[i].get(), *result->scene->mMaterials);
 		}
 	}
-	LoadSkin(result.get(), *scene->mMeshes);
-	for (uint32_t i = 0; i < scene->mNumMeshes; ++i)
+	LoadSkin(result.get(), *result->scene->mMeshes);
+	//頂点データを更新したので転送する
+	for (uint32_t i = 0; i < result->scene->mNumMeshes; ++i)
 	{
 		result->vertices_[i]->Map();
 	}
-	//LoadNode(result.get(), nullptr, model->scene->mRootNode);
+	LoadNode(result.get(), nullptr, result->scene->mRootNode);
 
 	return std::move(result);
 }
@@ -234,11 +233,18 @@ void AssimpLoader::LoadNode(AssimpModel* model, Node* parent, const aiNode* node
 
 	for (uint32_t i = 0; i < node->mNumMeshes; i++)
 	{
-		//aiMesh* aimesh = model->scene->mMeshes[node->mMeshes[i]];
-		//if (aimesh)
-		//{
-			//ParseMesh(model, aimesh);
-		//}
+		aiMesh* aimesh = model->scene->mMeshes[node->mMeshes[i]];
+		if (aimesh)
+		{
+			//各種情報読み込み
+			LoadVertices(model->vertices_[i].get(), aimesh);
+			LoadSkin(model, aimesh);
+		}
+	}
+	//頂点データを更新したので転送する
+	for (uint32_t i = 0; i < model->scene->mNumMeshes; ++i)
+	{
+		model->vertices_[i]->Map();
 	}
 
 	// 再帰
@@ -248,7 +254,7 @@ void AssimpLoader::LoadNode(AssimpModel* model, Node* parent, const aiNode* node
 	}
 }
 
-Matrix4 ConvertAiMatrixToMatrix(const aiMatrix4x4 aimat)
+Matrix4 AssimpLoader::ConvertAiMatrixToMatrix(const aiMatrix4x4 aimat)
 {
 	Matrix4 result;
 

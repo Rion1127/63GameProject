@@ -1,18 +1,45 @@
 #pragma once
 #include "AssimpModel.h"
 #include "WorldTransform.h"
+#include <assimp/anim.h>
+#include "Quaternion.h"
+
+struct aiNode;
+
 class AssimpObject3D
 {
+private:
+	std::unique_ptr<AssimpModel> model_;
+	WorldTransform worldTransform_;
+	//エイリアステンプレート
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	static const int32_t MAX_BONES = 32;
+	//定数バッファ用データ構造体
+	struct ConstBuffDataSkin {
+		Matrix4 bones[MAX_BONES];
+	};
+	//定数バッファの生成
+	ComPtr<ID3D12Resource> constBuff_ = nullptr;
+	//定数バッファのマッピング
+	ConstBuffDataSkin* constMap_ = nullptr;
+
 public:
+	AssimpObject3D();
 
 	void Update();
 
 	void Draw();
+public:
+	void ParseNodeHeirarchy(const float currentTime, const uint32_t index, const Matrix4& parentMat, const aiNode* rootNode);
+	aiNodeAnim* FindNodeAnim(const std::string& nodeName, aiAnimation* animation);
 
-private:
-	std::unique_ptr<AssimpModel> model_;
-	WorldTransform worldTransform_;
+	uint32_t FindScaleIndex(const aiNodeAnim* nodeAnim, const float currentTime);
+	uint32_t FindRotIndex(const aiNodeAnim* nodeAnim, const float currentTime);
+	uint32_t FindPosIndex(const aiNodeAnim* nodeAnim, const float currentTime);
 
+	Vector3 CalcCurrentScale(const aiNodeAnim* nodeAnim, const float currentTime);
+	Quaternion CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime);
+	Vector3 CalcCurrentPos(const aiNodeAnim* nodeAnim, const float currentTime);
 public:
 	void SetPos(Vector3 pos) { worldTransform_.position_ = pos; }
 	void SetScale(Vector3 scale) { worldTransform_.scale_ = scale; }

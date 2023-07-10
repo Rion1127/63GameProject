@@ -1,5 +1,4 @@
-#pragma once
-#include <DirectXMath.h>
+ï»¿#pragma once
 #include <vector>
 #include "Vector2.h"
 #include "Vector3.h"
@@ -12,12 +11,12 @@ struct FLOAT2 {
 	FLOAT2();
 	FLOAT2(float x, float y);
 
-	//’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+	//å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	FLOAT2 operator+() const;
 	FLOAT2 operator-() const;
 	FLOAT2 operator*(FLOAT2 v);
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	FLOAT2& operator+=(const FLOAT2& v);
 	FLOAT2& operator-=(const FLOAT2& v);
 	FLOAT2& operator*=(float s);
@@ -32,12 +31,12 @@ struct FLOAT3 {
 	FLOAT3();
 	FLOAT3(float x, float y,float z);
 
-	//’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+	//å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	FLOAT3 operator+() const;
 	FLOAT3 operator-() const;
 	FLOAT3 operator*(FLOAT3 v);
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	FLOAT3& operator+=(const FLOAT3& v);
 	FLOAT3& operator-=(const FLOAT3& v);
 	FLOAT3& operator*=(float s);
@@ -46,7 +45,7 @@ struct FLOAT3 {
 	FLOAT3& operator+=(const FLOAT2& v);
 	FLOAT3& operator-=(const FLOAT2& v);
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	FLOAT3& operator+=(const Vector3& v);
 	FLOAT3& operator-=(const Vector3& v);
 	FLOAT3& operator*=(const Vector3& v);
@@ -55,12 +54,12 @@ struct FLOAT3 {
 };
 
 struct Matrix4 {
-	// sx—ñ
+	// è¡Œxåˆ—
 	float m[4][4];
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Matrix4();
-	// ¬•ª‚ğw’è‚µ‚Ä‚Ì¶¬
+	// æˆåˆ†ã‚’æŒ‡å®šã—ã¦ã®ç”Ÿæˆ
 	Matrix4(
 		float m00, float m01, float m02, float m03,
 		float m10, float m11, float m12, float m13,
@@ -69,60 +68,57 @@ struct Matrix4 {
 
 	void UnitMatrix();
 
-	// ‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	// ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	Matrix4& operator*=(const Matrix4& m2);
 	Matrix4 operator*(const Matrix4& m2);
-	Matrix4 Inverse();			// ‹ts—ñ‚ğ•Ô‚·ŠÖ”
+	Matrix4 Inverse();			// é€†è¡Œåˆ—ã‚’è¿”ã™é–¢æ•°
 	Matrix4 Transpose();
 };
 
-Matrix4 ConvertScalingMat(Vector3 scale);		// ƒXƒP[ƒŠƒ“ƒOs—ñ‚ğ•Ô‚·ŠÖ”
-Matrix4 ConvertRotationXAxisMat(float angle);	// ‰ñ“]s—ñ‚˜²‚ğ•Ô‚·ŠÖ”
-Matrix4 ConvertRotationYAxisMat(float angle);	// ‰ñ“]s—ñ‚™²‚ğ•Ô‚·ŠÖ”
-Matrix4 ConvertRotationZAxisMat(float angle);	// ‰ñ“]s—ñ‚š²‚ğ•Ô‚·ŠÖ”
-Matrix4 ConvertTranslationMat(const Vector3& pos);	// •½sˆÚ“®‚ğ•Ô‚·ŠÖ”
+Matrix4 ConvertScalingMat(Vector3 scale);		// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—ã‚’è¿”ã™é–¢æ•°
+Matrix4 ConvertRotationXAxisMat(float angle);	// å›è»¢è¡Œåˆ—ï½˜è»¸ã‚’è¿”ã™é–¢æ•°
+Matrix4 ConvertRotationYAxisMat(float angle);	// å›è»¢è¡Œåˆ—ï½™è»¸ã‚’è¿”ã™é–¢æ•°
+Matrix4 ConvertRotationZAxisMat(float angle);	// å›è»¢è¡Œåˆ—ï½šè»¸ã‚’è¿”ã™é–¢æ•°
+Matrix4 ConvertTranslationMat(const Vector3& pos);	// å¹³è¡Œç§»å‹•ã‚’è¿”ã™é–¢æ•°
 
 template <class T>
 inline T Max(T value, T max)
 {
-	// ’l‚ªÅ‘å’l‚ğã‰ñ‚Á‚Ä‚¢‚½‚çÅ‘å’l‚ğ•Ô‚·
+	// å€¤ãŒæœ€å¤§å€¤ã‚’ä¸Šå›ã£ã¦ã„ãŸã‚‰æœ€å¤§å€¤ã‚’è¿”ã™
 	if (value >= max) return max;
 	else return value;
 }
 template <class T>
 inline T Min(T value, T min)
 {
-	// ’l‚ªÅ¬’l‚ğ‰º‰ñ‚Á‚Ä‚¢‚½‚çÅ¬’l‚ğ•Ô‚·
+	// å€¤ãŒæœ€å°å€¤ã‚’ä¸‹å›ã£ã¦ã„ãŸã‚‰æœ€å°å€¤ã‚’è¿”ã™
 	if (value <= min) return value;
 	else return min;
 }
 template <class T>
 inline T Clamp(T value, T min, T max)
 {
-	// ’l‚ªÅ‘å’l‚ğã‰ñ‚Á‚Ä‚¢‚½‚çÅ‘å’l‚ğ•Ô‚·
+	// å€¤ãŒæœ€å¤§å€¤ã‚’ä¸Šå›ã£ã¦ã„ãŸã‚‰æœ€å¤§å€¤ã‚’è¿”ã™
 	if (value >= max) return max;
 
-	// ’l‚ªÅ¬’l‚ğ‰º‰ñ‚Á‚Ä‚¢‚½‚çÅ¬’l‚ğ•Ô‚·
+	// å€¤ãŒæœ€å°å€¤ã‚’ä¸‹å›ã£ã¦ã„ãŸã‚‰æœ€å°å€¤ã‚’è¿”ã™
 	if (value <= min) return min;
 
-	// ‚Ç‚¿‚ç‚É‚à“–‚Ä‚Í‚Ü‚ç‚È‚©‚Á‚½‚ç’l‚ğ‚»‚Ì‚Ü‚Ü•Ô‚·
+	// ã©ã¡ã‚‰ã«ã‚‚å½“ã¦ã¯ã¾ã‚‰ãªã‹ã£ãŸã‚‰å€¤ã‚’ãã®ã¾ã¾è¿”ã™
 	return value;
 }
 
-//ƒ‰ƒWƒAƒ“‚©‚çŠp“x
+//ãƒ©ã‚¸ã‚¢ãƒ³ã‹ã‚‰è§’åº¦
 float Angle(float radian);
-//Šp“x‚©‚çƒ‰ƒWƒAƒ“
+//è§’åº¦ã‹ã‚‰ãƒ©ã‚¸ã‚¢ãƒ³
 float Radian(float angle);
 
 const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
-// n“_/I“_‚ÌÀ•W‚Æ ƒxƒNƒgƒ‹‚©‚çA‹Èü‚Ì‹O“¹ã‚ÌÀ•W‚ğ•Ô‚·
+// å§‹ç‚¹/çµ‚ç‚¹ã®åº§æ¨™ã¨ ãƒ™ã‚¯ãƒˆãƒ«ã‹ã‚‰ã€æ›²ç·šã®è»Œé“ä¸Šã®åº§æ¨™ã‚’è¿”ã™
 Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t);
 
 float UpAndDown(float oneRoundTime, float range);
 
-const Vector3 operator-(const DirectX::XMFLOAT3 v1, const Vector3 v2);
-const Vector3 operator-(const Vector3 v1, const DirectX::XMFLOAT3 v2);
-const Vector3 operator+(const Vector3 v1, const DirectX::XMFLOAT3 v2);
-const Vector3 operator+(const DirectX::XMFLOAT3 v1, const Vector3 v2);
-
 float Vec2Angle(Vector2 vec);
+
+Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 rot);

@@ -147,3 +147,9 @@ const Vector3 operator/(const Vector3& v, float s)
 	Vector3 temp(v);
 	return temp /= s;
 }
+
+Vector3 Lerp(const Vector3 s, const Vector3 e, const float f)
+{
+	Vector3 dis = e - s;
+	return dis * f + s;
+}

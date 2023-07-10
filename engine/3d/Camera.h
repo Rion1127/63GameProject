@@ -69,5 +69,3 @@ public:
 	void SetOriginalPos();
 	bool GetIsShake() { return isShake_; }
 };
-
-const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3 v1, const DirectX::XMFLOAT3 v2);
