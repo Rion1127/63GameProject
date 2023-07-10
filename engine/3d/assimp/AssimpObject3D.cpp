@@ -9,8 +9,8 @@
 AssimpObject3D::AssimpObject3D()
 {
 	constBuff_ = CreateBuff(constMap_);
-	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/moveCube.fbx", nullptr));
-	
+	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/AMove.fbx", nullptr));
+	animation_.timer.SetLimitTime(600);
 }
 
 void AssimpObject3D::Update()
@@ -18,22 +18,31 @@ void AssimpObject3D::Update()
 	HRESULT result;
 
 	std::vector<Bone>& bones = model_->bones;
-
-	PlayAnimation();
+	if (model_->scene->HasAnimations()) {
+		PlayAnimation();
+	}
 
 	ConstBuffDataSkin* constMap = nullptr;
 	result = constBuff_->Map(0, nullptr, (void**)&constMap);
-	for (int32_t i = 0; i < bones.size(); i++) {
+	if (model_->scene->HasAnimations()) {
+		for (int32_t i = 0; i < bones.size(); i++) {
+			//¡‚ÌŽp¨s—ñ
+			Matrix4 matCurrentPose;
+			matCurrentPose.UnitMatrix();
+
+			constMap->bones[i] = bones[i].currentMat * matCurrentPose;
+		}
+	}
+	else {
 		//¡‚ÌŽp¨s—ñ
 		Matrix4 matCurrentPose;
 		matCurrentPose.UnitMatrix();
-
-		constMap->bones[i] = bones[i].currentMat * matCurrentPose;
+		constMap->bones[0] = matCurrentPose;
 	}
 	constBuff_->Unmap(0, nullptr);
 
 	worldTransform_.Update();
-	
+
 }
 
 void AssimpObject3D::Draw()
@@ -53,11 +62,11 @@ void AssimpObject3D::PlayAnimation()
 	animation_.isPlay = true;
 	if (animation_.isPlay == false)
 	{
-		
+
 		ParseNodeHeirarchy(0.f, 0, identity, model_->scene->mRootNode);
 		return;
 	}
-	
+
 	// Œ»Ý‚ÌƒtƒŒ[ƒ€
 	float endTime = (float)model_->scene->mAnimations[animation_.index]->mDuration;
 	float currentTime = animation_.timer.GetTimeRate() * endTime;
@@ -65,13 +74,13 @@ void AssimpObject3D::PlayAnimation()
 
 	if (currentTime >= endTime)animation_.timer.Reset();
 
-	animation_.timer.SetLimitTime(1200);
+
 	static bool animeStart = true;
 
 	if (Key::TriggerKey(DIK_Z)) {
 		animeStart = (animeStart == true) ? false : true;
 	}
-	if(animeStart)animation_.timer.AddTime(1);
+	if (animeStart)animation_.timer.AddTime(1);
 
 	if (Key::TriggerKey(DIK_T)) {
 		animation_.timer.AddTime(1);
@@ -112,9 +121,15 @@ void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t 
 	{
 		if (model_->bones[i].name == nodeName)
 		{
+			Matrix4 scale = {
+				0.001f,0,0,0,
+				0,0.001f,0,0,
+				0,0,0.001f,0,
+				0,0,0,1.0f
+			};
 			Matrix4 initalMat = model_->bones[i].offsetMat;
 			Matrix4 invWorldMat = AssimpLoader::ConvertAiMatrixToMatrix(model_->scene->mRootNode->mTransformation);
-			model_->bones[i].currentMat = initalMat * globalTransformMat * invWorldMat;
+			model_->bones[i].currentMat = initalMat * globalTransformMat * invWorldMat * scale;
 		}
 	}
 
@@ -215,7 +230,7 @@ Vector3 AssimpObject3D::CalcCurrentScale(const aiNodeAnim* nodeAnim, const float
 		return result;
 	}
 
-	return {0,0,0};
+	return { 0,0,0 };
 }
 
 Quaternion AssimpObject3D::CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime)
@@ -304,5 +319,5 @@ Vector3 AssimpObject3D::CalcCurrentPos(const aiNodeAnim* nodeAnim, const float c
 		return result;
 	}
 
-	return {0,0,0};
+	return { 0,0,0 };
 }

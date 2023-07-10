@@ -65,7 +65,7 @@ void GameScene::Update()
 	ParticleManager::GetInstance()->Update();
 
 	assimpObj_.SetPos({ -2,2,0 });
-	assimpObj_.SetScale({ 0.1f,0.1f,0.1f });
+	assimpObj_.SetScale({ 0.4f,0.4f,0.4f });
 	assimpObj_.Update();
 }
 
