@@ -23,6 +23,10 @@ void LoadManager::LoadTexture()
 	LoadGraph("gauge.png", "Gauge");
 	//パーティクル
 	LoadGraph("starParticle.png", "StarParticle");
+	//UI
+	LoadGraph("LockOn1.png", "LockOn1");
+	LoadGraph("LockOn2.png", "LockOn2");
+
 }
 
 void LoadManager::LoadSound()

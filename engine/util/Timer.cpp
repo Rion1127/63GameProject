@@ -5,6 +5,7 @@ Timer::Timer()
 	timer_ = 0;
 	limitTime_ = 0;
 	isEnd_ = false;
+	isLoop_ = false;
 }
 
 void Timer::AddTime(int32_t addValue)
@@ -12,8 +13,15 @@ void Timer::AddTime(int32_t addValue)
 	timer_ += addValue;
 
 	timer_ = Min(timer_, limitTime_);
-	//timer_がendTime_と同じ値になったら
-	if (timer_ >= limitTime_) isEnd_ = true;
+	if (isLoop_)
+	{
+		if (timer_ >= limitTime_) timer_ = 0;
+	}
+	else
+	{
+		//timer_がendTime_と同じ値になったら
+		if (timer_ >= limitTime_) isEnd_ = true;
+	}
 }
 
 void Timer::SubTime(int32_t addValue)
@@ -21,8 +29,15 @@ void Timer::SubTime(int32_t addValue)
 	timer_ -= addValue;
 
 	timer_ = Max(timer_, limitTime_);
-	//timer_がendTime_と同じ値になったら
-	if (timer_ <= limitTime_) isEnd_ = true;
+	if (isLoop_)
+	{
+		if (timer_ >= limitTime_) timer_ = 0;
+	}
+	else
+	{
+		//timer_がendTime_と同じ値になったら
+		if (timer_ >= limitTime_) isEnd_ = true;
+	}
 }
 
 void Timer::Reset()

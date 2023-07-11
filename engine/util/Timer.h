@@ -8,6 +8,7 @@ private:
 	int32_t limitTime_;
 
 	bool isEnd_;
+	bool isLoop_;
 public:
 	Timer();
 
@@ -21,6 +22,7 @@ public:
 	void SetLimitTime(int32_t limitTime) { limitTime_ = limitTime; }
 	void SetTime(int32_t setValue) { timer_ = setValue; }
 	void SetIsEnd(bool flag) { isEnd_ = flag; }
+	void SetIsLoop(bool flag) { isLoop_ = flag; }
 public:
 	//ÉQÉbÉ^Å[
 	int32_t GetTimer() { return timer_; }

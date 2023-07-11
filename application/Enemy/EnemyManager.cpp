@@ -4,6 +4,7 @@
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
+	lockOnobjTimer_.SetIsLoop(true);
 	/*enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(20, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(-20, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, -20))));
@@ -18,9 +19,15 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));*/
 
-	lockOnObj_ = std::move(std::make_unique<Object3d>());
-	lockOnObj_->SetModel(Model::CreateOBJ_uniptr("LockOn", true));
-	lockOnObj_->SetAmbient("LockOn", { 0,0.2f,0.8f });
+	lockOnSprite_.resize(2);
+	for (size_t i = 0; i < 2; i++)
+	{
+		lockOnSprite_[i] = std::move(std::make_unique<Sprite>());
+		lockOnSprite_[i]->Ini("");
+		lockOnSprite_[i]->SetScale({ 0.5f,0.5f });
+	}
+	lockOnSprite_[0]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn1"));
+	lockOnSprite_[1]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn2"));
 }
 
 void EnemyManager::PreUpdate()
@@ -36,11 +43,24 @@ void EnemyManager::PreUpdate()
 	//ロックオンオブジェ
 	if (lockOnEnemy_ != nullptr) {
 		lockOnobjTimer_.AddTime(1);
-		lockOnObj_->GetTransform()->SetPosition(lockOnEnemy_->GetWorldTransform()->position_);
-		float posy = 4 + sinf((float)lockOnobjTimer_.GetTimer() / 15.f) * 0.4f;
-		lockOnObj_->GetTransform()->AddPosition({ 0,posy,0});
-		lockOnObj_->GetTransform()->AddRotation({ 0,0.03f,0 });
-		lockOnObj_->Update();
+		
+
+		lockOnSprite_[0]->SetRot(Radian((float)-lockOnobjTimer_.GetTimer()));
+		lockOnSprite_[1]->SetRot(Radian((float)lockOnobjTimer_.GetTimer()));
+		for (size_t i = 0; i < 2; i++)
+		{
+			lockOnSprite_[i]->SetInvisivle(false);
+			Vector2 pos = TransformToVec2(*lockOnEnemy_->GetWorldTransform(),*Camera::scurrent_);
+			lockOnSprite_[i]->SetPos(pos);
+			lockOnSprite_[i]->Update();
+		}
+	}
+	else
+	{
+		for (size_t i = 0; i < 2; i++)
+		{
+			lockOnSprite_[i]->SetInvisivle(true);
+		}
 	}
 	//hpゲージにロックオン中の敵をセット
 	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
@@ -64,16 +84,13 @@ void EnemyManager::Draw()
 	for (auto& enemy : enemys_) {
 		enemy->Draw();
 	}
-	if (lockOnEnemy_ != nullptr) {
-		lockOnObj_->Draw();
-	}
 }
 
 void EnemyManager::SpriteDraw()
 {
-	for (auto& enemy : enemys_)
+	for (size_t i = 0; i < 2; i++)
 	{
-		enemy->DrawSprite();
+		lockOnSprite_[i]->Draw();
 	}
 	hpGauge_.Draw();
 }

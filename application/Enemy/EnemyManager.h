@@ -9,10 +9,10 @@ class EnemyManager
 private:
 	std::list<std::unique_ptr<IEnemy>> enemys_;
 
-	std::unique_ptr<Object3d> lockOnObj_;
 	IEnemy* lockOnEnemy_;
 	Timer lockOnobjTimer_;
 	EnemyHPGauge hpGauge_;
+	std::vector<std::unique_ptr<Sprite>> lockOnSprite_;
 public:
 	EnemyManager();
 	void PreUpdate();
