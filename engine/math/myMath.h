@@ -75,6 +75,17 @@ struct Matrix4 {
 	Matrix4 Transpose();
 };
 
+struct Vector4 {
+	float x; // x成分
+	float y; // y成分
+	float z; // z成分
+	float w; // w成分
+
+	// コンストラクタ
+	Vector4() : x(0), y(0), z(0), w(0){};                                   // 零ベクトルとする
+	Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}; // x成分, y成分, z成分 を指定しての生成
+};
+
 Matrix4 ConvertScalingMat(Vector3 scale);		// スケーリング行列を返す関数
 Matrix4 ConvertRotationXAxisMat(float angle);	// 回転行列ｘ軸を返す関数
 Matrix4 ConvertRotationYAxisMat(float angle);	// 回転行列ｙ軸を返す関数
@@ -122,3 +133,4 @@ float UpAndDown(float oneRoundTime, float range);
 float Vec2Angle(Vector2 vec);
 
 Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 rot);
+Vector4 Vec4MulMat4(Vector4 v, Matrix4 m);

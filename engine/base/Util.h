@@ -7,6 +7,7 @@
 #include "Vector3.h"
 #include "WorldTransform.h"
 #include <cassert>
+#include "Camera.h"
 
 //WARNINGの詳細表示
 void DisplayWarningInfo(ID3D12Device* device);
@@ -70,3 +71,6 @@ std::string ToUTF8(const std::wstring& value);
 std::wstring ToWideString(const std::string& str);
 // std::wstring(ワイド文字列)からstd::string(マルチバイト文字列)を得る
 std::string WStringToString(std::wstring oWString);
+
+
+Vector2 TransformToVec2(const WorldTransform& WT, const Camera& camera);

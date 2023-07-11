@@ -139,3 +139,32 @@ void MoveTo(const Vector3& goal, float speed, Vector3& value)
 	value =
 		value + dir.SetLength(speed);
 }
+
+Vector2 TransformToVec2(const WorldTransform& WT, const Camera& camera)
+{
+	Vector2 result;
+
+	Vector4 pos = {
+		0,
+		0,
+		0,
+		1
+	};
+	Vector2 winSize = WinAPI::GetInstance()->GetWindowSize();
+	Matrix4 viewPort = {
+		winSize.x / 2.f,	           0,0,0,
+		              0,-winSize.y / 2.f,0,0,
+		              0,               0,1,0,
+		winSize.x / 2.f, winSize.y / 2.f,0,1,
+	};
+
+	pos = Vec4MulMat4(pos, WT.matWorld_);
+	pos = Vec4MulMat4(pos, camera.matView_);
+	pos = Vec4MulMat4(pos, camera.matProjection_);
+	pos = Vec4MulMat4(pos, viewPort);
+
+	result = { pos.x ,pos.y };
+
+	return result;
+}
+

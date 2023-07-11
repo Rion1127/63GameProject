@@ -64,9 +64,9 @@ void GameScene::Update()
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
 
-	assimpObj_.SetPos({ -2,2,0 });
-	assimpObj_.SetScale({ 0.4f,0.4f,0.4f });
-	assimpObj_.Update();
+	//assimpObj_.SetPos({ -2,2,0 });
+	//assimpObj_.SetScale({ 0.4f,0.4f,0.4f });
+	//assimpObj_.Update();
 }
 
 void GameScene::Draw()
@@ -86,7 +86,7 @@ void GameScene::Draw()
 	//skyDome_->Draw();
 	
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-	assimpObj_.Draw();
+	//assimpObj_.Draw();
 	////////////
 	//スプライト//
 	////////////

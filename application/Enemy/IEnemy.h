@@ -41,6 +41,8 @@ public:
 	void FloorColision();
 	void ColPosUpdate();
 	void HitPlayerAttack(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
+
+	virtual void DrawSprite() = 0;
 public:
 	Gravity GetGravity() { return gravity_; }
 	bool GetIsLockOn() { return isLockOn_; }

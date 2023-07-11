@@ -17,3 +17,7 @@ EnemyAirDummy::EnemyAirDummy(Vector3 pos) : IEnemy(EnemyType::Air, false, 100)
 void EnemyAirDummy::MoveUpdate()
 {
 }
+
+void EnemyAirDummy::DrawSprite()
+{
+}
