@@ -10,14 +10,14 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, -20))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, 20))));*/
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 1, 0))));
-	/*enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(10, 2, 0))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(10, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(-10, 2, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, 10))));
 
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(5, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(10, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));*/
+	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));
 
 	lockOnSprite_.resize(2);
 	for (size_t i = 0; i < 2; i++)
@@ -33,12 +33,22 @@ EnemyManager::EnemyManager()
 void EnemyManager::PreUpdate()
 {
 	lockOnEnemy_ = nullptr;
-	for (auto& enemy : enemys_) {
-		enemy->PreUpdate();
-		//ロックオンしている敵のアドレスを代入
-		if (enemy->GetIsLockOn()) {
-			lockOnEnemy_ = enemy.get();
+	std::list<std::unique_ptr<IEnemy>>::iterator itr;
+	for (itr = enemys_.begin(); itr != enemys_.end();)
+	{
+		//敵が死んだら要素を消して次のイテレータへ移る
+		if (itr->get()->GetIsDead())
+		{
+			itr = enemys_.erase(itr);
+			continue;
 		}
+		itr->get()->PreUpdate();
+		//ロックオンしている敵のアドレスを代入
+		if (itr->get()->GetIsLockOn()) {
+			lockOnEnemy_ = itr->get();
+		}
+		//
+		itr++;
 	}
 	//ロックオンオブジェ
 	if (lockOnEnemy_ != nullptr) {
@@ -74,9 +84,9 @@ void EnemyManager::PostUpdate()
 	}
 
 	//デスフラグの立った球を削除
-	enemys_.remove_if([](std::unique_ptr<IEnemy>& bullet) {
+	/*enemys_.remove_if([](std::unique_ptr<IEnemy>& bullet) {
 		return bullet->GetIsDead();
-		});
+		});*/
 }
 
 void EnemyManager::Draw()
