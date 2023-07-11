@@ -22,13 +22,17 @@ public:
 
 	WorldTransform();
 
-	void SetScale(Vector3 scale);
-	void SetRotation(Vector3 rot);
-	void SetPosition(Vector3 pos);
+	void SetScale(Vector3 scale) { scale_ = scale; }
+	void SetRotation(Vector3 rot) { rotation_ = rot; }
+	void SetPosition(Vector3 pos) { position_ = pos; }
 
-	void AddScale(Vector3 scale);
-	void AddRotation(Vector3 rot);
-	void AddPosition(Vector3 pos);
+	void AddScale(float x, float y, float z);
+	void AddRotation(float x, float y, float z);
+	void AddPosition(float x, float y, float z);
+
+	void AddScale(Vector3 scale) { scale_ += scale; }
+	void AddRotation(Vector3 rot) { rotation_ += rot; }
+	void AddPosition(Vector3 pos) { position_ += pos; }
 	/// <summary>
 	/// ワールドトランスフォーム更新
 	/// </summary>
@@ -36,7 +40,7 @@ public:
 	/// <param name="isBillboard">0 = 無し; 1 = ビルボードあり; 2 = Y軸ビルボード</param>
 	void Update(uint32_t isBillboard = 0);
 
-	Matrix4 GetMatrix() { return matWorld_; }
+	Matrix4 GetMatWorld() { return matWorld_; }
 
 	//定数バッファ（行列用）
 	ComPtr<ID3D12Resource> constBuffTransform_;
@@ -44,7 +48,7 @@ public:
 	ConstBufferDataTransform* constMapTransform_;
 	//親オブジェクトへのポインタ
 	WorldTransform* parent_ = nullptr;
-	
+
 	//アフィン変換情報
 	Vector3 scale_ = { 1,1,1 };
 	Vector3 rotation_ = { 0,0,0 };
@@ -56,4 +60,3 @@ private:
 	//クォータニオン
 	Quaternion quaternion_ = { 0,1,0,0 };
 };
-

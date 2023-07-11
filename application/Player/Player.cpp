@@ -100,7 +100,7 @@ void Player::InputVecUpdate()
 
 	//プレイヤーの正面ベクトル
 	frontVec_ =
-		Camera::scurrent_.target_ - Camera::scurrent_.eye_;
+		Camera::scurrent_->target_ - Camera::scurrent_->eye_;
 	frontVec_.normalize();
 
 	sideVec = upVec.cross(frontVec_);

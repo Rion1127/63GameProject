@@ -2,8 +2,9 @@
 #include <random>
 #include "Util.h"
 #include "Camera.h"
+#include <imgui.h>
 
-Camera Camera::scurrent_{};
+Camera* Camera::scurrent_ = nullptr;
 
 Camera::Camera()
 {
@@ -13,7 +14,10 @@ Camera::Camera()
 	target_ = { 0,0,0 };
 	up_ = { 0,1,0 };
 
-	Update();
+	UpdateLookAt();
+
+	WT_.SetRotation(rot_);
+	WT_.Update();
 }
 
 void Camera::SetEyePos(float x, float y, float z)
@@ -25,12 +29,14 @@ void Camera::SetEyePos(float x, float y, float z)
 
 void Camera::SetEyePos(Vector3 pos)
 {
-	if (isShake_) {
+	if (isShake_)
+	{
 		originalPos_.x = pos.x;
 		originalPos_.y = pos.y;
 		originalPos_.z = pos.z;
 	}
-	else if (isShake_ == false) {
+	else if (isShake_ == false)
+	{
 		eye_.x = pos.x;
 		eye_.y = pos.y;
 		eye_.z = pos.z;
@@ -82,10 +88,9 @@ void Camera::MoveTo(Vector3 goal, float speed)
 }
 
 
-void Camera::Update()
+void Camera::UpdateLookAt()
 {
-#pragma region ビュー行列
-			//視点座標
+	//視点座標
 	Vector3 eyePosition = eye_;
 	//注視点座標
 	Vector3 targetPosition = target_;
@@ -93,12 +98,7 @@ void Camera::Update()
 	Vector3 upVector = up_;
 
 	//カメラZ軸（視線方向）
-	Vector3 cameraAxisZ = targetPosition- eyePosition;
-	//0ベクトルだと向きが定まらないので除外
-	/*assert(!XMVector3Equal(cameraAxisZ, XMVectorZero()));
-	assert(!XMVector3IsInfinite(cameraAxisZ));
-	assert(!XMVector3Equal(upVector, XMVectorZero()));
-	assert(!XMVector3IsInfinite(upVector));*/
+	Vector3 cameraAxisZ = targetPosition - eyePosition;
 	//ベクトルを正規化
 	cameraAxisZ = cameraAxisZ.normalize();
 	//カメラのX軸（右方向）
@@ -111,7 +111,6 @@ void Camera::Update()
 	Vector3 cameraAxisY;
 	//Y軸はZ軸→X軸の外積で求まる
 	cameraAxisY = cameraAxisZ.cross(cameraAxisX);
-	//cameraAxisY = XMVector3Normalize(cameraAxisY);
 	//カメラ回転行列
 	Matrix4 matCameraRot{};
 	//カメラ座標系→ワールド座標系の変換行列
@@ -152,19 +151,13 @@ void Camera::Update()
 	matView_.m[1][3] = matCameraRot.m[3][1];
 	matView_.m[2][3] = matCameraRot.m[3][2];
 	matView_.m[3][3] = matCameraRot.m[3][3];
-	
+
 	//視点座標に-1を賭けた座標
 	Vector3 reverseEyePosition = eyePosition * -1;
-	//カメラの位置からワールド原点へのベクトル（カメラ座標系）
-	float tX = cameraAxisX.dot(reverseEyePosition);
-	float tY = cameraAxisY.dot(reverseEyePosition);
-	float tZ = cameraAxisZ.dot(reverseEyePosition);
-	//一つのベクトルにまとめる
-	Vector3 translation = { tX, tY, tZ };
 	//ビュー行列に平行移動成分を設定
-	matView_.m[3][0] = translation.x;
-	matView_.m[3][1] = translation.y;
-	matView_.m[3][2] = translation.z;
+	matView_.m[3][0] = cameraAxisX.dot(reverseEyePosition);
+	matView_.m[3][1] = cameraAxisY.dot(reverseEyePosition);
+	matView_.m[3][2] = cameraAxisZ.dot(reverseEyePosition);
 	matView_.m[3][3] = 1.f;
 	//全方向ビルボード行列
 	/*matBillboard_.m[0] = cameraAxisX;
@@ -187,20 +180,66 @@ void Camera::Update()
 	//matBillboardY_.r[1] = ybillCameraAxisY;
 	//matBillboardY_.r[2] = ybillCameraAxisZ;
 	//matBillboardY_.r[3] = XMVectorSet(0, 0, 0, 1);
-#pragma endregion
+
 	//カメラシェイクアップデート
 	ShakeUpdate();
-	
-	float scaleY = 1.f / tanf(Radian(45) / 2);
-	float scaleX = 1.f / tanf(Radian(45) / 2) / aspectRatio_;
-	float scaleZ = 1.f / (1000.0f - 0.1f) * 1000.0f;
-	float TransZ = -0.1f / (1000.0f - 0.1f) * 1000.0f;
 
-	matProjection_.m[1][1] = scaleY;
-	matProjection_.m[0][0] = scaleX;
-	matProjection_.m[2][2] = scaleZ;
-	matProjection_.m[3][2] = TransZ;
-	matProjection_.m[2][3] = 1;
+	UpdateMatProjection();
+}
+
+void Camera::UpdateLookTo()
+{
+	WT_.SetRotation(rot_);
+	WT_.Update();
+	//カメラ座標とY軸、Z軸を取得
+	Vector3 pos = eye_;
+	Vector3 axisY = WT_.GetMatWorld().GetAxisY();
+	Vector3 axisZ = WT_.GetMatWorld().GetAxisZ();
+	//単位行列に初期化
+	matView_.UnitMatrix();
+	//Z軸とY軸を取得
+	Vector3 xAxisVec = axisY.cross(axisZ).normalize();
+	Vector3 yAxisVec = axisZ.cross(xAxisVec).normalize();
+	//平行移動成分を設定
+	Vector3 transPos = {
+		-pos.dot(xAxisVec.normalize()),
+		-pos.dot(yAxisVec.normalize()),
+		-pos.dot(axisZ.normalize())
+	};
+
+	matView_ = {
+		xAxisVec.x,yAxisVec.x,axisZ.x	,0.f,
+		xAxisVec.y,yAxisVec.y,axisZ.y	,0.f,
+		xAxisVec.z,yAxisVec.z,axisZ.z	,0.f,
+		transPos.x,transPos.y,transPos.z,1.f,
+	};
+
+	/*ImGui::Begin("camera");
+	static float rot[3] = { rot_.x,rot_.y,rot_.z };
+	static float eyepos[3] = { eye_.x,eye_.y,eye_.z };
+	ImGui::SliderFloat3("rot", rot, Radian(-180), Radian(180));
+	ImGui::SliderFloat3("pos", eyepos, -10, 10);
+	rot_.x = rot[0];
+	rot_.y = rot[1];
+	rot_.z = rot[2];
+	eye_.x = eyepos[0];
+	eye_.y = eyepos[1];
+	eye_.z = eyepos[2];
+	ImGui::End();*/
+
+
+}
+
+void Camera::Update(CameraMode mode)
+{
+	if (CameraMode::LookAT == mode)
+	{
+		UpdateLookAt();
+	}
+	else if (CameraMode::LookTo == mode)
+	{
+		UpdateLookTo();
+	}
 }
 
 Matrix4 Camera::GetMatView()
@@ -266,4 +305,18 @@ void Camera::ShakeUpdate()
 void Camera::SetOriginalPos()
 {
 	originalPos_ = eye_;
+}
+
+void Camera::UpdateMatProjection()
+{
+	float scaleY = 1.f / tanf(Radian(45) / 2);
+	float scaleX = 1.f / tanf(Radian(45) / 2) / aspectRatio_;
+	float scaleZ = 1.f / (1000.0f - 0.1f) * 1000.0f;
+	float TransZ = -0.1f / (1000.0f - 0.1f) * 1000.0f;
+
+	matProjection_.m[1][1] = scaleY;
+	matProjection_.m[0][0] = scaleX;
+	matProjection_.m[2][2] = scaleZ;
+	matProjection_.m[3][2] = TransZ;
+	matProjection_.m[2][3] = 1;
 }

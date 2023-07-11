@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Collision.h"
 #include "ParticleManager.h"
+#include "Camera.h"
 
 GameScene::~GameScene()
 {
@@ -30,22 +31,6 @@ void GameScene::Ini()
 	colManager_->SetFloor(floor_.get());
 	colManager_->SetEnemys(enemyManager_.get());
 	IAttack::SetPlayerInfo(player_->GetPlayerInfo());
-
-	////const wchar_t* modelFile = L"Resources/Alicia/FBX/Alicia_solid_Unity.FBX";
-	//const wchar_t* modelFile = L"application/Resources/boneTest/boneTest.fbx";
-	////  L"Resources/FBX/Alica/Alicia_solid_Unity.FBX"
-	////  L"Resources/FBX/untitled.glb"
-	//std::vector<Mesh> meshes;
-	//ImportSettings importSetting = {
-	//	modelFile,
-	//	meshes,
-	//	false,
-	//	true
-	//};
-	//
-	//assimpObj_.SetModel(&testModel_);
-	//testModel_ = AssimpLoader::GetInstance()->Load("application/Resources/boneTest/TestCube.fbx");
-	//assimpObj_.SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/boneTest.fbx",nullptr));
 }
 
 void GameScene::Update()
@@ -63,10 +48,6 @@ void GameScene::Update()
 
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
-
-	//assimpObj_.SetPos({ -2,2,0 });
-	//assimpObj_.SetScale({ 0.4f,0.4f,0.4f });
-	//assimpObj_.Update();
 }
 
 void GameScene::Draw()
@@ -83,10 +64,10 @@ void GameScene::Draw()
 	
 	
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
-	//skyDome_->Draw();
+	
 	
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-	//assimpObj_.Draw();
+
 	////////////
 	//スプライト//
 	////////////
@@ -106,19 +87,15 @@ void GameScene::CameraUpdate()
 	if (isDebug)
 	{
 		gameCamera_.Update();
-		Camera::scurrent_.eye_ = gameCamera_.GetCamera()->eye_;
-		Camera::scurrent_.up_ = gameCamera_.GetCamera()->up_;
-		Camera::scurrent_.target_ = gameCamera_.GetCamera()->target_;
+		Camera::scurrent_ = gameCamera_.GetCamera();
 	}
 	else
 	{
 		//カメラ更新
 		debugCamera_.Update();
-		Camera::scurrent_.eye_ = debugCamera_.GetCamera()->eye_;
-		Camera::scurrent_.up_ = debugCamera_.GetCamera()->up_;
-		Camera::scurrent_.target_ = debugCamera_.GetCamera()->target_;
+		Camera::scurrent_ = debugCamera_.GetCamera();
 	}
-	Camera::scurrent_.Update();
+	Camera::scurrent_->Update(CameraMode::LookAT);
 
 	
 }

@@ -73,6 +73,12 @@ struct Matrix4 {
 	Matrix4 operator*(const Matrix4& m2);
 	Matrix4 Inverse();			// 逆行列を返す関数
 	Matrix4 Transpose();
+
+
+	Vector3 GetAxisX() { return Vector3(m[0][0], m[0][1], m[0][2]); }
+	Vector3 GetAxisY() { return Vector3(m[1][0], m[1][1], m[1][2]); }
+	Vector3 GetAxisZ() { return Vector3(m[2][0], m[2][1], m[2][2]); }
+	Vector3 GetTranslation() { return Vector3(m[3][0], m[3][1], m[3][2]); }
 };
 
 struct Vector4 {

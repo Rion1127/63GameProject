@@ -144,12 +144,7 @@ Vector2 TransformToVec2(const WorldTransform& WT, const Camera& camera)
 {
 	Vector2 result;
 
-	Vector4 pos = {
-		0,
-		0,
-		0,
-		1
-	};
+	Vector4 pos(0,0,0,1);
 	Vector2 winSize = WinAPI::GetInstance()->GetWindowSize();
 	Matrix4 viewPort = {
 		winSize.x / 2.f,	           0,0,0,
@@ -157,7 +152,7 @@ Vector2 TransformToVec2(const WorldTransform& WT, const Camera& camera)
 		              0,               0,1,0,
 		winSize.x / 2.f, winSize.y / 2.f,0,1,
 	};
-
+	//ÇRéüå≥Å®ÇQéüå≥ÇÃïœä∑
 	pos = Vec4MulMat4(pos, WT.matWorld_);
 	pos = Vec4MulMat4(pos, camera.matView_);
 	pos = Vec4MulMat4(pos, camera.matProjection_);
