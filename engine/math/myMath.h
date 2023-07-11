@@ -140,3 +140,5 @@ float Vec2Angle(Vector2 vec);
 
 Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 rot);
 Vector4 Vec4MulMat4(Vector4 v, Matrix4 m);
+
+Vector3 getEulerAnglesFromVector(const Vector3& vec);

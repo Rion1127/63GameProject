@@ -10,9 +10,27 @@ GameCamera::GameCamera()
 		DeadZone::Mul_2,
 		DeadZone::Default
 	};
+
+	cameraSpeed_ = 0.15f;
 }
 
-void GameCamera::Update()
+void GameCamera::Update(CameraMode cameraMode)
+{
+	UpdateCameraPos();
+	if (cameraMode == CameraMode::LookAT)
+	{
+		UpdateLookAT();
+	}
+	else if (cameraMode == CameraMode::LookTo)
+	{
+		UpdateLookTO();
+	}
+
+	camera_->eye_ += (endEyePos_ - camera_->eye_) * cameraSpeed_;
+	
+}
+
+void GameCamera::UpdateCameraPos()
 {
 	Vector3 cameraTrans = {
 		player_->GetWorldTransform()->position_.x,
@@ -32,9 +50,9 @@ void GameCamera::Update()
 		moveDist.y = Clamp(moveDist.y, -0.8f, 1.2f);
 	}
 
-	
 	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
-	if (player_->GetAttackManager()->GetLockOnEnemy()) {
+	if (player_->GetAttackManager()->GetLockOnEnemy())
+	{
 		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
 		Vector3 ptoEVec = enemy->GetWorldTransform()->position_ - player_->GetWorldTransform()->position_;
 		ptoEVec /= 2.f;
@@ -42,28 +60,19 @@ void GameCamera::Update()
 		endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
 		endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
 		endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
-
-		//endTargetPos_ = enemy->GetWorldTransform()->position_ + ptoEVec;
-		endTargetPos_ = player_->GetWorldTransform()->position_;
 	}
 	//ロックオンしている敵がいない時のカメラ
-	else {
-		
+	else
+	{
 		endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
 		endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
 		endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
-
-		endTargetPos_ = player_->GetWorldTransform()->position_;
 	}
 
-	camera_->eye_ += (endEyePos_ - camera_->eye_) * 0.15f;
-	camera_->target_ += (endTargetPos_ - camera_->target_) * 0.15f;
-	
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
 	float minGamecameraY = 0.5f;
 
-	
-	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY,maxGamecameraY);
+	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY, maxGamecameraY);
 
 	ImGui::Begin("GameCamera");
 	/* ここに追加したいGUIを書く */
@@ -88,4 +97,53 @@ void GameCamera::Update()
 	ImGui::SliderFloat("sideVec.y", &sideVec.y, 0.0f, 2000.0f, "y = %.3f");*/
 
 	ImGui::End();
+}
+
+void GameCamera::UpdateLookAT()
+{
+	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
+	if (player_->GetAttackManager()->GetLockOnEnemy())
+	{
+		endTargetPos_ = player_->GetWorldTransform()->position_;
+	}
+	//ロックオンしている敵がいない時のカメラ
+	else
+	{
+		endTargetPos_ = player_->GetWorldTransform()->position_;
+	}
+
+	camera_->target_ += (endTargetPos_ - camera_->target_) * cameraSpeed_;
+}
+
+void GameCamera::UpdateLookTO()
+{
+	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
+	if (player_->GetAttackManager()->GetLockOnEnemy())
+	{
+		Vector3 cameraToPlayer =
+			player_->GetWorldTransform()->position_ - camera_->eye_;
+		cameraToPlayer.normalize();
+
+
+		Vector3 angle = getEulerAnglesFromVector(cameraToPlayer);
+
+		endRot_ = angle;
+	}
+	//ロックオンしている敵がいない時のカメラ
+	else
+	{
+		Vector3 cameraToPlayer =
+			player_->GetWorldTransform()->position_ - camera_->eye_;
+		cameraToPlayer.normalize();
+
+		Vector3 angle = {
+			acosf(cameraToPlayer.x),
+			acosf(cameraToPlayer.y),
+			acosf(cameraToPlayer.z),
+		};
+
+		endRot_ = angle;
+	}
+
+	camera_->rot_ += (endRot_ - camera_->rot_) * cameraSpeed_;
 }

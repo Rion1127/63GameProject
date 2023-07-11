@@ -509,3 +509,18 @@ Vector4 Vec4MulMat4(Vector4 v, Matrix4 m)
 
 	return result;
 }
+
+Vector3 getEulerAnglesFromVector(const Vector3& vec) {
+	// ベクトルの長さを計算
+	double length_xy = (double)std::sqrt(vec.x * vec.x + vec.y * vec.y);
+	double length_xyz = (double)std::sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+
+	Vector3 result;
+
+	result = {
+		std::atan2(vec.y, vec.x),
+		std::atan2(-vec.z, (float)length_xy) + Radian(90),
+		std::atan2(vec.y, vec.x),
+	};
+	return result;
+}

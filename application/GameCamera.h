@@ -16,9 +16,15 @@ private:
 	//カメラの最終地点
 	Vector3 endEyePos_;
 	Vector3 endTargetPos_;
+	Vector3 endRot_;
+
+	float cameraSpeed_;
 public:
 	GameCamera();
-	void Update();
+	void Update(CameraMode cameraMode);
+	void UpdateCameraPos();
+	void UpdateLookAT();
+	void UpdateLookTO();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 public:

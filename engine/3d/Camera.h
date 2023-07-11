@@ -13,7 +13,7 @@ struct ConstVPBuff {
 	Vector3 cameraPos;  // カメラ座標（ワールド座標）
 };
 
-enum CameraMode {
+enum class CameraMode {
 	LookAT,	//座標と注視点座標
 	LookTo	//座標とオイラー角
 };
