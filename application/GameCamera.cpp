@@ -105,26 +105,38 @@ void GameCamera::UpdateLookAT()
 	{
 		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
 		Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(),*Camera::scurrent_);
+		Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+		Vector2 length = { 300,150 };
+		Vector2 vec = screenPos - halfWindowSize;
+		vec.normalize();
+		
+		if (putOnCamera_ == false)
+		{
+			getoutWay = GetOutScreenEnemy();
+		}
+		else
+		{
+			if (screenPos.x > halfWindowSize.x - length.x &&
+				screenPos.x < halfWindowSize.x + length.x &&
+				screenPos.y > halfWindowSize.y - length.y &&
+				screenPos.y < halfWindowSize.y + length.y)
+			{
+				putOnCamera_ = false;
+			}
+		}
 		//ロックオンした敵が画面外に出そうだったら
-		if (GetOutScreenEnemy() == GetOutEnemy::Right)
+		if (getoutWay == GetOutEnemy::Right ||
+			getoutWay == GetOutEnemy::Left)
 		{
-			moveDist.x += 0.01f;
+			moveDist.x += vec.x * 0.05f;
 		}
 
-		if (GetOutScreenEnemy() == GetOutEnemy::Left)
+		if (getoutWay == GetOutEnemy::Up ||
+			getoutWay == GetOutEnemy::Down)
 		{
-			moveDist.x -= 0.01f;
+			moveDist.y += vec.y * 0.01f;
 		}
-
-		if (GetOutScreenEnemy() == GetOutEnemy::Up)
-		{
-			moveDist.y -= 0.01f;
-		}
-
-		if (GetOutScreenEnemy() == GetOutEnemy::Down)
-		{
-			moveDist.y += 0.01f;
-		}
+		
 
 		endTargetPos_ = player_->GetWorldTransform()->position_;
 	}
@@ -177,9 +189,10 @@ GetOutEnemy GameCamera::GetOutScreenEnemy()
 {
 	IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
 	Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-	Vector2 length = {320,120};
+	Vector2 length = {520,250};
 	Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
 	
+	putOnCamera_ = true;
 	if (screenPos.x < halfWindowSize.x - length.x)
 	{
 		return GetOutEnemy::Left;
@@ -197,5 +210,6 @@ GetOutEnemy GameCamera::GetOutScreenEnemy()
 	{
 		return GetOutEnemy::Down;
 	}
+	putOnCamera_ = false;
 	return GetOutEnemy::Middle;
 }

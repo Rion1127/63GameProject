@@ -5,8 +5,8 @@ EnemyHPGauge::EnemyHPGauge()
 	hpBar_ = std::move(std::make_unique<Sprite>());
 	hpBarBack_ = std::move(std::make_unique<Sprite>());
 
-	hpBar_->Ini("hpBar");
-	hpBarBack_->Ini("hpBarBack");
+	hpBar_->Ini("");
+	hpBarBack_->Ini("");
 	hpBar_->SetTexture(TextureManager::GetInstance()->GetTexture("Gauge"));
 	hpBarBack_->SetTexture(TextureManager::GetInstance()->GetTexture("HpBarBack"));
 
@@ -52,8 +52,5 @@ void EnemyHPGauge::Draw()
 	{
 		hpBarBack_->Draw();
 		hpBar_->Draw();
-
-		hpBar_->DrawImGui();
-		hpBarBack_->DrawImGui();
 	}
 }

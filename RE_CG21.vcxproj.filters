@@ -414,11 +414,11 @@
     <ClCompile Include="application\Enemy\EnemyAirDummy.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DebugScene.cpp">
       <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -650,11 +650,11 @@
     <ClInclude Include="application\Enemy\EnemyAirDummy.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="application\Enemy\EnemyHPGauge.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DebugScene.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\EnemyHPGauge.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

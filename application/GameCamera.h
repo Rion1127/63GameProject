@@ -30,6 +30,8 @@ private:
 	Vector3 endRot_;
 
 	float cameraSpeed_;
+	bool putOnCamera_;	//ロックオン時カメラを戻すフラグ
+	GetOutEnemy getoutWay;
 public:
 	GameCamera();
 	void Update(CameraMode cameraMode);
