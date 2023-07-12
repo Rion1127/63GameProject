@@ -12,7 +12,8 @@ enum class GetOutEnemy {
 	Left,
 	Up,
 	Down,
-	Middle
+	Middle,
+	LookBack
 };
 
 class GameCamera {

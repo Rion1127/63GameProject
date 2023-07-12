@@ -90,7 +90,7 @@ void CollisionManager::EnemyLockOn()
 		//ロックオン用の大きい当たり判定
 		enemy->SetIsLockOn(false);
 		Sphere serchCol = player_->GetCol();
-		serchCol.radius *= 15.f;
+		serchCol.radius *= 20.f;
 		if (BallCollision(serchCol, enemy->GetCol()))
 		{
 			//ロックオン圏内にいる敵を追加していく
@@ -98,7 +98,7 @@ void CollisionManager::EnemyLockOn()
 		}
 	}
 	//仮の大きい値を入れておく
-	float dist2d = 1000.f;
+	float dist2d = 5000.f;
 	for (auto& enemy : lockOnEnemys_)
 	{
 		//スクリーン座標を取得して画面の中央に近い敵をロックオンする

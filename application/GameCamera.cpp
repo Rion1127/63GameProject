@@ -106,12 +106,13 @@ void GameCamera::UpdateLookAT()
 		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
 		Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(),*Camera::scurrent_);
 		Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
-		Vector2 length = { 300,150 };
+		Vector2 length = { 250,200 };
 		Vector2 vec = screenPos - halfWindowSize;
 		vec.normalize();
 		
 		if (putOnCamera_ == false)
 		{
+			//敵が画面のどの位置にいるかの判定
 			getoutWay = GetOutScreenEnemy();
 		}
 		else
@@ -138,13 +139,17 @@ void GameCamera::UpdateLookAT()
 		}
 		
 
-		endTargetPos_ = player_->GetWorldTransform()->position_;
+		if (getoutWay == GetOutEnemy::LookBack) {
+			moveDist.x += vec.x * 0.1f;
+		}
 	}
 	//ロックオンしている敵がいない時のカメラ
 	else
 	{
-		endTargetPos_ = player_->GetWorldTransform()->position_;
+		
 	}
+
+	endTargetPos_ = player_->GetWorldTransform()->position_;
 
 	camera_->target_ += (endTargetPos_ - camera_->target_) * cameraSpeed_;
 }
@@ -163,8 +168,6 @@ void GameCamera::UpdateLookTO()
 		q = DirectionToDirection({0,0,1}, cameraToPlayer);
 		
 		camera_->WT_.SetQuaternion(q);
-
-		endRot_ = {0,0,0};
 	}
 	//ロックオンしている敵がいない時のカメラ
 	else
@@ -172,14 +175,6 @@ void GameCamera::UpdateLookTO()
 		Vector3 cameraToPlayer =
 			player_->GetWorldTransform()->position_ - camera_->eye_;
 		cameraToPlayer.normalize();
-
-		Vector3 angle = {
-			acosf(cameraToPlayer.x),
-			acosf(cameraToPlayer.y),
-			acosf(cameraToPlayer.z),
-		};
-
-		endRot_ = angle;
 	}
 
 	camera_->rot_ += (endRot_ - camera_->rot_) * cameraSpeed_;
@@ -189,10 +184,28 @@ GetOutEnemy GameCamera::GetOutScreenEnemy()
 {
 	IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
 	Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-	Vector2 length = {520,250};
+	Vector2 length = {520,300};
 	Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+
+	Vector3 PToCDir = player_->GetWorldTransform()->position_ - camera_->eye_;
+	Vector3 EToCDir = enemy->GetWorldTransform()->position_ - camera_->eye_;
+	//プレイヤー->カメラの距離
+	float PToCLength = PToCDir.length();
+	//敵->カメラの距離
+	float EToCLength = EToCDir.length();
 	
 	putOnCamera_ = true;
+	//カメラが
+	if (PToCLength > EToCLength) {
+		if (screenPos.x < halfWindowSize.x - length.x ||
+			screenPos.x > halfWindowSize.x + length.x ||
+			screenPos.y < halfWindowSize.y - length.y ||
+			screenPos.y > halfWindowSize.y + length.y)
+		{
+			return GetOutEnemy::LookBack;
+		}
+	}
+
 	if (screenPos.x < halfWindowSize.x - length.x)
 	{
 		return GetOutEnemy::Left;
@@ -210,6 +223,9 @@ GetOutEnemy GameCamera::GetOutScreenEnemy()
 	{
 		return GetOutEnemy::Down;
 	}
+
+	
+
 	putOnCamera_ = false;
 	return GetOutEnemy::Middle;
 }
