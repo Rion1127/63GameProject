@@ -51,7 +51,8 @@ void CollisionManager::PlayerToFloor()
 
 void CollisionManager::EnemyToFloor()
 {
-	for (auto& enemy : *enemyManager_->GetEnemy()) {
+	for (auto& enemy : *enemyManager_->GetEnemy())
+	{
 		//床と敵
 		if (Sphere2PlaneCol(enemy->GetCol(), floor_->GetPlaneCol()))
 		{
@@ -83,35 +84,31 @@ void CollisionManager::EnemyLockOn()
 {
 	IEnemy* lockOnEnemy = nullptr;
 	std::vector<IEnemy*> lockOnEnemys_;
-	float dist = 1000.f;
-	
-	for (auto& enemy : *enemyManager_->GetEnemy()) {
+
+	for (auto& enemy : *enemyManager_->GetEnemy())
+	{
 		//ロックオン用の大きい当たり判定
 		enemy->SetIsLockOn(false);
 		Sphere serchCol = player_->GetCol();
 		serchCol.radius *= 15.f;
 		if (BallCollision(serchCol, enemy->GetCol()))
 		{
+			//ロックオン圏内にいる敵を追加していく
 			lockOnEnemys_.push_back(enemy.get());
-			Vector3 PtoEVec = serchCol.center - enemy->GetCol().center;
-			float length = PtoEVec.length();
-			//ベクトルの長さを測ってdistよりも小さければ
-			if (dist > length) {
-				dist = length;
-				
-				
-			}
 		}
 	}
+	//仮の大きい値を入れておく
 	float dist2d = 1000.f;
 	for (auto& enemy : lockOnEnemys_)
 	{
+		//スクリーン座標を取得して画面の中央に近い敵をロックオンする
 		Vector2 ScreenPos = TransformToVec2(*enemy->GetWorldTransform(), *Camera::scurrent_);
 
 		Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
 
 		Vector2 dist = halfWindowSize - ScreenPos;
 		float length = dist.length();
+		//比較して短かったら敵を代入する
 		if (dist2d > length)
 		{
 			dist2d = length;
@@ -119,7 +116,8 @@ void CollisionManager::EnemyLockOn()
 		}
 	}
 
-	if (lockOnEnemy != nullptr) {
+	if (lockOnEnemy != nullptr)
+	{
 		lockOnEnemy->SetIsLockOn(true);
 	}
 	enemyManager_->SetLockOnEnemy(lockOnEnemy);
@@ -130,7 +128,8 @@ void CollisionManager::EnemyLockOn()
 
 void CollisionManager::PlayerToEnemy()
 {
-	for (auto& enemy : *enemyManager_->GetEnemy()) {
+	for (auto& enemy : *enemyManager_->GetEnemy())
+	{
 		if (BallCollision(player_->GetCol(), enemy->GetCol()))
 		{
 			Vector3 PtoEVec = player_->GetCol().center - enemy->GetCol().center;
@@ -152,10 +151,14 @@ void CollisionManager::PlayerToEnemy()
 void CollisionManager::PlayerAttackToEnemy()
 {
 	IAttack* attackCol = player_->GetAttackManager()->GetNowAttack();
-	if (attackCol != nullptr) {
-		for (auto& enemy : *enemyManager_->GetEnemy()) {
-			for (auto& col : *attackCol->GetAttackCol()) {
-				if (enemy->GetDamageCoolTime().GetIsEnd()) {
+	if (attackCol != nullptr)
+	{
+		for (auto& enemy : *enemyManager_->GetEnemy())
+		{
+			for (auto& col : *attackCol->GetAttackCol())
+			{
+				if (enemy->GetDamageCoolTime().GetIsEnd())
+				{
 					if (BallCollision(col->col_, enemy->GetCol()))
 					{
 						//プレイヤーの反対方向にノックバックする
@@ -168,7 +171,7 @@ void CollisionManager::PlayerAttackToEnemy()
 						enemy->HitPlayerAttack(knockVec, col->damage, col->damageCoolTime);
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
-	
+
 						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 0.7f);
 						SoundManager::Play("HitSE", false, 0.2f);
 					}

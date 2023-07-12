@@ -53,9 +53,6 @@ void GameCamera::UpdateCameraPos()
 	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
 	if (player_->GetAttackManager()->GetLockOnEnemy())
 	{
-		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
-		Vector3 ptoEVec = enemy->GetWorldTransform()->position_ - player_->GetWorldTransform()->position_;
-		ptoEVec /= 2.f;
 
 		endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
 		endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
