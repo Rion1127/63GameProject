@@ -23,7 +23,7 @@ void EnemyDummy::MoveUpdate()
 		health_ += 5;
 	}
 
-	pos2D = TransformToVec2(*obj_->GetTransform(), *Camera::scurrent_);
+	pos2D = GetScreenPos(*obj_->GetTransform(), *Camera::scurrent_);
 	sprite_.SetPos(pos2D);
 	sprite_.SetScale({ 0.1f, 0.1f });
 	sprite_.Update();

@@ -6,11 +6,22 @@ struct DeadZoneValue {
 	int32_t x;
 	int32_t y;
 };
+
+enum class GetOutEnemy {
+	Right,
+	Left,
+	Up,
+	Down,
+	Middle
+};
+
 class GameCamera {
 private:
 	std::unique_ptr<Camera> camera_;
 	Player* player_;
 	Controller* controller_ = nullptr;
+
+	Vector3 moveDist{};	//球面座標
 
 	DeadZoneValue deadZone_;
 	//カメラの最終地点
@@ -25,6 +36,8 @@ public:
 	void UpdateCameraPos();
 	void UpdateLookAT();
 	void UpdateLookTO();
+private:
+	GetOutEnemy GetOutScreenEnemy();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 public:

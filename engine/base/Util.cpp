@@ -140,7 +140,7 @@ void MoveTo(const Vector3& goal, float speed, Vector3& value)
 		value + dir.SetLength(speed);
 }
 
-Vector2 TransformToVec2(const WorldTransform& WT, const Camera& camera)
+Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera)
 {
 	Vector2 result;
 

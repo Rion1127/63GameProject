@@ -73,4 +73,4 @@ std::wstring ToWideString(const std::string& str);
 std::string WStringToString(std::wstring oWString);
 
 
-Vector2 TransformToVec2(const WorldTransform& WT, const Camera& camera);
+Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera);

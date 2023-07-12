@@ -60,7 +60,7 @@ void EnemyManager::PreUpdate()
 		for (size_t i = 0; i < 2; i++)
 		{
 			lockOnSprite_[i]->SetInvisivle(false);
-			Vector2 pos = TransformToVec2(*lockOnEnemy_->GetWorldTransform(),*Camera::scurrent_);
+			Vector2 pos = GetScreenPos(*lockOnEnemy_->GetWorldTransform(),*Camera::scurrent_);
 			lockOnSprite_[i]->SetPos(pos);
 			lockOnSprite_[i]->Update();
 		}

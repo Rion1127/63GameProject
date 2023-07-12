@@ -40,8 +40,6 @@ void GameCamera::UpdateCameraPos()
 
 	float frontdist = 15;
 
-	static Vector3 moveDist{};	//球面座標
-
 	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
 		moveDist.x -= controller_->GetRStick(deadZone_.x).x * 0.0000015f;
@@ -105,6 +103,29 @@ void GameCamera::UpdateLookAT()
 	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
 	if (player_->GetAttackManager()->GetLockOnEnemy())
 	{
+		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
+		Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(),*Camera::scurrent_);
+		//ロックオンした敵が画面外に出そうだったら
+		if (GetOutScreenEnemy() == GetOutEnemy::Right)
+		{
+			moveDist.x += 0.01f;
+		}
+
+		if (GetOutScreenEnemy() == GetOutEnemy::Left)
+		{
+			moveDist.x -= 0.01f;
+		}
+
+		if (GetOutScreenEnemy() == GetOutEnemy::Up)
+		{
+			moveDist.y -= 0.01f;
+		}
+
+		if (GetOutScreenEnemy() == GetOutEnemy::Down)
+		{
+			moveDist.y += 0.01f;
+		}
+
 		endTargetPos_ = player_->GetWorldTransform()->position_;
 	}
 	//ロックオンしている敵がいない時のカメラ
@@ -150,4 +171,31 @@ void GameCamera::UpdateLookTO()
 	}
 
 	camera_->rot_ += (endRot_ - camera_->rot_) * cameraSpeed_;
+}
+
+GetOutEnemy GameCamera::GetOutScreenEnemy()
+{
+	IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
+	Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
+	Vector2 length = {320,120};
+	Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+	
+	if (screenPos.x < halfWindowSize.x - length.x)
+	{
+		return GetOutEnemy::Left;
+	}
+	if (screenPos.x > halfWindowSize.x + length.x)
+	{
+		return GetOutEnemy::Right;
+	}
+
+	if (screenPos.y < halfWindowSize.y - length.y)
+	{
+		return GetOutEnemy::Up;
+	}
+	if (screenPos.y > halfWindowSize.y + length.y)
+	{
+		return GetOutEnemy::Down;
+	}
+	return GetOutEnemy::Middle;
 }
