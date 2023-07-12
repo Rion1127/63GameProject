@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectX.h"
 #include "IPostEffect.h"
-class Noise :
+class Noise final:
 	public IPostEffect {
 private:
 	struct ConstBuffTime {

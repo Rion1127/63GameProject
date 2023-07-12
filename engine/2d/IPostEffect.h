@@ -49,7 +49,7 @@ private:
 	};
 public:
 	IPostEffect();
-	
+	virtual ~IPostEffect() {};
 	//XV
 	void PUpdate();
 

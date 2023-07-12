@@ -1,6 +1,7 @@
 #pragma once
 #include "Framework.h"
-class Game :public Framework
+class Game final :
+	public Framework
 {
 public:
 	~Game();

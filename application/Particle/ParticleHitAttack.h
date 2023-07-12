@@ -1,6 +1,6 @@
 #pragma once
 #include "IParticle.h"
-class ParticleHitAttack :
+class ParticleHitAttack final:
     public IParticle
 {
 public:

@@ -2,8 +2,8 @@
 #include "IEnemy.h"
 #include "Vector2.h"
 #include "Sprite.h"
-class EnemyDummy :
-    public IEnemy
+class EnemyDummy final :
+    public IEnemy 
 {
 private:
     Vector2 pos2D;

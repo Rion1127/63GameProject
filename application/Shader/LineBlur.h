@@ -1,7 +1,7 @@
 #pragma once
 #include "IPostEffect.h"
 
-class LineBlur :
+class LineBlur final:
     public IPostEffect
 {
 private:

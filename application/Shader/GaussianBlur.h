@@ -2,7 +2,7 @@
 #include "DirectX.h"
 #include "IPostEffect.h"
 
-class GaussianBlur :
+class GaussianBlur final :
 	public IPostEffect {
 private:
 	void TransferBuff() override {};
@@ -11,7 +11,7 @@ public:
 	void PreDraw();
 };
 
-class RadialBlur :
+class RadialBlur final :
 	public IPostEffect {
 private:
 	void TransferBuff() override {};

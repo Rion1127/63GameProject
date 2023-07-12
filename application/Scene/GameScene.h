@@ -21,7 +21,7 @@
 #include "CollisionManager.h"
 #include "EnemyManager.h"
 
-class GameScene :
+class GameScene final:
 	public EmptyScene
 {
 private:

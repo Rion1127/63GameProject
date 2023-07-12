@@ -12,7 +12,7 @@
 #include "Object3d.h"
 #include "RRandom.h"
 
-class DebugScene :
+class DebugScene final:
     public EmptyScene
 {
 private:

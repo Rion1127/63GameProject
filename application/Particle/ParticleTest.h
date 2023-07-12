@@ -1,6 +1,6 @@
 #pragma once
 #include "IParticle.h"
-class ParticleTest :
+class ParticleTest final:
     public IParticle
 {
 public:

@@ -1,6 +1,6 @@
 #pragma once
 #include "IEnemy.h"
-class EnemyAirDummy :
+class EnemyAirDummy final :
     public IEnemy
 {
 private:

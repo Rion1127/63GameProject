@@ -16,7 +16,7 @@
 #include "AssimpLoader.h"
 
 #include "AssimpObject3D.h"
-class ParticleScene :
+class ParticleScene final:
 	public EmptyScene
 {
 public:

@@ -10,7 +10,7 @@
 #include "IActor.h"
 
 
-class Player :
+class Player final:
 	public IActor
 {
 private:

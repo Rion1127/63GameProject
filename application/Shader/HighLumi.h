@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IPostEffect.h"
-class HighLumi :
+class HighLumi final:
 	public IPostEffect {
 private:
 	void TransferBuff() override {};
