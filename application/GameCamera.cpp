@@ -12,6 +12,7 @@ GameCamera::GameCamera()
 	};
 
 	cameraSpeed_ = 0.15f;
+	camera_->WT_.SetRotType(RotType::Quaternion);
 }
 
 void GameCamera::Update(CameraMode cameraMode)
@@ -92,6 +93,10 @@ void GameCamera::UpdateCameraPos()
 
 	ImGui::SliderFloat("moveDist.x", &moveDist.x, 0.0f, 2000.0f, "x = %.3f");
 	ImGui::SliderFloat("moveDist.y", &moveDist.y, 0.0f, 2000.0f, "y = %.3f");
+	ImGui::SliderFloat("q.x", &camera_->WT_.quaternion_.x, -1.0f, 1.0f, "x = %.3f");
+	ImGui::SliderFloat("q.y", &camera_->WT_.quaternion_.y, -1.0f, 1.0f, "y = %.3f");
+	ImGui::SliderFloat("q.z", &camera_->WT_.quaternion_.z, -1.0f, 1.0f, "z = %.3f");
+	ImGui::SliderFloat("q.w", &camera_->WT_.quaternion_.w, -1.0f, 5.0f, "w = %.3f");
 
 	/*ImGui::SliderFloat("sideVec.x", &sideVec.x, 0.0f, 2000.0f, "x = %.3f");
 	ImGui::SliderFloat("sideVec.y", &sideVec.y, 0.0f, 2000.0f, "y = %.3f");*/
@@ -124,8 +129,11 @@ void GameCamera::UpdateLookTO()
 			player_->GetWorldTransform()->position_ - camera_->eye_;
 		cameraToPlayer.normalize();
 
+		Quaternion q;
 
+		q = DirectionToDirection({0,0,1}, cameraToPlayer);
 		
+		camera_->WT_.SetQuaternion(q);
 
 		endRot_ = {0,0,0};
 	}

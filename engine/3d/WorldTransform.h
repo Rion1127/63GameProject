@@ -31,6 +31,7 @@ public:
 	void SetRotation(Vector3 rot) { rotation_ = rot; }
 	void SetPosition(Vector3 pos) { position_ = pos; }
 	void SetQuaternion(Quaternion q) { quaternion_ = q; }
+	void SetRotType(RotType type) { rotType = type; }
 
 	void AddScale(float x, float y, float z);
 	void AddRotation(float x, float y, float z);
@@ -61,8 +62,8 @@ public:
 	Vector3 position_ = { 0,0,0 };
 	//ワールド変換行列
 	Matrix4 matWorld_;
-private:
 	RotType rotType;
 	//クォータニオン
 	Quaternion quaternion_ = { 0,1,0,0 };
+private:
 };

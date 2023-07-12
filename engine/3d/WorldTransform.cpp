@@ -52,6 +52,7 @@ void WorldTransform::Update(uint32_t isBillboard)
 	else
 	{
 		matRot = ConvertRotationMat(quaternion_);
+		//matRot = quaternion_.UpdateMatrix();
 	}
 	matTrans = ConvertTranslationMat(position_);
 

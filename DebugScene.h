@@ -12,40 +12,19 @@
 #include "Object3d.h"
 #include "RRandom.h"
 
-#include "AssimpObject3D.h"
-#include "AssimpLoader.h"
-
-#include "Floor.h"
-#include "Player.h"
-#include "GameCamera.h"
-#include "CollisionManager.h"
-#include "EnemyManager.h"
-
-class GameScene :
-	public EmptyScene
+class DebugScene :
+    public EmptyScene
 {
 private:
 	Controller* controller_ = nullptr;
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
-	
-	GameCamera gameCamera_;
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
-	//è∞
-	std::unique_ptr<Floor> floor_;
-	//ÉvÉåÉCÉÑÅ[
-	std::unique_ptr<Player> player_;
-
-	std::unique_ptr<CollisionManager> colManager_;
-	std::unique_ptr<EnemyManager> enemyManager_;
-
-	std::unique_ptr<AssimpModel> testModel_;
-
-	AssimpObject3D assimpObj_;
+	Object3d obj_;
 public:
-	~GameScene();
+	~DebugScene();
 
 	void Ini()override;
 

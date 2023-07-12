@@ -66,11 +66,13 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 	Quaternion result{};
 	//this‚Æq1‚Ì“àÏ
 	float dot = this->w * q1.w + this->x * q1.x + this->y * q1.y + this->z * q1.z;
-	if (dot < 0) {
+	if (dot < 0)
+	{
 		result = { -this->x,-this->y,-this->z,-this->w };	//‚à‚¤•Ğ•û‚Ì‰ñ“]‚ğ—˜—p‚·‚é
 		dot = -dot;		//“àÏ‚à”½“]
 	}
-	else {
+	else
+	{
 		//‚È‚·Šp‚ğ‹‚ß‚é
 		float theta = acos(dot);
 		float sinPh = sin(theta);
@@ -78,10 +80,11 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 		float sinTheta1subT = (float)sin(theta * (1.0 - t));
 		float sinThetaMulT = sin(theta * t);
 
-		if (dot < 0.0 && theta > 3.1415f / 2.0) {
+		if (dot < 0.0 && theta > 3.1415f / 2.0)
+		{
 			//theta‚Æsin‚ğg‚Á‚Ä•âŠÔŒW”‚ğ‹‚ß‚é
 			dot = -this->w * q1.w - this->x * q1.x - this->y * q1.y - this->z * q1.z;
-			
+
 			float s1 = sinTheta1subT / sinPh;
 			float s2 = sinThetaMulT / sinPh;
 			//‚»‚ê‚¼‚ê‚Ì•âŠÔŒW”‚ğ—˜—p‚µ‚Ä•ÛŠÇŒã‚Ì
@@ -90,7 +93,8 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 			result.z = this->z * s1 - q1.z * s2;
 			result.w = this->w * s1 - q1.w * s2;
 		}
-		else {
+		else
+		{
 			float s1, s2;
 			s1 = sinTheta1subT / sinPh;
 			s2 = sinThetaMulT / sinPh;
@@ -101,7 +105,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 			result.w = this->w * s1 + q1.w * s2;
 		}
 	}
-	
+
 	return result;
 }
 //”CˆÓ²‰ñ“]‚ğ•\‚·Quaternion‚Ì¶¬
@@ -188,16 +192,19 @@ Matrix4 ConvertRotationMat(const Quaternion q)
 	Matrix4 result;
 	result.UnitMatrix();
 
-	float xx = q.x * q.x;
-	float yy = q.y * q.y;
-	float zz = q.z * q.z;
-	float ww = q.w * q.w;
-	float xy = q.x * q.y * 2.0f;
-	float xz = q.x * q.z * 2.0f;
-	float yz = q.y * q.z * 2.0f;
-	float wx = q.w * q.x * 2.0f;
-	float wy = q.w * q.y * 2.0f;
-	float wz = q.w * q.z * 2.0f;
+	Quaternion q_ = q;
+	q_ = q_.Normalize();
+
+	float xx = q_.x * q_.x;
+	float yy = q_.y * q_.y;
+	float zz = q_.z * q_.z;
+	float ww = q_.w * q_.w;
+	float xy = q_.x * q_.y * 2.0f;
+	float xz = q_.x * q_.z * 2.0f;
+	float yz = q_.y * q_.z * 2.0f;
+	float wx = q_.w * q_.x * 2.0f;
+	float wy = q_.w * q_.y * 2.0f;
+	float wz = q_.w * q_.z * 2.0f;
 
 	result =
 	{

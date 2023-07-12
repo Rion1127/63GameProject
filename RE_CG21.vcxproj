@@ -44,6 +44,7 @@
     <ClCompile Include="application\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Shader\Noise.cpp" />
+    <ClCompile Include="DebugScene.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="application\Shader\HighLumi.h" />
     <ClInclude Include="application\Shader\LineBlur.h" />
     <ClInclude Include="application\Shader\Noise.h" />
+    <ClInclude Include="DebugScene.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />

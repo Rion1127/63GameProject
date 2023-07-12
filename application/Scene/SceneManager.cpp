@@ -4,12 +4,13 @@
 #include "Texture.h"
 #include "Easing.h"
 #include "ParticleScene.h"
+#include "DebugScene.h"
 
 
 void SceneManager::Ini()
 {
 	//ビルド開始時のシーン
-	Transition<GameScene>();
+	Transition<DebugScene>();
 	
 
 	
