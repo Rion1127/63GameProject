@@ -86,7 +86,7 @@ void GameScene::CameraUpdate()
 	}
 	if (isDebug)
 	{
-		gameCamera_.Update(CameraMode::LookTo);
+		gameCamera_.Update(CameraMode::LookAT);
 		Camera::scurrent_ = gameCamera_.GetCamera();
 	}
 	else
@@ -95,7 +95,7 @@ void GameScene::CameraUpdate()
 		debugCamera_.Update();
 		Camera::scurrent_ = debugCamera_.GetCamera();
 	}
-	Camera::scurrent_->Update(CameraMode::LookTo);
+	Camera::scurrent_->Update(CameraMode::LookAT);
 
 	
 }

@@ -12,7 +12,6 @@ GameCamera::GameCamera()
 	};
 
 	cameraSpeed_ = 0.15f;
-	camera_->WT_.SetRotType(RotType::Quaternion);
 }
 
 void GameCamera::Update(CameraMode cameraMode)

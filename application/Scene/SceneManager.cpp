@@ -10,7 +10,7 @@
 void SceneManager::Ini()
 {
 	//ビルド開始時のシーン
-	Transition<DebugScene>();
+	Transition<GameScene>();
 	
 
 	

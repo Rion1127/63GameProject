@@ -82,7 +82,9 @@ void CollisionManager::EnemyToFloor()
 void CollisionManager::EnemyLockOn()
 {
 	IEnemy* lockOnEnemy = nullptr;
+	std::vector<IEnemy*> lockOnEnemys_;
 	float dist = 1000.f;
+	
 	for (auto& enemy : *enemyManager_->GetEnemy()) {
 		//ロックオン用の大きい当たり判定
 		enemy->SetIsLockOn(false);
@@ -90,13 +92,30 @@ void CollisionManager::EnemyLockOn()
 		serchCol.radius *= 15.f;
 		if (BallCollision(serchCol, enemy->GetCol()))
 		{
+			lockOnEnemys_.push_back(enemy.get());
 			Vector3 PtoEVec = serchCol.center - enemy->GetCol().center;
 			float length = PtoEVec.length();
 			//ベクトルの長さを測ってdistよりも小さければ
 			if (dist > length) {
 				dist = length;
-				lockOnEnemy = enemy.get();
+				
+				
 			}
+		}
+	}
+	float dist2d = 1000.f;
+	for (auto& enemy : lockOnEnemys_)
+	{
+		Vector2 ScreenPos = TransformToVec2(*enemy->GetWorldTransform(), *Camera::scurrent_);
+
+		Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+
+		Vector2 dist = halfWindowSize - ScreenPos;
+		float length = dist.length();
+		if (dist2d > length)
+		{
+			dist2d = length;
+			lockOnEnemy = enemy;
 		}
 	}
 
