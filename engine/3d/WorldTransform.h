@@ -14,6 +14,11 @@ struct ConstBufferDataTransform {
 	Vector3 cameraPos;
 };
 
+enum class RotType {
+	Euler,
+	Quaternion
+};
+
 class WorldTransform
 {
 public:
@@ -25,6 +30,7 @@ public:
 	void SetScale(Vector3 scale) { scale_ = scale; }
 	void SetRotation(Vector3 rot) { rotation_ = rot; }
 	void SetPosition(Vector3 pos) { position_ = pos; }
+	void SetQuaternion(Quaternion q) { quaternion_ = q; }
 
 	void AddScale(float x, float y, float z);
 	void AddRotation(float x, float y, float z);
@@ -56,7 +62,7 @@ public:
 	//ワールド変換行列
 	Matrix4 matWorld_;
 private:
-
+	RotType rotType;
 	//クォータニオン
 	Quaternion quaternion_ = { 0,1,0,0 };
 };

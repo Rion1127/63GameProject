@@ -11,6 +11,8 @@ WorldTransform::WorldTransform()
 	rotation_ = { 0,0,0 };
 
 	constBuffTransform_ = CreateBuff(constMapTransform_);
+
+	rotType = RotType::Euler;
 }
 
 void WorldTransform::AddScale(float x, float y, float z)
@@ -41,16 +43,17 @@ void WorldTransform::Update(uint32_t isBillboard)
 	//スケール、回転、平行移動行列の計算
 	matScale = ConvertScalingMat(scale_);
 	matRot.UnitMatrix();
-	matRot *= ConvertRotationZAxisMat(rotation_.z);
-	matRot *= ConvertRotationXAxisMat(rotation_.x);
-	matRot *= ConvertRotationYAxisMat(rotation_.y);
+	if (rotType == RotType::Euler)
+	{
+		matRot *= ConvertRotationZAxisMat(rotation_.z);
+		matRot *= ConvertRotationXAxisMat(rotation_.x);
+		matRot *= ConvertRotationYAxisMat(rotation_.y);
+	}
+	else
+	{
+		matRot = ConvertRotationMat(quaternion_);
+	}
 	matTrans = ConvertTranslationMat(position_);
-
-
-	//クォータニオン
-	/*q.w += 0.005f;
-
-	matRot = q.UpdateMatrix();*/
 
 	//ワールド行列の合成
 	matWorld_.UnitMatrix();//変形をリセット

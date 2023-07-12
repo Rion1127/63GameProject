@@ -125,9 +125,9 @@ void GameCamera::UpdateLookTO()
 		cameraToPlayer.normalize();
 
 
-		Vector3 angle = getEulerAnglesFromVector(cameraToPlayer);
+		
 
-		endRot_ = angle;
+		endRot_ = {0,0,0};
 	}
 	//ロックオンしている敵がいない時のカメラ
 	else
