@@ -12,6 +12,8 @@ private:
 
 	IEnemy* lockOnEnemy_;	//ƒƒbƒNƒIƒ“‚µ‚Ä‚­‚ê‚é“G
 	Timer lockOnobjTimer_;
+	float lockOnobjRot;
+	float addRot;
 	EnemyHPGauge hpGauge_;
 	std::vector<std::unique_ptr<Sprite>> lockOnSprite_;
 public:

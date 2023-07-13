@@ -99,19 +99,31 @@ void EnemyManager::LockOnSpriteUpdate()
 	bool isHardLockOn = lockOnEnemy_->GetIsHardLockOn();
 	lockOnobjTimer_.AddTime(1);
 
-	float rot = (float)lockOnobjTimer_.GetTimer();
-	lockOnSprite_[0]->SetRot(Radian(-rot));
-	lockOnSprite_[1]->SetRot(Radian(rot));
+	lockOnobjRot++;
+	
+	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
+	{
+		addRot = 10.f;
+	}
+	addRot -= 0.2f;
+	addRot = Max(0.f, addRot);
+
+	lockOnobjRot += addRot;
+
+	lockOnSprite_[0]->SetRot(Radian(-lockOnobjRot));
+	lockOnSprite_[1]->SetRot(Radian(lockOnobjRot));
 	for (size_t i = 0; i < 2; i++)
 	{
 		if (isHardLockOn)
 		{
 			lockOnSprite_[i]->SetInvisivle(false);
+			lockOnSprite_[i]->SetColor(Color(40, 30, 240, 255));
 		}
 		else
 		{
 			lockOnSprite_[0]->SetInvisivle(true);
 			lockOnSprite_[1]->SetInvisivle(false);
+			lockOnSprite_[i]->SetColor(Color(240,175,30,255));
 		}
 		
 		Vector2 pos = GetScreenPos(*lockOnEnemy_->GetWorldTransform(), *Camera::scurrent_);

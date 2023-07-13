@@ -27,9 +27,11 @@ EnemyHPGauge::EnemyHPGauge()
 	scale_ = { 1.0f,0.3f };
 
 	hpBar_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
-	hpBar_->SetColor({ 0.2f,0.8f,0.2f,1.f });
-	hpBarBack_->SetPos(pos_);
+	hpBar_->SetColor({ 50.f,205.f,50.f,255.f });
 	hpBar_->SetScale(scale_);
+
+	hpBarBack_->SetColor({ 255.f,255.f,255.f,255.f });
+	hpBarBack_->SetPos(pos_);
 	hpBarBack_->SetScale(scale_);
 }
 

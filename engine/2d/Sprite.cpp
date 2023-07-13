@@ -263,7 +263,7 @@ void Sprite::Update()
 	matWorld_ *= ConvertTranslationMat({ pos_.x, pos_.y, 0.0f });
 
 	// 定数バッファにデータ転送
-	constMapMaterial_->color = color_;
+	constMapMaterial_->color = color_ / 255.f;
 	constMapTransform_->mat = matWorld_ * matProjection_; // 行列の合成
 
 #pragma endregion

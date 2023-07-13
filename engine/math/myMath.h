@@ -102,8 +102,8 @@ template <class T>
 inline T Max(T value, T max)
 {
 	// 値が最大値を上回っていたら最大値を返す
-	if (value >= max) return max;
-	else return value;
+	if (value >= max) return value;
+	else return max;
 }
 template <class T>
 inline T Min(T value, T min)
