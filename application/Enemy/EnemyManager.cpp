@@ -22,7 +22,6 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));*/
 	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
 
-	lockOnSprite_.resize(2);
 	for (size_t i = 0; i < 2; i++)
 	{
 		lockOnSprite_[i] = std::move(std::make_unique<Sprite>());

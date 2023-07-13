@@ -1,5 +1,6 @@
 #include "EnemyShadow.h"
 #include "mInput.h"
+#include "Player.h"
 
 
 EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
@@ -15,6 +16,9 @@ EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 
 	state_ = State::Idle;
 	actionTimer_.SetLimitTime(240);
+
+	followLength = 5.f;
+	moveSpeed = 0.1f;
 }
 
 void EnemyShadow::MoveUpdate()
@@ -27,13 +31,23 @@ void EnemyShadow::MoveUpdate()
 	void (EnemyShadow:: *Action[]) () =
 	{
 		&EnemyShadow::Idle,
-		&EnemyShadow::Move,
+		&EnemyShadow::Following,
+		&EnemyShadow::Wander,
 		&EnemyShadow::HideMove,
 		&EnemyShadow::Attack,
-		&EnemyShadow::JumpAttack
+		&EnemyShadow::JumpAttack,
+		&EnemyShadow::KnockBack
 	};
+
+	if (isKnock_)
+	{
+		state_ = State::KnockBack;
+	}
+
+
 	//ŽÀs
 	(this->*Action[(int)state_])();
+	//(this->*Action[(int)State::Following])();
 
 }
 
@@ -44,10 +58,37 @@ void EnemyShadow::DrawSprite()
 
 void EnemyShadow::Idle()
 {
-	addVec_.x += 0.001f;
+	actionTimer_.SetLimitTime(120);
+
+	actionTimer_.AddTime(1);
+
+	if (actionTimer_.GetIsEnd())
+	{
+		state_ = State::Following;
+		actionTimer_.Reset();
+	}
 }
 
-void EnemyShadow::Move()
+void EnemyShadow::Following()
+{
+	actionTimer_.SetLimitTime(180);
+	actionTimer_.AddTime(1);
+
+	Vector3& pos = splayer_->GetWorldTransform()->position_;
+	Vector3 EtoPVec = pos - obj_->WT_.position_;
+	EtoPVec.y = 0;
+	float length = EtoPVec.length();
+	
+	addVec_ = EtoPVec.normalize() * moveSpeed;
+
+	if (length < followLength || actionTimer_.GetIsEnd())
+	{
+		state_ = State::Idle;
+		actionTimer_.Reset();
+	}
+}
+
+void EnemyShadow::Wander()
 {
 	addVec_.x += 0.05f;
 }
@@ -65,4 +106,13 @@ void EnemyShadow::Attack()
 void EnemyShadow::JumpAttack()
 {
 	addVec_.z -= 0.001f;
+}
+
+void EnemyShadow::KnockBack()
+{
+	obj_->GetTransform()->scale_ = { 0.5f,0.5f, 0.5f };
+}
+
+void EnemyShadow::PriorityUpdate()
+{
 }

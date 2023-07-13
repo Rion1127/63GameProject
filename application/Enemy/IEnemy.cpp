@@ -1,4 +1,7 @@
 #include "IEnemy.h"
+#include "Player.h"
+
+Player* IEnemy::splayer_ = nullptr;
 
 IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 {
@@ -9,6 +12,7 @@ IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 	isDead_ = false;
 	isSoftLockOn_ = false;
 	isHardLockOn_ = false;
+	isKnock_ = false;
 }
 
 void IEnemy::PreUpdate()

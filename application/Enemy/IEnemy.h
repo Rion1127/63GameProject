@@ -10,10 +10,12 @@ enum class EnemyType {
 	Air
 };
 
+class Player;
+
 class IEnemy : public IActor
 {
 protected:
-	static IActor* splayer_;
+	static Player* splayer_;
 
 	EnemyType enemyType_;
 	//ƒ‚ƒfƒ‹
@@ -26,6 +28,7 @@ protected:
 	bool isHardLockOn_;
 	bool isGravityImpact_;	//d—Í‚ğ—LŒø‚É‚·‚é
 	bool isDead_;
+	bool isKnock_;
 	Timer damegeCoolTime_;
 	//‘Ì—Í
 	int32_t health_;
@@ -33,9 +36,10 @@ protected:
 public:
 	IEnemy(EnemyType type,bool isGravityImpact, int32_t health);
 	virtual ~IEnemy() {};
-	static void SetPlayer(IActor* player) { splayer_ = player; }
+	static void SetPlayer(Player* player) { splayer_ = player; }
 	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
 	void SetHardIsLockOn(bool flag) { isHardLockOn_ = flag; }
+	void SetIsNock(bool flag) { isKnock_ = flag; }
 
 	void PreUpdate();
 	void PostUpdate();

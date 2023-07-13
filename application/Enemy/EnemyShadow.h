@@ -8,26 +8,33 @@ class EnemyShadow :
 private:
     enum class State {
         Idle,
-        Move,
+        Following,
+        Wander,
         HideMove,
         Attack,
         JumpAttack,
+        KnockBack,
         None
     };
 private:
     State state_;
     Timer actionTimer_;
+    std::map<int32_t,State> priority_;
+    float followLength;
+    float moveSpeed;
 public:
     EnemyShadow(Vector3 pos);
 private:
     void MoveUpdate() override;
     void DrawSprite() override;
 
-    void Idle(void);
-    void Move();
+    void Idle();
+    void Following();
+    void Wander();
     void HideMove();
     void Attack();
     void JumpAttack();
+    void KnockBack();
 
-   
+    void PriorityUpdate();
 };

@@ -27,6 +27,7 @@ void GameScene::Ini()
 	player_ = std::move(std::make_unique<Player>());
 	gameCamera_.SetPlayer(player_.get());
 
+	IEnemy::SetPlayer(player_.get());
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(floor_.get());
 	colManager_->SetEnemys(enemyManager_.get());

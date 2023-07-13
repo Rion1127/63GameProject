@@ -2,6 +2,7 @@
 #include "IEnemy.h"
 #include <vector>
 #include <list>
+#include <array>
 #include "Timer.h"
 #include "EnemyHPGauge.h"
 #include "mInput.h"
@@ -15,7 +16,7 @@ private:
 	float lockOnobjRot;
 	float addRot;
 	EnemyHPGauge hpGauge_;
-	std::vector<std::unique_ptr<Sprite>> lockOnSprite_;
+	std::array<std::unique_ptr<Sprite>,2> lockOnSprite_;
 public:
 	EnemyManager();
 	void PreUpdate();
