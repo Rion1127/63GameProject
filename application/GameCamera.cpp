@@ -133,7 +133,7 @@ void GameCamera::UpdateLookAT()
 
 			if (getOutWay == GetOutEnemy::LookBack)
 			{
-				addVec.x = EtoMidvec.x * 0.1f;
+				addVec.x = EtoMidvec.x * 0.2f;
 			}
 
 			moveDist += addVec;
