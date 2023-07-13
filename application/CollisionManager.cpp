@@ -88,7 +88,7 @@ void CollisionManager::EnemyLockOn()
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
 		//ロックオン用の大きい当たり判定
-		enemy->SetIsLockOn(false);
+		enemy->SetSoftIsLockOn(false);
 		Sphere serchCol = player_->GetCol();
 		serchCol.radius *= 20.f;
 		if (BallCollision(serchCol, enemy->GetCol()))
@@ -118,12 +118,22 @@ void CollisionManager::EnemyLockOn()
 
 	if (lockOnEnemy != nullptr)
 	{
-		lockOnEnemy->SetIsLockOn(true);
-	}
-	enemyManager_->SetLockOnEnemy(lockOnEnemy);
-	//AttackManagerへlockOnEnemyのアドレスを渡す
-	player_->SetLockOnEnemy(lockOnEnemy);
+		//自分でロックオンする敵を設定
+		if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
+		{
+			//ロックオンしていれば解除、していなければロックオン
+			bool hardLockOn = (lockOnEnemy->GetIsHardLockOn() == true) ?
+				false : true;
+			lockOnEnemy->SetHardIsLockOn(hardLockOn);
 
+		}
+		//ハードロックしていたらソフトロックは解除
+		bool softLockOn = (lockOnEnemy->GetIsHardLockOn() == true) ?
+			false : true;
+		lockOnEnemy->SetSoftIsLockOn(softLockOn);
+
+	}
+	player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy);
 }
 
 void CollisionManager::PlayerToEnemy()

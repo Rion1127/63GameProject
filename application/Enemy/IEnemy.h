@@ -22,7 +22,8 @@ protected:
 	Vector3 knockVec_;
 	Vector3 knockResist_;
 
-	bool isLockOn_;
+	bool isSoftLockOn_;
+	bool isHardLockOn_;
 	bool isGravityImpact_;	//èdóÕÇóLå¯Ç…Ç∑ÇÈ
 	bool isDead_;
 	Timer damegeCoolTime_;
@@ -33,7 +34,8 @@ public:
 	IEnemy(EnemyType type,bool isGravityImpact, int32_t health);
 	virtual ~IEnemy() {};
 	static void SetPlayer(IActor* player) { splayer_ = player; }
-	void SetIsLockOn(bool flag) { isLockOn_ = flag; }
+	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
+	void SetHardIsLockOn(bool flag) { isHardLockOn_ = flag; }
 
 	void PreUpdate();
 	void PostUpdate();
@@ -45,7 +47,8 @@ public:
 	virtual void DrawSprite() = 0;
 public:
 	Gravity GetGravity() { return gravity_; }
-	bool GetIsLockOn() { return isLockOn_; }
+	bool GetIsSoftLockOn() { return isSoftLockOn_; }
+	bool GetIsHardLockOn() { return isHardLockOn_; }
 	bool GetIsDead() { return isDead_; }
 	Timer GetDamageCoolTime() { return damegeCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }

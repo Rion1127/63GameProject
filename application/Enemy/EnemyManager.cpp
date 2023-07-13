@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "EnemyDummy.h"
 #include "EnemyAirDummy.h"
+
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
@@ -33,6 +34,7 @@ EnemyManager::EnemyManager()
 void EnemyManager::PreUpdate()
 {
 	lockOnEnemy_ = nullptr;
+	
 	std::list<std::unique_ptr<IEnemy>>::iterator itr;
 	for (itr = enemys_.begin(); itr != enemys_.end();)
 	{
@@ -44,29 +46,21 @@ void EnemyManager::PreUpdate()
 		}
 		itr->get()->PreUpdate();
 		//ロックオンしている敵のアドレスを代入
-		if (itr->get()->GetIsLockOn()) {
+		if (itr->get()->GetIsSoftLockOn() ||
+			itr->get()->GetIsHardLockOn()) {
 			lockOnEnemy_ = itr->get();
 		}
-		//
+
 		itr++;
 	}
-	//ロックオンオブジェ
+	
 	if (lockOnEnemy_ != nullptr) {
-		lockOnobjTimer_.AddTime(1);
-		
-
-		lockOnSprite_[0]->SetRot(Radian((float)-lockOnobjTimer_.GetTimer()));
-		lockOnSprite_[1]->SetRot(Radian((float)lockOnobjTimer_.GetTimer()));
-		for (size_t i = 0; i < 2; i++)
-		{
-			lockOnSprite_[i]->SetInvisivle(false);
-			Vector2 pos = GetScreenPos(*lockOnEnemy_->GetWorldTransform(),*Camera::scurrent_);
-			lockOnSprite_[i]->SetPos(pos);
-			lockOnSprite_[i]->Update();
-		}
+		//ロックオンスプライト更新
+		LockOnSpriteUpdate();
 	}
 	else
 	{
+		//ロックオンできる敵がいなければUIを消す
 		for (size_t i = 0; i < 2; i++)
 		{
 			lockOnSprite_[i]->SetInvisivle(true);
@@ -82,11 +76,6 @@ void EnemyManager::PostUpdate()
 	for (auto& enemy : enemys_) {
 		enemy->PostUpdate();
 	}
-
-	//デスフラグの立った球を削除
-	/*enemys_.remove_if([](std::unique_ptr<IEnemy>& bullet) {
-		return bullet->GetIsDead();
-		});*/
 }
 
 void EnemyManager::Draw()
@@ -103,4 +92,30 @@ void EnemyManager::SpriteDraw()
 		lockOnSprite_[i]->Draw();
 	}
 	hpGauge_.Draw();
+}
+
+void EnemyManager::LockOnSpriteUpdate()
+{
+	bool isHardLockOn = lockOnEnemy_->GetIsHardLockOn();
+	lockOnobjTimer_.AddTime(1);
+
+	float rot = (float)lockOnobjTimer_.GetTimer();
+	lockOnSprite_[0]->SetRot(Radian(-rot));
+	lockOnSprite_[1]->SetRot(Radian(rot));
+	for (size_t i = 0; i < 2; i++)
+	{
+		if (isHardLockOn)
+		{
+			lockOnSprite_[i]->SetInvisivle(false);
+		}
+		else
+		{
+			lockOnSprite_[0]->SetInvisivle(true);
+			lockOnSprite_[1]->SetInvisivle(false);
+		}
+		
+		Vector2 pos = GetScreenPos(*lockOnEnemy_->GetWorldTransform(), *Camera::scurrent_);
+		lockOnSprite_[i]->SetPos(pos);
+		lockOnSprite_[i]->Update();
+	}
 }

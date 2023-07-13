@@ -7,6 +7,8 @@ IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 	health_ = health;
 	maxHealth_ = health;
 	isDead_ = false;
+	isSoftLockOn_ = false;
+	isHardLockOn_ = false;
 }
 
 void IEnemy::PreUpdate()

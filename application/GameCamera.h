@@ -7,6 +7,11 @@ struct DeadZoneValue {
 	int32_t y;
 };
 
+struct CameraSpeed {
+	float x;
+	float y;
+};
+
 enum class GetOutEnemy {
 	Right,
 	Left,
@@ -25,6 +30,8 @@ private:
 	Vector3 moveDist{};	//球面座標
 
 	DeadZoneValue deadZone_;
+	CameraSpeed transSpeed_;
+	CameraSpeed lockOnCameraspeed_;
 	//カメラの最終地点
 	Vector3 endEyePos_;
 	Vector3 endTargetPos_;
@@ -32,7 +39,8 @@ private:
 
 	float cameraSpeed_;
 	bool putOnCamera_;	//ロックオン時カメラを戻すフラグ
-	GetOutEnemy getoutWay;
+	GetOutEnemy getOutWay;
+
 public:
 	GameCamera();
 	void Update(CameraMode cameraMode);
@@ -40,7 +48,7 @@ public:
 	void UpdateLookAT();
 	void UpdateLookTO();
 private:
-	GetOutEnemy GetOutScreenEnemy();
+	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos,const Vector2& winSize,IEnemy* enemy);
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 public:
