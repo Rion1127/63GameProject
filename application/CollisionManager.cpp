@@ -84,9 +84,20 @@ void CollisionManager::EnemyLockOn()
 {
 	IEnemy* lockOnEnemy = nullptr;
 	std::vector<IEnemy*> lockOnEnemys_;
+	bool isHardLockOn = false;
 
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
+		if (enemy->GetIsSoftLockOn() == false)
+		{
+			enemy->SetHardIsLockOn(false);
+		}
+		//一体でもハードロックをしていたらフラグをtrueにする
+		if (enemy->GetIsHardLockOn())
+		{
+			isHardLockOn = true;
+			break;
+		}
 		//ロックオン用の大きい当たり判定
 		enemy->SetSoftIsLockOn(false);
 		Sphere serchCol = player_->GetCol();
@@ -97,43 +108,48 @@ void CollisionManager::EnemyLockOn()
 			lockOnEnemys_.push_back(enemy.get());
 		}
 	}
-	//仮の大きい値を入れておく
-	float dist2d = 5000.f;
-	for (auto& enemy : lockOnEnemys_)
+	if (isHardLockOn == false)
 	{
-		//スクリーン座標を取得して画面の中央に近い敵をロックオンする
-		Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-
-		Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
-
-		Vector2 dist = halfWindowSize - ScreenPos;
-		float length = dist.length();
-		//比較して短かったら敵を代入する
-		if (dist2d > length)
+		//仮の大きい値を入れておく
+		float dist2d = 5000.f;
+		for (auto& enemy : lockOnEnemys_)
 		{
-			dist2d = length;
-			lockOnEnemy = enemy;
+			//スクリーン座標を取得して画面の中央に近い敵をロックオンする
+			Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
+
+			Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+
+			Vector2 dist = halfWindowSize - ScreenPos;
+			float length = dist.length();
+			//比較して短かったら敵を代入する
+			if (dist2d > length)
+			{
+				dist2d = length;
+				lockOnEnemy = enemy;
+			}
 		}
+
+		if (lockOnEnemy != nullptr)
+		{
+			lockOnEnemy->SetSoftIsLockOn(true);
+		}
+		player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy);
 	}
 
-	if (lockOnEnemy != nullptr)
+	if (enemyManager_->GetLockOnEnemy() != nullptr)
 	{
 		//自分でロックオンする敵を設定
 		if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 		{
+
 			//ロックオンしていれば解除、していなければロックオン
-			bool hardLockOn = (lockOnEnemy->GetIsHardLockOn() == true) ?
+			bool isLockOn = (enemyManager_->GetLockOnEnemy()->GetIsHardLockOn() == true) ?
 				false : true;
-			lockOnEnemy->SetHardIsLockOn(hardLockOn);
+			enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(isLockOn);
 
+			player_->GetAttackManager()->SetLockOnEnemy(enemyManager_->GetLockOnEnemy());
 		}
-		//ハードロックしていたらソフトロックは解除
-		bool softLockOn = (lockOnEnemy->GetIsHardLockOn() == true) ?
-			false : true;
-		lockOnEnemy->SetSoftIsLockOn(softLockOn);
-
 	}
-	player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy);
 }
 
 void CollisionManager::PlayerToEnemy()

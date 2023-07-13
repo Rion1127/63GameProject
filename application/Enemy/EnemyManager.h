@@ -26,6 +26,7 @@ private:
 	void LockOnSpriteUpdate();
 public:
 	std::list<std::unique_ptr<IEnemy>>* GetEnemy() { return &enemys_; };
+	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
 public:
 	
 public:
