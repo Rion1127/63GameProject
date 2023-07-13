@@ -16,6 +16,7 @@
     <ClCompile Include="application\Enemy\EnemyDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp" />
     <ClCompile Include="application\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="application\Enemy\EnemyShadow.cpp" />
     <ClCompile Include="application\Enemy\IEnemy.cpp" />
     <ClCompile Include="application\Floor.cpp" />
     <ClCompile Include="application\GameCamera.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="application\Enemy\EnemyDummy.h" />
     <ClInclude Include="application\Enemy\EnemyHPGauge.h" />
     <ClInclude Include="application\Enemy\EnemyManager.h" />
+    <ClInclude Include="application\Enemy\EnemyShadow.h" />
     <ClInclude Include="application\Enemy\IEnemy.h" />
     <ClInclude Include="application\Floor.h" />
     <ClInclude Include="application\GameCamera.h" />

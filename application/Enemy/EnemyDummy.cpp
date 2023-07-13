@@ -12,8 +12,6 @@ EnemyDummy::EnemyDummy(Vector3 pos) : IEnemy(EnemyType::Ground, true,100)
 	damegeCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 
-	sprite_.Ini("Lockon");
-	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("uv"));
 }
 
 void EnemyDummy::MoveUpdate()
@@ -23,12 +21,9 @@ void EnemyDummy::MoveUpdate()
 	}
 
 	pos2D = GetScreenPos(*obj_->GetTransform(), *Camera::scurrent_);
-	sprite_.SetPos(pos2D);
-	sprite_.SetScale({ 0.1f, 0.1f });
-	sprite_.Update();
 }
 
 void EnemyDummy::DrawSprite()
 {
-	sprite_.Draw();
+	
 }

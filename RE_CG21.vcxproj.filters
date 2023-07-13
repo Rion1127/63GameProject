@@ -420,6 +420,9 @@
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="application\Enemy\EnemyShadow.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -654,6 +657,9 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Enemy\EnemyHPGauge.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\EnemyShadow.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
