@@ -46,7 +46,7 @@ void EnemyShadow::MoveUpdate()
 
 
 	//ŽÀs
-	(this->*Action[(int)state_])();
+	//(this->*Action[(int)state_])();
 	//(this->*Action[(int)State::Following])();
 
 }

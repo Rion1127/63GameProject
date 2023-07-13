@@ -141,7 +141,7 @@ void CollisionManager::EnemyLockOn()
 		//自分でロックオンする敵を設定
 		if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 		{
-
+			SoundManager::Play("lockOnSE", false, 0.2f);
 			//ロックオンしていれば解除、していなければロックオン
 			bool isLockOn = (enemyManager_->GetLockOnEnemy()->GetIsHardLockOn() == true) ?
 				false : true;
