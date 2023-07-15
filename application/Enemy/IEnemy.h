@@ -33,6 +33,8 @@ protected:
 	//‘Ì—Í
 	int32_t health_;
 	int32_t maxHealth_;
+
+	Sphere attackCol_;
 public:
 	IEnemy(EnemyType type,bool isGravityImpact, int32_t health);
 	virtual ~IEnemy() {};
