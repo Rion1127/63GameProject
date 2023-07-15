@@ -6,6 +6,7 @@ class EnemyAirDummy final :
 private:
 public:
     EnemyAirDummy(Vector3 pos);
+    void SetIsNock(bool flag) override {};
 private:
     void MoveUpdate() override;
     void DrawSprite() override;

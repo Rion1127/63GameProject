@@ -14,7 +14,7 @@ GameCamera::GameCamera()
 	cameraSpeed_ = 0.15f;
 
 	transSpeed_ = { 0.0000015f,0.0000015f };
-	lockOnCameraspeed_ = { 0.05f ,0.01f };
+	lockOnCameraspeed_ = { 0.04f ,0.01f };
 }
 
 void GameCamera::Update(CameraMode cameraMode)
@@ -133,7 +133,7 @@ void GameCamera::UpdateLookAT()
 
 			if (getOutWay == GetOutEnemy::LookBack)
 			{
-				addVec.x = EtoMidvec.x * 0.2f;
+				addVec.x = EtoMidvec.x * 0.1f;
 			}
 
 			moveDist += addVec;

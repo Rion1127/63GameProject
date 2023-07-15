@@ -1,7 +1,7 @@
 #include "EnemyShadow.h"
 #include "mInput.h"
 #include "Player.h"
-
+#include <imgui.h>
 
 EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 {
@@ -19,6 +19,13 @@ EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 
 	followLength = 5.f;
 	moveSpeed = 0.1f;
+}
+
+void EnemyShadow::SetIsNock(bool flag)
+{
+	isKnock_ = flag;
+	actionTimer_.SetLimitTime(100);
+	actionTimer_.Reset();
 }
 
 void EnemyShadow::MoveUpdate()
@@ -46,9 +53,13 @@ void EnemyShadow::MoveUpdate()
 
 
 	//実行
-	//(this->*Action[(int)state_])();
-	//(this->*Action[(int)State::Following])();
+	(this->*Action[(int32_t)state_])();
 
+	ImGui::Begin("Enemy");
+
+	ImGui::Text(stateName_.c_str());
+
+	ImGui::End();
 }
 
 void EnemyShadow::DrawSprite()
@@ -58,6 +69,7 @@ void EnemyShadow::DrawSprite()
 
 void EnemyShadow::Idle()
 {
+	stateName_ = "Idle";
 	actionTimer_.SetLimitTime(120);
 
 	actionTimer_.AddTime(1);
@@ -71,6 +83,7 @@ void EnemyShadow::Idle()
 
 void EnemyShadow::Following()
 {
+	stateName_ = "Following";
 	actionTimer_.SetLimitTime(180);
 	actionTimer_.AddTime(1);
 
@@ -90,27 +103,38 @@ void EnemyShadow::Following()
 
 void EnemyShadow::Wander()
 {
+	stateName_ = "Wander";
 	addVec_.x += 0.05f;
 }
 
 void EnemyShadow::HideMove()
 {
+	stateName_ = "HideMove";
 	addVec_.x -= 0.05f;
 }
 
 void EnemyShadow::Attack()
 {
+	stateName_ = "Attack";
 	addVec_.z += 0.01f;
 }
 
 void EnemyShadow::JumpAttack()
 {
+	stateName_ = "JumpAttack";
 	addVec_.z -= 0.001f;
 }
 
 void EnemyShadow::KnockBack()
 {
-	obj_->GetTransform()->scale_ = { 0.5f,0.5f, 0.5f };
+	stateName_ = "KnockBack";
+	//一定時間経てばノック状態からアイドル状態に戻る
+	actionTimer_.AddTime(1);
+	if (actionTimer_.GetIsEnd()) {
+		state_ = State::Idle;
+		isKnock_ = false;
+		actionTimer_.Reset();
+	}
 }
 
 void EnemyShadow::PriorityUpdate()

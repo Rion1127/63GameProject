@@ -39,8 +39,7 @@ public:
 	static void SetPlayer(Player* player) { splayer_ = player; }
 	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
 	void SetHardIsLockOn(bool flag) { isHardLockOn_ = flag; }
-	void SetIsNock(bool flag) { isKnock_ = flag; }
-
+	
 	void PreUpdate();
 	void PostUpdate();
 	void Draw();
@@ -48,6 +47,7 @@ public:
 	void ColPosUpdate();
 	void HitPlayerAttack(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
 
+	virtual void SetIsNock(bool flag) = 0;
 	virtual void DrawSprite() = 0;
 public:
 	Gravity GetGravity() { return gravity_; }

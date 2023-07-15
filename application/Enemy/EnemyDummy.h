@@ -9,6 +9,7 @@ private:
     Vector2 pos2D;
 public:
     EnemyDummy(Vector3 pos);
+    void SetIsNock(bool flag) override {};
 private:
     void MoveUpdate() override;
     void DrawSprite() override;

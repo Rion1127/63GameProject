@@ -22,8 +22,12 @@ private:
     std::map<int32_t,State> priority_;
     float followLength;
     float moveSpeed;
+private:
+    //デバッグ
+    std::string stateName_;
 public:
     EnemyShadow(Vector3 pos);
+    void SetIsNock(bool flag) override;
 private:
     void MoveUpdate() override;
     void DrawSprite() override;
