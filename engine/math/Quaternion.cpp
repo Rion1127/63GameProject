@@ -161,19 +161,19 @@ Quaternion RotationBetweenVectors(Vector3 start, Vector3 dest)
 	float cosTheta = start.dot(dest);
 	Vector3 rotationAxis;
 
-	if (cosTheta < -1 + 0.001f) {
-		// ベクトルが反対方向を向いている特殊なケース：
-		// 単位回転軸はないので、垂直なものを見つけます。
-		Vector3 up = { 0,0,1 };
-		Vector3 right = { 1,0,0 };
+	//if (cosTheta < -1 + 0.001f) {
+	//	// ベクトルが反対方向を向いている特殊なケース：
+	//	// 単位回転軸はないので、垂直なものを見つけます。
+	//	Vector3 up = { 0,0,1 };
+	//	Vector3 right = { 1,0,0 };
 
-		rotationAxis = up.cross(start);
-		if (rotationAxis.length() < 0.01) { // もう一度計算！
-			rotationAxis = right.cross(start);
-		}
-		rotationAxis = rotationAxis.normalize();
-		return MakeAxisAngle(rotationAxis, Radian(180.0f));
-	}
+	//	rotationAxis = up.cross(start);
+	//	if (rotationAxis.length() < 0.01) { // もう一度計算！
+	//		rotationAxis = right.cross(start);
+	//	}
+	//	rotationAxis = rotationAxis.normalize();
+	//	return MakeAxisAngle(rotationAxis, Radian(180.0f));
+	//}
 
 	rotationAxis = start.cross(dest);
 
