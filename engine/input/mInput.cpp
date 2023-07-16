@@ -119,8 +119,7 @@ void MouseInput::GetCursorPosition()
 	mPos_.y = (float)p_.y;
 	//マウスがどの方向に動いたかのベクトルを取得
 	mouseVec_ = mPos_ - prevmPos_;
-	//ベクトル正規化
-	//mouseVec.normalize();
+	
 }
 #include <string>
 void MouseInput::Updata()

@@ -14,14 +14,16 @@ float Vector3::length() const
 //	return x * x + y * y + z * z;
 //}
 // ƒxƒNƒgƒ‹‚ğ³‹K‰»
-Vector3& Vector3::normalize()
+Vector3 Vector3::normalize()
 {
+	Vector3 result = *this;
 	float len = length();
 	if (len != 0)
 	{
-		return *this /= len;
+		result /= len;
+		return result;
 	}
-	return *this;
+	return result;
 }
 // “àÏ‚ğ‹‚ß‚é
 float Vector3::dot(const Vector3& v) const

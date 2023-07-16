@@ -35,7 +35,7 @@ void Attack3::Init()
 				cosf(splayerInfo_->WT->rotation_.y),
 			};
 		}
-		frontVec.normalize();
+		frontVec = frontVec.normalize();
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
 		colPos = splayerInfo_->WT->position_ + frontDist;
@@ -55,7 +55,7 @@ void Attack3::Init()
 void Attack3::MoveUpdate()
 {
 	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
-	attackVec_.normalize();
+	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = attackVec_ * 0.1f;
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;

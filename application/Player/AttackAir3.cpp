@@ -20,7 +20,7 @@ void AttackAir3::Init()
 				0,
 				lockOnPos.z - splayerInfo_->WT->position_.z,
 			};
-			frontVec.normalize();
+			frontVec = frontVec.normalize();
 			//“G‚Ö‚ÌƒxƒNƒgƒ‹‚©‚çŠp“x‚ðŒvŽZ‚·‚é
 			Vector2 frontVec2 = {
 				frontVec.x,
@@ -61,7 +61,7 @@ void AttackAir3::MoveUpdate()
 		0,
 		cosf(splayerInfo_->WT->rotation_.y),
 	};
-	frontVec.normalize();
+	frontVec = frontVec.normalize();
 	Vector3 speed = frontVec * 0.15f;
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
 	speed *= timerate;

@@ -149,9 +149,9 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 {
 	//u‚Æv‚ğ³‹K‰»
 	Vector3 uNorm = u;
-	uNorm.normalize();
+	uNorm = uNorm.normalize();
 	Vector3 vNorm = v;
-	vNorm.normalize();
+	vNorm = vNorm.normalize();
 
 	//u‚Æv‚Ì“àÏ
 	float dot = uNorm.dot(vNorm);

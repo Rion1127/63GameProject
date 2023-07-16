@@ -161,7 +161,7 @@ void CollisionManager::PlayerToEnemy()
 			Vector3 PtoEVec = player_->GetCol().center - enemy->GetCol().center;
 			//ベクトルの長さを取得
 			float length = PtoEVec.length();
-			PtoEVec.normalize();
+			PtoEVec = PtoEVec.normalize();
 			//Y成分を無効にして押し出す
 			PtoEVec.y = 0;
 			//二つの当たり判定の半径の長さを足す
@@ -190,7 +190,7 @@ void CollisionManager::PlayerAttackToEnemy()
 						//プレイヤーの反対方向にノックバックする
 						Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
 						knockVec.y = col->knockVecY;
-						knockVec.normalize();
+						knockVec = knockVec.normalize();
 						knockVec = knockVec * col->knockPower;
 						//敵のノックバック抵抗力を掛ける
 						knockVec = knockVec * enemy->GetKnockResist();

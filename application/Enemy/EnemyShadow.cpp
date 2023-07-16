@@ -2,6 +2,7 @@
 #include "mInput.h"
 #include "Player.h"
 #include <imgui.h>
+#include "RRandom.h"
 
 EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 {
@@ -19,6 +20,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 
 	followLength = 5.f;
 	moveSpeed = 0.1f;
+	randRange_ = 30;
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -26,6 +28,19 @@ void EnemyShadow::SetIsNock(bool flag)
 	isKnock_ = flag;
 	actionTimer_.SetLimitTime(100);
 	actionTimer_.Reset();
+}
+
+void EnemyShadow::SetState(State state)
+{
+	state_ = state;
+	actionTimer_.Reset();
+	int32_t randRange = RRandom::Rand(-randRange_, randRange_);
+	if (State::Idle == state_) {
+		actionTimer_.SetLimitTime(100 + randRange);
+	}
+	else if (State::Following == state_) {
+		actionTimer_.SetLimitTime(150 + randRange);
+	}
 }
 
 void EnemyShadow::MoveUpdate()
@@ -51,6 +66,7 @@ void EnemyShadow::MoveUpdate()
 		state_ = State::KnockBack;
 	}
 
+	UpdateVector();
 
 	//実行
 	(this->*Action[(int32_t)state_])();
@@ -70,7 +86,6 @@ void EnemyShadow::DrawSprite()
 void EnemyShadow::Idle()
 {
 	stateName_ = "Idle";
-	actionTimer_.SetLimitTime(120);
 
 	actionTimer_.AddTime(1);
 
@@ -84,15 +99,12 @@ void EnemyShadow::Idle()
 void EnemyShadow::Following()
 {
 	stateName_ = "Following";
-	actionTimer_.SetLimitTime(180);
-	actionTimer_.AddTime(1);
-
-	Vector3& pos = splayer_->GetWorldTransform()->position_;
-	Vector3 EtoPVec = pos - obj_->WT_.position_;
-	EtoPVec.y = 0;
-	float length = EtoPVec.length();
 	
-	addVec_ = EtoPVec.normalize() * moveSpeed;
+	actionTimer_.AddTime(1);
+	
+	float length = EtoPVec_.length();
+	
+	addVec_ = EtoPVec_.normalize() * moveSpeed;
 
 	if (length < followLength || actionTimer_.GetIsEnd())
 	{
@@ -104,25 +116,25 @@ void EnemyShadow::Following()
 void EnemyShadow::Wander()
 {
 	stateName_ = "Wander";
-	addVec_.x += 0.05f;
+	
 }
 
 void EnemyShadow::HideMove()
 {
 	stateName_ = "HideMove";
-	addVec_.x -= 0.05f;
+	
 }
 
 void EnemyShadow::Attack()
 {
 	stateName_ = "Attack";
-	addVec_.z += 0.01f;
+	
 }
 
 void EnemyShadow::JumpAttack()
 {
 	stateName_ = "JumpAttack";
-	addVec_.z -= 0.001f;
+	
 }
 
 void EnemyShadow::KnockBack()
@@ -139,4 +151,12 @@ void EnemyShadow::KnockBack()
 
 void EnemyShadow::PriorityUpdate()
 {
+}
+
+void EnemyShadow::UpdateVector()
+{
+	//プレイヤーへのベクトル
+	Vector3& pos = splayer_->GetWorldTransform()->position_;
+	EtoPVec_ = pos - obj_->WT_.position_;
+	EtoPVec_.y = 0;
 }

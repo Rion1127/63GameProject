@@ -100,7 +100,7 @@ void GameCamera::UpdateLookAT()
 
 			Vector2 length = { 250,300 };
 			Vector2 EtoMidvec = screenPos - halfWindowSize;
-			EtoMidvec.normalize();
+			EtoMidvec = EtoMidvec.normalize();
 			Vector2 addVec;
 
 			if (putOnCamera_ == false)
@@ -157,7 +157,7 @@ void GameCamera::UpdateLookTO()
 	{
 		Vector3 cameraToPlayer =
 			player_->GetWorldTransform()->position_ - camera_->eye_;
-		cameraToPlayer.normalize();
+		cameraToPlayer = cameraToPlayer.normalize();
 
 		Quaternion q;
 
@@ -170,7 +170,7 @@ void GameCamera::UpdateLookTO()
 	{
 		Vector3 cameraToPlayer =
 			player_->GetWorldTransform()->position_ - camera_->eye_;
-		cameraToPlayer.normalize();
+		cameraToPlayer = cameraToPlayer.normalize();
 	}
 
 	camera_->rot_ += (endRot_ - camera_->rot_) * cameraSpeed_;

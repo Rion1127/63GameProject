@@ -14,7 +14,7 @@ public:
 
     // ƒƒ“ƒoŠÖ”
     float length() const;                   // ƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
-    Vector2& normalize();                   // ³‹K‰»
+    Vector2 normalize();                   // ³‹K‰»
     float dot(const Vector2& v) const;      // “àÏ‚ğ‹‚ß‚é
     float cross(const Vector2& v) const;    // ŠOÏ‚ğ‹‚ß‚é
 

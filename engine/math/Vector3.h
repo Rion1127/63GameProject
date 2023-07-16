@@ -15,7 +15,7 @@ public:
 	//メンバ関数
 	float length() const;					//ノルム（長さを求める）
 	//float lengthsqrt() const;					//ノルム（長さを求める）
-	Vector3& normalize();					//正規化する
+	Vector3 normalize();					//正規化する
 	float dot(const Vector3& v)const;		//内積を求める
 	Vector3 cross(const Vector3& v)const;	//外積を求める
 	Vector3 SetLength(float l);

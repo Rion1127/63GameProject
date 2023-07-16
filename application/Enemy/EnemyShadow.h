@@ -3,42 +3,47 @@
 #include "Timer.h"
 
 class EnemyShadow :
-    public IEnemy
+	public IEnemy
 {
-private:
-    enum class State {
-        Idle,
-        Following,
-        Wander,
-        HideMove,
-        Attack,
-        JumpAttack,
-        KnockBack,
-        None
-    };
-private:
-    State state_;
-    Timer actionTimer_;
-    std::map<int32_t,State> priority_;
-    float followLength;
-    float moveSpeed;
-private:
-    //デバッグ
-    std::string stateName_;
 public:
-    EnemyShadow(Vector3 pos);
-    void SetIsNock(bool flag) override;
+	enum class State {
+		Idle,
+		Following,
+		Wander,
+		HideMove,
+		Attack,
+		JumpAttack,
+		KnockBack,
+		None
+	};
 private:
-    void MoveUpdate() override;
-    void DrawSprite() override;
+	State state_;
+	Timer actionTimer_;
+	std::map<int32_t, State> priority_;
+	float followLength;
+	float moveSpeed;
+	int32_t randRange_;
 
-    void Idle();
-    void Following();
-    void Wander();
-    void HideMove();
-    void Attack();
-    void JumpAttack();
-    void KnockBack();
+	Vector3 EtoPVec_;
+private:
+	//デバッグ
+	std::string stateName_;
+public:
+	EnemyShadow(Vector3 pos);
+	void SetIsNock(bool flag) override;
+	void SetState(State state);
+private:
+	void MoveUpdate() override;
+	void DrawSprite() override;
 
-    void PriorityUpdate();
+	void Idle();
+	void Following();
+	void Wander();
+	void HideMove();
+	void Attack();
+	void JumpAttack();
+	void KnockBack();
+
+	void PriorityUpdate();
+	void UpdateVector();
 };

@@ -66,8 +66,8 @@ void DirectionalLight::TransferConstBuffer()
 void DirectionalLight::SetLightDir(const Vector3& lightdir)
 {
 	//³‹K‰»‚·‚é
-	this->lightdir_ = lightdir;
-	this->lightdir_.normalize();
+	lightdir_ = lightdir;
+	lightdir_ = lightdir_.normalize();
 	dirty_ = true;
 }
 

@@ -66,7 +66,7 @@ void DebugCamera::CameraMove()
 
 	//カメラの正面ベクトル
 	frontVec_ = camera_.target_ - camera_.eye_;
-	frontVec_.normalize();
+	frontVec_ = frontVec_.normalize();
 
 	sideVec_ = proviUpVec.cross(frontVec_);
 

@@ -15,15 +15,16 @@ float Vector2::length() const
 }
 
 // ƒxƒNƒgƒ‹‚ğ³‹K‰»
-Vector2& Vector2::normalize()
+Vector2 Vector2::normalize()
 {
+	Vector2 result = *this;
 	float len = length();
-	//Vector2 vec = *this;
 	if (len != 0)
 	{
-		return *this /= len;
+		result /= len;
+		return result;
 	}
-	return *this;
+	return result;
 }
 
 // “àÏ‚ğ‹‚ß‚é

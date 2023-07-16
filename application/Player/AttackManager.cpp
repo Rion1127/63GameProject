@@ -16,6 +16,7 @@ void AttackManager::Update()
 	IAttack::SetLockOnActor(lockOnEnemy_);
 	if (controller_->GetTriggerButtons(PAD::INPUT_B))
 	{
+		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
 		if (comboNum < MAX_COMBO)
 		{
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é

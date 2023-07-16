@@ -43,7 +43,7 @@ bool RayCollision(WorldTransform ray, WorldTransform obj)
 	float raySize;
 	raySize = rayVec.length();
 	//正規化(a→N)
-	rayVec.normalize();
+	rayVec = rayVec.normalize();
 	//レイとオブジェクトのベクトル(b→)を求める
 	// レイの始点とオブジェクトへのベクトル(b→)を求める
 	Vector3 ABVec;
