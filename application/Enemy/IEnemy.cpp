@@ -59,7 +59,15 @@ void IEnemy::FloorColision()
 void IEnemy::ColPosUpdate()
 {
 	obj_->Update();
-	col_.center = obj_->GetTransform()->position_;
+
+	Vector3 colPos = {
+		obj_->GetTransform()->position_.x,
+		obj_->GetTransform()->position_.y + obj_->WT_.scale_.y,
+		obj_->GetTransform()->position_.z,
+	};
+
+	col_.SetPos(colPos);
+
 	col_.radius = obj_->GetTransform()->scale_.x;
 }
 

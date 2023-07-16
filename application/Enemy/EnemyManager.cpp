@@ -21,6 +21,7 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));*/
 	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(2, 3, 0))));
 
 	for (size_t i = 0; i < 2; i++)
 	{
@@ -115,19 +116,28 @@ void EnemyManager::LockOnSpriteUpdate()
 	lockOnSprite_[1]->SetRot(Radian(lockOnobjRot));
 	for (size_t i = 0; i < 2; i++)
 	{
+		//ハードロック
 		if (isHardLockOn)
 		{
 			lockOnSprite_[i]->SetInvisivle(false);
 			lockOnSprite_[i]->SetColor(Color(40, 30, 240, 255));
 		}
+		//ソフトロック
 		else
 		{
 			lockOnSprite_[0]->SetInvisivle(true);
 			lockOnSprite_[1]->SetInvisivle(false);
 			lockOnSprite_[i]->SetColor(Color(240,175,30,255));
 		}
-		
-		Vector2 pos = GetScreenPos(*lockOnEnemy_->GetWorldTransform(), *Camera::scurrent_);
+
+		WorldTransform lockOnWT = *lockOnEnemy_->GetWorldTransform();
+		lockOnWT.position_ = {
+			lockOnWT.position_.x,
+			lockOnWT.position_.y + lockOnWT.scale_.y,
+			lockOnWT.position_.z,
+		};
+		lockOnWT.Update();
+		Vector2 pos = GetScreenPos(lockOnWT, *Camera::scurrent_);
 		lockOnSprite_[i]->SetPos(pos);
 		lockOnSprite_[i]->Update();
 	}

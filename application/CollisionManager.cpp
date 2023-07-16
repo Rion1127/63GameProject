@@ -59,7 +59,7 @@ void CollisionManager::EnemyToFloor()
 			//’n–Ê‚É‚ß‚è‚Ü‚È‚¢‚æ‚¤‚É‰Ÿ‚µo‚µˆ—
 			while (true)
 			{
-				float checkValue = 1.5f;
+				float checkValue = 0.01f;
 				Sphere col = enemy->GetCol();
 				col.center.y -= checkValue;
 				col.radius = enemy->GetCol().radius;

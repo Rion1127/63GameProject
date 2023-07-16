@@ -22,7 +22,6 @@ void AttackManager::Update()
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ð‘ã“ü‚·‚é
 			if (nowAttack_ == nullptr)
 			{
-
 				if (*IAttack::GetPlayerInfo()->state == PlayerState::Idle)
 				{
 					nowAttack_ = std::move(std::make_unique<Attack1>());

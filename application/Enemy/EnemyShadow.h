@@ -19,12 +19,15 @@ public:
 private:
 	State state_;
 	Timer actionTimer_;
-	std::map<int32_t, State> priority_;
+	
 	float followLength;
 	float moveSpeed;
 	int32_t randRange_;
 
 	Vector3 EtoPVec_;
+
+	float endRot_;
+	float nowRot_;
 private:
 	//デバッグ
 	std::string stateName_;

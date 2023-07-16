@@ -7,8 +7,8 @@
 EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 {
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
-	obj_->SetAmbient("cube", { 0,0,1.0f });
+	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	//obj_->SetAmbient("player", { 0,0,1.0f });
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
@@ -103,9 +103,8 @@ void EnemyShadow::Following()
 	actionTimer_.AddTime(1);
 	
 	float length = EtoPVec_.length();
-	
 	addVec_ = EtoPVec_.normalize() * moveSpeed;
-
+	//ˆê’è‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚çORˆê’èŽžŠÔ’Ç‚¢‚©‚¯‚½‚ç
 	if (length < followLength || actionTimer_.GetIsEnd())
 	{
 		state_ = State::Idle;
