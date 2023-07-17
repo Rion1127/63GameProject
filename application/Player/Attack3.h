@@ -6,7 +6,7 @@ class Attack3 final :
 private:
 	float frontDist_;
 public:
-	Attack3();
+	Attack3(IActor* selfActor, IActor* lockOnActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;

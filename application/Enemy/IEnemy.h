@@ -19,7 +19,6 @@ protected:
 
 	EnemyType enemyType_;
 	//ƒ‚ƒfƒ‹
-	Gravity gravity_;
 	Vector3 addVec_;
 	Vector3 knockVec_;
 	Vector3 knockResist_;

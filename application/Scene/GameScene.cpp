@@ -31,7 +31,7 @@ void GameScene::Ini()
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(floor_.get());
 	colManager_->SetEnemys(enemyManager_.get());
-	IAttack::SetPlayerInfo(player_->GetPlayerInfo());
+	AttackManager::SetPlayer(player_.get());
 }
 
 void GameScene::Update()

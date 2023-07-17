@@ -2,18 +2,21 @@
 #include "mSound.h"
 #include "RRandom.h"
 #include <imgui.h>
+#include "Player.h"
+
+Player* AttackManager::player_ = nullptr;
 
 AttackManager::AttackManager()
 {
 	controller_ = Controller::GetInstance();
 	comboNum = 0;
-	attacks_.emplace_back(std::move(std::make_unique<Attack1>()));
+	//attacks_.emplace_back(std::move(std::make_unique<Attack1>()));
 	isAttacking = false;
 }
 
 void AttackManager::Update()
 {
-	IAttack::SetLockOnActor(lockOnEnemy_);
+	//IAttack::SetLockOnActor(lockOnEnemy_);
 	if (controller_->GetTriggerButtons(PAD::INPUT_B))
 	{
 		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
@@ -22,13 +25,13 @@ void AttackManager::Update()
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
 			if (nowAttack_ == nullptr)
 			{
-				if (*IAttack::GetPlayerInfo()->state == PlayerState::Idle)
+				if (*playerState_ == PlayerState::Idle)
 				{
-					nowAttack_ = std::move(std::make_unique<Attack1>());
+					nowAttack_ = std::move(std::make_unique<Attack1>(player_, lockOnEnemy_));
 				}
-				else if (*IAttack::GetPlayerInfo()->state == PlayerState::Jump)
+				else if (*playerState_ == PlayerState::Jump)
 				{
-					nowAttack_ = std::move(std::make_unique<AttackAir1>());
+					nowAttack_ = std::move(std::make_unique<AttackAir1>(player_, lockOnEnemy_));
 				}
 				if (nowAttack_ != nullptr) {
 					nowAttack_->Init();
@@ -42,16 +45,16 @@ void AttackManager::Update()
 			{
 				if (nextAttack_ == nullptr)
 				{
-					if (*IAttack::GetPlayerInfo()->state == PlayerState::Attack)
+					if (*playerState_ == PlayerState::Attack)
 					{
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>());
-						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>());
+						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>(player_, lockOnEnemy_));
+						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>(player_, lockOnEnemy_));
 					}
-					else if (*IAttack::GetPlayerInfo()->state == PlayerState::AirAttack)
+					else if (*playerState_ == PlayerState::AirAttack)
 					{
-						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>());
-						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>());
+						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>(player_, lockOnEnemy_));
+						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>(player_, lockOnEnemy_));
 					}
 				}
 			}

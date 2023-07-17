@@ -14,12 +14,9 @@ class Player final:
 	public IActor
 {
 private:
-	Vector3 addVec_;
-	Vector3 rot_;
 	Vector3 scale_;
 
 	bool isFloorCollision_ = false;
-	Gravity gravity_;
 	//ƒxƒNƒgƒ‹
 	Vector3 move_;
 	Vector3 frontVec_;
@@ -79,5 +76,6 @@ public:
 	AttackManager* GetAttackManager() { return &attack_; }
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerInfo* GetPlayerInfo() { return &info_; }
+	PlayerState GetState() { return state_; }
 };
 

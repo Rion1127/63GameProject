@@ -28,6 +28,7 @@ private:
 
 	float endRot_;
 	float nowRot_;
+
 private:
 	//デバッグ
 	std::string stateName_;
@@ -50,3 +51,4 @@ private:
 	void PriorityUpdate();
 	void UpdateVector();
 };
+

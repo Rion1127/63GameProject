@@ -1,9 +1,7 @@
 #include "IAttack.h"
 
-PlayerInfo* IAttack::splayerInfo_ = nullptr;
-IActor* IAttack::lockOnActor_ = nullptr;
-
-IAttack::IAttack(int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime)
+IAttack::IAttack(IActor* selfActor, IActor* lockOnActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime) :
+	selfActor_(selfActor),lockOnActor_(lockOnActor)
 {
 	attackCol_.resize(colNum);
 	for (auto& col : attackCol_)
@@ -19,7 +17,7 @@ IAttack::IAttack(int32_t colNum, int32_t maxTime, int32_t damage, int32_t damage
 
 void IAttack::Update()
 {
-	if (splayerInfo_ != nullptr) {
+	if (selfActor_ != nullptr) {
 		MoveUpdate();
 	}
 

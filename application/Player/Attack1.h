@@ -1,5 +1,6 @@
 #pragma once
 #include "IAttack.h"
+#include "IActor.h"
 
 class Attack1 final :
 	public IAttack
@@ -7,7 +8,7 @@ class Attack1 final :
 private:
 	float frontDist_;
 public:
-	Attack1();
+	Attack1(IActor* selfActor, IActor* lockOnActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;

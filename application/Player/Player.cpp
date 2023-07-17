@@ -28,7 +28,8 @@ Player::Player()
 	info_.addVec_ = &addVec_;
 	info_.gravity = &gravity_;
 	info_.state = &state_;
-	info_.rot_ = &rot_;
+
+	attack_.SetPlayer(&state_);
 }
 
 void Player::PreUpdate()
@@ -61,7 +62,6 @@ void Player::PostUpdate()
 	addVec_ += gravity_.GetGravityValue();
 	attack_.Update();
 
-	obj_->WT_.rotation_ = rot_;
 	obj_->WT_.position_ += addVec_;
 	obj_->WT_.scale_ = scale_;
 	obj_->Update();
@@ -74,7 +74,6 @@ void Player::GravityUpdate()
 }
 void Player::ColPosUpdate()
 {
-	obj_->WT_.rotation_ = rot_;
 	obj_->WT_.position_ += addVec_;
 	obj_->WT_.scale_ = scale_;
 	obj_->Update();
@@ -137,7 +136,7 @@ void Player::InputVecUpdate()
 	if (controller_->GetLStick().x != 0 ||
 		controller_->GetLStick().y != 0)
 	{
-		rot_ = { 0,Radian(inputAngle_) ,0 };
+		obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
 	}
 }
 
@@ -222,7 +221,6 @@ void Player::DrawImGui()
 	{
 		float rot = obj_->GetTransform()->rotation_.y;
 		ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
-		//rot_ = rot;
 	}
 
 	if (ImGui::CollapsingHeader("Scale"))

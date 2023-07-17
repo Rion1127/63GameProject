@@ -28,11 +28,11 @@ class IAttack
 protected:
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;
-	static PlayerInfo* splayerInfo_;
-	static IActor* lockOnActor_;
+	IActor* selfActor_;
+	IActor* lockOnActor_;
 	Vector3 attackVec_;
 public:
-	IAttack(int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
+	IAttack(IActor* selfActor, IActor* lockOnActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	virtual ~IAttack(){};
 	void Update();
 	void DrawCol();
@@ -41,10 +41,10 @@ public:
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
-	static PlayerInfo* GetPlayerInfo() { return splayerInfo_; }
+	IActor* GetSelfActor() { return selfActor_; }
 public:
-	static void SetPlayerInfo(PlayerInfo* info) { splayerInfo_ = info; }
-	static void SetLockOnActor(IActor* info) { lockOnActor_ = info; }
+	void SetSelfActor(IActor* info) { selfActor_ = info; }
+	void SetLockOnActor(IActor* info) { lockOnActor_ = info; }
 public:
 	virtual void Init() = 0;
 protected:

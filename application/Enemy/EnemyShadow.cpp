@@ -69,7 +69,8 @@ void EnemyShadow::MoveUpdate()
 	UpdateVector();
 
 	//ŽÀs
-	(this->*Action[(int32_t)state_])();
+	//(this->*Action[(int32_t)state_])();
+	(this->*Action[(int32_t)State::Attack])();
 
 	ImGui::Begin("Enemy");
 
@@ -127,7 +128,6 @@ void EnemyShadow::HideMove()
 void EnemyShadow::Attack()
 {
 	stateName_ = "Attack";
-	
 }
 
 void EnemyShadow::JumpAttack()

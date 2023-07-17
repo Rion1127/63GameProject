@@ -1,6 +1,7 @@
 #include "AttackAir3.h"
 
-AttackAir3::AttackAir3() : IAttack(1, 30, 10, 31)
+AttackAir3::AttackAir3(IActor* selfActor, IActor* lockOnActor) :
+	IAttack(selfActor, lockOnActor,1, 30, 10, 31)
 {
 }
 
@@ -9,16 +10,16 @@ void AttackAir3::Init()
 	Vector3 frontVec{};
 	Vector3 colPos{};
 	Vector3 frontDist{};
-	if (splayerInfo_ != nullptr) {
+	if (selfActor_ != nullptr) {
 		frontDist_ = 5.f;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
 			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
 			//ロックオンしている敵へのベクトルをとる
 			frontVec = {
-				 lockOnPos.x - splayerInfo_->WT->position_.x,
+				 lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
 				0,
-				lockOnPos.z - splayerInfo_->WT->position_.z,
+				lockOnPos.z - selfActor_->GetWorldTransform()->position_.z,
 			};
 			frontVec = frontVec.normalize();
 			//敵へのベクトルから角度を計算する
@@ -27,21 +28,21 @@ void AttackAir3::Init()
 				frontVec.z
 			};
 			float rotY = Radian(Vec2Angle(frontVec2));
-			*splayerInfo_->rot_ = { 0,rotY ,0 };
+			selfActor_->GetWorldTransform()->rotation_ = { 0,rotY ,0 };
 		}
 		else {
 			//回転情報から正面ベクトル(2D)を取得
 			frontVec = {
-				sinf(splayerInfo_->WT->rotation_.y),
+				sinf(selfActor_->GetWorldTransform()->rotation_.y),
 				0,
-				cosf(splayerInfo_->WT->rotation_.y),
+				cosf(selfActor_->GetWorldTransform()->rotation_.y),
 			};
 		}
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
-		colPos = splayerInfo_->WT->position_ + frontDist;
+		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
 		colPos.y += 1;
-		splayerInfo_->gravity->SetGrabity({ 0,0.12f,0 });
+		selfActor_->GetGravity()->SetGrabity({0,0.12f,0});
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 1.f;
 		attackCol_.at(0)->damage = 20;
@@ -57,9 +58,9 @@ void AttackAir3::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
 	Vector3 frontVec = {
-		sinf(splayerInfo_->WT->rotation_.y),
+		sinf(selfActor_->GetWorldTransform()->rotation_.y),
 		0,
-		cosf(splayerInfo_->WT->rotation_.y),
+		cosf(selfActor_->GetWorldTransform()->rotation_.y),
 	};
 	frontVec = frontVec.normalize();
 	Vector3 speed = frontVec * 0.15f;
@@ -67,8 +68,8 @@ void AttackAir3::MoveUpdate()
 	speed *= timerate;
 
 
-	*splayerInfo_->addVec_ += speed;
-	Vector3 attackVec = attackVec_ * (splayerInfo_->WT->scale_.x * 2.f);
-	attackCol_.at(0)->col_.center = splayerInfo_->WT->position_ + attackVec;
-	attackCol_.at(0)->col_.center.y += splayerInfo_->WT->scale_.y;
+	*selfActor_->GetAddVec() += speed;
+	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
+	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
+	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;
 }

@@ -184,6 +184,24 @@
     <Filter Include="engine\ソース ファイル\DirectX\Pipeline">
       <UniqueIdentifier>{e0ec0fa2-b9dc-45ec-a1fe-e7976cba1154}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Enemy\EnemyShadow">
+      <UniqueIdentifier>{b2e54d03-1999-4503-ad44-231593e2da05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Enemy\EnemyShadow\Attack">
+      <UniqueIdentifier>{b40d1d21-273e-4c4d-bac6-849d8bf5a71d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Interface">
+      <UniqueIdentifier>{3eda43a1-d647-4e62-be1a-3c476ae2dd20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Interface">
+      <UniqueIdentifier>{d12aa36a-d515-40fe-ad13-559fca77a541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Enemy\EnemyShadow">
+      <UniqueIdentifier>{cfb111c1-f835-499c-a355-479dd2ab9b30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Enemy\EnemyShadow\Attack">
+      <UniqueIdentifier>{64c739a9-eb4c-4fb4-887c-4b3d641b7fa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -348,9 +366,6 @@
     <ClCompile Include="application\Player\PlayerAttack.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\IAttack.cpp">
-      <Filter>application\ソースファイル\Player\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\AttackManager.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
@@ -381,9 +396,6 @@
     <ClCompile Include="application\Player\PlayerInfo.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="application\Enemy\IEnemy.cpp">
-      <Filter>application\ソースファイル\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="application\Enemy\EnemyManager.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
@@ -402,9 +414,6 @@
     <ClCompile Include="engine\3d\light\LightManager.cpp">
       <Filter>engine\ソース ファイル\Object3D\Light</Filter>
     </ClCompile>
-    <ClCompile Include="engine\IParticle.cpp">
-      <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="application\Particle\ParticleTest.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
@@ -421,7 +430,16 @@
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="application\Enemy\EnemyShadow.cpp">
-      <Filter>application\ソースファイル\Enemy</Filter>
+      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\IParticle.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\IAttack.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\IEnemy.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -584,9 +602,6 @@
     <ClInclude Include="application\Player\PlayerAttack.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\IAttack.h">
-      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
@@ -620,9 +635,6 @@
     <ClInclude Include="engine\base\REngine.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="application\Enemy\IEnemy.h">
-      <Filter>application\ヘッダーファイル\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="application\Enemy\EnemyManager.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
@@ -641,9 +653,6 @@
     <ClInclude Include="engine\3d\light\LightManager.h">
       <Filter>engine\ヘッダー ファイル\Object3D\Light</Filter>
     </ClInclude>
-    <ClInclude Include="engine\IParticle.h">
-      <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="application\Particle\ParticleTest.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
@@ -659,8 +668,17 @@
     <ClInclude Include="application\Enemy\EnemyHPGauge.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="engine\IParticle.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\IAttack.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
     <ClInclude Include="application\Enemy\EnemyShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy</Filter>
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\IEnemy.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
