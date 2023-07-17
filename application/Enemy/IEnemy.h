@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include "Gravity.h"
 #include "Timer.h"
+#include "IAttack.h"
 
 enum class EnemyType {
 	Ground,	
@@ -19,21 +20,18 @@ protected:
 
 	EnemyType enemyType_;
 	//ÉÇÉfÉã
-	Vector3 addVec_;
-	Vector3 knockVec_;
-	Vector3 knockResist_;
-
+	
 	bool isSoftLockOn_;
 	bool isHardLockOn_;
 	bool isGravityImpact_;	//èdóÕÇóLå¯Ç…Ç∑ÇÈ
 	bool isDead_;
 	bool isKnock_;
-	Timer damegeCoolTime_;
+	
 	//ëÃóÕ
 	int32_t health_;
 	int32_t maxHealth_;
 
-	Sphere attackCol_;
+	std::unique_ptr<IAttack> attack_;
 public:
 	IEnemy(EnemyType type,bool isGravityImpact, int32_t health);
 	virtual ~IEnemy() {};
@@ -43,7 +41,7 @@ public:
 	
 	void PreUpdate();
 	void PostUpdate();
-	void Draw();
+	virtual void Draw();
 	void FloorColision();
 	void ColPosUpdate();
 	void HitPlayerAttack(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
@@ -59,6 +57,7 @@ public:
 	Vector3 GetKnockResist() { return knockResist_; }
 	int32_t GetHealth() { return health_; }
 	int32_t GetMaxHealth() { return maxHealth_; }
+	IAttack* GetAttack() { return attack_.get(); }
 protected:
 	virtual void MoveUpdate() = 0;
 };

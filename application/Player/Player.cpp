@@ -30,6 +30,7 @@ Player::Player()
 	info_.state = &state_;
 
 	attack_.SetPlayer(&state_);
+	damegeCoolTime_.SetLimitTime(50);
 }
 
 void Player::PreUpdate()
@@ -49,6 +50,8 @@ void Player::PreUpdate()
 	GravityUpdate();
 
 	ColPosUpdate();
+
+	damegeCoolTime_.AddTime(1);
 }
 
 void Player::PostUpdate()
@@ -60,6 +63,9 @@ void Player::PostUpdate()
 	//当たり判定でgravityの値を変化させてから
 	//PostUpdateでaddVec_に代入している
 	addVec_ += gravity_.GetGravityValue();
+	addVec_ += knockVec_;
+	//ノックバックのベクトルを0にしていく
+	MoveTo({ 0,0,0 }, 0.05f, knockVec_);
 	attack_.Update();
 
 	obj_->WT_.position_ += addVec_;

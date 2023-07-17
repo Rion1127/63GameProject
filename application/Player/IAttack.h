@@ -43,9 +43,6 @@ public:
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
 public:
-	void SetSelfActor(IActor* info) { selfActor_ = info; }
-	void SetLockOnActor(IActor* info) { lockOnActor_ = info; }
-public:
 	virtual void Init() = 0;
 protected:
 	virtual void MoveUpdate() = 0;

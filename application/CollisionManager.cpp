@@ -14,6 +14,8 @@ void CollisionManager::Update()
 	PlayerToEnemy();
 	//ƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ“G
 	PlayerAttackToEnemy();
+	//“GUŒ‚‚ÆƒvƒŒƒCƒ„[
+	EnemyAttackToPlayer();
 }
 
 void CollisionManager::PlayerToFloor()
@@ -203,6 +205,43 @@ void CollisionManager::PlayerAttackToEnemy()
 						SoundManager::Play("HitSE", false, 0.2f);
 					}
 				}
+			}
+		}
+	}
+}
+
+void CollisionManager::EnemyAttackToPlayer()
+{
+	for (auto& enemy : *enemyManager_->GetEnemy())
+	{
+		IAttack* attackCol = enemy->GetAttack();
+		if (attackCol != nullptr)
+		{
+			for (auto& col : *attackCol->GetAttackCol())
+			{
+				if (player_->GetDamegeCoolTime()->GetIsEnd()) {
+					if (BallCollision(col->col_, player_->GetCol()))
+					{
+						//“G‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+						Vector3 knockVec =
+							player_->GetWorldTransform()->position_ - enemy->GetCol().center;
+						knockVec.y = col->knockVecY;
+						knockVec = knockVec.normalize();
+						knockVec = knockVec * col->knockPower;
+						//“G‚ÌƒmƒbƒNƒoƒbƒN’ïR—Í‚ðŠ|‚¯‚é
+						knockVec = knockVec * enemy->GetKnockResist();
+
+						player_->SetKnockVec(knockVec);
+						player_->GetDamegeCoolTime()->Reset();
+
+						Vector3 addVec = { 0.15f,0.15f,0.15f };
+
+						ParticleManager::GetInstance()->
+							AddParticle("HitAttack", 3, 40, player_->GetCol().center, addVec, 0.7f);
+						SoundManager::Play("HitSE", false, 0.2f);
+					}
+				}
+
 			}
 		}
 	}

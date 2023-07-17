@@ -26,5 +26,7 @@ private:
 	void PlayerToEnemy();
 	//プレイヤー攻撃と敵
 	void PlayerAttackToEnemy();
+	//敵攻撃とプレイヤー
+	void EnemyAttackToPlayer();
 };
 

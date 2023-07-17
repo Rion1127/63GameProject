@@ -441,6 +441,9 @@
     <ClCompile Include="application\Enemy\IEnemy.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="AttackShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -679,6 +682,9 @@
     </ClInclude>
     <ClInclude Include="application\Enemy\IEnemy.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\AttackShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

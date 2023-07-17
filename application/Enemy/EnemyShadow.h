@@ -29,6 +29,7 @@ private:
 	float endRot_;
 	float nowRot_;
 
+	
 private:
 	//デバッグ
 	std::string stateName_;
@@ -36,6 +37,8 @@ public:
 	EnemyShadow(Vector3 pos);
 	void SetIsNock(bool flag) override;
 	void SetState(State state);
+
+	void Draw()override;
 private:
 	void MoveUpdate() override;
 	void DrawSprite() override;

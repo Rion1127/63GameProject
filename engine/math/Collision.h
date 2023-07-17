@@ -13,7 +13,7 @@ struct Sphere {
 	};
 
 	// ƒtƒ‰ƒO
-	bool isActive = false;
+	bool isActive = true;
 };
 //•½–Ê
 struct Plane {

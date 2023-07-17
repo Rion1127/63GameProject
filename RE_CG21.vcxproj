@@ -45,6 +45,7 @@
     <ClCompile Include="application\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Shader\Noise.cpp" />
+    <ClCompile Include="AttackShadow.cpp" />
     <ClCompile Include="DebugScene.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
@@ -93,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\CollisionManager.h" />
+    <ClInclude Include="application\Enemy\AttackShadow.h" />
     <ClInclude Include="application\Enemy\EnemyAirDummy.h" />
     <ClInclude Include="application\Enemy\EnemyDummy.h" />
     <ClInclude Include="application\Enemy\EnemyHPGauge.h" />

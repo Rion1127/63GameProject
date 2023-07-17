@@ -124,6 +124,11 @@ bool BallCollision(const Vector3& a, const float& aSize, const Vector3& b, const
 //球と球
 bool BallCollision(const Sphere& a, const Sphere& b)
 {
+	if (a.isActive == false ||
+		b.isActive == false)
+	{
+		return false;
+	}
 	float x, y, z;
 	float r;
 
@@ -143,6 +148,10 @@ bool BallCollision(const Sphere& a, const Sphere& b)
 //平面と球
 bool Sphere2PlaneCol(const Sphere& sphere, const Plane& plane, Vector3* inter)
 {
+	if (sphere.isActive == false)
+	{
+		return false;
+	}
 	//座標系の原点から球の中心座標への距離
 	float distV = sphere.center.dot(plane.normal);
 	//平面の原点距離を減産することで、平面と球の中心との距離が出る

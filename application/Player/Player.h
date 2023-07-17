@@ -67,6 +67,7 @@ public:
 	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
 	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
+	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 
 	void AddPos(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
@@ -77,5 +78,6 @@ public:
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerInfo* GetPlayerInfo() { return &info_; }
 	PlayerState GetState() { return state_; }
+	Timer* GetDamegeCoolTime() { return &damegeCoolTime_; }
 };
 

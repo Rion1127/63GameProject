@@ -4,7 +4,10 @@
 #include <imgui.h>
 #include "RRandom.h"
 
-EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
+#include "AttackShadow.h"
+
+EnemyShadow::EnemyShadow(Vector3 pos) :
+	IEnemy(EnemyType::Ground, true, 100)
 {
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
@@ -16,7 +19,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
 	ColPosUpdate();
 
 	state_ = State::Idle;
-	actionTimer_.SetLimitTime(240);
+	actionTimer_.SetLimitTime(200);
 
 	followLength = 5.f;
 	moveSpeed = 0.1f;
@@ -40,6 +43,14 @@ void EnemyShadow::SetState(State state)
 	}
 	else if (State::Following == state_) {
 		actionTimer_.SetLimitTime(150 + randRange);
+	}
+}
+
+void EnemyShadow::Draw()
+{
+	obj_->Draw();
+	if (attack_ != nullptr) {
+		attack_->DrawCol();
 	}
 }
 
@@ -69,8 +80,8 @@ void EnemyShadow::MoveUpdate()
 	UpdateVector();
 
 	//実行
-	//(this->*Action[(int32_t)state_])();
-	(this->*Action[(int32_t)State::Attack])();
+	(this->*Action[(int32_t)state_])();
+	//(this->*Action[(int32_t)State::Attack])();
 
 	ImGui::Begin("Enemy");
 
@@ -92,8 +103,12 @@ void EnemyShadow::Idle()
 
 	if (actionTimer_.GetIsEnd())
 	{
-		state_ = State::Following;
+		state_ = State::Attack;
 		actionTimer_.Reset();
+		actionTimer_.SetLimitTime(70);
+		attack_.reset();
+		attack_ = std::move(std::make_unique<AttackShadow>(this, splayer_));
+		attack_->Init();
 	}
 }
 
@@ -128,12 +143,22 @@ void EnemyShadow::HideMove()
 void EnemyShadow::Attack()
 {
 	stateName_ = "Attack";
+	attack_->Update();
+	attack_->SetNowTime(actionTimer_.GetTimer());
+	actionTimer_.SetLimitTime(attack_->GetInfo().maxTime);
+	
+	actionTimer_.AddTime(1);
+	if (actionTimer_.GetIsEnd()) {
+		state_ = State::Idle;
+		actionTimer_.Reset();
+		actionTimer_.SetLimitTime(150);
+		attack_.reset();
+	}
 }
 
 void EnemyShadow::JumpAttack()
 {
 	stateName_ = "JumpAttack";
-	
 }
 
 void EnemyShadow::KnockBack()
@@ -141,6 +166,7 @@ void EnemyShadow::KnockBack()
 	stateName_ = "KnockBack";
 	//一定時間経てばノック状態からアイドル状態に戻る
 	actionTimer_.AddTime(1);
+	attack_.reset();
 	if (actionTimer_.GetIsEnd()) {
 		state_ = State::Idle;
 		isKnock_ = false;
