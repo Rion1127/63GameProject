@@ -233,9 +233,9 @@ void CollisionManager::EnemyAttackToPlayer()
 
 						player_->SetKnockVec(knockVec);
 						player_->GetDamegeCoolTime()->Reset();
+						player_->SetState(PlayerState::Knock);
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
-
 						ParticleManager::GetInstance()->
 							AddParticle("HitAttack", 3, 40, player_->GetCol().center, addVec, 0.7f);
 						SoundManager::Play("HitSE", false, 0.2f);

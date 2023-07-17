@@ -23,12 +23,6 @@ Player::Player()
 
 	scale_ = { 1,1,1 };
 
-	info_.frontVec = &frontVec_;
-	info_.WT = obj_->GetTransform();
-	info_.addVec_ = &addVec_;
-	info_.gravity = &gravity_;
-	info_.state = &state_;
-
 	attack_.SetPlayer(&state_);
 	damegeCoolTime_.SetLimitTime(50);
 }
@@ -173,21 +167,25 @@ void Player::JumpUpdate()
 
 void Player::StateUpdate()
 {
-	state_ = PlayerState::Idle;
+	if (state_ != PlayerState::Knock) {
+		state_ = PlayerState::Idle;
+	}
 	landingTimer_.AddTime(1);
 	if (landingTimer_.GetIsEnd())
 	{
-		if (isFloorCollision_ == false)
-		{
-			state_ = PlayerState::Jump;
-		}
-		if (attack_.GetIsAttacking())
-		{
-			state_ = PlayerState::Attack;
-		}
-		if (isFloorCollision_ == false && attack_.GetIsAttacking())
-		{
-			state_ = PlayerState::AirAttack;
+		if (state_ != PlayerState::Knock) {
+			if (isFloorCollision_ == false)
+			{
+				state_ = PlayerState::Jump;
+			}
+			if (attack_.GetIsAttacking())
+			{
+				state_ = PlayerState::Attack;
+			}
+			if (isFloorCollision_ == false && attack_.GetIsAttacking())
+			{
+				state_ = PlayerState::AirAttack;
+			}
 		}
 	}
 	else
@@ -246,6 +244,7 @@ void Player::DrawImGui()
 	if (state_ == PlayerState::Attack)text = "Attack";
 	if (state_ == PlayerState::AirAttack)text = "AirAttack";
 	if (state_ == PlayerState::Landing)text = "Landing";
+	if (state_ == PlayerState::Knock)text = "Knock";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
@@ -284,7 +283,8 @@ void Player::floorColision()
 bool Player::GetIsCanMove()
 {
 	if (state_ != PlayerState::Attack &&
-		state_ != PlayerState::AirAttack)
+		state_ != PlayerState::AirAttack &&
+		state_ != PlayerState::Knock)
 	{
 		return true;
 	}

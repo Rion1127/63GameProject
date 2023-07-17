@@ -8,17 +8,6 @@ enum class PlayerState {
 	Jump,
 	Attack,
 	AirAttack,
-	Landing
+	Landing,
+	Knock
 };
-//外部のファイル(IAttack,Enemy)などでプレイヤーの情報に
-//アクセスできるようにする
-struct PlayerInfo
-{
-	WorldTransform* WT;
-	Vector3* frontVec;
-	Vector3* addVec_;
-	Vector3* rot_;
-	Gravity* gravity;
-	PlayerState* state;
-};
-

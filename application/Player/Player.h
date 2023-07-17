@@ -34,7 +34,6 @@ private:
 	int jumpTime_;
 
 	AttackManager attack_;
-	PlayerInfo info_;
 	PlayerState state_;
 	//’…’nd’¼ŽžŠÔ
 	Timer landingTimer_;
@@ -68,6 +67,7 @@ public:
 	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
 	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
+	void SetState(PlayerState state) { state_ = state; }
 
 	void AddPos(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
@@ -76,7 +76,6 @@ public:
 public:
 	AttackManager* GetAttackManager() { return &attack_; }
 	Vector3 GetFrontVec() { return frontVec_; }
-	PlayerInfo* GetPlayerInfo() { return &info_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damegeCoolTime_; }
 };
