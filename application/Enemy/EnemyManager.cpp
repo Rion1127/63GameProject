@@ -23,11 +23,11 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(2, 3, 0))));
 
-	for (size_t i = 0; i < 2; i++)
+	for (auto& lockOnSprite : lockOnSprite_)
 	{
-		lockOnSprite_[i] = std::move(std::make_unique<Sprite>());
-		lockOnSprite_[i]->Ini("");
-		lockOnSprite_[i]->SetScale({ 0.5f,0.5f });
+		lockOnSprite = std::move(std::make_unique<Sprite>());
+		lockOnSprite->Ini("");
+		lockOnSprite->SetScale({ 0.5f,0.5f });
 	}
 	lockOnSprite_[0]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn1"));
 	lockOnSprite_[1]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn2"));
@@ -93,9 +93,9 @@ void EnemyManager::Draw()
 
 void EnemyManager::SpriteDraw()
 {
-	for (size_t i = 0; i < 2; i++)
+	for (auto& lockOnSprite : lockOnSprite_)
 	{
-		lockOnSprite_[i]->Draw();
+		lockOnSprite->Draw();
 	}
 	hpGauge_.Draw();
 }

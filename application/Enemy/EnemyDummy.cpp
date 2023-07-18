@@ -18,7 +18,7 @@ EnemyDummy::EnemyDummy(Vector3 pos) : IEnemy(EnemyType::Ground, true,100)
 void EnemyDummy::MoveUpdate()
 {
 	if (health_ < 100) {
-		health_ += 5;
+		health_++;
 	}
 
 	pos2D = GetScreenPos(*obj_->GetTransform(), *Camera::scurrent_);
