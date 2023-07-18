@@ -44,6 +44,10 @@ void EnemyManager::PreUpdate()
 		if (itr->get()->GetIsDead())
 		{
 			itr = enemys_.erase(itr);
+			//消した配列の次が終わりだったら
+			if (itr == enemys_.end()) continue;
+
+			lockOnEnemy_ = nullptr;
 			continue;
 		}
 		itr->get()->PreUpdate();
@@ -63,9 +67,9 @@ void EnemyManager::PreUpdate()
 	else
 	{
 		//ロックオンできる敵がいなければUIを消す
-		for (size_t i = 0; i < 2; i++)
+		for (auto& lockOnSprite : lockOnSprite_)
 		{
-			lockOnSprite_[i]->SetInvisivle(true);
+			lockOnSprite->SetInvisivle(true);
 		}
 	}
 	//hpゲージにロックオン中の敵をセット

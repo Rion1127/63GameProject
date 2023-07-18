@@ -78,4 +78,5 @@ void PlayerHPGauge::Damage()
 	Color color = hpBarMiddle_->GetColor();
 	color.a = 255.f;
 	hpBarMiddle_->SetColor(color);
+	hpBarMiddle_->SetScale(hpBar_->GetScale());
 }
