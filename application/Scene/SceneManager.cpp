@@ -5,12 +5,13 @@
 #include "Easing.h"
 #include "ParticleScene.h"
 #include "DebugScene.h"
+#include "TitleScene.h"
 
 
 void SceneManager::Ini()
 {
 	//ビルド開始時のシーン
-	Transition<GameScene>();
+	Transition<TitleScene>();
 	
 
 	

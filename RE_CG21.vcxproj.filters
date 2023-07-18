@@ -447,6 +447,9 @@
     <ClCompile Include="application\Player\PlayerHPGauge.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Scene\TitleScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -691,6 +694,9 @@
     </ClInclude>
     <ClInclude Include="application\Player\PlayerHPGauge.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Scene\TitleScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

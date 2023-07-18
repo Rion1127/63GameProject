@@ -42,6 +42,7 @@
     <ClCompile Include="application\Scene\GameScene.cpp" />
     <ClCompile Include="application\Scene\ParticleScene.cpp" />
     <ClCompile Include="application\Scene\SceneManager.cpp" />
+    <ClCompile Include="application\Scene\TitleScene.cpp" />
     <ClCompile Include="application\Shader\Bloom.cpp" />
     <ClCompile Include="application\Shader\CrossFilter.cpp" />
     <ClCompile Include="application\Shader\GaussianBlur.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="application\Scene\GameScene.h" />
     <ClInclude Include="application\Scene\ParticleScene.h" />
     <ClInclude Include="application\Scene\SceneManager.h" />
+    <ClInclude Include="application\Scene\TitleScene.h" />
     <ClInclude Include="application\Shader\Bloom.h" />
     <ClInclude Include="application\Shader\CrossFilter.h" />
     <ClInclude Include="application\Shader\GaussianBlur.h" />

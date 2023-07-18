@@ -13,15 +13,14 @@
 #include "CollisionManager.h"
 #include "EnemyManager.h"
 
-class GameScene final:
+class TitleScene
+	final :
 	public EmptyScene
 {
 private:
 	Controller* controller_ = nullptr;
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
-	
-	GameCamera gameCamera_;
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
@@ -34,7 +33,7 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager_;
 
 public:
-	~GameScene();
+	~TitleScene();
 
 	void Ini()override;
 
