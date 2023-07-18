@@ -25,6 +25,7 @@ Player::Player()
 
 	attack_.SetPlayer(&state_);
 	damegeCoolTime_.SetLimitTime(50);
+	health_ = 100;
 }
 
 void Player::PreUpdate()
@@ -289,4 +290,8 @@ bool Player::GetIsCanMove()
 		return true;
 	}
 	return false;
+}
+
+void Player::Damage(int32_t damage, Vector3 knockVec)
+{
 }

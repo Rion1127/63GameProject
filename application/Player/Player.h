@@ -37,6 +37,8 @@ private:
 	PlayerState state_;
 	//’…’nd’¼ŽžŠÔ
 	Timer landingTimer_;
+
+	int32_t health_;
 private:
 	Controller* controller_ = nullptr;
 public:
@@ -62,6 +64,8 @@ public:
 	void floorColision();
 
 	bool GetIsCanMove();
+
+	void Damage(int32_t damage, Vector3 knockVec);
 public:
 	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }

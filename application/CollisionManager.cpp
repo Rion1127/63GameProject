@@ -171,7 +171,10 @@ void CollisionManager::PlayerToEnemy()
 			//ƒxƒNƒgƒ‹‚Ì’·‚³‚ðˆø‚¢‚Ä‚ß‚èž‚ñ‚Å‚¢‚é’·‚³•ª‚¾‚¯‰Ÿ‚µ–ß‚·()
 			backLength -= length;
 
-			player_->SetAddPos(PtoEVec * backLength);
+			Vector3 pushBackVec = PtoEVec * backLength;
+
+			player_->SetAddPos(pushBackVec / 2.f);
+			enemy->AddVec(-pushBackVec / 2.f);
 		}
 	}
 }
@@ -198,6 +201,8 @@ void CollisionManager::PlayerAttackToEnemy()
 						knockVec = knockVec * enemy->GetKnockResist();
 						enemy->HitPlayerAttack(knockVec, col->damage, col->damageCoolTime);
 						enemy->SetIsNock(true);
+
+					
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 
@@ -232,6 +237,7 @@ void CollisionManager::EnemyAttackToPlayer()
 						knockVec = knockVec * enemy->GetKnockResist();
 
 						player_->SetKnockVec(knockVec);
+						player_->SetAddPos({0,0,0});
 						player_->GetDamegeCoolTime()->Reset();
 						player_->SetState(PlayerState::Knock);
 
@@ -241,7 +247,6 @@ void CollisionManager::EnemyAttackToPlayer()
 						SoundManager::Play("HitSE", false, 0.2f);
 					}
 				}
-
 			}
 		}
 	}
