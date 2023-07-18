@@ -96,6 +96,11 @@ void EnemyManager::SpriteDraw()
 	hpGauge_.Draw();
 }
 
+void EnemyManager::Damage()
+{
+	hpGauge_.Damage();
+}
+
 void EnemyManager::LockOnSpriteUpdate()
 {
 	bool isHardLockOn = lockOnEnemy_->GetIsHardLockOn();

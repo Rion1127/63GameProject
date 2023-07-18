@@ -58,7 +58,7 @@ void EnemyShadow::MoveUpdate()
 {
 	if (health_ < 100)
 	{
-		health_ += 5;
+		//health_ += 5;
 	}
 	//ステータスごとの動きを追加
 	void (EnemyShadow:: *Action[]) () =

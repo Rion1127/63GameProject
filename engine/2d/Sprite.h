@@ -130,6 +130,7 @@ public:
 	//ÉQÉbÉ^Å[
 	Vector2 GetScale() { return Scale_; }
 	Vector2 GetPos() { return pos_; }
+	Color GetColor() { return color_; }
 private:
 	void TransferVertex();
 };

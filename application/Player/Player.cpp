@@ -310,4 +310,5 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	health_ -= damage;
 	knockVec_ = knockVec;
 	damageCoolTime_.Reset();
+	hpGauge_.Damage();
 }

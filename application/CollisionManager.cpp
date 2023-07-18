@@ -202,7 +202,7 @@ void CollisionManager::PlayerAttackToEnemy()
 						enemy->HitPlayerAttack(knockVec, col->damage, col->damageCoolTime);
 						enemy->SetIsNock(true);
 
-					
+						enemyManager_->Damage();
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 
@@ -236,9 +236,6 @@ void CollisionManager::EnemyAttackToPlayer()
 						//“G‚ÌƒmƒbƒNƒoƒbƒN’ïR—Í‚ðŠ|‚¯‚é
 						knockVec = knockVec * enemy->GetKnockResist();
 
-						/*player_->SetKnockVec(knockVec);
-						player_->SetAddPos({0,0,0});
-						player_->GetDamegeCoolTime()->Reset();*/
 						player_->Damage(col->damage, knockVec);
 						player_->SetState(PlayerState::Knock);
 

@@ -5,6 +5,7 @@ class EnemyHPGauge
 {
 private:
 	std::unique_ptr<Sprite> hpBar_;
+	std::unique_ptr<Sprite> hpBarMiddle_;	//ダメージが減った分を赤く表示する
 	std::unique_ptr<Sprite> hpBarBack_;
 
 	Vector2 offsetPos_;
@@ -19,6 +20,7 @@ public:
 	EnemyHPGauge();
 	void Update();
 	void Draw();
+	void Damage();
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
 };

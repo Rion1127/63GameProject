@@ -23,6 +23,7 @@ public:
 	void PostUpdate();
 	void Draw();
 	void SpriteDraw();
+	void Damage();
 private:
 	void LockOnSpriteUpdate();
 public:
