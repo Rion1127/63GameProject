@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\CollisionManager.cpp" />
+    <ClCompile Include="application\Enemy\AttackShadow.cpp" />
     <ClCompile Include="application\Enemy\EnemyAirDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="application\Player\PlayerAttack.cpp" />
     <ClCompile Include="application\Player\PlayerInfo.cpp" />
     <ClCompile Include="application\Player\Attack2.cpp" />
+    <ClCompile Include="application\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Scene\GameScene.cpp" />
     <ClCompile Include="application\Scene\ParticleScene.cpp" />
     <ClCompile Include="application\Scene\SceneManager.cpp" />
@@ -45,8 +47,6 @@
     <ClCompile Include="application\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Shader\Noise.cpp" />
-    <ClCompile Include="AttackShadow.cpp" />
-    <ClCompile Include="DebugScene.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -119,6 +119,7 @@
     <ClInclude Include="application\Player\PlayerAttack.h" />
     <ClInclude Include="application\Player\PlayerInfo.h" />
     <ClInclude Include="application\Player\Attack2.h" />
+    <ClInclude Include="application\Scene\DebugScene.h" />
     <ClInclude Include="application\Scene\GameScene.h" />
     <ClInclude Include="application\Scene\ParticleScene.h" />
     <ClInclude Include="application\Scene\SceneManager.h" />
@@ -128,7 +129,6 @@
     <ClInclude Include="application\Shader\HighLumi.h" />
     <ClInclude Include="application\Shader\LineBlur.h" />
     <ClInclude Include="application\Shader\Noise.h" />
-    <ClInclude Include="DebugScene.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />

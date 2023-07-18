@@ -423,9 +423,6 @@
     <ClCompile Include="application\Enemy\EnemyAirDummy.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="DebugScene.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
@@ -441,7 +438,10 @@
     <ClCompile Include="application\Enemy\IEnemy.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="AttackShadow.cpp">
+    <ClCompile Include="application\Scene\DebugScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\AttackShadow.cpp">
       <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClCompile>
   </ItemGroup>
@@ -665,9 +665,6 @@
     <ClInclude Include="application\Enemy\EnemyAirDummy.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="DebugScene.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Enemy\EnemyHPGauge.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
@@ -685,6 +682,9 @@
     </ClInclude>
     <ClInclude Include="application\Enemy\AttackShadow.h">
       <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Scene\DebugScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
