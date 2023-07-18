@@ -1,5 +1,6 @@
 #include "TitleScene.h"
-
+#include "SceneManager.h"
+#include "GameScene.h"
 TitleScene::~TitleScene()
 {
 }
@@ -9,22 +10,31 @@ void TitleScene::Ini()
 	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
 
-	lightManager_ = std::make_shared<LightManager>();
-	colManager_ = std::make_unique<CollisionManager>();
-	enemyManager_ = std::make_unique<EnemyManager>();
-	Model::SetLight(lightManager_->GetLightGroup());
+	pressASprite_ = std::move(std::make_unique<Sprite>());
+	pressASprite_->Ini();
+	pressASprite_->SetTexture(TextureManager::GetInstance()->GetTexture("PressA"));
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		WinAPI::GetWindowSize().y / 1.2f
+	};
+	pressASprite_->SetPos(pos);
 }
 
 void TitleScene::Update()
 {
 	CameraUpdate();
-	lightManager_->DebugUpdate();
+	
+	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A)) {
+		SceneManager::SetChangeStart(SceneName::Game);
+	}
+
+	pressASprite_->Update();
 }
 
 void TitleScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-
+	pressASprite_->Draw();
 	
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 

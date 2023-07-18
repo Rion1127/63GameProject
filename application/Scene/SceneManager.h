@@ -5,34 +5,41 @@
 #include "Sprite.h"
 #include "DirectX.h"
 #include "Util.h"
+#include "Timer.h"
+
+enum class SceneName {
+	Title,
+	Game,
+	GameOver
+};
+
 class SceneManager
 {
-public:
+private:
 	static std::unique_ptr<EmptyScene> scurrentScene_;
 
-	static uint32_t ssceneNum_;
-	static bool sisNext_;
-	static bool sisDifferent;
+	static SceneName ssceneName_;
+	static bool sisSetNext_;
+	static Timer animeTimer_;
 public:
 	static void Ini();
 	static void Update();
 	static void Draw();
 
 	template <class NextScene>
-	//なぜかインラインで宣言しないとエラーが起こる
 	static inline void Transition() {
-		/*deletee*/ scurrentScene_.release();
+		scurrentScene_.release();
 		scurrentScene_ = std::unique_ptr<NextScene>(new NextScene());
 		scurrentScene_->Ini();
 	}
-	static inline void SetChangeStart(uint32_t sceneNum) {
-		if (sisNext_ == false) {
-			
-			ssceneNum_ = sceneNum;
-			sisNext_ = true;
-			sisDifferent = true;
+	static inline void SetChangeStart(const SceneName sceneName) {
+		if (sisSetNext_ == false) {
+			ssceneName_ = sceneName;
+			sisSetNext_ = true;
 		}
 	}
+private:
+	static void SceneChange();
 };
 
 

@@ -22,15 +22,9 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 
-	std::shared_ptr<LightManager> lightManager_ = nullptr;
+	
 
-	//°
-	std::unique_ptr<Floor> floor_;
-	//ƒvƒŒƒCƒ„[
-	std::unique_ptr<Player> player_;
-
-	std::unique_ptr<CollisionManager> colManager_;
-	std::unique_ptr<EnemyManager> enemyManager_;
+	std::unique_ptr<Sprite> pressASprite_;
 
 public:
 	~TitleScene();

@@ -27,6 +27,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");
 
+	//ƒ{ƒ^ƒ“UI
+	LoadGraph("pressA.png", "PressA");
+
 }
 
 void LoadManager::LoadSound()

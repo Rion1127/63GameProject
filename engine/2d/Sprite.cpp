@@ -193,7 +193,6 @@ void Sprite::Ini(const std::string& guiname)
 	};
 	//ÉXÉPÅ[Éã
 	Scale_ = { 1.f,1.f };
-	color_ = { 1,1,1,1 };
 	anchorPoint_ = { 0.5f,0.5f };
 #pragma endregion
 }

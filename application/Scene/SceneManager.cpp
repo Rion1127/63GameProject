@@ -7,6 +7,10 @@
 #include "DebugScene.h"
 #include "TitleScene.h"
 
+std::unique_ptr<EmptyScene> SceneManager::scurrentScene_ = nullptr;
+SceneName SceneManager::ssceneName_;
+bool SceneManager::sisSetNext_ = false;
+Timer SceneManager::animeTimer_;
 
 void SceneManager::Ini()
 {
@@ -14,14 +18,21 @@ void SceneManager::Ini()
 	Transition<TitleScene>();
 	
 
-	
+	animeTimer_.SetLimitTime(120);
 }
 
 void SceneManager::Update()
 {
 	scurrentScene_->Update();
 
-	
+	//切り替えアニメーション開始
+	if (sisSetNext_) {
+		animeTimer_.AddTime(1);
+		//シーン遷移
+		if (animeTimer_.GetIsEnd()) {
+			SceneChange();
+		}
+	}
 }
 
 void SceneManager::Draw()
@@ -30,5 +41,20 @@ void SceneManager::Draw()
 	scurrentScene_->Draw();
 }
 
-std::unique_ptr<EmptyScene> SceneManager::scurrentScene_ = nullptr;
+void SceneManager::SceneChange()
+{
+	if (ssceneName_ == SceneName::Title) {
+		Transition<TitleScene>();
+	}
+	else if (ssceneName_ == SceneName::Game) {
+		Transition<GameScene>();
+	}
+	else if (ssceneName_ == SceneName::GameOver) {
+		//Transition<GameScene>();
+	}
+
+	animeTimer_.Reset();
+	sisSetNext_ = false;
+}
+
 
