@@ -15,7 +15,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
-	damegeCoolTime_.SetLimitTime(30);
+	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 
 	state_ = State::Idle;

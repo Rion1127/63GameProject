@@ -23,7 +23,7 @@ void IEnemy::PreUpdate()
 		gravity_.Update();
 	}
 
-	damegeCoolTime_.AddTime(1);
+	damageCoolTime_.AddTime(1);
 
 	if (health_ <= 0)
 	{
@@ -73,11 +73,11 @@ void IEnemy::ColPosUpdate()
 
 void IEnemy::HitPlayerAttack(Vector3 knockVec, int32_t damageValue, int32_t cooltime)
 {
-	if (damegeCoolTime_.GetIsEnd())
+	if (damageCoolTime_.GetIsEnd())
 	{
 		knockVec_ = knockVec;
-		damegeCoolTime_.SetLimitTime(cooltime);
-		damegeCoolTime_.Reset();
+		damageCoolTime_.SetLimitTime(cooltime);
+		damageCoolTime_.Reset();
 		health_ -= damageValue;
 	}
 

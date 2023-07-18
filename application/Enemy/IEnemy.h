@@ -53,7 +53,7 @@ public:
 	bool GetIsSoftLockOn() { return isSoftLockOn_; }
 	bool GetIsHardLockOn() { return isHardLockOn_; }
 	bool GetIsDead() { return isDead_; }
-	Timer GetDamageCoolTime() { return damegeCoolTime_; }
+	Timer GetDamageCoolTime() { return damageCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }
 	int32_t GetHealth() { return health_; }
 	int32_t GetMaxHealth() { return maxHealth_; }

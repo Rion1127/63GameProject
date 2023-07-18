@@ -10,7 +10,7 @@ EnemyDummy::EnemyDummy(Vector3 pos) : IEnemy(EnemyType::Ground, true,100)
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
-	damegeCoolTime_.SetLimitTime(30);
+	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 
 }

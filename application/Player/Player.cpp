@@ -24,8 +24,10 @@ Player::Player()
 	scale_ = { 1,1,1 };
 
 	attack_.SetPlayer(&state_);
-	damegeCoolTime_.SetLimitTime(50);
-	health_ = 100;
+	damageCoolTime_.SetLimitTime(50);
+	maxHealth_ = 100;
+	health_ = maxHealth_;
+	isAlive_ = true;
 }
 
 void Player::PreUpdate()
@@ -46,7 +48,8 @@ void Player::PreUpdate()
 
 	ColPosUpdate();
 
-	damegeCoolTime_.AddTime(1);
+	damageCoolTime_.AddTime(1);
+	hpGauge_.Update(maxHealth_,health_);
 }
 
 void Player::PostUpdate()
@@ -66,6 +69,11 @@ void Player::PostUpdate()
 	obj_->WT_.position_ += addVec_;
 	obj_->WT_.scale_ = scale_;
 	obj_->Update();
+
+	if (health_ <= 0)
+	{
+		isAlive_ = false;
+	}
 }
 
 void Player::GravityUpdate()
@@ -265,6 +273,11 @@ void Player::DrawImGui()
 
 }
 
+void Player::DrawSprite()
+{
+	hpGauge_.Draw();
+}
+
 void Player::floorColision()
 {
 	//前フレームで地面に接していなかったとき
@@ -294,4 +307,7 @@ bool Player::GetIsCanMove()
 
 void Player::Damage(int32_t damage, Vector3 knockVec)
 {
+	health_ -= damage;
+	knockVec_ = knockVec;
+	damageCoolTime_.Reset();
 }

@@ -13,7 +13,7 @@ protected:
 	Gravity gravity_;
 	Vector3 knockVec_;
 	Vector3 knockResist_;
-	Timer damegeCoolTime_;
+	Timer damageCoolTime_;
 public:
 	Sphere GetCol() { return col_; }
 	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }

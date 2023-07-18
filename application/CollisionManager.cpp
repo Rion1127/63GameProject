@@ -171,10 +171,10 @@ void CollisionManager::PlayerToEnemy()
 			//ƒxƒNƒgƒ‹‚Ì’·‚³‚ðˆø‚¢‚Ä‚ß‚èž‚ñ‚Å‚¢‚é’·‚³•ª‚¾‚¯‰Ÿ‚µ–ß‚·()
 			backLength -= length;
 
-			Vector3 pushBackVec = PtoEVec * backLength;
+			Vector3 pushBackVec = (PtoEVec * backLength) / 2.f;
 
-			player_->SetAddPos(pushBackVec / 2.f);
-			enemy->AddVec(-pushBackVec / 2.f);
+			player_->SetAddPos(pushBackVec);
+			enemy->AddVec(-pushBackVec);
 		}
 	}
 }
@@ -236,9 +236,10 @@ void CollisionManager::EnemyAttackToPlayer()
 						//“G‚ÌƒmƒbƒNƒoƒbƒN’ïR—Í‚ðŠ|‚¯‚é
 						knockVec = knockVec * enemy->GetKnockResist();
 
-						player_->SetKnockVec(knockVec);
+						/*player_->SetKnockVec(knockVec);
 						player_->SetAddPos({0,0,0});
-						player_->GetDamegeCoolTime()->Reset();
+						player_->GetDamegeCoolTime()->Reset();*/
+						player_->Damage(col->damage, knockVec);
 						player_->SetState(PlayerState::Knock);
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };

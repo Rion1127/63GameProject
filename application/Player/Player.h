@@ -8,7 +8,7 @@
 #include "Gravity.h"
 #include "AttackManager.h"
 #include "IActor.h"
-
+#include "PlayerHPGauge.h"
 
 class Player final:
 	public IActor
@@ -31,13 +31,16 @@ private:
 	float moveSpeed_;
 
 	bool isJump_;
+	bool isAlive_;
 	int jumpTime_;
 
 	AttackManager attack_;
+	PlayerHPGauge hpGauge_;
 	PlayerState state_;
 	//íÖínçdíºéûä‘
 	Timer landingTimer_;
 
+	int32_t maxHealth_;
 	int32_t health_;
 private:
 	Controller* controller_ = nullptr;
@@ -61,6 +64,8 @@ public:
 
 	void DrawImGui();
 
+	void DrawSprite();
+
 	void floorColision();
 
 	bool GetIsCanMove();
@@ -81,6 +86,6 @@ public:
 	AttackManager* GetAttackManager() { return &attack_; }
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerState GetState() { return state_; }
-	Timer* GetDamegeCoolTime() { return &damegeCoolTime_; }
+	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
 };
 

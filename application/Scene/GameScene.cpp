@@ -74,6 +74,7 @@ void GameScene::Draw()
 	////////////
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	enemyManager_->SpriteDraw();
+	player_->DrawSprite();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
