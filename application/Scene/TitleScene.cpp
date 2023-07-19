@@ -24,7 +24,8 @@ void TitleScene::Update()
 {
 	CameraUpdate();
 	
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A)) {
+	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
+		Key::TriggerKey(DIK_SPACE)) {
 		SceneManager::SetChangeStart(SceneName::Game);
 	}
 

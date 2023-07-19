@@ -28,8 +28,8 @@ public:
 
 	template <class NextScene>
 	static inline void Transition() {
-		scurrentScene_.release();
-		scurrentScene_ = std::unique_ptr<NextScene>(new NextScene());
+		scurrentScene_.reset();
+		scurrentScene_ = std::move(std::make_unique<NextScene>());
 		scurrentScene_->Ini();
 	}
 	static inline void SetChangeStart(const SceneName sceneName) {
