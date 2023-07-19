@@ -87,12 +87,13 @@ void SceneManager::SceneChange()
 	}
 
 	sisSetNext_ = false;
-	animeTimer_.Reset();
+	
 }
 
 void SceneManager::SetChangeStart(const SceneName sceneName) {
 	if (sisSetNext_ == false)
 	{
+		
 		ssceneName_ = sceneName;
 		sisSetNext_ = true;
 
@@ -104,7 +105,7 @@ void SceneManager::SetChangeStart(const SceneName sceneName) {
 		//ゲームオーバーシーンへ
 		else if (sceneName == SceneName::GameOver)
 		{
-			animeTimer_.SetLimitTime(180);
+			animeTimer_.SetLimitTime(120);
 		}
 	}
 }

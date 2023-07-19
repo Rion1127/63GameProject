@@ -19,6 +19,9 @@ private:
 
 	std::unique_ptr<Sprite> pressASprite_;
 
+	std::unique_ptr<Sprite> titleSprite_;
+	std::unique_ptr<Sprite> retrySprite_;
+
 public:
 	~GameOverScene();
 

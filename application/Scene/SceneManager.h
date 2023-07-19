@@ -35,6 +35,8 @@ public:
 		scurrentScene_->Ini();
 	}
 	static void SetChangeStart(const SceneName sceneName);
+public:
+	static bool GetIsSetNext() { return sisSetNext_; }
 private:
 	static void SceneChange();
 };

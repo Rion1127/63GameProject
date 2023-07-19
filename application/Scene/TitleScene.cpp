@@ -25,9 +25,12 @@ void TitleScene::Update()
 	CameraUpdate();
 	
 	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
-		Key::TriggerKey(DIK_SPACE)) {
+		Key::TriggerKey(DIK_SPACE)) 
+	{
+		if (SceneManager::GetIsSetNext() == false) {
+			SoundManager::Play("EnterSE", false, 1.5f);
+		}
 		SceneManager::SetChangeStart(SceneName::Game);
-		SoundManager::Play("EnterSE",false,1.5f);
 	}
 
 	pressASprite_->Update();

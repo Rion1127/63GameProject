@@ -454,7 +454,7 @@
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Scene\GameOverScene.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -708,7 +708,7 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Scene\GameOverScene.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

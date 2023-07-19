@@ -21,6 +21,7 @@ void Timer::AddTime(int32_t addValue)
 	{
 		//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
 		if (timer_ >= limitTime_) isEnd_ = true;
+		else isEnd_ = false;
 	}
 }
 
@@ -37,6 +38,7 @@ void Timer::SubTime(int32_t addValue)
 	{
 		//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
 		if (timer_ >= limitTime_) isEnd_ = true;
+		else isEnd_ = false;
 	}
 }
 

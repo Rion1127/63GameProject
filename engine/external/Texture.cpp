@@ -45,7 +45,7 @@ void TextureManager::LoadGraph(const std::string& fileName, const std::string& n
 	//最終的なファイル名
 	std::string allFileName;
 
-	std::string find_Name = "application/Resources/";
+	std::string find_Name = "application/Resources/Texture/";
 	size_t strPos = fileName.find(find_Name);
 	//"Resources/"　が文字列の最初になければ文字列を足す
 	if (strPos == 0)

@@ -13,7 +13,13 @@ void GameOverScene::Ini()
 	sound_ = SoundManager::GetInstance();
 
 	pressASprite_ = std::move(std::make_unique<Sprite>());
+	titleSprite_ = std::move(std::make_unique<Sprite>());
+	retrySprite_ = std::move(std::make_unique<Sprite>());
+
 	pressASprite_->Ini();
+	titleSprite_->Ini();
+	retrySprite_->Ini();
+
 	pressASprite_->SetTexture(TextureManager::GetInstance()->GetTexture("PressA"));
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
@@ -29,8 +35,10 @@ void GameOverScene::Update()
 	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
 	{
+		if (SceneManager::GetIsSetNext() == false) {
+			SoundManager::Play("EnterSE", false, 1.5f);
+		}
 		SceneManager::SetChangeStart(SceneName::Game);
-		SoundManager::Play("EnterSE", false, 1.5f);
 	}
 
 	pressASprite_->Update();
