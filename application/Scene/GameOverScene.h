@@ -21,6 +21,7 @@ private:
 
 	std::unique_ptr<Sprite> titleSprite_;
 	std::unique_ptr<Sprite> retrySprite_;
+	std::unique_ptr<Sprite> backSprite_;
 
 public:
 	~GameOverScene();

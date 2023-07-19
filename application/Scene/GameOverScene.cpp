@@ -15,17 +15,23 @@ void GameOverScene::Ini()
 	pressASprite_ = std::move(std::make_unique<Sprite>());
 	titleSprite_ = std::move(std::make_unique<Sprite>());
 	retrySprite_ = std::move(std::make_unique<Sprite>());
+	backSprite_ = std::move(std::make_unique<Sprite>());
 
 	pressASprite_->Ini();
 	titleSprite_->Ini();
 	retrySprite_->Ini();
+	backSprite_->Ini();
 
 	pressASprite_->SetTexture(TextureManager::GetInstance()->GetTexture("PressA"));
+	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 2.2f
 	};
 	pressASprite_->SetPos(pos);
+
+	backSprite_->SetAnchor({ 0,0 });
+	backSprite_->SetColor(Color(0, 0, 0, 255));
 }
 
 void GameOverScene::Update()
@@ -40,13 +46,14 @@ void GameOverScene::Update()
 		}
 		SceneManager::SetChangeStart(SceneName::Game);
 	}
-
+	backSprite_->Update();
 	pressASprite_->Update();
 }
 
 void GameOverScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	backSprite_->Draw();
 	pressASprite_->Draw();
 
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
