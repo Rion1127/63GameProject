@@ -7,8 +7,7 @@
 #include "EmptyScene.h"
 #include "LightManager.h"
 
-class TitleScene
-	final :
+class GameOverScene final :
 	public EmptyScene
 {
 private:
@@ -16,12 +15,12 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 
-	
+
 
 	std::unique_ptr<Sprite> pressASprite_;
-	
+
 public:
-	~TitleScene();
+	~GameOverScene();
 
 	void Ini()override;
 
@@ -31,4 +30,3 @@ public:
 private:
 	void CameraUpdate();
 };
-

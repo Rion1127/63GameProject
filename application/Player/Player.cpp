@@ -70,6 +70,18 @@ void Player::PostUpdate()
 	obj_->WT_.scale_ = scale_;
 	obj_->Update();
 
+#ifdef _DEBUG
+	if (Key::TriggerKey(DIK_1))
+	{
+		health_ = 100;
+	}
+	if (Key::TriggerKey(DIK_2))
+	{
+		Damage(10, {0,0,0});
+	}
+#endif // _DEBUG
+
+
 	if (health_ <= 0)
 	{
 		isAlive_ = false;
@@ -262,13 +274,15 @@ void Player::DrawImGui()
 	float gravity = gravity_.GetGravityValue().y;
 	ImGui::SliderFloat("gravity", &gravity, -80.f, 0.f, "y = %.3f");
 
-
-	//ImGui::SliderFloat("front.x", &resultVec2.x, 0.0f, 2000.0f, "x = %.3f");
-	//ImGui::SliderFloat("front.y", &resultVec2.y, 0.0f, 2000.0f, "y = %.3f");
-
-	//ImGui::SliderFloat("input.x", &inputVec_.x, -10.0f, 10.0f, "x = %.3f");
-	//ImGui::SliderFloat("input.y", &inputVec_.y, -10.0f, 10.0f, "y = %.3f");
-
+	if (ImGui::Button("Damage"))
+	{
+		Damage(10, { 0,0,0 });
+	}
+	if (ImGui::Button("Max_Heal"))
+	{
+		health_ = 100;
+	}
+	
 	ImGui::End();
 
 }

@@ -36,7 +36,17 @@ EnemyManager::EnemyManager()
 void EnemyManager::PreUpdate()
 {
 	lockOnEnemy_ = nullptr;
+#ifdef _DEBUG
 	
+	ImGui::Begin("EnemyManager");
+	if (ImGui::Button("POP_EnemyShadow"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
+	}
+	ImGui::End();
+#endif // _DEBUG
+
+
 	std::list<std::unique_ptr<IEnemy>>::iterator itr;
 	for (itr = enemys_.begin(); itr != enemys_.end();)
 	{
@@ -53,14 +63,16 @@ void EnemyManager::PreUpdate()
 		itr->get()->PreUpdate();
 		//ロックオンしている敵のアドレスを代入
 		if (itr->get()->GetIsSoftLockOn() ||
-			itr->get()->GetIsHardLockOn()) {
+			itr->get()->GetIsHardLockOn())
+		{
 			lockOnEnemy_ = itr->get();
 		}
 
 		itr++;
 	}
-	
-	if (lockOnEnemy_ != nullptr) {
+
+	if (lockOnEnemy_ != nullptr)
+	{
 		//ロックオンスプライト更新
 		LockOnSpriteUpdate();
 	}
@@ -79,14 +91,16 @@ void EnemyManager::PreUpdate()
 
 void EnemyManager::PostUpdate()
 {
-	for (auto& enemy : enemys_) {
+	for (auto& enemy : enemys_)
+	{
 		enemy->PostUpdate();
 	}
 }
 
 void EnemyManager::Draw()
 {
-	for (auto& enemy : enemys_) {
+	for (auto& enemy : enemys_)
+	{
 		enemy->Draw();
 	}
 }
@@ -111,7 +125,7 @@ void EnemyManager::LockOnSpriteUpdate()
 	lockOnobjTimer_.AddTime(1);
 
 	lockOnobjRot++;
-	
+
 	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 	{
 		addRot = 10.f;
@@ -136,7 +150,7 @@ void EnemyManager::LockOnSpriteUpdate()
 		{
 			lockOnSprite_[0]->SetInvisivle(true);
 			lockOnSprite_[1]->SetInvisivle(false);
-			lockOnSprite_[i]->SetColor(Color(240,175,30,255));
+			lockOnSprite_[i]->SetColor(Color(240, 175, 30, 255));
 		}
 
 		WorldTransform lockOnWT = *lockOnEnemy_->GetWorldTransform();

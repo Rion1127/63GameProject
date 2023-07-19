@@ -10,7 +10,8 @@
 enum class SceneName {
 	Title,
 	Game,
-	GameOver
+	GameOver,
+	None
 };
 
 class SceneManager
@@ -21,6 +22,7 @@ private:
 	static SceneName ssceneName_;
 	static bool sisSetNext_;
 	static Timer animeTimer_;
+	static Sprite whiteSprite_;
 public:
 	static void Ini();
 	static void Update();
@@ -32,12 +34,7 @@ public:
 		scurrentScene_ = std::move(std::make_unique<NextScene>());
 		scurrentScene_->Ini();
 	}
-	static inline void SetChangeStart(const SceneName sceneName) {
-		if (sisSetNext_ == false) {
-			ssceneName_ = sceneName;
-			sisSetNext_ = true;
-		}
-	}
+	static void SetChangeStart(const SceneName sceneName);
 private:
 	static void SceneChange();
 };

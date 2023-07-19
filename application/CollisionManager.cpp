@@ -143,7 +143,7 @@ void CollisionManager::EnemyLockOn()
 		//自分でロックオンする敵を設定
 		if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 		{
-			SoundManager::Play("lockOnSE", false, 0.2f);
+			SoundManager::Play("lockOnSE", false, 0.5f);
 			//ロックオンしていれば解除、していなければロックオン
 			bool isLockOn = (enemyManager_->GetLockOnEnemy()->GetIsHardLockOn() == true) ?
 				false : true;
@@ -207,7 +207,7 @@ void CollisionManager::PlayerAttackToEnemy()
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 
 						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 0.7f);
-						SoundManager::Play("HitSE", false, 0.2f);
+						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
 			}
@@ -242,7 +242,7 @@ void CollisionManager::EnemyAttackToPlayer()
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 						ParticleManager::GetInstance()->
 							AddParticle("HitAttack", 3, 40, player_->GetCol().center, addVec, 0.7f);
-						SoundManager::Play("HitSE", false, 0.2f);
+						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
 			}

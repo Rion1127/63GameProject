@@ -49,6 +49,11 @@ void GameScene::Update()
 
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
+
+	if (player_->GetIsAlive() == false)
+	{
+		SceneManager::SetChangeStart(SceneName::GameOver);
+	}
 }
 
 void GameScene::Draw()

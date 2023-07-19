@@ -39,6 +39,7 @@
     <ClCompile Include="application\Player\PlayerInfo.cpp" />
     <ClCompile Include="application\Player\Attack2.cpp" />
     <ClCompile Include="application\Scene\DebugScene.cpp" />
+    <ClCompile Include="application\Scene\GameOverScene.cpp" />
     <ClCompile Include="application\Scene\GameScene.cpp" />
     <ClCompile Include="application\Scene\ParticleScene.cpp" />
     <ClCompile Include="application\Scene\SceneChangeAnimation.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="application\Player\PlayerInfo.h" />
     <ClInclude Include="application\Player\Attack2.h" />
     <ClInclude Include="application\Scene\DebugScene.h" />
+    <ClInclude Include="application\Scene\GameOverScene.h" />
     <ClInclude Include="application\Scene\GameScene.h" />
     <ClInclude Include="application\Scene\ParticleScene.h" />
     <ClInclude Include="application\Scene\SceneChangeAnimation.h" />

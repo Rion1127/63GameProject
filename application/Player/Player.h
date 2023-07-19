@@ -87,5 +87,6 @@ public:
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
+	bool GetIsAlive() { return isAlive_; }
 };
 

@@ -37,4 +37,5 @@ void LoadManager::LoadSound()
 	LoadWave("swingSE.wav", "SwingSE");
 	LoadWave("hitSE.wav", "HitSE");
 	LoadWave("lockOnSE.wav", "lockOnSE");
+	LoadWave("enterSE.wav", "EnterSE");
 }

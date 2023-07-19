@@ -453,6 +453,9 @@
     <ClCompile Include="application\Scene\SceneChangeAnimation.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Scene\GameOverScene.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -702,6 +705,9 @@
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="application\Scene\SceneChangeAnimation.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Scene\GameOverScene.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
