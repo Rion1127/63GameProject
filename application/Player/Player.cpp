@@ -14,7 +14,7 @@ Player::Player()
 	inputAngle_ = 0.0f;
 
 	//ˆÚ“®‘¬“x
-	moveSpeed_ = 0.3f;
+	moveSpeed_ = 0.02f;
 
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
@@ -121,7 +121,7 @@ void Player::InputVecUpdate()
 		moveVec2.x = (frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y);
 		moveVec2.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
 		moveVec2.x = -moveVec2.x;
-		moveVec2 *= 0.01f;
+		moveVec2 *= moveSpeed_;
 	}
 
 	addVec_ += {moveVec2.x, 0, moveVec2.y};

@@ -60,7 +60,7 @@ void CollisionManager::PlayerToFloor()
 			float dist = player_->GetCol().center.y  - floor_->GetPlaneCol().distance;
 			if (player_->GetCol().radius <= dist)
 			{
-				player_->GetWorldTransform()->position_.y -= dist * 0.05f;
+				player_->GetWorldTransform()->position_.y -= dist * 0.1f;
 			}
 			player_->ColPosUpdate();
 			player_->GetGravity()->SetGrabity({ 0,0,0 });
@@ -95,7 +95,7 @@ void CollisionManager::EnemyToFloor()
 				float dist = enemy->GetCol().center.y - floor_->GetPlaneCol().distance;
 				if (enemy->GetCol().radius <= dist)
 				{
-					enemy->GetWorldTransform()->position_.y -= dist * 0.05f;
+					enemy->GetWorldTransform()->position_.y -= dist * 0.1f;
 				}
 				enemy->ColPosUpdate();
 				enemy->GetGravity().SetGrabity({ 0,0,0 });
