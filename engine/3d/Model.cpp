@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include "Util.h"
-const std::string kBaseDirectory = "application/Resources/Obj/";
+const std::string kBaseDirectory = "application/Resources/Object/";
 
 std::shared_ptr<LightGroup> Model::lightGroup_ = nullptr;
 

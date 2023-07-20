@@ -50,7 +50,7 @@ void SceneManager::Update()
 	{
 		if (animeTimer_.GetTimer() > 0)
 		{
-			animeTimer_.AddTime(-2);
+			animeTimer_.AddTime(-3);
 		}
 
 		Color color = whiteSprite_.GetColor();
