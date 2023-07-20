@@ -18,7 +18,7 @@ Sprite SceneManager::whiteSprite_;
 void SceneManager::Ini()
 {
 	//ビルド開始時のシーン
-	Transition<TitleScene>();
+	Transition<GameOverScene>();
 
 
 	animeTimer_.SetLimitTime(100);
@@ -50,16 +50,14 @@ void SceneManager::Update()
 	{
 		if (animeTimer_.GetTimer() > 0)
 		{
-			animeTimer_.AddTime(-3);
+			animeTimer_.AddTime(-5);
 		}
 
 		Color color = whiteSprite_.GetColor();
 		color.a = 255.f * animeTimer_.GetTimeRate();
 		whiteSprite_.SetColor(color);
 		whiteSprite_.Update();
-
 	}
-
 }
 
 void SceneManager::Draw()

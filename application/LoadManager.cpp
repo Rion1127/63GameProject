@@ -29,6 +29,9 @@ void LoadManager::LoadTexture()
 
 	//ボタンUI
 	LoadGraph("pressA.png", "PressA");
+	//ゲームオーバーUI
+	LoadGraph("continueTex.png", "Continue");
+	LoadGraph("TitleTex.png", "TitleTex");
 
 }
 
@@ -38,4 +41,5 @@ void LoadManager::LoadSound()
 	LoadWave("hitSE.wav", "HitSE");
 	LoadWave("lockOnSE.wav", "lockOnSE");
 	LoadWave("enterSE.wav", "EnterSE");
+	LoadWave("selectSE.wav", "SelectSE");
 }

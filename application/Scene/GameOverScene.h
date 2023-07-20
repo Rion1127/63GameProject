@@ -6,23 +6,30 @@
 #include "Texture.h"
 #include "EmptyScene.h"
 #include "LightManager.h"
+#include "Object3d.h"
 
 class GameOverScene final :
 	public EmptyScene
 {
 private:
+	enum class SelectType {
+		Continue,
+		Title
+	};
+private:
 	Controller* controller_ = nullptr;
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 
-
+	std::unique_ptr<Object3d> playerObj_;
 
 	std::unique_ptr<Sprite> pressASprite_;
 
 	std::unique_ptr<Sprite> titleSprite_;
-	std::unique_ptr<Sprite> retrySprite_;
+	std::unique_ptr<Sprite> continueSprite_;
 	std::unique_ptr<Sprite> backSprite_;
 
+	SelectType selectType_;
 public:
 	~GameOverScene();
 
