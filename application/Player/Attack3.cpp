@@ -63,7 +63,7 @@ void Attack3::MoveUpdate()
 	speed *= timerate;
 
 
-	*selfActor_->GetAddVec() += speed;
+	selfActor_->AddVec(speed);
 	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
 	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
 	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;

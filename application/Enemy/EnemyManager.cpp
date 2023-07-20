@@ -20,7 +20,7 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(10, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));*/
-	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 1, 0))));
+	//enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(-2, 1, 0))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(2, 1, 0))));
 
 	for (auto& lockOnSprite : lockOnSprite_)
@@ -37,7 +37,7 @@ void EnemyManager::PreUpdate()
 {
 	lockOnEnemy_ = nullptr;
 #ifdef _DEBUG
-	
+
 	ImGui::Begin("EnemyManager");
 	if (ImGui::Button("POP_EnemyShadow"))
 	{
@@ -54,18 +54,19 @@ void EnemyManager::PreUpdate()
 		if (itr->get()->GetIsDead())
 		{
 			itr = enemys_.erase(itr);
-			//消した配列の次が終わりだったら
-			if (itr == enemys_.end()) continue;
 
 			lockOnEnemy_ = nullptr;
 			continue;
 		}
-		itr->get()->PreUpdate();
-		//ロックオンしている敵のアドレスを代入
-		if (itr->get()->GetIsSoftLockOn() ||
-			itr->get()->GetIsHardLockOn())
+		else
 		{
-			lockOnEnemy_ = itr->get();
+			itr->get()->PreUpdate();
+			//ロックオンしている敵のアドレスを代入
+			if (itr->get()->GetIsSoftLockOn() ||
+				itr->get()->GetIsHardLockOn())
+			{
+				lockOnEnemy_ = itr->get();
+			}
 		}
 
 		itr++;
@@ -86,6 +87,7 @@ void EnemyManager::PreUpdate()
 	}
 	//hpゲージにロックオン中の敵をセット
 	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
+
 	hpGauge_.Update();
 }
 

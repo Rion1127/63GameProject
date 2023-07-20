@@ -61,7 +61,7 @@ void Attack1::MoveUpdate()
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
 	speed *= timerate;
 
-	*selfActor_->GetAddVec() += speed;
+	selfActor_->AddVec(speed);
 	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
 	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
 	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;

@@ -42,7 +42,7 @@ public:
 	void PreUpdate();
 	void PostUpdate();
 	virtual void Draw();
-	void FloorColision();
+	void FloorColision(Vector3 pos);
 	void ColPosUpdate();
 	void Damage(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
 

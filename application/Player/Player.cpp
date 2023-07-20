@@ -40,7 +40,7 @@ void Player::PreUpdate()
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
 	}
-
+	
 	//重力
 	GravityUpdate();
 
@@ -126,11 +126,11 @@ void Player::InputVecUpdate()
 
 	addVec_ += {moveVec2.x, 0, moveVec2.y};
 
-	obj_->GetTransform()->position_ = {
+	/*obj_->GetTransform()->position_ = {
 		Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
 		Clamp(obj_->GetTransform()->position_.y, 0.f, 100.f),
 		Clamp(obj_->GetTransform()->position_.z, -77.f, 77.f)
-	};
+	};*/
 
 	// 入力しているベクトルの角度を求める
 	float inputAngle = Vec2Angle(moveVec2);
@@ -151,7 +151,7 @@ void Player::InputVecUpdate()
 void Player::JumpUpdate()
 {
 	float jumpSpeed = 0.2f;
-	int Maxjumptimer = 20;
+	int Maxjumptimer = 10;
 	if (controller_->GetButtons(PAD::INPUT_A))
 	{
 		if (isJump_ == false)
@@ -278,20 +278,22 @@ void Player::DrawSprite()
 	hpGauge_.Draw();
 }
 
-void Player::floorColision()
+void Player::FloorColision(Vector3 pos)
 {
 	//前フレームで地面に接していなかったとき
 	if (isFloorCollision_ == false)
 	{
 		state_ = PlayerState::Landing;
 		landingTimer_.Reset();
-		addVec_ = { 0,0,0 };
+		
 	}
 	isFloorCollision_ = true;
 	isJump_ = false;
 	jumpTime_ = 0;
 	
+	//addVec_.y = 0;
 	gravity_.SetGrabity({ 0,0,0 });
+	obj_->WT_.SetPosition(pos);
 }
 
 bool Player::GetIsCanMove()

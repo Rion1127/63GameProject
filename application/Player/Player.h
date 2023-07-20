@@ -64,7 +64,7 @@ public:
 
 	void DrawSprite();
 
-	void floorColision();
+	void FloorColision(Vector3 pos);
 
 	bool GetIsCanMove();
 

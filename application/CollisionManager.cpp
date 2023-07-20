@@ -21,23 +21,57 @@ void CollisionManager::Update()
 void CollisionManager::PlayerToFloor()
 {
 	//床とプレイヤー
-	if (Sphere2PlaneCol(player_->GetCol(), floor_->GetPlaneCol()))
+	//if (Sphere2PlaneCol(player_->GetCol(), floor_->GetPlaneCol()))
+	//{
+	//	//地面にめり込まないように押し出し処理
+	//	while (true)
+	//	{
+	//		float checkValue = 0.01f;
+	//		Sphere col = player_->GetCol();
+	//		col.center.y -= checkValue;
+	//		col.radius = player_->GetCol().radius;
+	//		//地面に当たっていたら上に押し出していく
+	//		if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
+	//		{
+	//			player_->floorColision();
+	//			break;
+	//		}
+
+	//		Vector3 playerPos = player_->GetWorldTransform()->position_;
+	//		float upDist = 0.01f;
+	//		playerPos.y += upDist;
+	//		player_->SetAddPos({ 0,upDist,0 });
+	//		player_->ColPosUpdate();
+	//	}
+	//}
+	//else
+	//{
+	//	player_->SetIsFloorCollision(false);
+	//}
+	Sphere col = player_->GetCol();
+	col.center.y += player_->GetGravity()->GetGravityValue().y;
+	//床とプレイヤー
+	if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
 	{
-		//地面にめり込まないように押し出し処理
+		//地面にめり込まないよう処理
 		while (true)
 		{
-			float checkValue = 0.01f;
-			Sphere col = player_->GetCol();
-			col.center.y -= checkValue;
-			col.radius = player_->GetCol().radius;
-			//地面に当たっていたら上に押し出していく
-			if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
+			
+			float dist = player_->GetCol().center.y  - floor_->GetPlaneCol().distance;
+			if (player_->GetCol().radius <= dist)
 			{
-				player_->floorColision();
+				player_->GetWorldTransform()->position_.y -= dist * 0.05f;
+			}
+			player_->ColPosUpdate();
+			player_->GetGravity()->SetGrabity({ 0,0,0 });
+
+			Vector3 pos = {10,10,10};
+			if (Sphere2PlaneCol(player_->GetCol(), floor_->GetPlaneCol(), &pos))
+			{
+				player_->FloorColision(pos);
 				break;
 			}
 		}
-
 	}
 	else
 	{
@@ -49,21 +83,27 @@ void CollisionManager::EnemyToFloor()
 {
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
-		//床と敵
-		if (Sphere2PlaneCol(enemy->GetCol(), floor_->GetPlaneCol()))
+		Sphere col = enemy->GetCol();
+		col.center.y += enemy->GetGravity().GetGravityValue().y;
+		//床とプレイヤー
+		if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
 		{
-			//地面にめり込まないように押し出し処理
+			//地面にめり込まないよう処理
 			while (true)
 			{
-				float checkValue = 0.01f;
-				Sphere col = enemy->GetCol();
-				col.center.y -= checkValue;
-				col.radius = enemy->GetCol().radius;
-				enemy->FloorColision();
-				//地面に当たっていたら上に押し出していく
-				if (Sphere2PlaneCol(col, floor_->GetPlaneCol()) == false)
+
+				float dist = enemy->GetCol().center.y - floor_->GetPlaneCol().distance;
+				if (enemy->GetCol().radius <= dist)
 				{
-					
+					enemy->GetWorldTransform()->position_.y -= dist * 0.05f;
+				}
+				enemy->ColPosUpdate();
+				enemy->GetGravity().SetGrabity({ 0,0,0 });
+
+				Vector3 pos = { 10,10,10 };
+				if (Sphere2PlaneCol(enemy->GetCol(), floor_->GetPlaneCol(), &pos))
+				{
+					enemy->FloorColision(pos);
 					break;
 				}
 			}

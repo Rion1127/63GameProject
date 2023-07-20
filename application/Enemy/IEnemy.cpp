@@ -47,12 +47,11 @@ void IEnemy::Draw()
 	obj_->Draw();
 }
 
-void IEnemy::FloorColision()
+void IEnemy::FloorColision(Vector3 pos)
 {
-	addVec_ = { 0,0.01f,0 };
-	gravity_.SetGrabity({ 0,0.f,0 });
-	obj_->WT_.position_ += addVec_;
-	ColPosUpdate();
+	addVec_ = { 0,0,0 };
+	gravity_.SetGrabity({ 0,0.01f,0 });
+	obj_->WT_.SetPosition(pos);
 }
 
 void IEnemy::ColPosUpdate()
