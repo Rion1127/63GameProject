@@ -44,7 +44,7 @@ public:
 	virtual void Draw();
 	void FloorColision();
 	void ColPosUpdate();
-	void HitPlayerAttack(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
+	void Damage(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
 
 	virtual void SetIsNock(bool flag) = 0;
 	virtual void DrawSprite() = 0;

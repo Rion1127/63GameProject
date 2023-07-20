@@ -12,29 +12,24 @@ void GameOverScene::Ini()
 	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
 
-	pressASprite_ = std::move(std::make_unique<Sprite>());
 	titleSprite_ = std::move(std::make_unique<Sprite>());
 	continueSprite_ = std::move(std::make_unique<Sprite>());
 	backSprite_ = std::move(std::make_unique<Sprite>());
 
 	playerObj_ = std::move(std::make_unique<Object3d>());
 
-	pressASprite_->Ini();
 	titleSprite_->Ini();
 	continueSprite_->Ini();
 	backSprite_->Ini();
 
-	pressASprite_->SetTexture(TextureManager::GetInstance()->GetTexture("PressA"));
 	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 	continueSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Continue"));
 	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
-		WinAPI::GetWindowSize().y / 2.2f
+		WinAPI::GetWindowSize().y / 1.4f
 	};
-	pressASprite_->SetPos(pos);
-
-	pos.y = WinAPI::GetWindowSize().y / 1.4f;
+	
 	continueSprite_->SetPos(pos);
 
 	pos.y = WinAPI::GetWindowSize().y / 1.2f;
@@ -91,7 +86,6 @@ void GameOverScene::Update()
 		}
 	}
 	backSprite_->Update();
-	pressASprite_->Update();
 	continueSprite_->Update();
 	titleSprite_->Update();
 }
@@ -100,7 +94,6 @@ void GameOverScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	backSprite_->Draw();
-	pressASprite_->Draw();
 	continueSprite_->Draw();
 	titleSprite_->Draw();
 

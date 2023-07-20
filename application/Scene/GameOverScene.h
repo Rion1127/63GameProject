@@ -23,7 +23,6 @@ private:
 
 	std::unique_ptr<Object3d> playerObj_;
 
-	std::unique_ptr<Sprite> pressASprite_;
 
 	std::unique_ptr<Sprite> titleSprite_;
 	std::unique_ptr<Sprite> continueSprite_;

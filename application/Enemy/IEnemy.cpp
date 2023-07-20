@@ -71,7 +71,7 @@ void IEnemy::ColPosUpdate()
 	col_.radius = obj_->GetTransform()->scale_.x;
 }
 
-void IEnemy::HitPlayerAttack(Vector3 knockVec, int32_t damageValue, int32_t cooltime)
+void IEnemy::Damage(Vector3 knockVec, int32_t damageValue, int32_t cooltime)
 {
 	if (damageCoolTime_.GetIsEnd())
 	{
