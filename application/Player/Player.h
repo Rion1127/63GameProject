@@ -14,9 +14,7 @@ class Player final:
 	public IActor
 {
 private:
-	Vector3 scale_;
-
-	bool isFloorCollision_ = false;
+	
 	//ƒxƒNƒgƒ‹
 	Vector3 move_;
 	Vector3 frontVec_;

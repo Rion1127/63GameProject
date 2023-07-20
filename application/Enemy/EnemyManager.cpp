@@ -20,8 +20,8 @@ EnemyManager::EnemyManager()
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(10, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));
 	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-10, 3, -10))));*/
-	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(2, 3, 0))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 1, 0))));
+	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(2, 1, 0))));
 
 	for (auto& lockOnSprite : lockOnSprite_)
 	{

@@ -20,9 +20,9 @@ void IEnemy::PreUpdate()
 	addVec_ = { 0,0,0 };
 	if (isGravityImpact_ == true)
 	{
+		gravity_.SetAddValue({ 0,-0.01f,0 });
 		gravity_.Update();
 	}
-
 	damageCoolTime_.AddTime(1);
 
 	if (health_ <= 0)
@@ -30,20 +30,16 @@ void IEnemy::PreUpdate()
 		health_ = 0;
 		isDead_ = true;
 	}
+	ColPosUpdate();
 }
 
 void IEnemy::PostUpdate()
 {
 	MoveUpdate();
 
-	addVec_ += gravity_.GetGravityValue();
+	ObjUpdate();
 
-	addVec_ += knockVec_;
-	//ノックバックのベクトルを0にしていく
-	MoveTo({ 0,0,0 }, 0.05f, knockVec_);
-	obj_->WT_.position_ += addVec_;
-
-	ColPosUpdate();
+	
 }
 
 void IEnemy::Draw()
@@ -53,12 +49,14 @@ void IEnemy::Draw()
 
 void IEnemy::FloorColision()
 {
-	gravity_.SetGrabity({ 0,0,0 });
+	addVec_ = { 0,0.01f,0 };
+	gravity_.SetGrabity({ 0,0.f,0 });
+	obj_->WT_.position_ += addVec_;
+	ColPosUpdate();
 }
 
 void IEnemy::ColPosUpdate()
 {
-	obj_->Update();
 
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,

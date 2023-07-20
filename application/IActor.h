@@ -14,6 +14,9 @@ protected:
 	Vector3 knockVec_;
 	Vector3 knockResist_;
 	Timer damageCoolTime_;
+	bool isFloorCollision_ = false;
+protected:
+	void ObjUpdate();
 public:
 	Sphere GetCol() { return col_; }
 	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }

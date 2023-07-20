@@ -36,12 +36,6 @@ void CollisionManager::PlayerToFloor()
 				player_->floorColision();
 				break;
 			}
-
-			Vector3 playerPos = player_->GetWorldTransform()->position_;
-			float upDist = 0.01f;
-			playerPos.y += upDist;
-			player_->SetAddPos({ 0,upDist,0 });
-			player_->ColPosUpdate();
 		}
 
 	}
@@ -65,18 +59,13 @@ void CollisionManager::EnemyToFloor()
 				Sphere col = enemy->GetCol();
 				col.center.y -= checkValue;
 				col.radius = enemy->GetCol().radius;
+				enemy->FloorColision();
 				//’n–Ê‚É“–‚½‚Á‚Ä‚¢‚½‚çã‚É‰Ÿ‚µo‚µ‚Ä‚¢‚­
-				if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
+				if (Sphere2PlaneCol(col, floor_->GetPlaneCol()) == false)
 				{
-					enemy->FloorColision();
+					
 					break;
 				}
-
-				Vector3* enemyPos = &enemy->GetWorldTransform()->position_;
-				float upDist = 0.01f;
-				enemyPos->y += upDist;
-
-				enemy->ColPosUpdate();
 			}
 		}
 	}

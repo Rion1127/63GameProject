@@ -21,8 +21,6 @@ Player::Player()
 	//着地硬直時間
 	landingTimer_.SetLimitTime(7);
 
-	scale_ = { 1,1,1 };
-
 	attack_.SetPlayer(&state_);
 	damageCoolTime_.SetLimitTime(50);
 	maxHealth_ = 100;
@@ -60,15 +58,9 @@ void Player::PostUpdate()
 	}
 	//当たり判定でgravityの値を変化させてから
 	//PostUpdateでaddVec_に代入している
-	addVec_ += gravity_.GetGravityValue();
-	addVec_ += knockVec_;
-	//ノックバックのベクトルを0にしていく
-	MoveTo({ 0,0,0 }, 0.05f, knockVec_);
 	attack_.Update();
 
-	obj_->WT_.position_ += addVec_;
-	obj_->WT_.scale_ = scale_;
-	obj_->Update();
+	ObjUpdate();
 
 #ifdef _DEBUG
 	if (Key::TriggerKey(DIK_1))
@@ -95,10 +87,6 @@ void Player::GravityUpdate()
 }
 void Player::ColPosUpdate()
 {
-	obj_->WT_.position_ += addVec_;
-	obj_->WT_.scale_ = scale_;
-	obj_->Update();
-
 	//モデルの原点を下にしているためその分ずらす
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
@@ -107,8 +95,6 @@ void Player::ColPosUpdate()
 	};
 
 	col_.SetPos(colPos);
-
-
 }
 #pragma region 入力
 void Player::InputVecUpdate()
