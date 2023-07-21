@@ -20,36 +20,8 @@ void CollisionManager::Update()
 
 void CollisionManager::PlayerToFloor()
 {
-	//床とプレイヤー
-	//if (Sphere2PlaneCol(player_->GetCol(), floor_->GetPlaneCol()))
-	//{
-	//	//地面にめり込まないように押し出し処理
-	//	while (true)
-	//	{
-	//		float checkValue = 0.01f;
-	//		Sphere col = player_->GetCol();
-	//		col.center.y -= checkValue;
-	//		col.radius = player_->GetCol().radius;
-	//		//地面に当たっていたら上に押し出していく
-	//		if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
-	//		{
-	//			player_->floorColision();
-	//			break;
-	//		}
-
-	//		Vector3 playerPos = player_->GetWorldTransform()->position_;
-	//		float upDist = 0.01f;
-	//		playerPos.y += upDist;
-	//		player_->SetAddPos({ 0,upDist,0 });
-	//		player_->ColPosUpdate();
-	//	}
-	//}
-	//else
-	//{
-	//	player_->SetIsFloorCollision(false);
-	//}
 	Sphere col = player_->GetCol();
-	col.center.y += player_->GetGravity()->GetGravityValue().y;
+	col.center += *player_->GetAddVec();
 	//床とプレイヤー
 	if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
 	{
@@ -60,7 +32,8 @@ void CollisionManager::PlayerToFloor()
 			float dist = player_->GetCol().center.y  - floor_->GetPlaneCol().distance;
 			if (player_->GetCol().radius <= dist)
 			{
-				player_->GetWorldTransform()->position_.y -= dist * 0.1f;
+				Vector3 pushBackVec = floor_->GetPlaneCol().normal * dist * 0.1f;
+				player_->GetWorldTransform()->position_ -= pushBackVec;
 			}
 			player_->ColPosUpdate();
 			player_->GetGravity()->SetGrabity({ 0,0,0 });
@@ -79,23 +52,27 @@ void CollisionManager::PlayerToFloor()
 	}
 }
 
+void CollisionManager::PlayerToWall()
+{
+}
+
 void CollisionManager::EnemyToFloor()
 {
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
 		Sphere col = enemy->GetCol();
-		col.center.y += enemy->GetGravity().GetGravityValue().y;
+		col.center += *enemy->GetAddVec();
 		//床とプレイヤー
 		if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
 		{
 			//地面にめり込まないよう処理
 			while (true)
 			{
-
 				float dist = enemy->GetCol().center.y - floor_->GetPlaneCol().distance;
 				if (enemy->GetCol().radius <= dist)
 				{
-					enemy->GetWorldTransform()->position_.y -= dist * 0.1f;
+					Vector3 pushBackVec = floor_->GetPlaneCol().normal * dist * 0.1f;
+					enemy->GetWorldTransform()->position_ -= pushBackVec;
 				}
 				enemy->ColPosUpdate();
 				enemy->GetGravity().SetGrabity({ 0,0,0 });
@@ -200,7 +177,7 @@ void CollisionManager::PlayerToEnemy()
 			//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
 			backLength -= length;
 
-			Vector3 pushBackVec = (PtoEVec * backLength) / 2.f;
+			Vector3 pushBackVec = (PtoEVec * backLength);
 
 			player_->SetAddPos(pushBackVec);
 			enemy->AddVec(-pushBackVec);

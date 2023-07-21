@@ -6,7 +6,7 @@ Floor::Floor()
 	floorCol_.normal = { 0,1,0 };
 
 	model_ = std::move(std::make_unique<Object3d>());
-	model_->SetModel(Model::CreateOBJ_uniptr("cube", true));
+	model_->SetModel(Model::CreateOBJ_uniptr("cube", false));
 
 	model_->WT_.position_ = { 0,-1.f,0 };
 	model_->WT_.rotation_ = { 0,0,0 };

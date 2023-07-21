@@ -74,3 +74,9 @@ std::string WStringToString(std::wstring oWString);
 
 
 Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera);
+
+template <class T>
+inline std::unique_ptr<T> MakeUnique()
+{
+	return std::move(std::make_unique<T>());
+}

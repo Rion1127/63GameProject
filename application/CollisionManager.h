@@ -18,6 +18,8 @@ public:
 private:
 	//プレイヤーと床
 	void PlayerToFloor();
+	//プレイヤーと壁
+	void PlayerToWall();
 	//敵と床
 	void EnemyToFloor();
 	//敵ロックオン

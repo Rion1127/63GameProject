@@ -202,6 +202,12 @@
     <Filter Include="application\ヘッダーファイル\Enemy\EnemyShadow\Attack">
       <UniqueIdentifier>{64c739a9-eb4c-4fb4-887c-4b3d641b7fa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Stage">
+      <UniqueIdentifier>{efb73d80-b08a-4b91-838e-1c8e38cc9d7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Stage">
+      <UniqueIdentifier>{0ebdbb85-452a-4a88-b8a7-96716260afc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -360,9 +366,6 @@
     <ClCompile Include="application\GameCamera.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Floor.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\PlayerAttack.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
@@ -402,9 +405,6 @@
     <ClCompile Include="application\Enemy\EnemyDummy.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="application\IActor.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="engine\base\Framework.cpp">
       <Filter>engine\ソース ファイル\Game</Filter>
     </ClCompile>
@@ -416,9 +416,6 @@
     </ClCompile>
     <ClCompile Include="application\Particle\ParticleTest.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Particle\ParticleHitAttack.cpp">
-      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Enemy\EnemyAirDummy.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
@@ -444,17 +441,35 @@
     <ClCompile Include="application\Enemy\AttackShadow.cpp">
       <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\PlayerHPGauge.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Scene\TitleScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Scene\SceneChangeAnimation.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Scene\GameOverScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\IActor.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Floor.cpp">
+      <Filter>application\ソースファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Particle\ParticleHitAttack.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\PlayerHPGauge.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Scene\SceneChangeAnimation.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Stage\Floor.cpp">
+      <Filter>application\ソースファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Stage\Stage.cpp">
+      <Filter>application\ソースファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Stage\Wall.cpp">
+      <Filter>application\ソースファイル\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -611,9 +626,6 @@
     <ClInclude Include="application\GameCamera.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Floor.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\PlayerAttack.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
@@ -656,9 +668,6 @@
     <ClInclude Include="application\Enemy\EnemyDummy.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="application\IActor.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="engine\base\Framework.h">
       <Filter>engine\ヘッダー ファイル\Game</Filter>
     </ClInclude>
@@ -670,9 +679,6 @@
     </ClInclude>
     <ClInclude Include="application\Particle\ParticleTest.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Particle\ParticleHitAttack.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Enemy\EnemyAirDummy.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
@@ -698,17 +704,35 @@
     <ClInclude Include="application\Scene\DebugScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\PlayerHPGauge.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Scene\TitleScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\Scene\SceneChangeAnimation.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Scene\GameOverScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\IActor.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Floor.h">
+      <Filter>application\ヘッダーファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Particle\ParticleHitAttack.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\PlayerHPGauge.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Scene\SceneChangeAnimation.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Stage\Wall.h">
+      <Filter>application\ヘッダーファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Stage\Floor.h">
+      <Filter>application\ヘッダーファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Stage\Stage.h">
+      <Filter>application\ヘッダーファイル\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

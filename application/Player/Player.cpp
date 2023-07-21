@@ -40,14 +40,14 @@ void Player::PreUpdate()
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
 	}
-	
+
 	//重力
 	GravityUpdate();
 
 	ColPosUpdate();
 
 	damageCoolTime_.AddTime(1);
-	hpGauge_.Update(maxHealth_,health_);
+	hpGauge_.Update(maxHealth_, health_);
 }
 
 void Player::PostUpdate()
@@ -56,10 +56,10 @@ void Player::PostUpdate()
 	{
 		JumpUpdate();
 	}
-	//当たり判定でgravityの値を変化させてから
-	//PostUpdateでaddVec_に代入している
 	attack_.Update();
 
+	//当たり判定でgravityの値を変化させてから
+	//PostUpdateでaddVec_に代入している
 	ObjUpdate();
 
 #ifdef _DEBUG
@@ -69,7 +69,7 @@ void Player::PostUpdate()
 	}
 	if (Key::TriggerKey(DIK_2))
 	{
-		Damage(10, {0,0,0});
+		Damage(10, { 0,0,0 });
 	}
 #endif // _DEBUG
 
@@ -216,42 +216,36 @@ void Player::DrawImGui()
 	ImGui::Begin("Player");
 	/* ここに追加したいGUIを書く */
 	// Menu Bar
-	if (ImGui::CollapsingHeader("Posision"))
-	{
-		float x = obj_->GetTransform()->position_.x;
-		float y = obj_->GetTransform()->position_.y;
-		float z = obj_->GetTransform()->position_.z;
-		ImGui::SliderFloat("pos.x", &x, 0.0f, 2000.0f, "x = %.3f");
-		ImGui::SliderFloat("pos.y", &y, 0.0f, 2000.0f, "y = %.3f");
-		ImGui::SliderFloat("pos.y", &z, 0.0f, 2000.0f, "y = %.3f");
-
-	}
+	float pos[3] = {
+		obj_->GetTransform()->position_.x,
+		obj_->GetTransform()->position_.y,
+		obj_->GetTransform()->position_.z,
+	};
+	ImGui::SliderFloat3("Posision", pos, -100.0f, 100.0f);
 
 	//回転
-	if (ImGui::CollapsingHeader("Rotation"))
-	{
-		float rot = obj_->GetTransform()->rotation_.y;
-		ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
-	}
+	float rot[3] = {
+		obj_->GetTransform()->rotation_.x,
+		obj_->GetTransform()->rotation_.y,
+		obj_->GetTransform()->rotation_.z,
+	};
+	ImGui::SliderFloat3("Rotation", rot, -100.0f, 100.0f);
 
-	if (ImGui::CollapsingHeader("Scale"))
-	{
-		float x = obj_->GetTransform()->scale_.x;
-		float y = obj_->GetTransform()->scale_.y;
-		float z = obj_->GetTransform()->scale_.z;
-		ImGui::SliderFloat("scale.x", &x, 0.0f, 2000.0f, "x = %.3f");
-		ImGui::SliderFloat("scale.y", &y, 0.0f, 2000.0f, "y = %.3f");
-		ImGui::SliderFloat("scale.y", &z, 0.0f, 2000.0f, "y = %.3f");
+	//スケール
+	float scale[3] = {
+		obj_->GetTransform()->scale_.x,
+		obj_->GetTransform()->scale_.y,
+		obj_->GetTransform()->scale_.z,
+	};
+	ImGui::SliderFloat3("Scale", scale, -100.0f, 100.0f);
 
-	}
-
-	std::string text;
-	if (state_ == PlayerState::Idle)text = "Idle";
-	if (state_ == PlayerState::Jump)text = "Jump";
-	if (state_ == PlayerState::Attack)text = "Attack";
-	if (state_ == PlayerState::AirAttack)text = "AirAttack";
-	if (state_ == PlayerState::Landing)text = "Landing";
-	if (state_ == PlayerState::Knock)text = "Knock";
+	std::string text = "State : ";
+	if (state_ == PlayerState::Idle)		text += "Idle";
+	if (state_ == PlayerState::Jump)		text += "Jump";
+	if (state_ == PlayerState::Attack)		text += "Attack";
+	if (state_ == PlayerState::AirAttack)	text += "AirAttack";
+	if (state_ == PlayerState::Landing)		text += "Landing";
+	if (state_ == PlayerState::Knock)		text += "Knock";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
@@ -268,7 +262,7 @@ void Player::DrawImGui()
 	{
 		health_ = 100;
 	}
-	
+
 	ImGui::End();
 
 }
@@ -285,12 +279,12 @@ void Player::FloorColision(Vector3 pos)
 	{
 		state_ = PlayerState::Landing;
 		landingTimer_.Reset();
-		
+
 	}
 	isFloorCollision_ = true;
 	isJump_ = false;
 	jumpTime_ = 0;
-	
+
 	//addVec_.y = 0;
 	gravity_.SetGrabity({ 0,0,0 });
 	obj_->WT_.SetPosition(pos);
