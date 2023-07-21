@@ -77,7 +77,9 @@ public:
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 
-	void AddPos(Vector3 pos) { addVec_ += pos; }
+	void AddPos(Vector3 pos) { 
+		addVec_ += pos;
+	}
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 	void SetLockOnEnemy(IEnemy* enemy) { attack_.SetLockOnEnemy(enemy); }
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }

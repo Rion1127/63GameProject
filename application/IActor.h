@@ -20,7 +20,9 @@ protected:
 public:
 	Sphere GetCol() { return col_; }
 	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
-	Vector3* GetAddVec() { return &addVec_; }
+	Vector3 GetAddVec() {
+		return addVec_;
+	}
 	Gravity* GetGravity() { return &gravity_; }
 	void AddVec(Vector3 vec) { addVec_ += vec; }
 	virtual void SetKnockVec(Vector3 vec) { knockVec_ = knockVec_; }

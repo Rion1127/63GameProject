@@ -23,7 +23,7 @@ void CollisionManager::PlayerToFloor()
 {
 	Plane* floor = stage_->GetFloor();
 	Sphere col = player_->GetCol();
-	col.center += *player_->GetAddVec();
+	col.center += player_->GetAddVec();
 
 	//床とプレイヤー
 	if (Sphere2PlaneCol(col, *floor))
@@ -62,19 +62,18 @@ void CollisionManager::PlayerToWall()
 	//壁とプレイヤー
 	for (auto itr = walls->begin(); itr != walls->end(); ++itr) {
 		Vector3 interPos;
-		
-		if (Sphere2PlaneCol(player_->GetCol(), *itr->get(), &interPos))
+		Sphere col = player_->GetCol();
+		Vector3 addvec = player_->GetAddVec();
+		col.center += addvec;
+		if (Sphere2PlaneCol(col, *itr->get(), &interPos))
 		{
-
 			//めり込まないよう処理
 			Vector3 colEdgePos =
-				player_->GetCol().center + 
-				(player_->GetCol().radius * -itr->get()->normal)/* + 
-				*player_->GetAddVec()*/;
+				col.center +
+				(col.radius * -itr->get()->normal);
 
 			Vector3 pushBackVec = interPos - colEdgePos;
 			player_->AddPos(pushBackVec);
-			
 		}
 	}
 }
@@ -85,7 +84,7 @@ void CollisionManager::EnemyToFloor()
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
 		Sphere col = enemy->GetCol();
-		col.center += *enemy->GetAddVec();
+		col.center += enemy->GetAddVec();
 		//床とプレイヤー
 		if (Sphere2PlaneCol(col, *floor))
 		{
