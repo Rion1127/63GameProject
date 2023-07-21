@@ -7,7 +7,7 @@
 #include "EmptyScene.h"
 #include "LightManager.h"
 
-#include "Floor.h"
+#include "Stage.h"
 #include "Player.h"
 #include "GameCamera.h"
 #include "CollisionManager.h"
@@ -26,7 +26,7 @@ private:
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
 	//°
-	std::unique_ptr<Floor> floor_;
+	std::unique_ptr<Stage> stage_;
 	//ƒvƒŒƒCƒ„[
 	std::unique_ptr<Player> player_;
 

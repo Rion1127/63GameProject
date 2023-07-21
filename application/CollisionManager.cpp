@@ -6,6 +6,7 @@ void CollisionManager::Update()
 {
 	//床とプレイヤー
 	PlayerToFloor();
+	PlayerToWall();
 	//床と敵
 	EnemyToFloor();
 	//ロックオンする敵
@@ -20,27 +21,28 @@ void CollisionManager::Update()
 
 void CollisionManager::PlayerToFloor()
 {
+	Plane* floor = stage_->GetFloor();
 	Sphere col = player_->GetCol();
 	col.center += *player_->GetAddVec();
+
 	//床とプレイヤー
-	if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
+	if (Sphere2PlaneCol(col, *floor))
 	{
 		//地面にめり込まないよう処理
 		while (true)
 		{
-			
-			float dist = player_->GetCol().center.y  - floor_->GetPlaneCol().distance;
+			float dist = player_->GetCol().center.y - floor->distance;
 			if (player_->GetCol().radius <= dist)
 			{
-				Vector3 pushBackVec = floor_->GetPlaneCol().normal * dist * 0.1f;
+				Vector3 pushBackVec = floor->normal * dist;
 				player_->GetWorldTransform()->position_ -= pushBackVec;
 			}
 			player_->ColPosUpdate();
-			player_->GetGravity()->SetGrabity({ 0,0,0 });
 
-			Vector3 pos = {10,10,10};
-			if (Sphere2PlaneCol(player_->GetCol(), floor_->GetPlaneCol(), &pos))
+			Vector3 pos = { 10,10,10 };
+			if (Sphere2PlaneCol(player_->GetCol(), *floor, &pos))
 			{
+				player_->GetGravity()->SetGrabity({ 0,0,0 });
 				player_->FloorColision(pos);
 				break;
 			}
@@ -50,36 +52,59 @@ void CollisionManager::PlayerToFloor()
 	{
 		player_->SetIsFloorCollision(false);
 	}
+
 }
 
 void CollisionManager::PlayerToWall()
 {
+	auto* walls = stage_->GetPlaneCol();
+
+	//壁とプレイヤー
+	for (auto itr = walls->begin(); itr != walls->end(); ++itr) {
+		Vector3 interPos;
+		
+		if (Sphere2PlaneCol(player_->GetCol(), *itr->get(), &interPos))
+		{
+
+			//めり込まないよう処理
+			Vector3 colEdgePos =
+				player_->GetCol().center + 
+				(player_->GetCol().radius * -itr->get()->normal)/* + 
+				*player_->GetAddVec()*/;
+
+			Vector3 pushBackVec = interPos - colEdgePos;
+			player_->AddPos(pushBackVec);
+			
+		}
+	}
 }
 
 void CollisionManager::EnemyToFloor()
 {
+	Plane* floor = stage_->GetFloor();
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
 		Sphere col = enemy->GetCol();
 		col.center += *enemy->GetAddVec();
 		//床とプレイヤー
-		if (Sphere2PlaneCol(col, floor_->GetPlaneCol()))
+		if (Sphere2PlaneCol(col, *floor))
 		{
 			//地面にめり込まないよう処理
 			while (true)
 			{
-				float dist = enemy->GetCol().center.y - floor_->GetPlaneCol().distance;
+				float dist = enemy->GetCol().center.y - floor->distance;
 				if (enemy->GetCol().radius <= dist)
 				{
-					Vector3 pushBackVec = floor_->GetPlaneCol().normal * dist * 0.1f;
+					Vector3 pushBackVec = floor->normal * dist * 0.1f;
 					enemy->GetWorldTransform()->position_ -= pushBackVec;
 				}
 				enemy->ColPosUpdate();
-				enemy->GetGravity().SetGrabity({ 0,0,0 });
+
 
 				Vector3 pos = { 10,10,10 };
-				if (Sphere2PlaneCol(enemy->GetCol(), floor_->GetPlaneCol(), &pos))
+				if (Sphere2PlaneCol(enemy->GetCol(), *floor, &pos))
 				{
+					enemy->GetGravity().SetGrabity({ 0,0,0 });
 					enemy->FloorColision(pos);
 					break;
 				}

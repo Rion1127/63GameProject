@@ -52,7 +52,6 @@
     <ClCompile Include="application\Shader\Noise.cpp" />
     <ClCompile Include="application\Stage\Floor.cpp" />
     <ClCompile Include="application\Stage\Stage.cpp" />
-    <ClCompile Include="application\Stage\Wall.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -107,7 +106,6 @@
     <ClInclude Include="application\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Enemy\EnemyShadow.h" />
     <ClInclude Include="application\Enemy\IEnemy.h" />
-    <ClInclude Include="application\Floor.h" />
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\IActor.h" />
     <ClInclude Include="application\LoadManager.h" />
@@ -141,7 +139,6 @@
     <ClInclude Include="application\Shader\Noise.h" />
     <ClInclude Include="application\Stage\Floor.h" />
     <ClInclude Include="application\Stage\Stage.h" />
-    <ClInclude Include="application\Stage\Wall.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />

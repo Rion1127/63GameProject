@@ -450,9 +450,6 @@
     <ClCompile Include="application\IActor.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Floor.cpp">
-      <Filter>application\ソースファイル\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="application\Particle\ParticleHitAttack.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
@@ -466,9 +463,6 @@
       <Filter>application\ソースファイル\Stage</Filter>
     </ClCompile>
     <ClCompile Include="application\Stage\Stage.cpp">
-      <Filter>application\ソースファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Stage\Wall.cpp">
       <Filter>application\ソースファイル\Stage</Filter>
     </ClCompile>
   </ItemGroup>
@@ -713,9 +707,6 @@
     <ClInclude Include="application\IActor.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Floor.h">
-      <Filter>application\ヘッダーファイル\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="application\Particle\ParticleHitAttack.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
@@ -724,9 +715,6 @@
     </ClInclude>
     <ClInclude Include="application\Scene\SceneChangeAnimation.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Stage\Wall.h">
-      <Filter>application\ヘッダーファイル\Stage</Filter>
     </ClInclude>
     <ClInclude Include="application\Stage\Floor.h">
       <Filter>application\ヘッダーファイル\Stage</Filter>

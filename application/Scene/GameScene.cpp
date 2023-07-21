@@ -22,14 +22,14 @@ void GameScene::Ini()
 	
 
 	
-	floor_ = std::move(std::make_unique<Floor>());
+	stage_ = std::move(std::make_unique<Stage>());
 
 	player_ = std::move(std::make_unique<Player>());
 	gameCamera_.SetPlayer(player_.get());
 
 	IEnemy::SetPlayer(player_.get());
 	colManager_->SetPlayer(player_.get());
-	colManager_->SetFloor(floor_.get());
+	colManager_->SetFloor(stage_.get());
 	colManager_->SetEnemys(enemyManager_.get());
 	AttackManager::SetPlayer(player_.get());
 }
@@ -38,7 +38,7 @@ void GameScene::Update()
 {
 	CameraUpdate();
 	
-	floor_->Update();
+	stage_->Update();
 	player_->PreUpdate();
 	enemyManager_->PreUpdate();
 
@@ -64,7 +64,7 @@ void GameScene::Draw()
 	//3Dオブジェクト//
 	////////////////
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
-	floor_->Draw();
+	stage_->Draw();
 	player_->Draw();
 	enemyManager_->Draw();
 	

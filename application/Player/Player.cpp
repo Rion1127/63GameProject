@@ -102,7 +102,7 @@ void Player::InputVecUpdate()
 	Vector2 moveVec2;
 	Vector3 sideVec;
 	Vector3 upVec = { 0,1,0 };
-	Vector2 inputVec_;// -> 入力されているベクトル
+	Vector2 inputVec;// -> 入力されているベクトル
 
 	//プレイヤーの正面ベクトル
 	frontVec_ =
@@ -116,10 +116,10 @@ void Player::InputVecUpdate()
 	if (controller_->GetActive())
 	{
 		// 左スティックの入力方向ベクトル取得
-		inputVec_ = controller_->GetLStick() / 3276.8f;
+		inputVec = controller_->GetLStick() / 3276.8f;
 		//カメラから見た左右手前奥移動
-		moveVec2.x = (frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y);
-		moveVec2.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
+		moveVec2.x = (frontVec_.z * -inputVec.x) + (sideVec.z * inputVec.y);
+		moveVec2.y = (frontVec_.z * inputVec.y) + (sideVec.z * inputVec.x);
 		moveVec2.x = -moveVec2.x;
 		moveVec2 *= moveSpeed_;
 	}
@@ -285,9 +285,13 @@ void Player::FloorColision(Vector3 pos)
 	isJump_ = false;
 	jumpTime_ = 0;
 
-	//addVec_.y = 0;
-	gravity_.SetGrabity({ 0,0,0 });
 	obj_->WT_.SetPosition(pos);
+}
+
+void Player::WallColision()
+{
+	ColPosUpdate();
+	ObjUpdate();
 }
 
 bool Player::GetIsCanMove()
