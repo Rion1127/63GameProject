@@ -15,6 +15,7 @@ protected:
 	Vector3 knockResist_;
 	Timer damageCoolTime_;
 	bool isFloorCollision_ = false;
+	float knockDecreaseValue = 0.05f;
 protected:
 	void ObjUpdate();
 public:

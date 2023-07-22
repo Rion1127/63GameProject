@@ -45,12 +45,11 @@ void AttackShadow::Init()
 		attackCol_.at(0)->col_.radius = 0.6f;
 		attackCol_.at(0)->damage = 10;
 		//ノックバック力
-		attackCol_.at(0)->knockPower = { 0.5f,0.7f,0.5f };
+		attackCol_.at(0)->knockPower = { 0.1f,0.3f,0.1f };
 		attackCol_.at(0)->knockVecY = 0.5f;
 	}
 
 	attackVec_ = frontVec;
-	//selfActor_->GetGravity()->SetGrabity({ 0,0.15f,0 });
 }
 
 void AttackShadow::MoveUpdate()
@@ -63,7 +62,7 @@ void AttackShadow::MoveUpdate()
 	speed *= timerate;
 
 	selfActor_->AddVec(speed);
-	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
+	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 1.f);
 	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
 	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;
 }

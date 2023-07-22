@@ -62,7 +62,13 @@ void Guard::Update()
 	else {
 		col_.isActive = false;
 	}
-
+	//Vector3 frontVec = player_->GetWorldTransform()->position_;
+	//frontVec = frontVec.normalize();
+	//frontVec = frontVec * frontDist_;
+	//frontVec.y = 0;
+	////座標更新
+	//col_.center = player_->GetCol().center + frontVec;
+	//col_.center.y += colObj_->GetTransform()->scale_.y;
 
 	timer_.AddTime(1);
 	if (timer_.GetIsEnd()) {
@@ -76,4 +82,12 @@ void Guard::DrawDebug()
 	if (col_.isActive) {
 		colObj_->Draw();
 	}
+}
+
+void Guard::GuardHit()
+{
+	//ガードが成功したらガード時間を延長
+	timer_.Reset();
+	timer_.SetTime(enabledTime_.start);
+	Init();
 }

@@ -68,6 +68,7 @@ public:
 	bool GetIsCanMove();
 
 	void Damage(int32_t damage, Vector3 knockVec);
+	void GuardHit(Vector3 knockVec);
 public:
 	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
@@ -88,5 +89,6 @@ public:
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
 	bool GetIsAlive() { return isAlive_; }
 	Vector3 GetLockOnVec() { return lockOnVec_; }
+	Guard* GetGuard() { return &guard_; }
 };
 

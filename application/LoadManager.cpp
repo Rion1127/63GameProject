@@ -42,4 +42,6 @@ void LoadManager::LoadSound()
 	LoadWave("lockOnSE.wav", "lockOnSE");
 	LoadWave("enterSE.wav", "EnterSE");
 	LoadWave("selectSE.wav", "SelectSE");
+	LoadWave("guardSE.wav", "Guard");
+	LoadWave("guardHitSE.wav", "GuardHitSE");
 }

@@ -254,7 +254,26 @@ void CollisionManager::EnemyAttackToPlayer()
 		{
 			for (auto& col : *attackCol->GetAttackCol())
 			{
+				//プレイヤーのダメージクールタイムが終わっていれば
 				if (player_->GetDamegeCoolTime()->GetIsEnd()) {
+					
+					//ガードの当たり判定
+					if (player_->GetGuard()->GetCol().isActive) {
+						if (BallCollision(col->col_, player_->GetGuard()->GetCol())) {
+							//敵の反対方向にノックバックする
+							Vector3 knockVec =
+								player_->GetWorldTransform()->position_ - enemy->GetCol().center;
+							knockVec.y = 0;
+							knockVec = knockVec.normalize();
+							knockVec = knockVec * 0.1f;
+
+							player_->GuardHit(knockVec);
+
+							SoundManager::Play("GuardHitSE",false,0.5f);
+						}
+					}
+
+					//
 					if (BallCollision(col->col_, player_->GetCol()))
 					{
 						//敵の反対方向にノックバックする
@@ -263,9 +282,7 @@ void CollisionManager::EnemyAttackToPlayer()
 						knockVec.y = col->knockVecY;
 						knockVec = knockVec.normalize();
 						knockVec = knockVec * col->knockPower;
-						//敵のノックバック抵抗力を掛ける
-						knockVec = knockVec * enemy->GetKnockResist();
-
+						
 						player_->Damage(col->damage, knockVec);
 						player_->SetState(PlayerState::Knock);
 

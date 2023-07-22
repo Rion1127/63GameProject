@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Util.h"
 #include "Camera.h"
+#include "mSound.h"
 
 Player::Player()
 {
@@ -27,6 +28,7 @@ Player::Player()
 	health_ = maxHealth_;
 	isAlive_ = true;
 	guard_.SetPlayer(this);
+	knockDecreaseValue = 0.005f;
 }
 
 void Player::PreUpdate()
@@ -62,6 +64,7 @@ void Player::PostUpdate()
 		//空中にいるとき、ノックバックの時攻撃の時はガードができない
 		if (GetIsCanMove() && 
 			state_ != PlayerState::Jump) {
+			SoundManager::Play("Guard",false, 0.5f);
 			guard_.Init();
 		}
 	}
@@ -321,4 +324,11 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	knockVec_ = knockVec;
 	damageCoolTime_.Reset();
 	hpGauge_.Damage();
+}
+
+void Player::GuardHit(Vector3 knockVec)
+{
+	knockVec_ += knockVec;
+	guard_.GuardHit();
+	damageCoolTime_.Reset();
 }

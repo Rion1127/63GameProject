@@ -24,14 +24,19 @@ private:
 	bool isGurdNow_;
 	//ガードを開始してから有効になるまで
 	EnableTime enabledTime_;
+
 public:
 	Guard();
 	void Init();
 	void Update();
 	void DrawDebug();
+	//ガード成功時の処理
+	void GuardHit();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 public:
 	bool GetIsGurdNow() { return isGurdNow_; }
+	Sphere GetCol() { return col_; }
+
 };
 
