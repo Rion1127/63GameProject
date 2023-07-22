@@ -11,6 +11,7 @@ Guard::Guard()
 	colObj_->SetAmbient("cube", { 0.0f, 0, 1.0f });
 
 	timer_.SetLimitTime(40);
+	timer_.SetTime(timer_.GetLimitTimer());
 	isGurdNow_ = false;
 
 	enabledTime_ = { 5,30 };

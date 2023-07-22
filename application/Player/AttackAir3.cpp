@@ -48,7 +48,7 @@ void AttackAir3::Init()
 		attackCol_.at(0)->damage = 20;
 		//ノックバック力
 		attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
-		attackCol_.at(0)->knockVecY = 0.8f;
+		attackCol_.at(0)->knockVecY = 0.5f;
 	}
 
 	attackVec_ = frontVec;
