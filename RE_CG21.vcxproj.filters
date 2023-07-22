@@ -366,9 +366,6 @@
     <ClCompile Include="application\GameCamera.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\PlayerAttack.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\AttackManager.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
@@ -464,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="application\Stage\Stage.cpp">
       <Filter>application\ソースファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Player\Guard.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,9 +620,6 @@
     <ClInclude Include="application\GameCamera.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\PlayerAttack.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
@@ -721,6 +718,9 @@
     </ClInclude>
     <ClInclude Include="application\Stage\Stage.h">
       <Filter>application\ヘッダーファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\Guard.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

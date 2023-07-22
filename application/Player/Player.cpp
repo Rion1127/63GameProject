@@ -26,6 +26,7 @@ Player::Player()
 	maxHealth_ = 100;
 	health_ = maxHealth_;
 	isAlive_ = true;
+	guard_.SetPlayer(this);
 }
 
 void Player::PreUpdate()
@@ -57,22 +58,23 @@ void Player::PostUpdate()
 		JumpUpdate();
 	}
 	attack_.Update();
+	if (controller_->GetTriggerButtons(PAD::INPUT_X)) {
+		//空中にいるとき、ノックバックの時攻撃の時はガードができない
+		if (GetIsCanMove() && 
+			state_ != PlayerState::Jump) {
+			guard_.Init();
+		}
+	}
+
+	guard_.Update();
 
 	//当たり判定でgravityの値を変化させてから
 	//PostUpdateでaddVec_に代入している
 	ObjUpdate();
-
-#ifdef _DEBUG
-	if (Key::TriggerKey(DIK_1))
-	{
-		health_ = 100;
+	if (attack_.GetLockOnEnemy() != nullptr) {
+		lockOnVec_ =
+			attack_.GetLockOnEnemy()->GetWorldTransform()->position_ - obj_->GetTransform()->position_;
 	}
-	if (Key::TriggerKey(DIK_2))
-	{
-		Damage(10, { 0,0,0 });
-	}
-#endif // _DEBUG
-
 
 	if (health_ <= 0)
 	{
@@ -199,6 +201,11 @@ void Player::StateUpdate()
 	{
 		state_ = PlayerState::Landing;
 	}
+
+	if (guard_.GetIsGurdNow())
+	{
+		state_ = PlayerState::Guard;
+	}
 }
 
 void Player::Draw()
@@ -209,6 +216,7 @@ void Player::Draw()
 	DrawImGui();
 
 	attack_.DrawDebug();
+	guard_.DrawDebug();
 }
 
 void Player::DrawImGui()
@@ -246,6 +254,7 @@ void Player::DrawImGui()
 	if (state_ == PlayerState::AirAttack)	text += "AirAttack";
 	if (state_ == PlayerState::Landing)		text += "Landing";
 	if (state_ == PlayerState::Knock)		text += "Knock";
+	if (state_ == PlayerState::Guard)		text += "Guard";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
@@ -298,7 +307,8 @@ bool Player::GetIsCanMove()
 {
 	if (state_ != PlayerState::Attack &&
 		state_ != PlayerState::AirAttack &&
-		state_ != PlayerState::Knock)
+		state_ != PlayerState::Knock &&
+		state_ != PlayerState::Guard)
 	{
 		return true;
 	}

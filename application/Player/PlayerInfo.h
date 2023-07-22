@@ -9,5 +9,6 @@ enum class PlayerState {
 	Attack,
 	AirAttack,
 	Landing,
-	Knock
+	Knock,
+	Guard
 };

@@ -3,12 +3,12 @@
 #include "Vector3.h"
 #include <memory>
 #include "Texture.h"
-#include "PlayerAttack.h"
 #include "PlayerInfo.h"
 #include "Gravity.h"
 #include "AttackManager.h"
 #include "IActor.h"
 #include "PlayerHPGauge.h"
+#include "Guard.h"
 
 class Player final:
 	public IActor
@@ -18,11 +18,8 @@ private:
 	//ベクトル
 	Vector3 move_;
 	Vector3 frontVec_;
+	Vector3 lockOnVec_;
 	
-	//移動制限
-	Vector2 MaxMinX_;
-	Vector2 MaxMinY_;
-
 	// --入力-- //
 	float inputAngle_;// -> 入力されている方向の角度
 
@@ -33,6 +30,7 @@ private:
 	int jumpTime_;
 
 	AttackManager attack_;
+	Guard guard_;
 	PlayerHPGauge hpGauge_;
 	PlayerState state_;
 	//着地硬直時間
@@ -89,5 +87,6 @@ public:
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
 	bool GetIsAlive() { return isAlive_; }
+	Vector3 GetLockOnVec() { return lockOnVec_; }
 };
 
