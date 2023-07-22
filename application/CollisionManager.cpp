@@ -273,7 +273,6 @@ void CollisionManager::EnemyAttackToPlayer()
 						}
 					}
 
-					//
 					if (BallCollision(col->col_, player_->GetCol()))
 					{
 						//敵の反対方向にノックバックする

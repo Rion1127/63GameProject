@@ -63,13 +63,21 @@ void Guard::Update()
 	else {
 		col_.isActive = false;
 	}
-	//Vector3 frontVec = player_->GetWorldTransform()->position_;
-	//frontVec = frontVec.normalize();
-	//frontVec = frontVec * frontDist_;
-	//frontVec.y = 0;
-	////座標更新
-	//col_.center = player_->GetCol().center + frontVec;
-	//col_.center.y += colObj_->GetTransform()->scale_.y;
+	
+	Vector3 frontVec = player_->GetWorldTransform()->position_;
+	//回転情報から正面ベクトル(2D)を取得
+	frontVec = {
+		sinf(player_->GetWorldTransform()->rotation_.y),
+		0,
+		cosf(player_->GetWorldTransform()->rotation_.y),
+	};
+
+	frontVec = frontVec.normalize();
+	frontVec = frontVec * frontDist_;
+	frontVec.y = 0;
+	col_.center = player_->GetCol().center + frontVec;
+	col_.center.y += colObj_->GetTransform()->scale_.y;
+	colObj_->GetTransform()->SetPosition(col_.center);
 
 	timer_.AddTime(1);
 	if (timer_.GetIsEnd()) {
