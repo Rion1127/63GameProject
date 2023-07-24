@@ -32,6 +32,7 @@ void GameScene::Ini()
 	colManager_->SetFloor(stage_.get());
 	colManager_->SetEnemys(enemyManager_.get());
 	AttackManager::SetPlayer(player_.get());
+
 }
 
 void GameScene::Update()
@@ -54,6 +55,8 @@ void GameScene::Update()
 	{
 		SceneManager::SetChangeStart(SceneName::GameOver);
 	}
+
+	
 }
 
 void GameScene::Draw()
@@ -67,7 +70,6 @@ void GameScene::Draw()
 	stage_->Draw();
 	player_->Draw();
 	enemyManager_->Draw();
-	
 	
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 	

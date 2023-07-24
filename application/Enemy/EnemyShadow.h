@@ -1,6 +1,7 @@
 #pragma once
 #include "IEnemy.h"
 #include "Timer.h"
+#include "Spline.h"
 
 class EnemyShadow :
 	public IEnemy
@@ -29,7 +30,9 @@ private:
 	float endRot_;
 	float nowRot_;
 
-	
+	Spline spline_;
+	bool isWanderInit_;
+	Timer sinkTimer_;
 private:
 	//デバッグ
 	std::string stateName_;
@@ -53,5 +56,7 @@ private:
 
 	void PriorityUpdate();
 	void UpdateVector();
+
+	void WanderInit();
 };
 

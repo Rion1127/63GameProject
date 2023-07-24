@@ -13,6 +13,9 @@
 #include "CollisionManager.h"
 #include "EnemyManager.h"
 
+#include "Spline.h"
+#include "Object3d.h"
+
 class GameScene final:
 	public EmptyScene
 {

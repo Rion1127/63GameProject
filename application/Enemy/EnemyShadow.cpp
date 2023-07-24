@@ -24,6 +24,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 	followLength = 5.f;
 	moveSpeed = 0.1f;
 	randRange_ = 30;
+	isWanderInit_ = false;
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -61,7 +62,7 @@ void EnemyShadow::MoveUpdate()
 		//health_ += 5;
 	}
 	//ステータスごとの動きを追加
-	void (EnemyShadow:: *Action[]) () =
+	void (EnemyShadow:: * Action[]) () =
 	{
 		&EnemyShadow::Idle,
 		&EnemyShadow::Following,
@@ -92,7 +93,7 @@ void EnemyShadow::MoveUpdate()
 
 void EnemyShadow::DrawSprite()
 {
-	
+
 }
 
 void EnemyShadow::Idle()
@@ -101,7 +102,7 @@ void EnemyShadow::Idle()
 
 	actionTimer_.AddTime(1);
 
-	if (actionTimer_.GetIsEnd())
+	/*if (actionTimer_.GetIsEnd())
 	{
 		state_ = State::Attack;
 		actionTimer_.Reset();
@@ -109,15 +110,23 @@ void EnemyShadow::Idle()
 		attack_.reset();
 		attack_ = std::move(std::make_unique<AttackShadow>(this, splayer_));
 		attack_->Init();
+	}*/
+
+	if (actionTimer_.GetIsEnd())
+	{
+		state_ = State::Wander;
+		actionTimer_.Reset();
+		actionTimer_.SetLimitTime(300);
+		isWanderInit_ = true;
 	}
 }
 
 void EnemyShadow::Following()
 {
 	stateName_ = "Following";
-	
+
 	actionTimer_.AddTime(1);
-	
+
 	float length = EtoPVec_.length();
 	addVec_ = EtoPVec_.normalize() * moveSpeed;
 	//一定距離まで近づいたらOR一定時間追いかけたら
@@ -130,14 +139,48 @@ void EnemyShadow::Following()
 
 void EnemyShadow::Wander()
 {
+	//地面に潜って移動する
 	stateName_ = "Wander";
-	
+	WanderInit();
+	col_.isActive = false;
+
+	//移動する
+	if (spline_.GetisEnd() == false)
+	{
+		if (obj_->WT_.scale_.y > 0.1f) {
+			obj_->WT_.scale_.y -= 0.1f;
+		}
+		else {
+			//スプライン曲線更新
+			spline_.Update();
+			obj_->WT_.SetPosition(spline_.GetNowPoint());
+		}
+		Vector2 dir = {
+			spline_.GetHeadingVec().x,
+			spline_.GetHeadingVec().z
+		};
+		//進行方向に回転
+		float rotY = Vec2Angle(dir);
+		obj_->WT_.rotation_.y = Radian(rotY);
+	}
+	//移動が終わったら別のパターンへ
+	else {
+		if (obj_->WT_.scale_.y < 1.0f) {
+			obj_->WT_.scale_.y += 0.1f;
+		}
+		else {
+			state_ = State::Idle;
+			actionTimer_.Reset();
+			actionTimer_.SetLimitTime(100);
+			col_.isActive = true;
+		}
+	}
 }
 
 void EnemyShadow::HideMove()
 {
 	stateName_ = "HideMove";
-	
+
 }
 
 void EnemyShadow::Attack()
@@ -146,7 +189,7 @@ void EnemyShadow::Attack()
 	attack_->Update();
 	attack_->SetNowTime(actionTimer_.GetTimer());
 	actionTimer_.SetLimitTime(attack_->GetInfo().maxTime);
-	
+
 	actionTimer_.AddTime(1);
 	if (actionTimer_.GetIsEnd()) {
 		state_ = State::Idle;
@@ -184,4 +227,49 @@ void EnemyShadow::UpdateVector()
 	Vector3& pos = splayer_->GetWorldTransform()->position_;
 	EtoPVec_ = pos - obj_->WT_.position_;
 	EtoPVec_.y = 0;
+}
+
+void EnemyShadow::WanderInit()
+{
+	if (isWanderInit_) {
+		//削除する
+		spline_.DleteAllPoint();
+		spline_.Reset();
+		//初期地点を挿入
+		spline_.AddPosition(obj_->WT_.position_, PosState::Start);
+
+		//移動するポイントを計算する
+		for (int32_t i = 0; i < 2; i++) {
+			size_t index = spline_.GetsplinePos().size() - 1;
+			Vector3 splinePos = spline_.GetsplinePos().at(index);
+			//スプラインのポイントからプレイヤーへのベクトルを計算
+			Vector3 EtoPVec = splayer_->GetWorldTransform()->position_ - splinePos;
+			EtoPVec = EtoPVec.normalize();
+
+			EtoPVec = EtoPVec * Vector3(
+				RRandom::RandF(5.f, 7.f),
+				0,
+				RRandom::RandF(5.f, 7.f));
+			//乱数
+
+			splinePos += EtoPVec;
+
+			spline_.AddPosition(splinePos, PosState::Middle);
+		}
+
+		size_t index = spline_.GetsplinePos().size() - 1;
+		Vector3 splinePos = spline_.GetsplinePos().at(index);
+		//最終地点はプレイヤーの近くへ行く
+		Vector3 endPos = {
+			splinePos.x + RRandom::RandF(-3.f, 3.f),
+			0,
+			splinePos.z + RRandom::RandF(-3.f, 3.f),
+		};
+		//最終地点を代入
+		spline_.AddPosition(endPos, PosState::End);
+		spline_.SetIsStart(true);
+		spline_.SetLimitTime(50);
+
+		isWanderInit_ = false;
+	}
 }

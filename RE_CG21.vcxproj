@@ -86,6 +86,7 @@
     <ClCompile Include="engine\3d\Object3d.cpp" />
     <ClCompile Include="engine\external\Texture.cpp" />
     <ClCompile Include="engine\base\Util.cpp" />
+    <ClCompile Include="engine\math\Spline.cpp" />
     <ClCompile Include="engine\math\Vector2.cpp" />
     <ClCompile Include="engine\math\Vector3.cpp" />
     <ClCompile Include="engine\3d\Vertices.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="engine\3d\Object3d.h" />
     <ClInclude Include="engine\external\Texture.h" />
     <ClInclude Include="engine\base\Util.h" />
+    <ClInclude Include="engine\math\Spline.h" />
     <ClInclude Include="engine\math\Vector2.h" />
     <ClInclude Include="engine\math\Vector3.h" />
     <ClInclude Include="engine\3d\Vertices.h" />

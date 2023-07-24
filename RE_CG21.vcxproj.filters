@@ -465,6 +465,9 @@
     <ClCompile Include="application\Player\Guard.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="engine\math\Spline.cpp">
+      <Filter>engine\ソース ファイル\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -721,6 +724,9 @@
     </ClInclude>
     <ClInclude Include="application\Player\Guard.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Spline.h">
+      <Filter>engine\ヘッダー ファイル\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
