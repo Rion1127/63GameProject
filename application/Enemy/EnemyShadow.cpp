@@ -242,14 +242,20 @@ void EnemyShadow::WanderInit()
 		for (int32_t i = 0; i < 2; i++) {
 			size_t index = spline_.GetsplinePos().size() - 1;
 			Vector3 splinePos = spline_.GetsplinePos().at(index);
-			//スプラインのポイントからプレイヤーへのベクトルを計算
-			Vector3 EtoPVec = splayer_->GetWorldTransform()->position_ - splinePos;
+			//スプラインのポイントからtargetPosへのベクトルを計算
+			Vector3 targetPos = splayer_->GetWorldTransform()->position_;
+			targetPos += {
+				RRandom::RandF(-2.f, 2.f),
+				0,
+				RRandom::RandF(-2.f, 2.f)
+			};
+			Vector3 EtoPVec = targetPos - splinePos;
 			EtoPVec = EtoPVec.normalize();
 
 			EtoPVec = EtoPVec * Vector3(
-				RRandom::RandF(5.f, 7.f),
+				RRandom::RandF(3.f, 7.f),
 				0,
-				RRandom::RandF(5.f, 7.f));
+				RRandom::RandF(3.f, 7.f));
 			//乱数
 
 			splinePos += EtoPVec;

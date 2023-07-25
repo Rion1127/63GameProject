@@ -38,6 +38,7 @@ public:
 	void DrawCol();
 public:
 	void SetNowTime(int32_t time) { attackInfo_.nowTime = time; }
+	void SetLockOnActor(IActor* lockOnActor) { lockOnActor_ = lockOnActor; };
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }

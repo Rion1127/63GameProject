@@ -77,6 +77,7 @@ void AttackManager::Update()
 			nowAttack_.swap(nextAttack_);
 			//UŒ‚‰Šú‰»
 			if (nowAttack_ != nullptr) {
+				nowAttack_->SetLockOnActor(lockOnEnemy_);
 				nowAttack_->Init();
 				float picth = RRandom::RandF(0.7f, 1.5f);
 				SoundManager::Play("SwingSE", false, 0.3f, picth);
