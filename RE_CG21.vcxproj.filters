@@ -208,6 +208,12 @@
     <Filter Include="application\ヘッダーファイル\Stage">
       <UniqueIdentifier>{0ebdbb85-452a-4a88-b8a7-96716260afc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Enemy\Dummy">
+      <UniqueIdentifier>{b9b75c5d-ae0d-45dd-a507-0ba305e3d205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Enemy\Dummy">
+      <UniqueIdentifier>{3406d5dc-cbb1-4e65-979c-538497aaa584}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -399,9 +405,6 @@
     <ClCompile Include="application\Enemy\EnemyManager.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="application\Enemy\EnemyDummy.cpp">
-      <Filter>application\ソースファイル\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="engine\base\Framework.cpp">
       <Filter>engine\ソース ファイル\Game</Filter>
     </ClCompile>
@@ -413,9 +416,6 @@
     </ClCompile>
     <ClCompile Include="application\Particle\ParticleTest.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\EnemyAirDummy.cpp">
-      <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
@@ -470,6 +470,12 @@
     </ClCompile>
     <ClCompile Include="application\Enemy\Shadow\AttackJumpShadow.cpp">
       <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\Dummy\EnemyAirDummy.cpp">
+      <Filter>application\ソースファイル\Enemy\Dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\Dummy\EnemyDummy.cpp">
+      <Filter>application\ソースファイル\Enemy\Dummy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +668,6 @@
     <ClInclude Include="application\Enemy\EnemyManager.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="application\Enemy\EnemyDummy.h">
-      <Filter>application\ヘッダーファイル\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="engine\base\Framework.h">
       <Filter>engine\ヘッダー ファイル\Game</Filter>
     </ClInclude>
@@ -676,9 +679,6 @@
     </ClInclude>
     <ClInclude Include="application\Particle\ParticleTest.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\EnemyAirDummy.h">
-      <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="application\Enemy\EnemyHPGauge.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
@@ -733,6 +733,12 @@
     </ClInclude>
     <ClInclude Include="application\Enemy\Shadow\AttackJumpShadow.h">
       <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\Dummy\EnemyAirDummy.h">
+      <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\Dummy\EnemyDummy.h">
+      <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
