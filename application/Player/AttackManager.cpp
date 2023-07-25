@@ -27,13 +27,14 @@ void AttackManager::Update()
 			{
 				if (*playerState_ == PlayerState::Idle)
 				{
-					nowAttack_ = std::move(std::make_unique<Attack1>(player_, lockOnEnemy_));
+					nowAttack_ = std::move(std::make_unique<Attack1>(player_));
 				}
 				else if (*playerState_ == PlayerState::Jump)
 				{
-					nowAttack_ = std::move(std::make_unique<AttackAir1>(player_, lockOnEnemy_));
+					nowAttack_ = std::move(std::make_unique<AttackAir1>(player_));
 				}
 				if (nowAttack_ != nullptr) {
+					nowAttack_->SetLockOnActor(lockOnEnemy_);
 					nowAttack_->Init();
 					float picth = RRandom::RandF(0.7f, 1.5f);
 					SoundManager::Play("SwingSE", false, 0.3f,picth);
@@ -48,13 +49,13 @@ void AttackManager::Update()
 					if (*playerState_ == PlayerState::Attack)
 					{
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>(player_, lockOnEnemy_));
-						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>(player_, lockOnEnemy_));
+						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>(player_));
+						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>(player_));
 					}
 					else if (*playerState_ == PlayerState::AirAttack)
 					{
-						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>(player_, lockOnEnemy_));
-						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>(player_, lockOnEnemy_));
+						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>(player_));
+						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>(player_));
 					}
 				}
 			}

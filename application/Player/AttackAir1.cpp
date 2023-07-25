@@ -1,7 +1,7 @@
 #include "AttackAir1.h"
 
-AttackAir1::AttackAir1(IActor* selfActor, IActor* lockOnActor) :
-	IAttack(selfActor, lockOnActor, 1, 20,10,21)
+AttackAir1::AttackAir1(IActor* selfActor) :
+	IAttack(selfActor, 1, 20,10,21)
 {
 }
 

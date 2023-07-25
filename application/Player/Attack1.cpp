@@ -1,7 +1,7 @@
 #include "Attack1.h"
 
-Attack1::Attack1(IActor* selfActor, IActor* lockOnActor) :
-	IAttack(selfActor, lockOnActor,1, 25, 10, 26)
+Attack1::Attack1(IActor* selfActor) :
+	IAttack(selfActor,1, 25, 10, 26)
 {
 }
 

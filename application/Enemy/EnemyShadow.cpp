@@ -108,7 +108,8 @@ void EnemyShadow::Idle()
 		actionTimer_.Reset();
 		actionTimer_.SetLimitTime(70);
 		attack_.reset();
-		attack_ = std::move(std::make_unique<AttackShadow>(this, splayer_));
+		attack_->SetLockOnActor(splayer_);
+		attack_ = std::move(std::make_unique<AttackShadow>(this));
 		attack_->Init();
 	}*/
 

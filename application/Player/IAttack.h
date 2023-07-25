@@ -32,7 +32,7 @@ protected:
 	IActor* lockOnActor_;
 	Vector3 attackVec_;
 public:
-	IAttack(IActor* selfActor, IActor* lockOnActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
+	IAttack(IActor* selfActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	virtual ~IAttack(){};
 	void Update();
 	void DrawCol();

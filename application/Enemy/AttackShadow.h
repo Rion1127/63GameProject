@@ -6,7 +6,7 @@ class AttackShadow final:
 private:
 	float frontDist_;
 public:
-	AttackShadow(IActor* selfActor, IActor* lockOnActor);
+	AttackShadow(IActor* selfActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;

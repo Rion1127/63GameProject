@@ -8,7 +8,7 @@ class Attack1 final :
 private:
 	float frontDist_;
 public:
-	Attack1(IActor* selfActor, IActor* lockOnActor);
+	Attack1(IActor* selfActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;

@@ -1,7 +1,7 @@
 #include "AttackShadow.h"
 
-AttackShadow::AttackShadow(IActor* selfActor, IActor* lockOnActor) :
-	IAttack(selfActor, lockOnActor, 1, 25, 5, 26)
+AttackShadow::AttackShadow(IActor* selfActor) :
+	IAttack(selfActor, 1, 25, 5, 26)
 {
 }
 

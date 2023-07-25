@@ -6,7 +6,7 @@ class AttackAir1 final :
 private:
 	float frontDist_;
 public:
-	AttackAir1(IActor* selfActor, IActor* lockOnActor);
+	AttackAir1(IActor* selfActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;

@@ -1,7 +1,7 @@
 #include "IAttack.h"
 
-IAttack::IAttack(IActor* selfActor, IActor* lockOnActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime) :
-	selfActor_(selfActor),lockOnActor_(lockOnActor)
+IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime) :
+	selfActor_(selfActor)
 {
 	attackCol_.resize(colNum);
 	for (auto& col : attackCol_)
