@@ -420,9 +420,6 @@
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="application\Enemy\EnemyShadow.cpp">
-      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
-    </ClCompile>
     <ClCompile Include="engine\IParticle.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
@@ -434,9 +431,6 @@
     </ClCompile>
     <ClCompile Include="application\Scene\DebugScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\AttackShadow.cpp">
-      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClCompile>
     <ClCompile Include="application\Scene\TitleScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
@@ -467,6 +461,15 @@
     </ClCompile>
     <ClCompile Include="engine\math\Spline.cpp">
       <Filter>engine\ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\Shadow\AttackShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\Shadow\AttackJumpShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -686,14 +689,8 @@
     <ClInclude Include="application\Player\IAttack.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Enemy\EnemyShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
-    </ClInclude>
     <ClInclude Include="application\Enemy\IEnemy.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\AttackShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClInclude>
     <ClInclude Include="application\Scene\DebugScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
@@ -727,6 +724,15 @@
     </ClInclude>
     <ClInclude Include="engine\math\Spline.h">
       <Filter>engine\ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\Shadow\AttackShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\Shadow\AttackJumpShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

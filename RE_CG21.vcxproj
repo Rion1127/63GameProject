@@ -12,13 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\CollisionManager.cpp" />
-    <ClCompile Include="application\Enemy\AttackShadow.cpp" />
     <ClCompile Include="application\Enemy\EnemyAirDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyDummy.cpp" />
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp" />
     <ClCompile Include="application\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="application\Enemy\EnemyShadow.cpp" />
     <ClCompile Include="application\Enemy\IEnemy.cpp" />
+    <ClCompile Include="application\Enemy\Shadow\AttackJumpShadow.cpp" />
+    <ClCompile Include="application\Enemy\Shadow\AttackShadow.cpp" />
+    <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp" />
     <ClCompile Include="application\GameCamera.cpp" />
     <ClCompile Include="application\IActor.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
@@ -100,13 +101,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\CollisionManager.h" />
-    <ClInclude Include="application\Enemy\AttackShadow.h" />
     <ClInclude Include="application\Enemy\EnemyAirDummy.h" />
     <ClInclude Include="application\Enemy\EnemyDummy.h" />
     <ClInclude Include="application\Enemy\EnemyHPGauge.h" />
     <ClInclude Include="application\Enemy\EnemyManager.h" />
-    <ClInclude Include="application\Enemy\EnemyShadow.h" />
     <ClInclude Include="application\Enemy\IEnemy.h" />
+    <ClInclude Include="application\Enemy\Shadow\AttackJumpShadow.h" />
+    <ClInclude Include="application\Enemy\Shadow\AttackShadow.h" />
+    <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h" />
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\IActor.h" />
     <ClInclude Include="application\LoadManager.h" />
