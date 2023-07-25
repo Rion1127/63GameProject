@@ -24,24 +24,24 @@ void DebugCamera::Update()
 		CameraMove();
 		camera_.Update(CameraMode::LookAT);
 	}
-	/*ImGui::Begin("debugCamera");
-	static float pos[3] = {
-		viewProjection_.eye_.x,
-		viewProjection_.eye_.y,
-		viewProjection_.eye_.z,
-	};
-	static float target[3] = {
-		viewProjection_.target_.x,
-		viewProjection_.target_.y,
-		viewProjection_.target_.z,
-	};
-	ImGui::SliderFloat3("pos", pos, -200.f, 200.f);
-	ImGui::SliderFloat3("target", target, -200.f, 200.f);
+	//ImGui::Begin("debugCamera");
+	//float pos[3] = {
+	//	camera_.up_.x,
+	//	camera_.up_.y,
+	//	camera_.up_.z,
+	//};
+	///*static float target[3] = {
+	//	viewProjection_.target_.x,
+	//	viewProjection_.target_.y,
+	//	viewProjection_.target_.z,
+	//};*/
+	//ImGui::SliderFloat3("up", pos, -200.f, 200.f);
+	///*ImGui::SliderFloat3("target", target, -200.f, 200.f);*/
 
 
-	ImGui::End();
+	//ImGui::End();
 
-	viewProjection_.eye_.x = pos[0];
+	/*viewProjection_.eye_.x = pos[0];
 	viewProjection_.eye_.y = pos[1];
 	viewProjection_.eye_.z = pos[2];
 

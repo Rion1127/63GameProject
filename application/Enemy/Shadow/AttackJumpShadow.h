@@ -5,6 +5,7 @@ class AttackJumpShadow :
 {
 private:
 	float frontDist_;
+	Vector3 PToEVec_;
 public:
 	AttackJumpShadow(IActor* selfActor);
 private:

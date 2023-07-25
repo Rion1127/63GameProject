@@ -3,6 +3,8 @@
 #include "Timer.h"
 #include "Spline.h"
 
+#include <unordered_map>
+
 class EnemyShadow :
 	public IEnemy
 {
@@ -20,7 +22,7 @@ public:
 private:
 	State state_;
 	Timer actionTimer_;
-	
+
 	float followLength;
 	float moveSpeed;
 	int32_t randRange_;
@@ -33,6 +35,8 @@ private:
 	Spline spline_;
 	bool isWanderInit_;
 	Timer sinkTimer_;
+
+	std::unordered_map<State, int32_t> priority_;
 private:
 	//デバッグ
 	std::string stateName_;
@@ -54,9 +58,11 @@ private:
 	void JumpAttack();
 	void KnockBack();
 
-	void PriorityUpdate();
+	void SortPriority();
 	void UpdateVector();
 
 	void WanderInit();
+
+	void StateUpdate(State state);
 };
 
