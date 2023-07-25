@@ -465,9 +465,6 @@
     <ClCompile Include="application\Enemy\Shadow\AttackShadow.cpp">
       <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp">
-      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
-    </ClCompile>
     <ClCompile Include="application\Enemy\Shadow\AttackJumpShadow.cpp">
       <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClCompile>
@@ -476,6 +473,9 @@
     </ClCompile>
     <ClCompile Include="application\Enemy\Dummy\EnemyDummy.cpp">
       <Filter>application\ソースファイル\Enemy\Dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -728,9 +728,6 @@
     <ClInclude Include="application\Enemy\Shadow\AttackShadow.h">
       <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
-    </ClInclude>
     <ClInclude Include="application\Enemy\Shadow\AttackJumpShadow.h">
       <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
     </ClInclude>
@@ -739,6 +736,9 @@
     </ClInclude>
     <ClInclude Include="application\Enemy\Dummy\EnemyDummy.h">
       <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

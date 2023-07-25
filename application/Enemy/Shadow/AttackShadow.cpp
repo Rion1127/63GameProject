@@ -7,26 +7,14 @@ AttackShadow::AttackShadow(IActor* selfActor) :
 
 void AttackShadow::Init()
 {
-	Vector3 frontVec{};
+	Vector3 frontVec = CalculateFrontVec();
 	Vector3 colPos{};
 	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 		frontDist_ = 0;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
-			Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
-			//ロックオンしている敵へのベクトルをとる
-			frontVec = {
-				 lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
-				0,
-				lockOnPos.z - selfActor_->GetWorldTransform()->position_.z,
-			};
-			Vector2 frontVec2 = {
-				frontVec.x,
-				frontVec.z
-			};
-			float rotY = Radian(Vec2Angle(frontVec2));
-			selfActor_->GetWorldTransform()->rotation_ = { 0,rotY ,0 };
+			CalculateRotToLockOnActor(frontVec);
 		}
 		else {
 			//回転情報から正面ベクトル(2D)を取得

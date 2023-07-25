@@ -40,3 +40,26 @@ void IAttack::DrawCol()
 		col->colObj_.Draw();
 	}
 }
+
+Vector3 IAttack::CalculateFrontVec()
+{
+	Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
+	Vector3 frontVec;
+	//ロックオンしている敵へのベクトルをとる
+	frontVec = {
+		lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
+		0,
+		lockOnPos.z - selfActor_->GetWorldTransform()->position_.z,
+	};
+	return frontVec;
+}
+
+void IAttack::CalculateRotToLockOnActor(Vector3 frontVec)
+{
+	Vector2 frontVec2 = {
+		frontVec.x,
+		frontVec.z
+	};
+	float rotY = Radian(Vec2Angle(frontVec2));
+	selfActor_->GetWorldTransform()->rotation_ = { 0,rotY ,0 };
+}

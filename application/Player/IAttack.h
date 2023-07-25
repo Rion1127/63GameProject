@@ -36,6 +36,8 @@ public:
 	virtual ~IAttack(){};
 	void Update();
 	void DrawCol();
+	Vector3 CalculateFrontVec();
+	void CalculateRotToLockOnActor(Vector3 frontVec);
 public:
 	void SetNowTime(int32_t time) { attackInfo_.nowTime = time; }
 	void SetLockOnActor(IActor* lockOnActor) { lockOnActor_ = lockOnActor; };

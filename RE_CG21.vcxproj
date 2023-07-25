@@ -478,7 +478,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;$(ProjectDir)engine;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)application\Stage;$(ProjectDir)application\Enemy\Dummy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;$(ProjectDir)engine;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)application\Stage;$(ProjectDir)application\Enemy\Dummy;$(ProjectDir)application\Enemy\Shadow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>

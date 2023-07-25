@@ -1,8 +1,7 @@
 #include "EnemyManager.h"
-#include "EnemyDummy.h"
-#include "EnemyAirDummy.h"
-#include "EnemyShadow.h"
-
+#include "Enemy/Shadow/EnemyShadow.h"
+#include "Enemy/Dummy/EnemyDummy.h"
+#include "Enemy/Dummy/EnemyAirDummy.h"
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
