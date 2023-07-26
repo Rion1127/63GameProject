@@ -55,6 +55,14 @@ Vector3 IAttack::CalculateFrontVec()
 			lockOnPos.z - selfActor_->GetWorldTransform()->position_.z,
 		};
 	}
+	else
+	{
+		frontVec = {
+				sinf(selfActor_->GetWorldTransform()->rotation_.y),
+				0,
+				cosf(selfActor_->GetWorldTransform()->rotation_.y),
+		};
+	}
 	return frontVec;
 }
 

@@ -33,7 +33,7 @@ void AttackAir2::Init()
 		attackCol_.at(0)->col_.radius = 1.f;
 		attackCol_.at(0)->damage = 10;
 		//ノックバック力
-		attackCol_.at(0)->knockPower = { 0.5f,0.3f,0.5f };
+		attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
 		attackCol_.at(0)->knockVecY = 0.5f;
 	}
 
@@ -60,26 +60,28 @@ void AttackAir2::MoveUpdate()
 
 
 	std::vector<Vector3>attackVec;
+	Vector3 up = Vector3(0, 1, 0) * -(selfActor_->GetWorldTransform()->scale_.y * 0.5f);
+	Vector3 playerDownPos =
+		selfActor_->GetWorldTransform()->position_ + up;
+	attackVec.push_back(playerDownPos);
+	attackVec.push_back(playerDownPos);
 
-	Vector3 down = {
+	up = {
 		frontVec.normalize().x,
 		frontVec.normalize().y + selfActor_->GetWorldTransform()->scale_.y * -1.5f,
 		frontVec.normalize().z,
 	};
 	Vector3 playermiddlePos =
-		selfActor_->GetWorldTransform()->position_ + down;
-	attackVec.push_back(playermiddlePos);
+		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(playermiddlePos);
 
 	Vector3 playerFrontPos =
-		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 3.f;
+		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
 	attackVec.push_back(playerFrontPos);
 
-	Vector3 up = down;
-	up.y = -up.y;
+	up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
 	Vector3 playerUpPos =
 		selfActor_->GetWorldTransform()->position_ + up;
-
 	attackVec.push_back(playerUpPos);
 	attackVec.push_back(playerUpPos);
 
