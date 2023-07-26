@@ -127,6 +127,14 @@ void EnemyShadow::Following()
 
 	float length = EtoPVec_.length();
 	addVec_ = EtoPVec_.normalize() * moveSpeed;
+
+	Vector2 dir = {
+			EtoPVec_.x,
+			EtoPVec_.z
+	};
+	//is•ûŒü‚É‰ñ“]
+	float rotY = Vec2Angle(dir);
+	obj_->WT_.rotation_.y = Radian(rotY);
 	//ˆê’è‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚çORˆê’èŽžŠÔ’Ç‚¢‚©‚¯‚½‚ç
 	if (length < followLength || actionTimer_.GetIsEnd())
 	{
