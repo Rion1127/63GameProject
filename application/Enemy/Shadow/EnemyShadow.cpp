@@ -21,7 +21,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 	ColPosUpdate();
 
 	state_ = State::Idle;
-	actionTimer_.SetLimitTime(200);
+	actionTimer_.SetLimitTime(400);
 
 	followLength = 5.f;
 	moveSpeed = 0.1f;
@@ -96,7 +96,11 @@ void EnemyShadow::MoveUpdate()
 	actionTimer_.AddTime(1);
 	//実行
 	(this->*Action[(int32_t)state_])();
-	//(this->*Action[(int32_t)State::Attack])();
+
+	if (actionTimer_.GetIsEnd())
+	{
+		SortPriority();
+	}
 
 	ImGui::Begin("Enemy");
 
@@ -114,36 +118,7 @@ void EnemyShadow::Idle()
 {
 	stateName_ = "Idle";
 
-	/*if (actionTimer_.GetIsEnd())
-	{
-		state_ = State::Attack;
-		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(70);
-		attack_.reset();
-		attack_ = std::move(std::make_unique<AttackShadow>(this));
-		attack_->SetLockOnActor(splayer_);
-		attack_->Init();
-	}*/
 
-	if (actionTimer_.GetIsEnd())
-	{
-		/*state_ = State::JumpAttack;
-		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(100);
-		attack_.reset();
-		attack_ = std::move(std::make_unique<AttackJumpShadow>(this));
-		attack_->SetLockOnActor(splayer_);
-		attack_->Init();*/
-		SortPriority();
-	}
-
-	/*if (actionTimer_.GetIsEnd())
-	{
-		state_ = State::Attack;
-		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(300);
-		isWanderInit_ = true;
-	}*/
 }
 
 void EnemyShadow::Following()
@@ -222,7 +197,7 @@ void EnemyShadow::Attack()
 	{
 		state_ = State::Idle;
 		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(150);
+		actionTimer_.SetLimitTime(120);
 		attack_.reset();
 	}
 }
@@ -239,7 +214,7 @@ void EnemyShadow::JumpAttack()
 	{
 		state_ = State::Idle;
 		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(150);
+		actionTimer_.SetLimitTime(120);
 		attack_.reset();
 	}
 }
@@ -276,7 +251,7 @@ void EnemyShadow::SortPriority()
 		priority_.at(State::Attack) += 70;
 		priority_.at(State::JumpAttack) += 20;
 		priority_.at(State::Wander) += 10;
-		priority_.at(State::Idle) += 10;
+		priority_.at(State::Idle) += 20;
 	}
 	//中距離にいるとき
 	else if (length > compareShortlength &&
@@ -296,17 +271,17 @@ void EnemyShadow::SortPriority()
 		priority_.at(State::Idle) += 5;
 	}
 
-	std::vector<std::pair<State, int32_t> > arr;
+	std::vector<std::pair<State, int32_t>> arr;
 	std::vector<int32_t> probability;
 	int32_t allPriolityValue = 0;
-	for (const auto& item : priority_)
+	for (const auto& p : priority_)
 	{
 		//プライオリティが0のものは除外する
-		if (item.second != 0)
-		{
-			arr.emplace_back(item);
-			allPriolityValue += item.second;
-		}
+		if (p.second == 0) continue;
+
+		arr.emplace_back(p);
+		//優先度の
+		allPriolityValue += p.second;
 	}
 	//降順に並び変える
 	std::sort(arr.begin(), arr.end(),
@@ -400,18 +375,18 @@ void EnemyShadow::WanderInit()
 void EnemyShadow::StateUpdate(State state)
 {
 	state_ = state;
+	actionTimer_.Reset();
 	if (state == State::Idle)
 	{
-
+		actionTimer_.SetLimitTime(RRandom::Rand(100,300));
 	}
 	else if (state == State::Following)
 	{
-
+		actionTimer_.SetLimitTime(300);
 	}
 	else if (state == State::Wander)
 	{
-		state_ = State::Attack;
-		actionTimer_.Reset();
+
 		actionTimer_.SetLimitTime(300);
 		isWanderInit_ = true;
 	}
@@ -421,7 +396,6 @@ void EnemyShadow::StateUpdate(State state)
 	}
 	else if (state == State::Attack)
 	{
-		actionTimer_.Reset();
 		actionTimer_.SetLimitTime(70);
 		attack_.reset();
 		attack_ = std::move(std::make_unique<AttackShadow>(this));
@@ -430,20 +404,10 @@ void EnemyShadow::StateUpdate(State state)
 	}
 	else if (state == State::JumpAttack)
 	{
-		state_ = State::JumpAttack;
-		actionTimer_.Reset();
 		actionTimer_.SetLimitTime(100);
 		attack_.reset();
 		attack_ = std::move(std::make_unique<AttackJumpShadow>(this));
 		attack_->SetLockOnActor(splayer_);
 		attack_->Init();
-	}
-	else if (state == State::KnockBack)
-	{
-
-	}
-	else if (state == State::None)
-	{
-
 	}
 }
