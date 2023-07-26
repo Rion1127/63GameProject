@@ -477,6 +477,9 @@
     <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp">
       <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
     </ClCompile>
+    <ClCompile Include="engine\util\JsonLoader.cpp">
+      <Filter>engine\ソース ファイル\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -739,6 +742,9 @@
     </ClInclude>
     <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h">
       <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\JsonLoader.h">
+      <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

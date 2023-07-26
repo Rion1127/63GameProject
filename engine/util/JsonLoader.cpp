@@ -47,7 +47,7 @@ void JsonLoader::LoadFile(std::string fileName)
 
 	//レベルデータ格納用インスタンスを生成
 	LevelData* levelData = new LevelData();
-	
+
 	//"object"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"])
 	{
@@ -58,8 +58,8 @@ void JsonLoader::LoadFile(std::string fileName)
 
 		if (type.compare("MESH") == 0)
 		{
-			levelData->object.emplace_back(new Object3D);
-			Object3D* newobj = levelData->object.back();
+			levelData->object.emplace_back(new Object3d);
+			Object3d* newobj = levelData->object.back();
 
 			//トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
@@ -69,30 +69,30 @@ void JsonLoader::LoadFile(std::string fileName)
 				(float)transform["translation"][2],
 				-(float)transform["translation"][0],
 			};
-			newobj->SetPos(pos);
+			newobj->WT_.position_ = pos;
 			//回転角
 			Vector3 rot = {
 				-(float)transform["rotation"][1],
 				-(float)transform["rotation"][2],
 				(float)transform["rotation"][0],
 			};
-			newobj->SetRot(rot);
+			newobj->WT_.rotation_;
 			//スケーリング
 			Vector3 scale = {
 				(float)transform["scaling"][1],
 				(float)transform["scaling"][2],
 				(float)transform["scaling"][0],
 			};
-			newobj->SetScale(scale);
+			newobj->WT_.scale_;
 
 			if (object.contains("children"))
 			{
-				levelData->object.emplace_back(new Object3D);
-				Object3D& newobj = *levelData->object.back();
+				levelData->object.emplace_back(new Object3d);
+				Object3d& newobj = *levelData->object.back();
 
-				Object3D* parent = levelData->object.at(levelData->object.size() - 2);
+				Object3d* parent = levelData->object.at(levelData->object.size() - 2);
 
-				newobj.SetParent(parent->GetWorldTransform());
+				newobj.WT_.parent_ = parent->GetTransform();
 
 			}
 		}

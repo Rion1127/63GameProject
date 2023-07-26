@@ -96,6 +96,7 @@
     <ClCompile Include="engine\3d\WorldTransform.cpp" />
     <ClCompile Include="engine\util\Color.cpp" />
     <ClCompile Include="engine\util\Gravity.cpp" />
+    <ClCompile Include="engine\util\JsonLoader.cpp" />
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
   </ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="engine\3d\WorldTransform.h" />
     <ClInclude Include="engine\util\Color.h" />
     <ClInclude Include="engine\util\Gravity.h" />
+    <ClInclude Include="engine\util\JsonLoader.h" />
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\Timer.h" />
   </ItemGroup>

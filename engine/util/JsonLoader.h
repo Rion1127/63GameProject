@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
-#include "Object3D.h"
+#include "Object3d.h"
 #include "json.hpp"
 
 struct LevelData {
-	std::vector<Object3D*> object;
+	std::vector<Object3d*> object;
 	std::vector<std::string> fileName;
 };
 class JsonLoader
@@ -19,18 +19,18 @@ public:
 
 
 	void LoadFile(std::string fileName);
-	void SetObjects(std::vector<Object3D*>* objects, int dataNum) {
+	void SetObjects(std::vector<Object3d*>* objects, uint32_t dataNum) {
 
 		LevelData& data = levelData_.at(dataNum);
-		int num = data.object.size();
+		uint32_t num = (uint32_t)data.object.size();
 
-		for (int i = 0; i < num; i++)
+		for (uint32_t i = 0; i < num; i++)
 		{
 			objects->emplace_back(data.object.at(i));
 		}
 	}
 private:
-	
+
 private:
 	//ÉQÉbÉ^Å[
 	std::vector<LevelData> GetLevelData() { return levelData_; }
