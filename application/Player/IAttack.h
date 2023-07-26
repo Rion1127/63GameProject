@@ -5,6 +5,7 @@
 #include "mInput.h"
 #include "PlayerInfo.h"
 #include "IActor.h"
+#include "Spline.h"
 
 struct AttackCol {
 	Object3d colObj_;
@@ -31,6 +32,7 @@ protected:
 	IActor* selfActor_;
 	IActor* lockOnActor_;
 	Vector3 attackVec_;
+	Spline spline_;
 public:
 	IAttack(IActor* selfActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	virtual ~IAttack(){};

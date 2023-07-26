@@ -33,11 +33,13 @@ void AttackAir2::Init()
 		attackCol_.at(0)->col_.radius = 1.f;
 		attackCol_.at(0)->damage = 10;
 		//ノックバック力
-		attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
+		attackCol_.at(0)->knockPower = { 0.5f,0.3f,0.5f };
 		attackCol_.at(0)->knockVecY = 0.5f;
 	}
 
 	attackVec_ = frontVec;
+
+	spline_.SetLimitTime(attackInfo_.maxTime - 15);
 }
 
 void AttackAir2::MoveUpdate()
@@ -55,7 +57,35 @@ void AttackAir2::MoveUpdate()
 
 
 	selfActor_->AddVec(speed);
-	Vector3 attackVec = attackVec_.normalize() * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
-	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
-	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;
+
+
+	std::vector<Vector3>attackVec;
+
+	Vector3 down = {
+		frontVec.normalize().x,
+		frontVec.normalize().y + selfActor_->GetWorldTransform()->scale_.y * -1.5f,
+		frontVec.normalize().z,
+	};
+	Vector3 playermiddlePos =
+		selfActor_->GetWorldTransform()->position_ + down;
+	attackVec.push_back(playermiddlePos);
+	attackVec.push_back(playermiddlePos);
+
+	Vector3 playerFrontPos =
+		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 3.f;
+	attackVec.push_back(playerFrontPos);
+
+	Vector3 up = down;
+	up.y = -up.y;
+	Vector3 playerUpPos =
+		selfActor_->GetWorldTransform()->position_ + up;
+
+	attackVec.push_back(playerUpPos);
+	attackVec.push_back(playerUpPos);
+
+	spline_.SetPositions(attackVec);
+
+	spline_.Update();
+
+	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 }

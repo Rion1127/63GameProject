@@ -256,7 +256,7 @@ void CollisionManager::EnemyAttackToPlayer()
 			{
 				//プレイヤーのダメージクールタイムが終わっていれば
 				if (player_->GetDamegeCoolTime()->GetIsEnd()) {
-					
+
 					//ガードの当たり判定
 					if (player_->GetGuard()->GetCol().isActive) {
 						if (BallCollision(col->col_, player_->GetGuard()->GetCol())) {
@@ -281,7 +281,7 @@ void CollisionManager::EnemyAttackToPlayer()
 						knockVec.y = col->knockVecY;
 						knockVec = knockVec.normalize();
 						knockVec = knockVec * col->knockPower;
-						
+
 						player_->Damage(col->damage, knockVec);
 						player_->SetState(PlayerState::Knock);
 

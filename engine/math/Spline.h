@@ -22,7 +22,7 @@ public:
 	Spline();
 
 	void Update();
-	void SplineUpdate();
+
 	void DrawDebug();
 	void Reset();
 	void DleteAllPoint() { splinePos_.clear(); }
@@ -37,9 +37,9 @@ public:
 	const std::vector<Vector3> GetsplinePos() { return splinePos_; }
 	bool GetisEnd() { return isEnd_; }
 private:
+	void SplineUpdate();
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
 	// 始点/終点の座標と ベクトルから、曲線の軌道上の座標を返す
 	Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t);
-	
 };
 

@@ -28,6 +28,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 	randRange_ = 30;
 	isWanderInit_ = false;
 
+	//プライオリティに行動パターンを登録
 	priority_.insert(std::make_pair(State::Idle, 0));
 	priority_.insert(std::make_pair(State::Following, 0));
 	priority_.insert(std::make_pair(State::Wander, 0));

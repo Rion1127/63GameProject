@@ -13,6 +13,7 @@ IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 		col->damage = damage;
 	}
 	attackInfo_.maxTime = maxTime;
+	spline_.SetIsStart(true);
 }
 
 void IAttack::Update()
@@ -43,7 +44,7 @@ void IAttack::DrawCol()
 
 Vector3 IAttack::CalculateFrontVec()
 {
-	Vector3 frontVec{};
+	Vector3 frontVec ={0,0,0};
 	if (IAttack::lockOnActor_ != nullptr)
 	{
 		Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;

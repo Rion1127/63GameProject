@@ -67,6 +67,7 @@ void AttackManager::Update()
 		//攻撃中フラグ
 		isAttacking = true;
 		//攻撃更新
+		nowAttack_->SetLockOnActor(lockOnEnemy_);
 		nowAttack_->Update();
 		nowAttack_->SetNowTime(timer_);
 		//攻撃中カウントを進める

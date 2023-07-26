@@ -20,13 +20,13 @@ protected:
 
 	EnemyType enemyType_;
 	//ƒ‚ƒfƒ‹
-	
+
 	bool isSoftLockOn_;
 	bool isHardLockOn_;
 	bool isGravityImpact_;	//d—Í‚ğ—LŒø‚É‚·‚é
 	bool isDead_;
 	bool isKnock_;
-	
+
 	//‘Ì—Í
 	int32_t health_;
 	int32_t maxHealth_;
@@ -38,7 +38,7 @@ public:
 	static void SetPlayer(Player* player) { splayer_ = player; }
 	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
 	void SetHardIsLockOn(bool flag) { isHardLockOn_ = flag; }
-	
+
 	void PreUpdate();
 	void PostUpdate();
 	virtual void Draw();

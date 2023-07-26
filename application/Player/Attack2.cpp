@@ -34,13 +34,15 @@ void Attack2::Init()
 		colPos.y += 1;
 	}
 	attackCol_.at(0)->col_.center = colPos;
-	attackCol_.at(0)->col_.radius = 1.f;
+	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
 	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 
 	attackVec_ = frontVec;
+
+	spline_.SetLimitTime(attackInfo_.maxTime - 15);
 }
 
 void Attack2::MoveUpdate()
@@ -53,9 +55,25 @@ void Attack2::MoveUpdate()
 	speed *= timerate;
 
 	selfActor_->AddVec(speed);
-	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
-	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
-	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;
+
+	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
+
+	std::vector<Vector3>attackVec;
+	Vector3 playerFrontPos =
+		attackBasePos + CalculateFrontVec().normalize();
+	attackVec.push_back(playerFrontPos);
+	attackVec.push_back(playerFrontPos);
+
+	Vector3 endPos =
+		attackBasePos + CalculateFrontVec().normalize() * 3.f;
+	attackVec.push_back(endPos);
+	attackVec.push_back(endPos);
+
+	spline_.SetPositions(attackVec);
+
+	spline_.Update();
+
+	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 }
 
 

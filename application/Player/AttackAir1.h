@@ -1,5 +1,6 @@
 #pragma once
 #include "IAttack.h"
+
 class AttackAir1 final :
     public IAttack
 {

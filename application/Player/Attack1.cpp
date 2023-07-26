@@ -41,6 +41,8 @@ void Attack1::Init()
 	attackCol_.at(0)->knockVecY = 0.5f;
 
 	attackVec_ = frontVec;
+
+	spline_.SetLimitTime(attackInfo_.maxTime - 20);
 }
 
 void Attack1::MoveUpdate()
@@ -53,9 +55,35 @@ void Attack1::MoveUpdate()
 	speed *= timerate;
 
 	selfActor_->AddVec(speed);
-	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 2.f);
-	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
-	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;
+
+
+	std::vector<Vector3>attackVec;
+	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 3.f);
+	Vector3 playerUpPos =
+		selfActor_->GetWorldTransform()->position_ + up;
+	attackVec.push_back(playerUpPos);
+	attackVec.push_back(playerUpPos);
+
+	up = {
+		CalculateFrontVec().normalize().x,
+		CalculateFrontVec().normalize().y + selfActor_->GetWorldTransform()->scale_.y * 3.f,
+		CalculateFrontVec().normalize().z,
+	};
+	Vector3 playermiddlePos =
+		selfActor_->GetWorldTransform()->position_ + up;
+	attackVec.push_back(playermiddlePos);
+
+	Vector3 playerFrontPos =
+		selfActor_->GetWorldTransform()->position_ + CalculateFrontVec().normalize() * 3.f;
+	spline_.AddPosition(playerFrontPos, PosState::End);
+	attackVec.push_back(playerFrontPos);
+	attackVec.push_back(playerFrontPos);
+
+	spline_.SetPositions(attackVec);
+
+	spline_.Update();
+
+	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 }
 
 
