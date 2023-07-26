@@ -43,14 +43,17 @@ void IAttack::DrawCol()
 
 Vector3 IAttack::CalculateFrontVec()
 {
-	Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
-	Vector3 frontVec;
-	//ロックオンしている敵へのベクトルをとる
-	frontVec = {
-		lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
-		0,
-		lockOnPos.z - selfActor_->GetWorldTransform()->position_.z,
-	};
+	Vector3 frontVec{};
+	if (IAttack::lockOnActor_ != nullptr)
+	{
+		Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
+		//ロックオンしている敵へのベクトルをとる
+		frontVec = {
+			lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
+			0,
+			lockOnPos.z - selfActor_->GetWorldTransform()->position_.z,
+		};
+	}
 	return frontVec;
 }
 
