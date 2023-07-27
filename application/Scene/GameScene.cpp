@@ -5,23 +5,25 @@
 #include "ParticleManager.h"
 #include "Camera.h"
 
+#include "JsonLoader.h"
+
 GameScene::~GameScene()
 {
-	
+
 }
 
 void GameScene::Ini()
 {
 	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
-	
+
 	lightManager_ = std::make_shared<LightManager>();
 	colManager_ = std::make_unique<CollisionManager>();
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
-	
 
-	
+
+
 	stage_ = std::move(std::make_unique<Stage>());
 
 	player_ = std::move(std::make_unique<Player>());
@@ -33,12 +35,14 @@ void GameScene::Ini()
 	colManager_->SetEnemys(enemyManager_.get());
 	AttackManager::SetPlayer(player_.get());
 
+	JsonLoader::GetInstance()->LoadFile("test.json","Test");
+	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Test");
 }
 
 void GameScene::Update()
 {
 	CameraUpdate();
-	
+
 	stage_->Update();
 	player_->PreUpdate();
 	enemyManager_->PreUpdate();
@@ -56,13 +60,13 @@ void GameScene::Update()
 		SceneManager::SetChangeStart(SceneName::GameOver);
 	}
 
-	
+
 }
 
 void GameScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-	
+
 	////////////////
 	//3Dオブジェクト//
 	////////////////
@@ -70,10 +74,10 @@ void GameScene::Draw()
 	stage_->Draw();
 	player_->Draw();
 	enemyManager_->Draw();
-	
+
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
-	
-	
+
+
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
 
 	////////////
@@ -106,5 +110,5 @@ void GameScene::CameraUpdate()
 	}
 	Camera::scurrent_->Update(CameraMode::LookAT);
 
-	
+
 }

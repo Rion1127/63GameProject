@@ -26,5 +26,6 @@ public:
 public:
 	std::array<std::unique_ptr<Plane>, 4>* GetPlaneCol() { return &walls_; }
 	Plane* GetFloor() { return floor_.get(); }
+	std::vector<std::unique_ptr<Object3d>>* GetObjects() { return &stageObj_; }
 };
 

@@ -10,10 +10,10 @@ JsonLoader* JsonLoader::GetInstance()
 
 JsonLoader::JsonLoader()
 {
-	kDefaultBaseDirectory = "Resources/JSON/";
+	kDefaultBaseDirectory = "application/Resources/JSON/";
 }
 
-void JsonLoader::LoadFile(std::string fileName)
+void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 {
 	//連結してフルパスを得る
 	const std::string fullpath = kDefaultBaseDirectory + fileName;
@@ -46,8 +46,8 @@ void JsonLoader::LoadFile(std::string fileName)
 	assert(name.compare("scene") == 0);
 
 	//レベルデータ格納用インスタンスを生成
-	LevelData* levelData = new LevelData();
-
+	std::unique_ptr<LevelData> levelData = std::move(std::make_unique<LevelData>());
+	levelData->fileName = fileName;
 	//"object"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"])
 	{
@@ -56,11 +56,10 @@ void JsonLoader::LoadFile(std::string fileName)
 		//種別を取得
 		std::string type = object["type"].get<std::string>();
 
+
 		if (type.compare("MESH") == 0)
 		{
-			levelData->object.emplace_back(new Object3d);
-			Object3d* newobj = levelData->object.back();
-
+			std::unique_ptr<Object3d> newobj = std::move(std::make_unique<Object3d>());
 			//トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
 			//平行移動
@@ -69,35 +68,95 @@ void JsonLoader::LoadFile(std::string fileName)
 				(float)transform["translation"][2],
 				-(float)transform["translation"][0],
 			};
-			newobj->WT_.position_ = pos;
+			newobj->SetPos(pos);
 			//回転角
 			Vector3 rot = {
-				-(float)transform["rotation"][1],
-				-(float)transform["rotation"][2],
-				(float)transform["rotation"][0],
+				Radian(-(float)transform["rotation"][1]),
+				Radian(-(float)transform["rotation"][2]),
+				Radian((float)transform["rotation"][0]),
 			};
-			newobj->WT_.rotation_;
+			newobj->SetRot(rot);
 			//スケーリング
 			Vector3 scale = {
 				(float)transform["scaling"][1],
 				(float)transform["scaling"][2],
 				(float)transform["scaling"][0],
 			};
-			newobj->WT_.scale_;
+			newobj->SetScale(scale);
+			//モデルを読み込む
+			std::string modelName_ = object["model_name"].get<std::string>();
+			newobj->SetModel(Model::CreateOBJ_uniptr(modelName_, true));
+			//表示フラグを代入
+			nlohmann::json& visible = object["isvisible"];
+			bool isVisible = visible.get<uint32_t>();
 
-			if (object.contains("children"))
+			newobj->SetIsVisible(isVisible);
+			levelData->object.push_back(std::move(newobj));
+
+			/*if (object.contains("children"))
 			{
-				levelData->object.emplace_back(new Object3d);
-				Object3d& newobj = *levelData->object.back();
+				levelData->object.emplace_back();
+				Object3d& newobj = levelData->object.back();
 
-				Object3d* parent = levelData->object.at(levelData->object.size() - 2);
+				Object3d& parent = levelData->object.at(levelData->object.size() - 2);
 
-				newobj.WT_.parent_ = parent->GetTransform();
+				newobj.SetParent(parent.GetTransform());
 
-			}
+			}*/
+		}
+		else if (type.compare("CAMERA") == 0)
+		{
+			nlohmann::json& transform = object["transform"];
+			Vector3 pos = {
+				(float)transform["translation"][1],
+				(float)transform["translation"][2],
+				-(float)transform["translation"][0],
+			};
+			//回転角
+			Vector3 rot = {
+				Radian(-(float)transform["rotation"][0] + 90.f),
+				Radian(-(float)transform["rotation"][2] + 90.f),
+				Radian((float)transform["rotation"][1]),
+			};
+			levelData->cameraInfo.pos = pos;
+			levelData->cameraInfo.rot = rot;
+		}
+
+	}
+
+	if (levelData_.size() > 0) {
+		//同じファイルを読み込んだ場合、新しい情報に入れ替える
+		if (levelData_.find(dataName)->second->fileName == fileName) {
+			levelData_.erase(dataName);
 		}
 	}
 
-	levelData_.push_back(*levelData);
-	delete levelData;
+	levelData_.insert(std::make_pair(dataName, std::move(levelData)));
+}
+
+void JsonLoader::SetObjects(std::vector<std::unique_ptr<Object3d>>* objects, std::string levelDataName) {
+
+	LevelData* data = levelData_.at(levelDataName).get();
+	size_t num = data->object.size();
+
+	objects->clear();
+	for (size_t i = 0; i < num; i++)
+	{
+		//読み込んだ情報を代入してく
+		std::unique_ptr<Object3d> newObj = std::move(std::make_unique<Object3d>());
+		newObj->SetPos(data->object.at(i)->GetPos());
+		newObj->SetRot(data->object.at(i)->GetRot());
+		newObj->SetScale(data->object.at(i)->GetScale());
+		std::string modelName_ = data->object.at(i)->GetModel()->GetModelName();
+		newObj->SetModel(Model::CreateOBJ_uniptr(modelName_, false));
+		newObj->SetIsVisible(data->object.at(i)->GetIsVisible());
+		objects->push_back(std::move(newObj));
+	}
+}
+
+void JsonLoader::SetCamera(Camera* camera, std::string levelDataName)
+{
+	LevelData* data = levelData_.at(levelDataName).get();
+	camera->eye_ = data->cameraInfo.pos;
+	camera->rot_ = data->cameraInfo.rot;
 }
