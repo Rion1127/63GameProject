@@ -45,7 +45,7 @@
         },
         {
             "type": "MESH",
-            "name": "立方体",
+            "name": "Stage",
             "transform": {
                 "translation": [
                     0.0,
@@ -61,6 +61,167 @@
                     30.0,
                     30.0,
                     1.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar01",
+            "transform": {
+                "translation": [
+                    31.0,
+                    31.0,
+                    9.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar02",
+            "transform": {
+                "translation": [
+                    31.0,
+                    -31.0,
+                    9.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar03",
+            "transform": {
+                "translation": [
+                    -31.0,
+                    -31.0,
+                    9.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar04",
+            "transform": {
+                "translation": [
+                    -31.0,
+                    31.0,
+                    9.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "Floor",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -1.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    50.0,
+                    50.0,
+                    1.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体",
+            "transform": {
+                "translation": [
+                    0.0,
+                    51.0,
+                    12.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    50.0,
+                    1.0,
+                    13.0
+                ]
+            },
+            "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -51.0,
+                    12.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    50.0,
+                    1.0,
+                    13.0
                 ]
             },
             "model_name": "cube",
