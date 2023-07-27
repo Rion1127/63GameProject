@@ -41,6 +41,14 @@ void GameScene::Ini()
 
 void GameScene::Update()
 {
+#ifdef _DEBUG
+	if (Key::TriggerKey(DIK_R))
+	{
+		JsonLoader::GetInstance()->LoadFile("test.json", "Test");
+		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Test");
+	}
+#endif // _DEBUG
+
 	CameraUpdate();
 
 	stage_->Update();
@@ -59,6 +67,7 @@ void GameScene::Update()
 	{
 		SceneManager::SetChangeStart(SceneName::GameOver);
 	}
+
 
 
 }

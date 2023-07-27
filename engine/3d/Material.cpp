@@ -47,7 +47,7 @@ void Material::LoadTexture(const std::string& directoryPath)
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 	// ファイルパスを結合
-	std::string filepath = directoryPath + textureFilename_;
+	std::string filepath = "application/Resources/Object/" + directoryPath + textureFilename_;
 	// テクスチャ読み込み
 	TextureManager::GetInstance()->LoadGraph(filepath, filepath);
 	texture_ = *TextureManager::GetInstance()->GetTexture(filepath);

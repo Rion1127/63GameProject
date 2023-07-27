@@ -45,144 +45,6 @@
         },
         {
             "type": "MESH",
-            "name": "Stage",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    -1.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    30.0,
-                    30.0,
-                    1.0
-                ]
-            },
-            "model_name": "cube",
-            "isvisible": 1
-        },
-        {
-            "type": "MESH",
-            "name": "pillar01",
-            "transform": {
-                "translation": [
-                    31.0,
-                    31.0,
-                    9.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "model_name": "cube",
-            "isvisible": 1
-        },
-        {
-            "type": "MESH",
-            "name": "pillar02",
-            "transform": {
-                "translation": [
-                    31.0,
-                    -31.0,
-                    9.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "model_name": "cube",
-            "isvisible": 1
-        },
-        {
-            "type": "MESH",
-            "name": "pillar03",
-            "transform": {
-                "translation": [
-                    -31.0,
-                    -31.0,
-                    9.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "model_name": "cube",
-            "isvisible": 1
-        },
-        {
-            "type": "MESH",
-            "name": "pillar04",
-            "transform": {
-                "translation": [
-                    -31.0,
-                    31.0,
-                    9.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "model_name": "cube",
-            "isvisible": 1
-        },
-        {
-            "type": "MESH",
-            "name": "Floor",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    -1.5
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    50.0,
-                    50.0,
-                    1.0
-                ]
-            },
-            "model_name": "cube",
-            "isvisible": 1
-        },
-        {
-            "type": "MESH",
             "name": "立方体",
             "transform": {
                 "translation": [
@@ -225,6 +87,144 @@
                 ]
             },
             "model_name": "cube",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -1.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "floor",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "stage",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -1.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "stage",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.003",
+            "transform": {
+                "translation": [
+                    32.5,
+                    32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    -32.5,
+                    32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.005",
+            "transform": {
+                "translation": [
+                    32.5,
+                    -32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.006",
+            "transform": {
+                "translation": [
+                    -32.5,
+                    -32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
             "isvisible": 1
         }
     ]

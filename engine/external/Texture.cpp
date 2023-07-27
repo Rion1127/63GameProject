@@ -28,7 +28,7 @@ void TextureManager::Ini()
 	assert(SUCCEEDED(result));
 	//SRVヒープの先頭ハンドルを取得
 	srvHandle = srvHeap.Get()->GetCPUDescriptorHandleForHeapStart();
-	
+
 
 	textureHandle = 0;
 }
@@ -45,16 +45,17 @@ void TextureManager::LoadGraph(const std::string& fileName, const std::string& n
 	//最終的なファイル名
 	std::string allFileName;
 
-	std::string find_Name = "application/Resources/Texture/";
+	std::string find_Name = "Resources/";
 	size_t strPos = fileName.find(find_Name);
+	size_t strSize = fileName.size();
 	//"Resources/"　が文字列の最初になければ文字列を足す
-	if (strPos == 0)
+	if (strPos <= strSize)
 	{
 		allFileName = fileName;
 	}
 	else
 	{
-		allFileName = find_Name + fileName;
+		allFileName = "application/Resources/Texture/" + fileName;
 	}
 #pragma region 画像読み込み
 	//stringをwchar_tに変換
@@ -98,7 +99,7 @@ void TextureManager::LoadGraph(const std::string& fileName, const std::string& n
 			allFileName_w.c_str(),
 			&metadata, scratchImg);
 	}
-	
+
 	//失敗したときは白のテクスチャを読み込む
 	if (result != S_OK) {
 		result = LoadFromWICFile(
@@ -206,7 +207,7 @@ ID3D12Resource* TextureManager::UploadTextureData(ID3D12Resource* texture, const
 	std::vector<D3D12_SUBRESOURCE_DATA> subresources;
 	DirectX::PrepareUpload(&device, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
 	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
-	//ID3D12Resource* intermediateResource = 
+	//ID3D12Resource* intermediateResource =
 	return nullptr;
 }
 
