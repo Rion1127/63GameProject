@@ -1,11 +1,13 @@
 #include "ParticleHitAttack.h"
 #include "RRandom.h"
 #include "Util.h"
+#include "Easing.h"
 ParticleHitAttack::ParticleHitAttack() :
 	vertexCount(32)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
+	isBillBoard = true;
 }
 
 void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
@@ -21,7 +23,7 @@ void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		particles_.emplace_back();
 		//í«â¡ÇµÇΩóvëfÇÃéQè∆
 		Particle& p = particles_.back();
-		
+
 		Vector3 vec = {
 			RRandom::RandF(-addVec.x,addVec.x),
 			RRandom::RandF(-addVec.y,addVec.y),
@@ -41,7 +43,7 @@ void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		p.scale = scale;
 		p.baseScale = scale;
 		p.addRot = addrot;
-		p.color = { 200,200,0,255 };
+		p.color = { 255,175,60,255 };
 	}
 }
 
@@ -56,7 +58,10 @@ void ParticleHitAttack::MoveUpdate()
 		p.position += p.velocity;
 		p.rot += p.addRot;
 
-		MoveTo({ 0,0,0 }, 0.005f, p.velocity);
+		p.scale = Easing::Bounce::easeIn(f,p.baseScale,-p.baseScale,1.0f);
+
+
+		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
 	}
 }

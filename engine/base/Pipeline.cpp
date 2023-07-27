@@ -130,10 +130,17 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
-	pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
-	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK(depthWriteMasc);//書き込み許可
-	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;//小さければ合格
-	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
+	if (depthWriteMasc == WRIGHT_MASK::DEPTH_ENABLE_FALSE)
+	{
+		pipelineDesc.DepthStencilState.DepthEnable = false;
+	}
+	else
+	{
+		pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
+		pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK(depthWriteMasc);//書き込み許可
+		pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;//小さければ合格
+		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
+	}
 
 	// 頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout_.data();
@@ -237,7 +244,7 @@ void PipelineObject::AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum
 	rootParams_.clear();
 	int32_t size = 0;
 
-	
+
 	for (int32_t i = 0; i < addTexnum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};

@@ -74,6 +74,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 
 	////////////////

@@ -14,12 +14,12 @@ class Player final:
 	public IActor
 {
 private:
-	
+
 	//ベクトル
 	Vector3 move_;
 	Vector3 frontVec_;
 	Vector3 lockOnVec_;
-	
+
 	// --入力-- //
 	float inputAngle_;// -> 入力されている方向の角度
 
@@ -38,6 +38,8 @@ private:
 
 	int32_t maxHealth_;
 	int32_t health_;
+
+	Sphere damageCol_;
 private:
 	Controller* controller_ = nullptr;
 public:
@@ -76,7 +78,7 @@ public:
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 
-	void AddPos(Vector3 pos) { 
+	void AddPos(Vector3 pos) {
 		addVec_ += pos;
 	}
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
@@ -90,5 +92,6 @@ public:
 	bool GetIsAlive() { return isAlive_; }
 	Vector3 GetLockOnVec() { return lockOnVec_; }
 	Guard* GetGuard() { return &guard_; }
+	Sphere GetDamageCol() { return damageCol_; }
 };
 

@@ -160,10 +160,25 @@ void Camera::UpdateLookAt()
 	matView_.m[3][2] = cameraAxisZ.dot(reverseEyePosition);
 	matView_.m[3][3] = 1.f;
 	//全方向ビルボード行列
-	/*matBillboard_.m[0] = cameraAxisX;
-	matBillboard_.m[1] = cameraAxisY;
-	matBillboard_.m[2] = cameraAxisZ;
-	matBillboard_.m[3] = XMVectorSet(0, 0, 0, 1);*/
+	matBillboard_.m[0][0] = cameraAxisX.x;
+	matBillboard_.m[0][1] = cameraAxisX.y;
+	matBillboard_.m[0][2] = cameraAxisX.z;
+	matBillboard_.m[0][3] = 0;
+
+	matBillboard_.m[1][0] = cameraAxisY.x;
+	matBillboard_.m[1][1] = cameraAxisY.y;
+	matBillboard_.m[1][2] = cameraAxisY.z;
+	matBillboard_.m[1][3] = 0;
+
+	matBillboard_.m[2][0] = cameraAxisZ.x;
+	matBillboard_.m[2][1] = cameraAxisZ.y;
+	matBillboard_.m[2][2] = cameraAxisZ.z;
+	matBillboard_.m[2][3] = 0;
+
+	matBillboard_.m[3][0] = 0;
+	matBillboard_.m[3][1] = 0;
+	matBillboard_.m[3][2] = 0;
+	matBillboard_.m[3][3] = 1;
 
 	////Y軸周りビルボード行列
 	////カメラXYZ軸
@@ -298,7 +313,7 @@ void Camera::ShakeUpdate()
 	//		eye_ = originalPos_;
 	//		isShake_ = false;
 	//	//}
-	//	
+	//
 	//}
 }
 

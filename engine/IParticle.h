@@ -47,12 +47,15 @@ protected:
 		int particleType = 0;
 		Vector2 ancorPoint_ = { 0,0 };
 	};
+	struct BillBoardConstBuff {
+		Matrix4 billBoardMat;
+	};
 protected:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	//頂点データ
 	std::vector<VertexParticle> vertices_;
-	
+
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	ComPtr<ID3D12Resource> vertBuff_;
@@ -64,6 +67,8 @@ protected:
 	int32_t maxParticleNum_;
 	//パーティクルデータ
 	std::vector<Particle> particles_;
+
+	bool isBillBoard;
 public:
 	IParticle() {};
 	virtual ~IParticle();

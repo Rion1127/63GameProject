@@ -28,7 +28,7 @@ void main(
 )
 {
     GSOutput element; //出力用頂点データ
-   
+
     for (uint i = 0; i < vnum; i++)
     {
         //中心からのオフセットをスケーリング
@@ -39,7 +39,7 @@ void main(
             offset_array[i].z * input[0].scale,
             offset_array[i].w * input[0].scale,
         };
-        
+
         // X軸回転行列
         matrix rotXMat =
         {
@@ -56,7 +56,7 @@ void main(
             sin(input[0].rot.y), 0, cos(input[0].rot.y), 0,
             0, 0, 0, 1
         };
-        
+
         // Z軸回転行列
         matrix rotZMat =
         {
@@ -65,13 +65,15 @@ void main(
             0, 0, 1, 0,
             0, 0, 0, 1
         };
-        
+
         offset = mul(rotZMat, offset);
         offset = mul(rotXMat, offset);
         offset = mul(rotYMat, offset);
-        
+
+        offset = mul(worldMat, offset);
+
         element.svpos = input[0].pos + offset;
-        
+
         //ビュー、射影変換
         element.svpos = mul(viewProjMat, element.svpos);
         //element.svpos.x = element.svpos.x * cos(input[0].rot.x);

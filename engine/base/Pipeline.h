@@ -40,7 +40,8 @@ enum TOPOLOGY_TYPE
 };
 enum WRIGHT_MASK {
 	DEPTH_WRITE_MASK_ZERO = 0,
-	DEPTH_WRITE_MASK_ALL = 1
+	DEPTH_WRITE_MASK_ALL = 1,
+	DEPTH_ENABLE_FALSE = 2
 };
 enum TEXTURE_ADDRESS_MODE {	//https://learn.microsoft.com/ja-jp/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_address_mode
 	MODE_WRAP = 1,		//繰り返し（タイリング）

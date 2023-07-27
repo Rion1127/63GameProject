@@ -234,9 +234,9 @@ void CollisionManager::PlayerAttackToEnemy()
 						//HPƒQ[ƒW”½‰f
 						enemyManager_->Damage();
 
-						Vector3 addVec = { 0.15f,0.15f,0.15f };
+						Vector3 addVec = { 0.05f,0.05f,0.05f };
 
-						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 0.7f);
+						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 1.0f);
 						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
@@ -273,7 +273,7 @@ void CollisionManager::EnemyAttackToPlayer()
 						}
 					}
 
-					if (BallCollision(col->col_, player_->GetCol()))
+					if (BallCollision(col->col_, player_->GetDamageCol()))
 					{
 						//“G‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
 						Vector3 knockVec =
@@ -287,7 +287,7 @@ void CollisionManager::EnemyAttackToPlayer()
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 						ParticleManager::GetInstance()->
-							AddParticle("HitAttack", 3, 40, player_->GetCol().center, addVec, 0.7f);
+							AddParticle("HitAttack", 3, 40, player_->GetDamageCol().center, addVec, 0.7f);
 						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}

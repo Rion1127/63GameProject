@@ -171,7 +171,7 @@ void PipelineManager::PostEffectIni()
 	GetPipelineObjects("CrossFilter")->AddrootParamsMultiTexture(3, 1);
 
 	Create("CrossFilter", NONE, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ZERO, MODE_BORDER);
-#pragma endregion 
+#pragma endregion
 
 #pragma region CG4_評価課題２
 	AddPipeline("MultiRenderTexture");
@@ -184,7 +184,7 @@ void PipelineManager::PostEffectIni()
 	GetPipelineObjects("MultiRenderTexture")->AddrootParamsMultiTexture(2, 1);
 
 	Create("MultiRenderTexture", NONE, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ZERO, MODE_BORDER);
-#pragma endregion 
+#pragma endregion
 
 #pragma region ラインブラー
 	//ポストエフェクト
@@ -216,7 +216,7 @@ void PipelineManager::ParticleShaderIni()
 
 	GetPipelineObjects("Particle")->AddrootParams(2);
 
-	Create("Particle", NONE, TOPOLOGY_POINT, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
+	Create("Particle", NONE, TOPOLOGY_POINT, DEPTH_ENABLE_FALSE, MODE_WRAP);
 }
 
 void PipelineManager::Create(

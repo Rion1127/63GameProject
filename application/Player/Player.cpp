@@ -8,7 +8,6 @@ Player::Player()
 {
 	controller_ = Controller::GetInstance();
 
-	col_.radius = 1;
 	gravity_.SetAddValue({ 0,-0.01f,0 });
 
 	// “ü—Í‚³‚ê‚Ä‚¢‚é•ûŒü‚ÌŠp“x
@@ -21,6 +20,9 @@ Player::Player()
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	//’…’nd’¼ŽžŠÔ
 	landingTimer_.SetLimitTime(7);
+
+	col_.radius = obj_->GetTransform()->scale_.x;
+	damageCol_.radius = obj_->GetTransform()->scale_.x;
 
 	attack_.SetPlayer(&state_);
 	damageCoolTime_.SetLimitTime(50);
@@ -100,6 +102,7 @@ void Player::ColPosUpdate()
 	};
 
 	col_.SetPos(colPos);
+	damageCol_.SetPos(colPos);
 }
 #pragma region “ü—Í
 void Player::InputVecUpdate()

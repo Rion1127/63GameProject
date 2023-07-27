@@ -1,7 +1,9 @@
 #include "IParticle.h"
 #include "DirectX.h"
+#include "Util.h"
 
 IParticle::~IParticle() {
+	isBillBoard = false;
 }
 
 void IParticle::Init(int32_t vertexCount)
@@ -87,7 +89,7 @@ void IParticle::TransferBuff()
 
 		vertMap->scale = particles_[i].scale;
 
-		vertMap->rot = particles_[i].rot;
+		vertMap->rot = particles_[i].rot * (float)Max(1 - isBillBoard ,0);
 
 		vertMap->ancorPoint = particles_[i].ancorPoint_;
 
@@ -97,11 +99,11 @@ void IParticle::TransferBuff()
 		vertices_.at(i) = *vertMap;
 	}
 	std::copy(vertices_.begin(), vertices_.end(), vertMap);
-	
+
 	// Œq‚ª‚è‚ð‰ðœ
 	vertBuff_->Unmap(0, nullptr);
 
-	transform_.Update();
+	transform_.Update(1);
 
 }
 
