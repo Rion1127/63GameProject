@@ -2,18 +2,7 @@
 #include "Util.h"
 Stage::Stage()
 {
-	//stageObj_.resize(1);
-	for (int32_t i = 0; i < stageObj_.size(); i++) {
-		stageObj_[i] = MakeUnique<Object3d>();
-		/*if (i == 0) {
-			stageObj_[i]->SetModel(Model::CreateOBJ_uniptr("cube", false));
 
-			stageObj_[i]->WT_.position_ = { 0,-1.f,0 };
-			stageObj_[i]->WT_.rotation_ = { 0,0,0 };
-			stageObj_[i]->WT_.scale_ = { 30,1,30 };
-			stageObj_[i]->Update();
-		}*/
-	}
 	for (int32_t i = 0; i < walls_.size(); i++) {
 		walls_[i] = MakeUnique<Plane>();
 

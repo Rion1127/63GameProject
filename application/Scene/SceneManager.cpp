@@ -4,7 +4,6 @@
 #include "Easing.h"
 
 #include "GameScene.h"
-#include "ParticleScene.h"
 #include "DebugScene.h"
 #include "TitleScene.h"
 #include "GameOverScene.h"
@@ -85,13 +84,13 @@ void SceneManager::SceneChange()
 	}
 
 	sisSetNext_ = false;
-	
+
 }
 
 void SceneManager::SetChangeStart(const SceneName sceneName) {
 	if (sisSetNext_ == false)
 	{
-		
+
 		ssceneName_ = sceneName;
 		sisSetNext_ = true;
 

@@ -306,9 +306,6 @@
     <ClCompile Include="application\Scene\GameScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Scene\ParticleScene.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="application\Scene\SceneManager.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
@@ -570,9 +567,6 @@
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="application\Scene\GameScene.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Scene\ParticleScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="application\Particle\ParticleManager.h">
