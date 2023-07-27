@@ -32,6 +32,7 @@
     <ClCompile Include="application\Player\AttackAir3.cpp" />
     <ClCompile Include="application\Player\AttackManager.cpp" />
     <ClCompile Include="application\Player\Attack1.cpp" />
+    <ClCompile Include="application\Player\DodgeRoll.cpp" />
     <ClCompile Include="application\Player\Guard.cpp" />
     <ClCompile Include="application\Player\IAttack.cpp" />
     <ClCompile Include="application\Player\Player.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="application\Player\AttackAir3.h" />
     <ClInclude Include="application\Player\AttackManager.h" />
     <ClInclude Include="application\Player\Attack1.h" />
+    <ClInclude Include="application\Player\DodgeRoll.h" />
     <ClInclude Include="application\Player\Guard.h" />
     <ClInclude Include="application\Player\IAttack.h" />
     <ClInclude Include="application\Player\Player.h" />

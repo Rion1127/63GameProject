@@ -12,4 +12,3 @@ private:
 
 	int32_t vertexCount;
 };
-

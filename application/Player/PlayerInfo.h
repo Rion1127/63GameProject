@@ -10,5 +10,6 @@ enum class PlayerState {
 	AirAttack,
 	Landing,
 	Knock,
-	Guard
+	Guard,
+	DodgeRoll
 };
