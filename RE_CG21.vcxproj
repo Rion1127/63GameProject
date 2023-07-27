@@ -67,7 +67,7 @@
     <ClCompile Include="engine\3d\DebugCamera.cpp" />
     <ClCompile Include="engine\base\DirectX.cpp" />
     <ClCompile Include="engine\math\Easing.cpp" />
-    <ClCompile Include="engine\base\EmptyScene.cpp" />
+    <ClCompile Include="engine\base\IScene.cpp" />
     <ClCompile Include="engine\base\Framework.cpp" />
     <ClCompile Include="engine\base\Game.cpp" />
     <ClCompile Include="engine\external\ImGuiManager.cpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="engine\3d\DebugCamera.h" />
     <ClInclude Include="engine\base\DirectX.h" />
     <ClInclude Include="engine\math\Easing.h" />
-    <ClInclude Include="engine\base\EmptyScene.h" />
+    <ClInclude Include="engine\base\IScene.h" />
     <ClInclude Include="engine\base\Framework.h" />
     <ClInclude Include="engine\base\Game.h" />
     <ClInclude Include="engine\external\ImGuiManager.h" />

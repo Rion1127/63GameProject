@@ -4,12 +4,12 @@
 #include "mInput.h"
 #include "mSound.h"
 #include "Texture.h"
-#include "EmptyScene.h"
+#include "IScene.h"
 #include "LightManager.h"
 #include "Object3d.h"
 
 class GameOverScene final :
-	public EmptyScene
+	public IScene
 {
 private:
 	enum class SelectType {

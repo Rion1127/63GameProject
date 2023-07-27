@@ -8,7 +8,7 @@
 #include "TitleScene.h"
 #include "GameOverScene.h"
 
-std::unique_ptr<EmptyScene> SceneManager::scurrentScene_ = nullptr;
+std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
 bool SceneManager::sisSetNext_ = false;
 Timer SceneManager::animeTimer_;

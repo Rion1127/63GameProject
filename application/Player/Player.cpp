@@ -62,7 +62,7 @@ void Player::PostUpdate()
 	attack_.Update();
 	if (controller_->GetTriggerButtons(PAD::INPUT_X)) {
 		//空中にいるとき、ノックバックの時攻撃の時はガードができない
-		if (GetIsCanMove() && 
+		if (GetIsCanMove() &&
 			state_ != PlayerState::Jump) {
 			SoundManager::Play("Guard",false, 0.5f);
 			guard_.Init();

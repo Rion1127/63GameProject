@@ -5,7 +5,7 @@
 #include "mInput.h"
 #include "mSound.h"
 #include "Texture.h"
-#include "EmptyScene.h"
+#include "IScene.h"
 #include <sstream>
 #include <fstream>
 #include "LightManager.h"
@@ -13,7 +13,7 @@
 #include "RRandom.h"
 
 class DebugScene final:
-    public EmptyScene
+    public IScene
 {
 private:
 	Controller* controller_ = nullptr;

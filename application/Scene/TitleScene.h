@@ -4,22 +4,22 @@
 #include "mInput.h"
 #include "mSound.h"
 #include "Texture.h"
-#include "EmptyScene.h"
+#include "IScene.h"
 #include "LightManager.h"
 
 class TitleScene
 	final :
-	public EmptyScene
+	public IScene
 {
 private:
 	Controller* controller_ = nullptr;
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 
-	
+
 
 	std::unique_ptr<Sprite> pressASprite_;
-	
+
 public:
 	~TitleScene();
 

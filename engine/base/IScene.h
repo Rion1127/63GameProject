@@ -1,10 +1,10 @@
 #pragma once
 #include <stdint.h>
-class EmptyScene
+class IScene
 {
 public:
 	//‹ó‚ÌŠÖ”‚ğéŒ¾‚µ‚Ä‚¨‚­
-	EmptyScene() {
+	IScene() {
 	};
 	virtual void Ini() = 0;
 	virtual void Update() = 0;
@@ -15,7 +15,7 @@ public:
 
 	uint32_t isNext_ = false;
 
-	virtual ~EmptyScene() {
+	virtual ~IScene() {
 	};
 };
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "EmptyScene.h"
+#include "IScene.h"
 #include "mInput.h"
 #include "Sprite.h"
 #include "DirectX.h"
@@ -11,13 +11,14 @@ enum class SceneName {
 	Title,
 	Game,
 	GameOver,
+	GameClear,
 	None
 };
 
 class SceneManager
 {
 private:
-	static std::unique_ptr<EmptyScene> scurrentScene_;
+	static std::unique_ptr<IScene> scurrentScene_;
 
 	static SceneName ssceneName_;
 	static bool sisSetNext_;
