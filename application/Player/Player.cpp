@@ -45,6 +45,18 @@ void Player::PreUpdate()
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
 	}
+	//ドッジロール
+	if (GetIsCanDodge())
+	{
+		if (controller_->GetTriggerButtons(PAD::INPUT_X))
+		{
+			dodgeRoll_.Begin(moveVec2_.normalize());
+		}
+	}
+
+	addVec_ += dodgeRoll_.GetDodgeVec();
+
+	dodgeRoll_.Update();
 
 	//重力
 	GravityUpdate();
@@ -62,11 +74,12 @@ void Player::PostUpdate()
 		JumpUpdate();
 	}
 	attack_.Update();
-	if (controller_->GetTriggerButtons(PAD::INPUT_X)) {
-		//空中にいるとき、ノックバックの時攻撃の時はガードができない
-		if (GetIsCanMove() &&
-			state_ != PlayerState::Jump) {
-			SoundManager::Play("Guard",false, 0.5f);
+	if (GetIsCanGuard())
+	{
+		if (controller_->GetTriggerButtons(PAD::INPUT_X))
+		{
+			//空中にいるとき、ノックバックの時攻撃の時はガードができない
+			SoundManager::Play("Guard", false, 0.5f);
 			guard_.Init();
 		}
 	}
@@ -76,7 +89,8 @@ void Player::PostUpdate()
 	//当たり判定でgravityの値を変化させてから
 	//PostUpdateでaddVec_に代入している
 	ObjUpdate();
-	if (attack_.GetLockOnEnemy() != nullptr) {
+	if (attack_.GetLockOnEnemy() != nullptr)
+	{
 		lockOnVec_ =
 			attack_.GetLockOnEnemy()->GetWorldTransform()->position_ - obj_->GetTransform()->position_;
 	}
@@ -107,7 +121,7 @@ void Player::ColPosUpdate()
 #pragma region 入力
 void Player::InputVecUpdate()
 {
-	Vector2 moveVec2;
+	moveVec2_ = {0,0};
 	Vector3 sideVec;
 	Vector3 upVec = { 0,1,0 };
 	Vector2 inputVec;// -> 入力されているベクトル
@@ -126,13 +140,13 @@ void Player::InputVecUpdate()
 		// 左スティックの入力方向ベクトル取得
 		inputVec = controller_->GetLStick() / 3276.8f;
 		//カメラから見た左右手前奥移動
-		moveVec2.x = (frontVec_.z * -inputVec.x) + (sideVec.z * inputVec.y);
-		moveVec2.y = (frontVec_.z * inputVec.y) + (sideVec.z * inputVec.x);
-		moveVec2.x = -moveVec2.x;
-		moveVec2 *= moveSpeed_;
+		moveVec2_.x = (frontVec_.z * -inputVec.x) + (sideVec.z * inputVec.y);
+		moveVec2_.y = (frontVec_.z * inputVec.y) + (sideVec.z * inputVec.x);
+		moveVec2_.x = -moveVec2_.x;
+		moveVec2_ *= moveSpeed_;
 	}
 
-	addVec_ += {moveVec2.x, 0, moveVec2.y};
+	addVec_ += {moveVec2_.x, 0, moveVec2_.y};
 
 	/*obj_->GetTransform()->position_ = {
 		Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
@@ -141,7 +155,7 @@ void Player::InputVecUpdate()
 	};*/
 
 	// 入力しているベクトルの角度を求める
-	float inputAngle = Vec2Angle(moveVec2);
+	float inputAngle = Vec2Angle(moveVec2_);
 
 	// 計算結果がオーバーフローしていなかったら値を更新
 	if (inputAngle >= 0)
@@ -182,13 +196,15 @@ void Player::JumpUpdate()
 
 void Player::StateUpdate()
 {
-	if (state_ != PlayerState::Knock) {
+	if (state_ != PlayerState::Knock)
+	{
 		state_ = PlayerState::Idle;
 	}
 	landingTimer_.AddTime(1);
 	if (landingTimer_.GetIsEnd())
 	{
-		if (state_ != PlayerState::Knock) {
+		if (state_ != PlayerState::Knock)
+		{
 			if (isFloorCollision_ == false)
 			{
 				state_ = PlayerState::Jump;
@@ -261,6 +277,7 @@ void Player::DrawImGui()
 	if (state_ == PlayerState::Landing)		text += "Landing";
 	if (state_ == PlayerState::Knock)		text += "Knock";
 	if (state_ == PlayerState::Guard)		text += "Guard";
+	if (state_ == PlayerState::DodgeRoll)	text += "DodgeRoll";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
@@ -317,6 +334,38 @@ bool Player::GetIsCanMove()
 		state_ != PlayerState::Guard)
 	{
 		return true;
+	}
+	return false;
+}
+
+bool Player::GetIsCanDodge()
+{
+	if (state_ == PlayerState::Idle)
+	{
+		if (addVec_.x != 0 ||
+			addVec_.y != 0 ||
+			addVec_.z != 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Player::GetIsCanGuard()
+{
+	if (state_ != PlayerState::Attack &&
+		state_ != PlayerState::AirAttack &&
+		state_ != PlayerState::Knock &&
+		state_ != PlayerState::Guard &&
+		state_ != PlayerState::Jump)
+	{
+		if (addVec_.x == 0 &&
+			addVec_.y == 0 &&
+			addVec_.z == 0)
+		{
+			return true;
+		}
 	}
 	return false;
 }

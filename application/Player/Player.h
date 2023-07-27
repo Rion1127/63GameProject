@@ -9,6 +9,7 @@
 #include "IActor.h"
 #include "PlayerHPGauge.h"
 #include "Guard.h"
+#include "DodgeRoll.h"
 
 class Player final:
 	public IActor
@@ -19,7 +20,7 @@ private:
 	Vector3 move_;
 	Vector3 frontVec_;
 	Vector3 lockOnVec_;
-
+	Vector2 moveVec2_;
 	// --“ü—Í-- //
 	float inputAngle_;// -> “ü—Í‚³‚ê‚Ä‚¢‚é•ûŒü‚ÌŠp“x
 
@@ -31,6 +32,7 @@ private:
 
 	AttackManager attack_;
 	Guard guard_;
+	DodgeRoll dodgeRoll_;
 	PlayerHPGauge hpGauge_;
 	PlayerState state_;
 	//’…’nd’¼ŠÔ
@@ -68,6 +70,8 @@ public:
 	void WallColision();
 
 	bool GetIsCanMove();
+	bool GetIsCanDodge();
+	bool GetIsCanGuard();
 
 	void Damage(int32_t damage, Vector3 knockVec);
 	void GuardHit(Vector3 knockVec);
