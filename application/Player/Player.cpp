@@ -235,10 +235,12 @@ void Player::Draw()
 	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
 	obj_->Draw();
 
+#ifdef _DEBUG
 	DrawImGui();
 
 	attack_.DrawDebug();
 	guard_.DrawDebug();
+#endif // _DEBUG
 }
 
 void Player::DrawImGui()

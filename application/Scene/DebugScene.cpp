@@ -56,23 +56,21 @@ void DebugScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
-
+#ifdef _DEBUG
 	ImGui::Begin("Quaternion");
 	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ð‘‚­ */
 	Quaternion& q = obj_.GetTransform()->quaternion_;
 
-	
 	ImGui::DragFloat("q.x", &q.x, 0.1f, -1.0f, 1.0f);
 	ImGui::DragFloat("q.y", &q.y, 0.1f, -1.0f, 1.0f);
 	ImGui::DragFloat("q.z", &q.z, 0.1f, -1.0f, 1.0f);
 	ImGui::DragFloat("q.w", &q.w, 0.01f, -3.1415f, 3.1415f);
 
-	
-
 	/*ImGui::SliderFloat("sideVec.x", &sideVec.x, 0.0f, 2000.0f, "x = %.3f");
 	ImGui::SliderFloat("sideVec.y", &sideVec.y, 0.0f, 2000.0f, "y = %.3f");*/
 
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void DebugScene::CameraUpdate()

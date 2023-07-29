@@ -59,7 +59,7 @@ void GameCamera::UpdateCameraPos()
 	float minGamecameraY = 0.5f;
 
 	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY, maxGamecameraY);
-
+#ifdef _DEBUG
 	ImGui::Begin("GameCamera");
 	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ð‘‚­ */
 	// Menu Bar
@@ -80,7 +80,8 @@ void GameCamera::UpdateCameraPos()
 	ImGui::SliderFloat("q.z", &camera_->WT_.quaternion_.z, -1.0f, 1.0f, "z = %.3f");
 	ImGui::SliderFloat("q.w", &camera_->WT_.quaternion_.w, -1.0f, 5.0f, "w = %.3f");
 
-	ImGui::End();
+	ImGui::End(); 
+#endif // _DEBUG
 }
 
 void GameCamera::UpdateLookAT()

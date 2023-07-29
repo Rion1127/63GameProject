@@ -35,7 +35,7 @@ void EnemyDummy::MoveUpdate()
 
 	obj_->WT_.SetRotType(RotType::Quaternion);
 	obj_->WT_.SetQuaternion(target);
-
+#ifdef _DEBUG
 	ImGui::Begin("Dummy_Enemy");
 
 	float regist[3] = { knockResist_.x,knockResist_.y, knockResist_.z };
@@ -45,6 +45,7 @@ void EnemyDummy::MoveUpdate()
 	knockResist_ = { regist[0],regist[1], regist[2] };
 
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void EnemyDummy::DrawSprite()

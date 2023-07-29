@@ -102,12 +102,13 @@ void EnemyShadow::MoveUpdate()
 	{
 		SortPriority();
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("Enemy");
 
 	ImGui::Text(stateName_.c_str());
 
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void EnemyShadow::DrawSprite()

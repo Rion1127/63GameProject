@@ -113,6 +113,8 @@ void LightManager::DirectionalLightUpdate()
 	//2”Ô–Ú‚Ì•½sŒõŒ¹
 	lightGroup->SetDirLightDir(2, { lightDir2[0],lightDir2[1], lightDir2[2] });
 	lightGroup->SetDirLightColor(2, { lightColor2[0],lightColor2[1] ,lightColor2[2] });
+#ifdef _DEBUG
+
 
 	ImGui::Begin("DirectionalLight");
 
@@ -162,6 +164,7 @@ void LightManager::DirectionalLightUpdate()
 	ImGui::SliderFloat3("ShadowFacrotAngle", circleShadowFactorAngle, -1.f, 2.0f);
 
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void LightManager::PointLightUpdate()
