@@ -37,28 +37,4 @@ void Sword::Draw()
 	if (attackManager_->GetNowAttack() != nullptr) {
 		obj_->Draw();
 	}
-#ifdef _DEBUG
-	ImGui::Begin("Sword");
-
-	float rot[3] = {
-		obj_->GetRot().x,
-		obj_->GetRot().y,
-		obj_->GetRot().z,
-	};
-
-	ImGui::SliderFloat3("rot", rot,-3.14f,3.14f);
-
-	float pos[3] = {
-		obj_->WT_.matWorld_.m[3][0],
-		obj_->WT_.matWorld_.m[3][1],
-		obj_->WT_.matWorld_.m[3][2],
-	};
-
-	ImGui::SliderFloat3("pos", pos, -3.14f, 3.14f);
-
-	//obj_->SetRot({ pos[0],pos[1], pos[2], });
-
-	ImGui::End();
-#endif // _DEBUG
-
 }

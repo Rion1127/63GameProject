@@ -228,21 +228,6 @@ void Camera::UpdateLookTo()
 		xAxisVec.z,yAxisVec.z,axisZ.z	,0.f,
 		transPos.x,transPos.y,transPos.z,1.f,
 	};
-
-	/*ImGui::Begin("camera");
-	static float rot[3] = { rot_.x,rot_.y,rot_.z };
-	static float eyepos[3] = { eye_.x,eye_.y,eye_.z };
-	ImGui::SliderFloat3("rot", rot, Radian(-180), Radian(180));
-	ImGui::SliderFloat3("pos", eyepos, -10, 10);
-	rot_.x = rot[0];
-	rot_.y = rot[1];
-	rot_.z = rot[2];
-	eye_.x = eyepos[0];
-	eye_.y = eyepos[1];
-	eye_.z = eyepos[2];
-	ImGui::End();*/
-
-
 }
 
 void Camera::Update(CameraMode mode)
