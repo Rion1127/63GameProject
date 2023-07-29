@@ -1,7 +1,7 @@
 #include "Attack3.h"
 
 Attack3::Attack3(IActor* selfActor) :
-	IAttack(selfActor,1, 130, 10, 31)
+	IAttack(selfActor,1, 30, 10, 31)
 {
 }
 
@@ -40,7 +40,7 @@ void Attack3::Init()
 
 	attackVec_ = frontVec;
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 70);
+	spline_.SetLimitTime(attackInfo_.maxTime - 20);
 }
 
 void Attack3::MoveUpdate()
