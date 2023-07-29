@@ -480,6 +480,9 @@
     <ClCompile Include="application\Player\DodgeRoll.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="application\Player\Sword.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -744,6 +747,9 @@
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="application\Player\DodgeRoll.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Player\Sword.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>

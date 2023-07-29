@@ -10,6 +10,7 @@
 #include "PlayerHPGauge.h"
 #include "Guard.h"
 #include "DodgeRoll.h"
+#include "Sword.h"
 
 class Player final:
 	public IActor
@@ -42,6 +43,8 @@ private:
 	int32_t health_;
 
 	Sphere damageCol_;
+
+	Sword sword_;
 private:
 	Controller* controller_ = nullptr;
 public:

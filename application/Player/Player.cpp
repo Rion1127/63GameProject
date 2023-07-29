@@ -31,6 +31,9 @@ Player::Player()
 	isAlive_ = true;
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
+
+	sword_.SetAttackManager(&attack_);
+	sword_.SetParent(obj_.get());
 }
 
 void Player::PreUpdate()
@@ -84,7 +87,9 @@ void Player::PostUpdate()
 		}
 	}
 
+
 	guard_.Update();
+	sword_.Update();
 
 	//“–‚½‚è”»’è‚Ågravity‚Ì’l‚ð•Ï‰»‚³‚¹‚Ä‚©‚ç
 	//PostUpdate‚ÅaddVec_‚É‘ã“ü‚µ‚Ä‚¢‚é
@@ -234,6 +239,9 @@ void Player::Draw()
 {
 	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
 	obj_->Draw();
+	//if (attack_.GetIsAttacking()) {
+		sword_.Draw();
+	//}
 
 #ifdef _DEBUG
 	DrawImGui();
