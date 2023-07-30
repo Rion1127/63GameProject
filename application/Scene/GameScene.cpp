@@ -34,6 +34,7 @@ void GameScene::Ini()
 	colManager_->SetFloor(stage_.get());
 	colManager_->SetEnemys(enemyManager_.get());
 	AttackManager::SetPlayer(player_.get());
+	enemyManager_->SetPlayer(player_.get());
 
 	JsonLoader::GetInstance()->LoadFile("test.json","Test");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Test");

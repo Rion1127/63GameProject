@@ -56,7 +56,7 @@ void AttackAir3::MoveUpdate()
 	speed *= timerate;
 
 
-	selfActor_->AddVec(speed);
+	selfActor_->AddaddVec(speed);
 
 
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);

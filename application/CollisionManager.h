@@ -22,6 +22,8 @@ private:
 	void PlayerToWall();
 	//敵と床
 	void EnemyToFloor();
+	//敵と床
+	void EnemyToWall();
 	//敵ロックオン
 	void EnemyLockOn();
 	//プレイヤーと敵押し出し

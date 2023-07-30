@@ -9,6 +9,8 @@ void CollisionManager::Update()
 	PlayerToWall();
 	//床と敵
 	EnemyToFloor();
+	//敵と壁
+	EnemyToWall();
 	//ロックオンする敵
 	EnemyLockOn();
 	//プレイヤーと敵押し出し
@@ -73,7 +75,7 @@ void CollisionManager::PlayerToWall()
 				(col.radius * -itr->get()->normal);
 
 			Vector3 pushBackVec = interPos - colEdgePos;
-			player_->AddPos(pushBackVec);
+			player_->AddaddVec(pushBackVec);
 		}
 	}
 }
@@ -112,12 +114,40 @@ void CollisionManager::EnemyToFloor()
 	}
 }
 
+void CollisionManager::EnemyToWall()
+{
+	auto* walls = stage_->GetPlaneCol();
+
+	//壁とプレイヤー
+	for (auto itr = walls->begin(); itr != walls->end(); ++itr) {
+		for (auto& enemy : *enemyManager_->GetEnemy())
+		{
+			Vector3 interPos;
+			Sphere col = enemy->GetCol();
+			Vector3 addvec = enemy->GetAddVec();
+			col.center += addvec;
+			if (Sphere2PlaneCol(col, *itr->get(), &interPos))
+			{
+				//めり込まないよう処理
+				Vector3 colEdgePos =
+					col.center +
+					(col.radius * -itr->get()->normal);
+
+				Vector3 pushBackVec = interPos - colEdgePos;
+				enemy->AddaddVec(pushBackVec);
+			}
+		}
+	}
+}
+
 void CollisionManager::EnemyLockOn()
 {
 	IEnemy* lockOnEnemy = nullptr;
 	std::vector<IEnemy*> lockOnEnemys_;
 	bool isHardLockOn = false;
-	if (player_->GetAttackManager()->GetIsAttacking() == false) {
+	//攻撃をしていない、又は、ロックオンしている敵がいない時にロックオン対象を探す
+	if (player_->GetAttackManager()->GetIsAttacking() == false ||
+		enemyManager_->GetLockOnEnemy() == nullptr) {
 		for (auto& enemy : *enemyManager_->GetEnemy())
 		{
 			if (enemy->GetIsSoftLockOn() == false)
@@ -205,7 +235,7 @@ void CollisionManager::PlayerToEnemy()
 			Vector3 pushBackVec = (PtoEVec * backLength);
 
 			player_->SetAddPos(pushBackVec);
-			enemy->AddVec(-pushBackVec);
+			enemy->AddaddVec(-pushBackVec);
 		}
 	}
 }

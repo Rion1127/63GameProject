@@ -54,7 +54,7 @@ void AttackJumpShadow::MoveUpdate()
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
 	speed *= timerate;
 
-	selfActor_->AddVec(speed);
+	selfActor_->AddaddVec(speed);
 
 	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 1.f);
 	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;

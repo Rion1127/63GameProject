@@ -54,7 +54,7 @@ void Attack1::MoveUpdate()
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
 	speed *= timerate;
 
-	selfActor_->AddVec(speed);
+	selfActor_->AddaddVec(speed);
 
 
 	std::vector<Vector3>attackVec;

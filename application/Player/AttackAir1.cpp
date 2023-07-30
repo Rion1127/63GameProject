@@ -55,7 +55,7 @@ void AttackAir1::MoveUpdate()
 	speed *= timerate;
 
 
-	selfActor_->AddVec(speed);
+	selfActor_->AddaddVec(speed);
 
 
 	std::vector<Vector3>attackVec;

@@ -6,12 +6,14 @@
 #include "Timer.h"
 #include "EnemyHPGauge.h"
 #include "mInput.h"
+#include "Player.h"
 class EnemyManager
 {
 private:
 	std::list<std::unique_ptr<IEnemy>> enemys_;
 
-	IEnemy* lockOnEnemy_;	//ロックオンしてくれる敵
+	Player* player_;
+	IEnemy* lockOnEnemy_;	//ロックオンしている敵
 	Timer lockOnobjTimer_;
 	float lockOnobjRot;
 	float addRot;
@@ -30,7 +32,7 @@ public:
 	std::list<std::unique_ptr<IEnemy>>* GetEnemy() { return &enemys_; };
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
 public:
-	
+	void SetPlayer(Player* player) { player_ = player; }
 public:
 };
 

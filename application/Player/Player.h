@@ -85,7 +85,7 @@ public:
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 
-	void AddPos(Vector3 pos) {
+	void AddaddVec(Vector3 pos) {
 		addVec_ += pos;
 	}
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }

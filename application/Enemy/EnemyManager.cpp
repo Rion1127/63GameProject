@@ -61,6 +61,7 @@ void EnemyManager::PreUpdate()
 			itr = enemys_.erase(itr);
 
 			lockOnEnemy_ = nullptr;
+			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
 			continue;
 		}
 		else

@@ -55,9 +55,7 @@ void AttackAir2::MoveUpdate()
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
 	speed *= timerate;
 
-
-	selfActor_->AddVec(speed);
-
+	selfActor_->AddaddVec(speed);
 
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * -(selfActor_->GetWorldTransform()->scale_.y * 0.5f);

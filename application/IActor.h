@@ -25,7 +25,7 @@ public:
 		return addVec_;
 	}
 	Gravity* GetGravity() { return &gravity_; }
-	void AddVec(Vector3 vec) { addVec_ += vec; }
+	void AddaddVec(Vector3 vec) { addVec_ += vec; }
 	virtual void SetKnockVec(Vector3 vec) { knockVec_ = knockVec_; }
 };
 
