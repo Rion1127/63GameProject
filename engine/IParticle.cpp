@@ -105,7 +105,7 @@ void IParticle::TransferBuff()
 	// Œq‚ª‚è‚ð‰ðœ
 	vertBuff_->Unmap(0, nullptr);
 
-	transform_.Update(1);
+	transform_.Update(isBillBoard);
 
 }
 

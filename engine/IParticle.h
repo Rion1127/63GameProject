@@ -68,7 +68,10 @@ protected:
 	bool isBillBoard;
 	std::string shaderName_;
 public:
-	IParticle(std::string shaderName = "Particle") { shaderName_ = shaderName; };
+	IParticle(std::string shaderName = "Particle") {
+		shaderName_ = shaderName;
+		isBillBoard = false;
+	};
 	virtual ~IParticle();
 
 	void Update();

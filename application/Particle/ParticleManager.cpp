@@ -3,6 +3,7 @@
 #include "ParticleTest.h"
 #include "ParticleHitAttack.h"
 #include "ParticleEnemyDead.h"
+#include "ParticleWallHit.h"
 
 ParticleManager* ParticleManager::GetInstance()
 {
@@ -15,7 +16,8 @@ ParticleManager::ParticleManager()
 	particles_.insert(std::make_pair("Test", std::move(std::make_unique<ParticleTest>())));
 	particles_.insert(std::make_pair("HitAttack", std::move(std::make_unique<ParticleHitAttack>())));
 	particles_.insert(std::make_pair("EnemyDead", std::move(std::make_unique<ParticleEnemyDead>())));
-	particles_.insert(std::make_pair("Heart",std::move(std::make_unique<ParticleHeart>())));
+	particles_.insert(std::make_pair("Heart", std::move(std::make_unique<ParticleHeart>())));
+	particles_.insert(std::make_pair("WallHit",std::move(std::make_unique<ParticleWallHit>())));
 }
 
 void ParticleManager::Update()

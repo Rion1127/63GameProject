@@ -78,7 +78,8 @@ void ParticleEnemyDead::MoveUpdate()
 
 #pragma region ハートパーティクル
 ParticleHeart::ParticleHeart() :
-	vertexCount(10), IParticle()
+	IParticle("Particle_Depth_False"),
+	vertexCount(10)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Heart");

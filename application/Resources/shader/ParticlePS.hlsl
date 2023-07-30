@@ -7,7 +7,7 @@ float4 main(GSOutput input) : SV_TARGET
 {
     float4 texColor = tex.Sample(smp, input.uv);
 
-    //clip(texColor.a - 0.3f);
+    clip(texColor.a - 0.05f);
     
     return texColor * input.color;
 }

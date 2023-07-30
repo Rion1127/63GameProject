@@ -216,7 +216,22 @@ void PipelineManager::ParticleShaderIni()
 
 	GetPipelineObjects("Particle")->AddrootParams(2);
 
-	Create("Particle", NONE, TOPOLOGY_POINT, DEPTH_ENABLE_FALSE, MODE_WRAP);
+	Create("Particle", NONE, TOPOLOGY_POINT, DEPTH_WRITE_MASK_ZERO, MODE_WRAP);
+
+	AddPipeline("Particle_Depth_False");
+	GetPipelineObjects("Particle_Depth_False")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Particle_Depth_False")->AddInputLayout("SCALE", DXGI_FORMAT_R32_FLOAT, 0);
+	GetPipelineObjects("Particle_Depth_False")->AddInputLayout("ROTATION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Particle_Depth_False")->AddInputLayout("ANCORPOINT", DXGI_FORMAT_R32G32_FLOAT);
+	GetPipelineObjects("Particle_Depth_False")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
+
+	GetPipelineObjects("Particle_Depth_False")->Setshader("ParticleGS.hlsl", ShaderType::GS);
+	GetPipelineObjects("Particle_Depth_False")->Setshader("ParticleVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("Particle_Depth_False")->Setshader("ParticlePS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("Particle_Depth_False")->AddrootParams(2);
+
+	Create("Particle_Depth_False", NONE, TOPOLOGY_POINT, DEPTH_ENABLE_FALSE, MODE_WRAP);
 
 	AddPipeline("Smoke");
 	GetPipelineObjects("Smoke")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);

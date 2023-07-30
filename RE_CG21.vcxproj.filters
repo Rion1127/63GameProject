@@ -486,6 +486,9 @@
     <ClCompile Include="application\Particle\ParticleEnemyDead.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="application\Particle\ParticleWallHit.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -756,6 +759,9 @@
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="application\Particle\ParticleEnemyDead.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Particle\ParticleWallHit.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>

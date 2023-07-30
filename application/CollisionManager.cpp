@@ -76,6 +76,14 @@ void CollisionManager::PlayerToWall()
 
 			Vector3 pushBackVec = interPos - colEdgePos;
 			player_->AddaddVec(pushBackVec);
+
+			Vector3 rot{};
+			if (itr->get()->normal.x != 0) {
+				rot = { 0,Radian(90),0 };
+			}
+
+			ParticleManager::GetInstance()->
+				AddParticle("WallHit", 1, 60, interPos, rot, 1.0f);
 		}
 	}
 }

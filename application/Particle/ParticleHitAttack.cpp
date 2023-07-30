@@ -3,6 +3,7 @@
 #include "Util.h"
 #include "Easing.h"
 ParticleHitAttack::ParticleHitAttack() :
+	IParticle("Particle_Depth_False"),
 	vertexCount(32)
 {
 	Init(vertexCount);
