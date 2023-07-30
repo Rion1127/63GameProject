@@ -16,8 +16,7 @@ void LoadManager::LoadTexture()
 {
 	LoadGraph("white1280x720.png", "White1280x720");
 	LoadGraph("white1x1.png", "White");
-	LoadGraph("test.png", "Test");
-	LoadGraph("uv.png", "uv");
+	LoadGraph("title.png", "Title");
 	//HPÉoÅ[
 	LoadGraph("hpBarBack.png", "HpBarBack");
 	LoadGraph("gauge.png", "Gauge");

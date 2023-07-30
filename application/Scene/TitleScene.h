@@ -16,7 +16,8 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 
-
+	std::unique_ptr<Sprite> titleSprite_;
+	std::unique_ptr<Sprite> backSprite_;
 
 	std::unique_ptr<Sprite> pressASprite_;
 
