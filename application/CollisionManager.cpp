@@ -117,55 +117,56 @@ void CollisionManager::EnemyLockOn()
 	IEnemy* lockOnEnemy = nullptr;
 	std::vector<IEnemy*> lockOnEnemys_;
 	bool isHardLockOn = false;
-
-	for (auto& enemy : *enemyManager_->GetEnemy())
-	{
-		if (enemy->GetIsSoftLockOn() == false)
+	if (player_->GetAttackManager()->GetIsAttacking() == false) {
+		for (auto& enemy : *enemyManager_->GetEnemy())
 		{
-			enemy->SetHardIsLockOn(false);
-		}
-		//一体でもハードロックをしていたらフラグをtrueにする
-		if (enemy->GetIsHardLockOn())
-		{
-			isHardLockOn = true;
-			break;
-		}
-		//ロックオン用の大きい当たり判定
-		enemy->SetSoftIsLockOn(false);
-		Sphere serchCol = player_->GetCol();
-		serchCol.radius *= 20.f;
-		if (BallCollision(serchCol, enemy->GetCol()))
-		{
-			//ロックオン圏内にいる敵を追加していく
-			lockOnEnemys_.push_back(enemy.get());
-		}
-	}
-	if (isHardLockOn == false)
-	{
-		//仮の大きい値を入れておく
-		float dist2d = 5000.f;
-		for (auto& enemy : lockOnEnemys_)
-		{
-			//スクリーン座標を取得して画面の中央に近い敵をロックオンする
-			Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-
-			Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
-
-			Vector2 dist = halfWindowSize - ScreenPos;
-			float length = dist.length();
-			//比較して短かったら敵を代入する
-			if (dist2d > length)
+			if (enemy->GetIsSoftLockOn() == false)
 			{
-				dist2d = length;
-				lockOnEnemy = enemy;
+				enemy->SetHardIsLockOn(false);
+			}
+			//一体でもハードロックをしていたらフラグをtrueにする
+			if (enemy->GetIsHardLockOn())
+			{
+				isHardLockOn = true;
+				break;
+			}
+			//ロックオン用の大きい当たり判定
+			enemy->SetSoftIsLockOn(false);
+			Sphere serchCol = player_->GetCol();
+			serchCol.radius *= 20.f;
+			if (BallCollision(serchCol, enemy->GetCol()))
+			{
+				//ロックオン圏内にいる敵を追加していく
+				lockOnEnemys_.push_back(enemy.get());
 			}
 		}
-
-		if (lockOnEnemy != nullptr)
+		if (isHardLockOn == false)
 		{
-			lockOnEnemy->SetSoftIsLockOn(true);
+			//仮の大きい値を入れておく
+			float dist2d = 5000.f;
+			for (auto& enemy : lockOnEnemys_)
+			{
+				//スクリーン座標を取得して画面の中央に近い敵をロックオンする
+				Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
+
+				Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+
+				Vector2 dist = halfWindowSize - ScreenPos;
+				float length = dist.length();
+				//比較して短かったら敵を代入する
+				if (dist2d > length)
+				{
+					dist2d = length;
+					lockOnEnemy = enemy;
+				}
+			}
+
+			if (lockOnEnemy != nullptr)
+			{
+				lockOnEnemy->SetSoftIsLockOn(true);
+			}
+			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy);
 		}
-		player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy);
 	}
 
 	if (enemyManager_->GetLockOnEnemy() != nullptr)
@@ -269,7 +270,7 @@ void CollisionManager::EnemyAttackToPlayer()
 
 							player_->GuardHit(knockVec);
 
-							SoundManager::Play("GuardHitSE",false,0.5f);
+							SoundManager::Play("GuardHitSE", false, 0.5f);
 						}
 					}
 

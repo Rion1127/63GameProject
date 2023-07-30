@@ -59,6 +59,7 @@ private:
 	static ComPtr<IXAudio2> sxAudio2_;
 	static IXAudio2MasteringVoice* smasterVoice_;
 	static std::map<SoundKey, SoundData> ssndMap_;
+	static std::vector<SoundData> ssndPlaying_;
 public:
 	
 	~SoundManager();

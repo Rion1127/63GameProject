@@ -5,6 +5,7 @@
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
 IXAudio2MasteringVoice* SoundManager::smasterVoice_;
 std::map<SoundKey, SoundData> SoundManager::ssndMap_;
+std::vector<SoundData> SoundManager::ssndPlaying_;
 
 std::string directoryPath_ = "application/Resources/BGM_SE/";
 
@@ -104,19 +105,19 @@ bool SoundManager::IsPlaying(const SoundKey& key) {
 void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float picth)
 {
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	SoundData* pSnd = &ssndMap_[key];
-
-	if (pSnd->sound_ != nullptr)
+	//SoundData* pSnd = &;
+	ssndPlaying_.push_back(ssndMap_[key]);
+	if (ssndPlaying_.back().sound_ != nullptr)
 	{
-		pSnd->sound_->Stop();
+		ssndPlaying_.back().sound_->Stop();
 	}
 
-	sxAudio2_->CreateSourceVoice(&pSourceVoice, &pSnd->wfex_);
+	sxAudio2_->CreateSourceVoice(&pSourceVoice, &ssndPlaying_.back().wfex_);
 
 	XAUDIO2_BUFFER buf{};
 
-	buf.pAudioData = pSnd->pBuffer_.data();
-	buf.AudioBytes = pSnd->bufferSize_;
+	buf.pAudioData = ssndPlaying_.back().pBuffer_.data();
+	buf.AudioBytes = ssndPlaying_.back().bufferSize_;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 	if (loopFlag) buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 	//ボリュームセット
@@ -125,7 +126,7 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float p
 	pSourceVoice->SetFrequencyRatio(picth);
 	pSourceVoice->Start();
 
-	pSnd->sound_ = pSourceVoice;
+	ssndPlaying_.back().sound_ = pSourceVoice;
 }
 
 SoundData* SoundManager::GetSoundData(const SoundKey& key)

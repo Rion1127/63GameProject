@@ -3,6 +3,7 @@
 #include "Enemy/Dummy/EnemyDummy.h"
 #include "Enemy/Dummy/EnemyAirDummy.h"
 #include "ParticleManager.h"
+#include "mSound.h"
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
@@ -56,7 +57,7 @@ void EnemyManager::PreUpdate()
 			Vector3 pos = itr->get()->GetWorldTransform()->position_;
 			ParticleManager::GetInstance()->
 				AddParticle("EnemyDead", 32, 80, pos, { 0.8f,0.8f, 0.8f }, 1.0f);
-
+			SoundManager::Play("DeathSE", false, 1.0f, 0.6f);
 			itr = enemys_.erase(itr);
 
 			lockOnEnemy_ = nullptr;

@@ -46,4 +46,5 @@ void LoadManager::LoadSound()
 	LoadWave("selectSE.wav", "SelectSE");
 	LoadWave("guardSE.wav", "Guard");
 	LoadWave("guardHitSE.wav", "GuardHitSE");
+	LoadWave("deathSE.wav", "DeathSE");
 }
