@@ -36,8 +36,8 @@ void GameScene::Ini()
 	AttackManager::SetPlayer(player_.get());
 	enemyManager_->SetPlayer(player_.get());
 
-	JsonLoader::GetInstance()->LoadFile("test.json","Test");
-	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Test");
+	JsonLoader::GetInstance()->LoadFile("stage.json","Stage");
+	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Stage");
 }
 
 void GameScene::Update()
@@ -45,8 +45,8 @@ void GameScene::Update()
 #ifdef _DEBUG
 	if (Key::TriggerKey(DIK_R))
 	{
-		JsonLoader::GetInstance()->LoadFile("test.json", "Test");
-		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Test");
+		JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
+		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
 
