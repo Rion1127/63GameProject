@@ -3,7 +3,7 @@
 #include "Util.h"
 
 IParticle::~IParticle() {
-	isBillBoard = false;
+	
 }
 
 void IParticle::Init(int32_t vertexCount)
@@ -42,6 +42,8 @@ void IParticle::Init(int32_t vertexCount)
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 	vbView_.SizeInBytes = sizeVB;
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
+
+	isBillBoard = false;
 }
 
 void IParticle::Update()

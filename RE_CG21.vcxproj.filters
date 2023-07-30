@@ -483,6 +483,9 @@
     <ClCompile Include="application\Player\Sword.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="application\Particle\ParticleEnemyDead.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -752,6 +755,9 @@
     <ClInclude Include="application\Player\Sword.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
+    <ClInclude Include="application\Particle\ParticleEnemyDead.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -794,11 +800,14 @@
     <None Include="application\Resources\shader\MultiTexture.hlsli">
       <Filter>シェーダーファイル\application\postEffect</Filter>
     </None>
-    <None Include="application\Resources\shader\MultiRenderTexture.hlsli">
-      <Filter>シェーダーファイル\application</Filter>
-    </None>
     <None Include="application\Resources\shader\RadialBlur.hlsli">
       <Filter>シェーダーファイル\application\postEffect\RadialBlur</Filter>
+    </None>
+    <None Include="application\Resources\shader\MultiRenderTexture.hlsli">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </None>
+    <None Include="application\Resources\shader\Smoke.hlsli">
+      <Filter>シェーダーファイル\application</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -883,17 +892,26 @@
     <FxCompile Include="application\Resources\shader\MultiTextureVS.hlsl">
       <Filter>シェーダーファイル\application\postEffect</Filter>
     </FxCompile>
-    <FxCompile Include="application\Resources\shader\MultiRenderTexturePS.hlsl">
-      <Filter>シェーダーファイル\application</Filter>
-    </FxCompile>
-    <FxCompile Include="application\Resources\shader\MultiRenderTextureVS.hlsl">
-      <Filter>シェーダーファイル\application</Filter>
-    </FxCompile>
     <FxCompile Include="application\Resources\shader\RadialBlurPS.hlsl">
       <Filter>シェーダーファイル\application\postEffect\RadialBlur</Filter>
     </FxCompile>
     <FxCompile Include="application\Resources\shader\RadialBlurVS.hlsl">
       <Filter>シェーダーファイル\application\postEffect\RadialBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\MultiRenderTextureVS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\MultiRenderTexturePS.hlsl">
+      <Filter>シェーダーファイル\application\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SmokeVS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SmokeGS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SmokePS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

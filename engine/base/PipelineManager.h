@@ -11,6 +11,12 @@ enum TopologyName {
 	TRIANGLELIST = 4,
 	TRIANGLESTRIP = 5,
 };
+enum class PipeLineState {
+	Add,
+	Alpha,
+	Nega,
+	Sub
+};
 
 class PipelineManager {
 private:
@@ -24,7 +30,7 @@ public:
 		TEXTURE_ADDRESS_MODE uvMode);
 	static void AddPipeline(const std::string& pipelinename);
 
-	static void PreDraw(std::string pipelinename, TopologyName topologyName);
+	static void PreDraw(std::string pipelinename, TopologyName topologyName, PipeLineState state = PipeLineState::Alpha);
 private:
 	static void ObjShaderIni();
 	static void PostEffectIni();

@@ -23,6 +23,7 @@
     <ClCompile Include="application\GameCamera.cpp" />
     <ClCompile Include="application\IActor.cpp" />
     <ClCompile Include="application\LoadManager.cpp" />
+    <ClCompile Include="application\Particle\ParticleEnemyDead.cpp" />
     <ClCompile Include="application\Particle\ParticleHitAttack.cpp" />
     <ClCompile Include="application\Particle\ParticleManager.cpp" />
     <ClCompile Include="application\Particle\ParticleTest.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="application\GameCamera.h" />
     <ClInclude Include="application\IActor.h" />
     <ClInclude Include="application\LoadManager.h" />
+    <ClInclude Include="application\Particle\ParticleEnemyDead.h" />
     <ClInclude Include="application\Particle\ParticleHitAttack.h" />
     <ClInclude Include="application\Particle\ParticleManager.h" />
     <ClInclude Include="application\Particle\ParticleTest.h" />
@@ -206,6 +208,7 @@
     <None Include="application\Resources\shader\Particle.hlsli" />
     <None Include="application\Resources\shader\PostEffect.hlsli" />
     <None Include="application\Resources\shader\RadialBlur.hlsli" />
+    <None Include="application\Resources\shader\Smoke.hlsli" />
     <None Include="application\Resources\shader\Sprite.hlsli" />
     <None Include="application\Resources\shader\Toon.hlsli" />
     <None Include="packages.config" />
@@ -363,6 +366,24 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="application\Resources\shader\RadialBlurVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SmokeGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SmokePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SmokeVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>

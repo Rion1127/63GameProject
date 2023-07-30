@@ -2,6 +2,7 @@
 #include "Enemy/Shadow/EnemyShadow.h"
 #include "Enemy/Dummy/EnemyDummy.h"
 #include "Enemy/Dummy/EnemyAirDummy.h"
+#include "ParticleManager.h"
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
@@ -52,6 +53,9 @@ void EnemyManager::PreUpdate()
 		//敵が死んだら要素を消して次のイテレータへ移る
 		if (itr->get()->GetIsDead())
 		{
+			Vector3 pos = itr->get()->GetWorldTransform()->position_;
+			ParticleManager::GetInstance()->AddParticle("EnemyDead", 8, 50, pos, {0.01f,0.01f, 0.01f },1.0f);
+
 			itr = enemys_.erase(itr);
 
 			lockOnEnemy_ = nullptr;

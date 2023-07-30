@@ -217,6 +217,21 @@ void PipelineManager::ParticleShaderIni()
 	GetPipelineObjects("Particle")->AddrootParams(2);
 
 	Create("Particle", NONE, TOPOLOGY_POINT, DEPTH_ENABLE_FALSE, MODE_WRAP);
+
+	AddPipeline("Smoke");
+	GetPipelineObjects("Smoke")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Smoke")->AddInputLayout("SCALE", DXGI_FORMAT_R32_FLOAT, 0);
+	GetPipelineObjects("Smoke")->AddInputLayout("ROTATION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Smoke")->AddInputLayout("ANCORPOINT", DXGI_FORMAT_R32G32_FLOAT);
+	GetPipelineObjects("Smoke")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
+
+	GetPipelineObjects("Smoke")->Setshader("SmokeGS.hlsl", ShaderType::GS);
+	GetPipelineObjects("Smoke")->Setshader("SmokeVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("Smoke")->Setshader("SmokePS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("Smoke")->AddrootParams(2);
+
+	Create("Smoke", NONE, TOPOLOGY_POINT, DEPTH_ENABLE_FALSE, MODE_WRAP);
 }
 
 void PipelineManager::Create(
@@ -236,12 +251,25 @@ void PipelineManager::AddPipeline(const std::string& pipelinename)
 	obj->name_ = pipelinename;
 	pipelineObjects_.insert(std::make_pair(pipelinename, std::move(obj)));
 }
-void PipelineManager::PreDraw(std::string pipelinename, TopologyName topologyName)
+void PipelineManager::PreDraw(std::string pipelinename, TopologyName topologyName, PipeLineState state)
 {
 	auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
 	// パイプラインステートとルートシグネチャの設定コマンド
-	cmdList.SetPipelineState(
-		PipelineManager::GetPipelineObjects(pipelinename)->GetPipelineStateAlpha());
+	if (state == PipeLineState::Add) {
+		cmdList.SetPipelineState(
+			PipelineManager::GetPipelineObjects(pipelinename)->GetPipelineStateAdd());
+	}else if (state == PipeLineState::Alpha) {
+		cmdList.SetPipelineState(
+			PipelineManager::GetPipelineObjects(pipelinename)->GetPipelineStateAlpha());
+	}
+	else if (state == PipeLineState::Nega) {
+		cmdList.SetPipelineState(
+			PipelineManager::GetPipelineObjects(pipelinename)->GetPipelineStateNega());
+	}
+	else if (state == PipeLineState::Sub) {
+		cmdList.SetPipelineState(
+			PipelineManager::GetPipelineObjects(pipelinename)->GetPipelineStateSub());
+	}
 
 	cmdList.SetGraphicsRootSignature(
 		PipelineManager::GetPipelineObjects(pipelinename)->GetRootSignature());
