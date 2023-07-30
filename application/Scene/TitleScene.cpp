@@ -11,7 +11,7 @@ void TitleScene::Ini()
 	sound_ = SoundManager::GetInstance();
 
 	pressASprite_ = std::move(std::make_unique<Sprite>());
-	pressASprite_->Ini();
+	pressASprite_->Ini("pressA");
 	pressASprite_->SetTexture(TextureManager::GetInstance()->GetTexture("PressA"));
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
@@ -62,6 +62,8 @@ void TitleScene::Draw()
 	backSprite_->Draw();
 	pressASprite_->Draw();
 	titleSprite_->Draw();
+
+	pressASprite_->DrawImGui();
 	
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 

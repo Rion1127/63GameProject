@@ -218,32 +218,36 @@ void Sprite::DrawImGui()
 	}
 
 	// Menu Bar
-	if (ImGui::CollapsingHeader("Posision"))
-	{
-		float x = pos_.x;
-		float y = pos_.y;
-		ImGui::SliderFloat("pos.x", &x, 0.0f, 2000.0f, "x = %.3f");
-		ImGui::SliderFloat("pos.y", &y, 0.0f, 2000.0f, "y = %.3f");
-		pos_.x = x;
-		pos_.y = y;
-	}
+	float pos[2] = { pos_.x,pos_.y };
+	ImGui::SliderFloat2("pos", pos, 0.0f, 2000.0f, "x = %.3f");
+
+	pos_.x = pos[0];
+	pos_.y = pos[1];
 	// スケール変更
-	if (ImGui::CollapsingHeader("Scale"))
-	{
-		float scalex = Scale_.x;
-		float scaley = Scale_.y;
-		ImGui::DragFloat("scale.x", &scalex,1.0f, 0.0f, 10.0f);
-		ImGui::DragFloat("scale.y", &scaley,1.0f, 0.0f, 10.0f);
-		Scale_.x = scalex;
-		Scale_.y = scaley;
-	}
+	float scale[2] = { Scale_.x,Scale_.y };
+	ImGui::DragFloat2("scale", scale, 1.0f, 0.0f, 10.0f);
+
+	Scale_.x = scale[0];
+	Scale_.y = scale[1];
+
 	//回転
-	if (ImGui::CollapsingHeader("Rotation"))
-	{
-		float rot = rot_;
-		ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
-		rot_ = rot;
-	}
+	float rot = rot_;
+	ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
+	rot_ = rot;
+
+	// textureLeftTop変更
+	float textureLeftTop[2] = { textureLeftTop_.x,textureLeftTop_.y };
+	ImGui::DragFloat2("textureLeftTop", textureLeftTop, 1.0f, 0.0f, 1280.0f);
+
+	textureLeftTop_.x = textureLeftTop[0];
+	textureLeftTop_.y = textureLeftTop[1];
+
+	// textureSize変更
+	float textureSize[2] = { textureSize_.x,textureSize_.y };
+	ImGui::DragFloat2("textureSize", textureSize, 1.0f, 0.0f, 1280.0f);
+
+	textureSize_.x = textureSize[0];
+	textureSize_.y = textureSize[1];
 
 	ImGui::End();
 }
