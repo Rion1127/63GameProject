@@ -28,22 +28,26 @@ void main(
 )
 {
     GSOutput element; //出力用頂点データ
-   
+
     for (uint i = 0; i < vnum; i++)
     {
         //中心からのオフセットをスケーリング
-        float4 offset = offset_array[i] * input[0].scale;
-        //ビルボード回転
-        offset = mul(matBillboard, offset);
-        //オフセット分ずらす(ワールド座標)
+        float4 offset =
+        {
+            (offset_array[i].x - input[0].ancorPoint.x) * input[0].scale,
+            (offset_array[i].y - input[0].ancorPoint.y) * input[0].scale,
+            offset_array[i].z * input[0].scale,
+            offset_array[i].w * input[0].scale,
+        };
+
+        offset = mul(worldMat, offset);
+
         element.svpos = input[0].pos + offset;
-        
+
         //ビュー、射影変換
-        element.svpos = mul(mat, element.svpos);
-        element.uv.x = uv_array[i].x;
-        element.uv.y = uv_array[i].y /*+ uvPos*/;
+        element.svpos = mul(viewProjMat, element.svpos);
+        element.uv = uv_array[i];
         element.color = input[0].color;
-        //element.color = (0.0f, 0.0f, 0.0f, 1.0f);
         output.Append(element);
     }
 }

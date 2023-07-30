@@ -68,7 +68,10 @@ void GameScene::Update()
 		SceneManager::SetChangeStart(SceneName::GameOver);
 	}
 
-
+	if (Key::TriggerKey(DIK_P)) {
+		ParticleManager::GetInstance()->
+			AddParticle("EnemyDead", 9, 80, {0,2,0}, { 0.5f,0.5f, 0.5f }, 2.f);
+	}
 
 }
 

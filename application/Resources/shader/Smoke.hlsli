@@ -1,7 +1,7 @@
-cbuffer cbuff0 : register(b0)
+cbuffer ConstantBuffer : register(b0)
 {
-    matrix mat; //ビュープロジェクション行列
-    matrix matBillboard; //ビルボード行列
+    matrix worldMat;
+    matrix viewProjMat; //ビュープロジェクション行列
     float3 cameraPos;
     float uvPos;
 };

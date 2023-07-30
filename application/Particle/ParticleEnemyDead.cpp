@@ -7,7 +7,7 @@ ParticleEnemyDead::ParticleEnemyDead() :
 	vertexCount(32), IParticle("Smoke")
 {
 	Init(vertexCount);
-	texture = *TextureManager::GetInstance()->GetTexture("uv");
+	texture = *TextureManager::GetInstance()->GetTexture("Smoke");
 	isBillBoard = true;
 }
 
@@ -37,14 +37,15 @@ void ParticleEnemyDead::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		};
 		float scale_ = RRandom::RandF(0.3f, scale);
 
-		p.position = pos;
+		Vector3 dist = pos - (pos + vec);
+
+
+		p.position = pos + vec;
 		p.basePos = pos;
 		p.end_frame = time;
-		p.velocity = vec;
 		p.scale = scale;
 		p.baseScale = scale;
-		p.addRot = addrot;
-		p.color = { 5,5,35,255 };
+		p.color = { 5,5,35,0 };
 	}
 }
 
@@ -56,10 +57,12 @@ void ParticleEnemyDead::MoveUpdate()
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += p.velocity;
-		p.rot += p.addRot;
+		p.position += { 0,0.01f,0 };
 
-		p.scale = Easing::Bounce::easeIn(f, p.baseScale, -p.baseScale, 1.0f);
+		if(f < 0.5f)p.color.a = f * 355.f;
+		else p.color.a = (1 - f) * 355.f;
+
+		p.scale = Easing::Circ::easeIn(f, p.baseScale, -p.baseScale, 1.0f);
 
 
 		MoveTo({ 0,0,0 }, 0.001f, p.velocity);

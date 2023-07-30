@@ -54,7 +54,8 @@ void EnemyManager::PreUpdate()
 		if (itr->get()->GetIsDead())
 		{
 			Vector3 pos = itr->get()->GetWorldTransform()->position_;
-			ParticleManager::GetInstance()->AddParticle("EnemyDead", 32, 50, pos, {0.00f,0.00f, 0.00f },1.0f);
+			ParticleManager::GetInstance()->
+				AddParticle("EnemyDead", 32, 80, pos, { 0.8f,0.8f, 0.8f }, 1.0f);
 
 			itr = enemys_.erase(itr);
 
