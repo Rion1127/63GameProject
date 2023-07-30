@@ -5,7 +5,7 @@
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
 IXAudio2MasteringVoice* SoundManager::smasterVoice_;
 std::map<SoundKey, SoundData> SoundManager::ssndMap_;
-std::vector<SoundData> SoundManager::ssndPlaying_;
+std::list<SoundData> SoundManager::ssndPlaying_;
 
 std::string directoryPath_ = "application/Resources/BGM_SE/";
 
@@ -26,10 +26,30 @@ void SoundManager::Init()
 	ssndMap_.clear();
 }
 
+void SoundManager::Update()
+{
+	for (auto itr = ssndPlaying_.begin(); itr != ssndPlaying_.end();)
+	{
+		XAUDIO2_VOICE_STATE state;
+		itr->sound_->GetState(&state);
+		if (state.BuffersQueued <= 0) {
+			//’†g‚ª“ü‚Á‚Ä‚¢‚½‚ç‚·‚×‚ÄŽ~‚ß‚é
+			if (itr->sound_ != nullptr) {
+				itr->sound_->Stop();
+			}
+			itr->Release();
+
+			itr = ssndPlaying_.erase(itr);
+			continue;
+		}
+		itr++;
+	}
+}
+
 SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
 {
 	std::ifstream file;
-	
+
 	std::string fullPath = directoryPath_ + path;
 
 	file.open(fullPath, std::ios_base::binary);
@@ -76,7 +96,7 @@ SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
 
 	std::vector<BYTE> pBuffer_;
 	pBuffer_.resize(data.size);
-	
+
 	file.read((char*)pBuffer_.data(), data.size);
 
 	file.close();
@@ -127,11 +147,13 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float p
 	pSourceVoice->Start();
 
 	ssndPlaying_.back().sound_ = pSourceVoice;
+
+
 }
 
 SoundData* SoundManager::GetSoundData(const SoundKey& key)
 {
-	
+
 	return &ssndMap_.at(key);
 }
 

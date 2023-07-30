@@ -52,6 +52,7 @@ void Framework::Update()
 	Key::InputUpdata();
 	Controller::GetInstance()->Update();
 	MouseInput::GetInstance()->Updata();
+	SoundManager::Update();
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
 	//ImGui::ShowDemoWindow();

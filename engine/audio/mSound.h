@@ -2,6 +2,7 @@
 #include <xaudio2.h>
 
 #include <map>
+#include <list>
 #include <wrl.h>
 #include <fstream>
 #include <memory>
@@ -59,12 +60,14 @@ private:
 	static ComPtr<IXAudio2> sxAudio2_;
 	static IXAudio2MasteringVoice* smasterVoice_;
 	static std::map<SoundKey, SoundData> ssndMap_;
-	static std::vector<SoundData> ssndPlaying_;
+	static std::list<SoundData> ssndPlaying_;
 public:
 	
 	~SoundManager();
 	static SoundManager* GetInstance();
 	static void Init();
+
+	static void Update();
 
 	/// <summary>
 	/// WAVƒtƒ@ƒCƒ‹“Ç‚İ‚İ
