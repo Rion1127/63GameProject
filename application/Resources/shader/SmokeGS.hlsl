@@ -1,4 +1,4 @@
-#include "Wind.hlsli"
+#include "Smoke.hlsli"
 
 //四角形の頂点数
 static const uint vnum = 4;
@@ -41,7 +41,7 @@ void main(
         //ビュー、射影変換
         element.svpos = mul(mat, element.svpos);
         element.uv.x = uv_array[i].x;
-        element.uv.y = uv_array[i].y + uvPos;
+        element.uv.y = uv_array[i].y /*+ uvPos*/;
         element.color = input[0].color;
         //element.color = (0.0f, 0.0f, 0.0f, 1.0f);
         output.Append(element);

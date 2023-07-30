@@ -6,17 +6,27 @@ cbuffer cbuff0 : register(b0)
     float uvPos;
 };
 
-// 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
+struct VSInput
+{
+    float4 pos : POSITION; // システム用頂点座標
+    float scale : SCALE; // スケール
+    float3 rot : ROTATION; // 角度
+    float2 ancorPoint : ANCORPOINT;
+    float4 color : COLOR; //色
+};
+
 struct VSOutput
 {
-    float4 pos : SV_POSITION;   //システム用頂点座標
-    float scale : TEXCOORD;     //スケール
-    float4 color : COLOR;       //色
+    float4 pos : SV_POSITION; // システム用頂点座標
+    float scale : SCALE; // スケール
+    float3 rot : ROTATION; // 角度
+    float2 ancorPoint : ANCORPOINT;
+    float4 color : COLOR; //色
 };
 
 struct GSOutput
 {
     float4 svpos : SV_POSITION; //システム用頂点座標
-    float2 uv : TEXCOORD;       //uv値
+    float2 uv : TEXCOORD; //uv値
     float4 color : COLOR; //色
 };

@@ -47,9 +47,6 @@ protected:
 		int particleType = 0;
 		Vector2 ancorPoint_ = { 0,0 };
 	};
-	struct BillBoardConstBuff {
-		Matrix4 billBoardMat;
-	};
 protected:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -69,8 +66,9 @@ protected:
 	std::vector<Particle> particles_;
 
 	bool isBillBoard;
+	std::string shaderName_;
 public:
-	IParticle() {};
+	IParticle(std::string shaderName = "Particle") { shaderName_ = shaderName; };
 	virtual ~IParticle();
 
 	void Update();
@@ -78,6 +76,8 @@ public:
 	void Draw();
 
 	virtual void Add(int32_t addNum, int32_t time,Vector3 pos,Vector3 addVec,float scale) = 0;
+public:
+	std::string GetShaderName() { return shaderName_; }
 private:
 	//データ転送
 	void TransferBuff();

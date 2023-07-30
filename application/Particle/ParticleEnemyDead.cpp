@@ -4,10 +4,10 @@
 #include "Util.h"
 
 ParticleEnemyDead::ParticleEnemyDead() :
-	vertexCount(32)
+	vertexCount(32), IParticle("Smoke")
 {
 	Init(vertexCount);
-	texture = *TextureManager::GetInstance()->GetTexture("Smoke");
+	texture = *TextureManager::GetInstance()->GetTexture("uv");
 	isBillBoard = true;
 }
 

@@ -27,8 +27,11 @@ void ParticleManager::Update()
 
 void ParticleManager::Draw()
 {
+	std::string shaderName = "Particle";
 	for (auto& particle : particles_)
 	{
+		PipelineManager::PreDraw(particle.second->GetShaderName(), POINTLIST);
+
 		particle.second->Draw();
 	}
 }
