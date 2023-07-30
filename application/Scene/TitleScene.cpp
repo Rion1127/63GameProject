@@ -63,8 +63,6 @@ void TitleScene::Draw()
 	pressASprite_->Draw();
 	titleSprite_->Draw();
 
-	pressASprite_->DrawImGui();
-	
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
