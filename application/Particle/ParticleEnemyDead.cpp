@@ -4,6 +4,7 @@
 #include "Easing.h"
 #include "Util.h"
 
+#pragma region 煙パーティクル
 ParticleEnemyDead::ParticleEnemyDead() :
 	vertexCount(64), IParticle("Smoke")
 {
@@ -73,7 +74,9 @@ void ParticleEnemyDead::MoveUpdate()
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
 	}
 }
+#pragma endregion
 
+#pragma region ハートパーティクル
 ParticleHeart::ParticleHeart() :
 	vertexCount(10), IParticle()
 {
@@ -121,10 +124,11 @@ void ParticleHeart::MoveUpdate()
 
 		Vector3 col(p.color.r, p.color.g, p.color.b);
 
-		MoveTo({ 255,255,255 }, 10.5f, col);
+		MoveTo({ 255,255,255 }, 10.f, col);
 
 		p.color = { col.x,col.y,col.z,255 };
 
 		p.color.a = (1 - f) * 255.f;
 	}
 }
+#pragma endregion
