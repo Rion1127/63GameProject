@@ -53,10 +53,10 @@ void UIOperation::Draw()
 {
 	for (auto& ui : operationUI_) {
 		ui->Draw();
-		ui->DrawImGui();
+		//ui->DrawImGui();
 	}
 	for (auto& ui : textUI_) {
 		ui->Draw();
-		ui->DrawImGui();
+		//ui->DrawImGui();
 	}
 }
