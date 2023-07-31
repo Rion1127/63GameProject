@@ -38,8 +38,30 @@ void AttackAir3::Init()
 	}
 
 	attackVec_ = frontVec;
-
+	//スプライン曲線計算
 	spline_.SetLimitTime(attackInfo_.maxTime - 20);
+
+	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
+
+	std::vector<Vector3>attackVec;
+	Vector3 rightVec = CalculateFrontVec().cross(Vector3(0, 1, 0));
+	rightVec = rightVec.normalize();
+	Vector3 playerrightPos =
+		attackBasePos + rightVec * 2.f;
+	attackVec.push_back(playerrightPos);
+	attackVec.push_back(playerrightPos);
+
+	Vector3 playerFrontPos =
+		attackBasePos + CalculateFrontVec().normalize() * 3.f;
+	attackVec.push_back(playerFrontPos);
+
+
+	Vector3 playerLeftPos =
+		attackBasePos + -rightVec * 2.f;
+	attackVec.push_back(playerLeftPos);
+	attackVec.push_back(playerLeftPos);
+
+	spline_.SetPositions(attackVec);
 }
 
 void AttackAir3::MoveUpdate()
@@ -55,32 +77,7 @@ void AttackAir3::MoveUpdate()
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
 	speed *= timerate;
 
-
 	selfActor_->AddaddVec(speed);
-
-
-	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
-
-	std::vector<Vector3>attackVec;
-	Vector3 rightVec = CalculateFrontVec().cross(Vector3(0, 1, 0));
-	rightVec = rightVec.normalize();
-	Vector3 playerrightPos =
-		attackBasePos + rightVec * 2.f;
-	attackVec.push_back(playerrightPos);
-	attackVec.push_back(playerrightPos);
-
-	Vector3 playerFrontPos =
-		attackBasePos + CalculateFrontVec().normalize() * 3.f;
-	spline_.AddPosition(playerFrontPos, PosState::Middle);
-	attackVec.push_back(playerFrontPos);
-
-
-	Vector3 playerLeftPos =
-		attackBasePos + -rightVec * 2.f;
-	attackVec.push_back(playerLeftPos);
-	attackVec.push_back(playerLeftPos);
-
-	spline_.SetPositions(attackVec);
 
 	spline_.Update();
 

@@ -43,20 +43,7 @@ void Attack1::Init()
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 20);
-}
-
-void Attack1::MoveUpdate()
-{
-	//回転情報から正面ベクトル(2D)を取得
-	attackVec_ = attackVec_.normalize();
-
-	Vector3 speed = attackVec_ * 0.06f;
-	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
-	speed *= timerate;
-
-	selfActor_->AddaddVec(speed);
-
-
+	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 3.f);
 	Vector3 playerUpPos =
@@ -75,11 +62,22 @@ void Attack1::MoveUpdate()
 
 	Vector3 playerFrontPos =
 		selfActor_->GetWorldTransform()->position_ + CalculateFrontVec().normalize() * 3.f;
-	spline_.AddPosition(playerFrontPos, PosState::End);
 	attackVec.push_back(playerFrontPos);
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
+}
+
+void Attack1::MoveUpdate()
+{
+	//回転情報から正面ベクトル(2D)を取得
+	attackVec_ = attackVec_.normalize();
+
+	Vector3 speed = attackVec_ * 0.06f;
+	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	speed *= timerate;
+
+	selfActor_->AddaddVec(speed);
 
 	spline_.Update();
 
