@@ -28,9 +28,11 @@ void LoadManager::LoadTexture()
 	//UI
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");
+	LoadGraph("UItex.png", "UItex");
 
 	//ボタンUI
 	LoadGraph("pressA.png", "PressA");
+	LoadGraph("OperationUI.png", "OperationUI");
 	//ゲームオーバーUI
 	LoadGraph("continueTex.png", "Continue");
 	LoadGraph("TitleTex.png", "TitleTex");

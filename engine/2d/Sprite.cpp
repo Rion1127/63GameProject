@@ -219,13 +219,13 @@ void Sprite::DrawImGui()
 
 	// Menu Bar
 	float pos[2] = { pos_.x,pos_.y };
-	ImGui::SliderFloat2("pos", pos, 0.0f, 2000.0f, "x = %.3f");
+	ImGui::DragFloat2("pos", pos, 1.0f, 0.f,WinAPI::GetWindowSize().x);
 
 	pos_.x = pos[0];
 	pos_.y = pos[1];
 	// スケール変更
 	float scale[2] = { Scale_.x,Scale_.y };
-	ImGui::DragFloat2("scale", scale, 1.0f, 0.0f, 10.0f);
+	ImGui::DragFloat2("scale", scale, 0.1f, 0.0f, 10.0f);
 
 	Scale_.x = scale[0];
 	Scale_.y = scale[1];

@@ -37,7 +37,7 @@ LightManager::LightManager()
 
 void LightManager::DebugUpdate()
 {
-	if (Key::TriggerKey(DIK_RETURN))
+	if (Key::TriggerKey(DIK_L))
 	{
 		lightType_++;
 		if (lightType_ >= LIGHTTYPE::NUMEND_)lightType_ = 0;

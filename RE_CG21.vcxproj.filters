@@ -214,6 +214,12 @@
     <Filter Include="application\ヘッダーファイル\Enemy\Dummy">
       <UniqueIdentifier>{3406d5dc-cbb1-4e65-979c-538497aaa584}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\UI">
+      <UniqueIdentifier>{410bc6b2-7bca-41a2-9023-edba9b6020e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\UI">
+      <UniqueIdentifier>{4bbecf48-c7d6-42f0-9f2a-8ffb8bed7b30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -489,6 +495,9 @@
     <ClCompile Include="application\Sourcecode\Shader\Bloom.cpp">
       <Filter>engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp">
+      <Filter>application\ソースファイル\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -760,6 +769,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Shader\Noise.h">
       <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\UI\UIOperation.h">
+      <Filter>application\ヘッダーファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

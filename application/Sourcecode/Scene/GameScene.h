@@ -12,6 +12,7 @@
 #include "GameCamera.h"
 #include "CollisionManager.h"
 #include "EnemyManager.h"
+#include "UIOperation.h"
 
 #include "Spline.h"
 #include "Object3d.h"
@@ -35,6 +36,8 @@ private:
 
 	std::unique_ptr<CollisionManager> colManager_;
 	std::unique_ptr<EnemyManager> enemyManager_;
+
+	std::unique_ptr<UIOperation> operationUI_;
 
 public:
 	~GameScene();

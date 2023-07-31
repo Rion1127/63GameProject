@@ -21,6 +21,7 @@ void GameScene::Ini()
 	colManager_ = std::make_unique<CollisionManager>();
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
+	operationUI_ = std::make_unique<UIOperation>();
 
 
 
@@ -64,6 +65,8 @@ void GameScene::Update()
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
 
+	operationUI_->Update();
+
 	if (player_->GetIsAlive() == false)
 	{
 		SceneManager::SetChangeStart(SceneName::GameOver);
@@ -80,7 +83,7 @@ void GameScene::Draw()
 {
 
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-
+	
 	////////////////
 	//3Dオブジェクト//
 	////////////////
@@ -100,6 +103,7 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
+	operationUI_->Draw();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
