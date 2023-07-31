@@ -63,10 +63,10 @@
     <ClCompile Include="engine\3d\assimp\AssimpLoader.cpp" />
     <ClCompile Include="engine\3d\assimp\AssimpObject3D.cpp" />
     <ClCompile Include="engine\3d\assimp\AssimpModel.cpp" />
+    <ClCompile Include="engine\3d\IParticle.cpp" />
     <ClCompile Include="engine\3d\light\CircleShadow.cpp" />
     <ClCompile Include="engine\3d\light\LightManager.cpp" />
     <ClCompile Include="engine\3d\Model.cpp" />
-    <ClCompile Include="engine\IParticle.cpp" />
     <ClCompile Include="engine\math\Collision.cpp" />
     <ClCompile Include="engine\3d\DebugCamera.cpp" />
     <ClCompile Include="engine\base\DirectX.cpp" />
@@ -156,11 +156,11 @@
     <ClInclude Include="engine\3d\assimp\AssimpLoader.h" />
     <ClInclude Include="engine\3d\assimp\AssimpObject3D.h" />
     <ClInclude Include="engine\3d\assimp\AssimpModel.h" />
+    <ClInclude Include="engine\3d\IParticle.h" />
     <ClInclude Include="engine\3d\light\CircleShadow.h" />
     <ClInclude Include="engine\3d\light\LightManager.h" />
     <ClInclude Include="engine\3d\Model.h" />
     <ClInclude Include="engine\base\REngine.h" />
-    <ClInclude Include="engine\IParticle.h" />
     <ClInclude Include="engine\math\Collision.h" />
     <ClInclude Include="engine\3d\DebugCamera.h" />
     <ClInclude Include="engine\base\DirectX.h" />

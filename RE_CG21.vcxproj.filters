@@ -417,9 +417,6 @@
     <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="engine\IParticle.cpp">
-      <Filter>application\ソースファイル\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="application\Player\IAttack.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
@@ -488,6 +485,9 @@
     </ClCompile>
     <ClCompile Include="application\Particle\ParticleWallHit.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\3d\IParticle.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -692,9 +692,6 @@
     <ClInclude Include="application\Enemy\EnemyHPGauge.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="engine\IParticle.h">
-      <Filter>application\ヘッダーファイル\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="application\Player\IAttack.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
@@ -763,6 +760,9 @@
     </ClInclude>
     <ClInclude Include="application\Particle\ParticleWallHit.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\3d\IParticle.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
