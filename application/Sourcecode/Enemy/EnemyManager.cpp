@@ -1,7 +1,7 @@
 #include "EnemyManager.h"
-#include "Enemy/Shadow/EnemyShadow.h"
-#include "Enemy/Dummy/EnemyDummy.h"
-#include "Enemy/Dummy/EnemyAirDummy.h"
+#include "EnemyShadow.h"
+#include "EnemyDummy.h"
+#include "EnemyAirDummy.h"
 #include "ParticleManager.h"
 #include "mSound.h"
 EnemyManager::EnemyManager()
