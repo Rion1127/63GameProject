@@ -11,51 +11,51 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="application\CollisionManager.cpp" />
-    <ClCompile Include="application\Enemy\Dummy\EnemyAirDummy.cpp" />
-    <ClCompile Include="application\Enemy\Dummy\EnemyDummy.cpp" />
-    <ClCompile Include="application\Enemy\EnemyHPGauge.cpp" />
-    <ClCompile Include="application\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="application\Enemy\IEnemy.cpp" />
-    <ClCompile Include="application\Enemy\Shadow\AttackJumpShadow.cpp" />
-    <ClCompile Include="application\Enemy\Shadow\AttackShadow.cpp" />
-    <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp" />
-    <ClCompile Include="application\GameCamera.cpp" />
-    <ClCompile Include="application\IActor.cpp" />
-    <ClCompile Include="application\LoadManager.cpp" />
-    <ClCompile Include="application\Particle\ParticleEnemyDead.cpp" />
-    <ClCompile Include="application\Particle\ParticleHitAttack.cpp" />
-    <ClCompile Include="application\Particle\ParticleManager.cpp" />
-    <ClCompile Include="application\Particle\ParticleTest.cpp" />
-    <ClCompile Include="application\Particle\ParticleWallHit.cpp" />
-    <ClCompile Include="application\Player\Attack3.cpp" />
-    <ClCompile Include="application\Player\AttackAir1.cpp" />
-    <ClCompile Include="application\Player\AttackAir2.cpp" />
-    <ClCompile Include="application\Player\AttackAir3.cpp" />
-    <ClCompile Include="application\Player\AttackManager.cpp" />
-    <ClCompile Include="application\Player\Attack1.cpp" />
-    <ClCompile Include="application\Player\DodgeRoll.cpp" />
-    <ClCompile Include="application\Player\Guard.cpp" />
-    <ClCompile Include="application\Player\IAttack.cpp" />
-    <ClCompile Include="application\Player\Player.cpp" />
-    <ClCompile Include="application\Player\PlayerHPGauge.cpp" />
-    <ClCompile Include="application\Player\PlayerInfo.cpp" />
-    <ClCompile Include="application\Player\Attack2.cpp" />
-    <ClCompile Include="application\Player\Sword.cpp" />
-    <ClCompile Include="application\Scene\DebugScene.cpp" />
-    <ClCompile Include="application\Scene\GameOverScene.cpp" />
-    <ClCompile Include="application\Scene\GameScene.cpp" />
-    <ClCompile Include="application\Scene\SceneChangeAnimation.cpp" />
-    <ClCompile Include="application\Scene\SceneManager.cpp" />
-    <ClCompile Include="application\Scene\TitleScene.cpp" />
-    <ClCompile Include="application\Shader\Bloom.cpp" />
-    <ClCompile Include="application\Shader\CrossFilter.cpp" />
-    <ClCompile Include="application\Shader\GaussianBlur.cpp" />
-    <ClCompile Include="application\Shader\HighLumi.cpp" />
-    <ClCompile Include="application\Shader\LineBlur.cpp" />
-    <ClCompile Include="application\Shader\Noise.cpp" />
-    <ClCompile Include="application\Stage\Floor.cpp" />
-    <ClCompile Include="application\Stage\Stage.cpp" />
+    <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\EnemyHPGauge.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackShadow.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.cpp" />
+    <ClCompile Include="application\Sourcecode\GameCamera.cpp" />
+    <ClCompile Include="application\Sourcecode\IActor.cpp" />
+    <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleTest.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleWallHit.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack1.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack2.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack3.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\AttackAir1.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\AttackAir2.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\AttackAir3.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\AttackManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Guard.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\IAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Player.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\GameOverScene.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\SceneChangeAnimation.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\SceneManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\TitleScene.cpp" />
+    <ClCompile Include="application\Sourcecode\Shader\Bloom.cpp" />
+    <ClCompile Include="application\Sourcecode\Shader\CrossFilter.cpp" />
+    <ClCompile Include="application\Sourcecode\Shader\GaussianBlur.cpp" />
+    <ClCompile Include="application\Sourcecode\Shader\HighLumi.cpp" />
+    <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp" />
+    <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
+    <ClCompile Include="application\Sourcecode\Stage\Floor.cpp" />
+    <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -104,51 +104,50 @@
     <ClCompile Include="engine\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application\CollisionManager.h" />
-    <ClInclude Include="application\Enemy\Dummy\EnemyAirDummy.h" />
-    <ClInclude Include="application\Enemy\Dummy\EnemyDummy.h" />
-    <ClInclude Include="application\Enemy\EnemyHPGauge.h" />
-    <ClInclude Include="application\Enemy\EnemyManager.h" />
-    <ClInclude Include="application\Enemy\IEnemy.h" />
-    <ClInclude Include="application\Enemy\Shadow\AttackJumpShadow.h" />
-    <ClInclude Include="application\Enemy\Shadow\AttackShadow.h" />
-    <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h" />
-    <ClInclude Include="application\GameCamera.h" />
-    <ClInclude Include="application\IActor.h" />
-    <ClInclude Include="application\LoadManager.h" />
-    <ClInclude Include="application\Particle\ParticleEnemyDead.h" />
-    <ClInclude Include="application\Particle\ParticleHitAttack.h" />
-    <ClInclude Include="application\Particle\ParticleManager.h" />
-    <ClInclude Include="application\Particle\ParticleTest.h" />
-    <ClInclude Include="application\Particle\ParticleWallHit.h" />
-    <ClInclude Include="application\Player\Attack3.h" />
-    <ClInclude Include="application\Player\AttackAir1.h" />
-    <ClInclude Include="application\Player\AttackAir2.h" />
-    <ClInclude Include="application\Player\AttackAir3.h" />
-    <ClInclude Include="application\Player\AttackManager.h" />
-    <ClInclude Include="application\Player\Attack1.h" />
-    <ClInclude Include="application\Player\DodgeRoll.h" />
-    <ClInclude Include="application\Player\Guard.h" />
-    <ClInclude Include="application\Player\IAttack.h" />
-    <ClInclude Include="application\Player\Player.h" />
-    <ClInclude Include="application\Player\PlayerHPGauge.h" />
-    <ClInclude Include="application\Player\PlayerInfo.h" />
-    <ClInclude Include="application\Player\Attack2.h" />
-    <ClInclude Include="application\Player\Sword.h" />
-    <ClInclude Include="application\Scene\DebugScene.h" />
-    <ClInclude Include="application\Scene\GameOverScene.h" />
-    <ClInclude Include="application\Scene\GameScene.h" />
-    <ClInclude Include="application\Scene\SceneChangeAnimation.h" />
-    <ClInclude Include="application\Scene\SceneManager.h" />
-    <ClInclude Include="application\Scene\TitleScene.h" />
-    <ClInclude Include="application\Shader\Bloom.h" />
-    <ClInclude Include="application\Shader\CrossFilter.h" />
-    <ClInclude Include="application\Shader\GaussianBlur.h" />
-    <ClInclude Include="application\Shader\HighLumi.h" />
-    <ClInclude Include="application\Shader\LineBlur.h" />
-    <ClInclude Include="application\Shader\Noise.h" />
-    <ClInclude Include="application\Stage\Floor.h" />
-    <ClInclude Include="application\Stage\Stage.h" />
+    <ClInclude Include="application\Sourcecode\CollisionManager.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\EnemyHPGauge.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackShadow.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.h" />
+    <ClInclude Include="application\Sourcecode\GameCamera.h" />
+    <ClInclude Include="application\Sourcecode\IActor.h" />
+    <ClInclude Include="application\Sourcecode\LoadManager.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleManager.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleWallHit.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack1.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack2.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack3.h" />
+    <ClInclude Include="application\Sourcecode\Player\AttackAir1.h" />
+    <ClInclude Include="application\Sourcecode\Player\AttackAir2.h" />
+    <ClInclude Include="application\Sourcecode\Player\AttackAir3.h" />
+    <ClInclude Include="application\Sourcecode\Player\AttackManager.h" />
+    <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />
+    <ClInclude Include="application\Sourcecode\Player\Guard.h" />
+    <ClInclude Include="application\Sourcecode\Player\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h" />
+    <ClInclude Include="application\Sourcecode\Player\Sword.h" />
+    <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
+    <ClInclude Include="application\Sourcecode\Scene\GameOverScene.h" />
+    <ClInclude Include="application\Sourcecode\Scene\GameScene.h" />
+    <ClInclude Include="application\Sourcecode\Scene\SceneChangeAnimation.h" />
+    <ClInclude Include="application\Sourcecode\Scene\SceneManager.h" />
+    <ClInclude Include="application\Sourcecode\Scene\TitleScene.h" />
+    <ClInclude Include="application\Sourcecode\Shader\Bloom.h" />
+    <ClInclude Include="application\Sourcecode\Shader\CrossFilter.h" />
+    <ClInclude Include="application\Sourcecode\Shader\GaussianBlur.h" />
+    <ClInclude Include="application\Sourcecode\Shader\HighLumi.h" />
+    <ClInclude Include="application\Sourcecode\Shader\LineBlur.h" />
+    <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
+    <ClInclude Include="application\Sourcecode\Stage\Floor.h" />
+    <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />
@@ -479,7 +478,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;$(ProjectDir)engine;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)application\Stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -505,7 +504,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)application;$(ProjectDir)application\Scene;$(ProjectDir)application\Particle;$(ProjectDir)engine\3d\assimp;$(ProjectDir)engine\\util;$(ProjectDir)application\Shader;$(ProjectDir)application\Player;$(ProjectDir)application\Enemy;$(ProjectDir)engine;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)application\Stage;$(ProjectDir)application\Enemy\Dummy;$(ProjectDir)application\Enemy\Shadow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)application\Enemy\Dummy;$(ProjectDir)application\Enemy\Shadow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>

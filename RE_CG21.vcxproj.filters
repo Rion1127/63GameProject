@@ -303,15 +303,6 @@
     <ClCompile Include="engine\2d\Sprite.cpp">
       <Filter>engine\ソース ファイル\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="application\Scene\GameScene.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Scene\SceneManager.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Particle\ParticleManager.cpp">
-      <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="engine\3d\assimp\AssimpLoader.cpp">
       <Filter>engine\ソース ファイル\Object3D\assimp</Filter>
     </ClCompile>
@@ -320,9 +311,6 @@
     </ClCompile>
     <ClCompile Include="engine\3d\assimp\AssimpModel.cpp">
       <Filter>engine\ソース ファイル\Object3D\assimp</Filter>
-    </ClCompile>
-    <ClCompile Include="application\LoadManager.cpp">
-      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="engine\2d\MultiTexture.cpp">
       <Filter>engine\ソース ファイル\PostEffect</Filter>
@@ -339,68 +327,14 @@
     <ClCompile Include="engine\util\Timer.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="application\Shader\Bloom.cpp">
-      <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Shader\Noise.cpp">
-      <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
     <ClCompile Include="engine\2d\IPostEffect.cpp">
       <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Shader\GaussianBlur.cpp">
-      <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Shader\CrossFilter.cpp">
-      <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Shader\LineBlur.cpp">
-      <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Shader\HighLumi.cpp">
-      <Filter>engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="application\CollisionManager.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\Player.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\GameCamera.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\AttackManager.cpp">
-      <Filter>application\ソースファイル\Player\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\Attack1.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\Attack2.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\Attack3.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\AttackAir1.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\AttackAir2.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\AttackAir3.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
     <ClCompile Include="engine\util\Gravity.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="engine\util\Color.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\PlayerInfo.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\EnemyManager.cpp">
-      <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="engine\base\Framework.cpp">
       <Filter>engine\ソース ファイル\Game</Filter>
@@ -411,83 +345,149 @@
     <ClCompile Include="engine\3d\light\LightManager.cpp">
       <Filter>engine\ソース ファイル\Object3D\Light</Filter>
     </ClCompile>
-    <ClCompile Include="application\Particle\ParticleTest.cpp">
-      <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\EnemyHPGauge.cpp">
-      <Filter>application\ソースファイル\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\IAttack.cpp">
-      <Filter>application\ソースファイル\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\IEnemy.cpp">
-      <Filter>application\ソースファイル\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Scene\DebugScene.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Scene\TitleScene.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Scene\GameOverScene.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\IActor.cpp">
-      <Filter>application\ソースファイル\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Particle\ParticleHitAttack.cpp">
-      <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\PlayerHPGauge.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Scene\SceneChangeAnimation.cpp">
-      <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Stage\Floor.cpp">
-      <Filter>application\ソースファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Stage\Stage.cpp">
-      <Filter>application\ソースファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\Guard.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="engine\math\Spline.cpp">
       <Filter>engine\ソース ファイル\math</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\Shadow\AttackShadow.cpp">
-      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\Shadow\AttackJumpShadow.cpp">
-      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\Dummy\EnemyAirDummy.cpp">
-      <Filter>application\ソースファイル\Enemy\Dummy</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\Dummy\EnemyDummy.cpp">
-      <Filter>application\ソースファイル\Enemy\Dummy</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Enemy\Shadow\EnemyShadow.cpp">
-      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
     </ClCompile>
     <ClCompile Include="engine\util\JsonLoader.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="application\Player\DodgeRoll.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Player\Sword.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Particle\ParticleEnemyDead.cpp">
-      <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Particle\ParticleWallHit.cpp">
-      <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="engine\3d\IParticle.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.cpp">
+      <Filter>application\ソースファイル\Enemy\Dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.cpp">
+      <Filter>application\ソースファイル\Enemy\Dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.cpp">
+      <Filter>application\ソースファイル\Enemy\EnemyShadow</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\EnemyHPGauge.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\IAttack.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\IActor.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleManager.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleTest.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleWallHit.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Attack1.cpp">
+      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Attack2.cpp">
+      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Attack3.cpp">
+      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\AttackAir1.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\AttackAir2.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\AttackAir3.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\AttackManager.cpp">
+      <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Guard.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Player.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Sword.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\GameOverScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\SceneChangeAnimation.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\SceneManager.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\TitleScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Stage\Floor.cpp">
+      <Filter>application\ソースファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Stage\Stage.cpp">
+      <Filter>application\ソースファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\CollisionManager.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\GameCamera.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\LoadManager.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Shader\CrossFilter.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Shader\GaussianBlur.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Shader\HighLumi.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Shader\Noise.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Shader\Bloom.cpp">
+      <Filter>engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -575,15 +575,6 @@
     <ClInclude Include="engine\2d\Sprite.h">
       <Filter>engine\ヘッダー ファイル\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="application\Scene\SceneManager.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Scene\GameScene.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Particle\ParticleManager.h">
-      <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="engine\3d\assimp\AssimpModel.h">
       <Filter>engine\ヘッダー ファイル\Object3D\assimp</Filter>
     </ClInclude>
@@ -592,9 +583,6 @@
     </ClInclude>
     <ClInclude Include="engine\3d\assimp\AssimpObject3D.h">
       <Filter>engine\ヘッダー ファイル\Object3D\assimp</Filter>
-    </ClInclude>
-    <ClInclude Include="application\LoadManager.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="engine\2d\MultipleRenderTarget.h">
       <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
@@ -611,56 +599,8 @@
     <ClInclude Include="engine\util\Timer.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="application\Shader\Bloom.h">
-      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Shader\Noise.h">
-      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
     <ClInclude Include="engine\2d\IPostEffect.h">
       <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Shader\GaussianBlur.h">
-      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Shader\CrossFilter.h">
-      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Shader\HighLumi.h">
-      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Shader\LineBlur.h">
-      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="application\CollisionManager.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\Player.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="application\GameCamera.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\AttackManager.h">
-      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\Attack1.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\Attack2.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\Attack3.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\AttackAir1.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\AttackAir2.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\AttackAir3.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\Gravity.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
@@ -668,14 +608,8 @@
     <ClInclude Include="engine\util\Color.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\PlayerInfo.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="engine\base\REngine.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\EnemyManager.h">
-      <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="engine\base\Framework.h">
       <Filter>engine\ヘッダー ファイル\Game</Filter>
@@ -686,83 +620,146 @@
     <ClInclude Include="engine\3d\light\LightManager.h">
       <Filter>engine\ヘッダー ファイル\Object3D\Light</Filter>
     </ClInclude>
-    <ClInclude Include="application\Particle\ParticleTest.h">
-      <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\EnemyHPGauge.h">
-      <Filter>application\ヘッダーファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\IAttack.h">
-      <Filter>application\ヘッダーファイル\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\IEnemy.h">
-      <Filter>application\ヘッダーファイル\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Scene\DebugScene.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Scene\TitleScene.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Scene\GameOverScene.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\IActor.h">
-      <Filter>application\ヘッダーファイル\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Particle\ParticleHitAttack.h">
-      <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\PlayerHPGauge.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Scene\SceneChangeAnimation.h">
-      <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Stage\Floor.h">
-      <Filter>application\ヘッダーファイル\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Stage\Stage.h">
-      <Filter>application\ヘッダーファイル\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\Guard.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="engine\math\Spline.h">
       <Filter>engine\ヘッダー ファイル\math</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\Shadow\AttackShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\Shadow\AttackJumpShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\Dummy\EnemyAirDummy.h">
-      <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\Dummy\EnemyDummy.h">
-      <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Enemy\Shadow\EnemyShadow.h">
-      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\JsonLoader.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="application\Player\DodgeRoll.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Player\Sword.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Particle\ParticleEnemyDead.h">
-      <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Particle\ParticleWallHit.h">
-      <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="engine\3d\IParticle.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.h">
+      <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.h">
+      <Filter>application\ヘッダーファイル\Enemy\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.h">
+      <Filter>application\ヘッダーファイル\Enemy\EnemyShadow</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\EnemyHPGauge.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\IAttack.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\IActor.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleWallHit.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleManager.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack1.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack2.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack3.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\AttackAir1.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\AttackAir2.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\AttackAir3.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\AttackManager.h">
+      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Guard.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Sword.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\SceneManager.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\TitleScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\DebugScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\GameOverScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\GameScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\SceneChangeAnimation.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Stage\Stage.h">
+      <Filter>application\ヘッダーファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Stage\Floor.h">
+      <Filter>application\ヘッダーファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\CollisionManager.h">
+      <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\GameCamera.h">
+      <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\LoadManager.h">
+      <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Shader\Bloom.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Shader\CrossFilter.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Shader\GaussianBlur.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Shader\HighLumi.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Shader\LineBlur.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Shader\Noise.h">
+      <Filter>engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
