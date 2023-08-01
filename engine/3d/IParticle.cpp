@@ -87,18 +87,16 @@ void IParticle::TransferBuff()
 	assert(SUCCEEDED(result));
 	for (int32_t i = 0; i < particles_.size(); i++)
 	{
-		vertMap->pos = particles_[i].position;
+		vertices_.at(i).pos = particles_[i].position;
 
-		vertMap->scale = particles_[i].scale;
+		vertices_.at(i).scale = particles_[i].scale;
 
-		vertMap->rot = particles_[i].rot * (float)Max(1 - isBillBoard ,0);
+		vertices_.at(i).rot = particles_[i].rot * (float)Max(1 - isBillBoard ,0);
 
-		vertMap->ancorPoint = particles_[i].ancorPoint_;
+		vertices_.at(i).ancorPoint = particles_[i].ancorPoint_;
 
-		vertMap->color = particles_[i].color / 255.f;
-		vertMap->color.a = particles_[i].color.a / 255.f;
-
-		vertices_.at(i) = *vertMap;
+		vertices_.at(i).color = particles_[i].color / 255.f;
+		vertices_.at(i).color.a = particles_[i].color.a / 255.f;
 	}
 	std::copy(vertices_.begin(), vertices_.end(), vertMap);
 

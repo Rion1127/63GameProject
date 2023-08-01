@@ -1,8 +1,13 @@
-//POP,X,Y,Z,敵の種類
+//SET,X,Y,Z,敵の種類
 //敵の種類
 //Dummy,Shadow,
 
+ROUND1
+
+SET,3,0,0,Dummy
+SET,0,0,5,Shadow
 
 
-POP,0,0,0,Dummy
-POP,0,0,5,Shadow
+ROUND2
+SET,4,0,5,Shadow
+SET,2,0,5,Shadow

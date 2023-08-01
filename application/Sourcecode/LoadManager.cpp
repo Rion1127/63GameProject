@@ -6,6 +6,7 @@ void LoadManager::LoadAllResources()
 	LoadTexture();
 	LoadModel();
 	LoadSound();
+	LoadEnemyPopData();
 }
 
 void LoadManager::LoadModel()
@@ -53,6 +54,6 @@ void LoadManager::LoadSound()
 
 void LoadManager::LoadEnemyPopData()
 {
-	std::string 
-	EnemyLoader::GetInstance()->LoadEnemyPopFile("");
+	std::string path = "application/Resources/EnemyPOP/";
+	EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "DebugEnemy.csv","Debug");
 }

@@ -10,9 +10,10 @@ EnemyLoader* EnemyLoader::GetInstance()
 	return &instance;
 }
 
-void EnemyLoader::LoadEnemyPopFile(const std::string& fileName)
+void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::string& dataName)
 {
-	PopData popData;
+
+	std::vector<PopData> popDatas;
 	std::stringstream enemyPopCommands_;
 	//ファイルを開く
 	std::ifstream file;
@@ -40,8 +41,18 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName)
 			//コメント行を飛ばす
 			continue;
 		}
-		//POPコマンド
-		if (word.find("POP") == 0)
+		if (word.find("ROUND") == 0)
+		{
+			std::string roundNum = word;
+			//ラウンドの数値だけを残す
+			roundNum.erase(0, 5);
+			//１ラウンド分のデータを生成
+			popDatas.emplace_back();
+			popDatas.back().roundNum = (uint32_t)std::atof(roundNum.c_str());
+		}
+
+		//SETコマンド
+		if (word.find("SET") == 0)
 		{
 			//座標読み込み
 			Vector3 pos = GetPosLoad(line_stream, word, ',');
@@ -50,26 +61,18 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName)
 			std::getline(line_stream, word, ',');
 			std::string enemyType = word.c_str();
 
-
 			if (enemyType == "Dummy")
 			{
-				popData.enemys.emplace_back(std::move(std::make_unique<EnemyDummy>(pos)));
+				popDatas.back().enemys.emplace_back(std::move(std::make_unique<EnemyDummy>(pos)));
 			}
 			else if (enemyType == "Shadow")
 			{
-				popData.enemys.emplace_back(std::move(std::make_unique<EnemyShadow>(pos)));
+				popDatas.back().enemys.emplace_back(std::move(std::make_unique<EnemyShadow>(pos)));
 			}
 		}
-		else if (word.find("WAIT") == 0)
-		{
-			std::getline(line_stream, word, ',');
-			//待ち時間
-			int32_t waitTime = atoi(word.c_str());
-
-			//コマンドループを抜ける
-			break;
-		}
 	}
+
+	popDatas_.insert(std::make_pair(dataName, std::move(popDatas)));
 }
 
 Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& word, char _Delim)
@@ -84,5 +87,5 @@ Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& wo
 	std::getline(line_stream, word, ',');
 	float z = (float)std::atof(word.c_str());
 
-	return Vector3(x,y,z);
+	return Vector3(x, y, z);
 }
