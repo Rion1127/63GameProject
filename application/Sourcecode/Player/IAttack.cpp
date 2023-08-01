@@ -9,6 +9,7 @@ IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 		col = std::move(std::make_unique<AttackCol>());
 		col->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false));
 		col->colObj_.SetAmbient("sphere", { 1.0f, 0, 0 });
+		col->colObj_.SetIsVisible(false);
 		col->damageCoolTime = damageCoolTime;
 		col->damage = damage;
 	}
