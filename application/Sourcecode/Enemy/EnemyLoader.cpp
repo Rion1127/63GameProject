@@ -54,8 +54,10 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 		//SETコマンド
 		if (word.find("SET") == 0)
 		{
+			EnemyData enemydata;
 			//座標読み込み
 			Vector3 pos = GetPosLoad(line_stream, word, ',');
+			enemydata.pos = pos;
 
 			//敵の種類
 			std::getline(line_stream, word, ',');
@@ -63,16 +65,43 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 
 			if (enemyType == "Dummy")
 			{
-				popDatas.back().enemys.emplace_back(std::move(std::make_unique<EnemyDummy>(pos)));
+				enemydata.name = "Dummy";
 			}
 			else if (enemyType == "Shadow")
 			{
-				popDatas.back().enemys.emplace_back(std::move(std::make_unique<EnemyShadow>(pos)));
+				enemydata.name = "Shadow";
 			}
+			//敵を生成するのに必要なデータを挿入
+			popDatas.back().enemyData.emplace_back(enemydata);
 		}
 	}
-
+	//一つのファイルとdataNameをペアにして保存
 	popDatas_.insert(std::make_pair(dataName, std::move(popDatas)));
+}
+
+void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std::string& dataName, uint32_t roundNum)
+{
+	uint32_t min = 0;
+	uint32_t max = (uint32_t)popDatas_[dataName].size();
+	uint32_t rountNum_ = Clamp(roundNum - 1, min, max);
+	//見やすいように参照渡しする
+	std::vector<EnemyData>& enemyData = popDatas_[dataName][rountNum_].enemyData;
+	enemys->clear();
+	//敵をセットしていく
+	for (uint32_t i = 0; i < enemyData.size(); i++)
+	{
+		std::unique_ptr<IEnemy> newEnemy;
+		if (enemyData[i].name == "Dummy")
+		{
+			newEnemy = std::make_unique<EnemyDummy>(enemyData[i].pos);
+			enemys->emplace_back(std::move(newEnemy));
+		}
+		else if (enemyData[i].name == "Shadow")
+		{
+			newEnemy = std::make_unique<EnemyShadow>(enemyData[i].pos);
+			enemys->emplace_back(std::move(newEnemy));
+		}
+	}
 }
 
 Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& word, char _Delim)

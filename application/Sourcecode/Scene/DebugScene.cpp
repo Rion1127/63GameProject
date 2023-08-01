@@ -5,6 +5,7 @@
 #include "Collision.h"
 #include "ParticleManager.h"
 #include "Camera.h"
+#include "EnemyLoader.h"
 
 #include "JsonLoader.h"
 
@@ -38,6 +39,7 @@ void DebugScene::Ini()
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
+	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 2);
 }
 
 void DebugScene::Update()

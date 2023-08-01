@@ -18,6 +18,7 @@ class IEnemy : public IActor
 protected:
 	static Player* splayer_;
 
+	std::string name_;
 	EnemyType enemyType_;
 	//ƒ‚ƒfƒ‹
 
@@ -38,6 +39,7 @@ public:
 	static void SetPlayer(Player* player) { splayer_ = player; }
 	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
 	void SetHardIsLockOn(bool flag) { isHardLockOn_ = flag; }
+	void SetName(std::string name) { name_ = name; }
 
 	void PreUpdate();
 	void PostUpdate();
@@ -58,6 +60,7 @@ public:
 	int32_t GetHealth() { return health_; }
 	int32_t GetMaxHealth() { return maxHealth_; }
 	IAttack* GetAttack() { return attack_.get(); }
+	std::string GetName() { return name_; }
 protected:
 	virtual void MoveUpdate() = 0;
 };
