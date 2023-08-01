@@ -15,6 +15,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyHPGauge.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\EnemyLoader.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyHPGauge.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\EnemyLoader.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.h" />

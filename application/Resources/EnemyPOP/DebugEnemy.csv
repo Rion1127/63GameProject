@@ -1,0 +1,8 @@
+//POP,X,Y,Z,敵の種類
+//敵の種類
+//Dummy,Shadow,
+
+
+
+POP,0,0,0,Dummy
+POP,0,0,5,Shadow

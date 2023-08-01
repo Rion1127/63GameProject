@@ -50,3 +50,9 @@ void LoadManager::LoadSound()
 	LoadWave("guardHitSE.wav", "GuardHitSE");
 	LoadWave("deathSE.wav", "DeathSE");
 }
+
+void LoadManager::LoadEnemyPopData()
+{
+	std::string 
+	EnemyLoader::GetInstance()->LoadEnemyPopFile("");
+}
