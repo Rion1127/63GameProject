@@ -1,17 +1,21 @@
 #pragma once
 #include "Sprite.h"
-#include "DirectX.h"
 #include "DebugCamera.h"
 #include "mInput.h"
 #include "mSound.h"
 #include "Texture.h"
 #include "IScene.h"
-#include <sstream>
-#include <fstream>
 #include "LightManager.h"
-#include "Object3d.h"
-#include "RRandom.h"
 
+#include "Stage.h"
+#include "Player.h"
+#include "GameCamera.h"
+#include "CollisionManager.h"
+#include "EnemyManager.h"
+#include "UIOperation.h"
+
+#include "Spline.h"
+#include "Object3d.h"
 class DebugScene final:
     public IScene
 {
@@ -20,9 +24,19 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 
+	GameCamera gameCamera_;
+
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
-	Object3d obj_;
+	//è∞
+	std::unique_ptr<Stage> stage_;
+	//ÉvÉåÉCÉÑÅ[
+	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<CollisionManager> colManager_;
+	std::unique_ptr<EnemyManager> enemyManager_;
+
+	std::unique_ptr<UIOperation> operationUI_;
 public:
 	~DebugScene();
 
