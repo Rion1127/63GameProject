@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "EnemyManager.h"
 #include <list>
+#include <array>
 #include "Timer.h"
 #include "Sprite.h"
 
@@ -18,6 +19,7 @@ private:
 	Player* player_;
 
 	std::unique_ptr<Sprite> readySprite_;
+	std::array<std::unique_ptr<Sprite>,2> readyShapeSprite_;
 	std::unique_ptr<Sprite> goSprite_;
 	std::unique_ptr<Sprite> blindSprite_;
 	std::unique_ptr<Sprite> clearSprite_;

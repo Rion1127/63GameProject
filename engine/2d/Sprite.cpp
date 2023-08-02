@@ -249,6 +249,15 @@ void Sprite::DrawImGui()
 	textureSize_.x = textureSize[0];
 	textureSize_.y = textureSize[1];
 
+	// colorïœçX
+	float color[4] = { color_.r,color_.g,color_.b,color_.a };
+	ImGui::DragFloat4("color", color, 1.0f, 0.0f, 255.0f);
+
+	color_.r = color[0];
+	color_.g = color[1];
+	color_.b = color[2];
+	color_.a = color[3];
+
 	ImGui::End();
 }
 
