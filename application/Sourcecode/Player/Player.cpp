@@ -394,3 +394,9 @@ void Player::GuardHit(Vector3 knockVec)
 	guard_.GuardHit();
 	damageCoolTime_.Reset();
 }
+
+void Player::Reset()
+{
+	obj_->WT_.position_ = { 0,0,0 };
+	attack_.SetLockOnEnemy(nullptr);
+}

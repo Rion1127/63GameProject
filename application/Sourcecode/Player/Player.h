@@ -78,6 +78,7 @@ public:
 
 	void Damage(int32_t damage, Vector3 knockVec);
 	void GuardHit(Vector3 knockVec);
+	void Reset();
 public:
 	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
@@ -85,9 +86,7 @@ public:
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 
-	void AddaddVec(Vector3 pos) {
-		addVec_ += pos;
-	}
+	void AddaddVec(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 	void SetLockOnEnemy(IEnemy* enemy) { attack_.SetLockOnEnemy(enemy); }
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }

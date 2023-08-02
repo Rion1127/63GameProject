@@ -26,6 +26,8 @@ public:
 	void Draw();
 	void SpriteDraw();
 	void Damage();
+
+	void Reset();
 private:
 	void LockOnSpriteUpdate();
 public:

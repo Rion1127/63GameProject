@@ -10,21 +10,6 @@ EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
 	lockOnobjTimer_.SetIsLoop(true);
-	/*enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(20, 2, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(-20, 2, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, -20))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, 20))));*/
-	/*enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 1, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(10, 2, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(-10, 2, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(0, 2, 10))));
-
-	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(5, 3, -10))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(10, 3, -10))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(-5, 3, -10))));*/
-	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(-10, 3, -10))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(-2, 1, 0))));
-	enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(Vector3(2, 1, 0))));
 
 	for (auto& lockOnSprite : lockOnSprite_)
 	{
@@ -127,6 +112,12 @@ void EnemyManager::SpriteDraw()
 void EnemyManager::Damage()
 {
 	hpGauge_.Damage();
+}
+
+void EnemyManager::Reset()
+{
+	enemys_.clear();
+	lockOnEnemy_ = nullptr;
 }
 
 void EnemyManager::LockOnSpriteUpdate()
