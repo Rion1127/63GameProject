@@ -77,15 +77,17 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 	}
 	//一つのファイルとdataNameをペアにして保存
 	popDatas_.insert(std::make_pair(dataName, std::move(popDatas)));
+	
 }
 
-void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std::string& dataName, uint32_t roundNum)
+void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std::string& dataName, int32_t roundNum)
 {
-	uint32_t min = 0;
-	uint32_t max = (uint32_t)popDatas_[dataName].size();
-	uint32_t rountNum_ = Clamp(roundNum - 1, min, max);
+	if (dataName == "") return;
+	int32_t min = 0;
+	int32_t max = (int32_t)popDatas_[dataName].size();
+	int32_t roundNum_ = Clamp(roundNum - 1, min, max);
 	//見やすいように参照渡しする
-	std::vector<EnemyData>& enemyData = popDatas_[dataName][rountNum_].enemyData;
+	std::vector<EnemyData>& enemyData = popDatas_[dataName][roundNum_].enemyData;
 	enemys->clear();
 	//敵をセットしていく
 	for (uint32_t i = 0; i < enemyData.size(); i++)

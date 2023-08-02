@@ -47,5 +47,7 @@ public:
 	void Draw()override;
 private:
 	void CameraUpdate();
+
+	void LoadEnemyImGui();
 };
 

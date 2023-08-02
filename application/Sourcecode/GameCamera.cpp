@@ -48,7 +48,7 @@ void GameCamera::UpdateCameraPos()
 		moveDist.x -= controller_->GetRStick(deadZone_.x).x * transSpeed_.x;
 		moveDist.y += controller_->GetRStick(deadZone_.y).y * transSpeed_.y;
 		//カメラがどのくらいプレイヤーに近づくかClampをする
-		moveDist.y = Clamp(moveDist.y, -0.8f, 1.2f);
+		moveDist.y = Clamp(moveDist.y, -1.0f, 1.2f);
 	}
 	//球面座標代入
 	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
@@ -143,6 +143,7 @@ void GameCamera::UpdateLookAT()
 	}
 
 	endTargetPos_ = player_->GetWorldTransform()->position_;
+	endTargetPos_.y += player_->GetWorldTransform()->scale_.y;
 
 	camera_->target_ += (endTargetPos_ - camera_->target_) * cameraSpeed_;
 }

@@ -8,6 +8,7 @@
 #include "EnemyLoader.h"
 
 #include "JsonLoader.h"
+#include <imgui.h>
 
 DebugScene::~DebugScene()
 {
@@ -39,7 +40,7 @@ void DebugScene::Ini()
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
-	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 2);
+	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
 }
 
 void DebugScene::Update()
@@ -50,24 +51,29 @@ void DebugScene::Update()
 		JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
+
 #endif // _DEBUG
 
 	CameraUpdate();
-
+	//当たり判定前更新
 	stage_->Update();
 	player_->PreUpdate();
 	enemyManager_->PreUpdate();
 
+#ifdef _DEBUG
+	LoadEnemyImGui();
+#endif // _DEBUG
+	//当たり判定
 	colManager_->Update();
-
+	//当たり判定後更新
 	enemyManager_->PostUpdate();
 	player_->PostUpdate();
-
+	//その他
 	lightManager_->DebugUpdate();
 	ParticleManager::GetInstance()->Update();
-
+	//UI更新
 	operationUI_->Update();
-
+	//プレイヤーが死んだらシーン変更
 	if (player_->GetIsAlive() == false)
 	{
 		SceneManager::SetChangeStart(SceneName::GameOver);
@@ -78,6 +84,7 @@ void DebugScene::Update()
 		ParticleManager::GetInstance()->
 			AddParticle("EnemyDead", 9, 80, { 0,2,0 }, { 0.5f,0.5f, 0.5f }, 2.f);
 	}
+
 
 }
 
@@ -130,4 +137,47 @@ void DebugScene::CameraUpdate()
 		Camera::scurrent_ = debugCamera_.GetCamera();
 	}
 	Camera::scurrent_->Update(CameraMode::LookAT);
+}
+
+void DebugScene::LoadEnemyImGui()
+{
+	std::string fileName_;
+	ImGui::Begin("EnemyRound");
+
+	//データプールのハッシュ値をfileNameに代入
+	std::vector<std::string> fileName;
+	auto datasize = EnemyLoader::GetInstance()->GetAllData();
+	for (auto itr = datasize.begin(); itr != datasize.end(); ++itr)
+	{
+		fileName.push_back(itr->first);
+	}
+	//プルダウンメニューで読み込んだファイルを選択できるようにする
+	static std::string s_currentItem;
+	if (ImGui::BeginCombo("Combo", s_currentItem.c_str()))
+	{
+		for (int i = 0; i < fileName.size() - 1; ++i)
+		{
+			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
+			const bool is_selected = (s_currentItem == fileName[i]);
+			if (ImGui::Selectable(fileName[i].c_str(), is_selected))
+			{
+				s_currentItem = fileName[i].c_str();
+			}
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+	//読み込んだファイルのラウンド数を入力
+	size_t RoundMax = EnemyLoader::GetInstance()->GetEnemyData(s_currentItem).size();
+	static int roundNum = 0;
+	ImGui::DragInt("Round", &roundNum, 1.f, 1, (int)RoundMax);
+	//上記の内容でファイルをリロードする
+	if (ImGui::Button("RoundLoad"))
+	{
+		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), s_currentItem, roundNum);
+	}
+	ImGui::End();
 }
