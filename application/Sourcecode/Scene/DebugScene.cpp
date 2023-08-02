@@ -45,7 +45,9 @@ void DebugScene::Ini()
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
 
-	
+	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData("Debug").size();
+	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
+
 }
 
 void DebugScene::Update()
@@ -91,6 +93,14 @@ void DebugScene::Update()
 			AddParticle("EnemyDead", 9, 80, { 0,2,0 }, { 0.5f,0.5f, 0.5f }, 2.f);
 	}
 
+	if (colosseumSystem_->GetIsReset())
+	{
+		player_->Reset();
+		enemyManager_->Reset();
+		uint32_t nextRound = colosseumSystem_->GetRoundNum();
+		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", nextRound);
+		colosseumSystem_->SetIsReset(false);
+	}
 
 }
 

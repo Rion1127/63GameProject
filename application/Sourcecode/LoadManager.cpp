@@ -32,6 +32,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("UItex.png", "UItex");
 	LoadGraph("ready.png", "Ready");
 	LoadGraph("go.png", "Go");
+	LoadGraph("clear.png", "Clear");
+	LoadGraph("retry.png", "Retry");
 
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("pressA.png", "PressA");

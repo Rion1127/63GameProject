@@ -4,20 +4,14 @@
 
 ROUND1
 
-SET,3,0,0,Shadow
 SET,-3,0,0,Shadow
 
 
 ROUND2
-SET,4,0,5,Dummy
-SET,2,0,5,Dummy
-SET,-2,0,5,Dummy
-SET,-4,0,5,Dummy
-SET,-6,0,5,Dummy
-SET,-8,0,5,Dummy
-SET,-10,0,5,Dummy
-SET,2,0,5,Dummy
-SET,2,0,5,Dummy
+
+SET,-2,0,5,Shadow
+SET,2,0,5,Shadow
+
 
 ROUND3
-SET,0,0,0,Dummy
+SET,0,0,5,Shadow
