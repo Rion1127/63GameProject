@@ -40,6 +40,7 @@ private:
 
 	std::unique_ptr<UIOperation> operationUI_;
 
+	std::unique_ptr<ColosseumSystem> colosseumSystem_;
 public:
 	~GameScene();
 

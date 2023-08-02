@@ -3,6 +3,8 @@
 #include "WinAPI.h"
 #include <imgui.h>
 #include "EnemyLoader.h"
+#include "mSound.h"
+#include "SceneManager.h"
 
 ColosseumSystem::ColosseumSystem()
 {
@@ -10,16 +12,22 @@ ColosseumSystem::ColosseumSystem()
 	goSprite_ = std::make_unique<Sprite>();
 	blindSprite_ = std::make_unique<Sprite>();
 	clearSprite_ = std::make_unique<Sprite>();
+	retrySprite_ = std::make_unique<Sprite>();
+	titleSprite_ = std::make_unique<Sprite>();
 
 	readySprite_->Ini();
 	goSprite_->Ini();
 	blindSprite_->Ini();
 	clearSprite_->Ini();
+	retrySprite_->Ini();
+	titleSprite_->Ini();
 
 	readySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Ready"));
 	goSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Go"));
 	blindSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 	clearSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Clear"));
+	retrySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
+	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
 
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
@@ -28,6 +36,15 @@ ColosseumSystem::ColosseumSystem()
 	readySprite_->SetPos(pos);
 	goSprite_->SetPos(pos);
 	clearSprite_->SetPos(pos);
+
+	pos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		WinAPI::GetWindowSize().y / 1.4f
+	};
+	retrySprite_->SetPos(pos);
+
+	pos.y = WinAPI::GetWindowSize().y / 1.2f;
+	titleSprite_->SetPos(pos);
 
 	blindSprite_->SetAnchor({ 0,0 });
 	blindSprite_->SetColor(Color(0, 0, 0, 0));
@@ -44,6 +61,7 @@ ColosseumSystem::ColosseumSystem()
 	blindTimer_.SetLimitTime(50);
 
 	roundNum_ = 1;
+	selectType_ = SelectType::Title;
 }
 
 void ColosseumSystem::Update()
@@ -93,7 +111,7 @@ void ColosseumSystem::Update()
 		if (enemyManager_->GetEnemy()->size() <= 0)
 		{
 			//すべてのラウンドをクリアしたら
-			if(roundNum_ >= maxRoundNum_)
+			if (roundNum_ >= maxRoundNum_)
 			{
 				isClear_ = true;
 			}
@@ -156,6 +174,8 @@ void ColosseumSystem::DrawSprite()
 	if (isClear_)
 	{
 		clearSprite_->Draw();
+		retrySprite_->Draw();
+		titleSprite_->Draw();
 	}
 
 	ImGui::Begin("ColosseumSystem");
@@ -177,4 +197,45 @@ void ColosseumSystem::Reset()
 
 void ColosseumSystem::ClearUpdate()
 {
+	//メニュー選択
+	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_DOWN) ||
+		Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_UP))
+	{
+		SoundManager::Play("SelectSE");
+		bool type = (selectType_ == SelectType::Retry);
+		//現在選択しているものがコンティニューだったら
+		selectType_ = (type) ? SelectType::Title : SelectType::Retry;
+	}
+
+	Color selectColor = { 200,50,50,255 };
+	if (selectType_ == SelectType::Retry)
+	{
+		retrySprite_->SetColor(selectColor);
+		titleSprite_->SetColor(Color(255, 255, 255, 255));
+
+	}
+	else if (selectType_ == SelectType::Title)
+	{
+		retrySprite_->SetColor(Color(255, 255, 255, 255));
+		titleSprite_->SetColor(selectColor);
+	}
+	//決定
+	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
+		Key::TriggerKey(DIK_SPACE))
+	{
+		if (SceneManager::GetIsSetNext() == false)
+		{
+			SoundManager::Play("EnterSE", false, 1.5f);
+		}
+		if (selectType_ == SelectType::Retry)
+		{
+			SceneManager::SetChangeStart(SceneName::Game);
+		}
+		else if (selectType_ == SelectType::Title)
+		{
+			SceneManager::SetChangeStart(SceneName::Title);
+		}
+	}
+	retrySprite_->Update();
+	titleSprite_->Update();
 }

@@ -4,7 +4,7 @@
 #include "Collision.h"
 #include "ParticleManager.h"
 #include "Camera.h"
-
+#include "EnemyLoader.h"
 #include "JsonLoader.h"
 
 GameScene::~GameScene()
@@ -22,6 +22,7 @@ void GameScene::Ini()
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
 	operationUI_ = std::make_unique<UIOperation>();
+	colosseumSystem_ = std::make_unique<ColosseumSystem>();
 
 	stage_ = std::move(std::make_unique<Stage>());
 
@@ -34,11 +35,16 @@ void GameScene::Ini()
 	colManager_->SetEnemys(enemyManager_.get());
 	AttackManager::SetPlayer(player_.get());
 	enemyManager_->SetPlayer(player_.get());
+	colosseumSystem_->SetPlayer(player_.get());
+	colosseumSystem_->SetEnemy(enemyManager_.get());
 
 	JsonLoader::GetInstance()->LoadFile("stage.json","Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Stage");
 
-	
+	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
+
+	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData("Debug").size();
+	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
 }
 
 void GameScene::Update()
@@ -50,6 +56,7 @@ void GameScene::Update()
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
+	colosseumSystem_->Update();
 
 	CameraUpdate();
 
@@ -75,6 +82,15 @@ void GameScene::Update()
 	if (Key::TriggerKey(DIK_P)) {
 		ParticleManager::GetInstance()->
 			AddParticle("EnemyDead", 9, 80, {0,2,0}, { 0.5f,0.5f, 0.5f }, 2.f);
+	}
+
+	if (colosseumSystem_->GetIsReset())
+	{
+		player_->Reset();
+		enemyManager_->Reset();
+		uint32_t nextRound = colosseumSystem_->GetRoundNum();
+		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", nextRound);
+		colosseumSystem_->SetIsReset(false);
 	}
 
 }
@@ -104,6 +120,7 @@ void GameScene::Draw()
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
 	operationUI_->Draw();
+	colosseumSystem_->DrawSprite();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();

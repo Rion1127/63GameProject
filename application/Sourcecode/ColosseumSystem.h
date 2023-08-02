@@ -9,6 +9,11 @@
 class ColosseumSystem
 {
 private:
+	enum class SelectType {
+		Retry,
+		Title
+	};
+private:
 	EnemyManager* enemyManager_;
 	Player* player_;
 
@@ -16,6 +21,10 @@ private:
 	std::unique_ptr<Sprite> goSprite_;
 	std::unique_ptr<Sprite> blindSprite_;
 	std::unique_ptr<Sprite> clearSprite_;
+
+	std::unique_ptr<Sprite> retrySprite_;
+	std::unique_ptr<Sprite> titleSprite_;
+
 
 	uint32_t maxRoundNum_;
 	uint32_t roundNum_;
@@ -28,6 +37,8 @@ private:
 	Timer displayTimer_;
 	Timer clearBlankTimer_;
 	Timer blindTimer_;
+
+	SelectType selectType_;
 public:
 	ColosseumSystem();
 	void Update();
