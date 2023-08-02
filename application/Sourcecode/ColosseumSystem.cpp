@@ -139,33 +139,33 @@ void ColosseumSystem::Update()
 
 	if (isNext_ == false)
 	{
-		//if (blindTimer_.GetTimer() > 0)
-		//{
-		//	blindTimer_.AddTime(-1);
-		//	Color color = blindSprite_->GetColor();
-		//	color.a = 255.f * blindTimer_.GetTimeRate();
-		//	blindSprite_->SetColor(color);
-		//}
-		////敵を全員倒したら
-		//if (enemyManager_->GetEnemy()->size() <= 0)
-		//{
-		//	//すべてのラウンドをクリアしたら
-		//	if (roundNum_ >= maxRoundNum_)
-		//	{
-		//		isClear_ = true;
-		//	}
-		//	//まだ次のラウンドがある場合
-		//	else if (roundNum_ < maxRoundNum_)
-		//	{
-		//		clearBlankTimer_.AddTime(1);
-		//		if (clearBlankTimer_.GetIsEnd())
-		//		{
-		//			isNext_ = true;
-		//			roundNum_++;
-		//			blindTimer_.Reset();
-		//		}
-		//	}
-		//}
+		if (blindTimer_.GetTimer() > 0)
+		{
+			blindTimer_.AddTime(-1);
+			Color color = blindSprite_->GetColor();
+			color.a = 255.f * blindTimer_.GetTimeRate();
+			blindSprite_->SetColor(color);
+		}
+		//敵を全員倒したら
+		if (enemyManager_->GetEnemy()->size() <= 0)
+		{
+			//すべてのラウンドをクリアしたら
+			if (roundNum_ >= maxRoundNum_)
+			{
+				isClear_ = true;
+			}
+			//まだ次のラウンドがある場合
+			else if (roundNum_ < maxRoundNum_)
+			{
+				clearBlankTimer_.AddTime(1);
+				if (clearBlankTimer_.GetIsEnd())
+				{
+					isNext_ = true;
+					roundNum_++;
+					blindTimer_.Reset();
+				}
+			}
+		}
 	}
 	else
 	{
@@ -231,6 +231,7 @@ void ColosseumSystem::Reset()
 	readyTimer_.Reset();
 	displayTimer_.Reset();
 	clearBlankTimer_.Reset();
+	rdyEaseTimer_.Reset();
 }
 
 void ColosseumSystem::ReadySpriteUpdate()
