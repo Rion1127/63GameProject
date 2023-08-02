@@ -30,6 +30,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");
 	LoadGraph("UItex.png", "UItex");
+	LoadGraph("ready.png", "Ready");
+	LoadGraph("go.png", "Go");
 
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("pressA.png", "PressA");

@@ -5,7 +5,7 @@
 ROUND1
 
 SET,3,0,0,Dummy
-SET,0,0,5,Dummy
+SET,-3,0,0,Dummy
 
 
 ROUND2

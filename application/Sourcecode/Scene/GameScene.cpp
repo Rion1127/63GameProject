@@ -22,7 +22,7 @@ void GameScene::Ini()
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
 	operationUI_ = std::make_unique<UIOperation>();
-
+	colosseumSystem_ = std::make_unique<ColosseumSystem>();
 
 
 	stage_ = std::move(std::make_unique<Stage>());
@@ -39,6 +39,8 @@ void GameScene::Ini()
 
 	JsonLoader::GetInstance()->LoadFile("stage.json","Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Stage");
+
+	
 }
 
 void GameScene::Update()

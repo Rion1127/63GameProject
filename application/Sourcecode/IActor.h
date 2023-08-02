@@ -16,6 +16,7 @@ protected:
 	Timer damageCoolTime_;
 	bool isFloorCollision_ = false;
 	float knockDecreaseValue = 0.05f;
+	bool isCanMove_ = true;
 protected:
 	void ObjUpdate();
 public:
@@ -25,7 +26,9 @@ public:
 		return addVec_;
 	}
 	Gravity* GetGravity() { return &gravity_; }
+public:
 	void AddaddVec(Vector3 vec) { addVec_ += vec; }
 	virtual void SetKnockVec(Vector3 vec) { knockVec_ = knockVec_; }
+	void SetIsCanMove(bool flag) { isCanMove_ = flag; }
 };
 

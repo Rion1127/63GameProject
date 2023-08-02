@@ -25,6 +25,7 @@ void DebugScene::Ini()
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
 	operationUI_ = std::make_unique<UIOperation>();
+	colosseumSystem_ = std::make_unique<ColosseumSystem>();
 
 	stage_ = std::move(std::make_unique<Stage>());
 
@@ -41,6 +42,14 @@ void DebugScene::Ini()
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
+
+	colosseumSystem_->SetPlayer(player_.get());
+	std::list<std::unique_ptr<IEnemy>>::iterator itr;
+	for (itr = enemyManager_->GetEnemy()->begin(); itr != enemyManager_->GetEnemy()->end();)
+	{
+		colosseumSystem_->SetEnemy(itr->get());
+		itr++;
+	}
 }
 
 void DebugScene::Update()
@@ -53,6 +62,7 @@ void DebugScene::Update()
 	}
 
 #endif // _DEBUG
+	colosseumSystem_->Update();
 
 	CameraUpdate();
 	//“–‚½‚è”»’è‘OXV
@@ -113,6 +123,7 @@ void DebugScene::Draw()
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
 	operationUI_->Draw();
+	colosseumSystem_->DrawSprite();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
