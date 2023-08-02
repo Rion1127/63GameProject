@@ -49,7 +49,7 @@ void EnemyManager::PreUpdate()
 	ImGui::End();
 #endif // _DEBUG
 
-
+	
 	std::list<std::unique_ptr<IEnemy>>::iterator itr;
 	for (itr = enemys_.begin(); itr != enemys_.end();)
 	{

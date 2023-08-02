@@ -38,18 +38,14 @@ void DebugScene::Ini()
 	colManager_->SetEnemys(enemyManager_.get());
 	AttackManager::SetPlayer(player_.get());
 	enemyManager_->SetPlayer(player_.get());
+	colosseumSystem_->SetPlayer(player_.get());
+	colosseumSystem_->SetEnemy(enemyManager_.get());
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
 
-	colosseumSystem_->SetPlayer(player_.get());
-	std::list<std::unique_ptr<IEnemy>>::iterator itr;
-	for (itr = enemyManager_->GetEnemy()->begin(); itr != enemyManager_->GetEnemy()->end();)
-	{
-		colosseumSystem_->SetEnemy(itr->get());
-		itr++;
-	}
+	
 }
 
 void DebugScene::Update()

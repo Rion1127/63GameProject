@@ -1,16 +1,19 @@
 #pragma once
 #include "IActor.h"
+#include "EnemyManager.h"
 #include <list>
 #include "Timer.h"
 #include "Sprite.h"
 
+
 class ColosseumSystem
 {
 private:
-	std::list<IActor*> enemys_;
+	EnemyManager* enemyManager_;
 	IActor* player_;
 
 	bool isStart_;
+	bool isClear_;
 	std::unique_ptr<Sprite> readySprite_;
 	std::unique_ptr<Sprite> goSprite_;
 	Timer easeTimer_;
@@ -21,6 +24,6 @@ public:
 	void DrawSprite();
 public:
 	void SetPlayer(IActor* actor) { player_ = actor; };
-	void SetEnemy(IActor* actor) { enemys_.emplace_back(actor); };
+	void SetEnemy(EnemyManager* actor) { enemyManager_ = actor; };
 };
 

@@ -20,6 +20,7 @@ ColosseumSystem::ColosseumSystem()
 
 
 	isStart_ = false;
+	isClear_ = false;
 
 	easeTimer_.SetLimitTime(180);
 	displayTimer_.SetLimitTime(100);
@@ -31,10 +32,12 @@ void ColosseumSystem::Update()
 	if (isStart_ == false)
 	{
 		easeTimer_.AddTime(1);
-
-		for (auto& actor : enemys_)
+		//‘Sˆõ“®‚¯‚È‚­‚·‚é
+		std::list<std::unique_ptr<IEnemy>>::iterator itr;
+		for (itr = enemyManager_->GetEnemy()->begin(); itr != enemyManager_->GetEnemy()->end();)
 		{
-			actor->SetIsCanMove(false);
+			itr->get()->SetIsCanMove(false);
+			itr++;
 		}
 		player_->SetIsCanMove(false);
 
@@ -43,9 +46,10 @@ void ColosseumSystem::Update()
 		{
 			isStart_ = true;
 			//‘Sˆõ“®‚¯‚é‚æ‚¤‚É‚·‚é
-			for (auto& actor : enemys_)
+			for (itr = enemyManager_->GetEnemy()->begin(); itr != enemyManager_->GetEnemy()->end();)
 			{
-				actor->SetIsCanMove(true);
+				itr->get()->SetIsCanMove(true);
+				itr++;
 			}
 			player_->SetIsCanMove(true);
 		}
@@ -54,6 +58,11 @@ void ColosseumSystem::Update()
 	else
 	{
 		displayTimer_.AddTime(1);
+	}
+
+	if (enemyManager_->GetEnemy()->size() <= 0)
+	{
+		isClear_ = true;
 	}
 
 	readySprite_->Update();
