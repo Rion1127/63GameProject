@@ -33,10 +33,12 @@ private:
 	bool isNext_;
 	bool isReset_;
 	bool isClear_;
-	Timer easeTimer_;
+	Timer readyTimer_;
 	Timer displayTimer_;
 	Timer clearBlankTimer_;
 	Timer blindTimer_;
+
+	Timer rdyEaseTimer_;
 
 	SelectType selectType_;
 public:
@@ -46,6 +48,7 @@ public:
 
 	void Reset();
 private:
+	void ReadySpriteUpdate();
 	void ClearUpdate();
 public:
 	void SetPlayer(Player* actor) { player_ = actor; };
