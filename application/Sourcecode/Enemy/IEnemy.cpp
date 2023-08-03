@@ -31,15 +31,13 @@ void IEnemy::PreUpdate()
 		isDead_ = true;
 	}
 	ColPosUpdate();
+
+	MoveUpdate();
 }
 
 void IEnemy::PostUpdate()
 {
-	MoveUpdate();
-
 	ObjUpdate();
-
-	
 }
 
 void IEnemy::Draw()

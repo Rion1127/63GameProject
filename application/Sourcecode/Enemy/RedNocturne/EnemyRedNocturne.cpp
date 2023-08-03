@@ -1,6 +1,7 @@
 #include "EnemyRedNocturne.h"
 #include "RRandom.h"
 #include "Player.h"
+#include "Easing.h"
 
 EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	IEnemy(EnemyType::Air, false, 80)
@@ -14,7 +15,7 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	ColPosUpdate();
 
 	state_ = State::Idle;
-	actionTimer_.SetLimitTime(400);
+	actionTimer_.SetLimitTime(60);
 
 	//プライオリティに行動パターンを登録
 	priority_.insert(std::make_pair(State::Idle, 0));
@@ -52,14 +53,20 @@ void EnemyRedNocturne::MoveUpdate()
 	}
 
 	/*UpdateVector();*/
-
-	actionTimer_.AddTime(1);
+	
+	
 	//実行
-	(this->*Action[(int32_t)state_])();
+	if (isCanMove_)
+	{
+		actionTimer_.AddTime(1);
+		(this->*Action[(int32_t)state_])();
+	}
 
 	if (actionTimer_.GetIsEnd())
 	{
 		stateInit = true;
+		state_ = State::Wander;
+		actionTimer_.Reset();
 		//SortPriority();
 	}
 }
@@ -75,7 +82,7 @@ void EnemyRedNocturne::Wander()
 	{
 		stateInit = false;
 
-		float wonderDist = 8.f;
+		float wonderDist = RRandom::RandF(-8.f, 8.f);
 
 		Vector3 offsetPos = {
 			RRandom::RandF(-1.f,1.f),
@@ -83,10 +90,23 @@ void EnemyRedNocturne::Wander()
 			RRandom::RandF(-1.f,1.f),
 		};
 		offsetPos *= wonderDist;
-		Vector3 goalPos =
-			IEnemy::splayer_->GetWorldTransform()->position_ + offsetPos;
+		wanderStartPos_ = obj_->WT_.position_;
+		wanderEndPos_ = (IEnemy::splayer_->GetWorldTransform()->position_ - wanderStartPos_) + offsetPos;
+
+		pos_ = wanderStartPos_;
 	}
 
+	addVec_ = {
+		pos_.x - obj_->WT_.position_.x ,
+		0,
+		pos_.z-obj_->WT_.position_.z ,
+	};
+	float rate = actionTimer_.GetTimeRate();
+	pos_ = {
+		Easing::Cubic::easeInOut(rate, wanderStartPos_.x, wanderEndPos_.x, 1.0f),
+		0.f,
+		Easing::Cubic::easeInOut(rate, wanderStartPos_.z, wanderEndPos_.z, 1.0f),
+	};
 
 }
 

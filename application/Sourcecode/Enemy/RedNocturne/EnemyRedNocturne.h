@@ -19,7 +19,9 @@ private:
 	float moveSpeed;
 	int32_t randRange_;
 
-	Vector3 EtoPVec_;
+	Vector3 wanderEndPos_;
+	Vector3 wanderStartPos_;
+	Vector3 pos_;
 
 	bool stateInit;
 

@@ -17,7 +17,7 @@ Sprite SceneManager::whiteSprite_;
 void SceneManager::Ini()
 {
 	//ビルド開始時のシーン
-	Transition<TitleScene>();
+	Transition<GameScene>();
 
 
 	animeTimer_.SetLimitTime(100);

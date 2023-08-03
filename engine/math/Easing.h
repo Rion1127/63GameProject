@@ -32,6 +32,12 @@ namespace Easing {
 		float easeOut(float t, float b, float c, float d);
 		float easeInOut(float t, float b, float c, float d);
 	}
+
+	namespace Sine {
+		float easeIn(float t, float b, float c, float d);
+		float easeOut(float t, float b, float c, float d);
+		float easeInOut(float t, float b, float c, float d);
+	};
 }
 
 /// ‰ü•ÏŒãƒR[ƒh

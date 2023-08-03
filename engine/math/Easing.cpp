@@ -221,3 +221,20 @@ float Easing::Cubic::easeInOut(float start, float end, float t)
 	return start * (1.0f - time) + end * time;
 }
 #pragma endregion
+
+#pragma region Sine
+float Easing::Sine::easeIn(float t, float b, float c, float d)
+{
+	return -c * cosf(t / d * (3.1415f / 2.f)) + c + b;
+}
+
+float Easing::Sine::easeOut(float t, float b, float c, float d)
+{
+	return c * sinf(t / d * (3.1415f / 2.f)) + b;
+}
+
+float Easing::Sine::easeInOut(float t, float b, float c, float d)
+{
+	return -c / 2.f * (cosf(3.1415f * t / d) - 1.f) + b;
+}
+#pragma endregion
