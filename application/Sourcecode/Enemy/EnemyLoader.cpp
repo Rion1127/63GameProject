@@ -3,6 +3,7 @@
 #include "EnemyDummy.h"
 #include "EnemyAirDummy.h"
 #include "EnemyShadow.h"
+#include "EnemyRedNocturne.h"
 
 EnemyLoader* EnemyLoader::GetInstance()
 {
@@ -63,14 +64,8 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 			std::getline(line_stream, word, ',');
 			std::string enemyType = word.c_str();
 
-			if (enemyType == "Dummy")
-			{
-				enemydata.name = "Dummy";
-			}
-			else if (enemyType == "Shadow")
-			{
-				enemydata.name = "Shadow";
-			}
+			enemydata.name = enemyType;
+
 			//敵を生成するのに必要なデータを挿入
 			popDatas.back().enemyData.emplace_back(enemydata);
 		}
@@ -101,6 +96,11 @@ void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std
 		else if (enemyData[i].name == "Shadow")
 		{
 			newEnemy = std::make_unique<EnemyShadow>(enemyData[i].pos);
+			enemys->emplace_back(std::move(newEnemy));
+		}
+		else if (enemyData[i].name == "RedNocturne")
+		{
+			newEnemy = std::make_unique<EnemyRedNocturne>(enemyData[i].pos);
 			enemys->emplace_back(std::move(newEnemy));
 		}
 	}

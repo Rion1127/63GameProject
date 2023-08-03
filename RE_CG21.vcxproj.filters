@@ -504,6 +504,9 @@
     <ClCompile Include="application\Sourcecode\ColosseumSystem.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -784,6 +787,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\ColosseumSystem.h">
       <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\EnemyLoader.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackShadow.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\EnemyLoader.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackShadow.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.h" />
@@ -484,7 +486,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;DIRECTINPUT_VERSION=0x0800;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -510,7 +512,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>

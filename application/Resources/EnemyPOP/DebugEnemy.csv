@@ -1,10 +1,11 @@
 //SET,X,Y,Z,敵の種類
 //敵の種類
-//Dummy,Shadow,
+//Dummy,Shadow,RedNocturne
 
 ROUND1
 
 SET,-3,0,0,Shadow
+SET,-3,4,0,RedNocturne
 
 
 ROUND2
