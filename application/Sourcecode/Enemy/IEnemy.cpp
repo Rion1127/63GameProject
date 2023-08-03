@@ -79,3 +79,11 @@ void IEnemy::Damage(Vector3 knockVec, int32_t damageValue, int32_t cooltime)
 	}
 
 }
+
+void IEnemy::UpdateEtoPVec()
+{
+	//プレイヤーへのベクトル
+	Vector3& pos = splayer_->GetWorldTransform()->position_;
+	EtoPVec_ = pos - obj_->WT_.position_;
+	EtoPVec_.y = 0;
+}

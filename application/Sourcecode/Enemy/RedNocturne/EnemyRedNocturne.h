@@ -6,7 +6,7 @@ class EnemyRedNocturne :
 public:
 	enum class State {
 		Idle,
-		Following,
+		Wander,
 		Attack,
 		KnockBack,
 		None
@@ -21,11 +21,9 @@ private:
 
 	Vector3 EtoPVec_;
 
-	float endRot_;
-	float nowRot_;
+	bool stateInit;
 
 	std::unordered_map<State, int32_t> priority_;
-public:
 public:
 	EnemyRedNocturne(Vector3 pos);
 	void SetIsNock(bool flag) override;
@@ -34,5 +32,10 @@ public:
 private:
 	void MoveUpdate() override;
 	void DrawSprite() override {};
+
+	void Idle();
+	void Wander();
+	void Attack();
+	void KnockBack();
 };
 

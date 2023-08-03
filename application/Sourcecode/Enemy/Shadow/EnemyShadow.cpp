@@ -13,7 +13,6 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 {
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
-	//obj_->SetAmbient("player", { 0,0,1.0f });
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
@@ -92,7 +91,7 @@ void EnemyShadow::MoveUpdate()
 		state_ = State::KnockBack;
 	}
 
-	UpdateVector();
+	UpdateEtoPVec();
 
 	actionTimer_.AddTime(1);
 	//実行
@@ -319,14 +318,6 @@ void EnemyShadow::SortPriority()
 			StateUpdate(arr[i].first);
 		}
 	}
-}
-
-void EnemyShadow::UpdateVector()
-{
-	//プレイヤーへのベクトル
-	Vector3& pos = splayer_->GetWorldTransform()->position_;
-	EtoPVec_ = pos - obj_->WT_.position_;
-	EtoPVec_.y = 0;
 }
 
 void EnemyShadow::WanderInit()

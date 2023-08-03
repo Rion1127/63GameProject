@@ -27,8 +27,6 @@ private:
 	float moveSpeed;
 	int32_t randRange_;
 
-	Vector3 EtoPVec_;
-
 	float endRot_;
 	float nowRot_;
 
@@ -59,7 +57,6 @@ private:
 	void KnockBack();
 
 	void SortPriority();
-	void UpdateVector();
 
 	void WanderInit();
 

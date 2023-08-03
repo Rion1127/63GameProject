@@ -28,6 +28,8 @@ protected:
 	bool isDead_;
 	bool isKnock_;
 
+	Vector3 EtoPVec_;
+
 	//‘Ì—Í
 	int32_t health_;
 	int32_t maxHealth_;
@@ -63,5 +65,6 @@ public:
 	std::string GetName() { return name_; }
 protected:
 	virtual void MoveUpdate() = 0;
+	void UpdateEtoPVec();
 };
 
