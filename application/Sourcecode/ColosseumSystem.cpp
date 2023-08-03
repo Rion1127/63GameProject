@@ -10,36 +10,40 @@
 ColosseumSystem::ColosseumSystem()
 {
 	readySprite_ = std::make_unique<Sprite>();
-	
+
 	goSprite_ = std::make_unique<Sprite>();
 	blindSprite_ = std::make_unique<Sprite>();
 	clearSprite_ = std::make_unique<Sprite>();
 	retrySprite_ = std::make_unique<Sprite>();
 	titleSprite_ = std::make_unique<Sprite>();
-	for (uint32_t i = 0; i < readyShapeSprite_.size(); i++) {
+	for (uint32_t i = 0; i < readyShapeSprite_.size(); i++)
+	{
 		readyShapeSprite_[i] = std::make_unique<Sprite>();
 		readyShapeSprite_[i]->Ini();
 		readyShapeSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("ReadyShape"));
 		readyShapeSprite_[i]->SetColor(Color(255, 255, 255, 0));
-		readyShapeSprite_[i]->SetPos({0,WinAPI::GetWindowSize().y / 4.0f });
+		readyShapeSprite_[i]->SetPos({ 0,WinAPI::GetWindowSize().y / 4.0f });
 		readyShapeSprite_[i]->SetRot(Radian(180.f * i));
 	}
+	goShapeSprite_ = std::make_unique<Sprite>();
 
 	readySprite_->Ini();
-	
+
 	goSprite_->Ini();
 	blindSprite_->Ini();
 	clearSprite_->Ini();
 	retrySprite_->Ini();
 	titleSprite_->Ini();
+	goShapeSprite_->Ini();
 
 	readySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Ready"));
-	
+
 	goSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Go"));
 	blindSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 	clearSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Clear"));
 	retrySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
+	goShapeSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("GoShape"));
 
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
@@ -50,6 +54,8 @@ ColosseumSystem::ColosseumSystem()
 	readySprite_->SetColor(Color(255, 255, 255, 0));
 	goSprite_->SetPos(pos);
 	clearSprite_->SetPos(pos);
+	goShapeSprite_->SetPos(pos);
+	goShapeSprite_->SetColor(Color(255, 255, 255, 100));
 
 	pos = {
 		WinAPI::GetWindowSize().x / 2.f,
@@ -128,13 +134,20 @@ void ColosseumSystem::Update()
 	{
 		displayTimer_.AddTime(1);
 
-		float rate =displayTimer_.GetTimeRate();
-		float scale = Easing::Circ::easeOut(3.f, 1.f, Min(rate * 2.f, 1.0f));
+		float rate = displayTimer_.GetTimeRate();
+		float goScale = Easing::Circ::easeOut(4.f, 2.f, Min(rate * 2.f, 1.0f));
 		float alpha = 500.f * (1.f - rate);
-		goSprite_->SetScale(Vector2(scale, scale));
+		goSprite_->SetScale(Vector2(goScale, goScale));
 		Color color = goSprite_->GetColor();
 		color.a = alpha;
 		goSprite_->SetColor(color);
+
+		float goShapeScale = Easing::Circ::easeOut(0.5f, 1.0f, Min(rate * 2.f, 1.0f));
+
+		goShapeSprite_->SetScale(Vector2(goShapeScale, goShapeScale));
+		Color  goShapeColor = goShapeSprite_->GetColor();
+		goShapeColor.a = alpha;
+		goShapeSprite_->SetColor(goShapeColor);
 	}
 
 	if (isNext_ == false)
@@ -189,13 +202,15 @@ void ColosseumSystem::Update()
 	readySprite_->Update();
 	goSprite_->Update();
 	blindSprite_->Update();
+	goShapeSprite_->Update();
 }
 
 void ColosseumSystem::DrawSprite()
 {
 	if (isStart_ == false)
 	{
-		for (uint32_t i = 0; i < readyShapeSprite_.size(); i++) {
+		for (uint32_t i = 0; i < readyShapeSprite_.size(); i++)
+		{
 			readyShapeSprite_[i]->Draw();
 			readyShapeSprite_[i]->DrawImGui();
 		}
@@ -205,13 +220,12 @@ void ColosseumSystem::DrawSprite()
 	{
 		if (displayTimer_.GetIsEnd() == false)
 		{
+			goShapeSprite_->Draw();
 			goSprite_->Draw();
 		}
 	}
-	if (isNext_)
-	{
-		blindSprite_->Draw();
-	}
+
+	blindSprite_->Draw();
 
 	if (isClear_)
 	{
@@ -219,8 +233,6 @@ void ColosseumSystem::DrawSprite()
 		retrySprite_->Draw();
 		titleSprite_->Draw();
 	}
-
-	
 }
 
 void ColosseumSystem::Reset()
@@ -237,7 +249,7 @@ void ColosseumSystem::Reset()
 void ColosseumSystem::ReadySpriteUpdate()
 {
 	rdyEaseTimer_.AddTime(1);
-	float scale = Easing::Circ::easeOut(4.f,1.f, rdyEaseTimer_.GetTimeRate());
+	float scale = Easing::Circ::easeOut(4.f, 1.f, rdyEaseTimer_.GetTimeRate());
 	readySprite_->SetScale({ scale ,scale });
 	Color color = readySprite_->GetColor();
 	color.a = 255.f * rdyEaseTimer_.GetTimeRate();
@@ -261,20 +273,21 @@ void ColosseumSystem::ReadySpriteUpdate()
 		}
 
 		color = { colorLight ,colorLight ,colorLight ,color.a };
-		
+
 		readySprite_->SetColor(color);
 	}
 
 	float rightStartPosX = 1050;
 	float rightEndPosX = 530;
 	float leftStartPosX = 310;
-	float leftEndPosX =	730;
+	float leftEndPosX = 730;
 
 	float easerightPosx = Easing::Cubic::easeOut(rightStartPosX, rightEndPosX, rdyEaseTimer_.GetTimeRate());
 	float easeleftPosx = Easing::Cubic::easeOut(leftStartPosX, leftEndPosX, rdyEaseTimer_.GetTimeRate());
 	float alpha = Easing::Circ::easeOut(0.f, 200.f, rdyEaseTimer_.GetTimeRate());
 
-	for (uint32_t i = 0; i < readyShapeSprite_.size(); i++) {
+	for (uint32_t i = 0; i < readyShapeSprite_.size(); i++)
+	{
 		Vector2 pos = {
 			0,
 			WinAPI::GetWindowSize().y / 4.0f
@@ -291,6 +304,7 @@ void ColosseumSystem::ReadySpriteUpdate()
 
 void ColosseumSystem::ClearUpdate()
 {
+	player_->SetIsCanMove(false);
 	//ƒƒjƒ…[‘I‘ð
 	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_UP))

@@ -21,6 +21,7 @@ private:
 	std::unique_ptr<Sprite> readySprite_;
 	std::array<std::unique_ptr<Sprite>,2> readyShapeSprite_;
 	std::unique_ptr<Sprite> goSprite_;
+	std::unique_ptr<Sprite> goShapeSprite_;
 	std::unique_ptr<Sprite> blindSprite_;
 	std::unique_ptr<Sprite> clearSprite_;
 
