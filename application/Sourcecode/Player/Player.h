@@ -75,6 +75,8 @@ public:
 	bool GetIsCanMove();
 	bool GetIsCanDodge();
 	bool GetIsCanGuard();
+	bool GetIsCanJump();
+	bool GetIsCanAttack();
 
 	void Damage(int32_t damage, Vector3 knockVec);
 	void GuardHit(Vector3 knockVec);

@@ -47,6 +47,7 @@ public:
 	void UpdateCameraPos();
 	void UpdateLookAT();
 	void UpdateLookTO();
+	void Reset();
 private:
 	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos,const Vector2& winSize,IEnemy* enemy);
 public:

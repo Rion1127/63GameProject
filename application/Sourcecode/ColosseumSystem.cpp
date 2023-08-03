@@ -270,6 +270,7 @@ void ColosseumSystem::ReadySpriteUpdate()
 		if (time < limitTime)
 		{
 			colorLight = 455.f + 600.f * fabs(rate);
+			if(rate <= 0.f)SoundManager::Play("ShineSE");
 		}
 
 		color = { colorLight ,colorLight ,colorLight ,color.a };

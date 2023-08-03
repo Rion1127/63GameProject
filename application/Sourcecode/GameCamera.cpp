@@ -30,7 +30,6 @@ void GameCamera::Update(CameraMode cameraMode)
 	}
 
 	camera_->eye_ += (endEyePos_ - camera_->eye_) * cameraSpeed_;
-
 }
 
 void GameCamera::UpdateCameraPos()
@@ -172,6 +171,11 @@ void GameCamera::UpdateLookTO()
 	}
 
 	camera_->rot_ += (endRot_ - camera_->rot_) * cameraSpeed_;
+}
+
+void GameCamera::Reset()
+{
+	moveDist = { 0,0.4f,0 };
 }
 
 GetOutEnemy GameCamera::GetOutScreenEnemy(const Vector2& screenPos, const Vector2& winSize, IEnemy* enemy)

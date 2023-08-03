@@ -88,6 +88,7 @@ void GameScene::Update()
 	{
 		player_->Reset();
 		enemyManager_->Reset();
+		gameCamera_.Reset();
 		uint32_t nextRound = colosseumSystem_->GetRoundNum();
 		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", nextRound);
 		colosseumSystem_->SetIsReset(false);

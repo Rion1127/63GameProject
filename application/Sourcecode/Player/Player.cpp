@@ -42,8 +42,7 @@ void Player::PreUpdate()
 	//プレイヤーの状態更新
 	StateUpdate();
 	//攻撃しているとき　&& 着地しているとき
-	if (GetIsCanMove() &&
-		state_ != PlayerState::Landing)
+	if (GetIsCanMove())
 	{
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
@@ -72,21 +71,23 @@ void Player::PreUpdate()
 
 void Player::PostUpdate()
 {
-	if (GetIsCanMove())
+	if (GetIsCanJump())
 	{
 		JumpUpdate();
 	}
-	attack_.Update();
+	if (GetIsCanAttack())
+	{
+		attack_.Update();
+	}
 	if (GetIsCanGuard())
 	{
 		if (controller_->GetTriggerButtons(PAD::INPUT_X))
 		{
 			//空中にいるとき、ノックバックの時攻撃の時はガードができない
-			SoundManager::Play("Guard", false, 0.5f);
+			SoundManager::Play("GuardSE", false, 0.5f);
 			guard_.Init();
 		}
 	}
-
 
 	guard_.Update();
 	sword_.Update();
@@ -126,7 +127,7 @@ void Player::ColPosUpdate()
 #pragma region 入力
 void Player::InputVecUpdate()
 {
-	moveVec2_ = {0,0};
+	moveVec2_ = { 0,0 };
 	Vector3 sideVec;
 	Vector3 upVec = { 0,1,0 };
 	Vector2 inputVec;// -> 入力されているベクトル
@@ -240,7 +241,7 @@ void Player::Draw()
 	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
 	obj_->Draw();
 	//if (attack_.GetIsAttacking()) {
-		sword_.Draw();
+	sword_.Draw();
 	//}
 
 #ifdef _DEBUG
@@ -336,12 +337,15 @@ void Player::WallColision()
 	ObjUpdate();
 }
 
+#pragma region それぞれ行動できる条件
 bool Player::GetIsCanMove()
 {
+	if (isCanMove_ == false) return false;
 	if (state_ != PlayerState::Attack &&
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
-		state_ != PlayerState::Guard)
+		state_ != PlayerState::Guard &&
+		state_ != PlayerState::Landing)
 	{
 		return true;
 	}
@@ -380,6 +384,24 @@ bool Player::GetIsCanGuard()
 	return false;
 }
 
+bool Player::GetIsCanJump()
+{
+	if (state_ != PlayerState::Attack &&
+		state_ != PlayerState::AirAttack &&
+		state_ != PlayerState::Knock &&
+		state_ != PlayerState::Guard)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Player::GetIsCanAttack()
+{
+	return isCanMove_;
+}
+#pragma endregion
+
 void Player::Damage(int32_t damage, Vector3 knockVec)
 {
 	health_ -= damage;
@@ -399,4 +421,6 @@ void Player::Reset()
 {
 	obj_->WT_.position_ = { 0,0,0 };
 	attack_.SetLockOnEnemy(nullptr);
+	inputAngle_ = 0;
+	obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
 }
