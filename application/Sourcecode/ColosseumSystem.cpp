@@ -212,7 +212,7 @@ void ColosseumSystem::DrawSprite()
 		for (uint32_t i = 0; i < readyShapeSprite_.size(); i++)
 		{
 			readyShapeSprite_[i]->Draw();
-			readyShapeSprite_[i]->DrawImGui();
+			//readyShapeSprite_[i]->DrawImGui();
 		}
 		readySprite_->Draw();
 	}

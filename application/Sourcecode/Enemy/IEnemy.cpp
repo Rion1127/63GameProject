@@ -32,11 +32,12 @@ void IEnemy::PreUpdate()
 	}
 	ColPosUpdate();
 
-	MoveUpdate();
+	
 }
 
 void IEnemy::PostUpdate()
 {
+	MoveUpdate();
 	ObjUpdate();
 }
 
@@ -47,7 +48,7 @@ void IEnemy::Draw()
 
 void IEnemy::FloorColision(Vector3 pos)
 {
-	addVec_ = { 0,0,0 };
+	//addVec_ = { 0,0,0 };
 	gravity_.SetGrabity({ 0,0.f,0 });
 	obj_->WT_.SetPosition(pos);
 }
