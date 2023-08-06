@@ -220,6 +220,12 @@
     <Filter Include="application\ヘッダーファイル\UI">
       <UniqueIdentifier>{4bbecf48-c7d6-42f0-9f2a-8ffb8bed7b30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Enemy\RedNocturne">
+      <UniqueIdentifier>{c4e08752-bf67-433b-9144-c2cc349c20fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Enemy\RedNocturne">
+      <UniqueIdentifier>{f3280003-9711-426f-934a-c2541e63ff68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -504,8 +510,11 @@
     <ClCompile Include="application\Sourcecode\ColosseumSystem.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\RedNocturneAttack.cpp">
+      <Filter>application\ソースファイル\Enemy\RedNocturne</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Enemy\RedNocturne</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -789,7 +798,10 @@
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Enemy\RedNocturne</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\RedNocturneAttack.h">
+      <Filter>application\ヘッダーファイル\Enemy\RedNocturne</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

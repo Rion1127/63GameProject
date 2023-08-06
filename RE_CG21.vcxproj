@@ -20,6 +20,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\RedNocturneAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackShadow.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\RedNocturneAttack.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackJumpShadow.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackShadow.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.h" />
