@@ -1,7 +1,7 @@
 #pragma once
-#include "IAttack.h"
+#include "IBullet.h"
 class AttackRedNocturne final:
-    public IAttack
+    public IBullet
 {
 private:
 	float frontDist_;

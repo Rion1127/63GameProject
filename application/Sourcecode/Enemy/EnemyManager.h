@@ -7,11 +7,12 @@
 #include "EnemyHPGauge.h"
 #include "mInput.h"
 #include "Player.h"
+#include "IBullet.h"
 class EnemyManager
 {
 private:
 	std::list<std::unique_ptr<IEnemy>> enemys_;
-	std::list<std::unique_ptr<IAttack>> bullets_;
+	std::list<std::unique_ptr<IBullet>> bullets_;
 
 	Player* player_;
 	IEnemy* lockOnEnemy_;	//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G

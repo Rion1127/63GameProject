@@ -26,6 +26,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.cpp" />
     <ClCompile Include="application\Sourcecode\GameCamera.cpp" />
     <ClCompile Include="application\Sourcecode\IActor.cpp" />
+    <ClCompile Include="application\Sourcecode\IBullet.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.h" />
     <ClInclude Include="application\Sourcecode\GameCamera.h" />
     <ClInclude Include="application\Sourcecode\IActor.h" />
+    <ClInclude Include="application\Sourcecode\IBullet.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h" />
@@ -204,6 +206,7 @@
     <ClInclude Include="engine\util\JsonLoader.h" />
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\Timer.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="application\Resources\shader\assimp.hlsli" />
@@ -432,6 +435,9 @@
     <ProjectReference Include="engine\external\imgui\imgui.vcxproj">
       <Project>{f7d37771-5e1f-448d-9f0b-3563c98512aa}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RE_CG21.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

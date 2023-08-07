@@ -5,6 +5,7 @@
 #include "Gravity.h"
 #include "Timer.h"
 #include "IAttack.h"
+#include "IBullet.h"
 
 enum class EnemyType {
 	Ground,	
@@ -52,7 +53,7 @@ public:
 	void Damage(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
 
 	virtual void SetIsNock(bool flag) = 0;
-	virtual void BulletShot(std::list<std::unique_ptr<IAttack>>* bullets) = 0;
+	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;
 	virtual void DrawSprite() = 0;
 public:
 	Gravity GetGravity() { return gravity_; }

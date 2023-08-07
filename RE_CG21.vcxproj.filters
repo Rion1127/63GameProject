@@ -522,6 +522,9 @@
     <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\AttackRedNocturne.cpp">
       <Filter>application\ソースファイル\Enemy\RedNocturne\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\IBullet.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -809,6 +812,12 @@
     <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\AttackRedNocturne.h">
       <Filter>application\ヘッダーファイル\Enemy\RedNocturne\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\IBullet.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -964,5 +973,10 @@
     <FxCompile Include="application\Resources\shader\SmokePS.hlsl">
       <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RE_CG21.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -42,7 +42,7 @@ public:
 	EnemyShadow(Vector3 pos);
 	void SetIsNock(bool flag) override;
 	void SetState(State state);
-	void BulletShot(std::list<std::unique_ptr<IAttack>>* bullets) override {};
+	void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override {};
 	void Draw()override;
 private:
 	void MoveUpdate() override;

@@ -79,7 +79,7 @@ void EnemyRedNocturne::MoveUpdate()
 	}
 }
 
-void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IAttack>>* bullets)
+void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)
 {
 	bullets->emplace_back(std::make_unique<AttackRedNocturne>(this));
 
