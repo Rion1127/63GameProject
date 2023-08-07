@@ -18,11 +18,13 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 
 	state_ = State::Idle;
 	actionTimer_.SetLimitTime(60);
+	shotTimer_.SetLimitTime(180);
 
 	//プライオリティに行動パターンを登録
 	priority_.insert(std::make_pair(State::Idle, 0));
 	priority_.insert(std::make_pair(State::Wander, 0));
 	priority_.insert(std::make_pair(State::FireAttack, 0));
+	priority_.insert(std::make_pair(State::Wander_FireAttack, 0));
 	priority_.insert(std::make_pair(State::KnockBack, 0));
 	priority_.insert(std::make_pair(State::None, 0));
 
@@ -49,7 +51,8 @@ void EnemyRedNocturne::MoveUpdate()
 	{
 		&EnemyRedNocturne::Idle,
 		&EnemyRedNocturne::Wander,
-		&EnemyRedNocturne::Attack,
+		&EnemyRedNocturne::FireAttack,
+		&EnemyRedNocturne::Wander_FireAttack,
 		&EnemyRedNocturne::KnockBack
 	};
 
@@ -124,9 +127,19 @@ void EnemyRedNocturne::Wander()
 
 }
 
-void EnemyRedNocturne::Attack()
+void EnemyRedNocturne::FireAttack()
 {
-	//attack_->Update();
+	shotTimer_.AddTime(1);
+	if (shotTimer_.GetIsEnd()) {
+		isBulletShot_ = true;
+		shotTimer_.Reset();
+	}
+}
+
+void EnemyRedNocturne::Wander_FireAttack()
+{
+	Wander();
+	FireAttack();
 }
 
 void EnemyRedNocturne::KnockBack()
@@ -141,30 +154,34 @@ void EnemyRedNocturne::SortPriority()
 	}
 
 	Vector3 EtoPVec = splayer_->GetWorldTransform()->position_ - obj_->WT_.position_;
-	Vector3 compareShortVec = { 0,0,2.f };
-	Vector3 compareLongVec = { 0,0,5.f };
+	Vector3 compareShortVec = { 0,0,7.f };
+	Vector3 compareLongVec = { 0,0,13.f };
 	float length = EtoPVec.length();
 	float compareShortlength = compareShortVec.length();
 	float compareLonglength = compareLongVec.length();
 	//近距離にいるとき
 	if (length <= compareShortlength)
 	{
-		priority_.at(State::FireAttack) += 70;
-		priority_.at(State::Wander) += 10;
-		priority_.at(State::Idle) += 20;
+		priority_.at(State::FireAttack) += 10;
+		priority_.at(State::Wander_FireAttack) += 1000;
+		priority_.at(State::Wander) += 100;
+		priority_.at(State::Idle) += 10;
 	}
 	//中距離にいるとき
 	else if (length > compareShortlength &&
 		length < compareLonglength)
 	{
 		priority_.at(State::FireAttack) += 30;
-		priority_.at(State::Wander) += 10;
-		priority_.at(State::Idle) += 10;
+		priority_.at(State::Wander_FireAttack) += 1000;
+		priority_.at(State::Wander) += 70;
+		priority_.at(State::Idle) += 5;
 	}
 	//遠くにいるとき
 	else
 	{
-		priority_.at(State::Wander) += 100;
+		priority_.at(State::FireAttack) += 80;
+		priority_.at(State::Wander_FireAttack) += 1000;
+		priority_.at(State::Wander) += 60;
 		priority_.at(State::Idle) += 5;
 	}
 
@@ -217,9 +234,16 @@ void EnemyRedNocturne::StateUpdate(State state)
 	{
 		actionTimer_.SetLimitTime(RRandom::Rand(100, 300));
 	}
+	else if (state == State::Wander)
+	{
+		actionTimer_.SetLimitTime(60);
+	}
 	else if (state == State::FireAttack)
 	{
-		actionTimer_.SetLimitTime(70);
-		isBulletShot_ = true;
+		actionTimer_.SetLimitTime(180);
+	}
+	else if (state == State::Wander_FireAttack)
+	{
+		actionTimer_.SetLimitTime(180);
 	}
 }

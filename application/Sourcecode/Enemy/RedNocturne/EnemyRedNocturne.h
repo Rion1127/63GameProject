@@ -8,12 +8,14 @@ public:
 		Idle,
 		Wander,
 		FireAttack,
+		Wander_FireAttack,
 		KnockBack,
 		None
 	};
 private:
 	State state_;
 	Timer actionTimer_;
+	Timer shotTimer_;
 
 	float followLength;
 	float moveSpeed;
@@ -37,7 +39,8 @@ private:
 
 	void Idle();
 	void Wander();
-	void Attack();
+	void FireAttack();
+	void Wander_FireAttack();
 	void KnockBack();
 
 	void SortPriority();
