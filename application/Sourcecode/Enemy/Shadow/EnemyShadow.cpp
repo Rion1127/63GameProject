@@ -11,6 +11,7 @@
 EnemyShadow::EnemyShadow(Vector3 pos) :
 	IEnemy(EnemyType::Ground, true, 100)
 {
+	name_ = "Shadow";
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	knockResist_ = { 1,1,1 };

@@ -2,10 +2,12 @@
 #include "RRandom.h"
 #include "Player.h"
 #include "Easing.h"
+#include "AttackRedNocturne.h"
 
 EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	IEnemy(EnemyType::Air, false, 80)
 {
+	name_ = "RedNocturne";
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true));
 	knockResist_ = { 1,0,1 };
@@ -34,6 +36,10 @@ void EnemyRedNocturne::SetIsNock(bool flag)
 void EnemyRedNocturne::Draw()
 {
 	obj_->Draw();
+
+	if (attack_ != nullptr) {
+		attack_->DrawCol();
+	}
 }
 
 void EnemyRedNocturne::MoveUpdate()
@@ -65,10 +71,23 @@ void EnemyRedNocturne::MoveUpdate()
 	if (actionTimer_.GetIsEnd())
 	{
 		stateInit = true;
-		state_ = State::Wander;
+		state_ = State::Attack;
 		actionTimer_.Reset();
 		//SortPriority();
+
+		isBulletShot_ = true;
 	}
+}
+
+void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IAttack>>* bullets)
+{
+	bullets->emplace_back(std::make_unique<AttackRedNocturne>(this));
+
+	auto& bullet = bullets->back();
+	bullet->SetLockOnActor(splayer_);
+	bullet->Init();
+	
+	isBulletShot_ = false;
 }
 
 void EnemyRedNocturne::Idle()
@@ -112,6 +131,7 @@ void EnemyRedNocturne::Wander()
 
 void EnemyRedNocturne::Attack()
 {
+	//attack_->Update();
 }
 
 void EnemyRedNocturne::KnockBack()

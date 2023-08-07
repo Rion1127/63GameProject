@@ -7,25 +7,24 @@
 #include "IActor.h"
 #include "Spline.h"
 
-struct AttackCol {
-	Object3d colObj_;
-	Sphere col_;
-	int32_t damage = 10;
-	//敵の攻撃当たり判定有効までの時間
-	int32_t damageCoolTime = 20;
-	//ノックバックの強さ
-	Vector3 knockPower = { 0.5f,0.5f,0.5f };
-	//上方向のノックバック
-	float knockVecY = 0.5f;
-};
-
-struct AttackInfo {
-	int32_t maxTime;	//攻撃のフレーム数
-	int32_t nowTime;
-};
-
 class IAttack
 {
+private:
+	struct AttackCol {
+		Object3d colObj_;
+		Sphere col_;
+		int32_t damage = 10;
+		//敵の攻撃当たり判定有効までの時間
+		int32_t damageCoolTime = 20;
+		//ノックバックの強さ
+		Vector3 knockPower = { 0.5f,0.5f,0.5f };
+		//上方向のノックバック
+		float knockVecY = 0.5f;
+	};
+	struct AttackInfo {
+		int32_t maxTime;	//攻撃のフレーム数
+		int32_t nowTime;
+	};
 protected:
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;

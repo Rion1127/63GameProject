@@ -13,6 +13,7 @@ IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 	isSoftLockOn_ = false;
 	isHardLockOn_ = false;
 	isKnock_ = false;
+	isBulletShot_ = false;
 }
 
 void IEnemy::PreUpdate()

@@ -62,6 +62,10 @@ void EnemyManager::PreUpdate()
 			}
 		}
 
+		if (itr->get()->GetIsBulletShot()) {
+			itr->get()->BulletShot(&bullets_);
+		}
+
 		itr++;
 	}
 
@@ -77,6 +81,10 @@ void EnemyManager::PreUpdate()
 		{
 			lockOnSprite->SetInvisivle(true);
 		}
+	}
+
+	for (auto& bullet : bullets_) {
+		bullet->Update();
 	}
 	//hpゲージにロックオン中の敵をセット
 	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
@@ -97,6 +105,10 @@ void EnemyManager::Draw()
 	for (auto& enemy : enemys_)
 	{
 		enemy->Draw();
+	}
+
+	for (auto& bullet : bullets_) {
+		bullet->DrawCol();
 	}
 }
 

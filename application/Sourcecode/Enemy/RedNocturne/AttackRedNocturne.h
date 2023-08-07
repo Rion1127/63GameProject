@@ -1,15 +1,15 @@
 #pragma once
 #include "IAttack.h"
-class AttackShadow final:
+class AttackRedNocturne final:
     public IAttack
 {
 private:
 	float frontDist_;
+	float bulletSpeed_;
 public:
-	AttackShadow(IActor* selfActor);
+	AttackRedNocturne(IActor* selfActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;
-	
 };
 

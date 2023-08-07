@@ -11,6 +11,7 @@ class EnemyManager
 {
 private:
 	std::list<std::unique_ptr<IEnemy>> enemys_;
+	std::list<std::unique_ptr<IAttack>> bullets_;
 
 	Player* player_;
 	IEnemy* lockOnEnemy_;	//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G

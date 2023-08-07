@@ -27,6 +27,7 @@ protected:
 	bool isGravityImpact_;	//èdóÕÇóLå¯Ç…Ç∑ÇÈ
 	bool isDead_;
 	bool isKnock_;
+	bool isBulletShot_;
 
 	Vector3 EtoPVec_;
 
@@ -51,12 +52,14 @@ public:
 	void Damage(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
 
 	virtual void SetIsNock(bool flag) = 0;
+	virtual void BulletShot(std::list<std::unique_ptr<IAttack>>* bullets) = 0;
 	virtual void DrawSprite() = 0;
 public:
 	Gravity GetGravity() { return gravity_; }
 	bool GetIsSoftLockOn() { return isSoftLockOn_; }
 	bool GetIsHardLockOn() { return isHardLockOn_; }
 	bool GetIsDead() { return isDead_; }
+	bool GetIsBulletShot() {return isBulletShot_;}
 	Timer GetDamageCoolTime() { return damageCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }
 	int32_t GetHealth() { return health_; }
@@ -65,6 +68,7 @@ public:
 	std::string GetName() { return name_; }
 protected:
 	virtual void MoveUpdate() = 0;
+	
 	void UpdateEtoPVec();
 };
 
