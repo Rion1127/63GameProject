@@ -26,12 +26,15 @@ private:
 		int32_t nowTime;
 	};
 protected:
-	std::vector<std::unique_ptr<AttackCol>> attackCol_;
+	std::unique_ptr<AttackCol> attackCol_;
 	AttackInfo attackInfo_;
 	IActor* selfActor_;
 	IActor* lockOnActor_;
 	Vector3 attackVec_;
 	Spline spline_;
+
+	Timer aliveTimer_;
+	bool isDead_;
 public:
 	IBullet(IActor* selfActor, int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25);
 	virtual ~IBullet() {};
@@ -42,10 +45,12 @@ public:
 public:
 	void SetNowTime(int32_t time) { attackInfo_.nowTime = time; }
 	void SetLockOnActor(IActor* lockOnActor) { lockOnActor_ = lockOnActor; };
+	void SetIsDead(bool flag) { isDead_ = flag; }
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
-	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
+	std::unique_ptr<AttackCol>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
+	bool GetIsDead() { return isDead_; }
 public:
 	virtual void Init() = 0;
 protected:

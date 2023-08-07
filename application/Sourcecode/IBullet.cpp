@@ -4,44 +4,42 @@
 IBullet::IBullet(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime) :
 	selfActor_(selfActor)
 {
-	attackCol_.resize(colNum);
-	for (auto& col : attackCol_)
-	{
-		col = std::move(std::make_unique<AttackCol>());
-		col->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false));
-		col->colObj_.SetAmbient("sphere", { 1.0f, 0, 0 });
-		col->colObj_.SetIsVisible(false);
-		col->damageCoolTime = damageCoolTime;
-		col->damage = damage;
-	}
+
+	attackCol_ = std::move(std::make_unique<AttackCol>());
+	attackCol_->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false));
+	attackCol_->colObj_.SetAmbient("sphere", { 1.0f, 0, 0 });
+	attackCol_->colObj_.SetIsVisible(false);
+	attackCol_->damageCoolTime = damageCoolTime;
+	attackCol_->damage = damage;
+
 	attackInfo_.maxTime = maxTime;
 	spline_.SetIsStart(true);
+	isDead_ = false;
+	aliveTimer_.SetLimitTime(120);
 }
 
 void IBullet::Update()
 {
+	aliveTimer_.AddTime(1);
+	if (aliveTimer_.GetIsEnd()) {
+		isDead_ = true;
+	}
 	if (selfActor_ != nullptr) {
 		MoveUpdate();
 	}
 
-	for (auto& col : attackCol_)
-	{
-		col->colObj_.WT_.position_ = col->col_.center;
-		col->colObj_.WT_.scale_ = {
-			col->col_.radius,
-			col->col_.radius,
-			col->col_.radius,
-		};
-		col->colObj_.Update();
-	}
+	attackCol_->colObj_.WT_.position_ = attackCol_->col_.center;
+	attackCol_->colObj_.WT_.scale_ = {
+		attackCol_->col_.radius,
+		attackCol_->col_.radius,
+		attackCol_->col_.radius,
+	};
+	attackCol_->colObj_.Update();
 }
 
 void IBullet::DrawCol()
 {
-	for (auto& col : attackCol_)
-	{
-		col->colObj_.Draw();
-	}
+	attackCol_->colObj_.Draw();
 }
 
 Vector3 IBullet::CalculateFrontVec()

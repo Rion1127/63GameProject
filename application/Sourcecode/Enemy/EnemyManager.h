@@ -29,11 +29,13 @@ public:
 	void SpriteDraw();
 	void Damage();
 
+	void BulletUpdate();
 	void Reset();
 private:
 	void LockOnSpriteUpdate();
 public:
 	std::list<std::unique_ptr<IEnemy>>* GetEnemy() { return &enemys_; };
+	std::list<std::unique_ptr<IBullet>>* GetBullet() { return &bullets_; };
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
 public:
 	void SetPlayer(Player* player) { player_ = player; }

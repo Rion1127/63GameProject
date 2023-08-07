@@ -22,7 +22,7 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	//プライオリティに行動パターンを登録
 	priority_.insert(std::make_pair(State::Idle, 0));
 	priority_.insert(std::make_pair(State::Wander, 0));
-	priority_.insert(std::make_pair(State::Attack, 0));
+	priority_.insert(std::make_pair(State::FireAttack, 0));
 	priority_.insert(std::make_pair(State::KnockBack, 0));
 	priority_.insert(std::make_pair(State::None, 0));
 
@@ -70,12 +70,7 @@ void EnemyRedNocturne::MoveUpdate()
 
 	if (actionTimer_.GetIsEnd())
 	{
-		stateInit = true;
-		state_ = State::Attack;
-		actionTimer_.Reset();
-		//SortPriority();
-
-		isBulletShot_ = true;
+		SortPriority();
 	}
 }
 
@@ -136,4 +131,95 @@ void EnemyRedNocturne::Attack()
 
 void EnemyRedNocturne::KnockBack()
 {
+}
+
+void EnemyRedNocturne::SortPriority()
+{
+	for (auto& p : priority_)
+	{
+		p.second = 0;
+	}
+
+	Vector3 EtoPVec = splayer_->GetWorldTransform()->position_ - obj_->WT_.position_;
+	Vector3 compareShortVec = { 0,0,2.f };
+	Vector3 compareLongVec = { 0,0,5.f };
+	float length = EtoPVec.length();
+	float compareShortlength = compareShortVec.length();
+	float compareLonglength = compareLongVec.length();
+	//近距離にいるとき
+	if (length <= compareShortlength)
+	{
+		priority_.at(State::FireAttack) += 70;
+		priority_.at(State::Wander) += 10;
+		priority_.at(State::Idle) += 20;
+	}
+	//中距離にいるとき
+	else if (length > compareShortlength &&
+		length < compareLonglength)
+	{
+		priority_.at(State::FireAttack) += 30;
+		priority_.at(State::Wander) += 10;
+		priority_.at(State::Idle) += 10;
+	}
+	//遠くにいるとき
+	else
+	{
+		priority_.at(State::Wander) += 100;
+		priority_.at(State::Idle) += 5;
+	}
+
+	std::vector<std::pair<State, int32_t>> arr;
+	std::vector<int32_t> probability;
+	int32_t allPriolityValue = 0;
+	for (const auto& p : priority_)
+	{
+		//プライオリティが0のものは除外する
+		if (p.second == 0) continue;
+
+		arr.emplace_back(p);
+		//優先度の
+		allPriolityValue += p.second;
+	}
+	//降順に並び変える
+	std::sort(arr.begin(), arr.end(),
+		[](const auto& x, const auto& y) {return x.second > y.second; });
+
+	uint16_t rand = RRandom::Rand(0, allPriolityValue);
+
+	int32_t prePriolityValue = 0;	//累計の優先度
+	for (uint32_t i = 0; i < arr.size(); i++)
+	{
+		int32_t nowPriolityValue = 0;	//現在の優先度
+
+		if (i >= 1)
+		{
+			prePriolityValue += arr[i - 1].second;
+		}
+		//
+		nowPriolityValue = prePriolityValue + arr[i].second;
+		//ランダムで決めた値が、
+		//前回の優先度よりも高い & 前回の優先度 + 今回の優先度よりも低い時
+		if (prePriolityValue <= rand &&
+			nowPriolityValue >= rand)
+		{
+			//ステートを代入
+			StateUpdate(arr[i].first);
+		}
+	}
+}
+
+void EnemyRedNocturne::StateUpdate(State state)
+{
+	state_ = state;
+	actionTimer_.Reset();
+	stateInit = true;
+	if (state == State::Idle)
+	{
+		actionTimer_.SetLimitTime(RRandom::Rand(100, 300));
+	}
+	else if (state == State::FireAttack)
+	{
+		actionTimer_.SetLimitTime(70);
+		isBulletShot_ = true;
+	}
 }

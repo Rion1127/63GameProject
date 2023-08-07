@@ -39,31 +39,33 @@ void EnemyManager::PreUpdate()
 	for (itr = enemys_.begin(); itr != enemys_.end();)
 	{
 		//敵が死んだら要素を消して次のイテレータへ移る
-		if (itr->get()->GetIsDead())
+		if ((*itr)->GetIsDead())
 		{
-			Vector3 pos = itr->get()->GetWorldTransform()->position_;
-			ParticleManager::GetInstance()->
-				AddParticle("EnemyDead", 32, 80, pos, { 0.8f,0.8f, 0.8f }, 1.0f);
-			SoundManager::Play("DeathSE", false, 1.0f, 0.6f);
+			Vector3 pos = (*itr)->GetWorldTransform()->position_;
+			
 			itr = enemys_.erase(itr);
 
 			lockOnEnemy_ = nullptr;
 			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
+
+			ParticleManager::GetInstance()->
+				AddParticle("EnemyDead", 32, 80, pos, { 0.8f,0.8f, 0.8f }, 1.0f);
+			SoundManager::Play("DeathSE", false, 1.0f, 0.6f);
 			continue;
 		}
 		else
 		{
-			itr->get()->PreUpdate();
+			(*itr)->PreUpdate();
 			//ロックオンしている敵のアドレスを代入
-			if (itr->get()->GetIsSoftLockOn() ||
-				itr->get()->GetIsHardLockOn())
+			if ((*itr)->GetIsSoftLockOn() ||
+				(*itr)->GetIsHardLockOn())
 			{
 				lockOnEnemy_ = itr->get();
 			}
 		}
 
-		if (itr->get()->GetIsBulletShot()) {
-			itr->get()->BulletShot(&bullets_);
+		if ((*itr)->GetIsBulletShot()) {
+			(*itr)->BulletShot(&bullets_);
 		}
 
 		itr++;
@@ -83,9 +85,8 @@ void EnemyManager::PreUpdate()
 		}
 	}
 
-	for (auto& bullet : bullets_) {
-		bullet->Update();
-	}
+	BulletUpdate();
+	
 	//hpゲージにロックオン中の敵をセット
 	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
 
@@ -124,6 +125,22 @@ void EnemyManager::SpriteDraw()
 void EnemyManager::Damage()
 {
 	hpGauge_.Damage();
+}
+
+void EnemyManager::BulletUpdate()
+{
+	std::list<std::unique_ptr<IBullet>>::iterator itr;
+	for (itr = bullets_.begin(); itr != bullets_.end();) {
+
+		if ((*itr)->GetIsDead()) {
+			itr = bullets_.erase(itr);
+			continue;
+		}
+
+		(*itr)->Update();
+
+		itr++;
+	}
 }
 
 void EnemyManager::Reset()

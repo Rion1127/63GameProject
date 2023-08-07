@@ -248,6 +248,7 @@ void ColosseumSystem::Reset()
 
 void ColosseumSystem::ReadySpriteUpdate()
 {
+	///Readyの色とスケール変更
 	rdyEaseTimer_.AddTime(1);
 	float scale = Easing::Circ::easeOut(4.f, 1.f, rdyEaseTimer_.GetTimeRate());
 	readySprite_->SetScale({ scale ,scale });

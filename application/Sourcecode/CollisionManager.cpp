@@ -19,6 +19,10 @@ void CollisionManager::Update()
 	PlayerAttackToEnemy();
 	//敵攻撃とプレイヤー
 	EnemyAttackToPlayer();
+	//敵弾とプレイヤー
+	EnemyBulletToPlayer();
+	//敵弾と床
+	EnemyBulletToFloor();
 }
 
 void CollisionManager::PlayerToFloor()
@@ -331,6 +335,68 @@ void CollisionManager::EnemyAttackToPlayer()
 					}
 				}
 			}
+		}
+	}
+}
+
+void CollisionManager::EnemyBulletToPlayer()
+{
+	for (auto& bullet : *enemyManager_->GetBullet())
+	{
+		//ガードの当たり判定
+		if (player_->GetGuard()->GetCol().isActive) {
+			if (BallCollision(bullet->GetAttackCol()->get()->col_, player_->GetGuard()->GetCol())) {
+				//プレイヤーのダメージクールタイムが終わっていれば
+				if (player_->GetDamegeCoolTime()->GetIsEnd()) {
+					//敵の反対方向にノックバックする
+					Vector3 knockVec =
+						player_->GetWorldTransform()->position_ - bullet->GetAttackCol()->get()->col_.center;
+					knockVec.y = 0;
+					knockVec = knockVec.normalize();
+					knockVec = knockVec * 0.1f;
+
+					player_->GuardHit(knockVec);
+				}
+				bullet->SetIsDead(true);
+
+				SoundManager::Play("GuardHitSE", false, 0.5f);
+			}
+		}
+
+		if (BallCollision(bullet->GetAttackCol()->get()->col_, player_->GetDamageCol()))
+		{
+			//プレイヤーのダメージクールタイムが終わっていれば
+			if (player_->GetDamegeCoolTime()->GetIsEnd()) {
+				//敵の反対方向にノックバックする
+				Vector3 knockVec =
+					player_->GetWorldTransform()->position_ - bullet->GetAttackCol()->get()->col_.center;
+				knockVec.y = bullet->GetAttackCol()->get()->knockVecY;
+				knockVec = knockVec.normalize();
+				knockVec = knockVec * bullet->GetAttackCol()->get()->knockPower;
+
+				player_->Damage(bullet->GetAttackCol()->get()->damage, knockVec);
+				player_->SetState(PlayerState::Knock);
+			}
+			bullet->SetIsDead(true);
+
+			Vector3 addVec = { 0.15f,0.15f,0.15f };
+			ParticleManager::GetInstance()->
+				AddParticle("HitAttack", 3, 40, player_->GetDamageCol().center, addVec, 0.7f);
+			SoundManager::Play("HitSE", false, 0.5f);
+		}
+	}
+}
+
+void CollisionManager::EnemyBulletToFloor()
+{
+	Plane* floor = stage_->GetFloor();
+	for (auto& bullet : *enemyManager_->GetBullet())
+	{
+		Sphere col = bullet->GetAttackCol()->get()->col_;
+		//床とプレイヤー
+		if (Sphere2PlaneCol(col, *floor))
+		{
+			bullet->SetIsDead(true);
 		}
 	}
 }

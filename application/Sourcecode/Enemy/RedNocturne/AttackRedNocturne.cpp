@@ -14,20 +14,21 @@ void AttackRedNocturne::Init()
 
 		colPos = selfActor_->GetWorldTransform()->position_;
 
-		attackCol_.at(0)->col_.center = colPos;
-		attackCol_.at(0)->col_.radius = 0.6f;
-		attackCol_.at(0)->damage = 10;
+		attackCol_->col_.center = colPos;
+		attackCol_->col_.radius = 0.6f;
+		attackCol_->damage = 10;
 		//ノックバック力
-		attackCol_.at(0)->knockPower = { 0.1f,0.3f,0.1f };
-		attackCol_.at(0)->knockVecY = 0.5f;
+		attackCol_->knockPower = { 0.1f,0.3f,0.1f };
+		attackCol_->knockVecY = 0.5f;
 	}
 
-	Vector3& lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
+	Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
+	lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;
 	//ロックオンしている敵へのベクトルをとる
 	Vector3 frontVec = lockOnPos - selfActor_->GetWorldTransform()->position_;
 	frontVec = frontVec.normalize();
 	attackVec_ = frontVec;
-	attackCol_.at(0)->colObj_.SetIsVisible(true);
+	attackCol_->colObj_.SetIsVisible(true);
 
 	bulletSpeed_ = 0.5f;
 }
@@ -35,11 +36,13 @@ void AttackRedNocturne::Init()
 void AttackRedNocturne::MoveUpdate()
 {
 	CalculateRotToLockOnActor(CalculateFrontVec());
-	//回転情報から正面ベクトル(2D)を取得
-	Vector3& lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
-	Vector3 frontVec = lockOnPos - attackCol_.at(0)->col_.center;
+	//回転情報からプレイヤーへのベクトルを取得
+	Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
+	lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;
+	Vector3 frontVec = lockOnPos - attackCol_->col_.center;
 	frontVec = frontVec.normalize();
+	//足していくベクトルを徐々にプレイヤーの方向に変えていく
 	MoveTo(frontVec,0.01f, attackVec_);
 
-	attackCol_.at(0)->col_.center += attackVec_ * bulletSpeed_;
+	attackCol_->col_.center += attackVec_ * bulletSpeed_;
 }

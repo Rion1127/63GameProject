@@ -32,5 +32,9 @@ private:
 	void PlayerAttackToEnemy();
 	//“GUŒ‚‚ÆƒvƒŒƒCƒ„[
 	void EnemyAttackToPlayer();
+	//“G’e‚ÆƒvƒŒƒCƒ„[
+	void EnemyBulletToPlayer();
+	//“G’e‚Æ°
+	void EnemyBulletToFloor();
 };
 

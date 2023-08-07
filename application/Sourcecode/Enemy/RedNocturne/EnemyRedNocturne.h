@@ -7,7 +7,7 @@ public:
 	enum class State {
 		Idle,
 		Wander,
-		Attack,
+		FireAttack,
 		KnockBack,
 		None
 	};
@@ -39,5 +39,8 @@ private:
 	void Wander();
 	void Attack();
 	void KnockBack();
+
+	void SortPriority();
+	void StateUpdate(State state);
 };
 
