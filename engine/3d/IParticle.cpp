@@ -91,7 +91,7 @@ void IParticle::TransferBuff()
 
 		vertices_.at(i).scale = particles_[i].scale;
 
-		vertices_.at(i).rot = particles_[i].rot * (float)Max(1 - isBillBoard ,0);
+		vertices_.at(i).rot = particles_[i].rot /** (float)Max(1 - isBillBoard ,0)*/;
 
 		vertices_.at(i).ancorPoint = particles_[i].ancorPoint_;
 

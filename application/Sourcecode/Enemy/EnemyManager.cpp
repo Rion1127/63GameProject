@@ -4,6 +4,7 @@
 #include "EnemyAirDummy.h"
 #include "ParticleManager.h"
 #include "mSound.h"
+#include "ParticleEnemyDead.h"
 
 
 EnemyManager::EnemyManager()
@@ -47,9 +48,16 @@ void EnemyManager::PreUpdate()
 
 			lockOnEnemy_ = nullptr;
 			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
+			
+			AddStatus status;
+			status.addNum = 32;
+			status.time = 80;
+			status.pos = pos;
+			status.addVec = { 0.8f,0.8f, 0.8f };
+			status.scale = 1.0f;
 
 			ParticleManager::GetInstance()->
-				AddParticle("EnemyDead", 32, 80, pos, { 0.8f,0.8f, 0.8f }, 1.0f);
+				AddParticle<ParticleEnemyDead>("EnemyDead", status);
 			SoundManager::Play("DeathSE", false, 1.0f, 0.6f);
 			continue;
 		}

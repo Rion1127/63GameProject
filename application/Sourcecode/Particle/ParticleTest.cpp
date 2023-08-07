@@ -2,15 +2,18 @@
 #include "Easing.h"
 #include "RRandom.h"
 #include "Util.h"
+#include <imgui.h>
 ParticleTest::ParticleTest() :
 	vertexCount(16)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
+	isBillBoard = true;
 }
 
 void ParticleTest::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
+	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
 	{
 		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
@@ -26,13 +29,13 @@ void ParticleTest::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec
 		Vector3 vec = {
 			RRandom::RandF(-addVec.x,addVec.x),
 			RRandom::RandF(-addVec.y,addVec.y),
-			RRandom::RandF(-addVec.z,addVec.z)
+			0
 		};
 
-		p.position = pos;
+		p.position = pos + vec;
 		p.basePos = pos;
 		p.end_frame = time;
-		p.velocity = vec;
+		p.velocity = {0,0,0};
 		p.scale = scale;
 		p.baseScale = scale;
 	}
@@ -47,7 +50,25 @@ void ParticleTest::MoveUpdate()
 		float f = (float)p.frame / p.end_frame;
 
 		p.position += p.velocity;
+
+		p.rot.z += 0.01f;
 		
 		MoveTo({ 0,0,0 }, 0.01f, p.velocity);
 	}
+
+	ImGui::Begin("testParticle");
+
+	float rot[3] = {
+		transform_.rotation_.x,
+		transform_.rotation_.y,
+		transform_.rotation_.z
+	};
+
+	ImGui::DragFloat3("rot", rot,0.1f,-3.14f,3.14f);
+
+	transform_.rotation_.x = rot[0];
+	transform_.rotation_.y = rot[1];
+	transform_.rotation_.z = rot[2];
+
+	ImGui::End();
 }

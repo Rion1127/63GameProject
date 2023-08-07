@@ -15,6 +15,7 @@ ParticleEnemyDead::ParticleEnemyDead() :
 
 void ParticleEnemyDead::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
+	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
@@ -41,17 +42,21 @@ void ParticleEnemyDead::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 
 		Vector3 dist = pos - (pos + vec);
 
-
-		p.position = pos + vec;
+		p.position = vec;
 		p.basePos = pos;
 		p.end_frame = time;
 		p.scale = scale;
 		p.baseScale = scale;
 		p.color = { 5,5,35,0 };
 	}
-
+	AddStatus status;
+	status.addNum = 1;
+	status.time = 80;
+	status.pos = pos;
+	status.addVec = { 0.f,0.05f, 0.0f };
+	status.scale = 1.0f;
 	ParticleManager::GetInstance()->
-		AddParticle("Heart", 1, 80, pos, { 0.f,0.05f, 0.0f }, 1.f);
+		AddParticle<ParticleHeart>("Heart", status);
 }
 
 void ParticleEnemyDead::MoveUpdate()
@@ -68,7 +73,6 @@ void ParticleEnemyDead::MoveUpdate()
 		else p.color.a = (1 - f) * 355.f;
 
 		p.scale = Easing::Circ::easeIn(f, p.baseScale, -p.baseScale, 1.0f);
-
 
 		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
@@ -88,6 +92,7 @@ ParticleHeart::ParticleHeart() :
 
 void ParticleHeart::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
+	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
@@ -100,8 +105,6 @@ void ParticleHeart::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVe
 		//追加した要素の参照
 		Particle& p = particles_.back();
 
-		
-		p.position = pos;
 		p.veloAdd = addVec;
 		p.basePos = pos;
 		p.end_frame = time;

@@ -8,10 +8,14 @@ private:
 	Player* player_;
 	Stage* stage_;
 	EnemyManager* enemyManager_;
+private:
+	//パーティクル用
+	Timer wallHitTimer_;
 public:
 	void Update();
 
 public:
+	CollisionManager();
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetFloor(Stage* floor) { stage_ = floor; }
 	void SetEnemys(EnemyManager* enemy) { enemyManager_ = enemy; }

@@ -1,6 +1,14 @@
 #include "CollisionManager.h"
 #include "ParticleManager.h"
 #include "mSound.h"
+#include "ParticleWallHit.h"
+#include "ParticleHitAttack.h"
+
+CollisionManager::CollisionManager()
+{
+	wallHitTimer_.SetLimitTime(40);
+	wallHitTimer_.SetTime(wallHitTimer_.GetLimitTimer());
+}
 
 void CollisionManager::Update()
 {
@@ -81,13 +89,24 @@ void CollisionManager::PlayerToWall()
 			Vector3 pushBackVec = interPos - colEdgePos;
 			player_->AddaddVec(pushBackVec);
 
-			Vector3 rot{};
-			if (itr->get()->normal.x != 0) {
-				rot = { 0,Radian(90),0 };
-			}
+			//パーティクル
+			wallHitTimer_.AddTime(1);
+			if (wallHitTimer_.GetIsEnd()) {
+				Vector3 rot{};
+				if (itr->get()->normal.x != 0) {
+					rot = { 0,Radian(90),0 };
+				}
+				AddStatus status;
+				status.addNum = 1;
+				status.time = 60;
+				status.pos = interPos;
+				status.addVec = rot;
+				status.scale = 1.0f;
 
-			ParticleManager::GetInstance()->
-				AddParticle("WallHit", 1, 60, interPos, rot, 1.0f);
+				ParticleManager::GetInstance()->
+					AddParticle<ParticleWallHit>("WallHit", status);
+				wallHitTimer_.Reset();
+			}
 		}
 	}
 }
@@ -279,7 +298,14 @@ void CollisionManager::PlayerAttackToEnemy()
 
 						Vector3 addVec = { 0.05f,0.05f,0.05f };
 
-						ParticleManager::GetInstance()->AddParticle("HitAttack", 3, 40, enemy->GetCol().center, addVec, 1.0f);
+						AddStatus status;
+						status.addNum = 3;
+						status.time = 40;
+						status.pos = enemy->GetCol().center;
+						status.addVec = addVec;
+						status.scale = 1.0f;
+						ParticleManager::GetInstance()->
+							AddParticle<ParticleHitAttack>("HitAttack", status);
 						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
@@ -329,8 +355,15 @@ void CollisionManager::EnemyAttackToPlayer()
 						player_->SetState(PlayerState::Knock);
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
+
+						AddStatus status;
+						status.addNum = 3;
+						status.time = 40;
+						status.pos = player_->GetDamageCol().center;
+						status.addVec = addVec;
+						status.scale = 0.7f;
 						ParticleManager::GetInstance()->
-							AddParticle("HitAttack", 3, 40, player_->GetDamageCol().center, addVec, 0.7f);
+							AddParticle<ParticleHitAttack>("HitAttack", status);
 						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
@@ -380,8 +413,15 @@ void CollisionManager::EnemyBulletToPlayer()
 			bullet->SetIsDead(true);
 
 			Vector3 addVec = { 0.15f,0.15f,0.15f };
+			AddStatus status;
+			status.addNum = 3;
+			status.time = 40;
+			status.pos = player_->GetDamageCol().center;
+			status.addVec = addVec;
+			status.scale = 0.7f;
 			ParticleManager::GetInstance()->
-				AddParticle("HitAttack", 3, 40, player_->GetDamageCol().center, addVec, 0.7f);
+				AddParticle<ParticleHitAttack>("HitAttack", status);
+
 			SoundManager::Play("HitSE", false, 0.5f);
 		}
 	}

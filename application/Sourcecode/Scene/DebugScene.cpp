@@ -9,6 +9,8 @@
 
 #include "JsonLoader.h"
 #include <imgui.h>
+#include "ParticleTest.h"
+#include "ParticleEnemyDead.h"
 
 DebugScene::~DebugScene()
 {
@@ -43,7 +45,7 @@ void DebugScene::Ini()
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
-	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
+	//EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
 
 	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData("Debug").size();
 	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
@@ -60,7 +62,7 @@ void DebugScene::Update()
 	}
 
 #endif // _DEBUG
-	colosseumSystem_->Update();
+	//colosseumSystem_->Update();
 
 	CameraUpdate();
 	//“–‚½‚è”»’è‘OXV
@@ -89,18 +91,38 @@ void DebugScene::Update()
 
 	if (Key::TriggerKey(DIK_P))
 	{
+		AddStatus status;
+		status.addNum = 10;
+		status.time = 60000;
+		status.pos = {0,3,0};
+		status.addVec = {1,1,1};
+		status.scale = 1.0f;
+
 		ParticleManager::GetInstance()->
-			AddParticle("EnemyDead", 9, 80, { 0,2,0 }, { 0.5f,0.5f, 0.5f }, 2.f);
+			AddParticle<ParticleTest>("WallHit", status);
 	}
 
-	if (colosseumSystem_->GetIsReset())
+	if (Key::TriggerKey(DIK_P))
+	{
+		AddStatus status;
+		status.addNum = 32;
+		status.time = 400;
+		status.pos = { 3,3,0 };
+		status.addVec = { 1,1,1 };
+		status.scale = 1.0f;
+
+		ParticleManager::GetInstance()->
+			AddParticle<ParticleEnemyDead>("WallHit", status);
+	}
+
+	/*if (colosseumSystem_->GetIsReset())
 	{
 		player_->Reset();
 		enemyManager_->Reset();
 		uint32_t nextRound = colosseumSystem_->GetRoundNum();
 		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", nextRound);
 		colosseumSystem_->SetIsReset(false);
-	}
+	}*/
 
 }
 
@@ -129,7 +151,7 @@ void DebugScene::Draw()
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
 	operationUI_->Draw();
-	colosseumSystem_->DrawSprite();
+	//colosseumSystem_->DrawSprite();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();

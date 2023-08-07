@@ -13,33 +13,31 @@ ParticleManager* ParticleManager::GetInstance()
 
 ParticleManager::ParticleManager()
 {
-	particles_.insert(std::make_pair("Test", std::move(std::make_unique<ParticleTest>())));
-	particles_.insert(std::make_pair("HitAttack", std::move(std::make_unique<ParticleHitAttack>())));
-	particles_.insert(std::make_pair("EnemyDead", std::move(std::make_unique<ParticleEnemyDead>())));
-	particles_.insert(std::make_pair("Heart", std::move(std::make_unique<ParticleHeart>())));
-	particles_.insert(std::make_pair("WallHit",std::move(std::make_unique<ParticleWallHit>())));
 }
 
 void ParticleManager::Update()
 {
-	for (auto& particle : particles_)
+	std::list<std::unique_ptr<IParticle>>::iterator itr;
+	for (itr = particles_.begin(); itr != particles_.end();)
 	{
-		particle.second->Update();
+		//パーティクルの数が0になったら消す
+		if ((*itr)->GetParticleNum() == 0) {
+			itr = particles_.erase(itr);
+			continue;
+		}
+
+		(*itr)->Update();
+		itr++;
 	}
 }
 
 void ParticleManager::Draw()
 {
 	std::string shaderName = "Particle";
+	
 	for (auto& particle : particles_)
 	{
-		PipelineManager::PreDraw(particle.second->GetShaderName(), POINTLIST);
-
-		particle.second->Draw();
+		PipelineManager::PreDraw(particle->GetShaderName(), POINTLIST);
+		particle->Draw();
 	}
-}
-
-void ParticleManager::AddParticle(std::string particleName, int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
-{
-	particles_.find(particleName)->second->Add(addNum, time, pos, addVec, scale);
 }

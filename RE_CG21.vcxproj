@@ -29,6 +29,7 @@
     <ClCompile Include="application\Sourcecode\IBullet.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleManager.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleTest.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="application\Sourcecode\IBullet.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleManager.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h" />

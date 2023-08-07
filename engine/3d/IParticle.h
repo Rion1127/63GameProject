@@ -4,7 +4,13 @@
 #include "Color.h"
 #include "WorldTransform.h"
 
-
+struct AddStatus {
+	int32_t addNum;
+	int32_t time;
+	Vector3 pos;
+	Vector3 addVec;
+	float scale;
+};
 
 class IParticle
 {
@@ -81,6 +87,7 @@ public:
 	virtual void Add(int32_t addNum, int32_t time,Vector3 pos,Vector3 addVec,float scale) = 0;
 public:
 	std::string GetShaderName() { return shaderName_; }
+	size_t GetParticleNum() { return particles_.size(); }
 private:
 	//ÉfÅ[É^ì]ëó
 	void TransferBuff();

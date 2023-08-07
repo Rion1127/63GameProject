@@ -1,9 +1,8 @@
-#include "ParticleHitAttack.h"
+#include "ParticleFire.h"
 #include "RRandom.h"
-#include "Util.h"
-#include "Easing.h"
-ParticleHitAttack::ParticleHitAttack() :
-	IParticle("Particle_Depth_False"),
+
+ParticleFire::ParticleFire() :
+	IParticle("Particle"),
 	vertexCount(32)
 {
 	Init(vertexCount);
@@ -11,9 +10,8 @@ ParticleHitAttack::ParticleHitAttack() :
 	isBillBoard = true;
 }
 
-void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleFire::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
-	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
 	{
 		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
@@ -38,6 +36,7 @@ void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		};
 		float scale_ = RRandom::RandF(0.3f, scale);
 
+		p.position = pos;
 		p.basePos = pos;
 		p.end_frame = time;
 		p.velocity = vec;
@@ -48,7 +47,7 @@ void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 	}
 }
 
-void ParticleHitAttack::MoveUpdate()
+void ParticleFire::MoveUpdate()
 {
 	for (auto& p : particles_)
 	{
@@ -56,13 +55,5 @@ void ParticleHitAttack::MoveUpdate()
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += p.velocity;
-		p.rot += p.addRot;
-
-		p.scale = Easing::Bounce::easeIn(f,p.baseScale,-p.baseScale,1.0f);
-
-
-		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
-		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
 	}
 }

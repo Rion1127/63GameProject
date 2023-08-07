@@ -1,11 +1,10 @@
 #pragma once
 #include "IParticle.h"
-#include "Timer.h"
-class ParticleWallHit :
+class ParticleFire final :
     public IParticle
 {
 public:
-	ParticleWallHit();
+	ParticleFire();
 
 	void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale) override;
 private:
