@@ -20,12 +20,11 @@ void ParticleManager::Update()
 	std::list<std::shared_ptr<IEmitter>>::iterator itr;
 	for (itr = emitters_.begin(); itr != emitters_.end();)
 	{
-		//パーティクルの数が0になったら消す
+		//パーティクルの数が0になったら
 		if ((*itr)->particle->GetParticleNum() == 0) {
 			itr = emitters_.erase(itr);
 			continue;
 		}
-
 		(*itr)->particle->Update();
 		itr++;
 	}

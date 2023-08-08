@@ -5,7 +5,7 @@
 AttackRedNocturne::AttackRedNocturne(IActor* selfActor) :
 	IBullet(selfActor, 1, 25, 5, 26)
 {
-	
+
 }
 
 void AttackRedNocturne::Init()
@@ -33,7 +33,7 @@ void AttackRedNocturne::Init()
 	attackCol_->colObj_.SetIsVisible(false);
 
 	bulletSpeed_ = 0.3f;
-	
+
 
 	Timer timer;
 	timer.SetLimitTime(1);
@@ -46,7 +46,7 @@ void AttackRedNocturne::Init()
 	fireEmitter_->isActive = true;
 	fireEmitter_->popCoolTime_ = timer;
 	fireEmitter_->time = 20;
-	fireEmitter_->pos = { 0,3,0 };
+	fireEmitter_->pos = attackCol_->col_.center;
 	fireEmitter_->scale = 1.f;
 	ParticleManager::GetInstance()->AddParticle("fireBall", fireEmitter_);
 }
@@ -60,11 +60,12 @@ void AttackRedNocturne::MoveUpdate()
 	Vector3 frontVec = lockOnPos - attackCol_->col_.center;
 	frontVec = frontVec.normalize();
 	//足していくベクトルを徐々にプレイヤーの方向に変えていく
-	MoveTo(frontVec,0.01f, attackVec_);
+	MoveTo(frontVec, 0.01f, attackVec_);
 
 	attackCol_->col_.center += attackVec_ * bulletSpeed_;
 
 	fireEmitter_->pos = attackCol_->col_.center;
+
 	fireEmitter_->popCoolTime_.AddTime(1);
 	if (fireEmitter_->popCoolTime_.GetIsEnd()) {
 		fireEmitter_->particle->Add(
@@ -74,6 +75,7 @@ void AttackRedNocturne::MoveUpdate()
 			fireEmitter_->addVec,
 			fireEmitter_->scale);
 
-			fireEmitter_->popCoolTime_.Reset();
+		fireEmitter_->popCoolTime_.Reset();
 	}
+
 }

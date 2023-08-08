@@ -4,6 +4,7 @@
 #include "Easing.h"
 #include "AttackRedNocturne.h"
 #include "ParticleFire.h"
+#include "ParticleManager.h"
 
 EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	IEnemy(EnemyType::Air, false, 80)
@@ -19,7 +20,7 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 
 	state_ = State::Idle;
 	actionTimer_.SetLimitTime(60);
-	shotTimer_.SetLimitTime(180);
+	shotTimer_.SetLimitTime(240);
 
 	//プライオリティに行動パターンを登録
 	priority_.insert(std::make_pair(State::Idle, 0));
@@ -135,6 +136,23 @@ void EnemyRedNocturne::Wander()
 
 void EnemyRedNocturne::FireAttack()
 {
+	if (fireEmitter_->isActive) {
+		fireEmitter_->popCoolTime_.AddTime(1);
+		if (fireEmitter_->popCoolTime_.GetIsEnd()) {
+			fireEmitter_->particle->Add(
+				fireEmitter_->addNum,
+				fireEmitter_->time,
+				fireEmitter_->pos,
+				fireEmitter_->addVec,
+				fireEmitter_->scale);
+
+			fireEmitter_->popCoolTime_.Reset();
+		}
+	}
+	if (shotTimer_.GetTimeRate() > 0.7f) {
+		fireEmitter_->isActive = false;
+	}
+
 	shotTimer_.AddTime(1);
 	if (shotTimer_.GetIsEnd()) {
 		isBulletShot_ = true;
@@ -247,7 +265,35 @@ void EnemyRedNocturne::StateUpdate(State state)
 	}
 	else if (state == State::FireAttack)
 	{
-		actionTimer_.SetLimitTime(180);
+		actionTimer_.SetLimitTime(240);
+
+		Timer timer;
+		timer.SetLimitTime(1);
+		timer.SetTime(timer.GetLimitTimer());
+		Vector3 pos = obj_->GetPos();
+		pos.y += obj_->GetScale().y * 2.f;
+		fireEmitter_ = std::make_shared<ContinuousEmitter>();
+		fireEmitter_->particle = std::make_unique<ParticleFire>();
+		fireEmitter_->addVec = { 0.25f,0.3f, 0.25f, };
+		fireEmitter_->addNum = 4;
+		fireEmitter_->isActive = true;
+		fireEmitter_->popCoolTime_ = timer;
+		fireEmitter_->time = 30;
+		fireEmitter_->pos = pos;
+		fireEmitter_->scale = 0.3f;
+		ParticleManager::GetInstance()->AddParticle("fireCharge", fireEmitter_);
+
+		pos = obj_->GetPos();
+		pos.y += obj_->GetScale().y;
+		fireCircleEmitter_ = std::make_shared<OneceEmitter>();
+		fireCircleEmitter_->particle = std::make_unique<ParticleFireCircle>();
+		fireCircleEmitter_->addVec = { 0.0f,0.0f, 0.0f, };
+		fireCircleEmitter_->addNum = 2;
+		fireCircleEmitter_->isActive = true;
+		fireCircleEmitter_->time = 180;
+		fireCircleEmitter_->pos = pos;
+		fireCircleEmitter_->scale = 1.0f;
+		ParticleManager::GetInstance()->AddParticle("fireCircle", fireCircleEmitter_);
 	}
 	else if (state == State::Wander_FireAttack)
 	{

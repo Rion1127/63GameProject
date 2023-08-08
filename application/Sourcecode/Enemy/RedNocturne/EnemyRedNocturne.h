@@ -30,6 +30,7 @@ private:
 
 	std::unordered_map<State, int32_t> priority_;
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
+	std::shared_ptr<OneceEmitter> fireCircleEmitter_;
 public:
 	EnemyRedNocturne(Vector3 pos);
 	void SetIsNock(bool flag) override;
