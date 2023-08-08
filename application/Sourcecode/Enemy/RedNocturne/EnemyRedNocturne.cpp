@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Easing.h"
 #include "AttackRedNocturne.h"
+#include "ParticleFire.h"
 
 EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	IEnemy(EnemyType::Air, false, 80)
@@ -84,6 +85,11 @@ void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)
 	auto& bullet = bullets->back();
 	bullet->SetLockOnActor(splayer_);
 	bullet->Init();
+
+	/*fireEmitter_->particle = std::make_unique<ParticleFire>();
+	fireEmitter_->addVec = { 0.05f,0.05f, 0.05f };
+	fireEmitter_->addNum = 3;
+	fireEmitter_->pos = bullet;*/
 	
 	isBulletShot_ = false;
 }
@@ -220,7 +226,8 @@ void EnemyRedNocturne::SortPriority()
 			nowPriolityValue >= rand)
 		{
 			//ステートを代入
-			StateUpdate(arr[i].first);
+			//StateUpdate(arr[i].first);
+			StateUpdate(State::FireAttack);
 		}
 	}
 }

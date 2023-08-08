@@ -5,6 +5,7 @@
 #include "ParticleManager.h"
 #include "mSound.h"
 #include "ParticleEnemyDead.h"
+#include "EnemyRedNocturne.h"
 
 
 EnemyManager::EnemyManager()
@@ -32,6 +33,10 @@ void EnemyManager::PreUpdate()
 	{
 		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
 	}
+	if (ImGui::Button("POP_RedNocturne"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0))));
+	}
 	ImGui::End();
 #endif // _DEBUG
 
@@ -49,7 +54,7 @@ void EnemyManager::PreUpdate()
 			lockOnEnemy_ = nullptr;
 			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
 			
-			std::shared_ptr<Emitter> deadEmitter_ = std::make_shared<Emitter>();
+			std::shared_ptr<OneceEmitter> deadEmitter_ = std::make_shared<OneceEmitter>();
 			deadEmitter_->particle = std::make_unique<ParticleEnemyDead>();
 			deadEmitter_->addNum = 32;
 			deadEmitter_->time = 80;

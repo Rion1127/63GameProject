@@ -6,7 +6,7 @@
 class ParticleManager
 {
 private:
-	std::list<std::shared_ptr<Emitter>> emitters_;
+	std::list<std::shared_ptr<IEmitter>> emitters_;
 public:
 	static ParticleManager* GetInstance();
 
@@ -14,7 +14,7 @@ public:
 
 	void Draw();
 
-	void AddParticle(std::string name, std::shared_ptr<Emitter> emitter);
+	void AddParticle(std::string name, std::shared_ptr<IEmitter> emitter);
 	
 	void AllClear() { emitters_.clear();};
 private:

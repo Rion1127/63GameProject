@@ -10,7 +10,6 @@ private:
 	Vector3 localPos_;
 
 	AttackManager* attackManager_;
-	Emitter hitEmitter_;
 public:
 	Sword();
 	void Update();

@@ -1,17 +1,21 @@
 #include "ParticleFire.h"
 #include "RRandom.h"
+#include "Easing.h"
+#include "Util.h"
 
 ParticleFire::ParticleFire() :
 	IParticle("Particle"),
-	vertexCount(32)
+	vertexCount(64)
 {
 	Init(vertexCount);
-	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
-	isBillBoard = true;
+	texture = *TextureManager::GetInstance()->GetTexture("Particle");
+	isBillBoard = false;
+	state_ = PipeLineState::Add;
 }
 
 void ParticleFire::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
 {
+	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
 	{
 		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
@@ -36,14 +40,14 @@ void ParticleFire::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec
 		};
 		float scale_ = RRandom::RandF(0.3f, scale);
 
-		p.position = pos;
+		Vector3 dist = pos - (pos + vec);
+
+		p.position = vec;
 		p.basePos = pos;
 		p.end_frame = time;
-		p.velocity = vec;
 		p.scale = scale;
 		p.baseScale = scale;
-		p.addRot = addrot;
-		p.color = { 255,175,60,255 };
+		p.color = { 255,100,0,255 };
 	}
 }
 
@@ -55,5 +59,14 @@ void ParticleFire::MoveUpdate()
 
 		float f = (float)p.frame / p.end_frame;
 
+		p.position += { 0, 0.01f, 0 };
+
+		/*if (f < 0.5f)p.color.a = f * 355.f;
+		else p.color.a = (1 - f) * 355.f;*/
+
+		p.scale -=0.01f;
+
+		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
+		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
 	}
 }

@@ -17,7 +17,7 @@ ParticleManager::ParticleManager()
 
 void ParticleManager::Update()
 {
-	std::list<std::shared_ptr<Emitter>>::iterator itr;
+	std::list<std::shared_ptr<IEmitter>>::iterator itr;
 	for (itr = emitters_.begin(); itr != emitters_.end();)
 	{
 		//パーティクルの数が0になったら消す
@@ -37,12 +37,12 @@ void ParticleManager::Draw()
 	
 	for (auto& emitter : emitters_)
 	{
-		PipelineManager::PreDraw(emitter->particle->GetShaderName(), POINTLIST);
+		PipelineManager::PreDraw(emitter->particle->GetShaderName(), POINTLIST, emitter->particle->GetPipelineState());
 		emitter->particle->Draw();
 	}
 }
 
-void ParticleManager::AddParticle(std::string name, std::shared_ptr<Emitter> emitter)
+void ParticleManager::AddParticle(std::string name, std::shared_ptr<IEmitter> emitter)
 {
 	emitters_.emplace_back();
 	emitters_.back() = emitter;

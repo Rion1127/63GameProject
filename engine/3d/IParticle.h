@@ -3,6 +3,8 @@
 #include "Vector3.h"
 #include "Color.h"
 #include "WorldTransform.h"
+#include "Timer.h"
+#include "PipelineManager.h"
 
 class IParticle
 {
@@ -65,10 +67,12 @@ protected:
 
 	bool isBillBoard;
 	std::string shaderName_;
+	PipeLineState state_;
 public:
 	IParticle(std::string shaderName = "Particle") {
 		shaderName_ = shaderName;
 		isBillBoard = false;
+		state_ = PipeLineState::Alpha;
 	};
 	virtual ~IParticle();
 
@@ -76,10 +80,11 @@ public:
 
 	void Draw();
 
-	virtual void Add(int32_t addNum, int32_t time,Vector3 pos,Vector3 addVec,float scale) = 0;
+	virtual void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale) = 0;
 public:
 	std::string GetShaderName() { return shaderName_; }
 	size_t GetParticleNum() { return particles_.size(); }
+	PipeLineState GetPipelineState() { return state_; }
 private:
 	//データ転送
 	void TransferBuff();
@@ -92,7 +97,7 @@ protected:
 	virtual void MoveUpdate() = 0;
 };
 
-struct Emitter {
+struct IEmitter {
 	std::unique_ptr<IParticle> particle;
 	int32_t addNum;	//同時発生数
 	int32_t time;	//パーティクル生存時間
@@ -100,3 +105,13 @@ struct Emitter {
 	Vector3 addVec;	//移動方向ベクトル
 	float scale;
 };
+
+struct OneceEmitter : public IEmitter {
+	
+};
+//フラグがfalseになるまで出続ける
+struct ContinuousEmitter : public IEmitter {
+	bool isActive = true;
+	Timer popCoolTime_;
+};
+

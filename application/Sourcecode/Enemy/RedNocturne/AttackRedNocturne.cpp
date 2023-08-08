@@ -1,4 +1,6 @@
 #include "AttackRedNocturne.h"
+#include "ParticleManager.h"
+#include "ParticleFire.h"
 
 AttackRedNocturne::AttackRedNocturne(IActor* selfActor) :
 	IBullet(selfActor, 1, 25, 5, 26)
@@ -28,9 +30,25 @@ void AttackRedNocturne::Init()
 	Vector3 frontVec = lockOnPos - selfActor_->GetWorldTransform()->position_;
 	frontVec = frontVec.normalize();
 	attackVec_ = frontVec;
-	attackCol_->colObj_.SetIsVisible(true);
+	attackCol_->colObj_.SetIsVisible(false);
 
 	bulletSpeed_ = 0.5f;
+	
+
+	Timer timer;
+	timer.SetLimitTime(2);
+	timer.SetTime(timer.GetLimitTimer());
+
+	fireEmitter_ = std::make_shared<ContinuousEmitter>();
+	fireEmitter_->particle = std::make_unique<ParticleFire>();
+	fireEmitter_->addVec = { 0.5f,0.5f, 0.5f, };
+	fireEmitter_->addNum = 3;
+	fireEmitter_->isActive = true;
+	fireEmitter_->popCoolTime_ = timer;
+	fireEmitter_->time = 20;
+	fireEmitter_->pos = selfActor_->GetWorldTransform()->position_;
+	fireEmitter_->scale = 1.f;
+	ParticleManager::GetInstance()->AddParticle("fireBall", fireEmitter_);
 }
 
 void AttackRedNocturne::MoveUpdate()
@@ -45,4 +63,17 @@ void AttackRedNocturne::MoveUpdate()
 	MoveTo(frontVec,0.01f, attackVec_);
 
 	attackCol_->col_.center += attackVec_ * bulletSpeed_;
+
+	fireEmitter_->pos = attackCol_->col_.center;
+	fireEmitter_->popCoolTime_.AddTime(1);
+	if (fireEmitter_->popCoolTime_.GetIsEnd()) {
+		fireEmitter_->particle->Add(
+			fireEmitter_->addNum,
+			fireEmitter_->time,
+			fireEmitter_->pos,
+			fireEmitter_->addVec,
+			fireEmitter_->scale);
+
+			fireEmitter_->popCoolTime_.Reset();
+	}
 }

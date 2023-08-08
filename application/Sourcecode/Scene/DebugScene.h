@@ -40,8 +40,7 @@ private:
 	std::unique_ptr<UIOperation> operationUI_;
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
 
-	std::vector<double> timeShared;
-	std::vector<double> timeUnique;
+	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 public:
 	~DebugScene();
 

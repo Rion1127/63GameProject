@@ -299,7 +299,7 @@ void CollisionManager::PlayerAttackToEnemy()
 
 						Vector3 addVec = { 0.05f,0.05f,0.05f };
 
-						std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+						std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 						hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
 						hitEmitter_->addNum = 3;
 						hitEmitter_->time = 40;
@@ -358,7 +358,7 @@ void CollisionManager::EnemyAttackToPlayer()
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 
-						std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+						std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 						hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
 						hitEmitter_->addNum = 3;
 						hitEmitter_->time = 40;
@@ -415,7 +415,7 @@ void CollisionManager::EnemyBulletToPlayer()
 			}
 			bullet->SetIsDead(true);
 
-			std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+			std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 			hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
 			hitEmitter_->addNum = 3;
 			hitEmitter_->time = 40;

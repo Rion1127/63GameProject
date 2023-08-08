@@ -26,6 +26,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("smoke.png", "Smoke");
 	LoadGraph("heart.png", "Heart");
 	LoadGraph("circle.png", "Circle");
+	LoadGraph("particle.png", "Particle");
 	//UI
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");

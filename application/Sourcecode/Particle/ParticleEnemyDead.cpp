@@ -49,7 +49,7 @@ void ParticleEnemyDead::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		p.baseScale = scale;
 		p.color = { 5,5,35,0 };
 	}
-	std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+	std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 	hitEmitter_->particle = std::make_unique<ParticleHeart>();
 	hitEmitter_->addNum = 1;
 	hitEmitter_->time = 80;

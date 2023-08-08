@@ -35,7 +35,7 @@ void SetBlend(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc, uint32_t blend)
 	if (blend == BlendNum::ADD)
 	{
 		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//加算
-		blenddesc.SrcBlend = D3D12_BLEND_ONE;			//ソースの値を100%使う
+		blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			//ソースの値を100%使う
 		blenddesc.DestBlend = D3D12_BLEND_ONE;			//デストの値を100%使う
 	}
 	//減算合成

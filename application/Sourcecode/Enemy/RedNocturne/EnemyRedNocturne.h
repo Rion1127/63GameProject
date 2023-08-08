@@ -1,5 +1,6 @@
 #pragma once
 #include "IEnemy.h"
+#include "IParticle.h"
 class EnemyRedNocturne :
     public IEnemy
 {
@@ -28,6 +29,7 @@ private:
 	bool stateInit;
 
 	std::unordered_map<State, int32_t> priority_;
+	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 public:
 	EnemyRedNocturne(Vector3 pos);
 	void SetIsNock(bool flag) override;
