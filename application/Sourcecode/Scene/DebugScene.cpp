@@ -123,8 +123,8 @@ void DebugScene::Update()
 		timer.SetLimitTime(1);
 		fireEmitter_ = std::make_shared<ContinuousEmitter>();
 		fireEmitter_->particle = std::make_unique<ParticleFire>();
-		fireEmitter_->addVec = { 0.5f,0.5f, 0.5f, };
-		fireEmitter_->addNum = 1;
+		fireEmitter_->addVec = { 0.2f,0.2f, 0.2f, };
+		fireEmitter_->addNum = 2;
 		fireEmitter_->isActive = true;
 		fireEmitter_->popCoolTime_ = timer;
 		fireEmitter_->time = 120;

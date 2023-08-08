@@ -875,6 +875,9 @@
     <None Include="application\Resources\shader\Smoke.hlsli">
       <Filter>シェーダーファイル\application</Filter>
     </None>
+    <None Include="application\Resources\shader\Fire.hlsli">
+      <Filter>シェーダーファイル\application</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="application\Resources\shader\ParticlePS.hlsl">
@@ -977,6 +980,15 @@
       <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
     <FxCompile Include="application\Resources\shader\SmokePS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\FireGS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\FirePS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\FireVS.hlsl">
       <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
   </ItemGroup>

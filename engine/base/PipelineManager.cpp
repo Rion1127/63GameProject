@@ -247,6 +247,21 @@ void PipelineManager::ParticleShaderIni()
 	GetPipelineObjects("Smoke")->AddrootParams(2);
 
 	Create("Smoke", NONE, TOPOLOGY_POINT, DEPTH_ENABLE_FALSE, MODE_WRAP);
+
+	AddPipeline("Fire");
+	GetPipelineObjects("Fire")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Fire")->AddInputLayout("SCALE", DXGI_FORMAT_R32_FLOAT, 0);
+	GetPipelineObjects("Fire")->AddInputLayout("ROTATION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Fire")->AddInputLayout("ANCORPOINT", DXGI_FORMAT_R32G32_FLOAT);
+	GetPipelineObjects("Fire")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
+
+	GetPipelineObjects("Fire")->Setshader("FireGS.hlsl", ShaderType::GS);
+	GetPipelineObjects("Fire")->Setshader("FireVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("Fire")->Setshader("FirePS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("Fire")->AddrootParams(2);
+
+	Create("Fire", NONE, TOPOLOGY_POINT, DEPTH_WRITE_MASK_ZERO, MODE_WRAP);
 }
 
 void PipelineManager::Create(
