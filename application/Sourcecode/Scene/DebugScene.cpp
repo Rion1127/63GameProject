@@ -12,6 +12,8 @@
 #include "ParticleTest.h"
 #include "ParticleEnemyDead.h"
 
+#include <time.h>
+
 DebugScene::~DebugScene()
 {
 
@@ -91,28 +93,80 @@ void DebugScene::Update()
 
 	if (Key::TriggerKey(DIK_P))
 	{
-		AddStatus status;
-		status.addNum = 10;
-		status.time = 60000;
-		status.pos = {0,3,0};
-		status.addVec = {1,1,1};
-		status.scale = 1.0f;
+		timeShared.clear();
+		timeUnique.clear();
+		for (uint32_t i = 0; i < 10; i++) {
+			clock_t start1 = clock();
+			for (uint32_t i = 0; i < 50; i++) {
+				std::shared_ptr<Emitter> debugEmitter_ = std::make_shared<Emitter>();
+				debugEmitter_->particle = std::make_unique<ParticleTest>();
+				debugEmitter_->addNum = 10;
+				debugEmitter_->time = 60000;
+				debugEmitter_->pos = { -3,3,0 };
+				debugEmitter_->addVec = { 1,1,1 };
+				debugEmitter_->scale = 1.0f;
 
-		ParticleManager::GetInstance()->
-			AddParticle<ParticleTest>("WallHit", status);
+				ParticleManager::GetInstance()->
+					AddParticle("WallHit", debugEmitter_);
+			}
+			clock_t end1 = clock();
+
+			double time1 = static_cast<double>(end1 - start1) / CLOCKS_PER_SEC * 1000.0;
+			timeShared.push_back(time1);
+		}
+
+		
+		for (uint32_t i = 0; i < 10; i++) {
+			clock_t start2 = clock();
+			for (uint32_t i = 0; i < 50; i++) {
+				std::unique_ptr<Emitter> debugEmitter_ = std::make_unique<Emitter>();
+				debugEmitter_->particle = std::make_unique<ParticleTest>();
+				debugEmitter_->addNum = 10;
+				debugEmitter_->time = 60000;
+				debugEmitter_->pos = { 3,3,0 };
+				debugEmitter_->addVec = { 1,1,1 };
+				debugEmitter_->scale = 1.0f;
+
+				ParticleManager::GetInstance()->
+					AddParticle("WallHit", std::move(debugEmitter_));
+			}
+			clock_t end2 = clock();
+
+			double time2 = static_cast<double>(end2 - start2) / CLOCKS_PER_SEC * 1000.0;
+			timeUnique.push_back(time2);
+		}
+		int a = 0;
 	}
+
+	ImGui::Begin("debug");
+	float sharedAverage = 0.f;
+	for (size_t i = 0; i < timeShared.size(); i++) {
+		sharedAverage += (float)timeShared[i];
+	}
+	sharedAverage /= timeShared.size();
+	ImGui::DragFloat("shared", &sharedAverage);
+
+	float uniqueAverage = 0.f;
+	for (size_t i = 0; i < timeUnique.size(); i++) {
+		uniqueAverage += (float)timeUnique[i];
+	}
+	uniqueAverage /= timeUnique.size();
+	ImGui::DragFloat("unique", &uniqueAverage);
+
+	ImGui::End();
 
 	if (Key::TriggerKey(DIK_P))
 	{
-		AddStatus status;
-		status.addNum = 32;
-		status.time = 400;
-		status.pos = { 3,3,0 };
-		status.addVec = { 1,1,1 };
-		status.scale = 1.0f;
+		/*Emitter emitter;
+		emitter.particle = std::make_unique<ParticleEnemyDead>();
+		emitter.addNum = 32;
+		emitter.time = 400;
+		emitter.pos = { 3,3,0 };
+		emitter.addVec = { 1,1,1 };
+		emitter.scale = 1.0f;
 
 		ParticleManager::GetInstance()->
-			AddParticle<ParticleEnemyDead>("WallHit", status);
+			AddParticle("WallHit", &emitter);*/
 	}
 
 	/*if (colosseumSystem_->GetIsReset())

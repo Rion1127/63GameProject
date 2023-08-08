@@ -4,7 +4,7 @@
 #include "Camera.h"
 #include "mSound.h"
 
-Player::Player()
+Player::Player() : IActor()
 {
 	controller_ = Controller::GetInstance();
 

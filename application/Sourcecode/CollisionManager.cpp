@@ -96,15 +96,16 @@ void CollisionManager::PlayerToWall()
 				if (itr->get()->normal.x != 0) {
 					rot = { 0,Radian(90),0 };
 				}
-				AddStatus status;
-				status.addNum = 1;
-				status.time = 60;
-				status.pos = interPos;
-				status.addVec = rot;
-				status.scale = 1.0f;
+				/*Emitter emitter;
+				emitter.particle = std::make_unique<ParticleWallHit>();
+				emitter.addNum = 1;
+				emitter.time = 60;
+				emitter.pos = interPos;
+				emitter.addVec = rot;
+				emitter.scale = 1.0f;
 
 				ParticleManager::GetInstance()->
-					AddParticle<ParticleWallHit>("WallHit", status);
+					AddParticle("WallHit", &emitter);*/
 				wallHitTimer_.Reset();
 			}
 		}
@@ -298,14 +299,15 @@ void CollisionManager::PlayerAttackToEnemy()
 
 						Vector3 addVec = { 0.05f,0.05f,0.05f };
 
-						AddStatus status;
-						status.addNum = 3;
-						status.time = 40;
-						status.pos = enemy->GetCol().center;
-						status.addVec = addVec;
-						status.scale = 1.0f;
+						std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+						hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+						hitEmitter_->addNum = 3;
+						hitEmitter_->time = 40;
+						hitEmitter_->pos = enemy->GetCol().center;
+						hitEmitter_->addVec = addVec;
+						hitEmitter_->scale = 1.0f;
 						ParticleManager::GetInstance()->
-							AddParticle<ParticleHitAttack>("HitAttack", status);
+							AddParticle("HitAttack", hitEmitter_);
 						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
@@ -356,14 +358,15 @@ void CollisionManager::EnemyAttackToPlayer()
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 
-						AddStatus status;
-						status.addNum = 3;
-						status.time = 40;
-						status.pos = player_->GetDamageCol().center;
-						status.addVec = addVec;
-						status.scale = 0.7f;
+						std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+						hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+						hitEmitter_->addNum = 3;
+						hitEmitter_->time = 40;
+						hitEmitter_->pos = enemy->GetCol().center;
+						hitEmitter_->addVec = addVec;
+						hitEmitter_->scale = 1.0f;
 						ParticleManager::GetInstance()->
-							AddParticle<ParticleHitAttack>("HitAttack", status);
+							AddParticle("HitAttack", hitEmitter_);
 						SoundManager::Play("HitSE", false, 0.5f);
 					}
 				}
@@ -412,15 +415,15 @@ void CollisionManager::EnemyBulletToPlayer()
 			}
 			bullet->SetIsDead(true);
 
-			Vector3 addVec = { 0.15f,0.15f,0.15f };
-			AddStatus status;
-			status.addNum = 3;
-			status.time = 40;
-			status.pos = player_->GetDamageCol().center;
-			status.addVec = addVec;
-			status.scale = 0.7f;
+			std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+			hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+			hitEmitter_->addNum = 3;
+			hitEmitter_->time = 40;
+			hitEmitter_->pos = player_->GetCol().center;
+			hitEmitter_->addVec = { 0.15f,0.15f,0.15f };;
+			hitEmitter_->scale = 1.0f;
 			ParticleManager::GetInstance()->
-				AddParticle<ParticleHitAttack>("HitAttack", status);
+				AddParticle("HitAttack", hitEmitter_);
 
 			SoundManager::Play("HitSE", false, 0.5f);
 		}

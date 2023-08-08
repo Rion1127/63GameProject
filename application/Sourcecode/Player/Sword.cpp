@@ -1,6 +1,7 @@
 #include "Sword.h"
 #include "util.h"
 #include <imgui.h>
+#include "ParticleHitAttack.h"
 
 Sword::Sword()
 {

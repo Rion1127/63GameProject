@@ -4,14 +4,6 @@
 #include "Color.h"
 #include "WorldTransform.h"
 
-struct AddStatus {
-	int32_t addNum;
-	int32_t time;
-	Vector3 pos;
-	Vector3 addVec;
-	float scale;
-};
-
 class IParticle
 {
 protected:
@@ -100,4 +92,11 @@ protected:
 	virtual void MoveUpdate() = 0;
 };
 
-
+struct Emitter {
+	std::unique_ptr<IParticle> particle;
+	int32_t addNum;	//同時発生数
+	int32_t time;	//パーティクル生存時間
+	Vector3 pos;	//エミッター中心座標
+	Vector3 addVec;	//移動方向ベクトル
+	float scale;
+};

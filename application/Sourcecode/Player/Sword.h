@@ -1,6 +1,7 @@
 #pragma once
 #include "Object3d.h"
 #include "AttackManager.h"
+#include "IAttack.h"
 class Sword
 {
 private:
@@ -9,6 +10,7 @@ private:
 	Vector3 localPos_;
 
 	AttackManager* attackManager_;
+	Emitter hitEmitter_;
 public:
 	Sword();
 	void Update();

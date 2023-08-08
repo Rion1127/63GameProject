@@ -49,15 +49,16 @@ void EnemyManager::PreUpdate()
 			lockOnEnemy_ = nullptr;
 			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
 			
-			AddStatus status;
-			status.addNum = 32;
-			status.time = 80;
-			status.pos = pos;
-			status.addVec = { 0.8f,0.8f, 0.8f };
-			status.scale = 1.0f;
+			std::shared_ptr<Emitter> deadEmitter_ = std::make_shared<Emitter>();
+			deadEmitter_->particle = std::make_unique<ParticleEnemyDead>();
+			deadEmitter_->addNum = 32;
+			deadEmitter_->time = 80;
+			deadEmitter_->pos = pos;
+			deadEmitter_->addVec = { 0.8f,0.8f, 0.8f };
+			deadEmitter_->scale = 1.0f;
 
 			ParticleManager::GetInstance()->
-				AddParticle<ParticleEnemyDead>("EnemyDead", status);
+				AddParticle("EnemyDead", deadEmitter_);
 			SoundManager::Play("DeathSE", false, 1.0f, 0.6f);
 			continue;
 		}

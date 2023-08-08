@@ -39,6 +39,9 @@ private:
 
 	std::unique_ptr<UIOperation> operationUI_;
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
+
+	std::vector<double> timeShared;
+	std::vector<double> timeUnique;
 public:
 	~DebugScene();
 

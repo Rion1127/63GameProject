@@ -1,4 +1,5 @@
 #pragma once
+#include "IParticle.h"
 #include "Object3d.h"
 #include "Collision.h"
 #include "Gravity.h"
@@ -20,6 +21,7 @@ protected:
 protected:
 	void ObjUpdate();
 public:
+	IActor();
 	Sphere GetCol() { return col_; }
 	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
 	Vector3 GetAddVec() {

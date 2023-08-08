@@ -1,9 +1,9 @@
 #include "IActor.h"
 #include "Util.h"
+#include "ParticleHitAttack.h"
 
 void IActor::ObjUpdate()
 {
-	
 	addVec_ += gravity_.GetGravityValue();
 	addVec_ += knockVec_;
 	//ノックバックのベクトルを0にしていく
@@ -15,4 +15,9 @@ void IActor::ObjUpdate()
 	}
 	obj_->WT_.position_ += addVec_;
 	obj_->Update();
+}
+
+IActor::IActor()
+{
+	
 }

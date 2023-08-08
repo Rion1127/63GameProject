@@ -32,7 +32,7 @@ void ParticleTest::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec
 			0
 		};
 
-		p.position = pos + vec;
+		p.position = vec;
 		p.basePos = pos;
 		p.end_frame = time;
 		p.velocity = {0,0,0};

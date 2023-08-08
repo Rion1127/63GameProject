@@ -6,7 +6,8 @@
 class ParticleManager
 {
 private:
-	std::list<std::unique_ptr<IParticle>> particles_;
+	std::list<std::shared_ptr<Emitter>> emitters_;
+	std::list<std::unique_ptr<Emitter>> uniqueEmitters_;
 public:
 	static ParticleManager* GetInstance();
 
@@ -14,16 +15,11 @@ public:
 
 	void Draw();
 
-	template<class T>
-	void AddParticle(std::string name, AddStatus status);
+	void AddParticle(std::string name, std::shared_ptr<Emitter> emitter);
+	void AddParticle(std::string name, std::unique_ptr<Emitter> emitter);
 
+	void AllClear() { emitters_.clear(); uniqueEmitters_.clear(); };
 private:
 	ParticleManager();
 };
 
-template<class T>
-inline void ParticleManager::AddParticle(std::string name, AddStatus status)
-{
-	particles_.emplace_back(std::move(std::make_unique<T>()));
-	particles_.back()->Add(status.addNum, status.time, status.pos, status.addVec, status.scale);
-}

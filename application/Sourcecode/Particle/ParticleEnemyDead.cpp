@@ -49,14 +49,15 @@ void ParticleEnemyDead::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 a
 		p.baseScale = scale;
 		p.color = { 5,5,35,0 };
 	}
-	AddStatus status;
-	status.addNum = 1;
-	status.time = 80;
-	status.pos = pos;
-	status.addVec = { 0.f,0.05f, 0.0f };
-	status.scale = 1.0f;
+	std::shared_ptr<Emitter> hitEmitter_ = std::make_shared<Emitter>();
+	hitEmitter_->particle = std::make_unique<ParticleHeart>();
+	hitEmitter_->addNum = 1;
+	hitEmitter_->time = 80;
+	hitEmitter_->pos = pos;
+	hitEmitter_->addVec = { 0.f,0.05f, 0.0f };
+	hitEmitter_->scale = 1.0f;
 	ParticleManager::GetInstance()->
-		AddParticle<ParticleHeart>("Heart", status);
+		AddParticle("Heart", hitEmitter_);
 }
 
 void ParticleEnemyDead::MoveUpdate()
