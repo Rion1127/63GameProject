@@ -93,67 +93,28 @@ void DebugScene::Update()
 
 	if (Key::TriggerKey(DIK_P))
 	{
-		timeShared.clear();
-		timeUnique.clear();
-		for (uint32_t i = 0; i < 10; i++) {
-			clock_t start1 = clock();
-			for (uint32_t i = 0; i < 50; i++) {
-				std::shared_ptr<Emitter> debugEmitter_ = std::make_shared<Emitter>();
-				debugEmitter_->particle = std::make_unique<ParticleTest>();
-				debugEmitter_->addNum = 10;
-				debugEmitter_->time = 60000;
-				debugEmitter_->pos = { -3,3,0 };
-				debugEmitter_->addVec = { 1,1,1 };
-				debugEmitter_->scale = 1.0f;
+		std::shared_ptr<Emitter> debugEmitter1 = std::make_shared<Emitter>();
+		debugEmitter1->particle = std::make_unique<ParticleTest>();
+		debugEmitter1->addNum = 10;
+		debugEmitter1->time = 60000;
+		debugEmitter1->pos = { -3,3,0 };
+		debugEmitter1->addVec = { 1,1,1 };
+		debugEmitter1->scale = 1.0f;
 
-				ParticleManager::GetInstance()->
-					AddParticle("WallHit", debugEmitter_);
-			}
-			clock_t end1 = clock();
+		ParticleManager::GetInstance()->
+			AddParticle("WallHit", debugEmitter1);
 
-			double time1 = static_cast<double>(end1 - start1) / CLOCKS_PER_SEC * 1000.0;
-			timeShared.push_back(time1);
-		}
+		std::shared_ptr<Emitter> debugEmitter2 = std::make_shared<Emitter>();
+		debugEmitter2->particle = std::make_unique<ParticleEnemyDead>();
+		debugEmitter2->addNum = 64;
+		debugEmitter2->time = 60;
+		debugEmitter2->pos = { 3,3,0 };
+		debugEmitter2->addVec = { 1,1,1 };
+		debugEmitter2->scale = 1.0f;
 
-		
-		for (uint32_t i = 0; i < 10; i++) {
-			clock_t start2 = clock();
-			for (uint32_t i = 0; i < 50; i++) {
-				std::unique_ptr<Emitter> debugEmitter_ = std::make_unique<Emitter>();
-				debugEmitter_->particle = std::make_unique<ParticleTest>();
-				debugEmitter_->addNum = 10;
-				debugEmitter_->time = 60000;
-				debugEmitter_->pos = { 3,3,0 };
-				debugEmitter_->addVec = { 1,1,1 };
-				debugEmitter_->scale = 1.0f;
-
-				ParticleManager::GetInstance()->
-					AddParticle("WallHit", std::move(debugEmitter_));
-			}
-			clock_t end2 = clock();
-
-			double time2 = static_cast<double>(end2 - start2) / CLOCKS_PER_SEC * 1000.0;
-			timeUnique.push_back(time2);
-		}
-		int a = 0;
+		ParticleManager::GetInstance()->
+			AddParticle("EnemyDead", debugEmitter2);
 	}
-
-	ImGui::Begin("debug");
-	float sharedAverage = 0.f;
-	for (size_t i = 0; i < timeShared.size(); i++) {
-		sharedAverage += (float)timeShared[i];
-	}
-	sharedAverage /= timeShared.size();
-	ImGui::DragFloat("shared", &sharedAverage);
-
-	float uniqueAverage = 0.f;
-	for (size_t i = 0; i < timeUnique.size(); i++) {
-		uniqueAverage += (float)timeUnique[i];
-	}
-	uniqueAverage /= timeUnique.size();
-	ImGui::DragFloat("unique", &uniqueAverage);
-
-	ImGui::End();
 
 	if (Key::TriggerKey(DIK_P))
 	{
