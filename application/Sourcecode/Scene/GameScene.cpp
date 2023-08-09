@@ -23,6 +23,7 @@ void GameScene::Ini()
 	Model::SetLight(lightManager_->GetLightGroup());
 	operationUI_ = std::make_unique<UIOperation>();
 	colosseumSystem_ = std::make_unique<ColosseumSystem>();
+	pauseMenu_ = std::make_unique<PauseMenu>();
 
 	stage_ = std::move(std::make_unique<Stage>());
 
@@ -58,42 +59,45 @@ void GameScene::Update()
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
-	colosseumSystem_->Update();
+	if (pauseMenu_->GetIsPause() == false) {
+		colosseumSystem_->Update();
 
-	CameraUpdate();
+		CameraUpdate();
 
-	stage_->Update();
-	player_->PreUpdate();
-	enemyManager_->PreUpdate();
+		stage_->Update();
+		player_->PreUpdate();
+		enemyManager_->PreUpdate();
 
-	colManager_->Update();
+		colManager_->Update();
 
-	enemyManager_->PostUpdate();
-	player_->PostUpdate();
+		enemyManager_->PostUpdate();
+		player_->PostUpdate();
 
-	lightManager_->DebugUpdate();
-	ParticleManager::GetInstance()->Update();
+		lightManager_->DebugUpdate();
+		ParticleManager::GetInstance()->Update();
 
-	operationUI_->Update();
+		operationUI_->Update();
 
-	if (player_->GetIsAlive() == false)
-	{
-		SceneManager::SetChangeStart(SceneName::GameOver);
+		if (player_->GetIsAlive() == false)
+		{
+			SceneManager::SetChangeStart(SceneName::GameOver);
+		}
+
+		if (Key::TriggerKey(DIK_P)) {
+
+		}
+
+		if (colosseumSystem_->GetIsReset())
+		{
+			player_->Reset();
+			enemyManager_->Reset();
+			gameCamera_.Reset();
+			uint32_t nextRound = colosseumSystem_->GetRoundNum();
+			EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), cupName_, nextRound);
+			colosseumSystem_->SetIsReset(false);
+		}
 	}
-
-	if (Key::TriggerKey(DIK_P)) {
-		
-	}
-
-	if (colosseumSystem_->GetIsReset())
-	{
-		player_->Reset();
-		enemyManager_->Reset();
-		gameCamera_.Reset();
-		uint32_t nextRound = colosseumSystem_->GetRoundNum();
-		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), cupName_, nextRound);
-		colosseumSystem_->SetIsReset(false);
-	}
+	pauseMenu_->Update();
 
 }
 
@@ -123,6 +127,7 @@ void GameScene::Draw()
 	player_->DrawSprite();
 	operationUI_->Draw();
 	colosseumSystem_->DrawSprite();
+	pauseMenu_->Draw();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();

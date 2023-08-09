@@ -14,6 +14,7 @@
 #include "EnemyManager.h"
 #include "UIOperation.h"
 #include "ColosseumSystem.h"
+#include "PauseMenu.h"
 
 #include "Spline.h"
 #include "Object3d.h"
@@ -39,6 +40,7 @@ private:
 
 	std::unique_ptr<UIOperation> operationUI_;
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
+	std::unique_ptr<PauseMenu> pauseMenu_;
 
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 public:

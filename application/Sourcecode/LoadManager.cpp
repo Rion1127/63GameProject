@@ -38,6 +38,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("retry.png", "Retry");
 	LoadGraph("readyShape.png", "ReadyShape");
 	LoadGraph("goShape.png", "GoShape");
+	LoadGraph("pause.png", "Pause");
 
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("pressA.png", "PressA");

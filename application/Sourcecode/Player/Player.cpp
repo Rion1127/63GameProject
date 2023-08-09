@@ -180,9 +180,14 @@ void Player::JumpUpdate()
 {
 	float jumpSpeed = 0.2f;
 	int Maxjumptimer = 10;
-	if (controller_->GetButtons(PAD::INPUT_A))
-	{
-		if (isJump_ == false)
+	
+	if (controller_->GetTriggerButtons(PAD::INPUT_A)) {
+		//ジャンプしたらジャンプ可能フラグをfalseにする
+		isCanJump_ = false;
+	}
+	if (isCanJump_ == false) {
+		//Aを押し続けた分高くジャンプする
+		if (controller_->GetButtons(PAD::INPUT_A))
 		{
 			if (jumpTime_ < Maxjumptimer)
 			{
@@ -192,11 +197,10 @@ void Player::JumpUpdate()
 			}
 		}
 	}
-	//押し戻し処理がまだ
-
+	//途中でAを離したら着地するまでジャンプできないようにする
 	if (controller_->GetReleasButtons(PAD::INPUT_A))
 	{
-		isJump_ = true;
+		jumpTime_ = Maxjumptimer;
 	}
 }
 
@@ -325,7 +329,7 @@ void Player::FloorColision(Vector3 pos)
 
 	}
 	isFloorCollision_ = true;
-	isJump_ = false;
+	isCanJump_ = true;
 	jumpTime_ = 0;
 
 	obj_->WT_.SetPosition(pos);

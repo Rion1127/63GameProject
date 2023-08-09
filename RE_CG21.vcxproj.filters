@@ -528,6 +528,9 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\PauseMenu.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -823,6 +826,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\PauseMenu.h">
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

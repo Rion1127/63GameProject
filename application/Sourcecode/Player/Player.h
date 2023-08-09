@@ -27,7 +27,7 @@ private:
 
 	float moveSpeed_;
 
-	bool isJump_;
+	bool isCanJump_;
 	bool isAlive_;
 	int jumpTime_;
 
