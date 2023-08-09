@@ -33,6 +33,13 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	stateInit = true;
 }
 
+EnemyRedNocturne::~EnemyRedNocturne()
+{
+	fireEmitter_->isActive = false;
+	fireCircleEmitter_->isActive = false;
+	fireCircleEmitter_->parentPos = nullptr;
+}
+
 void EnemyRedNocturne::SetIsNock(bool flag)
 {
 }
@@ -137,6 +144,10 @@ void EnemyRedNocturne::Wander()
 void EnemyRedNocturne::FireAttack()
 {
 	if (fireEmitter_->isActive) {
+		//座標を更新
+		Vector3 pos = obj_->GetPos();
+		pos.y += obj_->GetScale().y * 2.f;
+		fireEmitter_->pos = pos;
 		fireEmitter_->popCoolTime_.AddTime(1);
 		if (fireEmitter_->popCoolTime_.GetIsEnd()) {
 			fireEmitter_->particle->Add(
@@ -149,6 +160,8 @@ void EnemyRedNocturne::FireAttack()
 			fireEmitter_->popCoolTime_.Reset();
 		}
 	}
+	fireCirclePos_ = obj_->GetPos();
+	fireCirclePos_.y += obj_->GetScale().y;
 	if (shotTimer_.GetTimeRate() > 0.7f) {
 		fireEmitter_->isActive = false;
 	}
@@ -244,8 +257,7 @@ void EnemyRedNocturne::SortPriority()
 			nowPriolityValue >= rand)
 		{
 			//ステートを代入
-			//StateUpdate(arr[i].first);
-			StateUpdate(State::FireAttack);
+			StateUpdate(arr[i].first);
 		}
 	}
 }
@@ -267,36 +279,42 @@ void EnemyRedNocturne::StateUpdate(State state)
 	{
 		actionTimer_.SetLimitTime(240);
 
-		Timer timer;
-		timer.SetLimitTime(1);
-		timer.SetTime(timer.GetLimitTimer());
-		Vector3 pos = obj_->GetPos();
-		pos.y += obj_->GetScale().y * 2.f;
-		fireEmitter_ = std::make_shared<ContinuousEmitter>();
-		fireEmitter_->particle = std::make_unique<ParticleFire>();
-		fireEmitter_->addVec = { 0.25f,0.3f, 0.25f, };
-		fireEmitter_->addNum = 4;
-		fireEmitter_->isActive = true;
-		fireEmitter_->popCoolTime_ = timer;
-		fireEmitter_->time = 30;
-		fireEmitter_->pos = pos;
-		fireEmitter_->scale = 0.3f;
-		ParticleManager::GetInstance()->AddParticle("fireCharge", fireEmitter_);
-
-		pos = obj_->GetPos();
-		pos.y += obj_->GetScale().y;
-		fireCircleEmitter_ = std::make_shared<OneceEmitter>();
-		fireCircleEmitter_->particle = std::make_unique<ParticleFireCircle>();
-		fireCircleEmitter_->addVec = { 0.0f,0.0f, 0.0f, };
-		fireCircleEmitter_->addNum = 2;
-		fireCircleEmitter_->isActive = true;
-		fireCircleEmitter_->time = 180;
-		fireCircleEmitter_->pos = pos;
-		fireCircleEmitter_->scale = 1.0f;
-		ParticleManager::GetInstance()->AddParticle("fireCircle", fireCircleEmitter_);
+		InitFireParticle();
 	}
 	else if (state == State::Wander_FireAttack)
 	{
-		actionTimer_.SetLimitTime(180);
+		actionTimer_.SetLimitTime(240);
+
+		InitFireParticle();
 	}
+}
+
+void EnemyRedNocturne::InitFireParticle()
+{
+	Timer timer;
+	timer.SetLimitTime(1);
+	timer.SetTime(timer.GetLimitTimer());
+	Vector3 pos = obj_->GetPos();
+	pos.y += obj_->GetScale().y * 2.f;
+	fireEmitter_ = std::make_shared<ContinuousEmitter>();
+	fireEmitter_->particle = std::make_unique<ParticleFire>();
+	fireEmitter_->addVec = { 0.25f,0.3f, 0.25f, };
+	fireEmitter_->addNum = 4;
+	fireEmitter_->popCoolTime_ = timer;
+	fireEmitter_->time = 30;
+	fireEmitter_->pos = pos;
+	fireEmitter_->scale = 0.3f;
+	ParticleManager::GetInstance()->AddParticle("fireCharge", fireEmitter_);
+
+	fireCirclePos_ = obj_->GetPos();
+	fireCirclePos_.y += obj_->GetScale().y;
+	fireCircleEmitter_ = std::make_shared<OneceEmitter>();
+	fireCircleEmitter_->particle = std::make_unique<ParticleFireCircle>();
+	fireCircleEmitter_->addVec = { 0.0f,0.0f, 0.0f, };
+	fireCircleEmitter_->addNum = 2;
+	fireCircleEmitter_->time = 180;
+	fireCircleEmitter_->parentPos = &fireCirclePos_;
+	fireCircleEmitter_->pos = fireCirclePos_;
+	fireCircleEmitter_->scale = 1.0f;
+	ParticleManager::GetInstance()->AddParticle("fireCircle", fireCircleEmitter_);
 }

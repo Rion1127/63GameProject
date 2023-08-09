@@ -10,7 +10,9 @@ ParticleWallHit::ParticleWallHit() :
 	isBillBoard = false;
 }
 
-void ParticleWallHit::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleWallHit::Add(int32_t addNum, int32_t time,
+	Vector3 pos, Vector3 addVec,
+	float scale, Vector3* parentPos)
 {
 	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)

@@ -31,8 +31,10 @@ private:
 	std::unordered_map<State, int32_t> priority_;
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 	std::shared_ptr<OneceEmitter> fireCircleEmitter_;
+	Vector3 fireCirclePos_;
 public:
 	EnemyRedNocturne(Vector3 pos);
+	~EnemyRedNocturne();
 	void SetIsNock(bool flag) override;
 	void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override;
 	void Draw()override;
@@ -48,5 +50,7 @@ private:
 
 	void SortPriority();
 	void StateUpdate(State state);
+
+	void InitFireParticle();
 };
 

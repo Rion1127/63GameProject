@@ -80,7 +80,7 @@ public:
 
 	void Draw();
 
-	virtual void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale) = 0;
+	virtual void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale,Vector3* parentPos = nullptr) = 0;
 public:
 	std::string GetShaderName() { return shaderName_; }
 	size_t GetParticleNum() { return particles_.size(); }
@@ -102,6 +102,7 @@ struct IEmitter {
 	int32_t addNum;	//同時発生数
 	int32_t time;	//パーティクル生存時間
 	Vector3 pos;	//エミッター中心座標
+	Vector3* parentPos = nullptr;	//エミッター中心座標
 	Vector3 addVec;	//移動方向ベクトル
 	float scale;
 	bool isActive = true;

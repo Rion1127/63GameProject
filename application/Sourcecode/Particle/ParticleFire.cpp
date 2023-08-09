@@ -14,7 +14,9 @@ ParticleFire::ParticleFire() :
 	state_ = PipeLineState::Add;
 }
 
-void ParticleFire::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleFire::Add(int32_t addNum, int32_t time,
+	Vector3 pos, Vector3 addVec,
+	float scale, Vector3* parentPos)
 {
 	//transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
@@ -74,7 +76,7 @@ void ParticleFire::MoveUpdate()
 }
 #pragma endregion
 
-#pragma region 炎エフェクト
+#pragma region 炎円エフェクト
 ParticleFireCircle::ParticleFireCircle() :
 	IParticle("Fire"),
 	vertexCount(2)
@@ -85,8 +87,11 @@ ParticleFireCircle::ParticleFireCircle() :
 	state_ = PipeLineState::Add;
 }
 
-void ParticleFireCircle::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleFireCircle::Add(int32_t addNum, int32_t time,
+	Vector3 pos, Vector3 addVec,
+	float scale, Vector3* parentPos)
 {
+	parentPos_ = parentPos;
 	for (int i = 0; i < addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
@@ -101,7 +106,7 @@ void ParticleFireCircle::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 
 
 		p.position = pos;
 		p.position.y += 0.5f * (1 + i);
-		p.basePos = pos;
+		p.basePos.y = p.position.y;
 		p.end_frame = time;
 		p.scale = 0;
 		p.baseScale = scale * (1.5f + i);
@@ -114,6 +119,8 @@ void ParticleFireCircle::MoveUpdate()
 {
 	for (auto& p : particles_)
 	{
+		p.position = *parentPos_;
+		p.position.y = p.basePos.y;
 		p.frame++;
 
 		float f = (float)p.frame / p.end_frame;

@@ -11,7 +11,9 @@ ParticleHitAttack::ParticleHitAttack() :
 	isBillBoard = true;
 }
 
-void ParticleHitAttack::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleHitAttack::Add(int32_t addNum, int32_t time,
+	Vector3 pos, Vector3 addVec,
+	float scale, Vector3* parentPos)
 {
 	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)

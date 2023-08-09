@@ -13,7 +13,9 @@ ParticleEnemyDead::ParticleEnemyDead() :
 	isBillBoard = true;
 }
 
-void ParticleEnemyDead::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleEnemyDead::Add(int32_t addNum, int32_t time,
+	Vector3 pos, Vector3 addVec,
+	float scale, Vector3* parentPos)
 {
 	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
@@ -91,7 +93,9 @@ ParticleHeart::ParticleHeart() :
 	isBillBoard = true;
 }
 
-void ParticleHeart::Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale)
+void ParticleHeart::Add(int32_t addNum, int32_t time,
+	Vector3 pos, Vector3 addVec,
+	float scale, Vector3* parentPos)
 {
 	transform_.position_ = pos;
 	for (int i = 0; i < addNum; i++)
