@@ -31,6 +31,22 @@ void SceneManager::Update()
 {
 	scurrentScene_->Update();
 
+#ifdef _DEBUG
+	if (Key::TriggerKey(DIK_1)) {
+		Transition<TitleScene>();
+	}
+	if (Key::TriggerKey(DIK_2)) {
+		Transition<GameScene>();
+	}
+	if (Key::TriggerKey(DIK_3)) {
+		Transition<GameOverScene>();
+	}
+	if (Key::TriggerKey(DIK_0)) {
+		Transition<DebugScene>();
+	}
+
+#endif // _DEBUG
+
 	//切り替えアニメーション開始
 	if (sisSetNext_)
 	{
