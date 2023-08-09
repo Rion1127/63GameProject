@@ -6,6 +6,8 @@
 #include "Timer.h"
 #include "PipelineManager.h"
 
+struct IEmitter;
+
 class IParticle
 {
 protected:
@@ -68,6 +70,7 @@ protected:
 	bool isBillBoard;
 	std::string shaderName_;
 	PipeLineState state_;
+	IEmitter* emitter_;
 public:
 	IParticle(std::string shaderName = "Particle") {
 		shaderName_ = shaderName;
@@ -81,6 +84,7 @@ public:
 	void Draw();
 
 	virtual void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale,Vector3* parentPos = nullptr) = 0;
+	void SetEmitter(IEmitter* emitter) { emitter_ = emitter; }
 public:
 	std::string GetShaderName() { return shaderName_; }
 	size_t GetParticleNum() { return particles_.size(); }
@@ -109,7 +113,7 @@ struct IEmitter {
 };
 
 struct OneceEmitter : public IEmitter {
-	
+
 };
 //ƒtƒ‰ƒO‚ªfalse‚É‚È‚é‚Ü‚Åo‘±‚¯‚é
 struct ContinuousEmitter : public IEmitter {

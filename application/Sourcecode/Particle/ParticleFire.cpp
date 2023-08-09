@@ -119,7 +119,7 @@ void ParticleFireCircle::MoveUpdate()
 {
 	for (auto& p : particles_)
 	{
-		p.position = *parentPos_;
+		p.position = emitter_->pos;
 		p.position.y = p.basePos.y;
 		p.frame++;
 

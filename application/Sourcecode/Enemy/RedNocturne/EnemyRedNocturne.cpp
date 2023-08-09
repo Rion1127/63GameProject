@@ -160,8 +160,8 @@ void EnemyRedNocturne::FireAttack()
 			fireEmitter_->popCoolTime_.Reset();
 		}
 	}
-	fireCirclePos_ = obj_->GetPos();
-	fireCirclePos_.y += obj_->GetScale().y;
+	fireCircleEmitter_->pos = obj_->GetPos();
+	fireCircleEmitter_->pos.y += obj_->GetScale().y;
 	if (shotTimer_.GetTimeRate() > 0.7f) {
 		fireEmitter_->isActive = false;
 	}
