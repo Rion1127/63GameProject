@@ -13,7 +13,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 {
 	name_ = "Shadow";
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);

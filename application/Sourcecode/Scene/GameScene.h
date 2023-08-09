@@ -41,6 +41,7 @@ private:
 	std::unique_ptr<UIOperation> operationUI_;
 
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
+	std::string cupName_;
 public:
 	~GameScene();
 

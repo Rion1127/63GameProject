@@ -41,9 +41,11 @@ void GameScene::Ini()
 	JsonLoader::GetInstance()->LoadFile("stage.json","Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Stage");
 
-	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
+	cupName_ = "HadesCup";
 
-	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData("Debug").size();
+	EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), cupName_, 1);
+
+	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData(cupName_).size();
 	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
 }
 
@@ -89,7 +91,7 @@ void GameScene::Update()
 		enemyManager_->Reset();
 		gameCamera_.Reset();
 		uint32_t nextRound = colosseumSystem_->GetRoundNum();
-		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", nextRound);
+		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), cupName_, nextRound);
 		colosseumSystem_->SetIsReset(false);
 	}
 

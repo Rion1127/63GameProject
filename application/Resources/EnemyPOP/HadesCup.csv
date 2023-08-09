@@ -1,19 +1,19 @@
 //SET,X,Y,Z,敵の種類
 //敵の種類
-//Dummy,Shadow,
+//Dummy,Shadow,RedNocturne
 
 ROUND1
-SET,0,0,5,Dummy
+SET,0,0,5,RedNocturne
 
 ROUND2
-SET,5,0,5,Dummy
-SET,2,0,5,Dummy
+SET,5,0,5,RedNocturne
+SET,2,0,5,RedNocturne
 
 ROUND3
-SET,-5,0,0,Dummy
+SET,-5,0,0,RedNocturne
 ROUND4
-SET,2,0,5,Dummy
+SET,0,0,5,RedNocturne
 ROUND5
-SET,2,0,5,Dummy
+SET,2,0,5,RedNocturne
 ROUND6
-SET,2,0,5,Dummy
+SET,-4,0,5,RedNocturne
