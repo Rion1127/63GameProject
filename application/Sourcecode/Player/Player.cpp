@@ -408,6 +408,7 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	knockVec_ = knockVec;
 	damageCoolTime_.Reset();
 	hpGauge_.Damage();
+	SoundManager::Play("HitSE", false, 0.5f);
 }
 
 void Player::GuardHit(Vector3 knockVec)

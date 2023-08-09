@@ -71,7 +71,20 @@ void EnemyRedNocturne::MoveUpdate()
 	}
 
 	/*UpdateVector();*/
-	
+	Vector3 lockOnPos = splayer_->GetWorldTransform()->position_;
+	Vector3 frontVec;
+	//ロックオンしている敵へのベクトルをとる
+	frontVec = {
+		lockOnPos.x - GetWorldTransform()->position_.x,
+		0,
+		lockOnPos.z - GetWorldTransform()->position_.z,
+	};
+	Vector2 frontVec2 = {
+		frontVec.x,
+		frontVec.z
+	};
+	float rotY = Radian(Vec2Angle(frontVec2));
+	GetWorldTransform()->rotation_ = { 0,rotY ,0 };
 	
 	//実行
 	if (isCanMove_)
