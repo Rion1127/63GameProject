@@ -11,9 +11,9 @@
                     5.903861999511719
                 ],
                 "rotation": [
-                    37.261043548583984,
-                    3.1637072563171387,
-                    106.93630981445312
+                    37.26104736328125,
+                    3.1637091636657715,
+                    106.93632507324219
                 ],
                 "scaling": [
                     1.0,
@@ -32,9 +32,9 @@
                     4.958309173583984
                 ],
                 "rotation": [
-                    63.559303283691406,
-                    -2.664711473698844e-06,
-                    46.69194793701172
+                    63.559295654296875,
+                    2.2983238068263745e-07,
+                    46.69194412231445
                 ],
                 "scaling": [
                     1.0,
@@ -91,7 +91,7 @@
         },
         {
             "type": "MESH",
-            "name": "立方体.002",
+            "name": "floor",
             "transform": {
                 "translation": [
                     0.0,
@@ -137,7 +137,7 @@
         },
         {
             "type": "MESH",
-            "name": "立方体.003",
+            "name": "pillar.002",
             "transform": {
                 "translation": [
                     32.5,
@@ -160,7 +160,7 @@
         },
         {
             "type": "MESH",
-            "name": "立方体.004",
+            "name": "pillar.003",
             "transform": {
                 "translation": [
                     -32.5,
@@ -183,7 +183,7 @@
         },
         {
             "type": "MESH",
-            "name": "立方体.005",
+            "name": "pillar",
             "transform": {
                 "translation": [
                     32.5,
@@ -206,7 +206,7 @@
         },
         {
             "type": "MESH",
-            "name": "立方体.006",
+            "name": "pillar.001",
             "transform": {
                 "translation": [
                     -32.5,
@@ -225,6 +225,52 @@
                 ]
             },
             "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "wallFence",
+            "transform": {
+                "translation": [
+                    48.0,
+                    0.0,
+                    -0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    90.00000762939453
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "wallFence",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "wallFence.001",
+            "transform": {
+                "translation": [
+                    -48.473731994628906,
+                    0.0,
+                    -0.5
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -90.00000762939453
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "wallFence",
             "isvisible": 1
         }
     ]
