@@ -7,7 +7,7 @@ Sword::Sword()
 {
 	obj_ = MakeUnique<Object3d>();
 	obj_->SetModel(Model::CreateOBJ_uniptr("sword"));
-	obj_->SetScale({ 0.3f,0.3f, 0.3f });
+	obj_->SetScale({ 0.5f,0.5f, 0.5f });
 }
 
 void Sword::Update()
