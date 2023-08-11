@@ -31,7 +31,7 @@ private:
 
 	//頂点法線スムージング用データ
 	bool smoothing_ = false;
-	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData_;
+	std::vector<std::unordered_map<unsigned short, std::vector<unsigned short>>> smoothData_;
 public:
 	std::vector<std::unique_ptr<Vertices>> vert_;
 	// マテリアルコンテナ
@@ -63,7 +63,7 @@ private:
 
 	void AddMaterial(Material* material);
 
-	void AddSmoothData(unsigned short indexPositon, unsigned short indexVertex);
+	void AddSmoothData(unsigned short indexPositon, unsigned short indexVertex,uint32_t dataindex);
 	//平滑化された頂点法線の計算
 	void CalculateSmoothedVertexNormals();
 public:

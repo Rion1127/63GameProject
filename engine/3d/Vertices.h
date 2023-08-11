@@ -66,5 +66,7 @@ public:
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	//頂点インデックス
 	std::vector<uint16_t> indices_;
+
+	std::string materialName_;
 };
 

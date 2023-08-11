@@ -98,10 +98,11 @@ void Model::LoadOBJ(const std::string& modelname)
 	std::vector<Vector3> normals{};   // 法線ベクトル
 	std::vector<Vector2> texcoords{}; // テクスチャUV
 
-	vert_.emplace_back(new Vertices);	//空の頂点データを入れる
-	Vertices& vert = *vert_.back();		//空のvert_のアドレスをvertに入れる
+	
+	
 
 	uint16_t indexCountTex = 0;
+	uint16_t smoothIndex = 0;
 
 	while (getline(file, line))
 	{
@@ -112,6 +113,17 @@ void Model::LoadOBJ(const std::string& modelname)
 		std::string key;
 		getline(line_stream, key, ' ');
 
+		if (key == "o") {
+			if (vert_.size() > 0) {
+				indexCountTex = 0;
+				smoothIndex++;
+			}
+			vert_.emplace_back(new Vertices);	//空の頂点データを入れる
+			smoothData_.emplace_back();
+		}
+
+		std::unique_ptr<Vertices>* vert = nullptr;		//空のvert_のアドレスをvertに入れる
+		if (vert_.size() > 0)vert = &vert_.back();
 		//マテリアル
 		if (key == "mtllib")
 		{
@@ -120,6 +132,10 @@ void Model::LoadOBJ(const std::string& modelname)
 			line_stream >> matfilename;
 			// マテリアル読み込み
 			LoadMaterial(directoryPath, matfilename);
+			
+		}
+		if (key == "usemtl") {
+			line_stream >> (*vert)->materialName_;
 		}
 
 		if (key == "v")
@@ -180,11 +196,12 @@ void Model::LoadOBJ(const std::string& modelname)
 				vertex.normal = normals[indexNorm];
 				vertex.uv = texcoords[indexTex];
 
-				vert.AddVertices(vertex);
+				(*vert)->AddVertices(vertex);
 				//エッジ平滑化用のデータを追加
 				if (smoothing_)
 				{
-					AddSmoothData(indexPosition, (unsigned short)vert.GetVertexCount() - 1);
+					unsigned short indexVertex = (unsigned short)(*vert)->GetVertexCount() - 1;
+					AddSmoothData(indexPosition, indexVertex, smoothIndex);
 				}
 
 				// インデックスデータの追加
@@ -192,13 +209,13 @@ void Model::LoadOBJ(const std::string& modelname)
 				{
 					// 四角形ポリゴンの4点目なので、
 					// 四角形の0,1,2,3の内 2,3,0で三角形を構築する
-					vert.AddIndex(indexCountTex - 1);
-					vert.AddIndex(indexCountTex);
-					vert.AddIndex(indexCountTex - 3);
+					(*vert)->AddIndex(indexCountTex - 1);
+					(*vert)->AddIndex(indexCountTex);
+					(*vert)->AddIndex(indexCountTex - 3);
 				}
 				else
 				{
-					vert.AddIndex(indexCountTex);
+					(*vert)->AddIndex(indexCountTex);
 				}
 				faceIndexCount++;
 				indexCountTex++;
@@ -382,13 +399,14 @@ void Model::ModelIni(const std::string& modelname, bool smoothing)
 void Model::DrawOBJ(const WorldTransform& worldTransform)
 {
 	lightGroup_->Draw(3);
-	for (auto& m : materials_)
+	/*for (auto& m : materials_)
 	{
 		m.second->Draw();
-	}
-	for (auto& v : vert_)
+	}*/
+	for (uint32_t i = 0; i < vert_.size(); i++)
 	{
-		v->Draw(worldTransform);
+		materials_.find(vert_[i]->materialName_)->second->Draw();
+		vert_[i]->Draw(worldTransform);
 	}
 }
 
@@ -404,40 +422,42 @@ void Model::DrawOBJ(const WorldTransform& worldTransform, uint32_t textureHandle
 	}
 }
 
-void Model::AddSmoothData(unsigned short indexPositon, unsigned short indexVertex)
+void Model::AddSmoothData(unsigned short indexPositon, unsigned short indexVertex, uint32_t dataindex)
 {
-	smoothData_[indexPositon].emplace_back(indexVertex);
+	smoothData_[dataindex][indexPositon].emplace_back(indexVertex);
 }
 
 void Model::CalculateSmoothedVertexNormals()
 {
-	auto itr = smoothData_.begin();
-	for (; itr != smoothData_.end(); ++itr)
-	{
-		//各面用の共通頂点コレクション
-		std::vector<unsigned short>& v = itr->second;
-		//全頂点の法線を平均する
-		Vector3 normal = {};
-		for (unsigned short index : v)
+	for (uint32_t i = 0; i < vert_.size(); i++) {
+		auto itr = smoothData_[i].begin();
+		for (; itr != smoothData_[i].end(); ++itr)
 		{
-			float x = vert_[0]->vertices_[index].normal.x;
-			float y = vert_[0]->vertices_[index].normal.y;
-			float z = vert_[0]->vertices_[index].normal.z;
+			//各面用の共通頂点コレクション
+			std::vector<unsigned short>& v = itr->second;
+			//全頂点の法線を平均する
+			Vector3 normal = {};
+			for (unsigned short index : v)
+			{
+				float x = vert_[i]->vertices_[index].normal.x;
+				float y = vert_[i]->vertices_[index].normal.y;
+				float z = vert_[i]->vertices_[index].normal.z;
 
-			normal.x += x;
-			normal.y += y;
-			normal.z += z;
-		}
-		normal = normal.normalize() / (float)v.size();
-		//共通法線を使用するすべての頂点データに書き込む
-		for (unsigned short index : v)
-		{
-			float x = normal.x;
-			float y = normal.y;
-			float z = normal.z;
+				normal.x += x;
+				normal.y += y;
+				normal.z += z;
+			}
+			normal = normal.normalize() / (float)v.size();
+			//共通法線を使用するすべての頂点データに書き込む
+			for (unsigned short index : v)
+			{
+				float x = normal.x;
+				float y = normal.y;
+				float z = normal.z;
 
-			vert_[0]->vertices_[index].normal = { x,y,z };
+				vert_[i]->vertices_[index].normal = { x,y,z };
+			}
 		}
+		vert_[i]->Map();
 	}
-	vert_[0]->Map();
 }
