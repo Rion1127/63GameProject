@@ -399,10 +399,7 @@ void Model::ModelIni(const std::string& modelname, bool smoothing)
 void Model::DrawOBJ(const WorldTransform& worldTransform)
 {
 	lightGroup_->Draw(3);
-	/*for (auto& m : materials_)
-	{
-		m.second->Draw();
-	}*/
+	
 	for (uint32_t i = 0; i < vert_.size(); i++)
 	{
 		materials_.find(vert_[i]->materialName_)->second->Draw();
