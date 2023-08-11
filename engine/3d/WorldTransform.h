@@ -55,12 +55,17 @@ public:
 	ConstBufferDataTransform* constMapTransform_;
 	//親オブジェクトへのポインタ
 	WorldTransform* parent_ = nullptr;
+	Matrix4* parentRotMat_ = nullptr;
+	Matrix4* parentPosMat_ = nullptr;
 
 	//アフィン変換情報
 	Vector3 scale_ = { 1,1,1 };
 	Vector3 rotation_ = { 0,0,0 };
 	Vector3 position_ = { 0,0,0 };
 	//ワールド変換行列
+	Matrix4 scaleMat_;
+	Matrix4 rotMat_;
+	Matrix4 posMat_;
 	Matrix4 matWorld_;
 	RotType rotType;
 	//クォータニオン

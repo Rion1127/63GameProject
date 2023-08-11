@@ -52,9 +52,21 @@ void WorldTransform::Update(uint32_t isBillboard)
 	else
 	{
 		matRot = ConvertRotationMat(quaternion_);
-		//matRot = quaternion_.UpdateMatrix();
 	}
 	matTrans = ConvertTranslationMat(position_);
+
+	scaleMat_ = matScale;
+	rotMat_ = matRot;
+	posMat_ = matTrans;
+
+	//親オブジェの回転のみ
+	if (parentRotMat_) {
+		matRot *= *parentRotMat_;
+	}
+	//親オブジェの座標のみ
+	if (parentPosMat_) {
+		matTrans *= *parentPosMat_;
+	}
 
 	//ワールド行列の合成
 	matWorld_.UnitMatrix();//変形をリセット
@@ -69,7 +81,7 @@ void WorldTransform::Update(uint32_t isBillboard)
 	}
 
 	matWorld_ *= matScale;			//ワールド行列にスケーリングを反映
-	matWorld_ *= matRot;				//ワールド行列に開店を反映
+	matWorld_ *= matRot;				//ワールド行列に回転を反映
 	matWorld_ *= matTrans;			//ワールド行列に平行移動を反映
 
 	//親オブジェクトがあれば
@@ -78,6 +90,7 @@ void WorldTransform::Update(uint32_t isBillboard)
 		//親オブジェクトのワールド行列を掛ける
 		matWorld_ *= parent_->matWorld_;
 	}
+	
 
 	//定数バッファへデータ転送
 	if (Camera::scurrent_ != nullptr)

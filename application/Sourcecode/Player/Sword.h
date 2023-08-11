@@ -4,9 +4,20 @@
 #include "IAttack.h"
 class Sword
 {
+public:
+	enum class SwordState {
+		Idle,
+		Attack,
+		Guard,
+
+
+
+		Debug
+	};
 private:
 	std::unique_ptr<Object3d> obj_;
 	Object3d* playerObj_;
+	SwordState state_;
 	Vector3 localPos_;
 
 	Vector3 goalPos_;
@@ -22,5 +33,10 @@ public:
 	void SetAttackManager(AttackManager* attackManager) { attackManager_ = attackManager; }
 	void SetPos(const Vector3& pos) { obj_->SetPos(pos); }
 	void SetParent(Object3d* parent) { playerObj_ = parent; }
+	void SetState(SwordState state) {
+		if (state_ != SwordState::Debug) {
+			state_ = state;
+		}
+	}
 };
 

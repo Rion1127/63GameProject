@@ -63,6 +63,13 @@ Quaternion Quaternion::Multiply(const Quaternion& rhs)const
 }
 Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 {
+	if (q1.x == this->x &&
+		q1.y == this->y&&
+		q1.z == this->z&&
+		q1.w == this->w)
+	{
+		return *this;
+	}
 	Quaternion result{};
 	//this‚Æq1‚Ì“àÏ
 	float dot = this->w * q1.w + this->x * q1.x + this->y * q1.y + this->z * q1.z;

@@ -209,6 +209,7 @@ void Player::StateUpdate()
 	if (state_ != PlayerState::Knock)
 	{
 		state_ = PlayerState::Idle;
+		sword_.SetState(Sword::SwordState::Idle);
 	}
 	landingTimer_.AddTime(1);
 	if (landingTimer_.GetIsEnd())
@@ -222,10 +223,12 @@ void Player::StateUpdate()
 			if (attack_.GetIsAttacking())
 			{
 				state_ = PlayerState::Attack;
+				sword_.SetState(Sword::SwordState::Attack);
 			}
 			if (isFloorCollision_ == false && attack_.GetIsAttacking())
 			{
 				state_ = PlayerState::AirAttack;
+				sword_.SetState(Sword::SwordState::Attack);
 			}
 		}
 	}
@@ -237,6 +240,7 @@ void Player::StateUpdate()
 	if (guard_.GetIsGurdNow())
 	{
 		state_ = PlayerState::Guard;
+		sword_.SetState(Sword::SwordState::Guard);
 	}
 }
 
