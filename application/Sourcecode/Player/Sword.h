@@ -9,6 +9,9 @@ private:
 	Object3d* playerObj_;
 	Vector3 localPos_;
 
+	Vector3 goalPos_;
+	Vector3 nowPos_;
+
 	AttackManager* attackManager_;
 public:
 	Sword();

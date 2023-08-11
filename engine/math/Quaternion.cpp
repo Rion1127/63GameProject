@@ -95,14 +95,23 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 		}
 		else
 		{
-			float s1, s2;
-			s1 = sinTheta1subT / sinPh;
-			s2 = sinThetaMulT / sinPh;
+			float s1 = 0.f;
+			float s2 = 0.f;
+			if (sinPh != 0.f) {
+				s1 = sinTheta1subT / sinPh;
+				s2 = sinThetaMulT / sinPh;
 
-			result.x = this->x * s1 + q1.x * s2;
-			result.y = this->y * s1 + q1.y * s2;
-			result.z = this->z * s1 + q1.z * s2;
-			result.w = this->w * s1 + q1.w * s2;
+				result.x = this->x * s1 + q1.x * s2;
+				result.y = this->y * s1 + q1.y * s2;
+				result.z = this->z * s1 + q1.z * s2;
+				result.w = this->w * s1 + q1.w * s2;
+			}
+			else {
+				result.x = q1.x;
+				result.y = q1.y;
+				result.z = q1.z;
+				result.w = q1.w;
+			}
 		}
 	}
 
@@ -114,7 +123,7 @@ Quaternion Quaternion::operator*(const Quaternion& other) const {
 	float result_y = w * other.y - x * other.z + y * other.w + z * other.x;
 	float result_z = w * other.z + x * other.y - y * other.x + z * other.w;
 	float result_w = w * other.w - x * other.x - y * other.y - z * other.z;
-	return Quaternion(result_x, result_y, result_z,result_w);
+	return Quaternion(result_x, result_y, result_z, result_w);
 }
 
 //”CˆÓ²‰ñ“]‚ğ•\‚·Quaternion‚Ì¶¬
