@@ -57,6 +57,7 @@ struct Quaternion
 	Quaternion Slerp(const Quaternion& q1, float t);
 	// クォータニオンの掛け算を演算子オーバーロードで定義する
 	Quaternion operator*(const Quaternion& other) const;
+	bool operator==(const Quaternion& other) const;
 };
 
 //任意軸回転を表すQuaternionの生成

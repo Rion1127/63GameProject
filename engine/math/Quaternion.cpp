@@ -63,16 +63,22 @@ Quaternion Quaternion::Multiply(const Quaternion& rhs)const
 }
 Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 {
-	if (q1.x == this->x &&
-		q1.y == this->y&&
-		q1.z == this->z&&
-		q1.w == this->w)
+	Quaternion q = q1;
+	q = q.Normalize();
+	if (*this == q)
 	{
 		return *this;
 	}
+	if (isfinite(this->x) == false ||
+		isfinite(this->y) == false || 
+		isfinite(this->z) == false || 
+		isfinite(this->w) == false)
+	{
+		return q1;
+	}
 	Quaternion result{};
 	//this‚Æq1‚Ì“àÏ
-	float dot = this->w * q1.w + this->x * q1.x + this->y * q1.y + this->z * q1.z;
+	float dot = this->w * q.w + this->x * q.x + this->y * q.y + this->z * q.z;
 	if (dot < 0)
 	{
 		result = { -this->x,-this->y,-this->z,-this->w };	//‚à‚¤•Ğ•û‚Ì‰ñ“]‚ğ—˜—p‚·‚é
@@ -90,34 +96,35 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 		if (dot < 0.0 && theta > 3.1415f / 2.0)
 		{
 			//theta‚Æsin‚ğg‚Á‚Ä•âŠÔŒW”‚ğ‹‚ß‚é
-			dot = -this->w * q1.w - this->x * q1.x - this->y * q1.y - this->z * q1.z;
+			dot = -this->w * q.w - this->x * q.x - this->y * q.y - this->z * q.z;
 
 			float s1 = sinTheta1subT / sinPh;
 			float s2 = sinThetaMulT / sinPh;
 			//‚»‚ê‚¼‚ê‚Ì•âŠÔŒW”‚ğ—˜—p‚µ‚Ä•ÛŠÇŒã‚Ì
-			result.x = this->x * s1 - q1.x * s2;
-			result.y = this->y * s1 - q1.y * s2;
-			result.z = this->z * s1 - q1.z * s2;
-			result.w = this->w * s1 - q1.w * s2;
+			result.x = this->x * s1 - q.x * s2;
+			result.y = this->y * s1 - q.y * s2;
+			result.z = this->z * s1 - q.z * s2;
+			result.w = this->w * s1 - q.w * s2;
 		}
 		else
 		{
 			float s1 = 0.f;
 			float s2 = 0.f;
+			//‚O‚ÅŠ„‚ç‚È‚¢‚æ‚¤‚É‚·‚é
 			if (sinPh != 0.f) {
 				s1 = sinTheta1subT / sinPh;
 				s2 = sinThetaMulT / sinPh;
 
-				result.x = this->x * s1 + q1.x * s2;
-				result.y = this->y * s1 + q1.y * s2;
-				result.z = this->z * s1 + q1.z * s2;
-				result.w = this->w * s1 + q1.w * s2;
+				result.x = this->x * s1 + q.x * s2;
+				result.y = this->y * s1 + q.y * s2;
+				result.z = this->z * s1 + q.z * s2;
+				result.w = this->w * s1 + q.w * s2;
 			}
 			else {
-				result.x = q1.x;
-				result.y = q1.y;
-				result.z = q1.z;
-				result.w = q1.w;
+				result.x = q.x;
+				result.y = q.y;
+				result.z = q.z;
+				result.w = q.w;
 			}
 		}
 	}
@@ -131,6 +138,19 @@ Quaternion Quaternion::operator*(const Quaternion& other) const {
 	float result_z = w * other.z + x * other.y - y * other.x + z * other.w;
 	float result_w = w * other.w - x * other.x - y * other.y - z * other.z;
 	return Quaternion(result_x, result_y, result_z, result_w);
+}
+
+bool Quaternion::operator==(const Quaternion& other) const
+{
+	if (x == other.x &&
+		y == other.y &&
+		z == other.z &&
+		w == other.w)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 //”CˆÓ²‰ñ“]‚ğ•\‚·Quaternion‚Ì¶¬

@@ -14,9 +14,10 @@ Sword::Sword()
 
 void Sword::Update()
 {
-	//obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
+	
 	//攻撃時の剣の動き
 	if (state_ == SwordState::Idle) {
+		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
 		//プレイヤーの背中に向かって徐々に移動する
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = {
@@ -25,20 +26,19 @@ void Sword::Update()
 				cosf(playerObj_->WT_.rotation_.y),
 		};
 		frontVec = frontVec.normalize();
-
+		//座標移動
 		goalPos_ = pos - frontVec * 1.2f;
 		goalPos_.y += playerObj_->WT_.scale_.y;
-
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
-
 		nowPos_ += nowToGoalVec * 0.1f;
-
 		obj_->SetPos(nowPos_);
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(Quaternion(0, 1, 0, 0), 0.1f);
+		//回転処理
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(Quaternion(0, 1, 0, 0.f), 0.1f);
 	}
 	else if (state_ == SwordState::Attack &&
 		attackManager_->GetNowAttack() != nullptr)
 	{
+		obj_->WT_.parentRotMat_ = nullptr;
 		//座標
 		Vector3 pos = attackManager_->GetNowAttack()->GetAttackCol()->at(0)->col_.center;
 		localPos_ = pos - playerObj_->WT_.position_;
@@ -51,6 +51,7 @@ void Sword::Update()
 		obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 1, 0), PtoSVec);
 	}
 	else if (state_ == SwordState::Guard) {
+		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
 		//座標
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = {
