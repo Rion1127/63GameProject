@@ -96,16 +96,16 @@ void CollisionManager::PlayerToWall()
 				if (itr->get()->normal.x != 0) {
 					rot = { 0,Radian(90),0 };
 				}
-				/*Emitter emitter;
-				emitter.particle = std::make_unique<ParticleWallHit>();
-				emitter.addNum = 1;
-				emitter.time = 60;
-				emitter.pos = interPos;
-				emitter.addVec = rot;
-				emitter.scale = 1.0f;
+				std::shared_ptr<OneceEmitter> emitter = std::make_shared<OneceEmitter>();
+				emitter->particle = std::make_unique<ParticleWallHit>();
+				emitter->addNum = 1;
+				emitter->time = 60;
+				emitter->pos = interPos;
+				emitter->addVec = rot;
+				emitter->scale = 1.0f;
 
 				ParticleManager::GetInstance()->
-					AddParticle("WallHit", &emitter);*/
+					AddParticle("WallHit", emitter);
 				wallHitTimer_.Reset();
 			}
 		}
