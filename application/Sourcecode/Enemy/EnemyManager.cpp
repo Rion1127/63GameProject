@@ -17,7 +17,7 @@ EnemyManager::EnemyManager()
 	{
 		lockOnSprite = std::move(std::make_unique<Sprite>());
 		lockOnSprite->Ini("");
-		lockOnSprite->SetScale({ 0.5f,0.5f });
+		lockOnSprite->SetScale({ 0.3f,0.3f });
 	}
 	lockOnSprite_[0]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn1"));
 	lockOnSprite_[1]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn2"));

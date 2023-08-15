@@ -4,6 +4,7 @@
 #include <imgui.h>
 
 #include "RRandom.h"
+#include "Easing.h"
 
 #include "AttackShadow.h"
 #include "AttackJumpShadow.h"
@@ -22,6 +23,8 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 
 	state_ = State::Idle;
 	actionTimer_.SetLimitTime(400);
+
+	sinkTimer_.SetLimitTime(40);
 
 	followLength = 5.f;
 	moveSpeed = 0.1f;
@@ -155,15 +158,20 @@ void EnemyShadow::Wander()
 	//移動する
 	if (spline_.GetisEnd() == false)
 	{
-		if (obj_->WT_.scale_.y > 0.1f)
+		if (sinkTimer_.GetIsEnd() == false)
 		{
-			obj_->WT_.scale_.y -= 0.1f;
+			float t = sinkTimer_.GetTimeRate();
+			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, 1.0f, -0.9f, 1.0f);
+			sinkTimer_.AddTime(1);
 		}
 		else
 		{
 			//スプライン曲線更新
 			spline_.Update();
 			obj_->WT_.SetPosition(spline_.GetNowPoint());
+			if (spline_.GetisEnd()) {
+				sinkTimer_.Reset();
+			}
 		}
 		Vector2 dir = {
 			spline_.GetHeadingVec().x,
@@ -176,12 +184,15 @@ void EnemyShadow::Wander()
 	//移動が終わったら別のパターンへ
 	else
 	{
-		if (obj_->WT_.scale_.y < 1.0f)
+		if (sinkTimer_.GetIsEnd() == false)
 		{
-			obj_->WT_.scale_.y += 0.1f;
+			float t = sinkTimer_.GetTimeRate();
+			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, 0.1f, 0.9f, 1.0f);
+			sinkTimer_.AddTime(1);
 		}
 		else
 		{
+			sinkTimer_.Reset();
 			state_ = State::Idle;
 			actionTimer_.Reset();
 			actionTimer_.SetLimitTime(100);
@@ -276,7 +287,7 @@ void EnemyShadow::SortPriority()
 	//遠くにいるとき
 	else
 	{
-		priority_.at(State::Wander) += 100;
+		priority_.at(State::Wander) += 10000;
 		priority_.at(State::Following) += 70;
 		priority_.at(State::Idle) += 5;
 	}

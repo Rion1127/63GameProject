@@ -406,7 +406,8 @@ float UpAndDown(float oneRoundTime, float range)
 //}
 
 float Vec2Angle(Vector2 vec) {
-	float angle;
+	float angle = 0;
+	if (vec.length() == 0) return angle;
 	angle = vec.dot({ 0.0f, 1.0f }) / (vec.length() * Vector2(0.0f, 1.0f).length());
 	angle = acos(angle);
 	angle = Angle(angle);
