@@ -58,7 +58,6 @@ struct Quaternion
 	// クォータニオンの掛け算を演算子オーバーロードで定義する
 	Quaternion operator*(const Quaternion& other) const;
 	bool operator==(const Quaternion& other) const;
-	void Rotate(const Quaternion& other);
 };
 
 //任意軸回転を表すQuaternionの生成

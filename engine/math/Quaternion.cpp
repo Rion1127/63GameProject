@@ -153,21 +153,6 @@ bool Quaternion::operator==(const Quaternion& other) const
 	return false;
 }
 
-void Quaternion::Rotate(const Quaternion& other)
-{
-	float angle = other.w * 0.5f;
-	
-	float sinAngle = std::sin(angle);
-	Quaternion rotation(std::cos(angle), other.x * sinAngle, other.y * sinAngle, other.z * sinAngle);
-
-	Quaternion result = rotation * (*this) * rotation.Conjugate();
-
-	w = result.w;
-	x = result.x;
-	y = result.y;
-	z = result.z;
-}
-
 //”CˆÓ²‰ñ“]‚ğ•\‚·Quaternion‚Ì¶¬
 Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 {
