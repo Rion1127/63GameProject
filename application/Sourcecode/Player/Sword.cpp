@@ -54,7 +54,6 @@ void Sword::Update()
 		Vector3 axisY = {0, 1, 0};
 
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY,rot_), 0.1f);
-		
 	}
 	else if (state_ == SwordState::Attack &&
 		attackManager_->GetNowAttack() != nullptr)
