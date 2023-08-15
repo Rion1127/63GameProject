@@ -5,6 +5,8 @@
 
 enum class PlayerState {
 	Idle,
+	Walk,
+	Run,
 	Jump,
 	Attack,
 	AirAttack,
