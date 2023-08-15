@@ -100,7 +100,7 @@ void CollisionManager::PlayerToWall()
 				emitter->particle = std::make_unique<ParticleWallHit>();
 				emitter->addNum = 1;
 				emitter->time = 60;
-				emitter->pos = interPos;
+				emitter->pos = interPos + (itr->get()->normal * -0.01f);
 				emitter->addVec = rot;
 				emitter->scale = 1.0f;
 

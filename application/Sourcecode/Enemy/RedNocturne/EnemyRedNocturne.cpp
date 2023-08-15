@@ -42,6 +42,9 @@ EnemyRedNocturne::~EnemyRedNocturne()
 
 void EnemyRedNocturne::SetIsNock(bool flag)
 {
+	isKnock_ = flag;
+	actionTimer_.SetLimitTime(40);
+	actionTimer_.Reset();
 }
 
 void EnemyRedNocturne::Draw()
@@ -97,6 +100,21 @@ void EnemyRedNocturne::MoveUpdate()
 	{
 		SortPriority();
 	}
+#ifdef _DEBUG
+
+	ImGui::Begin("RedNocturne");
+
+	std::string text = "State : ";
+	if (state_ == State::Idle)		text += "Idle";
+	if (state_ == State::KnockBack)		text += "KnockBack";
+	if (state_ == State::FireAttack)			text += "FireAttack";
+	if (state_ == State::Wander)		text += "Wander";
+	if (state_ == State::Wander_FireAttack)		text += "Wander_FireAttack";
+	
+	ImGui::Text(text.c_str());
+
+	ImGui::End();
+#endif // _DEBUG
 }
 
 void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)
@@ -106,11 +124,6 @@ void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)
 	auto& bullet = bullets->back();
 	bullet->SetLockOnActor(splayer_);
 	bullet->Init();
-
-	/*fireEmitter_->particle = std::make_unique<ParticleFire>();
-	fireEmitter_->addVec = { 0.05f,0.05f, 0.05f };
-	fireEmitter_->addNum = 3;
-	fireEmitter_->pos = bullet;*/
 	
 	isBulletShot_ = false;
 }
@@ -194,6 +207,14 @@ void EnemyRedNocturne::Wander_FireAttack()
 
 void EnemyRedNocturne::KnockBack()
 {
+	//一定時間経てばノック状態からアイドル状態に戻る
+	attack_.reset();
+	if (actionTimer_.GetIsEnd())
+	{
+		state_ = State::Idle;
+		isKnock_ = false;
+		actionTimer_.Reset();
+	}
 }
 
 void EnemyRedNocturne::SortPriority()

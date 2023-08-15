@@ -62,6 +62,7 @@ void Attack1::Init()
 
 	Vector3 playerFrontPos =
 		selfActor_->GetWorldTransform()->position_ + CalculateFrontVec().normalize() * 3.f;
+	playerFrontPos.y += 0.2f;
 	attackVec.push_back(playerFrontPos);
 	attackVec.push_back(playerFrontPos);
 
