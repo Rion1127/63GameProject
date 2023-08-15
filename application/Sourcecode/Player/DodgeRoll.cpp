@@ -3,8 +3,9 @@
 
 void DodgeRoll::Begin(Vector2 frontVec)
 {
-	speed_ = 1.1f;
-	dodgetimer_.SetLimitTime(60);
+	speed_ = 0.4f;
+	dodgetimer_.SetLimitTime(30);
+	dodgetimer_.Reset();
 	dodgeVec_ = {
 		frontVec.x * speed_,
 		0,
@@ -16,9 +17,10 @@ void DodgeRoll::Begin(Vector2 frontVec)
 void DodgeRoll::Update()
 {
 	dodgetimer_.AddTime(1);
-	MoveTo({0,0,0}, 0.15f, dodgeVec_);
+	MoveTo({0,0,0}, 0.03f, dodgeVec_);
 
 	if (dodgetimer_.GetIsEnd()) {
+		dodgetimer_.Reset();
 		isDodge_ = false;
 	}
 }

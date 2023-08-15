@@ -14,7 +14,8 @@ Player::Player() : IActor()
 	inputAngle_ = 0.0f;
 
 	//移動速度
-	moveSpeed_ = 0.02f;
+	moveSpeed_ = 0.2f;
+	walklimitValue_ = 0.7f;
 
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
@@ -52,7 +53,7 @@ void Player::PreUpdate()
 	{
 		if (controller_->GetTriggerButtons(PAD::INPUT_X))
 		{
-			dodgeRoll_.Begin(moveVec2_.normalize());
+			dodgeRoll_.Begin(moveVec_.normalize());
 		}
 	}
 
@@ -127,11 +128,11 @@ void Player::ColPosUpdate()
 #pragma region 入力
 void Player::InputVecUpdate()
 {
-	moveVec2_ = { 0,0 };
+	moveVec_ = { 0,0 };
 	Vector3 sideVec;
 	Vector3 upVec = { 0,1,0 };
-	Vector2 inputVec;// -> 入力されているベクトル
-
+	inputVec_ = { 0,0 };
+	
 	//プレイヤーの正面ベクトル
 	frontVec_ =
 		Camera::scurrent_->target_ - Camera::scurrent_->eye_;
@@ -144,16 +145,24 @@ void Player::InputVecUpdate()
 	// コントローラーが接続されていたら
 	if (controller_->GetActive())
 	{
+		float inputlength = 0;
 		// 左スティックの入力方向ベクトル取得
-		inputVec = controller_->GetLStick() / 3276.8f;
+		inputVec_ = controller_->GetLStick() / 32768.f;
+		inputlength = inputVec_.length();
+		//スティックの傾きが小さければ歩く
+		if (inputlength <= walklimitValue_) {
+			inputVec_ = inputVec_.normalize() * 0.5f;
+		}
+		else {
+			inputVec_ = inputVec_.normalize();
+		}
 		//カメラから見た左右手前奥移動
-		moveVec2_.x = (frontVec_.z * -inputVec.x) + (sideVec.z * inputVec.y);
-		moveVec2_.y = (frontVec_.z * inputVec.y) + (sideVec.z * inputVec.x);
-		moveVec2_.x = -moveVec2_.x;
-		moveVec2_ *= moveSpeed_;
+		moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
+		moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
+		moveVec_ *= moveSpeed_;
 	}
 
-	addVec_ += {moveVec2_.x, 0, moveVec2_.y};
+	addVec_ += {moveVec_.x, 0, moveVec_.y};
 
 	/*obj_->GetTransform()->position_ = {
 		Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
@@ -162,7 +171,7 @@ void Player::InputVecUpdate()
 	};*/
 
 	// 入力しているベクトルの角度を求める
-	float inputAngle = Vec2Angle(moveVec2_);
+	float inputAngle = Vec2Angle(moveVec_);
 
 	// 計算結果がオーバーフローしていなかったら値を更新
 	if (inputAngle >= 0)
@@ -243,6 +252,9 @@ void Player::StateUpdate()
 		state_ = PlayerState::Guard;
 		sword_.SetState(Sword::SwordState::Guard);
 	}
+	if (dodgeRoll_.GetIsDodge()) {
+		state_ = PlayerState::DodgeRoll;
+	}
 }
 
 void Player::Draw()
@@ -271,26 +283,26 @@ void Player::DrawImGui()
 		obj_->GetTransform()->position_.y,
 		obj_->GetTransform()->position_.z,
 	};
-	ImGui::SliderFloat3("Posision", pos, -100.0f, 100.0f);
-
+	ImGui::Text("Pos x: %.2f y: %.2f z: %.2f ", pos[0], pos[1], pos[2]);
 	//回転
 	float rot[3] = {
 		obj_->GetTransform()->rotation_.x,
 		obj_->GetTransform()->rotation_.y,
 		obj_->GetTransform()->rotation_.z,
 	};
-	ImGui::SliderFloat3("Rotation", rot, -100.0f, 100.0f);
-
+	ImGui::Text("Rot x: %.2f y: %.2f z: %.2f ", rot[0], rot[1], rot[2]);
 	//スケール
 	float scale[3] = {
 		obj_->GetTransform()->scale_.x,
 		obj_->GetTransform()->scale_.y,
 		obj_->GetTransform()->scale_.z,
 	};
-	ImGui::SliderFloat3("Scale", scale, -100.0f, 100.0f);
+	ImGui::Text("Scale x: %.2f y: %.2f z: %.2f ", scale[0], scale[1], scale[2]);
 
 	std::string text = "State : ";
 	if (state_ == PlayerState::Idle)		text += "Idle";
+	if (state_ == PlayerState::Walk)		text += "Walk";
+	if (state_ == PlayerState::Run)			text += "Run";
 	if (state_ == PlayerState::Jump)		text += "Jump";
 	if (state_ == PlayerState::Attack)		text += "Attack";
 	if (state_ == PlayerState::AirAttack)	text += "AirAttack";
@@ -301,10 +313,10 @@ void Player::DrawImGui()
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
-	ImGui::SliderFloat3("addvec", addvec, 0.f, 80.f, "x = %.3f");
+	ImGui::SliderFloat3("addvec", addvec, 0.f, 1.f, "x = %.3f");
 
 	float gravity = gravity_.GetGravityValue().y;
-	ImGui::SliderFloat("gravity", &gravity, -80.f, 0.f, "y = %.3f");
+	ImGui::SliderFloat("gravity", &gravity, -1.f, 0.f, "y = %.3f");
 
 	if (ImGui::Button("Damage"))
 	{
@@ -354,6 +366,7 @@ bool Player::GetIsCanMove()
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
+		state_ != PlayerState::DodgeRoll &&
 		state_ != PlayerState::Landing)
 	{
 		return true;
@@ -383,9 +396,8 @@ bool Player::GetIsCanGuard()
 		state_ != PlayerState::Guard &&
 		state_ != PlayerState::Jump)
 	{
-		if (addVec_.x == 0 &&
-			addVec_.y == 0 &&
-			addVec_.z == 0)
+		if (inputVec_.x == 0 &&
+			inputVec_.y == 0)
 		{
 			return true;
 		}

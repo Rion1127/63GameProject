@@ -18,18 +18,21 @@ class Player final:
 private:
 
 	//ベクトル
-	Vector3 move_;
 	Vector3 frontVec_;
 	Vector3 lockOnVec_;
-	Vector2 moveVec2_;
+	Vector2 inputVec_;
+	Vector2 moveVec_;
 	// --入力-- //
-	float inputAngle_;// -> 入力されている方向の角度
+	float inputAngle_;	//入力されている方向の角度
+	float walklimitValue_;	//入力
 
 	float moveSpeed_;
 
 	bool isCanJump_;
 	bool isAlive_;
 	int jumpTime_;
+
+	
 
 	AttackManager attack_;
 	Guard guard_;
