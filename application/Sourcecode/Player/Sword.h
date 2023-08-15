@@ -23,6 +23,8 @@ private:
 	Vector3 goalPos_;
 	Vector3 nowPos_;
 
+	float rot_;
+
 	AttackManager* attackManager_;
 public:
 	Sword();
