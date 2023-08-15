@@ -395,9 +395,9 @@ float Radian(float angle) {
 
 
 
-float UpAndDown(float oneRoundTime, float range)
+float UpAndDown(float oneRoundTime, float range, float timer)
 {
-	return 0.0f;
+	return (sinf(PI * 2.f / oneRoundTime * timer) * range);
 }
 
 //float UpAndDown(float oneRoundTime, float range)

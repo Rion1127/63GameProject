@@ -2,6 +2,7 @@
 #include "Object3d.h"
 #include "AttackManager.h"
 #include "IAttack.h"
+#include "Timer.h"
 class Sword
 {
 public:
@@ -9,9 +10,6 @@ public:
 		Idle,
 		Attack,
 		Guard,
-
-
-
 		Debug
 	};
 private:
@@ -19,6 +17,8 @@ private:
 	Object3d* playerObj_;
 	SwordState state_;
 	Vector3 localPos_;
+	//Idle注にふわふわ浮くようにするタイマー
+	Timer floatingTimer_;
 
 	Vector3 goalPos_;
 	Vector3 nowPos_;

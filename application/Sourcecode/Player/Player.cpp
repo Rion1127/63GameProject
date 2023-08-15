@@ -54,6 +54,9 @@ void Player::PreUpdate()
 		if (controller_->GetTriggerButtons(PAD::INPUT_X))
 		{
 			dodgeRoll_.Begin(moveVec_.normalize());
+			damageCoolTime_.Reset();
+			uint32_t limit = dodgeRoll_.GetdodgeTimer().GetLimitTimer();
+			damageCoolTime_.SetLimitTime(limit);
 		}
 	}
 
@@ -437,6 +440,7 @@ void Player::GuardHit(Vector3 knockVec)
 	knockVec_ += knockVec;
 	guard_.GuardHit();
 	damageCoolTime_.Reset();
+	damageCoolTime_.SetLimitTime(50);
 }
 
 void Player::Reset()

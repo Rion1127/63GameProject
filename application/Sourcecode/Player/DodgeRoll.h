@@ -14,5 +14,6 @@ public:
 public:
 	Vector3 GetDodgeVec() { return dodgeVec_; }
 	bool GetIsDodge() { return isDodge_; }
+	Timer GetdodgeTimer() { return dodgetimer_; }
 };
 

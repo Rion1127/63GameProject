@@ -130,7 +130,7 @@ float Angle(float radian);
 //角度からラジアン
 float Radian(float angle);
 
-float UpAndDown(float oneRoundTime, float range);
+float UpAndDown(float oneRoundTime, float range,float timer);
 
 float Vec2Angle(Vector2 vec);
 

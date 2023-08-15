@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include "ParticleHitAttack.h"
 #include <imgui.h>
+#include "myMath.h"
 
 Sword::Sword()
 {
@@ -10,6 +11,9 @@ Sword::Sword()
 	obj_->SetModel(Model::CreateOBJ_uniptr("sword"));
 	obj_->SetScale({ 0.5f,0.5f, 0.5f });
 	obj_->WT_.SetRotType(RotType::Quaternion);
+
+	floatingTimer_.SetLimitTime(120);
+	floatingTimer_.SetIsLoop(true);
 }
 
 void Sword::Update()
@@ -29,6 +33,14 @@ void Sword::Update()
 		//À•WˆÚ“®
 		goalPos_ = pos - frontVec * 1.2f;
 		goalPos_.y += playerObj_->WT_.scale_.y;
+
+		floatingTimer_.AddTime(1);
+		float roundTime = (float)floatingTimer_.GetLimitTimer();
+		float timer = (float)floatingTimer_.GetTimer();
+		float floatingPos = UpAndDown(roundTime,0.3f, timer);
+
+		goalPos_.y += floatingPos;
+
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
 		nowPos_ += nowToGoalVec * 0.1f;
 		obj_->SetPos(nowPos_);
