@@ -48,6 +48,8 @@ void GameScene::Ini()
 
 	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData(cupName_).size();
 	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
+
+	lightColor_ = { 1,1,1 };
 }
 
 void GameScene::Update()
@@ -73,7 +75,10 @@ void GameScene::Update()
 		enemyManager_->PostUpdate();
 		player_->PostUpdate();
 
-		lightManager_->DebugUpdate();
+		
+		lightManager_->GetLightGroup()->SetDirLightColor(0, lightColor_);
+
+		lightManager_->Update();
 		ParticleManager::GetInstance()->Update();
 
 		operationUI_->Update();
@@ -95,6 +100,11 @@ void GameScene::Update()
 			uint32_t nextRound = colosseumSystem_->GetRoundNum();
 			EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), cupName_, nextRound);
 			colosseumSystem_->SetIsReset(false);
+
+			uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData(cupName_).size();
+			float rate = 1.f - ((float)nextRound / (float)maxRoundNum);
+			float colGB = 1.f * rate;
+			lightColor_ = { 1.f,colGB,colGB };
 		}
 	}
 	pauseMenu_->Update();

@@ -19,7 +19,7 @@ LightManager::LightManager()
 	//点光源
 	else if (lightType_ == LIGHTTYPE::POINT_)
 	{
-		lightGroup->SetPointLightActive(0, true);
+		lightGroup->SetPointLightActive(0, false);
 		lightGroup->SetPointLightActive(1, false);
 		lightGroup->SetPointLightActive(2, false);
 		pointLightPos[0] = 0.5f;
@@ -29,10 +29,10 @@ LightManager::LightManager()
 	//スポットライト
 	else if (lightType_ == LIGHTTYPE::SPOT_)
 	{
-		lightGroup->SetSpotLightActive(0, true);
+		lightGroup->SetSpotLightActive(0, false);
 	}
 
-	lightGroup->SetCircleShadowActive(0, true);
+	lightGroup->SetCircleShadowActive(0, false);
 }
 
 void LightManager::DebugUpdate()
@@ -97,6 +97,12 @@ void LightManager::DebugUpdate()
 	lightGroup->SetCircleShadowDir(0, { circleShadowDir[0],circleShadowDir[1], circleShadowDir[2] });
 	lightGroup->SetCircleShadowAtten(0, { circleShadowAtten[0],circleShadowAtten[1], circleShadowAtten[2] });
 	lightGroup->SetCircleShadowFactorAngle(0, { circleShadowFactorAngle[0],circleShadowFactorAngle[1] });
+}
+
+void LightManager::Update()
+{
+	lightGroup->Update();
+	//DirectionalLightUpdate();
 }
 
 void LightManager::DirectionalLightUpdate()

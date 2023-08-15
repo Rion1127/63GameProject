@@ -30,6 +30,7 @@ private:
 	GameCamera gameCamera_;
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
+	Vector3 lightColor_;
 
 	//è∞
 	std::unique_ptr<Stage> stage_;

@@ -287,7 +287,7 @@ void EnemyShadow::SortPriority()
 	//‰“‚­‚É‚¢‚é‚Æ‚«
 	else
 	{
-		priority_.at(State::Wander) += 10000;
+		priority_.at(State::Wander) += 100;
 		priority_.at(State::Following) += 70;
 		priority_.at(State::Idle) += 5;
 	}
@@ -301,7 +301,7 @@ void EnemyShadow::SortPriority()
 		if (p.second == 0) continue;
 
 		arr.emplace_back(p);
-		//—Dæ“x‚Ì
+		//—Dæ“x‚ğ‘«‚µ‚Ä‚¢‚­
 		allPriolityValue += p.second;
 	}
 	//~‡‚É•À‚Ñ•Ï‚¦‚é

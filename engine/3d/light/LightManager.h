@@ -53,7 +53,7 @@ public:
 	LightManager();
 	void DebugUpdate();
 
-
+	void Update();
 
 	std::shared_ptr<LightGroup> GetLightGroup() { return lightGroup; }
 };
