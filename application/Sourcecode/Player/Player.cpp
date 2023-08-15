@@ -379,7 +379,8 @@ bool Player::GetIsCanMove()
 
 bool Player::GetIsCanDodge()
 {
-	if (state_ == PlayerState::Idle)
+	if (state_ == PlayerState::Idle &&
+		state_ != PlayerState::DodgeRoll)
 	{
 		if (addVec_.x != 0 ||
 			addVec_.y != 0 ||
@@ -397,7 +398,8 @@ bool Player::GetIsCanGuard()
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
-		state_ != PlayerState::Jump)
+		state_ != PlayerState::Jump &&
+		state_ != PlayerState::DodgeRoll)
 	{
 		if (inputVec_.x == 0 &&
 			inputVec_.y == 0)
@@ -413,7 +415,8 @@ bool Player::GetIsCanJump()
 	if (state_ != PlayerState::Attack &&
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
-		state_ != PlayerState::Guard)
+		state_ != PlayerState::Guard &&
+		state_ != PlayerState::DodgeRoll)
 	{
 		return true;
 	}

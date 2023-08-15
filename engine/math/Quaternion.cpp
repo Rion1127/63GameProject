@@ -65,10 +65,10 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 {
 	Quaternion q = q1;
 	q = q.Normalize();
-	if (*this == q)
+	/*if (*this == q)
 	{
 		return *this;
-	}
+	}*/
 	if (isfinite(this->x) == false ||
 		isfinite(this->y) == false || 
 		isfinite(this->z) == false || 

@@ -21,7 +21,6 @@ void Sword::Update()
 	
 	//UŒ‚Žž‚ÌŒ•‚Ì“®‚«
 	if (state_ == SwordState::Idle) {
-		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
 		//ƒvƒŒƒCƒ„[‚Ì”w’†‚ÉŒü‚©‚Á‚Ä™X‚ÉˆÚ“®‚·‚é
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = {
@@ -33,12 +32,11 @@ void Sword::Update()
 		//À•WˆÚ“®
 		goalPos_ = pos - frontVec * 1.2f;
 		goalPos_.y += playerObj_->WT_.scale_.y;
-
+		//ã‰º‚É•‚‚©‚Î‚¹‚é
 		floatingTimer_.AddTime(1);
 		float roundTime = (float)floatingTimer_.GetLimitTimer();
 		float timer = (float)floatingTimer_.GetTimer();
 		float floatingPos = UpAndDown(roundTime,0.3f, timer);
-
 		goalPos_.y += floatingPos;
 
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
@@ -58,6 +56,7 @@ void Sword::Update()
 	else if (state_ == SwordState::Attack &&
 		attackManager_->GetNowAttack() != nullptr)
 	{
+		//‰ñ“]‚ÌeŽqŠÖŒW‚ð‰ðœ
 		obj_->WT_.parentRotMat_ = nullptr;
 		//À•W
 		Vector3 pos = attackManager_->GetNowAttack()->GetAttackCol()->at(0)->col_.center;
@@ -71,6 +70,7 @@ void Sword::Update()
 		obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 1, 0), PtoSVec);
 	}
 	else if (state_ == SwordState::Guard) {
+		//‰ñ“]s—ñ‚ðeŽqŠÖŒW‚É‚·‚é
 		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
 		//À•W
 		Vector3 pos = playerObj_->WT_.position_;
@@ -93,6 +93,10 @@ void Sword::Update()
 		Quaternion guard = { 2.5f, 1, 0, 0 };
 		guard = guard.Normalize();
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(guard, 0.5f);
+	}
+
+	if (state_ != SwordState::Idle) {
+		rot_ = 0;
 	}
 
 	obj_->Update();
