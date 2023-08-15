@@ -45,12 +45,16 @@ void Sword::Update()
 		nowPos_ += nowToGoalVec * 0.1f;
 		obj_->SetPos(nowPos_);
 		//‰ñ“]ˆ—
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(Quaternion(0, sinf(rot_), 0, cosf(rot_)), 0.1f);
 		//í‚É‰ñ“]‚³‚¹‚é
 		rot_ += 0.02f;
 		if (rot_ >= 3.14f) {
 			rot_ = -rot_;
 		}
+
+		Vector3 axisY = {0, 1, 0};
+
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY,rot_), 0.1f);
+		
 	}
 	else if (state_ == SwordState::Attack &&
 		attackManager_->GetNowAttack() != nullptr)
