@@ -42,14 +42,14 @@ PauseMenu::PauseMenu()
 
 void PauseMenu::Update()
 {
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_START)) {
+	if (Controller::GetTriggerButtons(PAD::INPUT_START)) {
 		isPause_ = (isPause_ == true) ? false : true;
 	}
 
 	if (isPause_) {
 		//ƒƒjƒ…[‘I‘ð
-		if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_DOWN) ||
-			Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_UP))
+		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
+			Controller::GetTriggerButtons(PAD::INPUT_UP))
 		{
 			SoundManager::Play("SelectSE");
 			bool type = (selectType_ == SelectType::Continue);
@@ -70,7 +70,7 @@ void PauseMenu::Update()
 			titleSprite_->SetColor(selectColor);
 		}
 		//Œˆ’è
-		if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
+		if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 			Key::TriggerKey(DIK_SPACE))
 		{
 			if (SceneManager::GetIsSetNext() == false)

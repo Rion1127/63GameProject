@@ -41,7 +41,7 @@ void Key::InputIni()	//初期化
 	//DISCL_FOREGROUND		画面が手前にある場合のみ入力を受け付ける
 	//DISCL_NONEXCLUSIVE	デバイスをこのアプリだけで占有しない
 	//DISCL_NOWINKEY		Windowsキーを無効化する 
-	
+
 	//キーボード情報の取得開始
 	skeyboard_->Acquire();
 }
@@ -85,7 +85,7 @@ MouseInput* MouseInput::GetInstance()
 void MouseInput::MouseIni()
 {
 	HRESULT result;
-	
+
 	//キーボードデバイスの生成
 	result = sdirectInput->CreateDevice(GUID_SysMouse, &mouse_, NULL);
 	assert(SUCCEEDED(result));
@@ -119,13 +119,13 @@ void MouseInput::GetCursorPosition()
 	mPos_.y = (float)p_.y;
 	//マウスがどの方向に動いたかのベクトルを取得
 	mouseVec_ = mPos_ - prevmPos_;
-	
+
 }
 #include <string>
 void MouseInput::Updata()
 {
 	HRESULT result;
-	
+
 	//マウス情報の取得開始
 	mouse_->Acquire();	//ここに置いたことで解決
 
@@ -137,7 +137,7 @@ void MouseInput::Updata()
 	if (result == DIERR_INPUTLOST) {
 		//str = "NG\n";
 	}
-	
+
 	result = mouse_->GetDeviceState(sizeof(DIMOUSESTATE), &mouseState_);
 	//ウィンドウの外をクリックしたら入力情報を無効にする
 	if (FAILED(result)) {
@@ -207,12 +207,12 @@ float MouseInput::GetCursorMoveZ()
 #pragma endregion
 
 #pragma region コントローラ
-Controller* Controller::GetInstance()
-{
-	static Controller instance;
-	return &instance;
-}
+XINPUT_STATE Controller::state_;
+XINPUT_STATE Controller::preState_;
+bool Controller::isConnect_;
 
+//バイブレーション
+XINPUT_VIBRATION Controller::vibration_;
 void Controller::Ini()
 {
 	Update();
@@ -268,7 +268,7 @@ WORD Controller::GetReleasButtons(PAD button)
 Vector2 Controller::GetLStick(int32_t deadZone)
 {
 	Vector2 stickPos;
-	
+
 	//左スティック
 	stickPos.x = state_.Gamepad.sThumbLX;
 	stickPos.y = state_.Gamepad.sThumbLY;

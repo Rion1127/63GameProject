@@ -308,8 +308,8 @@ void ColosseumSystem::ClearUpdate()
 {
 	player_->SetIsCanMove(false);
 	//ƒƒjƒ…[‘I‘ð
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_DOWN) ||
-		Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_UP))
+	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
+		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
 		SoundManager::Play("SelectSE");
 		bool type = (selectType_ == SelectType::Retry);
@@ -330,7 +330,7 @@ void ColosseumSystem::ClearUpdate()
 		titleSprite_->SetColor(selectColor);
 	}
 	//Œˆ’è
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
+	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
 	{
 		if (SceneManager::GetIsSetNext() == false)

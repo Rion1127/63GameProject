@@ -6,7 +6,6 @@
 
 Player::Player() : IActor()
 {
-	controller_ = Controller::GetInstance();
 
 	gravity_.SetAddValue({ 0,-0.01f,0 });
 
@@ -51,7 +50,7 @@ void Player::PreUpdate()
 	//ドッジロール
 	if (GetIsCanDodge())
 	{
-		if (controller_->GetTriggerButtons(PAD::INPUT_X))
+		if (Controller::GetTriggerButtons(PAD::INPUT_X))
 		{
 			dodgeRoll_.Begin(moveVec_.normalize());
 			damageCoolTime_.Reset();
@@ -85,7 +84,7 @@ void Player::PostUpdate()
 	}
 	if (GetIsCanGuard())
 	{
-		if (controller_->GetTriggerButtons(PAD::INPUT_X))
+		if (Controller::GetTriggerButtons(PAD::INPUT_X))
 		{
 			//空中にいるとき、ノックバックの時攻撃の時はガードができない
 			SoundManager::Play("GuardSE", false, 0.5f);
@@ -146,11 +145,11 @@ void Player::InputVecUpdate()
 	sideVec = sideVec.normalize();
 
 	// コントローラーが接続されていたら
-	if (controller_->GetActive())
+	if (Controller::GetActive())
 	{
 		float inputlength = 0;
 		// 左スティックの入力方向ベクトル取得
-		inputVec_ = controller_->GetLStick() / 32768.f;
+		inputVec_ = Controller::GetLStick() / 32768.f;
 		inputlength = inputVec_.length();
 		//スティックの傾きが小さければ歩く
 		if (inputlength <= walklimitValue_) {
@@ -181,8 +180,8 @@ void Player::InputVecUpdate()
 	{
 		inputAngle_ = inputAngle;
 	}
-	if (controller_->GetLStick().x != 0 ||
-		controller_->GetLStick().y != 0)
+	if (Controller::GetLStick().x != 0 ||
+		Controller::GetLStick().y != 0)
 	{
 		obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
 	}
@@ -194,13 +193,13 @@ void Player::JumpUpdate()
 	float jumpSpeed = 0.2f;
 	int Maxjumptimer = 10;
 	
-	if (controller_->GetTriggerButtons(PAD::INPUT_A)) {
+	if (Controller::GetTriggerButtons(PAD::INPUT_A)) {
 		//ジャンプしたらジャンプ可能フラグをfalseにする
 		isCanJump_ = false;
 	}
 	if (isCanJump_ == false) {
 		//Aを押し続けた分高くジャンプする
-		if (controller_->GetButtons(PAD::INPUT_A))
+		if (Controller::GetButtons(PAD::INPUT_A))
 		{
 			if (jumpTime_ < Maxjumptimer)
 			{
@@ -211,7 +210,7 @@ void Player::JumpUpdate()
 		}
 	}
 	//途中でAを離したら着地するまでジャンプできないようにする
-	if (controller_->GetReleasButtons(PAD::INPUT_A))
+	if (Controller::GetReleasButtons(PAD::INPUT_A))
 	{
 		jumpTime_ = Maxjumptimer;
 	}
@@ -264,9 +263,9 @@ void Player::Draw()
 {
 	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
 	obj_->Draw();
-	//if (attack_.GetIsAttacking()) {
+	
 	sword_.Draw();
-	//}
+	
 
 #ifdef _DEBUG
 	DrawImGui();

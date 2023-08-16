@@ -9,7 +9,6 @@ GameOverScene::~GameOverScene()
 
 void GameOverScene::Ini()
 {
-	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
 
 	titleSprite_ = std::move(std::make_unique<Sprite>());
@@ -48,8 +47,8 @@ void GameOverScene::Update()
 	CameraUpdate();
 
 	//ƒƒjƒ…[‘I‘ð
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_DOWN) ||
-		Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_UP))
+	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
+		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
 		SoundManager::Play("SelectSE");
 		bool type = (selectType_ == SelectType::Continue);
@@ -70,7 +69,7 @@ void GameOverScene::Update()
 		titleSprite_->SetColor(selectColor);
 	}
 	//Œˆ’è
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
+	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
 	{
 		if (SceneManager::GetIsSetNext() == false) {

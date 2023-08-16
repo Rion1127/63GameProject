@@ -14,7 +14,6 @@ GameScene::~GameScene()
 
 void GameScene::Ini()
 {
-	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
 
 	lightManager_ = std::make_shared<LightManager>();

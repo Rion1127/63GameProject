@@ -23,7 +23,6 @@ class GameScene final:
 	public IScene
 {
 private:
-	Controller* controller_ = nullptr;
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 

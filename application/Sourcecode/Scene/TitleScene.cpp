@@ -7,7 +7,6 @@ TitleScene::~TitleScene()
 
 void TitleScene::Ini()
 {
-	controller_ = Controller::GetInstance();
 	sound_ = SoundManager::GetInstance();
 
 	pressASprite_ = std::move(std::make_unique<Sprite>());
@@ -42,7 +41,7 @@ void TitleScene::Update()
 {
 	CameraUpdate();
 	
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_A) ||
+	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE)) 
 	{
 		if (SceneManager::GetIsSetNext() == false) {

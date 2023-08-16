@@ -17,7 +17,6 @@ private:
 		Title
 	};
 private:
-	Controller* controller_ = nullptr;
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 

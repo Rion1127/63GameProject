@@ -170,7 +170,7 @@ void EnemyManager::LockOnSpriteUpdate()
 
 	lockOnobjRot++;
 
-	if (Controller::GetInstance()->GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
+	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 	{
 		addRot = 10.f;
 	}

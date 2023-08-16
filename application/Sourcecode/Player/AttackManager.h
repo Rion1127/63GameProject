@@ -20,7 +20,6 @@ class AttackManager
 private:
 	static Player* player_;
 	PlayerState* playerState_;
-	Controller* controller_ = nullptr;
 	//攻撃のデータ・プール
 	std::vector<std::unique_ptr<IAttack>> attacks_;
 

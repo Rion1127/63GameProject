@@ -106,32 +106,31 @@ enum DeadZone {
 //コントローラ
 class Controller {
 private:
-	XINPUT_STATE state_;
-	XINPUT_STATE preState_;
-	bool isConnect_;
+	static XINPUT_STATE state_;
+	static XINPUT_STATE preState_;
+	static bool isConnect_;
 
 	//バイブレーション
-	XINPUT_VIBRATION vibration_;
+	static XINPUT_VIBRATION vibration_;
 
 public:
-	static Controller* GetInstance();
+	
+	static void Ini();
 
-	void Ini();
+	static void Update();
 
-	void Update();
+	static bool GetActive() { return isConnect_; }
 
-	bool GetActive() { return isConnect_; }
-
-	WORD GetButtons(PAD button);
-	WORD GetTriggerButtons(PAD button);
-	WORD GetReleasButtons(PAD button);
+	static WORD GetButtons(PAD button);
+	static WORD GetTriggerButtons(PAD button);
+	static WORD GetReleasButtons(PAD button);
 	//false	右スティック
 	//true	左スティック
-	Vector2 GetLStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-	Vector2 GetRStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+	static Vector2 GetLStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+	static Vector2 GetRStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 
-	BYTE GetRTrigger();
-	BYTE GetLTrigger();
+	static BYTE GetRTrigger();
+	static BYTE GetLTrigger();
 private:
 	Controller() {};
 };

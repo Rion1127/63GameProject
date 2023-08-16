@@ -8,7 +8,6 @@ Player* AttackManager::player_ = nullptr;
 
 AttackManager::AttackManager()
 {
-	controller_ = Controller::GetInstance();
 	comboNum = 0;
 	//attacks_.emplace_back(std::move(std::make_unique<Attack1>()));
 	isAttacking = false;
@@ -17,7 +16,7 @@ AttackManager::AttackManager()
 void AttackManager::Update()
 {
 	//IAttack::SetLockOnActor(lockOnEnemy_);
-	if (controller_->GetTriggerButtons(PAD::INPUT_B))
+	if (Controller::GetTriggerButtons(PAD::INPUT_B))
 	{
 		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
 		if (comboNum < MAX_COMBO)

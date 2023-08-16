@@ -25,8 +25,7 @@ class GameCamera {
 private:
 	std::unique_ptr<Camera> camera_;
 	Player* player_;
-	Controller* controller_ = nullptr;
-
+	
 	Vector3 moveDist{};	//ãÖñ ç¿ïW
 
 	DeadZoneValue deadZone_;

@@ -48,8 +48,6 @@ private:
 	Sphere damageCol_;
 
 	Sword sword_;
-private:
-	Controller* controller_ = nullptr;
 public:
 	Player();
 	void PreUpdate();

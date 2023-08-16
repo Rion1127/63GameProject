@@ -16,7 +16,7 @@ void Framework::Init()
 	//キーボード
 	Key::InputIni();
 	//コントローラー
-	Controller::GetInstance()->Ini();
+	Controller::Ini();
 	//マウス
 	MouseInput::GetInstance()->MouseIni();
 	//サウンド初期化
@@ -50,7 +50,7 @@ void Framework::Update()
 	ImGuiManager::Getinstance()->Begin();
 	//インプット関連更新
 	Key::InputUpdata();
-	Controller::GetInstance()->Update();
+	Controller::Update();
 	MouseInput::GetInstance()->Updata();
 	SoundManager::Update();
 #ifdef _DEBUG

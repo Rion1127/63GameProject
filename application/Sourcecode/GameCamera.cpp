@@ -4,7 +4,6 @@
 GameCamera::GameCamera()
 {
 	camera_ = std::move(std::make_unique<Camera>());
-	controller_ = Controller::GetInstance();
 
 	deadZone_ = {
 		DeadZone::Mul_2,
@@ -44,8 +43,8 @@ void GameCamera::UpdateCameraPos()
 
 	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
-		moveDist.x -= controller_->GetRStick(deadZone_.x).x * transSpeed_.x;
-		moveDist.y += controller_->GetRStick(deadZone_.y).y * transSpeed_.y;
+		moveDist.x -= Controller::GetRStick(deadZone_.x).x * transSpeed_.x;
+		moveDist.y += Controller::GetRStick(deadZone_.y).y * transSpeed_.y;
 		//カメラがどのくらいプレイヤーに近づくかClampをする
 		moveDist.y = Clamp(moveDist.y, -1.0f, 1.0f);
 	}

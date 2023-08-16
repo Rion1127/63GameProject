@@ -531,6 +531,9 @@
     <ClCompile Include="application\Sourcecode\PauseMenu.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -832,6 +835,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Player.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
