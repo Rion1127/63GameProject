@@ -4,6 +4,6 @@ class MagicManager
 private:
 
 public:
-	void 
+	void Update();
 };
 
