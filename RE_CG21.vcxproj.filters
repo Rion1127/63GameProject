@@ -528,9 +528,6 @@
     <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\AttackRedNocturne.cpp">
       <Filter>application\ソースファイル\Enemy\RedNocturne\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\IBullet.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
@@ -541,6 +538,12 @@
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp">
+      <Filter>application\ソースファイル\Player\Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\IBullet.cpp">
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\MagicBrrizard.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -833,9 +836,6 @@
     <ClInclude Include="resource.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\IBullet.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
@@ -849,6 +849,12 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\MagicManager.h">
+      <Filter>application\ヘッダーファイル\Player\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\IBullet.h">
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\MagicBrrizard.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
   </ItemGroup>
