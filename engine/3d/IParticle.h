@@ -83,7 +83,7 @@ public:
 
 	void Draw();
 
-	virtual void Add(int32_t addNum, int32_t time, Vector3 pos, Vector3 addVec, float scale,Vector3* parentPos = nullptr) = 0;
+	virtual void Add() = 0;
 	void SetEmitter(IEmitter* emitter) { emitter_ = emitter; }
 public:
 	std::string GetShaderName() { return shaderName_; }

@@ -11,12 +11,10 @@ ParticleTest::ParticleTest() :
 	isBillBoard = true;
 }
 
-void ParticleTest::Add(int32_t addNum, int32_t time,
-	Vector3 pos, Vector3 addVec,
-	float scale, Vector3* parentPos)
+void ParticleTest::Add()
 {
-	transform_.position_ = pos;
-	for (int i = 0; i < addNum; i++)
+	transform_.position_ = emitter_->pos;
+	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
 		if (particles_.size() >= vertexCount)
@@ -29,17 +27,17 @@ void ParticleTest::Add(int32_t addNum, int32_t time,
 		Particle& p = particles_.back();
 		
 		Vector3 vec = {
-			RRandom::RandF(-addVec.x,addVec.x),
-			RRandom::RandF(-addVec.y,addVec.y),
+			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
+			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
 			0
 		};
 
 		p.position = vec;
-		p.basePos = pos;
-		p.end_frame = time;
+		p.basePos = emitter_->pos;
+		p.end_frame = emitter_->time;
 		p.velocity = {0,0,0};
-		p.scale = scale;
-		p.baseScale = scale;
+		p.scale = emitter_->scale;
+		p.baseScale = emitter_->scale;
 	}
 }
 

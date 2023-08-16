@@ -46,7 +46,5 @@ void ParticleManager::AddParticle(std::string name, std::shared_ptr<IEmitter> em
 	emitters_.emplace_back();
 	emitters_.back() = emitter;
 	emitters_.back()->particle->SetEmitter(emitter.get());
-	emitters_.back()->particle->Add(emitter->addNum, emitter->time,
-		emitter->pos, emitter->addVec,
-		emitter->scale,emitter->parentPos);
+	emitters_.back()->particle->Add();
 }

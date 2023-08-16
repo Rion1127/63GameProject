@@ -48,6 +48,7 @@ void AttackRedNocturne::Init()
 	fireEmitter_->time = 20;
 	fireEmitter_->pos = attackCol_->col_.center;
 	fireEmitter_->scale = 1.f;
+	fireEmitter_->particle->SetEmitter(fireEmitter_.get());
 	ParticleManager::GetInstance()->AddParticle("fireBall", fireEmitter_);
 }
 
@@ -68,12 +69,7 @@ void AttackRedNocturne::MoveUpdate()
 
 	fireEmitter_->popCoolTime_.AddTime(1);
 	if (fireEmitter_->popCoolTime_.GetIsEnd()) {
-		fireEmitter_->particle->Add(
-			fireEmitter_->addNum,
-			fireEmitter_->time,
-			fireEmitter_->pos,
-			fireEmitter_->addVec,
-			fireEmitter_->scale);
+		fireEmitter_->particle->Add();
 
 		fireEmitter_->popCoolTime_.Reset();
 	}

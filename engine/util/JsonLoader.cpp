@@ -92,17 +92,6 @@ void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 
 			newobj->SetIsVisible(isVisible);
 			levelData->object.push_back(std::move(newobj));
-
-			/*if (object.contains("children"))
-			{
-				levelData->object.emplace_back();
-				Object3d& newobj = levelData->object.back();
-
-				Object3d& parent = levelData->object.at(levelData->object.size() - 2);
-
-				newobj.SetParent(parent.GetTransform());
-
-			}*/
 		}
 		else if (type.compare("CAMERA") == 0)
 		{

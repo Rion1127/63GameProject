@@ -13,12 +13,10 @@ ParticleEnemyDead::ParticleEnemyDead() :
 	isBillBoard = true;
 }
 
-void ParticleEnemyDead::Add(int32_t addNum, int32_t time,
-	Vector3 pos, Vector3 addVec,
-	float scale, Vector3* parentPos)
+void ParticleEnemyDead::Add()
 {
-	transform_.position_ = pos;
-	for (int i = 0; i < addNum; i++)
+	transform_.position_ = emitter_->pos;
+	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
 		if (particles_.size() >= vertexCount)
@@ -31,31 +29,29 @@ void ParticleEnemyDead::Add(int32_t addNum, int32_t time,
 		Particle& p = particles_.back();
 
 		Vector3 vec = {
-			RRandom::RandF(-addVec.x,addVec.x),
-			RRandom::RandF(-addVec.y,addVec.y),
-			RRandom::RandF(-addVec.z,addVec.z)
+			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
+			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
+			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
 		Vector3 addrot = {
-			RRandom::RandF(-addVec.x,addVec.x),
-			RRandom::RandF(-addVec.y,addVec.y),
-			RRandom::RandF(-addVec.z,addVec.z)
+			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
+			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
+			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
-		float scale_ = RRandom::RandF(0.3f, scale);
-
-		Vector3 dist = pos - (pos + vec);
+		float scale_ = RRandom::RandF(0.3f, emitter_->scale);
 
 		p.position = vec;
-		p.basePos = pos;
-		p.end_frame = time;
-		p.scale = scale;
-		p.baseScale = scale;
+		p.basePos = emitter_->pos;
+		p.end_frame = emitter_->time;
+		p.scale = emitter_->scale;
+		p.baseScale = emitter_->scale;
 		p.color = { 5,5,35,0 };
 	}
 	std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 	hitEmitter_->particle = std::make_unique<ParticleHeart>();
 	hitEmitter_->addNum = 1;
 	hitEmitter_->time = 80;
-	hitEmitter_->pos = pos;
+	hitEmitter_->pos = emitter_->pos;
 	hitEmitter_->addVec = { 0.f,0.05f, 0.0f };
 	hitEmitter_->scale = 1.0f;
 	ParticleManager::GetInstance()->
@@ -93,12 +89,10 @@ ParticleHeart::ParticleHeart() :
 	isBillBoard = true;
 }
 
-void ParticleHeart::Add(int32_t addNum, int32_t time,
-	Vector3 pos, Vector3 addVec,
-	float scale, Vector3* parentPos)
+void ParticleHeart::Add()
 {
-	transform_.position_ = pos;
-	for (int i = 0; i < addNum; i++)
+	transform_.position_ = emitter_->pos;
+	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
 		if (particles_.size() >= vertexCount)
@@ -110,11 +104,11 @@ void ParticleHeart::Add(int32_t addNum, int32_t time,
 		//追加した要素の参照
 		Particle& p = particles_.back();
 
-		p.veloAdd = addVec;
-		p.basePos = pos;
-		p.end_frame = time;
-		p.scale = scale;
-		p.baseScale = scale;
+		p.veloAdd = emitter_->addVec;
+		p.basePos = emitter_->pos;
+		p.end_frame = emitter_->time;
+		p.scale = emitter_->scale;
+		p.baseScale = emitter_->scale;
 		p.color = { 455,455,455,255 };
 	}
 }

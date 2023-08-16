@@ -14,12 +14,10 @@ ParticleFire::ParticleFire() :
 	state_ = PipeLineState::Add;
 }
 
-void ParticleFire::Add(int32_t addNum, int32_t time,
-	Vector3 pos, Vector3 addVec,
-	float scale, Vector3* parentPos)
+void ParticleFire::Add()
 {
 	//transform_.position_ = pos;
-	for (int i = 0; i < addNum; i++)
+	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
 		if (particles_.size() >= vertexCount)
@@ -32,24 +30,22 @@ void ParticleFire::Add(int32_t addNum, int32_t time,
 		Particle& p = particles_.back();
 
 		Vector3 vec = {
-			RRandom::RandF(-addVec.x,addVec.x),
-			RRandom::RandF(-addVec.y,addVec.y),
-			RRandom::RandF(-addVec.z,addVec.z)
+			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
+			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
+			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
 		Vector3 addrot = {
-			RRandom::RandF(-addVec.x,addVec.x),
-			RRandom::RandF(-addVec.y,addVec.y),
-			RRandom::RandF(-addVec.z,addVec.z)
+			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
+			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
+			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
-		float scale_ = RRandom::RandF(0.3f, scale);
+		float scale_ = RRandom::RandF(0.3f, emitter_->scale);
 
-		Vector3 dist = pos - (pos + vec);
-
-		p.position = pos + vec;
-		p.basePos = pos;
-		p.end_frame = time;
-		p.scale = scale;
-		p.baseScale = scale;
+		p.position = emitter_->pos + vec;
+		p.basePos = emitter_->pos;
+		p.end_frame = emitter_->time;
+		p.scale = emitter_->scale;
+		p.baseScale = emitter_->scale;
 		p.addRot.z = RRandom::RandF(-0.01f, 0.01f);
 		p.color = { 255,100,0,255 };
 	}
@@ -87,12 +83,10 @@ ParticleFireCircle::ParticleFireCircle() :
 	state_ = PipeLineState::Add;
 }
 
-void ParticleFireCircle::Add(int32_t addNum, int32_t time,
-	Vector3 pos, Vector3 addVec,
-	float scale, Vector3* parentPos)
+void ParticleFireCircle::Add()
 {
-	parentPos_ = parentPos;
-	for (int i = 0; i < addNum; i++)
+	parentPos_ = emitter_->parentPos;
+	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
 		if (particles_.size() >= vertexCount)
@@ -104,12 +98,12 @@ void ParticleFireCircle::Add(int32_t addNum, int32_t time,
 		//追加した要素の参照
 		Particle& p = particles_.back();
 
-		p.position = pos;
+		p.position = emitter_->pos;
 		p.position.y += 0.5f * (1 + i);
 		p.basePos.y = p.position.y;
-		p.end_frame = time;
+		p.end_frame = emitter_->time;
 		p.scale = 0;
-		p.baseScale = scale * (1.5f + i);
+		p.baseScale = emitter_->scale * (1.5f + i);
 		p.addRot.y = RRandom::RandF(-0.03f, 0.03f);
 		p.color = { 255,100,0,255 };
 	}

@@ -176,12 +176,7 @@ void EnemyRedNocturne::FireAttack()
 		fireEmitter_->pos = pos;
 		fireEmitter_->popCoolTime_.AddTime(1);
 		if (fireEmitter_->popCoolTime_.GetIsEnd()) {
-			fireEmitter_->particle->Add(
-				fireEmitter_->addNum,
-				fireEmitter_->time,
-				fireEmitter_->pos,
-				fireEmitter_->addVec,
-				fireEmitter_->scale);
+			fireEmitter_->particle->Add();
 
 			fireEmitter_->popCoolTime_.Reset();
 		}

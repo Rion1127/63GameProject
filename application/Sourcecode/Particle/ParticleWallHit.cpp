@@ -10,12 +10,10 @@ ParticleWallHit::ParticleWallHit() :
 	isBillBoard = false;
 }
 
-void ParticleWallHit::Add(int32_t addNum, int32_t time,
-	Vector3 pos, Vector3 addVec,
-	float scale, Vector3* parentPos)
+void ParticleWallHit::Add()
 {
-	transform_.position_ = pos;
-	for (int i = 0; i < addNum; i++)
+	transform_.position_ = emitter_->pos;
+	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//指定した最大頂点数超えてたら生成しない
 		if (particles_.size() >= vertexCount)
@@ -27,11 +25,11 @@ void ParticleWallHit::Add(int32_t addNum, int32_t time,
 		//追加した要素の参照
 		Particle& p = particles_.back();
 
-		p.basePos = pos;
-		p.end_frame = time;
-		p.rot = addVec;
-		p.scale = scale;
-		p.baseScale = scale;
+		p.basePos = emitter_->pos;
+		p.end_frame = emitter_->time;
+		p.rot = emitter_->addVec;
+		p.scale = emitter_->scale;
+		p.baseScale = emitter_->scale;
 		p.color = { 255,255,255,0 };
 	}
 }
