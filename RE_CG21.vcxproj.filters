@@ -232,6 +232,12 @@
     <Filter Include="application\ヘッダーファイル\Enemy\RedNocturne\Attack">
       <UniqueIdentifier>{18fd3fd5-7cde-460e-a274-28ea033a706d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Player\Magic">
+      <UniqueIdentifier>{c013d455-70dc-4c34-9286-1bf64a7b4747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player\Magic">
+      <UniqueIdentifier>{7afd0547-e89e-4102-b92e-6f55e37f4769}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -533,6 +539,9 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
       <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp">
+      <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -838,6 +847,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\MagicManager.h">
+      <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

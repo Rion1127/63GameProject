@@ -45,6 +45,7 @@
     <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Guard.cpp" />
     <ClCompile Include="application\Sourcecode\Player\IAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Player.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Guard.h" />
     <ClInclude Include="application\Sourcecode\Player\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\MagicManager.h" />
     <ClInclude Include="application\Sourcecode\Player\Player.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h" />
