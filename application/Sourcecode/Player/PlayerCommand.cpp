@@ -3,21 +3,10 @@
 #include <imgui.h>
 #include "Texture.h"
 #include "Easing.h"
+#include "mSound.h"
 
 PlayerCommand::PlayerCommand()
 {
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Ini("command");
-	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Command"));
-	sprite_->SetColor(Color(255,255,255,200));
-
-	commandTex1_ = std::make_unique<Sprite>();
-	commandTex1_->Ini("commandTex");
-	commandTex1_->SetTexture(TextureManager::GetInstance()->GetTexture("CommandTex"));
-	commandTex1_->SetColor(Color(255, 255, 255, 255));
-
-	
-
 	for (uint32_t i = 0; i < frame_.size(); i++) {
 		basePos_[i] = {120,550};
 		basePos_[i] = {
@@ -27,7 +16,7 @@ PlayerCommand::PlayerCommand()
 
 		frame_[i] = std::make_unique<Sprite>();
 		frame_[i]->Ini("");
-		frame_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("Command"));
+		frame_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 		frame_[i]->SetPos(basePos_[i]);
 		frame_[i]->SetScale(Vector2(0.5f,0.6f));
 		frame_[i]->SetColor(Color(255, 255, 255, 200));
@@ -43,6 +32,16 @@ PlayerCommand::PlayerCommand()
 		commandTex_[i]->SetColor(Color(255, 255, 255, 255));
 	}
 
+	commandTitle_ = std::make_unique<Sprite>();
+	commandTitle_->Ini("");
+	commandTitle_->SetTexture(TextureManager::GetInstance()->GetTexture("CommandTitle"));
+	Vector2 titlePos = basePos_[0];
+	titlePos.y -= (30.f * 1.2f);
+	commandTitle_->SetPos(titlePos);
+	commandTitle_->SetScale(Vector2(0.5f, 0.6f));
+	commandTitle_->SetColor(Color(255, 255, 255, 255));
+	commandTitle_->SetTex_LeftTop(Vector2(0, 5));
+
 	easeTimer_.SetLimitTime(5);
 }
 
@@ -54,6 +53,7 @@ void PlayerCommand::Update()
 			commandNum_ = (uint16_t)Command::END - 1;
 		}
 		easeTimer_.Reset();
+		SoundManager::Play("SelectSE",false,1.0f,0.5f);
 	}
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN)) {
 		commandNum_++;
@@ -61,12 +61,12 @@ void PlayerCommand::Update()
 			commandNum_ = 0;
 		}
 		easeTimer_.Reset();
+		SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
 	}
 	selectCommand_ = (Command)commandNum_;
 
 	attack_.SetLockOnEnemy(lockOnEnemy_);
 	attack_.SetPlayer(playerState_);
-
 
 	if (selectCommand_ == Command::Attack) {
 		attack_.Attack();
@@ -78,8 +78,6 @@ void PlayerCommand::Update()
 	SpriteUpdate();
 
 	attack_.Update();
-
-	
 }
 
 void PlayerCommand::SpriteUpdate()
@@ -96,26 +94,40 @@ void PlayerCommand::SpriteUpdate()
 
 	if (selectCommand_ == Command::Attack) {
 		frame_[(uint32_t)Command::Attack]->SetPos(easePos);
+		frame_[(uint32_t)Command::Attack]->
+			SetTexture(TextureManager::GetInstance()->
+				GetTexture("CommandSelect"));
+		frame_[(uint32_t)Command::Attack]->SetColor(Color(255, 255, 255, 255));
 		commandTex_[(uint32_t)Command::Attack]->SetPos(easePos);
 
 		frame_[(uint32_t)Command::Magic]->SetPos(basePos_[(uint32_t)Command::Magic]);
 		commandTex_[(uint32_t)Command::Magic]->SetPos(basePos_[(uint32_t)Command::Magic]);
+		frame_[(uint32_t)Command::Magic]->
+			SetTexture(TextureManager::GetInstance()->
+				GetTexture("CommandFrame"));
+		frame_[(uint32_t)Command::Magic]->SetColor(Color(255, 255, 255, 200));
 	}
 	else if (selectCommand_ == Command::Magic) {
 		frame_[(uint32_t)Command::Attack]->SetPos(basePos_[(uint32_t)Command::Attack]);
+		frame_[(uint32_t)Command::Attack]->
+			SetTexture(TextureManager::GetInstance()->
+				GetTexture("CommandFrame"));
+		frame_[(uint32_t)Command::Attack]->SetColor(Color(255, 255, 255, 200));
 		commandTex_[(uint32_t)Command::Attack]->SetPos(basePos_[(uint32_t)Command::Attack]);
 
 		frame_[(uint32_t)Command::Magic]->SetPos(easePos);
+		frame_[(uint32_t)Command::Magic]->
+			SetTexture(TextureManager::GetInstance()->
+				GetTexture("CommandSelect"));
+		frame_[(uint32_t)Command::Magic]->SetColor(Color(255, 255, 255, 255));
 		commandTex_[(uint32_t)Command::Magic]->SetPos(easePos);
 	}
-
-	sprite_->Update();
-	commandTex1_->Update();
 
 	for (uint32_t i = 0; i < frame_.size(); i++) {
 		frame_[i]->Update();
 		commandTex_[i]->Update();
 	}
+	commandTitle_->Update();
 }
 
 void PlayerCommand::Draw()
@@ -132,14 +144,9 @@ void PlayerCommand::Draw()
 
 void PlayerCommand::DrawSprite()
 {
-	sprite_->Draw();
-	sprite_->DrawImGui();
-
-	commandTex1_->Draw();
-	commandTex1_->DrawImGui();
-
 	for (uint32_t i = 0; i < frame_.size(); i++) {
 		frame_[i]->Draw();
 		commandTex_[i]->Draw();
 	}
+	commandTitle_->Draw();
 }

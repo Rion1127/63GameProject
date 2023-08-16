@@ -13,9 +13,7 @@ private:
 		END
 	};
 private:
-	std::unique_ptr<Sprite> sprite_;
-	std::unique_ptr<Sprite> commandTex1_;
-
+	std::unique_ptr<Sprite> commandTitle_;
 	std::array<std::unique_ptr<Sprite>, 2> frame_;
 	std::array<std::unique_ptr<Sprite>, 2> commandTex_;
 
@@ -25,6 +23,7 @@ private:
 private:
 	IEnemy* lockOnEnemy_;
 	PlayerState* playerState_;
+
 	AttackManager attack_;
 
 	Command selectCommand_;

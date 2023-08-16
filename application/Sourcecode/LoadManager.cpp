@@ -41,7 +41,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("pause.png", "Pause");
 
 	
-	LoadGraph("command.png", "Command");
+	LoadGraph("commandTitle.png", "CommandTitle");
+	LoadGraph("commandFrame.png", "CommandFrame");
+	LoadGraph("commandSelect.png", "CommandSelect");
 	LoadGraph("commandTex.png", "CommandTex");
 
 	//ƒ{ƒ^ƒ“UI
