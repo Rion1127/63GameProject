@@ -52,7 +52,7 @@ void EnemyManager::PreUpdate()
 			itr = enemys_.erase(itr);
 
 			lockOnEnemy_ = nullptr;
-			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
+			player_->SetLockOnEnemy(lockOnEnemy_);
 			
 			std::shared_ptr<OneceEmitter> deadEmitter_ = std::make_shared<OneceEmitter>();
 			deadEmitter_->particle = std::make_unique<ParticleEnemyDead>();

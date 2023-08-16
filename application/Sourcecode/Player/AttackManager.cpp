@@ -13,9 +13,8 @@ AttackManager::AttackManager()
 	isAttacking = false;
 }
 
-void AttackManager::Update()
+void AttackManager::Attack()
 {
-	//IAttack::SetLockOnActor(lockOnEnemy_);
 	if (Controller::GetTriggerButtons(PAD::INPUT_B))
 	{
 		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
@@ -36,7 +35,7 @@ void AttackManager::Update()
 					nowAttack_->SetLockOnActor(lockOnEnemy_);
 					nowAttack_->Init();
 					float picth = RRandom::RandF(0.7f, 1.5f);
-					SoundManager::Play("SwingSE", false, 0.3f,picth);
+					SoundManager::Play("SwingSE", false, 0.3f, picth);
 				}
 				timer_ = 0;
 				comboNum++;
@@ -60,7 +59,10 @@ void AttackManager::Update()
 			}
 		}
 	}
+}
 
+void AttackManager::Update()
+{
 	if (nowAttack_ != nullptr)
 	{
 		//UŒ‚’†ƒtƒ‰ƒO

@@ -242,7 +242,7 @@ void CollisionManager::EnemyLockOn()
 				false : true;
 			enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(isLockOn);
 
-			player_->GetAttackManager()->SetLockOnEnemy(enemyManager_->GetLockOnEnemy());
+			player_->SetLockOnEnemy(enemyManager_->GetLockOnEnemy());
 		}
 	}
 }

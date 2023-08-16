@@ -37,6 +37,7 @@ private:
 public:
 	AttackManager();
 
+	void Attack();
 	void Update();
 
 	void DrawDebug();

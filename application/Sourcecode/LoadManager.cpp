@@ -40,6 +40,10 @@ void LoadManager::LoadTexture()
 	LoadGraph("goShape.png", "GoShape");
 	LoadGraph("pause.png", "Pause");
 
+	
+	LoadGraph("command.png", "Command");
+	LoadGraph("commandTex.png", "CommandTex");
+
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("pressA.png", "PressA");
 	LoadGraph("OperationUI.png", "OperationUI");

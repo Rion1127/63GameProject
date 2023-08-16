@@ -11,6 +11,7 @@
 #include "Guard.h"
 #include "DodgeRoll.h"
 #include "Sword.h"
+#include "PlayerCommand.h"
 
 class Player final:
 	public IActor
@@ -33,8 +34,7 @@ private:
 	int jumpTime_;
 
 	
-
-	AttackManager attack_;
+	PlayerCommand command_;
 	Guard guard_;
 	DodgeRoll dodgeRoll_;
 	PlayerHPGauge hpGauge_;
@@ -91,10 +91,10 @@ public:
 
 	void AddaddVec(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
-	void SetLockOnEnemy(IEnemy* enemy) { attack_.SetLockOnEnemy(enemy); }
+	void SetLockOnEnemy(IEnemy* enemy) { command_.SetLockOnEnemy(enemy); }
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
 public:
-	AttackManager* GetAttackManager() { return &attack_; }
+	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }

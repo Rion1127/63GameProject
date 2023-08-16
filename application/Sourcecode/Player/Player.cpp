@@ -24,7 +24,6 @@ Player::Player() : IActor()
 	col_.radius = obj_->GetTransform()->scale_.x;
 	damageCol_.radius = obj_->GetTransform()->scale_.x;
 
-	attack_.SetPlayer(&state_);
 	damageCoolTime_.SetLimitTime(50);
 	maxHealth_ = 100;
 	health_ = maxHealth_;
@@ -32,8 +31,10 @@ Player::Player() : IActor()
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
 
-	sword_.SetAttackManager(&attack_);
+	sword_.SetAttackManager(command_.GetAttackManager());
 	sword_.SetParent(obj_.get());
+
+	command_.SetPlayerInfo(&state_);
 }
 
 void Player::PreUpdate()
@@ -80,8 +81,9 @@ void Player::PostUpdate()
 	}
 	if (GetIsCanAttack())
 	{
-		attack_.Update();
+		command_.Update();
 	}
+
 	if (GetIsCanGuard())
 	{
 		if (Controller::GetTriggerButtons(PAD::INPUT_X))
@@ -98,10 +100,10 @@ void Player::PostUpdate()
 	//“–‚½‚è”»’è‚Ågravity‚Ì’l‚ð•Ï‰»‚³‚¹‚Ä‚©‚ç
 	//PostUpdate‚ÅaddVec_‚É‘ã“ü‚µ‚Ä‚¢‚é
 	ObjUpdate();
-	if (attack_.GetLockOnEnemy() != nullptr)
+	if (command_.GetLockOnEnemy() != nullptr)
 	{
 		lockOnVec_ =
-			attack_.GetLockOnEnemy()->GetWorldTransform()->position_ - obj_->GetTransform()->position_;
+			command_.GetLockOnEnemy()->GetWorldTransform()->position_ - obj_->GetTransform()->position_;
 	}
 
 	if (health_ <= 0)
@@ -232,12 +234,12 @@ void Player::StateUpdate()
 			{
 				state_ = PlayerState::Jump;
 			}
-			if (attack_.GetIsAttacking())
+			if (command_.GetAttackManager()->GetIsAttacking())
 			{
 				state_ = PlayerState::Attack;
 				sword_.SetState(Sword::SwordState::Attack);
 			}
-			if (isFloorCollision_ == false && attack_.GetIsAttacking())
+			if (isFloorCollision_ == false && command_.GetAttackManager()->GetIsAttacking())
 			{
 				state_ = PlayerState::AirAttack;
 				sword_.SetState(Sword::SwordState::Attack);
@@ -270,8 +272,9 @@ void Player::Draw()
 #ifdef _DEBUG
 	DrawImGui();
 
-	attack_.DrawDebug();
+	command_.GetAttackManager()->DrawDebug();
 	guard_.DrawDebug();
+	command_.Draw();
 #endif // _DEBUG
 }
 
@@ -336,6 +339,7 @@ void Player::DrawImGui()
 void Player::DrawSprite()
 {
 	hpGauge_.Draw();
+	command_.DrawSprite();
 }
 
 void Player::FloorColision(Vector3 pos)
@@ -448,7 +452,7 @@ void Player::GuardHit(Vector3 knockVec)
 void Player::Reset()
 {
 	obj_->WT_.position_ = { 0,0,0 };
-	attack_.SetLockOnEnemy(nullptr);
+	command_.SetLockOnEnemy(nullptr);
 	inputAngle_ = 0;
 	obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
 }
