@@ -5,7 +5,7 @@ class MagicManager
 {
 private:
 	std::vector<IAttack> magics_;
-	std::vector<IAttack> magics_;
+	//std::vector<IAttack> magics_;
 
 public:
 	MagicManager();
