@@ -146,6 +146,7 @@
     <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Guard.h" />
     <ClInclude Include="application\Sourcecode\Player\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\Player.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />

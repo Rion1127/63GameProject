@@ -830,6 +830,9 @@
     <ClInclude Include="application\Sourcecode\PauseMenu.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Player.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
