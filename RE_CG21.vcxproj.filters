@@ -534,9 +534,6 @@
     <ClCompile Include="application\Sourcecode\PauseMenu.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
@@ -545,6 +542,9 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\MagicBrrizard.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -845,9 +845,6 @@
     <ClInclude Include="application\Sourcecode\Player\Player.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\MagicManager.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
@@ -856,6 +853,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\MagicBrrizard.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

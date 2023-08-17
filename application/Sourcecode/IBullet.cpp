@@ -15,7 +15,7 @@ IBullet::IBullet(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 	attackInfo_.maxTime = maxTime;
 	spline_.SetIsStart(true);
 	isDead_ = false;
-	aliveTimer_.SetLimitTime(120);
+	aliveTimer_.SetLimitTime(maxTime);
 }
 
 void IBullet::Update()

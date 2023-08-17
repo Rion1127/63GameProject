@@ -35,6 +35,7 @@ Player::Player() : IActor()
 	sword_.SetParent(obj_.get());
 
 	command_.SetPlayerInfo(&state_);
+	command_.SetPlayer(this);
 }
 
 void Player::PreUpdate()
@@ -419,7 +420,8 @@ bool Player::GetIsCanJump()
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
-		state_ != PlayerState::DodgeRoll)
+		state_ != PlayerState::DodgeRoll&& 
+		command_.GetIsMagicManu() == false)
 	{
 		return true;
 	}
