@@ -174,12 +174,6 @@ void EnemyRedNocturne::FireAttack()
 		Vector3 pos = obj_->GetPos();
 		pos.y += obj_->GetScale().y * 2.f;
 		fireEmitter_->pos = pos;
-		fireEmitter_->popCoolTime_.AddTime(1);
-		if (fireEmitter_->popCoolTime_.GetIsEnd()) {
-			fireEmitter_->particle->Add();
-
-			fireEmitter_->popCoolTime_.Reset();
-		}
 	}
 	fireCircleEmitter_->pos = obj_->GetPos();
 	fireCircleEmitter_->pos.y += obj_->GetScale().y;
@@ -210,6 +204,7 @@ void EnemyRedNocturne::KnockBack()
 		isKnock_ = false;
 		actionTimer_.Reset();
 	}
+	fireEmitter_->isActive = false;
 }
 
 void EnemyRedNocturne::SortPriority()

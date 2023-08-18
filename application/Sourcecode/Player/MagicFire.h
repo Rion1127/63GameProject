@@ -1,6 +1,6 @@
 #pragma once
 #include "IBullet.h"
-class MagicBrrizard :
+class MagicFire :
     public IBullet
 {
 private:
@@ -9,8 +9,8 @@ private:
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 	Timer freezeTimer_;
 public:
-	~MagicBrrizard();
-	MagicBrrizard(IActor* selfActor);
+	~MagicFire();
+	MagicFire(IActor* selfActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;

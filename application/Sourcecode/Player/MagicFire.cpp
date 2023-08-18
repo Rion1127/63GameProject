@@ -1,19 +1,19 @@
-#include "MagicBrrizard.h"
+#include "MagicFire.h"
 #include "ParticleManager.h"
 #include "ParticleFire.h"
 
-MagicBrrizard::~MagicBrrizard()
+MagicFire::~MagicFire()
 {
 	fireEmitter_->isActive = false;
 }
 
-MagicBrrizard::MagicBrrizard(IActor* selfActor) :
+MagicFire::MagicFire(IActor* selfActor) :
 	IBullet(selfActor, 1, 100, 5, 10)
 {
 
 }
 
-void MagicBrrizard::Init()
+void MagicFire::Init()
 {
 	Vector3 colPos{};
 	Vector3 frontDist{};
@@ -64,7 +64,7 @@ void MagicBrrizard::Init()
 	ParticleManager::GetInstance()->AddParticle("fireBall", fireEmitter_);
 }
 
-void MagicBrrizard::MoveUpdate()
+void MagicFire::MoveUpdate()
 {
 	freezeTimer_.AddTime(1);
 	if (freezeTimer_.GetIsEnd() == false) {

@@ -540,7 +540,7 @@
     <ClCompile Include="application\Sourcecode\IBullet.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\MagicBrrizard.cpp">
+    <ClCompile Include="application\Sourcecode\Player\MagicFire.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
@@ -851,7 +851,7 @@
     <ClInclude Include="application\Sourcecode\IBullet.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\MagicBrrizard.h">
+    <ClInclude Include="application\Sourcecode\Player\MagicFire.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">

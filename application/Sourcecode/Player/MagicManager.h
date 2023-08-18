@@ -2,7 +2,7 @@
 #include "IAttack.h"
 #include "IBullet.h"
 #include <list>
-#include "MagicBrrizard.h"
+#include "MagicFire.h"
 
 class Player;
 
