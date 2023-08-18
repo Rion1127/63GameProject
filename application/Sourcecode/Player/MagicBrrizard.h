@@ -9,6 +9,7 @@ private:
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 	Timer freezeTimer_;
 public:
+	~MagicBrrizard();
 	MagicBrrizard(IActor* selfActor);
 private:
 	void Init() override;

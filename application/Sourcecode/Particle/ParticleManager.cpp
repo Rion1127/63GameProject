@@ -25,6 +25,17 @@ void ParticleManager::Update()
 			itr = emitters_.erase(itr);
 			continue;
 		}
+
+		if ((*itr)->isActive) {
+			//À•W‚ğXV
+			(*itr)->popCoolTime_.AddTime(1);
+			if ((*itr)->popCoolTime_.GetIsEnd()) {
+				(*itr)->particle->Add();
+
+				(*itr)->popCoolTime_.Reset();
+			}
+		}
+
 		(*itr)->particle->Update();
 		itr++;
 	}

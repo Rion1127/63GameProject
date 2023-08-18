@@ -110,13 +110,14 @@ struct IEmitter {
 	Vector3 addVec;	//移動方向ベクトル
 	float scale;
 	bool isActive = true;
+	Timer popCoolTime_;
 };
 
 struct OneceEmitter : public IEmitter {
-
+	OneceEmitter() { isActive = false; }
 };
 //フラグがfalseになるまで出続ける
 struct ContinuousEmitter : public IEmitter {
-	Timer popCoolTime_;
+	
 };
 

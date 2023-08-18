@@ -1,6 +1,9 @@
 #include "JsonLoader.h"
 #include <fstream>
 #include <cassert>
+#include "ParticleManager.h"
+#include "ParticleFire.h"
+#include "Timer.h"
 
 JsonLoader* JsonLoader::GetInstance()
 {
@@ -129,6 +132,7 @@ void JsonLoader::SetObjects(std::vector<std::unique_ptr<Object3d>>* objects, std
 	size_t num = data->object.size();
 
 	objects->clear();
+	
 	for (size_t i = 0; i < num; i++)
 	{
 		//“Ç‚Ýž‚ñ‚¾î•ñ‚ð‘ã“ü‚µ‚Ä‚­
@@ -139,6 +143,30 @@ void JsonLoader::SetObjects(std::vector<std::unique_ptr<Object3d>>* objects, std
 		std::string modelName_ = data->object.at(i)->GetModel()->GetModelName();
 		newObj->SetModel(Model::CreateOBJ_uniptr(modelName_, false));
 		newObj->SetIsVisible(data->object.at(i)->GetIsVisible());
+
+		if (modelName_ == "pillar") {
+
+			Vector3 pos = newObj->GetPos();
+			pos.y += 8.5f;
+			Timer timer;
+			timer.SetLimitTime(1);
+			timer.SetTime(timer.GetLimitTimer());
+
+			std::shared_ptr<ContinuousEmitter> fireEmitter_;
+			fireEmitter_ = std::make_shared<ContinuousEmitter>();
+			fireEmitter_->particle = std::make_unique<ParticleFire>();
+			fireEmitter_->addVec = { 1.25f,1.3f, 1.25f, };
+			fireEmitter_->addNum = 8;
+			fireEmitter_->popCoolTime_ = timer;
+			fireEmitter_->time = 15;
+			fireEmitter_->pos = pos;
+			fireEmitter_->scale = 1.3f;
+			ParticleManager::GetInstance()->AddParticle("pillarFire", fireEmitter_);
+		}
+
+
+
+
 		objects->push_back(std::move(newObj));
 	}
 }

@@ -2,6 +2,11 @@
 #include "ParticleManager.h"
 #include "ParticleFire.h"
 
+MagicBrrizard::~MagicBrrizard()
+{
+	fireEmitter_->isActive = false;
+}
+
 MagicBrrizard::MagicBrrizard(IActor* selfActor) :
 	IBullet(selfActor, 1, 100, 5, 10)
 {

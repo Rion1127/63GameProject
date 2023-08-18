@@ -6,7 +6,7 @@
 #pragma region 炎エフェクト
 ParticleFire::ParticleFire() :
 	IParticle("Fire"),
-	vertexCount(128)
+	vertexCount(192)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Particle");
