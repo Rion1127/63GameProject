@@ -28,7 +28,7 @@ void MagicFire::Init()
 	attackCol_->knockPower = { 0.1f,0.3f,0.1f };
 	attackCol_->knockVecY = 0.5f;
 
-	bulletSpeed_ = 0.8f;
+	bulletSpeed_ = 1.0f;
 
 	if (IBullet::lockOnActor_ != nullptr) {
 		Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
@@ -54,7 +54,7 @@ void MagicFire::Init()
 	fireEmitter_ = std::make_shared<ContinuousEmitter>();
 	fireEmitter_->particle = std::make_unique<ParticleFire>();
 	fireEmitter_->addVec = { 0.2f,0.2f, 0.2f, };
-	fireEmitter_->addNum = 6;
+	fireEmitter_->addNum = 5;
 	fireEmitter_->isActive = true;
 	fireEmitter_->popCoolTime_ = timer;
 	fireEmitter_->time = 20;

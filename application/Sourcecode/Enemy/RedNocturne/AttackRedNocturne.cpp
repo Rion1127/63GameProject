@@ -5,7 +5,12 @@
 AttackRedNocturne::AttackRedNocturne(IActor* selfActor) :
 	IBullet(selfActor, 1, 120, 5, 120)
 {
+	
+}
 
+AttackRedNocturne::~AttackRedNocturne()
+{
+	fireEmitter_->isActive = false;
 }
 
 void AttackRedNocturne::Init()
@@ -40,7 +45,7 @@ void AttackRedNocturne::Init()
 	fireEmitter_ = std::make_shared<ContinuousEmitter>();
 	fireEmitter_->particle = std::make_unique<ParticleFire>();
 	fireEmitter_->addVec = { 0.2f,0.2f, 0.2f, };
-	fireEmitter_->addNum = 6;
+	fireEmitter_->addNum = 5;
 	fireEmitter_->isActive = true;
 	fireEmitter_->popCoolTime_ = timer;
 	fireEmitter_->time = 20;

@@ -10,6 +10,7 @@ public:
 		Idle,
 		Attack,
 		Guard,
+		MagicFire,
 		Debug
 	};
 private:

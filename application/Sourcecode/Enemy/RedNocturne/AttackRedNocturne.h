@@ -10,6 +10,7 @@ private:
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 public:
 	AttackRedNocturne(IActor* selfActor);
+	~AttackRedNocturne();
 private:
 	void Init() override;
 	void MoveUpdate() override;
