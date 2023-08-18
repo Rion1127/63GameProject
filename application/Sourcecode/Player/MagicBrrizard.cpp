@@ -3,7 +3,7 @@
 #include "ParticleFire.h"
 
 MagicBrrizard::MagicBrrizard(IActor* selfActor) :
-	IBullet(selfActor, 1, 120, 5, 120)
+	IBullet(selfActor, 1, 100, 5, 10)
 {
 
 }
@@ -23,7 +23,7 @@ void MagicBrrizard::Init()
 	attackCol_->knockPower = { 0.1f,0.3f,0.1f };
 	attackCol_->knockVecY = 0.5f;
 
-	bulletSpeed_ = 0.6f;
+	bulletSpeed_ = 0.8f;
 
 	if (IBullet::lockOnActor_ != nullptr) {
 		Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
@@ -38,8 +38,9 @@ void MagicBrrizard::Init()
 	else {
 		attackVec_ = CalculateFrontVec() * bulletSpeed_;
 	}
+	freezeTimer_.SetLimitTime(40);
+	selfActor_->SetFreezeTime(freezeTimer_.GetLimitTimer());
 
-	
 
 	Timer timer;
 	timer.SetLimitTime(1);
@@ -60,7 +61,10 @@ void MagicBrrizard::Init()
 
 void MagicBrrizard::MoveUpdate()
 {
-	
+	freezeTimer_.AddTime(1);
+	if (freezeTimer_.GetIsEnd() == false) {
+		selfActor_->SetGravity(Vector3(0, 0, 0));
+	}
 	if (IBullet::lockOnActor_ != nullptr) {
 		CalculateRotToLockOnActor(CalculateFrontVec());
 		//回転情報からプレイヤーへのベクトルを取得
@@ -70,7 +74,7 @@ void MagicBrrizard::MoveUpdate()
 		frontVec.y = 0;
 		frontVec = frontVec.normalize();
 		//足していくベクトルを徐々にプレイヤーの方向に変えていく
-		MoveTo(frontVec, 0.01f, attackVec_);
+		MoveTo(frontVec, 0.015f, attackVec_);
 	}
 
 	attackCol_->col_.center += attackVec_ * bulletSpeed_;

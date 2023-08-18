@@ -6,6 +6,7 @@
 #include "PlayerInfo.h"
 #include "Gravity.h"
 #include "AttackManager.h"
+#include "MagicManager.h"
 #include "IActor.h"
 #include "PlayerHPGauge.h"
 #include "Guard.h"
@@ -39,8 +40,6 @@ private:
 	DodgeRoll dodgeRoll_;
 	PlayerHPGauge hpGauge_;
 	PlayerState state_;
-	//’…’nd’¼ŽžŠÔ
-	Timer landingTimer_;
 
 	int32_t maxHealth_;
 	int32_t health_;
@@ -88,6 +87,7 @@ public:
 	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
+	
 
 	void AddaddVec(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
@@ -95,6 +95,7 @@ public:
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
 public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
+	MagicManager* GetMagicManager() { return command_.GetMagicManager(); }
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }

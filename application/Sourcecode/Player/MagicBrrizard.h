@@ -7,6 +7,7 @@ private:
 	float frontDist_;
 	float bulletSpeed_;
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
+	Timer freezeTimer_;
 public:
 	MagicBrrizard(IActor* selfActor);
 private:

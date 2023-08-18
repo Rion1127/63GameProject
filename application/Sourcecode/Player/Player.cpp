@@ -19,7 +19,7 @@ Player::Player() : IActor()
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	//着地硬直時間
-	landingTimer_.SetLimitTime(7);
+	freezeTimer_.SetLimitTime(7);
 
 	col_.radius = obj_->GetTransform()->scale_.x;
 	damageCol_.radius = obj_->GetTransform()->scale_.x;
@@ -82,8 +82,8 @@ void Player::PostUpdate()
 	}
 	if (GetIsCanAttack())
 	{
-		command_.Update();
 	}
+		command_.Update();
 
 	if (GetIsCanGuard())
 	{
@@ -226,9 +226,10 @@ void Player::StateUpdate()
 		state_ = PlayerState::Idle;
 		sword_.SetState(Sword::SwordState::Idle);
 	}
-	landingTimer_.AddTime(1);
-	if (landingTimer_.GetIsEnd())
+	freezeTimer_.AddTime(1);
+	if (freezeTimer_.GetIsEnd())
 	{
+		isCanMove_ = true;
 		if (state_ != PlayerState::Knock)
 		{
 			if (isFloorCollision_ == false)
@@ -249,7 +250,8 @@ void Player::StateUpdate()
 	}
 	else
 	{
-		state_ = PlayerState::Landing;
+		state_ = PlayerState::Freeze;
+		isCanMove_ = false;
 	}
 
 	if (guard_.GetIsGurdNow())
@@ -312,7 +314,7 @@ void Player::DrawImGui()
 	if (state_ == PlayerState::Jump)		text += "Jump";
 	if (state_ == PlayerState::Attack)		text += "Attack";
 	if (state_ == PlayerState::AirAttack)	text += "AirAttack";
-	if (state_ == PlayerState::Landing)		text += "Landing";
+	if (state_ == PlayerState::Freeze)		text += "Freeze";
 	if (state_ == PlayerState::Knock)		text += "Knock";
 	if (state_ == PlayerState::Guard)		text += "Guard";
 	if (state_ == PlayerState::DodgeRoll)	text += "DodgeRoll";
@@ -348,9 +350,9 @@ void Player::FloorColision(Vector3 pos)
 	//前フレームで地面に接していなかったとき
 	if (isFloorCollision_ == false)
 	{
-		state_ = PlayerState::Landing;
-		landingTimer_.Reset();
-
+		state_ = PlayerState::Freeze;
+		freezeTimer_.SetLimitTime(7);
+		freezeTimer_.Reset();
 	}
 	isFloorCollision_ = true;
 	isCanJump_ = true;
@@ -374,7 +376,7 @@ bool Player::GetIsCanMove()
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
 		state_ != PlayerState::DodgeRoll &&
-		state_ != PlayerState::Landing)
+		state_ != PlayerState::Freeze)
 	{
 		return true;
 	}
@@ -421,7 +423,7 @@ bool Player::GetIsCanJump()
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
 		state_ != PlayerState::DodgeRoll&& 
-		command_.GetIsMagicManu() == false)
+		command_.GetIsMagicMenu() == false)
 	{
 		return true;
 	}

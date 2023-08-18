@@ -10,7 +10,7 @@ enum class PlayerState {
 	Jump,
 	Attack,
 	AirAttack,
-	Landing,
+	Freeze,
 	Knock,
 	Guard,
 	DodgeRoll

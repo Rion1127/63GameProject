@@ -275,10 +275,11 @@ void CollisionManager::PlayerToEnemy()
 void CollisionManager::PlayerAttackToEnemy()
 {
 	IAttack* attackCol = player_->GetAttackManager()->GetNowAttack();
-	if (attackCol != nullptr)
+	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
-		for (auto& enemy : *enemyManager_->GetEnemy())
+		if (attackCol != nullptr)
 		{
+			//‹ßÚUŒ‚
 			for (auto& col : *attackCol->GetAttackCol())
 			{
 				if (enemy->GetDamageCoolTime().GetIsEnd())
@@ -313,7 +314,49 @@ void CollisionManager::PlayerAttackToEnemy()
 				}
 			}
 		}
+
+		auto& bullets = *player_->GetMagicManager()->GetBullet();
+
+		if (bullets.size() == 0)continue;
+		//–‚–@UŒ‚
+		for (auto& bullet : bullets)
+		{
+
+			if (enemy->GetDamageCoolTime().GetIsEnd())
+			{
+				if (BallCollision(bullet->GetAttackCol()->get()->col_, enemy->GetCol()))
+				{
+					//ƒvƒŒƒCƒ„[‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+					Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+					knockVec.y = bullet->GetAttackCol()->get()->knockVecY;
+					knockVec = knockVec.normalize();
+					knockVec = knockVec * bullet->GetAttackCol()->get()->knockPower;
+					//“G‚ÌƒmƒbƒNƒoƒbƒN’ïR—Í‚ðŠ|‚¯‚é
+					knockVec = knockVec * enemy->GetKnockResist();
+					enemy->Damage(knockVec, bullet->GetAttackCol()->get()->damage, bullet->GetAttackCol()->get()->damageCoolTime);
+					enemy->SetIsNock(true);
+					//HPƒQ[ƒW”½‰f
+					enemyManager_->Damage();
+
+					bullet->SetIsDead(true);
+
+					Vector3 addVec = { 0.05f,0.05f,0.05f };
+					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+					hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+					hitEmitter_->addNum = 3;
+					hitEmitter_->time = 40;
+					hitEmitter_->pos = enemy->GetCol().center;
+					hitEmitter_->addVec = addVec;
+					hitEmitter_->scale = 1.0f;
+					ParticleManager::GetInstance()->
+						AddParticle("HitAttack", hitEmitter_);
+					SoundManager::Play("HitSE", false, 0.5f);
+				}
+			}
+		}
 	}
+
+
 }
 
 void CollisionManager::EnemyAttackToPlayer()

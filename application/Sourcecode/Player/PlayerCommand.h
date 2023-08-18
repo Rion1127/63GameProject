@@ -83,8 +83,9 @@ public:
 	void SetPlayer(Player* player) { magicManager_.SetPlayer(player); }
 public:
 	AttackManager* GetAttackManager() { return &attackManager_; }
+	MagicManager* GetMagicManager() { return &magicManager_; }
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
-	bool GetIsMagicManu() { return isMagicMenu_; }
+	bool GetIsMagicMenu() { return isMagicMenu_; }
 
 };
 
