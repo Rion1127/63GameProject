@@ -37,7 +37,7 @@ void CollisionManager::PlayerToFloor()
 {
 	Plane* floor = stage_->GetFloor();
 	Sphere col = player_->GetCol();
-	col.center += player_->GetAddVec();
+	col.center += player_->GetGravity()->GetGravityValue();
 
 	//°‚ÆƒvƒŒƒCƒ„[
 	if (Sphere2PlaneCol(col, *floor))
@@ -397,7 +397,6 @@ void CollisionManager::EnemyAttackToPlayer()
 						knockVec = knockVec * col->knockPower;
 
 						player_->Damage(col->damage, knockVec);
-						player_->SetState(PlayerState::Knock);
 
 						Vector3 addVec = { 0.15f,0.15f,0.15f };
 

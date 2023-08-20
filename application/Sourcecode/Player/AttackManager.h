@@ -19,7 +19,6 @@ class AttackManager
 {
 private:
 	static Player* player_;
-	PlayerState* playerState_;
 	//攻撃のデータ・プール
 	std::vector<std::unique_ptr<IAttack>> attacks_;
 
@@ -45,7 +44,6 @@ public:
 	bool GetIsAttacking() { return isAttacking; }
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
-	void SetPlayer(PlayerState* playerState) { playerState_ = playerState; }
 public:
 	IAttack* GetNowAttack() { return nowAttack_.get(); }
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }

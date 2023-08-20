@@ -14,6 +14,8 @@ void PlayerIdle::Update()
 	}
 
 	player_->Guard();
+	player_->Jump();
+	player_->InputVecUpdate();
 }
 
 void PlayerIdle::Draw()

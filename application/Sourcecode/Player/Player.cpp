@@ -7,6 +7,11 @@
 #include "PlayerMove.h"
 #include "PlayerDogeRoll.h"
 #include "PlayerGuard.h"
+#include "PlayerJump.h"
+#include "PlayerFreeze.h"
+#include "PlayerKnock.h"
+#include "PlayerAttack.h"
+#include "PlayerAirAttack.h"
 
 Player::Player() : IActor()
 {
@@ -50,38 +55,21 @@ void Player::PreUpdate()
 	addVec_ = { 0,0,0 };
 	//プレイヤーの状態更新
 	StateUpdate();
-	//攻撃しているとき　&& 着地しているとき
-	if (GetIsCanMove())
-	{
-		// 入力方向ベクトルを更新
-		InputVecUpdate();
-	}
 	
-
 	////重力
 	GravityUpdate();
 
 	ColPosUpdate();
+	
+	Update();
 
+	command_.Update();
 	damageCoolTime_.AddTime(1);
 	hpGauge_.Update(maxHealth_, health_);
-	Update();
 }
 
 void Player::PostUpdate()
 {
-	if (GetIsCanJump())
-	{
-		JumpUpdate();
-	}
-	if (GetIsCanAttack())
-	{
-	}
-	command_.Update();
-
-	
-
-	
 	sword_.Update();
 
 	//当たり判定でgravityの値を変化させてから
@@ -123,129 +111,98 @@ void Player::InitStateMachine()
 	AddState(std::make_shared<PlayerMove>(this));
 	AddState(std::make_shared<PlayerDogeRoll>(this));
 	AddState(std::make_shared<PlayerGuard>(this));
+	AddState(std::make_shared<PlayerJump>(this));
+	AddState(std::make_shared<PlayerFreeze>(this));
+	AddState(std::make_shared<PlayerKnock>(this));
+	AddState(std::make_shared<PlayerAttack>(this));
+	AddState(std::make_shared<PlayerAirAttack>(this));
 }
 #pragma region 入力
 void Player::InputVecUpdate()
 {
-	moveVec_ = { 0,0 };
-	Vector3 sideVec;
-	Vector3 upVec = { 0,1,0 };
-	inputVec_ = { 0,0 };
-	
-	//プレイヤーの正面ベクトル
-	frontVec_ =
-		Camera::scurrent_->target_ - Camera::scurrent_->eye_;
-	frontVec_.y = 0;
-	frontVec_ = frontVec_.normalize();
-
-	sideVec = upVec.cross(frontVec_);
-	sideVec = sideVec.normalize();
-
-	// コントローラーが接続されていたら
-	if (Controller::GetActive())
+	if (GetIsCanMove())
 	{
-		float inputlength = 0;
-		// 左スティックの入力方向ベクトル取得
-		inputVec_ = Controller::GetLStick() / 32768.f;
-		inputlength = inputVec_.length();
-		//スティックの傾きが小さければ歩く
-		if (inputlength <= walklimitValue_) {
-			inputVec_ = inputVec_.normalize() * 0.5f;
-		}
-		else {
-			inputVec_ = inputVec_.normalize();
-		}
-		//カメラから見た左右手前奥移動
-		moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
-		moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
-		moveVec_ *= moveSpeed_;
-	}
 
-	addVec_ += {moveVec_.x, 0, moveVec_.y};
+		moveVec_ = { 0,0 };
+		Vector3 sideVec;
+		Vector3 upVec = { 0,1,0 };
+		inputVec_ = { 0,0 };
 
-	/*obj_->GetTransform()->position_ = {
-		Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
-		Clamp(obj_->GetTransform()->position_.y, 0.f, 100.f),
-		Clamp(obj_->GetTransform()->position_.z, -77.f, 77.f)
-	};*/
+		//プレイヤーの正面ベクトル
+		frontVec_ =
+			Camera::scurrent_->target_ - Camera::scurrent_->eye_;
+		frontVec_.y = 0;
+		frontVec_ = frontVec_.normalize();
 
-	// 入力しているベクトルの角度を求める
-	float inputAngle = Vec2Angle(moveVec_);
+		sideVec = upVec.cross(frontVec_);
+		sideVec = sideVec.normalize();
 
-	// 計算結果がオーバーフローしていなかったら値を更新
-	if (inputAngle >= 0)
-	{
-		inputAngle_ = inputAngle;
-	}
-	if (Controller::GetLStick().x != 0 ||
-		Controller::GetLStick().y != 0)
-	{
-		obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
-	}
-}
-
-
-void Player::JumpUpdate()
-{
-	float jumpSpeed = 0.2f;
-	int Maxjumptimer = 10;
-	
-	if (Controller::GetTriggerButtons(PAD::INPUT_A)) {
-		//ジャンプしたらジャンプ可能フラグをfalseにする
-		isCanJump_ = false;
-	}
-	if (isCanJump_ == false) {
-		//Aを押し続けた分高くジャンプする
-		if (Controller::GetButtons(PAD::INPUT_A))
+		// コントローラーが接続されていたら
+		if (Controller::GetActive())
 		{
-			if (jumpTime_ < Maxjumptimer)
-			{
-				jumpTime_++;
-
-				gravity_.SetGrabity({ 0, jumpSpeed ,0 });
+			float inputlength = 0;
+			// 左スティックの入力方向ベクトル取得
+			inputVec_ = Controller::GetLStick() / 32768.f;
+			inputlength = inputVec_.length();
+			//スティックの傾きが小さければ歩く
+			if (inputlength <= walklimitValue_) {
+				inputVec_ = inputVec_.normalize() * 0.5f;
 			}
+			else {
+				inputVec_ = inputVec_.normalize();
+			}
+			//カメラから見た左右手前奥移動
+			moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
+			moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
+			moveVec_ *= moveSpeed_;
+		}
+
+		addVec_ += {moveVec_.x, 0, moveVec_.y};
+
+		/*obj_->GetTransform()->position_ = {
+			Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
+			Clamp(obj_->GetTransform()->position_.y, 0.f, 100.f),
+			Clamp(obj_->GetTransform()->position_.z, -77.f, 77.f)
+		};*/
+
+		// 入力しているベクトルの角度を求める
+		float inputAngle = Vec2Angle(moveVec_);
+
+		// 計算結果がオーバーフローしていなかったら値を更新
+		if (inputAngle >= 0)
+		{
+			inputAngle_ = inputAngle;
+		}
+		if (Controller::GetLStick().x != 0 ||
+			Controller::GetLStick().y != 0)
+		{
+			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
 		}
 	}
-	//途中でAを離したら着地するまでジャンプできないようにする
-	if (Controller::GetReleasButtons(PAD::INPUT_A))
-	{
-		jumpTime_ = Maxjumptimer;
-	}
 }
+
+
 
 void Player::StateUpdate()
 {
-	if (state_ != PlayerState::Knock)
-	{
-		state_ = PlayerState::Idle;
-		sword_.SetState(Sword::SwordState::Idle);
-	}
 	freezeTimer_.AddTime(1);
 	if (freezeTimer_.GetIsEnd())
 	{
-		isCanMove_ = true;
 		if (state_ != PlayerState::Knock)
 		{
-			if (isFloorCollision_ == false)
-			{
-				state_ = PlayerState::Jump;
-			}
+			sword_.SetState(Sword::SwordState::Idle);
 			if (command_.GetAttackManager()->GetIsAttacking())
 			{
-				state_ = PlayerState::Attack;
+				GoToState(PlayerState::Attack);
 				sword_.SetState(Sword::SwordState::Attack);
 			}
+			
 			if (isFloorCollision_ == false && command_.GetAttackManager()->GetIsAttacking())
 			{
-				state_ = PlayerState::AirAttack;
+				GoToState(PlayerState::AirAttack);
 				sword_.SetState(Sword::SwordState::Attack);
 			}
 		}
-	}
-	else
-	{
-		state_ = PlayerState::Freeze;
-		isCanMove_ = false;
 	}
 
 	if (guard_.GetIsGurdNow())
@@ -310,13 +267,59 @@ void Player::GuardUpdate()
 	}
 }
 
+void Player::Jump()
+{
+	if (Controller::GetTriggerButtons(PAD::INPUT_A)) {
+		//ジャンプしたらジャンプ可能フラグをfalseにする
+		isCanJump_ = false;
+		GoToState(PlayerState::Jump);
+	}
+}
+
+void Player::JumpUpdate()
+{
+	float jumpSpeed = 0.2f;
+	int Maxjumptimer = 10;
+	//Aを押し続けた分高くジャンプする
+	if (Controller::GetButtons(PAD::INPUT_A))
+	{
+		if (jumpTime_ < Maxjumptimer)
+		{
+			jumpTime_++;
+
+			gravity_.SetGrabity({ 0, jumpSpeed ,0 });
+		}
+	}
+	//途中でAを離したら着地するまでジャンプできないようにする
+	if (Controller::GetReleasButtons(PAD::INPUT_A))
+	{
+		jumpTime_ = Maxjumptimer;
+	}
+}
+
+void Player::Freeze(uint32_t time)
+{
+	GoToState(PlayerState::Freeze);
+	freezeTimer_.SetLimitTime(time);
+	freezeTimer_.Reset();
+}
+
+void Player::FreezeUpdate()
+{
+	freezeTimer_.AddTime(1);
+
+	if (freezeTimer_.GetIsEnd()) {
+		GoToState(PlayerState::Idle);
+	}
+}
+
 void Player::Draw()
 {
 	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
 	obj_->Draw();
-	
+
 	sword_.Draw();
-	
+
 
 #ifdef _DEBUG
 	DrawImGui();
@@ -395,9 +398,7 @@ void Player::FloorColision(Vector3 pos)
 	//前フレームで地面に接していなかったとき
 	if (isFloorCollision_ == false)
 	{
-		state_ = PlayerState::Freeze;
-		freezeTimer_.SetLimitTime(7);
-		freezeTimer_.Reset();
+		Freeze(7);
 	}
 	isFloorCollision_ = true;
 	isCanJump_ = true;
@@ -416,12 +417,13 @@ void Player::WallColision()
 bool Player::GetIsCanMove()
 {
 	if (isCanMove_ == false) return false;
-	if (state_ != PlayerState::Attack &&
-		state_ != PlayerState::AirAttack &&
-		state_ != PlayerState::Knock &&
-		state_ != PlayerState::Guard &&
-		state_ != PlayerState::DodgeRoll &&
-		state_ != PlayerState::Freeze)
+	auto state = GetNowState()->GetId();
+	if (GetNowState()->GetId() != PlayerState::Attack &&
+		GetNowState()->GetId() != PlayerState::AirAttack &&
+		GetNowState()->GetId() != PlayerState::Knock &&
+		GetNowState()->GetId() != PlayerState::Guard &&
+		GetNowState()->GetId() != PlayerState::DodgeRoll &&
+		GetNowState()->GetId() != PlayerState::Freeze)
 	{
 		return true;
 	}
@@ -467,7 +469,7 @@ bool Player::GetIsCanJump()
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
-		state_ != PlayerState::DodgeRoll&& 
+		state_ != PlayerState::DodgeRoll &&
 		command_.GetIsMagicMenu() == false)
 	{
 		return true;
@@ -487,6 +489,7 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	knockVec_ = knockVec;
 	damageCoolTime_.Reset();
 	hpGauge_.Damage();
+	GoToState(PlayerState::Knock);
 	SoundManager::Play("HitSE", false, 0.5f);
 }
 

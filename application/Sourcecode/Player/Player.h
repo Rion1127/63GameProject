@@ -62,17 +62,18 @@ public:
 	void DogeRollUpdate();
 	void Guard();
 	void GuardUpdate();
-private:
+	//ジャンプ
+	void Jump();
+	void JumpUpdate();
+	void Freeze(uint32_t time);
+	void FreezeUpdate();
 	//移動
 	void InputVecUpdate();
+private:
 	//重力
 	void GravityUpdate();
-	//ジャンプ
-	void JumpUpdate();
 	//ステータス更新
 	void StateUpdate();
-
-	
 public:
 	void Draw();
 

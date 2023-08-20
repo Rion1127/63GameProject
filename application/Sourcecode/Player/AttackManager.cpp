@@ -23,11 +23,11 @@ void AttackManager::Attack()
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
 			if (nowAttack_ == nullptr)
 			{
-				if (*playerState_ == PlayerState::Idle)
+				if (player_->GetNowState()->GetId() == PlayerState::Idle)
 				{
 					nowAttack_ = std::move(std::make_unique<Attack1>(player_));
 				}
-				else if (*playerState_ == PlayerState::Jump)
+				else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 				{
 					nowAttack_ = std::move(std::make_unique<AttackAir1>(player_));
 				}
@@ -44,13 +44,13 @@ void AttackManager::Attack()
 			{
 				if (nextAttack_ == nullptr)
 				{
-					if (*playerState_ == PlayerState::Attack)
+					if (player_->GetNowState()->GetId() == PlayerState::Attack)
 					{
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
 						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>(player_));
 						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>(player_));
 					}
-					else if (*playerState_ == PlayerState::AirAttack)
+					else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 					{
 						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>(player_));
 						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>(player_));

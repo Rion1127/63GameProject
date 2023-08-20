@@ -564,8 +564,23 @@
     <ClCompile Include="application\Sourcecode\Player\PlayerDogeRoll.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerJump.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerGuard.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerFreeze.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerKnock.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerAttack.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerAirAttack.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -890,8 +905,23 @@
     <ClInclude Include="application\Sourcecode\Player\PlayerDogeRoll.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerJump.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerGuard.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerFreeze.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerKnock.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerAttack.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerAirAttack.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,10 @@
     <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Guard.cpp" />
     <ClCompile Include="application\Sourcecode\Player\IAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerAirAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerDogeRoll.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerFreeze.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerGuard.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerIdle.cpp" />
     <ClCompile Include="application\Sourcecode\Player\MagicFire.cpp" />
@@ -54,6 +57,8 @@
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerJump.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerKnock.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerMove.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
@@ -154,7 +159,10 @@
     <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Guard.h" />
     <ClInclude Include="application\Sourcecode\Player\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerAirAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerDogeRoll.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerFreeze.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerGuard.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerIdle.h" />
     <ClInclude Include="application\Sourcecode\Player\MagicFire.h" />
@@ -163,6 +171,8 @@
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerJump.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerKnock.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerMove.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />

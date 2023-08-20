@@ -14,6 +14,8 @@ void PlayerMove::Update()
 	}
 
 	player_->DogeRoll();
+	player_->Jump();
+	player_->InputVecUpdate();
 }
 
 void PlayerMove::Draw()
