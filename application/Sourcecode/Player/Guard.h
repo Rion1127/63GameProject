@@ -5,7 +5,7 @@
 
 class Player;
 
-class Guard
+class GuardClass
 {
 private:
 	struct EnableTime {
@@ -26,7 +26,7 @@ private:
 	EnableTime enabledTime_;
 
 public:
-	Guard();
+	GuardClass();
 	void Init();
 	void Update();
 	void DrawDebug();

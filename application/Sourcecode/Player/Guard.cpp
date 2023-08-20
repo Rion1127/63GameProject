@@ -3,7 +3,7 @@
 #include "mInput.h"
 #include "Util.h"
 
-Guard::Guard()
+GuardClass::GuardClass()
 {
 	col_.radius = 0.7f;
 	colObj_ = MakeUnique<Object3d>();
@@ -17,7 +17,7 @@ Guard::Guard()
 	enabledTime_ = { 5,30 };
 }
 
-void Guard::Init()
+void GuardClass::Init()
 {
 	const auto& enemy = player_->GetAttackManager()->GetLockOnEnemy();
 	Vector3 frontVec;
@@ -88,7 +88,7 @@ void Guard::Init()
 	isGurdNow_ = true;
 }
 
-void Guard::Update()
+void GuardClass::Update()
 {
 	//enabledTime_の間だったら当たり判定を有効にする
 	if (enabledTime_.start < timer_.GetTimer() &&
@@ -121,14 +121,14 @@ void Guard::Update()
 	colObj_->Update();
 }
 
-void Guard::DrawDebug()
+void GuardClass::DrawDebug()
 {
 	if (col_.isActive) {
 		colObj_->Draw();
 	}
 }
 
-void Guard::GuardHit()
+void GuardClass::GuardHit()
 {
 	//ガードが成功したらガード時間を延長
 	timer_.Reset();

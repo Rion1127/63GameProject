@@ -45,12 +45,16 @@
     <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Guard.cpp" />
     <ClCompile Include="application\Sourcecode\Player\IAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerDogeRoll.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerGuard.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerIdle.cpp" />
     <ClCompile Include="application\Sourcecode\Player\MagicFire.cpp" />
     <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Player.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerMove.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameOverScene.cpp" />
@@ -112,6 +116,7 @@
     <ClCompile Include="engine\util\Gravity.cpp" />
     <ClCompile Include="engine\util\JsonLoader.cpp" />
     <ClCompile Include="engine\util\RRandom.cpp" />
+    <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,12 +154,16 @@
     <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Guard.h" />
     <ClInclude Include="application\Sourcecode\Player\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerDogeRoll.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerGuard.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerIdle.h" />
     <ClInclude Include="application\Sourcecode\Player\MagicFire.h" />
     <ClInclude Include="application\Sourcecode\Player\MagicManager.h" />
     <ClInclude Include="application\Sourcecode\Player\Player.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerMove.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameOverScene.h" />
@@ -216,6 +225,7 @@
     <ClInclude Include="engine\util\Gravity.h" />
     <ClInclude Include="engine\util\JsonLoader.h" />
     <ClInclude Include="engine\util\RRandom.h" />
+    <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

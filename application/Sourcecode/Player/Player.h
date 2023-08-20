@@ -14,11 +14,12 @@
 #include "Sword.h"
 #include "PlayerCommand.h"
 
+#include "StateMachine.h"
+
 class Player final:
-	public IActor
+	public IActor , public StateMachine<PlayerState>
 {
 private:
-
 	//ベクトル
 	Vector3 frontVec_;
 	Vector3 lockOnVec_;
@@ -36,7 +37,7 @@ private:
 
 	
 	PlayerCommand command_;
-	Guard guard_;
+	GuardClass guard_;
 	DodgeRoll dodgeRoll_;
 	PlayerHPGauge hpGauge_;
 	PlayerState state_;
@@ -53,6 +54,14 @@ public:
 	void PostUpdate();
 
 	void ColPosUpdate();
+
+	// ステートマシンを初期化する。
+	void InitStateMachine() override;
+
+	void DogeRoll();
+	void DogeRollUpdate();
+	void Guard();
+	void GuardUpdate();
 private:
 	//移動
 	void InputVecUpdate();
@@ -62,6 +71,8 @@ private:
 	void JumpUpdate();
 	//ステータス更新
 	void StateUpdate();
+
+	
 public:
 	void Draw();
 
@@ -101,7 +112,8 @@ public:
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
 	bool GetIsAlive() { return isAlive_; }
 	Vector3 GetLockOnVec() { return lockOnVec_; }
-	Guard* GetGuard() { return &guard_; }
+	GuardClass* GetGuard() { return &guard_; }
 	Sphere GetDamageCol() { return damageCol_; }
+	Vector2 GetInputVec() { return inputVec_; }
 };
 

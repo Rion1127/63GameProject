@@ -3,6 +3,10 @@
 #include "Util.h"
 #include "Camera.h"
 #include "mSound.h"
+#include "PlayerIdle.h"
+#include "PlayerMove.h"
+#include "PlayerDogeRoll.h"
+#include "PlayerGuard.h"
 
 Player::Player() : IActor()
 {
@@ -36,6 +40,9 @@ Player::Player() : IActor()
 
 	command_.SetPlayerInfo(&state_);
 	command_.SetPlayer(this);
+
+	InitStateMachine();
+	GoToState(PlayerState::Idle);
 }
 
 void Player::PreUpdate()
@@ -49,29 +56,16 @@ void Player::PreUpdate()
 		// 入力方向ベクトルを更新
 		InputVecUpdate();
 	}
-	//ドッジロール
-	if (GetIsCanDodge())
-	{
-		if (Controller::GetTriggerButtons(PAD::INPUT_X))
-		{
-			dodgeRoll_.Begin(moveVec_.normalize());
-			damageCoolTime_.Reset();
-			uint32_t limit = dodgeRoll_.GetdodgeTimer().GetLimitTimer();
-			damageCoolTime_.SetLimitTime(limit);
-		}
-	}
+	
 
-	addVec_ += dodgeRoll_.GetDodgeVec();
-
-	dodgeRoll_.Update();
-
-	//重力
+	////重力
 	GravityUpdate();
 
 	ColPosUpdate();
 
 	damageCoolTime_.AddTime(1);
 	hpGauge_.Update(maxHealth_, health_);
+	Update();
 }
 
 void Player::PostUpdate()
@@ -83,19 +77,11 @@ void Player::PostUpdate()
 	if (GetIsCanAttack())
 	{
 	}
-		command_.Update();
+	command_.Update();
 
-	if (GetIsCanGuard())
-	{
-		if (Controller::GetTriggerButtons(PAD::INPUT_X))
-		{
-			//空中にいるとき、ノックバックの時攻撃の時はガードができない
-			SoundManager::Play("GuardSE", false, 0.5f);
-			guard_.Init();
-		}
-	}
+	
 
-	guard_.Update();
+	
 	sword_.Update();
 
 	//当たり判定でgravityの値を変化させてから
@@ -129,6 +115,14 @@ void Player::ColPosUpdate()
 
 	col_.SetPos(colPos);
 	damageCol_.SetPos(colPos);
+}
+void Player::InitStateMachine()
+{
+	//// 状態を追加していく。
+	AddState(std::make_shared<PlayerIdle>(this));
+	AddState(std::make_shared<PlayerMove>(this));
+	AddState(std::make_shared<PlayerDogeRoll>(this));
+	AddState(std::make_shared<PlayerGuard>(this));
 }
 #pragma region 入力
 void Player::InputVecUpdate()
@@ -264,6 +258,58 @@ void Player::StateUpdate()
 	}
 }
 
+void Player::DogeRoll()
+{
+	//ドッジロール
+	if (GetIsCanDodge())
+	{
+		if (Controller::GetTriggerButtons(PAD::INPUT_X))
+		{
+			dodgeRoll_.Begin(moveVec_.normalize());
+			damageCoolTime_.Reset();
+			uint32_t limit = dodgeRoll_.GetdodgeTimer().GetLimitTimer();
+			damageCoolTime_.SetLimitTime(limit);
+			GoToState(PlayerState::DodgeRoll);
+		}
+	}
+}
+
+void Player::DogeRollUpdate()
+{
+	addVec_ += dodgeRoll_.GetDodgeVec();
+	dodgeRoll_.Update();
+	if (dodgeRoll_.GetIsDodge() == false) {
+		GoToState(PlayerState::Idle);
+	}
+}
+
+void Player::Guard()
+{
+	if (GetIsCanGuard())
+	{
+		if (Controller::GetTriggerButtons(PAD::INPUT_X))
+		{
+			//空中にいるとき、ノックバックの時攻撃の時はガードができない
+			SoundManager::Play("GuardSE", false, 0.5f);
+			guard_.Init();
+			GoToState(PlayerState::Guard);
+		}
+	}
+}
+
+void Player::GuardUpdate()
+{
+	guard_.Update();
+
+	if (guard_.GetIsGurdNow())
+	{
+		sword_.SetState(Sword::SwordState::Guard);
+	}
+	else {
+		GoToState(PlayerState::Idle);
+	}
+}
+
 void Player::Draw()
 {
 	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
@@ -276,7 +322,7 @@ void Player::Draw()
 	DrawImGui();
 
 	command_.GetAttackManager()->DrawDebug();
-	guard_.DrawDebug();
+	//guard_.DrawDebug();
 	command_.Draw();
 #endif // _DEBUG
 }
@@ -308,16 +354,15 @@ void Player::DrawImGui()
 	ImGui::Text("Scale x: %.2f y: %.2f z: %.2f ", scale[0], scale[1], scale[2]);
 
 	std::string text = "State : ";
-	if (state_ == PlayerState::Idle)		text += "Idle";
-	if (state_ == PlayerState::Walk)		text += "Walk";
-	if (state_ == PlayerState::Run)			text += "Run";
-	if (state_ == PlayerState::Jump)		text += "Jump";
-	if (state_ == PlayerState::Attack)		text += "Attack";
-	if (state_ == PlayerState::AirAttack)	text += "AirAttack";
-	if (state_ == PlayerState::Freeze)		text += "Freeze";
-	if (state_ == PlayerState::Knock)		text += "Knock";
-	if (state_ == PlayerState::Guard)		text += "Guard";
-	if (state_ == PlayerState::DodgeRoll)	text += "DodgeRoll";
+	if (GetNowState()->GetId() == PlayerState::Idle)		text += "Idle";
+	if (GetNowState()->GetId() == PlayerState::Move)		text += "Move";
+	if (GetNowState()->GetId() == PlayerState::Jump)		text += "Jump";
+	if (GetNowState()->GetId() == PlayerState::Attack)		text += "Attack";
+	if (GetNowState()->GetId() == PlayerState::AirAttack)	text += "AirAttack";
+	if (GetNowState()->GetId() == PlayerState::Freeze)		text += "Freeze";
+	if (GetNowState()->GetId() == PlayerState::Knock)		text += "Knock";
+	if (GetNowState()->GetId() == PlayerState::Guard)		text += "Guard";
+	if (GetNowState()->GetId() == PlayerState::DodgeRoll)	text += "DodgeRoll";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };

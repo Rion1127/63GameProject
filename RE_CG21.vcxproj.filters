@@ -238,6 +238,12 @@
     <Filter Include="application\ヘッダーファイル\Player\Magic">
       <UniqueIdentifier>{7afd0547-e89e-4102-b92e-6f55e37f4769}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Player\State">
+      <UniqueIdentifier>{3227e121-0479-4756-b63c-69a332da9974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player\State">
+      <UniqueIdentifier>{8db6c27a-b84f-4dbf-9df1-dc9933b7fafb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -545,6 +551,21 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
       <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\StateMachine.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerIdle.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerMove.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerDogeRoll.cpp">
+      <Filter>application\ソースファイル\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerGuard.cpp">
+      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -856,6 +877,21 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\StateMachine.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerIdle.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerMove.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerDogeRoll.h">
+      <Filter>application\ヘッダーファイル\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerGuard.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
