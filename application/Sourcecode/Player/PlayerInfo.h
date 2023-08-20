@@ -12,5 +12,6 @@ enum class PlayerState {
 	Freeze,
 	Knock,
 	Guard,
-	DodgeRoll
+	DodgeRoll,
+	Magic
 };

@@ -12,6 +12,7 @@
 #include "PlayerKnock.h"
 #include "PlayerAttack.h"
 #include "PlayerAirAttack.h"
+#include "PlayerMagic.h"
 
 Player::Player() : IActor()
 {
@@ -116,6 +117,7 @@ void Player::InitStateMachine()
 	AddState(std::make_shared<PlayerKnock>(this));
 	AddState(std::make_shared<PlayerAttack>(this));
 	AddState(std::make_shared<PlayerAirAttack>(this));
+	AddState(std::make_shared<PlayerMagic>(this));
 }
 #pragma region “ü—Í
 void Player::InputVecUpdate()
@@ -366,6 +368,7 @@ void Player::DrawImGui()
 	if (GetNowState()->GetId() == PlayerState::Knock)		text += "Knock";
 	if (GetNowState()->GetId() == PlayerState::Guard)		text += "Guard";
 	if (GetNowState()->GetId() == PlayerState::DodgeRoll)	text += "DodgeRoll";
+	if (GetNowState()->GetId() == PlayerState::Magic)	text += "Magic";
 
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };

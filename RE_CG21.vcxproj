@@ -59,6 +59,7 @@
     <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerJump.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerKnock.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\PlayerMagic.cpp" />
     <ClCompile Include="application\Sourcecode\Player\PlayerMove.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerJump.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerKnock.h" />
+    <ClInclude Include="application\Sourcecode\Player\PlayerMagic.h" />
     <ClInclude Include="application\Sourcecode\Player\PlayerMove.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />

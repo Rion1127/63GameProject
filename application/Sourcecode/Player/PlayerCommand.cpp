@@ -66,6 +66,7 @@ void PlayerCommand::Update()
 				if (MagicType::Brrizard == (MagicType)magicNum_) {
 					magicManager_.AddBrrizard();
 				}
+				
 			}
 		}
 	}

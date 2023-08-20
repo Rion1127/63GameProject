@@ -111,6 +111,7 @@ public:
 	Vector3 GetFrontVec() { return frontVec_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
+	Timer* GetFreezeTime() { return &freezeTimer_; }
 	bool GetIsAlive() { return isAlive_; }
 	Vector3 GetLockOnVec() { return lockOnVec_; }
 	GuardClass* GetGuard() { return &guard_; }

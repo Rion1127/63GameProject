@@ -35,5 +35,7 @@ void MagicManager::AddBrrizard()
 	magic->SetLockOnActor(enemy_);
 	magic->Init();
 	magics_.emplace_back(std::move(magic));
+
+	player_->GoToState(PlayerState::Magic);
 }
 
