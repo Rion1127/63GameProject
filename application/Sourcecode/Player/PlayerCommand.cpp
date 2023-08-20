@@ -34,6 +34,7 @@ void PlayerCommand::Update()
 
 	attackManager_.SetLockOnEnemy(lockOnEnemy_);
 	attackManager_.SetPlayer(playerState_);
+	magicManager_.SetEnemy(lockOnEnemy_);
 
 	//–‚–@‚ð‘I‘ð
 	if (isMagicMenu_) {

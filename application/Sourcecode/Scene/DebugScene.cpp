@@ -53,6 +53,13 @@ void DebugScene::Ini()
 	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData("Debug").size();
 	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
 
+	std::unique_ptr<AssimpModel> model_;
+
+	std::string fileName = "application/Resources/Object/boneTest.fbx";
+
+	model_ = AssimpLoader::GetInstance()->Load(fileName, model_.get());
+
+	obj_.SetModel(std::move(model_));
 }
 
 void DebugScene::Update()
@@ -146,6 +153,11 @@ void DebugScene::Update()
 
 	}
 	pauseMenu_->Update();
+
+	obj_.SetPos({ 0, 2, 0 });
+	obj_.SetScale({ 1,1,1 });
+
+	obj_.Update();
 }
 
 void DebugScene::Draw()
@@ -165,7 +177,7 @@ void DebugScene::Draw()
 
 
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-
+	obj_.Draw();
 	////////////
 	//スプライト//
 	////////////

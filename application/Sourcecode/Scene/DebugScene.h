@@ -18,6 +18,8 @@
 
 #include "Spline.h"
 #include "Object3d.h"
+#include "AssimpObject3D.h"
+#include "AssimpLoader.h"
 class DebugScene final:
     public IScene
 {
@@ -42,6 +44,8 @@ private:
 	std::unique_ptr<PauseMenu> pauseMenu_;
 
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
+
+	AssimpObject3D obj_;
 public:
 	~DebugScene();
 

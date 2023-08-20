@@ -8,6 +8,7 @@ private:
 	float bulletSpeed_;
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 	Timer freezeTimer_;
+	Vector3 RecoilVec_;
 public:
 	~MagicFire();
 	MagicFire(IActor* selfActor);

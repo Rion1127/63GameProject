@@ -10,7 +10,7 @@ AssimpObject3D::AssimpObject3D()
 {
 	constBuff_ = CreateBuff(constMap_);
 	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/AMove.fbx", nullptr));
-	animation_.timer.SetLimitTime(600);
+	animation_.timer.SetLimitTime(180);
 }
 
 void AssimpObject3D::Update()
@@ -62,17 +62,20 @@ void AssimpObject3D::PlayAnimation()
 	animation_.isPlay = true;
 	if (animation_.isPlay == false)
 	{
-
 		ParseNodeHeirarchy(0.f, 0, identity, model_->scene->mRootNode);
 		return;
 	}
 
 	// 現在のフレーム
-	float endTime = (float)model_->scene->mAnimations[animation_.index]->mDuration;
+	float endTime = (float)model_->scene->mAnimations[animation_.index]->mDuration - 6.f;
 	float currentTime = animation_.timer.GetTimeRate() * endTime;
 	ParseNodeHeirarchy(currentTime, animation_.index, identity, model_->scene->mRootNode);
-
-	if (currentTime >= endTime)animation_.timer.Reset();
+	//リセットしたらもう行列を一度計算しなおす
+	if (currentTime >= endTime) {
+		animation_.timer.Reset();
+		currentTime = animation_.timer.GetTimeRate() * endTime;
+		ParseNodeHeirarchy(currentTime, animation_.index, identity, model_->scene->mRootNode);
+	}
 
 
 	static bool animeStart = true;
@@ -117,15 +120,16 @@ void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t 
 
 	Matrix4 globalTransformMat = currentPoseMat * parentMat;
 
+	Vector3 wscale = worldTransform_.scale_;
 	for (uint32_t i = 0; i < model_->bones.size(); i++)
 	{
 		if (model_->bones[i].name == nodeName)
 		{
 			//スケールを無理やり小さくしている
 			Matrix4 scale = {
-				0.001f,0,0,0,
-				0,0.001f,0,0,
-				0,0,0.001f,0,
+				wscale.x,0,0,0,
+				0,wscale.y,0,0,
+				0,0,wscale.z,0,
 				0,0,0,1.0f
 			};
 			Matrix4 initalMat = model_->bones[i].offsetMat;

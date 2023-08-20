@@ -6,6 +6,7 @@
 #include "mSound.h"
 #include "ParticleEnemyDead.h"
 #include "EnemyRedNocturne.h"
+#include "IBullet.h"
 
 
 EnemyManager::EnemyManager()
@@ -53,7 +54,6 @@ void EnemyManager::PreUpdate()
 
 			lockOnEnemy_ = nullptr;
 			player_->SetLockOnEnemy(lockOnEnemy_);
-			
 			std::shared_ptr<OneceEmitter> deadEmitter_ = std::make_shared<OneceEmitter>();
 			deadEmitter_->particle = std::make_unique<ParticleEnemyDead>();
 			deadEmitter_->addNum = 32;

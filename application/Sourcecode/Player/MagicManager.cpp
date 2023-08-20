@@ -31,8 +31,8 @@ void MagicManager::Draw()
 void MagicManager::AddBrrizard()
 {
 	std::unique_ptr<IBullet> magic = std::make_unique<MagicFire>(player_);
-	IActor* enemy = player_->GetAttackManager()->GetLockOnEnemy();
-	magic->SetLockOnActor(enemy);
+	
+	magic->SetLockOnActor(enemy_);
 	magic->Init();
 	magics_.emplace_back(std::move(magic));
 }
