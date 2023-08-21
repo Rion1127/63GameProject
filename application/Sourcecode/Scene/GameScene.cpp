@@ -60,9 +60,7 @@ void GameScene::Update()
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
-	if (pauseMenu_->GetIsPause() == false) {
-		colosseumSystem_->Update();
-
+	if (GetIsGameStop()) {
 		CameraUpdate();
 
 		stage_->Update();
@@ -106,6 +104,7 @@ void GameScene::Update()
 			lightColor_ = { 1.f,colGB,colGB };
 		}
 	}
+	colosseumSystem_->Update();
 	pauseMenu_->Update();
 
 }
@@ -162,4 +161,14 @@ void GameScene::CameraUpdate()
 	Camera::scurrent_->Update(CameraMode::LookAT);
 
 
+}
+
+bool GameScene::GetIsGameStop()
+{
+	if (pauseMenu_->GetIsPause() == false && 
+		colosseumSystem_->GetIsClear() == false)
+	{
+		return true;
+	}
+	return false;
 }

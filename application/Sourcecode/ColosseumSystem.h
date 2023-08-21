@@ -6,6 +6,46 @@
 #include "Timer.h"
 #include "Sprite.h"
 
+class ClearSprite {
+private:
+	std::unique_ptr<Sprite> sprite_;
+
+	Timer shineTimer_;
+
+	bool isStart_;
+public:
+	ClearSprite();
+	void Update(Timer timer);
+	void Draw();
+	void SetIsStart(bool flag) { isStart_ = flag; }
+	void Reset();
+};
+
+class ReadyGoSprite {
+private:
+	std::unique_ptr<Sprite> readySprite_;
+	std::array<std::unique_ptr<Sprite>, 2> readyShapeSprite_;
+	std::unique_ptr<Sprite> goSprite_;
+	std::unique_ptr<Sprite> goShapeSprite_;
+	
+	Timer readyTimer_;
+	Timer rdyEaseTimer_;
+	Timer displayTimer_;
+
+	bool isStart_;
+public:
+	ReadyGoSprite();
+	void Update(bool flag);
+	void Draw(bool flag);
+	void Reset();
+private:
+	void ReadySpriteUpdate();
+	void GoSpriteUpdate();
+public:
+	void SetIsStart(bool flag) { isStart_ = flag; }
+public:
+	Timer GetReadyTimer() { return readyTimer_; }
+};
 
 class ColosseumSystem
 {
@@ -18,16 +58,11 @@ private:
 	EnemyManager* enemyManager_;
 	Player* player_;
 
-	std::unique_ptr<Sprite> readySprite_;
-	std::array<std::unique_ptr<Sprite>,2> readyShapeSprite_;
-	std::unique_ptr<Sprite> goSprite_;
-	std::unique_ptr<Sprite> goShapeSprite_;
+	ClearSprite clearSprite_;
+	ReadyGoSprite readyGoSprite_;
 	std::unique_ptr<Sprite> blindSprite_;
-	std::unique_ptr<Sprite> clearSprite_;
-
 	std::unique_ptr<Sprite> retrySprite_;
 	std::unique_ptr<Sprite> titleSprite_;
-
 
 	uint32_t maxRoundNum_;
 	uint32_t roundNum_;
@@ -36,13 +71,11 @@ private:
 	bool isNext_;
 	bool isReset_;
 	bool isClear_;
-	Timer readyTimer_;
-	Timer displayTimer_;
+	
 	Timer clearBlankTimer_;
 	Timer blindTimer_;
-
-	Timer rdyEaseTimer_;
-
+	Timer gameClearBlankTimer_;
+	
 	SelectType selectType_;
 public:
 	ColosseumSystem();
@@ -51,7 +84,6 @@ public:
 
 	void Reset();
 private:
-	void ReadySpriteUpdate();
 	void ClearUpdate();
 public:
 	void SetPlayer(Player* actor) { player_ = actor; };
@@ -59,7 +91,8 @@ public:
 	void SetIsReset(bool flag) { isReset_ = flag; }
 	void SetMaxRoundNum(uint32_t num) { maxRoundNum_ = num; }
 public:
-	bool GetIsClear() { return isNext_; }
+	bool GetIsNext() { return isNext_; }
+	bool GetIsClear() { return isClear_; }
 	bool GetIsReset() { return isReset_; }
 	uint32_t GetRoundNum() { return roundNum_; }
 };

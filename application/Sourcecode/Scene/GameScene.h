@@ -54,5 +54,7 @@ public:
 	void Draw()override;
 private:
 	void CameraUpdate();
+
+	bool GetIsGameStop();
 };
 

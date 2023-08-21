@@ -3,18 +3,18 @@
 //Dummy,Shadow,RedNocturne
 
 ROUND1
-SET,0,3,5,RedNocturne
+//SET,0,3,5,RedNocturne
 SET,0,0,5,Shadow
 
 ROUND2
 SET,5,0,5,Shadow
 
-ROUND3
-SET,5,0,5,Shadow
+//ROUND3
+//SET,5,0,5,Shadow
 
-ROUND4
-SET,5,0,5,Shadow
+//ROUND4
+//SET,5,0,5,Shadow
 
-ROUND5
-SET,5,0,5,Shadow
+//ROUND5
+//SET,5,0,5,Shadow
 

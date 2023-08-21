@@ -52,5 +52,6 @@ private:
 	void StateUpdate(State state);
 
 	void InitFireParticle();
+	void AddFireParticle();
 };
 
