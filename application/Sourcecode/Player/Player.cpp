@@ -194,6 +194,8 @@ void Player::InputVecUpdate()
 
 void Player::StateUpdate()
 {
+	state_ = GetNowState()->GetId();
+
 	freezeTimer_.AddTime(1);
 	if (freezeTimer_.GetIsEnd())
 	{
@@ -222,7 +224,7 @@ void Player::StateUpdate()
 	if (dodgeRoll_.GetIsDodge()) {
 		//state_ = PlayerState::DodgeRoll;
 	}
-	state_ = GetNowState()->GetId();
+	
 }
 
 void Player::DogeRoll()
@@ -429,12 +431,12 @@ bool Player::GetIsCanMove()
 {
 	if (isCanMove_ == false) return false;
 	auto state = GetNowState()->GetId();
-	if (GetNowState()->GetId() != PlayerState::Attack &&
-		GetNowState()->GetId() != PlayerState::AirAttack &&
-		GetNowState()->GetId() != PlayerState::Knock &&
-		GetNowState()->GetId() != PlayerState::Guard &&
-		GetNowState()->GetId() != PlayerState::DodgeRoll &&
-		GetNowState()->GetId() != PlayerState::Freeze)
+	if (state_ != PlayerState::Attack &&
+		state_ != PlayerState::AirAttack &&
+		state_ != PlayerState::Knock &&
+		state_ != PlayerState::Guard &&
+		state_ != PlayerState::DodgeRoll &&
+		state_ != PlayerState::Freeze)
 	{
 		return true;
 	}

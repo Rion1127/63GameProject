@@ -23,7 +23,8 @@ void AttackManager::Attack()
 			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ð‘ã“ü‚·‚é
 			if (nowAttack_ == nullptr)
 			{
-				if (player_->GetNowState()->GetId() == PlayerState::Idle)
+				if (player_->GetNowState()->GetId() == PlayerState::Idle||
+					player_->GetNowState()->GetId() == PlayerState::Move)
 				{
 					nowAttack_ = std::move(std::make_unique<Attack1>(player_));
 				}
