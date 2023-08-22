@@ -76,6 +76,7 @@
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Floor.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
+    <ClCompile Include="application\Sourcecode\UI\UIMp.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
+    <ClCompile Include="IGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
@@ -191,6 +193,7 @@
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
     <ClInclude Include="application\Sourcecode\Stage\Floor.h" />
     <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
+    <ClInclude Include="application\Sourcecode\UI\UIMp.h" />
     <ClInclude Include="application\Sourcecode\UI\UIOperation.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
+    <ClInclude Include="IGauge.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

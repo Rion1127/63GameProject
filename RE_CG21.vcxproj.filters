@@ -459,9 +459,6 @@
     <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
@@ -583,6 +580,15 @@
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerMagic.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\UI\UIMp.cpp">
+      <Filter>application\ソースファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\PlayerHPGauge.cpp">
+      <Filter>application\ソースファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="IGauge.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -797,9 +803,6 @@
     <ClInclude Include="application\Sourcecode\Player\Guard.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
@@ -927,6 +930,15 @@
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerMagic.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\UI\UIMp.h">
+      <Filter>application\ヘッダーファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\PlayerHPGauge.h">
+      <Filter>application\ヘッダーファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="IGauge.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
