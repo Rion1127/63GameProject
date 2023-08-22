@@ -6,6 +6,8 @@ void PlayerMove::SetUp()
 
 void PlayerMove::Update()
 {
+	player_->InputVecUpdate();
+
 	if (player_->GetAddVec().x == 0 &&
 		player_->GetAddVec().y == 0 &&
 		player_->GetAddVec().z == 0)
@@ -15,7 +17,6 @@ void PlayerMove::Update()
 
 	player_->DogeRoll();
 	player_->Jump();
-	player_->InputVecUpdate();
 }
 
 void PlayerMove::Draw()

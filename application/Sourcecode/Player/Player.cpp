@@ -197,7 +197,7 @@ void Player::StateUpdate()
 	freezeTimer_.AddTime(1);
 	if (freezeTimer_.GetIsEnd())
 	{
-		if (state_ != PlayerState::Knock)
+		if (GetNowState()->GetId() != PlayerState::Knock)
 		{
 			sword_.SetState(Sword::SwordState::Idle);
 			if (command_.GetAttackManager()->GetIsAttacking())
@@ -216,12 +216,13 @@ void Player::StateUpdate()
 
 	if (guard_.GetIsGurdNow())
 	{
-		state_ = PlayerState::Guard;
+		
 		sword_.SetState(Sword::SwordState::Guard);
 	}
 	if (dodgeRoll_.GetIsDodge()) {
-		state_ = PlayerState::DodgeRoll;
+		//state_ = PlayerState::DodgeRoll;
 	}
+	state_ = GetNowState()->GetId();
 }
 
 void Player::DogeRoll()
@@ -442,7 +443,7 @@ bool Player::GetIsCanMove()
 
 bool Player::GetIsCanDodge()
 {
-	if (state_ == PlayerState::Idle &&
+	if (state_ == PlayerState::Move &&
 		state_ != PlayerState::DodgeRoll)
 	{
 		if (addVec_.x != 0 ||
