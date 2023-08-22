@@ -153,11 +153,18 @@ void Player::InputVecUpdate()
 			else {
 				inputVec_ = inputVec_.normalize();
 			}
-			//カメラから見た左右手前奥移動
-			moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
-			moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
-			moveVec_ *= moveSpeed_;
 		}
+		else
+		{
+			inputVec_ = {
+				(float)Key::PushKey(DIK_D) - Key::PushKey(DIK_A),
+				(float)Key::PushKey(DIK_W) - Key::PushKey(DIK_S)
+			};
+		}
+		//カメラから見た左右手前奥移動
+		moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
+		moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
+		moveVec_ *= moveSpeed_;
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
 
