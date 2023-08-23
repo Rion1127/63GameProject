@@ -45,14 +45,13 @@ Player::Player() : IActor()
 	nowMP_ = maxMP_;
 
 	isAlive_ = true;
-	isCharge_ = false;
+	isMPCharge_ = false;
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
 
 	sword_.SetAttackManager(command_.GetAttackManager());
 	sword_.SetParent(obj_.get());
 
-	command_.SetPlayerInfo(&state_);
 	command_.SetPlayer(this);
 
 	InitStateMachine();
@@ -244,13 +243,14 @@ void Player::MPCharge()
 	//MP‚ª‹ó‚É‚È‚Á‚½‚ç
 	if (nowMP_ < 0 || nowMP_ == 0) {
 		nowMP_ = 0;
-		if (isCharge_ == false) {
-			isCharge_ = true;
-			mpGauge_.SetIsCharge(isCharge_);
+		if (isMPCharge_ == false) {
+			isMPCharge_ = true;
+			mpGauge_.SetIsCharge(isMPCharge_);
+			
 		}
 	}
 	//MP‚ðƒ`ƒƒ[ƒW‚·‚é
-	if (isCharge_ == true) {
+	if (isMPCharge_ == true) {
 		mpChargeTime_.AddTime(1);
 		mpChargeIntervalTimer_.AddTime(1);
 
@@ -260,8 +260,8 @@ void Player::MPCharge()
 		}
 
 		if (mpChargeTime_.GetIsEnd()) {
-			isCharge_ = false;
-			mpGauge_.SetIsCharge(isCharge_);
+			isMPCharge_ = false;
+			mpGauge_.SetIsCharge(isMPCharge_);
 			nowMP_ = maxMP_;
 		}
 	}

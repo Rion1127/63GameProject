@@ -50,7 +50,7 @@ private:
 	int32_t nowMP_;
 	Timer mpChargeTime_;
 	Timer mpChargeIntervalTimer_;
-	bool isCharge_;
+	bool isMPCharge_;
 
 	Sphere damageCol_;
 
@@ -123,6 +123,8 @@ public:
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
 	Timer* GetFreezeTime() { return &freezeTimer_; }
 	bool GetIsAlive() { return isAlive_; }
+	bool GetIsMPCharge() { return isMPCharge_; }
+
 	Vector3 GetLockOnVec() { return lockOnVec_; }
 	GuardClass* GetGuard() { return &guard_; }
 	Sphere GetDamageCol() { return damageCol_; }

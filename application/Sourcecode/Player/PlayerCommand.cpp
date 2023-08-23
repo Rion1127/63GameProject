@@ -4,16 +4,17 @@
 #include "Texture.h"
 #include "Easing.h"
 #include "mSound.h"
+#include "Player.h"
 
 PlayerCommand::PlayerCommand()
 {
 	Color mainCommandColor = { 0,35,255,255 };
-	mainCommandSprite_ = std::make_unique<CommandSprite>(mainCommandColor,Vector2(120, 550), 2);
+	mainCommandSprite_ = std::make_unique<CommandSprite>(mainCommandColor, Vector2(120, 550), 2);
 	mainCommandSprite_->SetTitleTex(TextureManager::GetInstance()->GetTexture("CommandTitle"));
 	mainCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 	mainCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandTex"));
 	Color magicCommandColor = { 140,130,230,255 };
-	magicCommandSprite_ = std::make_unique<CommandSprite>(magicCommandColor,Vector2(150, 550), 2);
+	magicCommandSprite_ = std::make_unique<CommandSprite>(magicCommandColor, Vector2(150, 550), 2);
 	magicCommandSprite_->SetTitleTex(TextureManager::GetInstance()->GetTexture("CommandMagicTitle"));
 	magicCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 	magicCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandMagicTex"));
@@ -28,9 +29,9 @@ PlayerCommand::PlayerCommand()
 void PlayerCommand::Update()
 {
 	if (isMagicMenu_ == false) {
-		
+
 	}
-	
+
 
 	attackManager_.SetLockOnEnemy(lockOnEnemy_);
 	magicManager_.SetEnemy(lockOnEnemy_);
@@ -63,10 +64,17 @@ void PlayerCommand::Update()
 			magicCommandSprite_->ResetEase();
 			commandNum_ = 0;
 			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-				if (MagicType::Fire == (MagicType)magicNum_) {
-					magicManager_.ShotMagic(MagicType::Fire);
+				//MPÇ™Ç†ÇÈéû
+				if (player_->GetIsMPCharge() == false) {
+					if (MagicType::Fire == (MagicType)magicNum_) {
+						magicManager_.ShotMagic(MagicType::Fire);
+					}
 				}
-				
+				//MPÉ`ÉÉÅ[ÉWíÜÇÃéû
+				else {
+
+				}
+
 			}
 		}
 	}

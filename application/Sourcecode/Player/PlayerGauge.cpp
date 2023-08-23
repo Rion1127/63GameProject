@@ -120,10 +120,11 @@ void PlayerMPGauge::OriginalUpdate()
 		if (easeTimer_.GetIsEnd()) {
 			
 		}
+		gauge_->SetColor(Color(200.f, 0.f, 170.f, 255.f));
 	}
 	//�ʏ펞
 	else {
-
+		gauge_->SetColor(Color(0.f, 80.f, 255.f, 255.f));
 	}
 }
 

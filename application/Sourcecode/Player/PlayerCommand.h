@@ -39,6 +39,8 @@ public:
 	void SetTranslucent(bool flag) { isTranslucent_ = flag; }
 };
 
+struct Player;
+
 class PlayerCommand
 {
 private:
@@ -52,7 +54,7 @@ private:
 	std::unique_ptr<CommandSprite> magicCommandSprite_;
 private:
 	IEnemy* lockOnEnemy_;
-	PlayerState* playerState_;
+	Player* player_;
 	
 	AttackManager attackManager_;
 	MagicManager magicManager_;
@@ -73,8 +75,10 @@ public:
 
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
-	void SetPlayerInfo(PlayerState* state) { playerState_ = state; }
-	void SetPlayer(Player* player) { magicManager_.SetPlayer(player); }
+	void SetPlayer(Player* player) {
+		player_ = player;
+		magicManager_.SetPlayer(player);
+	}
 public:
 	AttackManager* GetAttackManager() { return &attackManager_; }
 	MagicManager* GetMagicManager() { return &magicManager_; }
