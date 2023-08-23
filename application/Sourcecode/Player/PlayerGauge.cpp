@@ -86,7 +86,7 @@ PlayerMPGauge::PlayerMPGauge() :
 	basePos_ = pos_;
 	easeStartPos_ = basePos_;
 	easeStartPos_.x = WinAPI::GetWindowSize().x * 1.5f;
-	scale_ = { 1.0f,0.3f };
+	scale_ = { 1.0f,0.2f };
 
 	gauge_->SetAnchor({ 1,0 });
 	gaugeFrame_->SetAnchor({ 1,0 });

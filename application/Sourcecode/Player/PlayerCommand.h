@@ -39,7 +39,7 @@ public:
 	void SetTranslucent(bool flag) { isTranslucent_ = flag; }
 };
 
-struct Player;
+class Player;
 
 class PlayerCommand
 {

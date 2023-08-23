@@ -260,6 +260,7 @@ void Player::MPCharge()
 		}
 
 		if (mpChargeTime_.GetIsEnd()) {
+			mpChargeTime_.Reset();
 			isMPCharge_ = false;
 			mpGauge_.SetIsCharge(isMPCharge_);
 			nowMP_ = maxMP_;
