@@ -35,6 +35,8 @@ Player::Player() : IActor()
 	damageCol_.radius = obj_->GetTransform()->scale_.x;
 
 	damageCoolTime_.SetLimitTime(50);
+	mpChargeTime_.SetLimitTime(600);
+	mpChargeIntervalTimer_.SetLimitTime(mpChargeTime_.GetLimitTimer() / 20);
 
 	maxHealth_ = 100;
 	health_ = maxHealth_;
@@ -43,6 +45,7 @@ Player::Player() : IActor()
 	nowMP_ = maxMP_;
 
 	isAlive_ = true;
+	isCharge_ = false;
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
 
@@ -61,15 +64,18 @@ void Player::PreUpdate()
 	addVec_ = { 0,0,0 };
 	//プレイヤーの状態更新
 	StateUpdate();
-	
+
 	////重力
 	GravityUpdate();
 
 	ColPosUpdate();
-	
+
 	Update();
 
 	command_.Update();
+
+	MPCharge();
+
 	damageCoolTime_.AddTime(1);
 	hpGauge_.Update(maxHealth_, health_);
 	mpGauge_.Update(maxMP_, nowMP_);
@@ -213,7 +219,7 @@ void Player::StateUpdate()
 				GoToState(PlayerState::Attack);
 				sword_.SetState(Sword::SwordState::Attack);
 			}
-			
+
 			if (isFloorCollision_ == false && command_.GetAttackManager()->GetIsAttacking())
 			{
 				GoToState(PlayerState::AirAttack);
@@ -224,13 +230,41 @@ void Player::StateUpdate()
 
 	if (guard_.GetIsGurdNow())
 	{
-		
+
 		sword_.SetState(Sword::SwordState::Guard);
 	}
 	if (dodgeRoll_.GetIsDodge()) {
 		//state_ = PlayerState::DodgeRoll;
 	}
-	
+
+}
+
+void Player::MPCharge()
+{
+	//MPが空になったら
+	if (nowMP_ < 0 || nowMP_ == 0) {
+		nowMP_ = 0;
+		if (isCharge_ == false) {
+			isCharge_ = true;
+			mpGauge_.SetIsCharge(isCharge_);
+		}
+	}
+	//MPをチャージする
+	if (isCharge_ == true) {
+		mpChargeTime_.AddTime(1);
+		mpChargeIntervalTimer_.AddTime(1);
+
+		if (mpChargeIntervalTimer_.GetIsEnd()) {
+			nowMP_ = (uint32_t)(100.f * mpChargeTime_.GetTimeRate());
+			mpChargeIntervalTimer_.Reset();
+		}
+
+		if (mpChargeTime_.GetIsEnd()) {
+			isCharge_ = false;
+			mpGauge_.SetIsCharge(isCharge_);
+			nowMP_ = maxMP_;
+		}
+	}
 }
 
 void Player::DogeRoll()

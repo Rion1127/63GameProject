@@ -4,7 +4,9 @@
 
 MagicFire::~MagicFire()
 {
-	fireEmitter_->isActive = false;
+	if (fireEmitter_ != nullptr) {
+		fireEmitter_->isActive = false;
+	}
 }
 
 MagicFire::MagicFire(IActor* selfActor) :

@@ -2,6 +2,7 @@
 #include "IAttack.h"
 #include "IBullet.h"
 #include <list>
+#include <unordered_map>
 #include "MagicFire.h"
 
 class Player;
@@ -15,6 +16,7 @@ enum class MagicType {
 class MagicManager
 {
 private:
+	std::unordered_map<MagicType,std::unique_ptr<IBullet>> magicList_;
 	std::list<std::unique_ptr<IBullet>> magics_;
 
 	Player* player_;
@@ -25,11 +27,11 @@ public:
 
 	void Draw();
 public:
-	void AddBrrizard();
 	void ShotMagic(MagicType type = MagicType::Fire);
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IActor* enemy) { enemy_ = enemy; }
 public:
 	std::list<std::unique_ptr<IBullet>>* GetBullet() { return &magics_; }
+	auto* GetMagicList() { return &magicList_; }
 };
 

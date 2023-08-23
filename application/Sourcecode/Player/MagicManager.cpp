@@ -1,8 +1,10 @@
 #include "MagicManager.h"
 #include "Player.h"
+#include "MagicFire.h"
 
 MagicManager::MagicManager()
 {
+	magicList_.insert(std::make_pair(MagicType::Fire, std::make_unique<MagicFire>(nullptr)));
 }
 
 void MagicManager::Update()
@@ -26,17 +28,6 @@ void MagicManager::Draw()
 	for (auto& bullet : magics_) {
 		bullet->DrawCol();
 	}
-}
-
-void MagicManager::AddBrrizard()
-{
-	std::unique_ptr<IBullet> magic = std::make_unique<MagicFire>(player_);
-
-	magic->SetLockOnActor(enemy_);
-	magic->Init();
-	magics_.emplace_back(std::move(magic));
-
-	player_->GoToState(PlayerState::Magic);
 }
 
 void MagicManager::ShotMagic(MagicType type)

@@ -132,6 +132,7 @@ void PlayerCommand::DrawSprite()
 	magicCommandSprite_->DrawSprite();
 }
 
+#pragma region CommandSprite
 CommandSprite::CommandSprite(Color color, Vector2 basePos, uint32_t menuNum)
 {
 	isVisible_ = true;
@@ -248,3 +249,4 @@ void CommandSprite::SetCharaTex(Texture* texture)
 		sprite->SetTexture(texture);
 	}
 }
+#pragma endregion

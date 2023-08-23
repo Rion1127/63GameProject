@@ -1,4 +1,5 @@
 #include "PlayerGauge.h"
+#include "Easing.h"
 
 #pragma region HPゲージ
 PlayerHPGauge::PlayerHPGauge() : 
@@ -67,6 +68,7 @@ void PlayerHPGauge::Damage()
 }
 #pragma endregion
 
+#pragma region MPゲージ
 PlayerMPGauge::PlayerMPGauge() : 
 	IGauge(Color(0.f, 80.f, 255.f, 255.f))
 {
@@ -81,6 +83,9 @@ PlayerMPGauge::PlayerMPGauge() :
 		WinAPI::GetWindowSize().x * offsetRate_.x,
 		WinAPI::GetWindowSize().y * offsetRate_.y
 	};
+	basePos_ = pos_;
+	easeStartPos_ = basePos_;
+	easeStartPos_.x = WinAPI::GetWindowSize().x * 1.5f;
 	scale_ = { 1.0f,0.3f };
 
 	gauge_->SetAnchor({ 1,0 });
@@ -92,11 +97,34 @@ PlayerMPGauge::PlayerMPGauge() :
 	gaugeFrame_->SetColor({ 255.f,255.f,255.f,255.f });
 	gaugeFrame_->SetPos(pos_);
 	gaugeFrame_->SetScale(scale_);
+
+	easeTimer_.SetLimitTime(40);
 }
 
 void PlayerMPGauge::OriginalUpdate()
 {
-	
+	easeTimer_.AddTime(1);
+
+	Vector2 pos = {
+			Easing::Back::easeOut(easeStartPos_.x,basePos_.x,easeTimer_.GetTimeRate()),
+			basePos_.y
+	};
+
+	pos_ = pos;
+
+	gauge_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
+	gaugeFrame_->SetPos(pos_);
+
+	//MPチャージ中
+	if (isCharge_ == true) {
+		if (easeTimer_.GetIsEnd()) {
+			
+		}
+	}
+	//通常時
+	else {
+
+	}
 }
 
 void PlayerMPGauge::OriginalFrontDraw()
@@ -104,3 +132,4 @@ void PlayerMPGauge::OriginalFrontDraw()
 	gaugeFrame_->DrawImGui();
 	gauge_->DrawImGui();
 }
+#pragma endregion 

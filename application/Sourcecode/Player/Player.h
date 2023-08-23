@@ -48,6 +48,9 @@ private:
 
 	int32_t maxMP_;
 	int32_t nowMP_;
+	Timer mpChargeTime_;
+	Timer mpChargeIntervalTimer_;
+	bool isCharge_;
 
 	Sphere damageCol_;
 
@@ -78,6 +81,7 @@ private:
 	void GravityUpdate();
 	//ステータス更新
 	void StateUpdate();
+	void MPCharge();
 public:
 	void Draw();
 

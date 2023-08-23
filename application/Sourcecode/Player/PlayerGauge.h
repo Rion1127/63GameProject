@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "IGauge.h"
+#include "Timer.h"
 class PlayerHPGauge : 
 	public IGauge
 {
@@ -20,6 +21,13 @@ private:
 class PlayerMPGauge :
 	public IGauge
 {
+private:
+	Timer easeTimer_;
+	Vector2 basePos_;
+	//画面外のポジション
+	Vector2 easeStartPos_;
+
+	bool isCharge_;
 public:
 	PlayerMPGauge();
 
@@ -28,5 +36,10 @@ private:
 	void OriginalFrontDraw() override;
 	void OriginalMiddleDraw()override {};
 	void OriginalBackDraw()override {};
+
+public:
+	void SetIsCharge(bool flag) { isCharge_ = flag; easeTimer_.Reset(); }
+public:
+	bool GetIsCharge() { return isCharge_; }
 };
 
