@@ -57,23 +57,26 @@ void PlayerCommand::Update()
 			SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
 		}
 
-		if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
-			Controller::GetTriggerButtons(PAD::INPUT_B))
+		//キャンセル（魔法コマンドを閉じる）
+		if (Controller::GetTriggerButtons(PAD::INPUT_A))
 		{
 			isMagicMenu_ = false;
 			magicCommandSprite_->ResetEase();
 			commandNum_ = 0;
-			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-				//MPがある時
-				if (player_->GetIsMPCharge() == false) {
-					if (MagicType::Fire == (MagicType)magicNum_) {
-						magicManager_.ShotMagic(MagicType::Fire);
-					}
+		}
+		//MPがある時
+		if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
+			if (player_->GetIsMPCharge() == false) {
+				isMagicMenu_ = false;
+				magicCommandSprite_->ResetEase();
+				commandNum_ = 0;
+				//選択した魔法を撃つ
+				if (MagicType::Fire == (MagicType)magicNum_) {
+					magicManager_.ShotMagic(MagicType::Fire);
 				}
-				//MPチャージ中の時
-				else {
-
-				}
+			}
+			//MPチャージ中の時
+			else {
 
 			}
 		}
