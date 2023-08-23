@@ -27,6 +27,7 @@
     <ClCompile Include="application\Sourcecode\GameCamera.cpp" />
     <ClCompile Include="application\Sourcecode\IActor.cpp" />
     <ClCompile Include="application\Sourcecode\IBullet.cpp" />
+    <ClCompile Include="application\Sourcecode\IGauge.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp" />
@@ -125,7 +126,6 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="IGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
@@ -144,6 +144,7 @@
     <ClInclude Include="application\Sourcecode\GameCamera.h" />
     <ClInclude Include="application\Sourcecode\IActor.h" />
     <ClInclude Include="application\Sourcecode\IBullet.h" />
+    <ClInclude Include="application\Sourcecode\IGauge.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h" />
@@ -242,7 +243,6 @@
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
-    <ClInclude Include="IGauge.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
