@@ -31,11 +31,27 @@ void MagicManager::Draw()
 void MagicManager::AddBrrizard()
 {
 	std::unique_ptr<IBullet> magic = std::make_unique<MagicFire>(player_);
-	
+
 	magic->SetLockOnActor(enemy_);
 	magic->Init();
 	magics_.emplace_back(std::move(magic));
 
 	player_->GoToState(PlayerState::Magic);
+}
+
+void MagicManager::ShotMagic(MagicType type)
+{
+	std::unique_ptr<IBullet> magic;
+
+	if (type == MagicType::Fire) {
+		magic = std::make_unique<MagicFire>(player_);
+	}
+
+	player_->GoToState(PlayerState::Magic);
+	player_->SubMP(magic->GetCostMP());
+
+	magic->SetLockOnActor(enemy_);
+	magic->Init();
+	magics_.emplace_back(std::move(magic));
 }
 

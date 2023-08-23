@@ -17,3 +17,16 @@ private:
 	void OriginalBackDraw()override {};
 };
 
+class PlayerMPGauge :
+	public IGauge
+{
+public:
+	PlayerMPGauge();
+
+private:
+	void OriginalUpdate() override;
+	void OriginalFrontDraw() override;
+	void OriginalMiddleDraw()override {};
+	void OriginalBackDraw()override {};
+};
+

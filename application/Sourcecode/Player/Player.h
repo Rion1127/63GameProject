@@ -8,7 +8,7 @@
 #include "AttackManager.h"
 #include "MagicManager.h"
 #include "IActor.h"
-#include "PlayerHPGauge.h"
+#include "PlayerGauge.h"
 #include "Guard.h"
 #include "DodgeRoll.h"
 #include "Sword.h"
@@ -40,10 +40,14 @@ private:
 	GuardClass guard_;
 	DodgeRoll dodgeRoll_;
 	PlayerHPGauge hpGauge_;
+	PlayerMPGauge mpGauge_;
 	PlayerState state_;
 
 	int32_t maxHealth_;
 	int32_t health_;
+
+	int32_t maxMP_;
+	int32_t nowMP_;
 
 	Sphere damageCol_;
 
@@ -105,6 +109,8 @@ public:
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }
 	void SetLockOnEnemy(IEnemy* enemy) { command_.SetLockOnEnemy(enemy); }
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
+
+	void SubMP(int32_t costMp) { nowMP_ -= costMp; }
 public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
 	MagicManager* GetMagicManager() { return command_.GetMagicManager(); }

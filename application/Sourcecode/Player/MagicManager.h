@@ -6,6 +6,12 @@
 
 class Player;
 
+enum class MagicType {
+	Fire,
+	NONE,
+	END
+};
+
 class MagicManager
 {
 private:
@@ -20,6 +26,7 @@ public:
 	void Draw();
 public:
 	void AddBrrizard();
+	void ShotMagic(MagicType type = MagicType::Fire);
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IActor* enemy) { enemy_ = enemy; }
 public:

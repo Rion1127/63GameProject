@@ -35,8 +35,13 @@ Player::Player() : IActor()
 	damageCol_.radius = obj_->GetTransform()->scale_.x;
 
 	damageCoolTime_.SetLimitTime(50);
+
 	maxHealth_ = 100;
 	health_ = maxHealth_;
+
+	maxMP_ = 100;
+	nowMP_ = maxMP_;
+
 	isAlive_ = true;
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
@@ -67,6 +72,7 @@ void Player::PreUpdate()
 	command_.Update();
 	damageCoolTime_.AddTime(1);
 	hpGauge_.Update(maxHealth_, health_);
+	mpGauge_.Update(maxMP_, nowMP_);
 }
 
 void Player::PostUpdate()
@@ -403,6 +409,7 @@ void Player::DrawImGui()
 void Player::DrawSprite()
 {
 	hpGauge_.Draw();
+	mpGauge_.Draw();
 	command_.DrawSprite();
 }
 

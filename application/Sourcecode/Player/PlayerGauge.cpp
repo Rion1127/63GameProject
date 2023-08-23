@@ -1,8 +1,8 @@
-#include "PlayerHPGauge.h"
+#include "PlayerGauge.h"
 
-
+#pragma region HPÉQÅ[ÉW
 PlayerHPGauge::PlayerHPGauge() : 
-	IGauge()
+	IGauge(Color(50.f, 205.f, 50.f, 255.f))
 {
 	
 	hpBarMiddle_ = std::move(std::make_unique<Sprite>());
@@ -30,7 +30,6 @@ PlayerHPGauge::PlayerHPGauge() :
 	scale_ = { 1.0f,0.3f };
 
 	gauge_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
-	gauge_->SetColor({ 50.f,205.f,50.f,255.f });
 	gauge_->SetScale(scale_);
 
 	hpBarMiddle_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
@@ -65,4 +64,43 @@ void PlayerHPGauge::Damage()
 	color.a = 255.f;
 	hpBarMiddle_->SetColor(color);
 	hpBarMiddle_->SetScale(gauge_->GetScale());
+}
+#pragma endregion
+
+PlayerMPGauge::PlayerMPGauge() : 
+	IGauge(Color(0.f, 80.f, 255.f, 255.f))
+{
+	gauge_->SetTexture(TextureManager::GetInstance()->GetTexture("Gauge"));
+	gaugeFrame_->SetTexture(TextureManager::GetInstance()->GetTexture("HpBarBack"));
+
+	offsetRate_ = {
+		0.9875f,
+		0.9f,
+	};
+	pos_ = {
+		WinAPI::GetWindowSize().x * offsetRate_.x,
+		WinAPI::GetWindowSize().y * offsetRate_.y
+	};
+	scale_ = { 1.0f,0.3f };
+
+	gauge_->SetAnchor({ 1,0 });
+	gaugeFrame_->SetAnchor({ 1,0 });
+
+	gauge_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
+	gauge_->SetScale(scale_);
+
+	gaugeFrame_->SetColor({ 255.f,255.f,255.f,255.f });
+	gaugeFrame_->SetPos(pos_);
+	gaugeFrame_->SetScale(scale_);
+}
+
+void PlayerMPGauge::OriginalUpdate()
+{
+	
+}
+
+void PlayerMPGauge::OriginalFrontDraw()
+{
+	gaugeFrame_->DrawImGui();
+	gauge_->DrawImGui();
 }

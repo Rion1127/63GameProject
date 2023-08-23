@@ -1,13 +1,15 @@
 #include "IGauge.h"
 
 
-IGauge::IGauge()
+IGauge::IGauge(Color color)
 {
 	gauge_ = std::move(std::make_unique<Sprite>());
 	gaugeFrame_ = std::move(std::make_unique<Sprite>());
 
 	gauge_->Ini();
 	gaugeFrame_->Ini();
+
+	gauge_->SetColor(color);
 }
 
 void IGauge::Update(int32_t maxHp, int32_t nowHp)

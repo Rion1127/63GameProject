@@ -47,12 +47,6 @@ private:
 		Magic,
 		END,
 	};
-
-	enum class MagicType {
-		Brrizard,
-		NONE,
-		END
-	};
 private:
 	std::unique_ptr<CommandSprite> mainCommandSprite_;
 	std::unique_ptr<CommandSprite> magicCommandSprite_;

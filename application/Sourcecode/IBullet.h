@@ -35,8 +35,10 @@ protected:
 
 	Timer aliveTimer_;
 	bool isDead_;
+	int32_t costMP_;
 public:
-	IBullet(IActor* selfActor, int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25);
+	IBullet(IActor* selfActor, int32_t colNum = 1,
+		int32_t maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25, int32_t costMP = 10);
 	virtual ~IBullet() {};
 	void Update();
 	void DrawCol();
@@ -51,6 +53,7 @@ public:
 	std::unique_ptr<AttackCol>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
 	bool GetIsDead() { return isDead_; }
+	int32_t GetCostMP() { return costMP_; }
 public:
 	virtual void Init() = 0;
 protected:

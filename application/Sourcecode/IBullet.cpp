@@ -1,7 +1,7 @@
 #include "IBullet.h"
 
 
-IBullet::IBullet(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime) :
+IBullet::IBullet(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime, int32_t costMP) :
 	selfActor_(selfActor)
 {
 
@@ -16,6 +16,8 @@ IBullet::IBullet(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 	spline_.SetIsStart(true);
 	isDead_ = false;
 	aliveTimer_.SetLimitTime(maxTime);
+
+	costMP_ = costMP;
 }
 
 void IBullet::Update()

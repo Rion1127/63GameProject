@@ -20,7 +20,7 @@ PlayerCommand::PlayerCommand()
 	magicCommandSprite_->SetIsVisible(false);
 	//選択していないコマンドを透けないようにする
 	magicCommandSprite_->SetTranslucent(false);
-	magicType_ = MagicType::Brrizard;
+	magicType_ = MagicType::Fire;
 	magicNum_ = 0;
 	commandNum_ = 0;
 }
@@ -63,8 +63,8 @@ void PlayerCommand::Update()
 			magicCommandSprite_->ResetEase();
 			commandNum_ = 0;
 			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-				if (MagicType::Brrizard == (MagicType)magicNum_) {
-					magicManager_.AddBrrizard();
+				if (MagicType::Fire == (MagicType)magicNum_) {
+					magicManager_.ShotMagic(MagicType::Fire);
 				}
 				
 			}
