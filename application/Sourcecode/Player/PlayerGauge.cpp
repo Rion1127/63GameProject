@@ -130,7 +130,7 @@ void PlayerMPGauge::OriginalUpdate()
 
 void PlayerMPGauge::OriginalFrontDraw()
 {
-	gaugeFrame_->DrawImGui();
-	gauge_->DrawImGui();
+	//gaugeFrame_->DrawImGui();
+	//gauge_->DrawImGui();
 }
 #pragma endregion 
