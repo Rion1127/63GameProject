@@ -1,7 +1,7 @@
 #include "Attack3.h"
 
 Attack3::Attack3(IActor* selfActor) :
-	IAttack(selfActor,1, 30, 10, 31)
+	IAttack(selfActor,1, 35, 10, 35)
 {
 }
 
@@ -63,7 +63,7 @@ void Attack3::MoveUpdate()
 	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = attackVec_ * 0.1f;
-	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	float timerate = 1.f - timer_.GetTimeRate();
 	speed *= timerate;
 
 

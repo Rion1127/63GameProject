@@ -19,6 +19,8 @@ void AttackManager::Attack()
 {
 	if (Controller::GetTriggerButtons(PAD::INPUT_B))
 	{
+		//“G‚Æ©•ª‚Ì‹——£‚ğŒvZ
+		CalculatePtoELength();
 		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
 		if (comboNum < MAX_COMBO)
 		{
@@ -28,11 +30,12 @@ void AttackManager::Attack()
 				if (player_->GetNowState()->GetId() == PlayerState::Idle||
 					player_->GetNowState()->GetId() == PlayerState::Move)
 				{
-					nowAttack_ = std::move(std::make_unique<AttackSlide>(player_));
+					if(PtoELength_ >= 5.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
+					else nowAttack_ = std::make_unique<Attack1>(player_);
 				}
 				else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 				{
-					nowAttack_ = std::move(std::make_unique<AttackAir1>(player_));
+					nowAttack_ = std::make_unique<AttackAir1>(player_);
 				}
 				if (nowAttack_ != nullptr) {
 					nowAttack_->SetLockOnActor(lockOnEnemy_);
@@ -40,7 +43,6 @@ void AttackManager::Attack()
 					float picth = RRandom::RandF(0.7f, 1.5f);
 					SoundManager::Play("SwingSE", false, 0.3f, picth);
 				}
-				timer_ = 0;
 				comboNum++;
 			}
 			else
@@ -50,13 +52,13 @@ void AttackManager::Attack()
 					if (player_->GetNowState()->GetId() == PlayerState::Attack)
 					{
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
-						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<Attack2>(player_));
-						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<Attack3>(player_));
+						if (comboNum == 1)nextAttack_ = std::make_unique<Attack2>(player_);
+						if (comboNum == 2)nextAttack_ = std::make_unique<Attack3>(player_);
 					}
 					else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 					{
-						if (comboNum == 1)nextAttack_ = std::move(std::make_unique<AttackAir2>(player_));
-						if (comboNum == 2)nextAttack_ = std::move(std::make_unique<AttackAir3>(player_));
+						if (comboNum == 1)nextAttack_ = std::make_unique<AttackAir2>(player_);
+						if (comboNum == 2)nextAttack_ = std::make_unique<AttackAir3>(player_);
 					}
 				}
 			}
@@ -73,13 +75,9 @@ void AttackManager::Update()
 		//UŒ‚XV
 		nowAttack_->SetLockOnActor(lockOnEnemy_);
 		nowAttack_->Update();
-		nowAttack_->SetNowTime(timer_);
-		//UŒ‚’†ƒJƒEƒ“ƒg‚ği‚ß‚é
-		timer_++;
 		//maxTime‚ğ’´‚¦‚½‚çnextAttack_‚ğnowAttack_‚É‘ã“ü‚·‚é
-		if (nowAttack_->GetInfo().maxTime <= timer_)
+		if (nowAttack_->GetTimer().GetIsEnd())
 		{
-			timer_ = 0;
 			nowAttack_.swap(nextAttack_);
 			//UŒ‚‰Šú‰»
 			if (nowAttack_ != nullptr) {
@@ -115,7 +113,8 @@ void AttackManager::DrawDebug()
 	ImGui::Begin("Attack");
 	int num = (int)comboNum;
 	ImGui::SliderInt("combo", &num, 0, 10, "%d");
-	int time = (int)timer_;
+	int time = 0;
+	if (nowAttack_ != nullptr) time = nowAttack_->GetTimer().GetTimer();
 	ImGui::SliderInt("time", &time, 0, 120, "%d");
 	if (ImGui::Button("colDisplay"))
 	{
@@ -123,4 +122,14 @@ void AttackManager::DrawDebug()
 		isColDisplay = isColDisplay & 1;
 	}
 	ImGui::End();
+}
+
+void AttackManager::CalculatePtoELength()
+{
+	if (lockOnEnemy_ != nullptr) {
+		Vector3 PtoEVec =
+			player_->GetWorldTransform()->position_ - lockOnEnemy_->GetWorldTransform()->position_;
+
+		PtoELength_ = PtoEVec.length();
+	}
 }

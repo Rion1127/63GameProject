@@ -6,6 +6,7 @@
 #include "PlayerInfo.h"
 #include "IActor.h"
 #include "Spline.h"
+#include "Timer.h"
 
 class IAttack
 {
@@ -27,6 +28,7 @@ private:
 		int32_t nowTime;
 	};
 protected:
+	Timer timer_;
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;
 	IActor* selfActor_;
@@ -50,6 +52,7 @@ public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
+	Timer GetTimer() { return timer_; }
 public:
 	virtual void Init() = 0;
 protected:

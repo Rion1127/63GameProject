@@ -12,6 +12,7 @@ private:
 	float frontDist_;
 	State state_;
 	float speed_;
+	float stateSwitchRate_;
 public:
 	AttackSlide(IActor* selfActor);
 private:

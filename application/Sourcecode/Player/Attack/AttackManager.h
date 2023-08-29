@@ -19,6 +19,7 @@ class AttackManager
 {
 private:
 	static Player* player_;
+	IEnemy* lockOnEnemy_;
 	//攻撃のデータ・プール
 	std::vector<std::unique_ptr<IAttack>> attacks_;
 
@@ -28,11 +29,10 @@ private:
 	const int32_t MAX_COMBO = 3;
 	int32_t comboNum;
 
-	int32_t timer_ = 0;
-
 	bool isAttacking;
 	bool isHardLock_;	//false 近い敵をロックオン, true ロックオンを固定
-	IEnemy* lockOnEnemy_;
+	
+	float PtoELength_;
 public:
 	AttackManager();
 
@@ -40,6 +40,8 @@ public:
 	void Update();
 
 	void DrawDebug();
+private:
+	void CalculatePtoELength();
 public:
 	bool GetIsAttacking() { return isAttacking; }
 public:

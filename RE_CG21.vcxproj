@@ -80,6 +80,7 @@
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIMp.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
+    <ClCompile Include="AttackFinishBreak.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir1.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir2.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir3.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackFinishBreak.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackManager.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackSlide.h" />
     <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />

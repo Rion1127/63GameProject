@@ -58,7 +58,7 @@ void Attack2::MoveUpdate()
 	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = attackVec_ * 0.06f;
-	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	float timerate = 1.f - timer_.GetTimeRate();
 	speed *= timerate;
 
 	selfActor_->AddaddVec(speed);

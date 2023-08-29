@@ -594,6 +594,9 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackSlide.cpp">
       <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
     </ClCompile>
+    <ClCompile Include="AttackFinishBreak.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -946,6 +949,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackFinishBreak.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

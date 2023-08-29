@@ -15,10 +15,12 @@ IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 	}
 	attackInfo_.maxTime = maxTime;
 	spline_.SetIsStart(true);
+	timer_.SetLimitTime(maxTime);
 }
 
 void IAttack::Update()
 {
+	timer_.AddTime(1);
 	if (selfActor_ != nullptr) {
 		MoveUpdate();
 	}

@@ -73,7 +73,7 @@ void AttackAir2::MoveUpdate()
 	};
 	frontVec = frontVec.normalize();
 	Vector3 speed = frontVec * 0.1f;
-	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	float timerate = 1.f - timer_.GetTimeRate();
 	speed *= timerate;
 
 	selfActor_->AddaddVec(speed);
