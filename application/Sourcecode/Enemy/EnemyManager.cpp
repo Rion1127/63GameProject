@@ -30,6 +30,19 @@ void EnemyManager::PreUpdate()
 #ifdef _DEBUG
 
 	ImGui::Begin("EnemyManager");
+
+	Vector3 popPos;
+
+	static float pos[3] = {};
+
+	ImGui::DragFloat3("popPos",pos,0.1f,-30,30);
+
+	popPos = { pos[0],pos[1],pos[2] };
+
+	if (ImGui::Button("POP_Dummy"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(popPos)));
+	}
 	if (ImGui::Button("POP_EnemyShadow"))
 	{
 		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));

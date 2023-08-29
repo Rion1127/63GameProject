@@ -14,7 +14,7 @@ PlayerCommand::PlayerCommand()
 	mainCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 	mainCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandTex"));
 	Color magicCommandColor = { 140,130,230,255 };
-	magicCommandSprite_ = std::make_unique<CommandSprite>(magicCommandColor, Vector2(150, 550), 2);
+	magicCommandSprite_ = std::make_unique<CommandSprite>(magicCommandColor, Vector2(150, 550), 1);
 	magicCommandSprite_->SetTitleTex(TextureManager::GetInstance()->GetTexture("CommandMagicTitle"));
 	magicCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 	magicCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandMagicTex"));
@@ -39,24 +39,7 @@ void PlayerCommand::Update()
 	//魔法を選択
 	if (isMagicMenu_) {
 		magicCommandSprite_->SetIsVisible(true);
-		//上下でコマンド選択
-		if (Controller::GetTriggerButtons(PAD::INPUT_UP)) {
-			magicNum_--;
-			if (magicNum_ < 0) {
-				magicNum_ = (uint16_t)MagicType::END - 1;
-			}
-			magicCommandSprite_->ResetEase();
-			SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
-		}
-		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN)) {
-			magicNum_++;
-			if (magicNum_ >= (uint16_t)MagicType::END) {
-				magicNum_ = 0;
-			}
-			magicCommandSprite_->ResetEase();
-			SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
-		}
-
+		
 		//キャンセル（魔法コマンドを閉じる）
 		if (Controller::GetTriggerButtons(PAD::INPUT_A))
 		{
