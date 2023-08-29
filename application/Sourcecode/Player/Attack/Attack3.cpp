@@ -16,28 +16,12 @@ void Attack3::Init()
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		else {
-			//回転情報から正面ベクトル(2D)を取得
-			frontVec = {
-				sinf(selfActor_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(selfActor_->GetWorldTransform()->rotation_.y),
-			};
-		}
 		frontVec = frontVec.normalize();
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
 		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
 		colPos.y += 1;
 	}
-
-	attackCol_.at(0)->col_.center = colPos;
-	attackCol_.at(0)->col_.radius = 0.8f;
-	attackCol_.at(0)->damage = 20;
-	//ノックバック力
-	attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
-	attackCol_.at(0)->knockVecY = 0.8f;
-
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 20);
@@ -63,6 +47,14 @@ void Attack3::Init()
 	attackVec.push_back(playerLeftPos);
 
 	spline_.SetPositions(attackVec);
+
+
+	attackCol_.at(0)->col_.center = colPos;
+	attackCol_.at(0)->col_.radius = 0.8f;
+	attackCol_.at(0)->damage = 20;
+	//ノックバック力
+	attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
+	attackCol_.at(0)->knockVecY = 0.8f;
 }
 
 void Attack3::MoveUpdate()

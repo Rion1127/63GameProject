@@ -51,6 +51,11 @@ void EnemyManager::PreUpdate()
 	{
 		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0))));
 	}
+
+	if (ImGui::Button("Reset"))
+	{
+		enemys_.clear();
+	}
 	ImGui::End();
 #endif // _DEBUG
 

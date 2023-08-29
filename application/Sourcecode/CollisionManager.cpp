@@ -241,10 +241,9 @@ void CollisionManager::EnemyLockOn()
 			bool isLockOn = (enemyManager_->GetLockOnEnemy()->GetIsHardLockOn() == true) ?
 				false : true;
 			enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(isLockOn);
-
-			player_->SetLockOnEnemy(enemyManager_->GetLockOnEnemy());
 		}
 	}
+	player_->SetLockOnEnemy(enemyManager_->GetLockOnEnemy());
 }
 
 void CollisionManager::PlayerToEnemy()
@@ -286,6 +285,7 @@ void CollisionManager::PlayerAttackToEnemy()
 				{
 					if (BallCollision(col->col_, enemy->GetCol()))
 					{
+						col->isCollision_ = true;
 						//プレイヤーの反対方向にノックバックする
 						Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
 						knockVec.y = col->knockVecY;

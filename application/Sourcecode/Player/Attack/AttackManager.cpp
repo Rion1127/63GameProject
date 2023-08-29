@@ -4,6 +4,8 @@
 #include <imgui.h>
 #include "Player.h"
 
+#include "AttackSlide.h"
+
 Player* AttackManager::player_ = nullptr;
 
 AttackManager::AttackManager()
@@ -26,7 +28,7 @@ void AttackManager::Attack()
 				if (player_->GetNowState()->GetId() == PlayerState::Idle||
 					player_->GetNowState()->GetId() == PlayerState::Move)
 				{
-					nowAttack_ = std::move(std::make_unique<Attack1>(player_));
+					nowAttack_ = std::move(std::make_unique<AttackSlide>(player_));
 				}
 				else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 				{

@@ -9,7 +9,7 @@ IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 		col = std::move(std::make_unique<AttackCol>());
 		col->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false));
 		col->colObj_.SetAmbient("sphere", { 1.0f, 0, 0 });
-		col->colObj_.SetIsVisible(false);
+		col->colObj_.SetIsVisible(true);
 		col->damageCoolTime = damageCoolTime;
 		col->damage = damage;
 	}
@@ -25,6 +25,7 @@ void IAttack::Update()
 
 	for (auto& col : attackCol_)
 	{
+		col->isCollision_ = false;
 		col->colObj_.WT_.position_ = col->col_.center;
 		col->colObj_.WT_.scale_ = {
 			col->col_.radius,

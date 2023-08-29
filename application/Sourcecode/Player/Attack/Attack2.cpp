@@ -18,32 +18,16 @@ void Attack2::Init()
 		{
 			CalculateRotToLockOnActor(frontVec);
 		}
-		else
-		{
-			//回転情報から正面ベクトル(2D)を取得
-			frontVec = {
-				sinf(selfActor_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(selfActor_->GetWorldTransform()->rotation_.y),
-			};
-		}
 		frontVec = frontVec.normalize();
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
 		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
 		colPos.y += 1;
 	}
-	attackCol_.at(0)->col_.center = colPos;
-	attackCol_.at(0)->col_.radius = 0.8f;
-	attackCol_.at(0)->damage = 10;
-	//ノックバック力
-	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
-	attackCol_.at(0)->knockVecY = 0.5f;
-
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 15);
-	//スプライン曲線計算
+	//スプライン曲線計算(剣の挙動)
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
 
 	std::vector<Vector3>attackVec;
@@ -58,6 +42,14 @@ void Attack2::Init()
 	attackVec.push_back(endPos);
 
 	spline_.SetPositions(attackVec);
+
+
+	attackCol_.at(0)->col_.center = colPos;
+	attackCol_.at(0)->col_.radius = 0.8f;
+	attackCol_.at(0)->damage = 10;
+	//ノックバック力
+	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
+	attackCol_.at(0)->knockVecY = 0.5f;
 }
 
 void Attack2::MoveUpdate()

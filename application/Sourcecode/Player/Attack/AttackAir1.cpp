@@ -16,27 +16,12 @@ void AttackAir1::Init()
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		else {
-			//回転情報から正面ベクトル(2D)を取得
-			frontVec = {
-				sinf(selfActor_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(selfActor_->GetWorldTransform()->rotation_.y),
-			};
-		}
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
 		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
 		colPos.y += 1;
 		selfActor_->GetGravity()->SetGrabity({0,0.1f,0});
-		attackCol_.at(0)->col_.center = colPos;
-		attackCol_.at(0)->col_.radius = 0.8f;
-		attackCol_.at(0)->damage = 10;
-		//ノックバック力
-		attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
-		attackCol_.at(0)->knockVecY = 0.5f;
 	}
-
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 15);
 	//スプライン曲線計算
@@ -63,6 +48,14 @@ void AttackAir1::Init()
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
+
+
+	attackCol_.at(0)->col_.center = colPos;
+	attackCol_.at(0)->col_.radius = 0.8f;
+	attackCol_.at(0)->damage = 10;
+	//ノックバック力
+	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
+	attackCol_.at(0)->knockVecY = 0.5f;
 }
 
 void AttackAir1::MoveUpdate()

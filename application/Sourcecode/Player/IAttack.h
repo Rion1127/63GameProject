@@ -20,6 +20,7 @@ private:
 		Vector3 knockPower = { 0.5f,0.5f,0.5f };
 		//上方向のノックバック
 		float knockVecY = 0.5f;
+		bool isCollision_ = false;
 	};
 	struct AttackInfo {
 		int32_t maxTime;	//攻撃のフレーム数
@@ -31,13 +32,16 @@ protected:
 	IActor* selfActor_;
 	IActor* lockOnActor_;
 	Vector3 attackVec_;
+	//当たり判定の軌道
 	Spline spline_;
 public:
 	IAttack(IActor* selfActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	virtual ~IAttack(){};
 	void Update();
 	void DrawCol();
+	//lockOnActorへのベクトルを計算する
 	Vector3 CalculateFrontVec();
+	//lockOnActorへ回転させる
 	void CalculateRotToLockOnActor(Vector3 frontVec);
 public:
 	void SetNowTime(int32_t time) { attackInfo_.nowTime = time; }

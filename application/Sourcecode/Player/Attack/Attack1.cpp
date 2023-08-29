@@ -18,15 +18,7 @@ void Attack1::Init()
 		{
 			CalculateRotToLockOnActor(frontVec);
 		}
-		else
-		{
-			//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
-			frontVec = {
-				sinf(selfActor_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(selfActor_->GetWorldTransform()->rotation_.y),
-			};
-		}
+		
 		frontVec = frontVec.normalize();
 		frontDist = frontVec * frontDist_;
 		frontDist.y = 0;
