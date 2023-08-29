@@ -36,13 +36,14 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleTest.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleWallHit.cpp" />
     <ClCompile Include="application\Sourcecode\PauseMenu.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\Attack1.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\Attack2.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\Attack3.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\AttackAir1.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\AttackAir2.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\AttackAir3.cpp" />
-    <ClCompile Include="application\Sourcecode\Player\AttackManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\Attack1.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\Attack2.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\Attack3.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir1.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir2.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir3.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackSlide.cpp" />
     <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Guard.cpp" />
     <ClCompile Include="application\Sourcecode\Player\IAttack.cpp" />
@@ -153,13 +154,14 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleWallHit.h" />
     <ClInclude Include="application\Sourcecode\PauseMenu.h" />
-    <ClInclude Include="application\Sourcecode\Player\Attack1.h" />
-    <ClInclude Include="application\Sourcecode\Player\Attack2.h" />
-    <ClInclude Include="application\Sourcecode\Player\Attack3.h" />
-    <ClInclude Include="application\Sourcecode\Player\AttackAir1.h" />
-    <ClInclude Include="application\Sourcecode\Player\AttackAir2.h" />
-    <ClInclude Include="application\Sourcecode\Player\AttackAir3.h" />
-    <ClInclude Include="application\Sourcecode\Player\AttackManager.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\Attack1.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\Attack2.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\Attack3.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir1.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir2.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir3.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackManager.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackSlide.h" />
     <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Guard.h" />
     <ClInclude Include="application\Sourcecode\Player\IAttack.h" />
@@ -550,7 +552,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;DIRECTINPUT_VERSION=0x0800;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;$(ProjectDir)application\Sourcecode\Player\Attack;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -576,7 +578,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;$(ProjectDir)application\Sourcecode\Player\Attack;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>

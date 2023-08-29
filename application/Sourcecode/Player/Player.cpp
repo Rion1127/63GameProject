@@ -76,8 +76,8 @@ void Player::PreUpdate()
 	MPCharge();
 
 	damageCoolTime_.AddTime(1);
-	hpGauge_.Update(maxHealth_, health_);
-	mpGauge_.Update(maxMP_, nowMP_);
+	hpGaugeUI_.Update(maxHealth_, health_);
+	mpGaugeUI_.Update(maxMP_, nowMP_);
 }
 
 void Player::PostUpdate()
@@ -201,8 +201,6 @@ void Player::InputVecUpdate()
 	}
 }
 
-
-
 void Player::StateUpdate()
 {
 	state_ = GetNowState()->GetId();
@@ -229,13 +227,8 @@ void Player::StateUpdate()
 
 	if (guard_.GetIsGurdNow())
 	{
-
 		sword_.SetState(Sword::SwordState::Guard);
 	}
-	if (dodgeRoll_.GetIsDodge()) {
-		//state_ = PlayerState::DodgeRoll;
-	}
-
 }
 
 void Player::MPCharge()
@@ -245,7 +238,7 @@ void Player::MPCharge()
 		nowMP_ = 0;
 		if (isMPCharge_ == false) {
 			isMPCharge_ = true;
-			mpGauge_.SetIsCharge(isMPCharge_);
+			mpGaugeUI_.SetIsCharge(isMPCharge_);
 			
 		}
 	}
@@ -262,7 +255,7 @@ void Player::MPCharge()
 		if (mpChargeTime_.GetIsEnd()) {
 			mpChargeTime_.Reset();
 			isMPCharge_ = false;
-			mpGauge_.SetIsCharge(isMPCharge_);
+			mpGaugeUI_.SetIsCharge(isMPCharge_);
 			nowMP_ = maxMP_;
 		}
 	}
@@ -443,8 +436,8 @@ void Player::DrawImGui()
 
 void Player::DrawSprite()
 {
-	hpGauge_.Draw();
-	mpGauge_.Draw();
+	hpGaugeUI_.Draw();
+	mpGaugeUI_.Draw();
 	command_.DrawSprite();
 }
 
@@ -543,7 +536,7 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	health_ -= damage;
 	knockVec_ = knockVec;
 	damageCoolTime_.Reset();
-	hpGauge_.Damage();
+	hpGaugeUI_.Damage();
 	GoToState(PlayerState::Knock);
 	SoundManager::Play("HitSE", false, 0.5f);
 }

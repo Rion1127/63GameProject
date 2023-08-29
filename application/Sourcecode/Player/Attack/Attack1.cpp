@@ -33,13 +33,6 @@ void Attack1::Init()
 		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
 		colPos.y += 1;
 	}
-	attackCol_.at(0)->col_.center = colPos;
-	attackCol_.at(0)->col_.radius = 1.f;
-	attackCol_.at(0)->damage = 10;
-	//ノックバック力
-	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
-	attackCol_.at(0)->knockVecY = 0.5f;
-
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 20);
@@ -67,6 +60,13 @@ void Attack1::Init()
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
+
+	attackCol_.at(0)->col_.center = colPos;
+	attackCol_.at(0)->col_.radius = 1.f;
+	attackCol_.at(0)->damage = 10;
+	//ノックバック力
+	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
+	attackCol_.at(0)->knockVecY = 0.5f;
 }
 
 void Attack1::MoveUpdate()

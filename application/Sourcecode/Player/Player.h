@@ -39,8 +39,8 @@ private:
 	PlayerCommand command_;
 	GuardClass guard_;
 	DodgeRoll dodgeRoll_;
-	PlayerHPGauge hpGauge_;
-	PlayerMPGauge mpGauge_;
+	PlayerHPGauge hpGaugeUI_;
+	PlayerMPGauge mpGaugeUI_;
 	PlayerState state_;
 
 	int32_t maxHealth_;
