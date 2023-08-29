@@ -5,6 +5,7 @@
 #include "Player.h"
 
 #include "AttackSlide.h"
+#include "AttackFinishBreak.h"
 
 Player* AttackManager::player_ = nullptr;
 
@@ -30,8 +31,9 @@ void AttackManager::Attack()
 				if (player_->GetNowState()->GetId() == PlayerState::Idle||
 					player_->GetNowState()->GetId() == PlayerState::Move)
 				{
-					if(PtoELength_ >= 5.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
-					else nowAttack_ = std::make_unique<Attack1>(player_);
+					/*if(PtoELength_ >= 5.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
+					else nowAttack_ = std::make_unique<Attack1>(player_);*/
+					nowAttack_ = std::make_unique<AttackFinishBreak>(player_);
 				}
 				else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 				{
