@@ -1,7 +1,7 @@
 #include "AttackSlide.h"
 
 AttackSlide::AttackSlide(IActor* selfActor) :
-	IAttack(selfActor,1,35,10,35)
+	IAttack(selfActor,1,30,10,30)
 {
 }
 
@@ -24,14 +24,14 @@ void AttackSlide::Init()
 	
 	attackCol_.at(0)->col_.center = colPos;
 	attackCol_.at(0)->col_.radius = 1.f;
-	attackCol_.at(0)->damage = 20;
+	attackCol_.at(0)->damage = 10;
 	//ノックバック力
 	attackCol_.at(0)->knockPower = { 0.1f,0.1f,0.1f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 
 	state_ = State::Slide;
 
-	speed_ = 0.5f;
+	speed_ = 0.6f;
 }
 
 void AttackSlide::MoveUpdate()
