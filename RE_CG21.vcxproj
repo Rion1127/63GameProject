@@ -128,6 +128,7 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
+    <ClCompile Include="ParticleExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="application\Sourcecode\IGauge.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleManager.h" />

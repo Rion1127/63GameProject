@@ -1,4 +1,6 @@
 #include "AttackFinishBreak.h"
+#include "ParticleExplosion.h"
+#include "ParticleManager.h"
 
 AttackFinishBreak::AttackFinishBreak(IActor* selfActor) : 
 	IAttack(selfActor,3,100,20,60)
@@ -44,6 +46,7 @@ void AttackFinishBreak::Init()
 	}
 	colRadius_ = 1.8f;
 	rotateSpeed_ = 5.f;
+	isParticleAdd_ = true;
 }
 
 void AttackFinishBreak::MoveUpdate()
@@ -76,7 +79,21 @@ void AttackFinishBreak::MoveUpdate()
 				attackCol_.at(i)->knockPower = { 1.0f,1.0f,1.0f };
 				attackCol_.at(i)->knockVecY = 0.5f;
 			}
+			//パーティクル追加
+			if (isParticleAdd_) {
+				emitter_[i] = std::make_shared<OneceEmitter>();
+				emitter_[i]->particle = std::make_unique<ParticleExplosion>();
+				emitter_[i]->addNum = 1;
+				emitter_[i]->time = changeColStateTime;
+				emitter_[i]->pos = attackCol_.at(i)->col_.center;
+				emitter_[i]->addVec = Vector3(0, 0, 0);
+				emitter_[i]->scale = 1.5f;
+				ParticleManager::GetInstance()->
+					AddParticle("Explosion", emitter_[i]);
+			}
+			emitter_[i]->pos = attackCol_.at(i)->col_.center;
 		}
+		isParticleAdd_ = false;
 	}
 	else {
 		for (uint32_t i = 0; i < attackCol_.size(); i++) {

@@ -597,6 +597,9 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackFinishBreak.cpp">
       <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleExplosion.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -952,6 +955,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackFinishBreak.h">
       <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,9 @@ private:
 	int32_t hitNum_;
 	//当たり判定が回転するスピード
 	float rotateSpeed_;
+	bool isParticleAdd_;
+	//エミッター
+	std::array<std::shared_ptr<OneceEmitter>,3> emitter_;
 public:
 	AttackFinishBreak(IActor* selfActor);
 private:
