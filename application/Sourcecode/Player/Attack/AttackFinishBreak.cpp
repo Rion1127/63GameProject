@@ -57,18 +57,19 @@ void AttackFinishBreak::MoveUpdate()
 {
 	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
 	attackVec_ = attackVec_.normalize();
-
+	//—\”õ“®ì‚ğ’x‚­“®‚©‚·
 	if (spline_.GetIndex() <= 1) {
 		splineTime_ = 15;
 	}
+	//U‚è‚©‚Ô‚é‚Í‘¬‚­“®‚©‚·
 	else {
 		splineTime_ = 2;
 	}
-	SplineUpdate();
 	spline_.Update();
 	//Œ•‚ğU‚èI‚í‚Á‚½‚çUŒ‚‚Ì”»’è‚ğ—LŒø‚É‚·‚é
 	if (spline_.GetisEnd()) {
 		int32_t changeColStateTime = attackCol_.at(0)->damageCoolTime * (hitNum_ - 1);
+		//“–‚½‚è”»’èˆ—
 		for (uint32_t i = 0; i < attackCol_.size(); i++) {
 			//“–‚½‚è”»’è—LŒø
 			attackCol_.at(i)->col_.isActive = true;
@@ -139,8 +140,6 @@ void AttackFinishBreak::SplineUpdate()
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
-
-	
 
 	spline_.SetLimitTime(splineTime_);
 }

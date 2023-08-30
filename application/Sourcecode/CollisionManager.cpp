@@ -227,7 +227,7 @@ void CollisionManager::EnemyLockOn()
 			{
 				lockOnEnemy->SetSoftIsLockOn(true);
 			}
-			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy);
+			player_->SetLockOnEnemy(lockOnEnemy);
 		}
 	}
 

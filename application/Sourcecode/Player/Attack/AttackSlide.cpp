@@ -43,18 +43,21 @@ void AttackSlide::MoveUpdate()
 
 		float rate = timer_.GetTimeRate();
 
-		if (attackCol_.at(0)->isCollision_ ||
+		Vector3 PtoEVec =
+			selfActor_->GetWorldTransform()->position_ - lockOnActor_->GetWorldTransform()->position_;
+
+		float length = PtoEVec.length();
+
+		if (length < 4.f ||
 			rate >= stateSwitchRate_)
 		{
 			state_ = State::SpeedDown;
 			float time = timer_.GetLimitTimer() * rate;
 			timer_.SetTime((int32_t)time);
 		}
-
-
 	}
 	else if (state_ == State::SpeedDown) {
-		speed_ -= 0.03f;
+		speed_ -= 0.07f;
 		speed_ = Max(speed_, 0.f);
 	}
 	moveVec = CalculateFrontVec().normalize() * speed_;

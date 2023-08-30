@@ -3,7 +3,7 @@
 
 void DodgeRoll::Begin(Vector2 frontVec)
 {
-	speed_ = 0.4f;
+	speed_ = 0.5f;
 	dodgetimer_.SetLimitTime(30);
 	dodgetimer_.Reset();
 	dodgeVec_ = {
