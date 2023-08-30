@@ -59,7 +59,7 @@ void Sword::Update()
 		//‰ñ“]‚ÌeŽqŠÖŒW‚ð‰ðœ
 		obj_->WT_.parentRotMat_ = nullptr;
 		//À•W
-		Vector3 pos = attackManager_->GetNowAttack()->GetAttackCol()->at(0)->col_.center;
+		Vector3 pos = attackManager_->GetNowAttack()->GetSwordPos();
 		localPos_ = pos - playerObj_->WT_.position_;
 		obj_->SetPos(pos);
 		nowPos_ = pos;

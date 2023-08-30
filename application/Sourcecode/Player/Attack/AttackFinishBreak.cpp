@@ -1,7 +1,7 @@
 #include "AttackFinishBreak.h"
 
 AttackFinishBreak::AttackFinishBreak(IActor* selfActor) : 
-	IAttack(selfActor,1,60,20,60)
+	IAttack(selfActor,1,120,20,60)
 {
 }
 
@@ -27,7 +27,44 @@ void AttackFinishBreak::Init()
 	}
 	attackVec_ = frontVec;
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 20);
+	selfActor_->SetGravity(Vector3(0,0.1f,0));
+
+	//スプライン曲線計算
+	SplineUpdate();
+
+	attackCol_.at(0)->col_.center = colPos;
+	attackCol_.at(0)->col_.radius = 1.f;
+	attackCol_.at(0)->damage = 10;
+	//ノックバック力
+	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
+	attackCol_.at(0)->knockVecY = 0.5f;
+
+	int32_t time = 
+		timer_.GetLimitTimer() / (int32_t)(spline_.GetsplinePos().size() - 2);
+
+	spline_.SetLimitTime(time);
+}
+
+void AttackFinishBreak::MoveUpdate()
+{
+	//回転情報から正面ベクトル(2D)を取得
+	attackVec_ = attackVec_.normalize();
+
+	Vector3 speed = attackVec_ * 0.06f;
+	float timerate = 1.f - timer_.GetTimeRate();
+	speed *= timerate;
+
+	selfActor_->AddaddVec(speed);
+
+	SplineUpdate();
+	spline_.Update();
+
+	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
+	swordPos_ = attackCol_.at(0)->col_.center;
+}
+
+void AttackFinishBreak::SplineUpdate()
+{
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 3.f);
@@ -52,27 +89,4 @@ void AttackFinishBreak::Init()
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
-
-	attackCol_.at(0)->col_.center = colPos;
-	attackCol_.at(0)->col_.radius = 1.f;
-	attackCol_.at(0)->damage = 10;
-	//ノックバック力
-	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
-	attackCol_.at(0)->knockVecY = 0.5f;
-}
-
-void AttackFinishBreak::MoveUpdate()
-{
-	//回転情報から正面ベクトル(2D)を取得
-	attackVec_ = attackVec_.normalize();
-
-	Vector3 speed = attackVec_ * 0.06f;
-	float timerate = 1.f - timer_.GetTimeRate();
-	speed *= timerate;
-
-	selfActor_->AddaddVec(speed);
-
-	spline_.Update();
-
-	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 }

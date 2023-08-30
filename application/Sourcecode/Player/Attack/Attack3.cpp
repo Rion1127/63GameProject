@@ -72,5 +72,6 @@ void Attack3::MoveUpdate()
 	spline_.Update();
 
 	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
+	swordPos_ = attackCol_.at(0)->col_.center;
 }
 

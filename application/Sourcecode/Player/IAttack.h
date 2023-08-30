@@ -36,6 +36,7 @@ protected:
 	Vector3 attackVec_;
 	//“–‚½‚è”»’è‚Ì‹O“¹
 	Spline spline_;
+	Vector3 swordPos_;
 public:
 	IAttack(IActor* selfActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	virtual ~IAttack(){};
@@ -53,6 +54,7 @@ public:
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
 	Timer GetTimer() { return timer_; }
+	Vector3 GetSwordPos() { return swordPos_; }
 public:
 	virtual void Init() = 0;
 protected:
