@@ -42,6 +42,7 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir1.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir2.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir3.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackFinishBreak.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackManager.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackSlide.cpp" />
     <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp" />
@@ -80,7 +81,6 @@
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIMp.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
-    <ClCompile Include="AttackFinishBreak.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
