@@ -32,7 +32,7 @@ void AttackSlide::Init()
 	state_ = State::Slide;
 
 	speed_ = 0.6f;
-	stateSwitchRate_ = 0.6f;
+	stateSwitchRate_ = 0.5f;
 }
 
 void AttackSlide::MoveUpdate()

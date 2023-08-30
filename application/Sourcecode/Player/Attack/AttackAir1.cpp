@@ -56,6 +56,7 @@ void AttackAir1::Init()
 	//ノックバック力
 	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
 	attackCol_.at(0)->knockVecY = 0.5f;
+	swordPos_ = attackCol_.at(0)->col_.center;
 }
 
 void AttackAir1::MoveUpdate()

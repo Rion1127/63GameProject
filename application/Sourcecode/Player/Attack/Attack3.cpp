@@ -55,6 +55,7 @@ void Attack3::Init()
 	//ノックバック力
 	attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
 	attackCol_.at(0)->knockVecY = 0.8f;
+	swordPos_ = attackCol_.at(0)->col_.center;
 }
 
 void Attack3::MoveUpdate()

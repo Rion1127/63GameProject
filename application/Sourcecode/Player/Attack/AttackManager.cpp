@@ -31,9 +31,8 @@ void AttackManager::Attack()
 				if (player_->GetNowState()->GetId() == PlayerState::Idle||
 					player_->GetNowState()->GetId() == PlayerState::Move)
 				{
-					/*if(PtoELength_ >= 5.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
-					else nowAttack_ = std::make_unique<Attack1>(player_);*/
-					nowAttack_ = std::make_unique<AttackFinishBreak>(player_);
+					if(PtoELength_ >= 4.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
+					else nowAttack_ = std::make_unique<Attack1>(player_);
 				}
 				else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 				{
@@ -55,7 +54,7 @@ void AttackManager::Attack()
 					{
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
 						if (comboNum == 1)nextAttack_ = std::make_unique<Attack2>(player_);
-						if (comboNum == 2)nextAttack_ = std::make_unique<Attack3>(player_);
+						if (comboNum == 2)nextAttack_ = std::make_unique<AttackFinishBreak>(player_);
 					}
 					else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 					{
