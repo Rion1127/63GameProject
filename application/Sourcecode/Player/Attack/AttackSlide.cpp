@@ -43,9 +43,10 @@ void AttackSlide::MoveUpdate()
 
 		float rate = timer_.GetTimeRate();
 
-		Vector3 PtoEVec =
-			selfActor_->GetWorldTransform()->position_ - lockOnActor_->GetWorldTransform()->position_;
-
+		Vector3 PtoEVec{};
+		if (lockOnActor_ != nullptr) {
+			PtoEVec = selfActor_->GetWorldTransform()->position_ - lockOnActor_->GetWorldTransform()->position_;
+		}
 		float length = PtoEVec.length();
 
 		if (length < 4.f ||
