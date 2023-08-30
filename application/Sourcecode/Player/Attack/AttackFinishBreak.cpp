@@ -28,6 +28,7 @@ void AttackFinishBreak::Init()
 	attackVec_ = frontVec;
 
 	//スプライン曲線計算
+	splineTime_ = 6;
 	SplineUpdate();
 
 	hitNum_ = 5;
@@ -45,8 +46,11 @@ void AttackFinishBreak::Init()
 		attackCol_.at(i)->knockVecY = 0.3f;
 	}
 	colRadius_ = 1.8f;
-	rotateSpeed_ = 5.f;
+	rotateSpeed_ = 10.f;
 	isParticleAdd_ = true;
+
+	spline_.Update();
+	swordPos_ = spline_.GetNowPoint();
 }
 
 void AttackFinishBreak::MoveUpdate()
@@ -54,6 +58,12 @@ void AttackFinishBreak::MoveUpdate()
 	//回転情報から正面ベクトル(2D)を取得
 	attackVec_ = attackVec_.normalize();
 
+	if (spline_.GetIndex() <= 1) {
+		splineTime_ = 15;
+	}
+	else {
+		splineTime_ = 2;
+	}
 	SplineUpdate();
 	spline_.Update();
 	//剣を振り終わったら攻撃の判定を有効にする
@@ -87,7 +97,7 @@ void AttackFinishBreak::MoveUpdate()
 				emitter_[i]->time = changeColStateTime;
 				emitter_[i]->pos = attackCol_.at(i)->col_.center;
 				emitter_[i]->addVec = Vector3(0, 0, 0);
-				emitter_[i]->scale = 1.5f;
+				emitter_[i]->scale = 1.2f;
 				ParticleManager::GetInstance()->
 					AddParticle("Explosion", emitter_[i]);
 			}
@@ -130,7 +140,7 @@ void AttackFinishBreak::SplineUpdate()
 
 	spline_.SetPositions(attackVec);
 
-	splineTime_ = 6;
+	
 
 	spline_.SetLimitTime(splineTime_);
 }
