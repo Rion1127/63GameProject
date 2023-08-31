@@ -30,6 +30,7 @@
     <ClCompile Include="application\Sourcecode\IGauge.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleManager.cpp" />
@@ -128,7 +129,6 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="ParticleExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />

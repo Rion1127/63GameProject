@@ -597,7 +597,7 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackFinishBreak.cpp">
       <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleExplosion.cpp">
+    <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
