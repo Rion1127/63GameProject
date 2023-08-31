@@ -1,10 +1,10 @@
-cbuffer ConstBufferDataMaterial : register(b0) {
-	float4 color;
-}
 
-cbuffer ConstBufferDataTransform : register(b1) {
-	matrix mat;
-}
+cbuffer ConstantBuffer : register(b0)
+{
+    matrix worldMat;
+    matrix viewProjMat; //ビュープロジェクション行列
+    float3 cameraPos;
+};
 
 //頂点シェーダの出力構造体
 //（頂点シェーダーからピクセルシェーダーへのやり取りに使用する）

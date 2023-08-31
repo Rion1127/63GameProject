@@ -3,6 +3,7 @@
 #include "AttackManager.h"
 #include "IAttack.h"
 #include "Timer.h"
+#include "SwordTrail.h"
 class Sword
 {
 public:
@@ -27,11 +28,16 @@ private:
 	float rot_;
 
 	AttackManager* attackManager_;
+
+	std::vector<std::unique_ptr<Object3d>> tailObj_;
+	SwordTrail::PosBuffer tailPos_;
+	std::unique_ptr<SwordTrail> trail_;
 public:
 	Sword();
 	void Update();
 	void Draw();
-	
+private:
+	void CalculateTrailPos();
 public:
 	void SetAttackManager(AttackManager* attackManager) { attackManager_ = attackManager; }
 	void SetPos(const Vector3& pos) { obj_->SetPos(pos); }

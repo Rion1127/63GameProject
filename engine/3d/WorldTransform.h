@@ -48,6 +48,7 @@ public:
 	void Update(uint32_t isBillboard = 0);
 
 	Matrix4 GetMatWorld() { return matWorld_; }
+	Vector3 GetWorldPos() { return Vector3(matWorld_.m[3][0], matWorld_.m[3][1], matWorld_.m[3][2]); }
 
 	//定数バッファ（行列用）
 	ComPtr<ID3D12Resource> constBuffTransform_;

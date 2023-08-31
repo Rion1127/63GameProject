@@ -14,6 +14,16 @@ Sword::Sword()
 
 	floatingTimer_.SetLimitTime(120);
 	floatingTimer_.SetIsLoop(true);
+	
+	trail_ = std::make_unique<SwordTrail>(16);
+
+	tailObj_.resize(2);
+	for (uint32_t i = 0; i < tailObj_.size(); i++) {
+		tailObj_[i] = std::make_unique<Object3d>();
+		tailObj_[i]->SetModel(Model::CreateOBJ_uniptr("sphere"));
+		tailObj_[i]->SetScale({ 0.5f,0.5f, 0.5f });
+		tailObj_[i]->WT_.parent_ = &obj_->WT_;
+	}
 }
 
 void Sword::Update()
@@ -68,6 +78,7 @@ void Sword::Update()
 		PtoSVec = PtoSVec.normalize();
 
 		obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 1, 0), PtoSVec);
+		
 	}
 	else if (state_ == SwordState::Guard) {
 		//‰ñ“]s—ñ‚ðeŽqŠÖŒW‚É‚·‚é
@@ -100,11 +111,21 @@ void Sword::Update()
 	}
 
 	obj_->Update();
+
+	
+	CalculateTrailPos();
+	trail_->Update();
 }
 
 void Sword::Draw()
 {
+	trail_->Draw();
+	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	obj_->Draw();
+
+	for (uint32_t i = 0; i < tailObj_.size(); i++) {
+		tailObj_[i]->Draw();
+	}
 
 	ImGui::Begin("sword");
 
@@ -143,4 +164,23 @@ void Sword::Draw()
 
 	ImGui::End();
 
+}
+
+void Sword::CalculateTrailPos()
+{
+	for (uint32_t i = 0; i < tailObj_.size(); i++) {
+		//head
+		if (i == 0) {
+			tailObj_[i]->SetPos(Vector3(0, 3.7f, 0));
+		}
+		//tail
+		else {
+			tailObj_[i]->SetPos(Vector3(0, 1.f, 0));
+		}
+		tailObj_[i]->Update();
+	}
+
+	Vector3 head = tailObj_[0]->WT_.GetWorldPos();
+	Vector3 tail = tailObj_[1]->WT_.GetWorldPos();
+	trail_->SetPos(head, tail);
 }

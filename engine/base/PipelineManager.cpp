@@ -262,6 +262,17 @@ void PipelineManager::ParticleShaderIni()
 	GetPipelineObjects("Fire")->AddrootParams(2);
 
 	Create("Fire", NONE, TOPOLOGY_POINT, DEPTH_WRITE_MASK_ZERO, MODE_WRAP);
+
+	AddPipeline("SwordTrail");
+	GetPipelineObjects("SwordTrail")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("SwordTrail")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+
+	GetPipelineObjects("SwordTrail")->Setshader("SwordTrailVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("SwordTrail")->Setshader("SwordTrailPS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("SwordTrail")->AddrootParams(2);
+
+	Create("SwordTrail", NONE, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ZERO, MODE_WRAP);
 }
 
 void PipelineManager::Create(
