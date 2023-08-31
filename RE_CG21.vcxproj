@@ -36,6 +36,7 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleManager.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleTest.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleWallHit.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\SwordTrail.cpp" />
     <ClCompile Include="application\Sourcecode\PauseMenu.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\Attack1.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\Attack2.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleManager.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleWallHit.h" />
+    <ClInclude Include="application\Sourcecode\Particle\SwordTrail.h" />
     <ClInclude Include="application\Sourcecode\PauseMenu.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\Attack1.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\Attack2.h" />
