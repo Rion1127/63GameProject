@@ -603,6 +603,9 @@
     <ClCompile Include="application\Sourcecode\Particle\SwordTrail.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleTrail.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -963,6 +966,9 @@
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\SwordTrail.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleTrail.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

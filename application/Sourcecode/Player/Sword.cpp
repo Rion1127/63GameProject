@@ -23,12 +23,13 @@ Sword::Sword()
 		tailObj_[i]->SetModel(Model::CreateOBJ_uniptr("sphere"));
 		tailObj_[i]->SetScale({ 0.5f,0.5f, 0.5f });
 		tailObj_[i]->WT_.parent_ = &obj_->WT_;
+		tailObj_[i]->SetIsVisible(false);
 	}
 }
 
 void Sword::Update()
 {
-	
+	trail_->SetIsVisible(false);
 	//攻撃時の剣の動き
 	if (state_ == SwordState::Idle) {
 		//プレイヤーの背中に向かって徐々に移動する
@@ -78,7 +79,7 @@ void Sword::Update()
 		PtoSVec = PtoSVec.normalize();
 
 		obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 1, 0), PtoSVec);
-		
+		trail_->SetIsVisible(true);
 	}
 	else if (state_ == SwordState::Guard) {
 		//回転行列を親子関係にする
