@@ -51,6 +51,7 @@ public:
 	void SetPos(const Vector3& head, const Vector3& tail);
 
 	void Draw();
+	void DrawImgui();
 private:
 	//ƒf[ƒ^“]‘—
 	void TransferBuff();

@@ -45,17 +45,20 @@ SwordTrail::SwordTrail(uint32_t vertSize) :
 	vbView_.StrideInBytes = sizeof(vertex_[0]);
 
 	timer_.SetLimitTime(10);
-	texture_ = *TextureManager::GetInstance()->GetTexture("Circle");
+	texture_ = *TextureManager::GetInstance()->GetTexture("SwordTrail");
+	isStop_ = true;
 }
 
 void SwordTrail::Update()
 {
 	if (isStop_) {
-		//データを更新
+		//先頭の値を配列の後ろへ代入していく
 		for (size_t i = posArray_.size() - 1; i > 0; --i)
 		{
 			posArray_[i] = posArray_[i - 1];
 		}
+
+		//配列の先頭に現在の座標を代入
 		posArray_.front() = tempPos;
 		tempPos = PosBuffer();
 	}
@@ -96,8 +99,10 @@ void SwordTrail::Draw()
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
 
 	cmdList.DrawInstanced((UINT)std::distance(vertex_.begin(), vertex_.end()), 1, 0, 0);
+}
 
-
+void SwordTrail::DrawImgui()
+{
 	ImGui::Begin("swordTrail");
 
 	if (ImGui::Button("Reset")) {
@@ -123,15 +128,16 @@ void SwordTrail::TransferBuff()
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//頂点データを更新する
-	float amount = 1.0f / (/*usedPosArray*/posArray_.size() - 1);
+	float amount = 1.0f / (posArray_.size() - 1);
 	float v = 0;
 	vertex_.clear();
-	vertex_.resize(posArray_/*usedPosArray*/.size() * 2);
-	for (size_t i = 0, j = 0; i < vertex_.size() && j < posArray_/*usedPosArray*/.size(); i += 2, ++j)
+	vertex_.resize(posArray_.size() * 2);
+	for (size_t i = 0, j = 0; i < vertex_.size() && j < posArray_.size(); i += 2, ++j)
 	{
-		vertex_[i].pos = posArray_/*usedPosArray*/[j].head;
+		//頂点座標を二つ代入する
+		vertex_[i].pos = posArray_[j].head;
 		vertex_[i].uv = Vector2(1.0f, v);
-		vertex_[i + 1].pos = posArray_/*usedPosArray*/[j].tail;
+		vertex_[i + 1].pos = posArray_[j].tail;
 		vertex_[i + 1].uv = Vector2(0.0f, v);
 		v += amount;
 	}
