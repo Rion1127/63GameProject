@@ -127,7 +127,7 @@ void Sword::Draw()
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i]->Draw();
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("sword");
 
 	if (ImGui::Button("debugMode")) {
@@ -164,7 +164,7 @@ void Sword::Draw()
 	obj_->WT_.position_.z = pos[2];
 
 	ImGui::End();
-
+#endif // _DEBUG
 }
 
 void Sword::CalculateTrailPos()

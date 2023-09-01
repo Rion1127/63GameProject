@@ -55,6 +55,9 @@ void EnemyManager::PreUpdate()
 	if (ImGui::Button("Reset"))
 	{
 		enemys_.clear();
+		lockOnEnemy_ = nullptr;
+		player_->SetLockOnEnemy(lockOnEnemy_);
+		player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
 	}
 	ImGui::End();
 #endif // _DEBUG

@@ -38,9 +38,9 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos, Vector3 rot) :
 
 EnemyRedNocturne::~EnemyRedNocturne()
 {
-	/*fireEmitter_->isActive = false;
+	fireEmitter_->isActive = false;
 	fireCircleEmitter_->isActive = false;
-	fireCircleEmitter_->parentPos = nullptr;*/
+	fireCircleEmitter_->parentPos = nullptr;
 }
 
 void EnemyRedNocturne::SetIsNock(bool flag)

@@ -16,8 +16,16 @@ Sprite SceneManager::whiteSprite_;
 
 void SceneManager::Ini()
 {
+#ifdef _DEBUG
 	//ビルド開始時のシーン
 	Transition<DebugScene>();
+#else
+	//ビルド開始時のシーン
+	Transition<TitleScene>();
+#endif // _DEBUG
+
+	
+	
 
 
 	animeTimer_.SetLimitTime(100);
