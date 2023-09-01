@@ -39,7 +39,7 @@ private:
 	//デバッグ
 	std::string stateName_;
 public:
-	EnemyShadow(Vector3 pos);
+	EnemyShadow(Vector3 pos, Vector3 rot);
 	void SetIsNock(bool flag) override;
 	void SetState(State state);
 	void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override {};

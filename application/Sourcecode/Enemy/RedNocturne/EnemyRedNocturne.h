@@ -33,7 +33,7 @@ private:
 	std::shared_ptr<OneceEmitter> fireCircleEmitter_;
 	Vector3 fireCirclePos_;
 public:
-	EnemyRedNocturne(Vector3 pos);
+	EnemyRedNocturne(Vector3 pos, Vector3 rot);
 	~EnemyRedNocturne();
 	void SetIsNock(bool flag) override;
 	void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override;

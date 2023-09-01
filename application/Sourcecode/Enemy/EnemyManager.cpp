@@ -45,11 +45,11 @@ void EnemyManager::PreUpdate()
 	}
 	if (ImGui::Button("POP_EnemyShadow"))
 	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0))));
+		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0),Vector3(0,Radian(180),0))));
 	}
 	if (ImGui::Button("POP_RedNocturne"))
 	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0))));
+		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
 	}
 
 	if (ImGui::Button("Reset"))

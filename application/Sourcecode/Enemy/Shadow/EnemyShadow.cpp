@@ -9,7 +9,7 @@
 #include "AttackShadow.h"
 #include "AttackJumpShadow.h"
 
-EnemyShadow::EnemyShadow(Vector3 pos) :
+EnemyShadow::EnemyShadow(Vector3 pos, Vector3 rot) :
 	IEnemy(EnemyType::Ground, true, 100)
 {
 	name_ = "Shadow";
@@ -18,6 +18,7 @@ EnemyShadow::EnemyShadow(Vector3 pos) :
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
+	obj_->GetTransform()->SetRotation(rot);
 	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 

@@ -11,6 +11,7 @@ private:
 	struct EnemyData {
 		std::string name;
 		Vector3 pos;
+		Vector3 rot;
 	};
 	struct PopData {
 		uint32_t roundNum;
@@ -27,6 +28,7 @@ public:
 	std::unordered_map<std::string, std::vector<PopData>> GetAllData() { return popDatas_; }
 private:
 	EnemyLoader() {};
-	Vector3 GetPosLoad(std::istringstream& line_stream, std::string& word,char _Delim);
+	Vector3 GetPosLoad(std::istringstream& line_stream, std::string& word, char _Delim);
+	Vector3 GetRotLoad(std::istringstream& line_stream, std::string& word,char _Delim);
 };
 

@@ -60,6 +60,9 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 			Vector3 pos = GetPosLoad(line_stream, word, ',');
 			enemydata.pos = pos;
 
+			Vector3 rot = GetRotLoad(line_stream, word, ',');
+			enemydata.rot = rot;
+
 			//敵の種類
 			std::getline(line_stream, word, ',');
 			std::string enemyType = word.c_str();
@@ -95,12 +98,12 @@ void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std
 		}
 		else if (enemyData[i].name == "Shadow")
 		{
-			newEnemy = std::make_unique<EnemyShadow>(enemyData[i].pos);
+			newEnemy = std::make_unique<EnemyShadow>(enemyData[i].pos, enemyData[i].rot);
 			enemys->emplace_back(std::move(newEnemy));
 		}
 		else if (enemyData[i].name == "RedNocturne")
 		{
-			newEnemy = std::make_unique<EnemyRedNocturne>(enemyData[i].pos);
+			newEnemy = std::make_unique<EnemyRedNocturne>(enemyData[i].pos, enemyData[i].rot);
 			enemys->emplace_back(std::move(newEnemy));
 		}
 	}
@@ -117,6 +120,21 @@ Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& wo
 	//Z座標
 	std::getline(line_stream, word, ',');
 	float z = (float)std::atof(word.c_str());
+
+	return Vector3(x, y, z);
+}
+
+Vector3 EnemyLoader::GetRotLoad(std::istringstream& line_stream, std::string& word, char _Delim)
+{
+	//x座標
+	std::getline(line_stream, word, ',');
+	float x = Radian((float)std::atof(word.c_str()));
+	//y座標
+	std::getline(line_stream, word, ',');
+	float y = Radian((float)std::atof(word.c_str()));
+	//Z座標
+	std::getline(line_stream, word, ',');
+	float z = Radian((float)std::atof(word.c_str()));
 
 	return Vector3(x, y, z);
 }

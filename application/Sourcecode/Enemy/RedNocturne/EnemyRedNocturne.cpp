@@ -6,7 +6,7 @@
 #include "ParticleFire.h"
 #include "ParticleManager.h"
 
-EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
+EnemyRedNocturne::EnemyRedNocturne(Vector3 pos, Vector3 rot) :
 	IEnemy(EnemyType::Air, false, 80)
 {
 	name_ = "RedNocturne";
@@ -15,6 +15,7 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos) :
 	knockResist_ = { 1,0,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
+	obj_->GetTransform()->SetRotation(rot);
 	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 
