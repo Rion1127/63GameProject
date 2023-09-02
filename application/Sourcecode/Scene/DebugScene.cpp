@@ -227,7 +227,7 @@ void DebugScene::LoadEnemyImGui()
 	}
 	//プルダウンメニューで読み込んだファイルを選択できるようにする
 	static std::string s_currentItem;
-	if (ImGui::BeginCombo("Combo", s_currentItem.c_str()))
+	if (ImGui::BeginCombo("fileName", s_currentItem.c_str()))
 	{
 		for (int i = 0; i < fileName.size() - 1; ++i)
 		{

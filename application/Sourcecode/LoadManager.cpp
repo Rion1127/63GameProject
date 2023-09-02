@@ -78,5 +78,4 @@ void LoadManager::LoadEnemyPopData()
 	std::string path = "application/Resources/EnemyPOP/";
 	EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "DebugEnemy.csv", "Debug");
 	EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "HadesCup.csv", "HadesCup");
-	EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "KingCup.csv","KingCup");
 }
