@@ -516,14 +516,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="RE_CG21.rc" />
+    <ResourceCompile Include="KING_HEART.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{1aed7f23-dbc9-4f51-9fbc-9e0f220029f2}</ProjectGuid>
-    <RootNamespace>RE_CG21</RootNamespace>
+    <RootNamespace>KING_HEART</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>KING_HEART</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
