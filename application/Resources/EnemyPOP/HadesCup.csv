@@ -4,14 +4,13 @@
 
 ROUND1
 SET,0,3,5,0,180,0,RedNocturne
-SET,-10,0,5,0,180,0,Shadow
+SET,0,0,5,0,180,0,Shadow
+
+ROUND2
+SET,0,3,5,0,180,0,RedNocturne
 SET,-5,0,5,0,180,0,Shadow
 SET,0,0,5,0,180,0,Shadow
 SET,5,0,5,0,180,0,Shadow
-SET,10,0,5,0,180,0,Shadow
-
-ROUND2
-SET,5,0,5,Shadow
 
 //ROUND3
 //SET,5,0,5,Shadow
