@@ -208,6 +208,7 @@ void Player::StateUpdate()
 	freezeTimer_.AddTime(1);
 	if (freezeTimer_.GetIsEnd())
 	{
+		
 		if (GetNowState()->GetId() != PlayerState::Knock)
 		{
 			sword_.SetState(Sword::SwordState::Idle);
@@ -239,7 +240,7 @@ void Player::MPCharge()
 		if (isMPCharge_ == false) {
 			isMPCharge_ = true;
 			mpGaugeUI_.SetIsCharge(isMPCharge_);
-			
+
 		}
 	}
 	//MPÇÉ`ÉÉÅ[ÉWÇ∑ÇÈ
@@ -539,6 +540,8 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	hpGaugeUI_.Damage();
 	GoToState(PlayerState::Knock);
 	SoundManager::Play("HitSE", false, 0.5f);
+	guard_.SetisGurdNow_(false);
+	
 }
 
 void Player::GuardHit(Vector3 knockVec)

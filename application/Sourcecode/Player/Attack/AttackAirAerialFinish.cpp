@@ -24,9 +24,6 @@ void AttackAirAerialFinish::Init()
 	}
 
 	FirstAttackInit();
-	/*SecondAttackInit();
-	ThirdAttackInit();
-	fourthAttackInit();*/
 	index_ = 0;
 }
 
@@ -39,10 +36,9 @@ void AttackAirAerialFinish::MoveUpdate()
 		cosf(selfActor_->GetWorldTransform()->rotation_.y),
 	};
 	frontVec = frontVec.normalize();
-	Vector3 speed = frontVec * 0.01f;
+	Vector3 speed = frontVec * 0.05f;
 	float timerate = 1.f - timer_.GetTimeRate();
 	speed *= timerate;
-
 
 	selfActor_->AddaddVec(speed);
 
@@ -65,6 +61,9 @@ void AttackAirAerialFinish::MoveUpdate()
 		swordPos_ = attackCol_.at(0)->col_.center;
 		attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 	}
+	int32_t limitTime = spline_.GetTimer().GetLimitTimer() + 7;
+	int32_t nowTime = spline_.GetTimer().GetTimer();
+	attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
 	selfActor_->GetGravity()->SetGrabity({ 0,0,0 });
 
 }

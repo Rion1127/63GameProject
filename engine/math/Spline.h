@@ -37,6 +37,7 @@ public:
 	const std::vector<Vector3> GetsplinePos() { return splinePos_; }
 	bool GetisEnd() { return isEnd_; }
 	uint32_t GetIndex() { return index_; }
+	Timer GetTimer() { return timer_; }
 private:
 	void SplineUpdate();
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);

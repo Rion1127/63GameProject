@@ -34,6 +34,10 @@ public:
 	void GuardHit();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
+	void SetisGurdNow_(bool flag) {
+		timer_.SetTime(timer_.GetLimitTimer());
+		isGurdNow_ = flag;
+	}
 public:
 	bool GetIsGurdNow() { return isGurdNow_; }
 	Sphere GetCol() { return col_; }
