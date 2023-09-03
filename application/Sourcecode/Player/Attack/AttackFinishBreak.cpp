@@ -3,7 +3,7 @@
 #include "ParticleManager.h"
 
 AttackFinishBreak::AttackFinishBreak(IActor* selfActor) : 
-	IAttack(selfActor,3,100,20,60)
+	IAttack(selfActor,3,80,20,60)
 {
 }
 

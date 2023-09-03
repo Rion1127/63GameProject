@@ -45,6 +45,7 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir1.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir2.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir3.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackFinishBreak.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackManager.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackSlide.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir1.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir2.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir3.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackFinishBreak.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackManager.h" />
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackSlide.h" />

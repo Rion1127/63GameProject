@@ -75,9 +75,6 @@ void AttackAir1::MoveUpdate()
 
 	selfActor_->AddaddVec(speed);
 
-
-	
-
 	spline_.Update();
 
 	attackCol_.at(0)->col_.center = spline_.GetNowPoint();

@@ -6,6 +6,7 @@
 
 #include "AttackSlide.h"
 #include "AttackFinishBreak.h"
+#include "AttackAirAerialFinish.h"
 
 Player* AttackManager::player_ = nullptr;
 
@@ -62,7 +63,7 @@ void AttackManager::Attack()
 					else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 					{
 						if (comboNum == 1)nextAttack_ = std::make_unique<AttackAir2>(player_);
-						if (comboNum == 2)nextAttack_ = std::make_unique<AttackAir3>(player_);
+						if (comboNum == 2)nextAttack_ = std::make_unique<AttackAirAerialFinish>(player_);
 					}
 				}
 			}
