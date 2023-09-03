@@ -1,4 +1,6 @@
 #include "AttackAirAerialFinish.h"
+#include "RRandom.h"
+#include "mSound.h"
 
 AttackAirAerialFinish::AttackAirAerialFinish(IActor* selfActor) : 
 	IAttack(selfActor,1,70,10,5)
@@ -47,14 +49,18 @@ void AttackAirAerialFinish::MoveUpdate()
 	if (spline_.GetisEnd()) {
 		spline_.Reset();
 		index_++;
+		float picth = RRandom::RandF(0.7f, 1.5f);
 		if (index_ == 1) {
 			SecondAttackInit();
+			SoundManager::Play("SwingSE", false, 0.3f, picth);
 		}
 		else if (index_ == 2) {
 			ThirdAttackInit();
+			SoundManager::Play("SwingSE", false, 0.3f, picth);
 		}
 		else if (index_ == 3) {
 			FourthAttackInit();
+			SoundManager::Play("SwingSE", false, 0.3f, picth);
 		}
 	}
 	if (index_ < 4) {
