@@ -309,7 +309,7 @@ void CollisionManager::PlayerAttackToEnemy()
 						hitEmitter_->scale = 1.0f;
 						ParticleManager::GetInstance()->
 							AddParticle("HitAttack", hitEmitter_);
-						SoundManager::Play("HitSE", false, 0.5f);
+						SoundManager::Play("HitSE", false, 0.4f);
 					}
 				}
 			}

@@ -3,33 +3,27 @@
 #include "mInput.h"
 #include "SceneManager.h"
 #include "mSound.h"
+#include "Easing.h"
+#include "Util.h"
 
 PauseMenu::PauseMenu()
 {
 	backSprite_ = std::make_unique<Sprite>();
-	pauseSprite_ = std::make_unique<Sprite>();
+	pauseSprite_ = std::make_unique<PauseSprite>();
 	continueSprite_ = std::make_unique<Sprite>();
 	titleSprite_ = std::make_unique<Sprite>();
 	backSprite_->Ini();
-	pauseSprite_->Ini();
 	continueSprite_->Ini();
 	titleSprite_->Ini();
 
 	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
-	pauseSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Pause"));
 	continueSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Continue"));
 	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
 
-	backSprite_->SetColor(Color(0, 0, 0, 150.f));
+	backSprite_->SetColor(Color(0, 0, 0, 200.f));
 	backSprite_->SetAnchor({ 0,0 });
 
 	Vector2 pos = {
-		WinAPI::GetWindowSize().x / 2.f,
-		WinAPI::GetWindowSize().y / 4.0f
-	};
-	pauseSprite_->SetPos(pos);
-
-	pos = {
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.4f
 	};
@@ -44,6 +38,9 @@ void PauseMenu::Update()
 {
 	if (Controller::GetTriggerButtons(PAD::INPUT_START)) {
 		isPause_ = (isPause_ == true) ? false : true;
+
+		pauseSprite_->SetIsAvtive(isPause_);
+		pauseSprite_->Reset();
 	}
 
 	if (isPause_) {
@@ -102,4 +99,159 @@ void PauseMenu::Draw()
 		continueSprite_->Draw();
 		titleSprite_->Draw();
 	}
+}
+
+PauseSprite::PauseSprite()
+{
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
+		pauseSprite_[i] = std::make_unique<PauseSprits>();
+		pauseSprite_[i]->sprite = std::make_unique<Sprite>();
+		pauseSprite_[i]->sprite->Ini();
+		pauseSprite_[i]->sprite->SetTexture(TextureManager::GetInstance()->GetTexture("Pause"));
+
+		pauseSprite_[i]->sprite->SetTex_Size(Vector2(64, 64));
+		pauseSprite_[i]->sprite->SetTex_LeftTop(Vector2(64 * (float)i, 0));
+		Vector2 scale = {
+			1.f / 5.f,
+			1.f
+		};
+		pauseSprite_[i]->sprite->SetScale(scale);
+		scale_ = scale;
+
+		Vector2 easeEndpos = {
+			WinAPI::GetWindowSize().x / 2.f + (64 * i) - (64.f * 2.f),
+			WinAPI::GetWindowSize().y / 4.0f
+		};
+		pauseSprite_[i]->sprite->SetPos(easeEndpos);
+		pauseSprite_[i]->easeEndPos_ = easeEndpos;
+
+		pauseSprite_[i]->sprite->Update();
+		pauseSprite_[i]->isActive = false;
+
+		Vector2 easeStartpos = {
+			WinAPI::GetWindowSize().x / 2.f + (64 * i) - (64.f * 2.f),
+			WinAPI::GetWindowSize().y / 4.0f - 128.f
+		};
+		pauseSprite_[i]->easeStartPos_ = easeStartpos;
+
+		pauseSprite_[i]->timer.SetLimitTime(30);
+		pauseSprite_[i]->sprite->SetColor(Color(255, 255, 255, 0));
+
+		if (i == pauseSprite_.size() - 1) {
+			pauseSprite_[i]->sprite->SetRot(Radian(180));
+			pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f,0.0f));
+
+			Vector2 easeEndpos = {
+			WinAPI::GetWindowSize().x / 2.f + (64 * i) - (64.f * 2.f),
+			WinAPI::GetWindowSize().y / 4.0f + 32.f
+			};
+			pauseSprite_[i]->sprite->SetPos(easeEndpos);
+			pauseSprite_[i]->easeEndPos_ = easeEndpos;
+		}
+
+	}
+	timer_.SetLimitTime(10);
+	index_ = 0;
+	isActive_ = false;
+	effectTimer_.SetLimitTime(30);
+	state_ = State::Collapse;
+}
+
+void PauseSprite::Update()
+{
+	//徐々に文字をアクティブにしていく
+	if (isActive_) {
+		timer_.AddTime(1);
+		if (timer_.GetIsEnd()) {
+			pauseSprite_[index_]->isActive = true;
+			index_++;
+
+			uint32_t max = (uint32_t)pauseSprite_.size() - 1;
+			index_ = Min(max, index_);
+
+			timer_.Reset();
+		}
+	}
+
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
+		if (pauseSprite_[i]->isActive) {
+			pauseSprite_[i]->timer.AddTime(1);
+
+			Vector2 start = pauseSprite_[i]->easeStartPos_;
+			Vector2 end = pauseSprite_[i]->easeEndPos_;
+			float rate = pauseSprite_[i]->timer.GetTimeRate();
+
+			Vector2 pos = {
+				Easing::Circ::easeOut(start.x,end.x,rate),
+				Easing::Circ::easeOut(start.y,end.y,rate)
+			};
+
+			pauseSprite_[i]->sprite->SetPos(pos);
+
+			auto color = pauseSprite_[i]->sprite->GetColor();
+			color.a = 255.f * rate;
+			pauseSprite_[i]->sprite->SetColor(color);
+
+			if (i == pauseSprite_.size() - 1) {
+				//Eの文字が回転する
+				
+				if (pauseSprite_[i]->timer.GetIsEnd()) {
+					effectTimer_.AddTime(1);
+
+					if (state_ == State::Collapse) {
+						//0.f → 1.f → 0.fのrateを計算する
+						float rate01 = 0.2f + fabs(0.5f - effectTimer_.GetTimeRate()) * 2.f;
+						float rate02 = 1.f - fabs(0.5f - effectTimer_.GetTimeRate()) * 2.f;
+
+						rate01 = Min(rate01, 1.0f);
+						Vector2 scale = {
+							scale_.x + (0.1f * rate02),
+							scale_.y * rate01
+						};
+
+						pauseSprite_[i]->sprite->SetScale(scale);
+					}
+					//飛び跳ねる
+					else if (state_ == State::Jump) {
+
+					}
+					//着地する
+					else if (state_ == State::Landing) {
+
+					}
+
+					if (effectTimer_.GetIsEnd()) {
+						if (state_ == State::Collapse) {
+							state_ = State::Jump;
+							gravity_ = -10;
+						}
+						if (state_ == State::Jump)state_ = State::Landing;
+						effectTimer_.Reset();
+					}
+				}
+			}
+		}
+		pauseSprite_[i]->sprite->Update();
+	}
+}
+
+void PauseSprite::Draw()
+{
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
+		if (pauseSprite_[i]->isActive) {
+			pauseSprite_[i]->sprite->Draw();
+		}
+	}
+}
+
+void PauseSprite::Reset()
+{
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
+		pauseSprite_[i]->timer.Reset();
+		pauseSprite_[i]->isActive = false;
+		timer_.Reset();
+		index_ = 0;
+		state_ = State::Collapse;
+	}
+	effectTimer_.Reset();
 }
