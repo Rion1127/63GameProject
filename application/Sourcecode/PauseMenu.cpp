@@ -41,6 +41,8 @@ void PauseMenu::Update()
 
 		pauseSprite_->SetIsAvtive(isPause_);
 		pauseSprite_->Reset();
+
+		SoundManager::Play("MenuSE");
 	}
 
 	if (isPause_) {
