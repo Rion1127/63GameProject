@@ -2,8 +2,8 @@
 #include "RRandom.h"
 #include "mSound.h"
 
-AttackAirAerialFinish::AttackAirAerialFinish(IActor* selfActor) : 
-	IAttack(selfActor,1,70,10,5)
+AttackAirAerialFinish::AttackAirAerialFinish(IActor* selfActor) :
+	IAttack(selfActor, 1, 70, 10, 5)
 {
 }
 
@@ -32,13 +32,9 @@ void AttackAirAerialFinish::Init()
 void AttackAirAerialFinish::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
-	Vector3 frontVec = {
-		sinf(selfActor_->GetWorldTransform()->rotation_.y),
-		0,
-		cosf(selfActor_->GetWorldTransform()->rotation_.y),
-	};
+	Vector3 frontVec = CalculateFrontVec();
 	frontVec = frontVec.normalize();
-	Vector3 speed = frontVec * 0.05f;
+	Vector3 speed = frontVec * 0.08f;
 	float timerate = 1.f - timer_.GetTimeRate();
 	speed *= timerate;
 
@@ -66,11 +62,11 @@ void AttackAirAerialFinish::MoveUpdate()
 	if (index_ < 4) {
 		swordPos_ = attackCol_.at(0)->col_.center;
 		attackCol_.at(0)->col_.center = spline_.GetNowPoint();
+		int32_t limitTime = spline_.GetTimer().GetLimitTimer() * (int32_t)(spline_.GetsplinePos().size() - 1);
+		int32_t nowTime = spline_.GetTimer().GetTimer();
+		attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
+		selfActor_->GetGravity()->SetGrabity({ 0,0,0 });
 	}
-	int32_t limitTime = spline_.GetTimer().GetLimitTimer() + 7;
-	int32_t nowTime = spline_.GetTimer().GetTimer();
-	attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
-	selfActor_->GetGravity()->SetGrabity({ 0,0,0 });
 
 }
 
@@ -186,7 +182,7 @@ void AttackAirAerialFinish::ThirdAttackInit()
 	attackCol_.at(0)->knockPower = { 0.1f,0.1f,0.1f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 
-	
+
 	//スプライン曲線計算
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
 	std::vector<Vector3>attackVec;

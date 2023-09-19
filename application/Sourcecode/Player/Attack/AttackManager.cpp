@@ -7,6 +7,7 @@
 #include "AttackSlide.h"
 #include "AttackFinishBreak.h"
 #include "AttackAirAerialFinish.h"
+#include "AttackAirSweep.h"
 
 Player* AttackManager::player_ = nullptr;
 
@@ -26,36 +27,75 @@ void AttackManager::Attack()
 		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
 		if (comboNum < MAX_COMBO)
 		{
-			//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
-			if (nowAttack_ == nullptr)
+			isNextAttack_ = true;
+		}
+		else {
+			isNextAttack_ = false;
+		}
+	}
+}
+
+void AttackManager::Update()
+{
+	if (isNextAttack_) {
+		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Æ‚Ì‚‚³‚Ì‹——£
+		float diffPosY = 0;
+		if (lockOnEnemy_ != nullptr) {
+			diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
+		}
+		diffPosY = fabs(diffPosY);
+		//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
+		if (nowAttack_ == nullptr)
+		{
+			isNextAttack_ = false;
+			if (player_->GetNowState()->GetId() == PlayerState::Idle ||
+				player_->GetNowState()->GetId() == PlayerState::Move)
 			{
-				if (player_->GetNowState()->GetId() == PlayerState::Idle||
-					player_->GetNowState()->GetId() == PlayerState::Move)
-				{
-					if(PtoELength_ >= 4.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
-					else nowAttack_ = std::make_unique<Attack1>(player_);
-				}
-				else if (player_->GetNowState()->GetId() == PlayerState::Jump)
-				{
-					nowAttack_ = std::make_unique<AttackAir1>(player_);
-				}
-				if (nowAttack_ != nullptr) {
-					nowAttack_->SetLockOnActor(lockOnEnemy_);
-					nowAttack_->Init();
-					float picth = RRandom::RandF(0.7f, 1.5f);
-					SoundManager::Play("SwingSE", false, 0.3f, picth);
-				}
-				comboNum++;
+				if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
+				else if (diffPosY > 1.f)nowAttack_ = std::make_unique<AttackAirSweep>(player_);
+				else nowAttack_ = std::make_unique<Attack1>(player_);
 			}
-			else
+			else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 			{
+				nowAttack_ = std::make_unique<AttackAir1>(player_);
+			}
+			if (nowAttack_ != nullptr) {
+				nowAttack_->SetLockOnActor(lockOnEnemy_);
+				nowAttack_->Init();
+				float picth = RRandom::RandF(0.7f, 1.5f);
+				SoundManager::Play("SwingSE", false, 0.3f, picth);
+			}
+			comboNum++;
+		}
+	}
+
+
+	if (nowAttack_ != nullptr)
+	{
+		//UŒ‚’†ƒtƒ‰ƒO
+		isAttacking = true;
+		//UŒ‚XV
+		nowAttack_->SetLockOnActor(lockOnEnemy_);
+		nowAttack_->Update();
+		//maxTime‚ğ’´‚¦‚½‚çnextAttack_‚ğnowAttack_‚É‘ã“ü‚·‚é
+		if (nowAttack_->GetTimer().GetIsEnd())
+		{
+			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Æ‚Ì‚‚³‚Ì‹——£
+			float diffPosY = 0;
+			if (lockOnEnemy_ != nullptr) {
+				diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
+			}
+			diffPosY = fabs(diffPosY);
+			if (isNextAttack_) {
 				if (nextAttack_ == nullptr)
 				{
+					isNextAttack_ = false;
 					if (player_->GetNowState()->GetId() == PlayerState::Attack)
 					{
 						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
 						if (comboNum == 1) {
 							if (PtoELength_ >= 4.f)nextAttack_ = std::make_unique<AttackSlide>(player_);
+							else if (diffPosY > 1.f)nowAttack_ = std::make_unique<AttackAirSweep>(player_);
 							else nextAttack_ = std::make_unique<Attack2>(player_);
 						}
 						if (comboNum == 2)nextAttack_ = std::make_unique<AttackFinishBreak>(player_);
@@ -67,22 +107,7 @@ void AttackManager::Attack()
 					}
 				}
 			}
-		}
-	}
-}
 
-void AttackManager::Update()
-{
-	if (nowAttack_ != nullptr)
-	{
-		//UŒ‚’†ƒtƒ‰ƒO
-		isAttacking = true;
-		//UŒ‚XV
-		nowAttack_->SetLockOnActor(lockOnEnemy_);
-		nowAttack_->Update();
-		//maxTime‚ğ’´‚¦‚½‚çnextAttack_‚ğnowAttack_‚É‘ã“ü‚·‚é
-		if (nowAttack_->GetTimer().GetIsEnd())
-		{
 			nowAttack_.swap(nextAttack_);
 			//UŒ‚‰Šú‰»
 			if (nowAttack_ != nullptr) {

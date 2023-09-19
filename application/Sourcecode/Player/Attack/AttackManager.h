@@ -33,6 +33,8 @@ private:
 	bool isHardLock_;	//false 近い敵をロックオン, true ロックオンを固定
 	
 	float PtoELength_;
+
+	bool isNextAttack_;
 public:
 	AttackManager();
 

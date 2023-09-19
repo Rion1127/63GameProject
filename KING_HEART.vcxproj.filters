@@ -607,7 +607,10 @@
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirSweep.cpp">
+      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -975,7 +978,10 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirSweep.h">
+      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

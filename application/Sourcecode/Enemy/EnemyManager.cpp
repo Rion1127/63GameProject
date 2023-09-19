@@ -43,6 +43,10 @@ void EnemyManager::PreUpdate()
 	{
 		enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(popPos)));
 	}
+	if (ImGui::Button("AirDummy"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(0, 3, 0))));
+	}
 	if (ImGui::Button("POP_EnemyShadow"))
 	{
 		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0),Vector3(0,Radian(180),0))));

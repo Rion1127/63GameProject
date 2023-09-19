@@ -15,7 +15,7 @@ Sword::Sword()
 	floatingTimer_.SetLimitTime(120);
 	floatingTimer_.SetIsLoop(true);
 	
-	trail_ = std::make_unique<SwordTrail>(16);
+	trail_ = std::make_unique<SwordTrail>(10);
 
 	tailObj_.resize(2);
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
