@@ -25,7 +25,9 @@ void AttackAirSweep::Init()
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 
-	colRadius_ = 2.f;
+	attackCol_.at(0)->col_.radius = 1.3f;
+	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
+	colRadius_ = 1.8f;
 	rotateSpeed_ = 1.7f;
 }
 
@@ -61,7 +63,7 @@ void AttackAirSweep::MoveUpdate()
 	//ダメージクールタイム
 	//攻撃が終わるまでの時間を計算する
 	int32_t limitTime = timer_.GetLimitTimer();
-	int32_t nowTime = spline_.GetTimer().GetTimer();
+	int32_t nowTime = timer_.GetTimer();
 	attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
 	
 	if (timer_.GetTimeRate() < 0.8f) {
