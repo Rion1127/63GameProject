@@ -37,6 +37,7 @@ void AttackManager::Attack()
 
 void AttackManager::Update()
 {
+	//最初の攻撃
 	if (isNextAttack_) {
 		//ロックオンしている敵との高さの距離
 		float diffPosY = 0;
@@ -69,7 +70,7 @@ void AttackManager::Update()
 		}
 	}
 
-
+	
 	if (nowAttack_ != nullptr)
 	{
 		//攻撃中フラグ
@@ -86,6 +87,7 @@ void AttackManager::Update()
 				diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
 			}
 			diffPosY = fabs(diffPosY);
+			//2コンボ以降の処理
 			if (isNextAttack_) {
 				if (nextAttack_ == nullptr)
 				{
