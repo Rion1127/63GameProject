@@ -80,6 +80,8 @@ void Sword::Update()
 
 		obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 1, 0), PtoSVec);
 		trail_->SetIsVisible(true);
+
+		CalculateTrailPos();
 	}
 	else if (state_ == SwordState::Guard) {
 		//‰ñ“]s—ñ‚ðeŽqŠÖŒW‚É‚·‚é
@@ -114,7 +116,7 @@ void Sword::Update()
 	obj_->Update();
 
 	
-	CalculateTrailPos();
+	
 	trail_->Update();
 }
 

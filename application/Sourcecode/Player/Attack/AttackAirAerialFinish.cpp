@@ -120,7 +120,7 @@ void AttackAirAerialFinish::FirstAttackInit()
 	splineTime /= splineSize;
 	spline_.SetLimitTime(splineTime);
 
-
+	attackCol_.at(0)->col_.center = fourthPos;
 	swordPos_ = attackCol_.at(0)->col_.center;
 }
 

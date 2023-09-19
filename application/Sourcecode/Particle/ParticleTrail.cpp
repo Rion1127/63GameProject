@@ -138,7 +138,20 @@ void ParticleTrail::TransferBuff()
 		vertex_[i].uv = Vector2(1.0f, v);
 		vertex_[i + 1].pos = posArray_[j].tail;
 		vertex_[i + 1].uv = Vector2(0.0f, v);
+		
+
 		v += amount;
+	}
+	for (size_t i = 0; i < vertex_.size(); i++)
+	{
+		if (i > 0) {
+			if (vertex_[i].pos.x == 0 &&
+				vertex_[i].pos.y == 0 &&
+				vertex_[i].pos.z == 0)
+			{
+				vertex_[i].pos = vertex_[i - 1].pos;
+			}
+		}
 	}
 	std::copy(vertex_.begin(), vertex_.end(), vertMap);
 }

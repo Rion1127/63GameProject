@@ -8,6 +8,7 @@ AttackSlide::AttackSlide(IActor* selfActor) :
 void AttackSlide::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
+	frontVec_ = frontVec;
 	Vector3 colPos{};
 	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
@@ -61,11 +62,11 @@ void AttackSlide::MoveUpdate()
 		speed_ -= 0.07f;
 		speed_ = Max(speed_, 0.f);
 	}
-	moveVec = CalculateFrontVec().normalize() * speed_;
+	moveVec = frontVec_.normalize() * speed_;
 	selfActor_->AddaddVec(moveVec);
 
 	colPos = selfActor_->GetWorldTransform()->position_;
-	colPos += CalculateFrontVec().normalize() * 2.5f;
+	colPos += frontVec_.normalize() * 2.5f;
 	colPos.y += 0.7f;
 	attackCol_.at(0)->col_.center = colPos;
 	attackCol_.at(0)->damageCoolTime = timer_.GetLimitTimer() - timer_.GetTimer() + 1;
