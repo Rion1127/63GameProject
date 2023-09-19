@@ -86,6 +86,9 @@ void AttackManager::Update()
 			if (lockOnEnemy_ != nullptr) {
 				diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
 			}
+			else {
+				PtoELength_ = 0;
+			}
 			diffPosY = fabs(diffPosY);
 			//2ƒRƒ“ƒ{ˆÈ~‚Ìˆ—
 			if (isNextAttack_) {
