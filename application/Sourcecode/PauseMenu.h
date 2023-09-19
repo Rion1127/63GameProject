@@ -14,6 +14,7 @@ struct PauseSprits {
 class PauseSprite {
 private:
 	enum State {
+		Ease,
 		Collapse,
 		Jump,
 		Landing

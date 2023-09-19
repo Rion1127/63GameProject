@@ -175,22 +175,24 @@ void PauseSprite::Update()
 
 	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
 		if (pauseSprite_[i]->isActive) {
-			pauseSprite_[i]->timer.AddTime(1);
+			if (state_ != State::Jump && state_ != State::Landing) {
+				pauseSprite_[i]->timer.AddTime(1);
 
-			Vector2 start = pauseSprite_[i]->easeStartPos_;
-			Vector2 end = pauseSprite_[i]->easeEndPos_;
-			float rate = pauseSprite_[i]->timer.GetTimeRate();
+				Vector2 start = pauseSprite_[i]->easeStartPos_;
+				Vector2 end = pauseSprite_[i]->easeEndPos_;
+				float rate = pauseSprite_[i]->timer.GetTimeRate();
 
-			Vector2 pos = {
-				Easing::Circ::easeOut(start.x,end.x,rate),
-				Easing::Circ::easeOut(start.y,end.y,rate)
-			};
+				Vector2 pos = {
+					Easing::Circ::easeOut(start.x,end.x,rate),
+					Easing::Circ::easeOut(start.y,end.y,rate)
+				};
 
-			pauseSprite_[i]->sprite->SetPos(pos);
+				pauseSprite_[i]->sprite->SetPos(pos);
 
-			auto color = pauseSprite_[i]->sprite->GetColor();
-			color.a = 255.f * rate;
-			pauseSprite_[i]->sprite->SetColor(color);
+				auto color = pauseSprite_[i]->sprite->GetColor();
+				color.a = 255.f * rate;
+				pauseSprite_[i]->sprite->SetColor(color);
+			}
 
 			if (i == pauseSprite_.size() - 1) {
 				//E‚Ì•¶Žš‚ª‰ñ“]‚·‚é
@@ -213,7 +215,25 @@ void PauseSprite::Update()
 					}
 					//”ò‚Ñ’µ‚Ë‚é
 					else if (state_ == State::Jump) {
+						Vector2 pos = pauseSprite_[i]->sprite->GetPos();
 
+						pos.y += gravity_;
+						gravity_ += 0.5f;
+
+						pauseSprite_[i]->sprite->SetPos(pos);
+
+						float rot = Easing::Sine::easeOut(effectTimer_.GetTimeRate(),Radian(180), Radian(180),1.f);
+						pauseSprite_[i]->sprite->SetRot(rot);
+
+						pos = pauseSprite_[i]->sprite->GetPos();
+						if (pos.y > pauseSprite_[i]->easeEndPos_.y - 32.f) {
+							state_ = State::Landing;
+							effectTimer_.Reset();
+							pos = pauseSprite_[i]->easeEndPos_;
+							pos.y -= 32.f;
+							pauseSprite_[i]->sprite->SetPos(pos);
+						}
+						
 					}
 					//’…’n‚·‚é
 					else if (state_ == State::Landing) {
@@ -224,9 +244,18 @@ void PauseSprite::Update()
 						if (state_ == State::Collapse) {
 							state_ = State::Jump;
 							gravity_ = -10;
+							effectTimer_.Reset();
+
+							pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f, 0.5f));
+							Vector2 pos = pauseSprite_[i]->sprite->GetPos();
+							pos.y -= 32.f;
+							pauseSprite_[i]->sprite->SetPos(pos);
 						}
-						if (state_ == State::Jump)state_ = State::Landing;
-						effectTimer_.Reset();
+						else if (state_ == State::Jump) {
+							
+							
+						}
+						
 					}
 				}
 			}
@@ -252,6 +281,11 @@ void PauseSprite::Reset()
 		timer_.Reset();
 		index_ = 0;
 		state_ = State::Collapse;
+		if (i == pauseSprite_.size() - 1) {
+			pauseSprite_[i]->sprite->SetRot(Radian(180));
+			pauseSprite_[i]->sprite->Update();
+			pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f, 0.0f));
+		}
 	}
 	effectTimer_.Reset();
 }
