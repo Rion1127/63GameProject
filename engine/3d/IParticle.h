@@ -21,33 +21,15 @@ protected:
 	};
 	struct Particle
 	{
-		//座標
-		Vector3 position = {};
-		Vector3 basePos = {};
-		Vector3 endPos = {};
-		Vector3* parentPos;
-		//速度
-		Vector3 velocity = {};
-		Vector3 baseVelo = {};
-		Vector3 veloAdd = {};
-
-		Vector3 rot = {};
-		Vector3 addRot = {};
-		//現在フレーム
-		int32_t frame = 0;
-		//終了フレーム
-		int32_t end_frame = 0;
-		// ローカルスケール
-		float scale = 1.0f;			//スケール
-		float maxScale = 1.f;
-		float baseScale = 0;
-		//色(RGBA)
-		Color color = {};
-		Color originColor = {};	//色の初期値
-		Color endColor = {};	//色の最終値
-
-		int particleType = 0;
+		Vector3 position = {};	//座標
+		float scale = 1.0f;		//スケール
+		Vector3 rot;
 		Vector2 ancorPoint_ = { 0,0 };
+		Color color = {};
+
+		int32_t frame = 0;		//現在フレーム
+		int32_t end_frame = 0;	//終了フレーム
+		float rate = 0;
 	};
 protected:
 	//エイリアステンプレート

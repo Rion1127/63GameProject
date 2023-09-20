@@ -111,6 +111,8 @@ void IParticle::DeleteUpdate()
 {
 	for (int32_t i = 0; i < particles_.size(); i++)
 	{
+		particles_[i].rate = (float)particles_[i].frame / (float)particles_[i].end_frame;
+
 		if (particles_[i].frame >= particles_[i].end_frame)
 		{
 			particles_.erase(particles_.begin() + i);

@@ -22,8 +22,9 @@ void ParticleWallHit::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		wallHitParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = wallHitParticles_.back();
 
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
@@ -36,7 +37,8 @@ void ParticleWallHit::Add()
 
 void ParticleWallHit::MoveUpdate()
 {
-	for (auto& p : particles_)
+	uint32_t index = 0;
+	for (auto& p : wallHitParticles_)
 	{
 		p.frame++;
 
@@ -46,5 +48,6 @@ void ParticleWallHit::MoveUpdate()
 
 		p.scale = Easing::Circ::easeOut(f, p.baseScale, 5.f, 1.0f);
 
+		particles_[index] = p;
 	}
 }

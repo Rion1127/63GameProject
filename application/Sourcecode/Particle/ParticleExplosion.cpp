@@ -29,8 +29,9 @@ void ParticleExplosion::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		explosionParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = explosionParticles_.back();
 
 		p.position = emitter_->pos;
 		p.basePos = emitter_->pos;
@@ -54,6 +55,7 @@ void ParticleExplosion::Add()
 
 void ParticleExplosion::MoveUpdate()
 {
+	uint32_t index = 0;
 	for (auto& p : particles_)
 	{
 		p.frame++;
@@ -75,6 +77,8 @@ void ParticleExplosion::MoveUpdate()
 			rate = 1.f - rate;
 			p.color.a = Easing::Sine::easeIn(rate,255,-255,1.0f);
 		}
+
+		particles_[index] = p;
 	}
 }
 #pragma endregion
@@ -102,14 +106,14 @@ void ParticleSmallExplosion::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		smallExplosionParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = smallExplosionParticles_.back();
 
 		p.position = emitter_->pos;
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
 		p.scale = emitter_->scale;
-		p.baseScale = emitter_->scale;
 		p.addRot.z = RRandom::RandF(-0.01f, 0.01f);
 		p.color = { 255,255,255,255 };
 	}
@@ -141,6 +145,8 @@ void ParticleSmallExplosion::MoveUpdate()
 		}
 
 		i++;
+
+		particles_[i] = p;
 	}
 }
 

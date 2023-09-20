@@ -23,24 +23,31 @@ void ParticleHitAttack::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		hitAttackParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = hitAttackParticles_.back();
 
 		Vector3 vec = {
 			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
-			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
+			RRandom::RandF(0,emitter_->addVec.y * 2.f),
 			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
+		Vector3 addvec = {
+			0,
+			RRandom::RandF(-emitter_->addVec.y / 20.f,-emitter_->addVec.y / 70.f),
+			0
+		};
 		Vector3 addrot = {
-			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
-			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
-			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
+			0,
+			0,
+			0.1f + RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
 		float scale_ = RRandom::RandF(0.3f, emitter_->scale);
 
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
 		p.velocity = vec;
+		p.addvelocity = addvec;
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
 		p.addRot = addrot;
@@ -50,19 +57,24 @@ void ParticleHitAttack::Add()
 
 void ParticleHitAttack::MoveUpdate()
 {
-	for (auto& p : particles_)
+	uint32_t index = 0;
+	for (auto& p : hitAttackParticles_)
 	{
 		p.frame++;
 
 		float f = (float)p.frame / p.end_frame;
 
+		p.velocity += p.addvelocity;
+
 		p.position += p.velocity;
 		p.rot += p.addRot;
 
-		p.scale = Easing::Bounce::easeIn(f,p.baseScale,-p.baseScale,1.0f);
+		p.scale = Easing::Quint::easeIn(p.baseScale,0.f, f);
 
 
 		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
+
+		particles_[index] = p;
 	}
 }

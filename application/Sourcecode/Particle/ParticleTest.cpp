@@ -23,8 +23,9 @@ void ParticleTest::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		testParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = testParticles_.back();
 		
 		Vector3 vec = {
 			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
@@ -35,7 +36,6 @@ void ParticleTest::Add()
 		p.position = vec;
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
-		p.velocity = {0,0,0};
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
 	}
@@ -49,26 +49,6 @@ void ParticleTest::MoveUpdate()
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += p.velocity;
-
 		p.rot.z += 0.01f;
-		
-		MoveTo({ 0,0,0 }, 0.01f, p.velocity);
 	}
-
-	ImGui::Begin("testParticle");
-
-	float rot[3] = {
-		transform_.rotation_.x,
-		transform_.rotation_.y,
-		transform_.rotation_.z
-	};
-
-	ImGui::DragFloat3("rot", rot,0.1f,-3.14f,3.14f);
-
-	transform_.rotation_.x = rot[0];
-	transform_.rotation_.y = rot[1];
-	transform_.rotation_.z = rot[2];
-
-	ImGui::End();
 }

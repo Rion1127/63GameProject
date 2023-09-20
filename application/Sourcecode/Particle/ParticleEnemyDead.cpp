@@ -25,8 +25,9 @@ void ParticleEnemyDead::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		enemyDeadParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = enemyDeadParticles_.back();
 
 		Vector3 vec = {
 			RRandom::RandF(-emitter_->addVec.x,emitter_->addVec.x),
@@ -41,7 +42,6 @@ void ParticleEnemyDead::Add()
 		float scale_ = RRandom::RandF(0.3f, emitter_->scale);
 
 		p.position = vec;
-		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
@@ -60,7 +60,8 @@ void ParticleEnemyDead::Add()
 
 void ParticleEnemyDead::MoveUpdate()
 {
-	for (auto& p : particles_)
+	uint32_t index = 0;
+	for (auto& p : enemyDeadParticles_)
 	{
 		p.frame++;
 
@@ -75,6 +76,10 @@ void ParticleEnemyDead::MoveUpdate()
 
 		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
+
+		particles_[index] = p;
+
+		index++;
 	}
 }
 #pragma endregion
@@ -101,10 +106,11 @@ void ParticleHeart::Add()
 		}
 		//リストに要素を追加
 		particles_.emplace_back();
+		heartParticles_.emplace_back();
 		//追加した要素の参照
-		Particle& p = particles_.back();
+		auto& p = heartParticles_.back();
 
-		p.veloAdd = emitter_->addVec;
+		p.addvelo = emitter_->addVec;
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
 		p.scale = emitter_->scale;
@@ -115,15 +121,16 @@ void ParticleHeart::Add()
 
 void ParticleHeart::MoveUpdate()
 {
-	for (auto& p : particles_)
+	uint32_t index = 0;
+	for (auto& p : heartParticles_)
 	{
 		p.frame++;
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += p.veloAdd;
+		p.position += p.addvelo;
 
-		p.veloAdd += {0.f, 0.001f, 0.f};
+		p.addvelo += {0.f, 0.001f, 0.f};
 
 		Vector3 col(p.color.r, p.color.g, p.color.b);
 
@@ -132,6 +139,9 @@ void ParticleHeart::MoveUpdate()
 		p.color = { col.x,col.y,col.z,255 };
 
 		p.color.a = (1 - f) * 255.f;
+
+		particles_[index] = p;
+		index++;
 	}
 }
 #pragma endregion

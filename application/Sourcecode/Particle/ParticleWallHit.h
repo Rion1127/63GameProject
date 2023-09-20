@@ -4,6 +4,12 @@
 class ParticleWallHit :
     public IParticle
 {
+private:
+	struct WallHitParticle : public Particle
+	{
+		Vector3 basePos;
+		float baseScale;
+	};
 public:
 	ParticleWallHit();
 
@@ -12,5 +18,7 @@ private:
 	void MoveUpdate() override;
 
 	int32_t vertexCount;
+
+	std::vector<WallHitParticle> wallHitParticles_;
 };
 
