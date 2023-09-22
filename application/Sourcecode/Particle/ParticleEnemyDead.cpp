@@ -123,6 +123,7 @@ void ParticleHeart::Add()
 		particles_.emplace_back();
 		heartParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = heartParticles_.back();
 
 		p.addvelo = emitter_->addVec;
@@ -131,6 +132,8 @@ void ParticleHeart::Add()
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
 		p.color = { 455,455,455,255 };
+
+		baseP = p;
 	}
 }
 

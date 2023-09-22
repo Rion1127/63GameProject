@@ -117,6 +117,7 @@ void ParticleFireCircle::Add()
 		particles_.emplace_back();
 		fireCircleParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = fireCircleParticles_.back();
 
 		p.position = emitter_->pos;
@@ -127,11 +128,25 @@ void ParticleFireCircle::Add()
 		p.baseScale = emitter_->scale * (1.5f + i);
 		p.addRot.y = RRandom::RandF(-0.03f, 0.03f);
 		p.color = { 255,100,0,255 };
+
+		baseP = p;
 	}
 }
 
 void ParticleFireCircle::MoveUpdate()
 {
+	for (int32_t i = 0; i < fireCircleParticles_.size(); i++)
+	{
+		fireCircleParticles_[i].rate = (float)fireCircleParticles_[i].frame / (float)fireCircleParticles_[i].end_frame;
+
+		if (fireCircleParticles_[i].frame >= fireCircleParticles_[i].end_frame)
+		{
+			fireCircleParticles_.erase(fireCircleParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t index = 0;
 	for (auto& p : fireCircleParticles_)
 	{
