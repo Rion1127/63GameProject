@@ -31,6 +31,7 @@ void ParticleExplosion::Add()
 		particles_.emplace_back();
 		explosionParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = explosionParticles_.back();
 
 		p.position = emitter_->pos;
@@ -40,6 +41,8 @@ void ParticleExplosion::Add()
 		p.baseScale = emitter_->scale;
 		p.addRot.z = RRandom::RandF(-0.01f, 0.01f);
 		p.color = { rgbColor_,rgbColor_,rgbColor_,255 };
+
+		baseP = p;
 	}
 
 	otherEmitter_ = std::make_shared<OneceEmitter>();
@@ -55,8 +58,20 @@ void ParticleExplosion::Add()
 
 void ParticleExplosion::MoveUpdate()
 {
+	for (int32_t i = 0; i < explosionParticles_.size(); i++)
+	{
+		explosionParticles_[i].rate = (float)explosionParticles_[i].frame / (float)explosionParticles_[i].end_frame;
+
+		if (explosionParticles_[i].frame >= explosionParticles_[i].end_frame)
+		{
+			explosionParticles_.erase(explosionParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t index = 0;
-	for (auto& p : particles_)
+	for (auto& p : explosionParticles_)
 	{
 		p.frame++;
 
@@ -79,6 +94,7 @@ void ParticleExplosion::MoveUpdate()
 		}
 
 		particles_[index] = p;
+		index++;
 	}
 }
 #pragma endregion
@@ -108,6 +124,7 @@ void ParticleSmallExplosion::Add()
 		particles_.emplace_back();
 		smallExplosionParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = smallExplosionParticles_.back();
 
 		p.position = emitter_->pos;
@@ -116,14 +133,28 @@ void ParticleSmallExplosion::Add()
 		p.scale = emitter_->scale;
 		p.addRot.z = RRandom::RandF(-0.01f, 0.01f);
 		p.color = { 255,255,255,255 };
+
+		baseP = p;
 	}
 	randOffset_ = RRandom::RandF(0.f,120.f);
 }
 
 void ParticleSmallExplosion::MoveUpdate()
 {
+	for (int32_t i = 0; i < smallExplosionParticles_.size(); i++)
+	{
+		smallExplosionParticles_[i].rate = (float)smallExplosionParticles_[i].frame / (float)smallExplosionParticles_[i].end_frame;
+
+		if (smallExplosionParticles_[i].frame >= smallExplosionParticles_[i].end_frame)
+		{
+			smallExplosionParticles_.erase(smallExplosionParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t i = 0;
-	for (auto& p : particles_)
+	for (auto& p : smallExplosionParticles_)
 	{
 		p.frame++;
 
@@ -144,9 +175,8 @@ void ParticleSmallExplosion::MoveUpdate()
 			p.color.a = Easing::Sine::easeIn(rate, 255, -255, 1.0f);
 		}
 
-		i++;
-
 		particles_[i] = p;
+		i++;
 	}
 }
 

@@ -24,6 +24,7 @@ void ParticleWallHit::Add()
 		particles_.emplace_back();
 		wallHitParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = wallHitParticles_.back();
 
 		p.basePos = emitter_->pos;
@@ -32,11 +33,25 @@ void ParticleWallHit::Add()
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
 		p.color = { 255,255,255,0 };
+
+		baseP = p;
 	}
 }
 
 void ParticleWallHit::MoveUpdate()
 {
+	for (int32_t i = 0; i < wallHitParticles_.size(); i++)
+	{
+		wallHitParticles_[i].rate = (float)wallHitParticles_[i].frame / (float)wallHitParticles_[i].end_frame;
+
+		if (wallHitParticles_[i].frame >= wallHitParticles_[i].end_frame)
+		{
+			wallHitParticles_.erase(wallHitParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t index = 0;
 	for (auto& p : wallHitParticles_)
 	{

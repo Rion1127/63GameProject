@@ -27,6 +27,7 @@ void ParticleEnemyDead::Add()
 		particles_.emplace_back();
 		enemyDeadParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = enemyDeadParticles_.back();
 
 		Vector3 vec = {
@@ -46,6 +47,8 @@ void ParticleEnemyDead::Add()
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
 		p.color = { 5,5,35,0 };
+
+		baseP = p;
 	}
 	std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 	hitEmitter_->particle = std::make_unique<ParticleHeart>();
@@ -60,6 +63,18 @@ void ParticleEnemyDead::Add()
 
 void ParticleEnemyDead::MoveUpdate()
 {
+	for (int32_t i = 0; i < enemyDeadParticles_.size(); i++)
+	{
+		enemyDeadParticles_[i].rate = (float)enemyDeadParticles_[i].frame / (float)enemyDeadParticles_[i].end_frame;
+
+		if (enemyDeadParticles_[i].frame >= enemyDeadParticles_[i].end_frame)
+		{
+			enemyDeadParticles_.erase(enemyDeadParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t index = 0;
 	for (auto& p : enemyDeadParticles_)
 	{
@@ -121,6 +136,18 @@ void ParticleHeart::Add()
 
 void ParticleHeart::MoveUpdate()
 {
+	for (int32_t i = 0; i < heartParticles_.size(); i++)
+	{
+		heartParticles_[i].rate = (float)heartParticles_[i].frame / (float)heartParticles_[i].end_frame;
+
+		if (heartParticles_[i].frame >= heartParticles_[i].end_frame)
+		{
+			heartParticles_.erase(heartParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t index = 0;
 	for (auto& p : heartParticles_)
 	{

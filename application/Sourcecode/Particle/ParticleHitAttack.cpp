@@ -25,6 +25,7 @@ void ParticleHitAttack::Add()
 		particles_.emplace_back();
 		hitAttackParticles_.emplace_back();
 		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		auto& baseP = particles_.back();
 		auto& p = hitAttackParticles_.back();
 
 		Vector3 vec = {
@@ -52,11 +53,25 @@ void ParticleHitAttack::Add()
 		p.baseScale = emitter_->scale;
 		p.addRot = addrot;
 		p.color = { 255,175,60,255 };
+
+		baseP = p;
 	}
 }
 
 void ParticleHitAttack::MoveUpdate()
 {
+	for (int32_t i = 0; i < hitAttackParticles_.size(); i++)
+	{
+		hitAttackParticles_[i].rate = (float)hitAttackParticles_[i].frame / (float)hitAttackParticles_[i].end_frame;
+
+		if (hitAttackParticles_[i].frame >= hitAttackParticles_[i].end_frame)
+		{
+			hitAttackParticles_.erase(hitAttackParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
 	uint32_t index = 0;
 	for (auto& p : hitAttackParticles_)
 	{
@@ -76,5 +91,7 @@ void ParticleHitAttack::MoveUpdate()
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
 
 		particles_[index] = p;
+
+		index++;
 	}
 }
