@@ -270,7 +270,7 @@ void PipelineManager::ParticleShaderIni()
 	GetPipelineObjects("SwordTrail")->Setshader("SwordTrailVS.hlsl", ShaderType::VS);
 	GetPipelineObjects("SwordTrail")->Setshader("SwordTrailPS.hlsl", ShaderType::PS);
 
-	GetPipelineObjects("SwordTrail")->AddrootParams(2);
+	GetPipelineObjects("SwordTrail")->AddrootParams(3);
 
 	Create("SwordTrail", NONE, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ZERO, MODE_WRAP);
 }

@@ -3,6 +3,7 @@
 #include "DirectX.h"
 #include "PipelineManager.h"
 #include <imgui.h>
+#include "Util.h"
 
 ParticleTrail::ParticleTrail(uint32_t vertSize) :
 	vertSize_(vertSize)
@@ -46,6 +47,8 @@ ParticleTrail::ParticleTrail(uint32_t vertSize) :
 
 	isStop_ = true;
 	isVisible_ = false;
+
+	constBuffColor_ = CreateBuff(constMapColor_);
 }
 
 void ParticleTrail::Update()
@@ -92,6 +95,9 @@ void ParticleTrail::Draw()
 		// 定数バッファ転送
 		cmdList.SetGraphicsRootConstantBufferView(
 			1, transform_.constBuffTransform_->GetGPUVirtualAddress());
+		// 定数バッファ転送
+		cmdList.SetGraphicsRootConstantBufferView(
+			2, constBuffColor_->GetGPUVirtualAddress());
 
 		// テクスチャ
 		TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
@@ -154,4 +160,6 @@ void ParticleTrail::TransferBuff()
 		}
 	}
 	std::copy(vertex_.begin(), vertex_.end(), vertMap);
+
+	constMapColor_->color = color_ / 255.f;
 }

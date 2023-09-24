@@ -6,6 +6,11 @@ cbuffer ConstantBuffer : register(b0)
     float3 cameraPos;
 };
 
+cbuffer ConstantBufferColor : register(b1)
+{
+    float4 color;
+};
+
 //頂点シェーダの出力構造体
 //（頂点シェーダーからピクセルシェーダーへのやり取りに使用する）
 struct VSOutput {

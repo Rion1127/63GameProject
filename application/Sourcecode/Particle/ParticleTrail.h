@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "WorldTransform.h"
 #include "Texture.h"
+#include "Color.h"
 
 class ParticleTrail
 {
@@ -25,6 +26,10 @@ public:
 		Vector3 head; //剣の先端の位置
 		Vector3 tail; //剣の末端の位置
 	};
+	struct colorBuffer
+	{
+		Color color;
+	};
 protected:
 	std::vector<PosBuffer> posArray_;
 	std::vector<SwordTrailVertex> vertex_;
@@ -40,6 +45,13 @@ protected:
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	ComPtr<ID3D12Resource> vertBuff_;
+
+	//色情報
+	ComPtr<ID3D12Resource> constBuffColor_;
+	//色情報
+	colorBuffer* constMapColor_;
+
+	Color color_;
 protected:
 	//デバッグ
 	bool isStop_;
@@ -48,6 +60,7 @@ public:
 	void Update();
 	void SetPos(const Vector3& head, const Vector3& tail);
 	void SetIsVisible(bool flag) { isVisible_ = flag; }
+	void SetColor(Color color) { color_ = color; }
 
 	void Draw();
 	void DrawImgui();

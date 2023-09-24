@@ -25,6 +25,7 @@ Sword::Sword()
 		tailObj_[i]->WT_.parent_ = &obj_->WT_;
 		tailObj_[i]->SetIsVisible(false);
 	}
+	trail_->SetColor(Color(230,152,120,255));
 }
 
 void Sword::Update()
