@@ -23,3 +23,26 @@ private:
 
 	std::vector<HitAttackParticle> hitAttackParticles_;
 };
+
+class ParticleHitCircle final :
+	public IParticle
+{
+private:
+	struct HitAttackParticle : public Particle
+	{
+		Vector3 addRot;
+		float baseScale;
+		float endScale;
+	};
+public:
+	ParticleHitCircle();
+
+	void Add() override;
+private:
+	void MoveUpdate() override;
+
+	int32_t vertexCount;
+	std::vector<HitAttackParticle> hitCircleParticles_;
+
+	float endScale_;
+};

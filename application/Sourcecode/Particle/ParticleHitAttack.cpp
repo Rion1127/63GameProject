@@ -2,6 +2,9 @@
 #include "RRandom.h"
 #include "Util.h"
 #include "Easing.h"
+#include "ParticleManager.h"
+
+#pragma region ParticleHitAttack
 ParticleHitAttack::ParticleHitAttack() :
 	IParticle("Particle_Depth_False"),
 	vertexCount(32)
@@ -56,6 +59,15 @@ void ParticleHitAttack::Add()
 
 		baseP = p;
 	}
+
+	std::shared_ptr<OneceEmitter> hitCirckeEmitter_ = std::make_shared<OneceEmitter>();
+	hitCirckeEmitter_->particle = std::make_unique<ParticleHitCircle>();
+	hitCirckeEmitter_->addNum = 1;
+	hitCirckeEmitter_->time = 15;
+	hitCirckeEmitter_->pos = emitter_->pos;
+	hitCirckeEmitter_->scale = 0.0f;
+	ParticleManager::GetInstance()->
+		AddParticle("HitCircle", hitCirckeEmitter_);
 }
 
 void ParticleHitAttack::MoveUpdate()
@@ -95,3 +107,89 @@ void ParticleHitAttack::MoveUpdate()
 		index++;
 	}
 }
+#pragma endregion
+
+#pragma region ParticleHitCircle
+
+ParticleHitCircle::ParticleHitCircle() :
+	IParticle("Particle_Depth_False"),
+	vertexCount(1)
+{
+	Init(vertexCount);
+	texture = *TextureManager::GetInstance()->GetTexture("HitCircle");
+	isBillBoard = true;
+}
+
+void ParticleHitCircle::Add()
+{
+	transform_.position_ = emitter_->pos;
+
+	endScale_ = 4.f;
+
+	for (int i = 0; i < emitter_->addNum; i++)
+	{
+		//指定した最大頂点数超えてたら生成しない
+		if (particles_.size() >= vertexCount)
+		{
+			return;
+		}
+		//リストに要素を追加
+		particles_.emplace_back();
+		hitCircleParticles_.emplace_back();
+		//追加した要素の参照
+		auto& baseP = particles_.back();
+		auto& p = hitCircleParticles_.back();
+
+		Vector3 addrot = {
+			0,
+			0,
+			0.2f
+		};
+		
+		//p.position = emitter_->pos;
+		p.end_frame = emitter_->time;
+		p.scale = emitter_->scale;
+		p.baseScale = emitter_->scale;
+		p.endScale = endScale_;
+		p.addRot = addrot;
+		p.color = { 255,255,255,255 };
+
+		baseP = p;
+	}
+}
+
+void ParticleHitCircle::MoveUpdate()
+{
+	for (int32_t i = 0; i < hitCircleParticles_.size(); i++)
+	{
+		hitCircleParticles_[i].rate = (float)hitCircleParticles_[i].frame / (float)hitCircleParticles_[i].end_frame;
+
+		if (hitCircleParticles_[i].frame >= hitCircleParticles_[i].end_frame)
+		{
+			hitCircleParticles_.erase(hitCircleParticles_.begin() + i);
+			vertices_.at(i).scale = 0;
+			i = -1;
+		}
+	}
+
+	uint32_t index = 0;
+	for (auto& p : hitCircleParticles_)
+	{
+		p.frame++;
+		float f = (float)p.frame / p.end_frame;
+
+		p.rot += p.addRot;
+
+		p.scale = Easing::Quint::easeOut(p.baseScale, p.endScale, f);
+		p.color.a = Easing::Quint::easeIn(255, 0, f);
+
+		MoveTo({ 0,0,0 }, 0.008f, p.addRot);
+
+		particles_[index] = p;
+		index++;
+	}
+}
+
+
+#pragma endregion
+
