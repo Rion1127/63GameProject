@@ -17,6 +17,7 @@ ParticleHitAttack::ParticleHitAttack() :
 void ParticleHitAttack::Add()
 {
 	transform_.position_ = emitter_->pos;
+	color_ = { 255,175,60,255 };
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
 		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
@@ -55,7 +56,8 @@ void ParticleHitAttack::Add()
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
 		p.addRot = addrot;
-		p.color = { 255,175,60,255 };
+		p.color = color_;
+		p.timer_.SetLimitTime(RRandom::Rand(5,10));
 
 		baseP = p;
 	}
@@ -88,6 +90,7 @@ void ParticleHitAttack::MoveUpdate()
 	for (auto& p : hitAttackParticles_)
 	{
 		p.frame++;
+		p.timer_.AddTime(1);
 
 		float f = (float)p.frame / p.end_frame;
 
@@ -98,9 +101,17 @@ void ParticleHitAttack::MoveUpdate()
 
 		p.scale = Easing::Quint::easeIn(p.baseScale,0.f, f);
 
-
 		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
+
+		if (p.timer_.GetIsEnd()) {
+			p.timer_.Reset();
+
+			Color color = color_ * 2.f;
+
+			p.color = (p.color.a == color_.a) ? color : color_;
+		}
+
 
 		particles_[index] = p;
 

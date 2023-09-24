@@ -25,7 +25,7 @@ Sword::Sword()
 		tailObj_[i]->WT_.parent_ = &obj_->WT_;
 		tailObj_[i]->SetIsVisible(false);
 	}
-	trail_->SetColor(Color(230,152,120,255));
+	trail_->SetColor(Color(255,175,60,255));
 }
 
 void Sword::Update()
@@ -165,6 +165,18 @@ void Sword::Draw()
 	obj_->WT_.position_.x = pos[0];
 	obj_->WT_.position_.y = pos[1];
 	obj_->WT_.position_.z = pos[2];
+
+	static float color[3] = {
+		trail_->GetColor().r,
+		trail_->GetColor().g,
+		trail_->GetColor().b
+	};
+	//ImGui::DragFloat4("color", color, 0.1f);
+
+	ImGui::ColorEdit3("color 1", color);
+
+	Color col = { color[0],color[1], color[2], 255};
+	trail_->SetColor(col);
 
 	ImGui::End();
 #endif // _DEBUG

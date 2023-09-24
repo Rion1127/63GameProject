@@ -1,5 +1,6 @@
 #pragma once
 #include "IParticle.h"
+#include "Timer.h"
 class ParticleHitAttack final:
     public IParticle
 {
@@ -11,6 +12,7 @@ private:
 		Vector3 addvelocity;
 		Vector3 addRot;
 		float baseScale;
+		Timer timer_;
 	};
 public:
 	ParticleHitAttack();
@@ -22,6 +24,8 @@ private:
 	int32_t vertexCount;
 
 	std::vector<HitAttackParticle> hitAttackParticles_;
+	
+	Color color_;
 };
 
 class ParticleHitCircle final :

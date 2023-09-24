@@ -67,5 +67,7 @@ public:
 private:
 	//ƒf[ƒ^“]‘—
 	void TransferBuff();
+public:
+	Color GetColor() { return color_; }
 };
 
