@@ -32,6 +32,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("explosion_02.png", "Explosion_02");
 	LoadGraph("swordTrail.png", "SwordTrail");
 	LoadGraph("hitCircle.png", "HitCircle");
+	LoadGraph("triangle.png", "Triangle");
 	//UI
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");
