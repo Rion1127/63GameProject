@@ -188,12 +188,13 @@ void DebugScene::Draw()
 	//colosseumSystem_->DrawSprite();
 	pauseMenu_->Draw();
 
-	PipelineManager::PreDraw("Particle", POINTLIST);
-	ParticleManager::GetInstance()->Draw();
+	
 }
 
 void DebugScene::DrawPostEffect()
 {
+	PipelineManager::PreDraw("Particle", POINTLIST);
+	ParticleManager::GetInstance()->Draw();
 }
 
 void DebugScene::CameraUpdate()

@@ -18,7 +18,7 @@ void Bloom::Update() {
 void Bloom::PreDraw()
 {
 	highLumi_->PreDrawScene();
-	SceneManager::Draw();
+	SceneManager::DrawPostEffect();
 	highLumi_->PostDrawScene();
 
 	gaussianBlur_->PreDrawScene();
@@ -26,11 +26,12 @@ void Bloom::PreDraw()
 	gaussianBlur_->PostDrawScene();
 
 	compo_->PreDrawSceneAssin(0);
-	gaussianBlur_->Draw("Gaussian");
+	SceneManager::Draw();
+	SceneManager::DrawPostEffect();
 	compo_->PostDrawSceneAssin(0);
 
 	compo_->PreDrawSceneAssin(1);
-	SceneManager::Draw();
+	gaussianBlur_->Draw("Gaussian");
 	compo_->PostDrawSceneAssin(1);
 }
 
