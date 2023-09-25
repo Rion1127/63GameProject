@@ -192,6 +192,10 @@ void DebugScene::Draw()
 	ParticleManager::GetInstance()->Draw();
 }
 
+void DebugScene::DrawPostEffect()
+{
+}
+
 void DebugScene::CameraUpdate()
 {
 	static bool isDebug = true;

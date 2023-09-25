@@ -28,6 +28,7 @@ public:
 	static void Ini();
 	static void Update();
 	static void Draw();
+	static void DrawPostEffect();
 
 	template <class NextScene>
 	static inline void Transition() {

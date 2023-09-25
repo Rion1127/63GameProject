@@ -83,6 +83,8 @@ void Framework::Draw()
 	RDirectX::GetInstance()->PreDraw();
 	//ƒQ[ƒ€ƒV[ƒ“•`‰æ
 	SceneManager::Draw();
+
+	
 	//imguiI—¹
 	ImGuiManager::Getinstance()->End();
 	//imgui•`‰æ

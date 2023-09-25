@@ -92,6 +92,11 @@ void SceneManager::Draw()
 	whiteSprite_.Draw();
 }
 
+void SceneManager::DrawPostEffect()
+{
+	scurrentScene_->DrawPostEffect();
+}
+
 void SceneManager::SceneChange()
 {
 	if (ssceneName_ == SceneName::Title)
