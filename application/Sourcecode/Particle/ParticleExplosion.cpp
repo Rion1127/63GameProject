@@ -73,7 +73,7 @@ void ParticleExplosion::MoveUpdate()
 	uint32_t index = 0;
 	for (auto& p : explosionParticles_)
 	{
-		p.frame++;
+		p.frame += 1.f * GameSpeed::GetGameSpeed();
 
 		float f = (float)p.frame / p.end_frame;
 		p.position = emitter_->pos;
@@ -82,7 +82,7 @@ void ParticleExplosion::MoveUpdate()
 		p.color.g = rgbColor_;
 		p.color.b = rgbColor_;
 
-		rgbColor_ -= 20.f;
+		rgbColor_ -= 20.f * GameSpeed::GetGameSpeed();
 
 		rgbColor_ = Max(rgbColor_, 255.f);
 
@@ -156,7 +156,7 @@ void ParticleSmallExplosion::MoveUpdate()
 	uint32_t i = 0;
 	for (auto& p : smallExplosionParticles_)
 	{
-		p.frame++;
+		p.frame += 1.f * GameSpeed::GetGameSpeed();
 
 		float f = (float)p.frame / p.end_frame;
 

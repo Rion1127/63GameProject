@@ -78,19 +78,19 @@ void ParticleEnemyDead::MoveUpdate()
 	uint32_t index = 0;
 	for (auto& p : enemyDeadParticles_)
 	{
-		p.frame++;
+		p.frame += 1.f * GameSpeed::GetGameSpeed();
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += { 0,0.01f,0 };
+		p.position += Vector3( 0,0.01f,0 ) * GameSpeed::GetGameSpeed();
 
 		if(f < 0.5f)p.color.a = f * 355.f;
 		else p.color.a = (1 - f) * 355.f;
 
 		p.scale = Easing::Circ::easeIn(f, p.baseScale, -p.baseScale, 1.0f);
 
-		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
-		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
+		MoveTo({ 0,0,0 }, 0.001f * GameSpeed::GetGameSpeed(), p.velocity);
+		MoveTo({ 0,0,0 }, 0.003f * GameSpeed::GetGameSpeed(), p.addRot);
 
 		particles_[index] = p;
 
@@ -154,17 +154,17 @@ void ParticleHeart::MoveUpdate()
 	uint32_t index = 0;
 	for (auto& p : heartParticles_)
 	{
-		p.frame++;
+		p.frame += 1.f * GameSpeed::GetGameSpeed();
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += p.addvelo;
+		p.position += p.addvelo * GameSpeed::GetGameSpeed();
 
-		p.addvelo += {0.f, 0.001f, 0.f};
+		p.addvelo += Vector3(0.f, 0.001f, 0.f) * GameSpeed::GetGameSpeed();
 
 		Vector3 col(p.color.r, p.color.g, p.color.b);
 
-		MoveTo({ 255,255,255 }, 10.f, col);
+		MoveTo({ 255,255,255 }, 10.f * GameSpeed::GetGameSpeed(), col);
 
 		p.color = { col.x,col.y,col.z,255 };
 

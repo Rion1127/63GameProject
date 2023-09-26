@@ -52,7 +52,7 @@ void Sword::Update()
 		goalPos_.y += floatingPos;
 
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
-		nowPos_ += nowToGoalVec * 0.1f;
+		nowPos_ += (nowToGoalVec * 0.1f) * GameSpeed::GetGameSpeed();
 		obj_->SetPos(nowPos_);
 		//‰ñ“]ˆ—
 		//í‚É‰ñ“]‚³‚¹‚é
@@ -101,7 +101,7 @@ void Sword::Update()
 
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
 
-		nowPos_ += nowToGoalVec * 0.5f;
+		nowPos_ += (nowToGoalVec * 0.5f) * GameSpeed::GetGameSpeed();
 
 		obj_->SetPos(nowPos_);
 		//‰ñ“]î•ñ

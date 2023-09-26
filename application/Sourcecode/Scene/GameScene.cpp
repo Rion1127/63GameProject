@@ -144,13 +144,13 @@ void GameScene::Draw()
 
 	static float gamespeed = 1;
 	ImGui::DragFloat("GameSpeed", &gamespeed, 0.1f);
-	GameSpeed::SetGameSpeed(gamespeed);
+	//GameSpeed::SetGameSpeed(gamespeed);
 	static float playerspeed = 1;
 	ImGui::DragFloat("PlayerSpeed", &playerspeed, 0.1f);
-	GameSpeed::SetPlayerSpeed(playerspeed);
+	//GameSpeed::SetPlayerSpeed(playerspeed);
 	static float enemyspeed = 1;
 	ImGui::DragFloat("EnemySpeed", &enemyspeed, 0.1f);
-	GameSpeed::SetEnemySpeed(enemyspeed);
+	//GameSpeed::SetEnemySpeed(enemyspeed);
 
 	ImGui::End();
 }

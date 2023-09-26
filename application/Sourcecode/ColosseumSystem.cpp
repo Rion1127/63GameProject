@@ -97,6 +97,7 @@ void ColosseumSystem::Update()
 		//敵を全員倒したら
 		if (enemyManager_->GetEnemy()->size() <= 0)
 		{
+			GameSpeed::SetGameSpeed(0.2f);
 			//すべてのラウンドをクリアしたら
 			if (roundNum_ >= maxRoundNum_)
 			{
@@ -113,6 +114,7 @@ void ColosseumSystem::Update()
 				clearBlankTimer_.AddTime(1);
 				if (clearBlankTimer_.GetIsEnd())
 				{
+					GameSpeed::SetGameSpeed(1.f);
 					isNext_ = true;
 					roundNum_++;
 					blindTimer_.Reset();
