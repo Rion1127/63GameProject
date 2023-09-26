@@ -57,7 +57,7 @@ void ParticleHitAttack::Add()
 		p.baseScale = emitter_->scale;
 		p.addRot = addrot;
 		p.color = color_;
-		p.timer_.SetLimitTime(RRandom::Rand(5,10));
+		p.timer_.SetLimitTime(RRandom::RandF(5,10));
 
 		baseP = p;
 	}
@@ -99,15 +99,15 @@ void ParticleHitAttack::MoveUpdate()
 	uint32_t index = 0;
 	for (auto& p : hitAttackParticles_)
 	{
-		p.frame++;
-		p.timer_.AddTime(1);
+		p.frame += 1.f * GameSpeed::GetGameSpeed();
+		p.timer_.AddTime(1.f * GameSpeed::GetGameSpeed());
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.velocity += p.addvelocity;
+		p.velocity += p.addvelocity * GameSpeed::GetGameSpeed();
 
-		p.position += p.velocity;
-		p.rot += p.addRot;
+		p.position += p.velocity /** GameSpeed::GetGameSpeed()*/;
+		p.rot += p.addRot * GameSpeed::GetGameSpeed();
 
 		p.scale = Easing::Quint::easeIn(p.baseScale,0.f, f);
 
@@ -196,15 +196,15 @@ void ParticleHitCircle::MoveUpdate()
 	uint32_t index = 0;
 	for (auto& p : hitCircleParticles_)
 	{
-		p.frame++;
+		p.frame += 1.f * GameSpeed::GetGameSpeed();
 		float f = (float)p.frame / p.end_frame;
 
-		p.rot += p.addRot;
+		p.rot += p.addRot * GameSpeed::GetGameSpeed();
 
 		p.scale = Easing::Quint::easeOut(p.baseScale, p.endScale, f);
 		p.color.a = Easing::Quint::easeIn(255, 0, f);
 
-		MoveTo({ 0,0,0 }, 0.008f, p.addRot);
+		MoveTo({ 0,0,0 }, 0.008f * GameSpeed::GetGameSpeed(), p.addRot);
 
 		particles_[index] = p;
 		index++;
@@ -266,7 +266,7 @@ void ParticleHitTriangle::Add()
 		p.baseScale = scale;
 		p.addRot = addrot * 3.f;
 		p.color = color_;
-		p.timer_.SetLimitTime(RRandom::Rand(5, 10));
+		p.timer_.SetLimitTime(RRandom::RandF(5, 10));
 
 		baseP = p;
 	}
@@ -289,20 +289,19 @@ void ParticleHitTriangle::MoveUpdate()
 	uint32_t index = 0;
 	for (auto& p : hitTriangleParticles_)
 	{
-		p.frame++;
-		p.timer_.AddTime(1);
+		p.frame += 1 * GameSpeed::GetGameSpeed();
+		p.timer_.AddTime(1.f * GameSpeed::GetGameSpeed());
 
 		float f = (float)p.frame / p.end_frame;
+		
+		p.velocity += p.addvelocity * GameSpeed::GetGameSpeed();
 
-		p.velocity += p.addvelocity;
-
-		p.position += p.velocity;
-		p.rot += p.addRot;
+		p.position += p.velocity * GameSpeed::GetGameSpeed();
+		p.rot += p.addRot * GameSpeed::GetGameSpeed();
 
 		p.scale = Easing::Quint::easeIn(p.baseScale, 0.f, f);
 
-		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
-		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
+		MoveTo({ 0,0,0 }, 0.003f * GameSpeed::GetGameSpeed(), p.addRot);
 
 		if (p.timer_.GetIsEnd()) {
 			p.timer_.Reset();

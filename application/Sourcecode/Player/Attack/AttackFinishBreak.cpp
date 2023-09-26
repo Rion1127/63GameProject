@@ -68,7 +68,7 @@ void AttackFinishBreak::MoveUpdate()
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	//Œ•‚ğU‚èI‚í‚Á‚½‚çUŒ‚‚Ì”»’è‚ğ—LŒø‚É‚·‚é
 	if (spline_.GetisEnd()) {
-		int32_t changeColStateTime = attackCol_.at(0)->damageCoolTime * (hitNum_ - 1);
+		float changeColStateTime = (float)(attackCol_.at(0)->damageCoolTime * (hitNum_ - 1));
 		//“–‚½‚è”»’èˆ—
 		for (uint32_t i = 0; i < attackCol_.size(); i++) {
 			//“–‚½‚è”»’è—LŒø

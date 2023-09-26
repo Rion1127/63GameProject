@@ -139,6 +139,20 @@ void GameScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
+
+	ImGui::Begin("GameSpeed");
+
+	static float gamespeed = 1;
+	ImGui::DragFloat("GameSpeed", &gamespeed, 0.1f);
+	GameSpeed::SetGameSpeed(gamespeed);
+	static float playerspeed = 1;
+	ImGui::DragFloat("PlayerSpeed", &playerspeed, 0.1f);
+	GameSpeed::SetPlayerSpeed(playerspeed);
+	static float enemyspeed = 1;
+	ImGui::DragFloat("EnemySpeed", &enemyspeed, 0.1f);
+	GameSpeed::SetEnemySpeed(enemyspeed);
+
+	ImGui::End();
 }
 
 void GameScene::DrawPostEffect()

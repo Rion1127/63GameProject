@@ -12,7 +12,7 @@ private:
 		Vector3 addvelocity;
 		Vector3 addRot;
 		float baseScale;
-		Timer timer_;
+		TimerFloat timer_;
 	};
 public:
 	ParticleHitAttack();
@@ -62,7 +62,7 @@ private:
 		Vector3 addvelocity;
 		Vector3 addRot;
 		float baseScale;
-		Timer timer_;
+		TimerFloat timer_;
 	};
 public:
 	ParticleHitTriangle();

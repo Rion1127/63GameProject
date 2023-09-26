@@ -5,6 +5,7 @@
 #include "WorldTransform.h"
 #include "Timer.h"
 #include "PipelineManager.h"
+#include "GameSpeed.h"
 
 struct IEmitter;
 
@@ -27,8 +28,8 @@ protected:
 		Vector2 ancorPoint_ = { 0,0 };
 		Color color = {};
 
-		int32_t frame = 0;		//現在フレーム
-		int32_t end_frame = 0;	//終了フレーム
+		float frame = 0;		//現在フレーム
+		float end_frame = 0;	//終了フレーム
 		float rate = 0;
 	};
 protected:
@@ -86,7 +87,7 @@ protected:
 struct IEmitter {
 	std::unique_ptr<IParticle> particle;
 	int32_t addNum;	//同時発生数
-	int32_t time;	//パーティクル生存時間
+	float time;	//パーティクル生存時間
 	Vector3 pos;	//エミッター中心座標
 	Vector3* parentPos = nullptr;	//エミッター中心座標
 	Vector3 addVec;	//移動方向ベクトル
