@@ -60,9 +60,9 @@ void GameScene::Update()
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
-		CameraUpdate();
+		
 	if (GetIsGameStop()) {
-
+		CameraUpdate();
 		stage_->Update();
 		player_->PreUpdate();
 		enemyManager_->PreUpdate();

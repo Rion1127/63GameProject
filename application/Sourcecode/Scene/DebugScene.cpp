@@ -74,10 +74,10 @@ void DebugScene::Update()
 	}
 
 #endif // _DEBUG
-	CameraUpdate();
+	
 	if (pauseMenu_->GetIsPause() == false) {
 		//colosseumSystem_->Update();
-
+		CameraUpdate();
 		
 		//“–‚½‚è”»’è‘OXV
 		stage_->Update();
