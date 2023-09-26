@@ -32,7 +32,7 @@ private:
 
 	Spline spline_;
 	bool isWanderInit_;
-	Timer sinkTimer_;
+	TimerFloat sinkTimer_;
 
 	std::unordered_map<State, int32_t> priority_;
 private:

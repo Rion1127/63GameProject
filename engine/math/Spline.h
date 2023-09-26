@@ -21,7 +21,7 @@ private:
 public:
 	Spline();
 
-	void Update();
+	void Update(float speedRate = 1.f);
 
 	void DrawDebug();
 	void Reset();
@@ -39,7 +39,7 @@ public:
 	uint32_t GetIndex() { return index_; }
 	TimerFloat GetTimer() { return timer_; }
 private:
-	void SplineUpdate();
+	void SplineUpdate(float speedRate);
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
 	// 始点/終点の座標と ベクトルから、曲線の軌道上の座標を返す
 	Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t);

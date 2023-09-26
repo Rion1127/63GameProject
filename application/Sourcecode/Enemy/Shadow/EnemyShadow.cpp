@@ -8,6 +8,7 @@
 
 #include "AttackShadow.h"
 #include "AttackJumpShadow.h"
+#include "GameSpeed.h"
 
 EnemyShadow::EnemyShadow(Vector3 pos, Vector3 rot) :
 	IEnemy(EnemyType::Ground, true, 100)
@@ -98,7 +99,7 @@ void EnemyShadow::MoveUpdate()
 
 	UpdateEtoPVec();
 
-	actionTimer_.AddTime(1);
+	actionTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 	//実行
 	(this->*Action[(int32_t)state_])();
 
@@ -163,12 +164,12 @@ void EnemyShadow::Wander()
 		{
 			float t = sinkTimer_.GetTimeRate();
 			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, 1.0f, -0.9f, 1.0f);
-			sinkTimer_.AddTime(1);
+			sinkTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 		}
 		else
 		{
 			//スプライン曲線更新
-			spline_.Update();
+			spline_.Update(GameSpeed::GetEnemySpeed());
 			obj_->WT_.SetPosition(spline_.GetNowPoint());
 			if (spline_.GetisEnd()) {
 				sinkTimer_.Reset();
@@ -189,7 +190,7 @@ void EnemyShadow::Wander()
 		{
 			float t = sinkTimer_.GetTimeRate();
 			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, 0.1f, 0.9f, 1.0f);
-			sinkTimer_.AddTime(1);
+			sinkTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 		}
 		else
 		{

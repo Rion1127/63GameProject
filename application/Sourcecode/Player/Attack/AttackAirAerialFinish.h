@@ -6,6 +6,7 @@ class AttackAirAerialFinish :
 private:
 	float frontDist_;
 	int32_t index_;
+	float damegeCooltime_;
 public:
 	AttackAirAerialFinish(IActor* selfActor);
 private:

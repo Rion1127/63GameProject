@@ -45,6 +45,7 @@ void AttackAirAerialFinish::MoveUpdate()
 	if (spline_.GetisEnd()) {
 		spline_.Reset();
 		index_++;
+		damegeCooltime_ = 0;
 		float picth = RRandom::RandF(0.7f, 1.5f);
 		if (index_ == 1) {
 			SecondAttackInit();
@@ -59,13 +60,18 @@ void AttackAirAerialFinish::MoveUpdate()
 			SoundManager::Play("SwingSE", false, 0.3f, picth);
 		}
 	}
+
 	if (index_ < 4) {
+		damegeCooltime_++;
 		swordPos_ = attackCol_.at(0)->col_.center;
 		attackCol_.at(0)->col_.center = spline_.GetNowPoint();
-		float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size() - 1);
-		float nowTime = spline_.GetTimer().GetTimer();
+		float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size());
+		float nowTime = damegeCooltime_;
 		attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 		selfActor_->GetGravity()->SetGrabity({ 0,0,0 });
+	}
+	else {
+		attackCol_.at(0)->col_.isActive = false;
 	}
 
 }
@@ -115,13 +121,17 @@ void AttackAirAerialFinish::FirstAttackInit()
 
 	spline_.SetPositions(attackVec);
 
-	float splineTime = attackInfo_.maxTime / 4;
+	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime(splineTime);
+	spline_.SetLimitTime((float)splineTime);
 
 	attackCol_.at(0)->col_.center = fourthPos;
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size());
+	float nowTime = damegeCooltime_;
+	attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 }
 
 void AttackAirAerialFinish::SecondAttackInit()
@@ -166,12 +176,16 @@ void AttackAirAerialFinish::SecondAttackInit()
 	attackVec.push_back(fourthPos);
 
 	spline_.SetPositions(attackVec);
-	float splineTime = attackInfo_.maxTime / 4;
+	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime(splineTime);
+	spline_.SetLimitTime((float)splineTime);
 
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size());
+	float nowTime = damegeCooltime_;
+	attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 }
 
 void AttackAirAerialFinish::ThirdAttackInit()
@@ -204,12 +218,16 @@ void AttackAirAerialFinish::ThirdAttackInit()
 	attackVec.push_back(playerLeftPos);
 
 	spline_.SetPositions(attackVec);
-	float splineTime = attackInfo_.maxTime / 4;
+	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime(splineTime);
+	spline_.SetLimitTime((float)splineTime);
 
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size());
+	float nowTime = damegeCooltime_;
+	attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 }
 
 void AttackAirAerialFinish::FourthAttackInit()
@@ -255,10 +273,14 @@ void AttackAirAerialFinish::FourthAttackInit()
 	attackVec.push_back(fourthPos);
 
 	spline_.SetPositions(attackVec);
-	float splineTime = attackInfo_.maxTime / 4;
+	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime(splineTime);
+	spline_.SetLimitTime((float)splineTime);
 
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size());
+	float nowTime = damegeCooltime_;
+	attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 }

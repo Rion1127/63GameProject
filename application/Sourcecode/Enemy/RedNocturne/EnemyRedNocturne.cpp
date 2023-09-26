@@ -5,6 +5,7 @@
 #include "AttackRedNocturne.h"
 #include "ParticleFire.h"
 #include "ParticleManager.h"
+#include "GameSpeed.h"
 
 EnemyRedNocturne::EnemyRedNocturne(Vector3 pos, Vector3 rot) :
 	IEnemy(EnemyType::Air, false, 80)
@@ -95,7 +96,7 @@ void EnemyRedNocturne::MoveUpdate()
 	//ŽÀs
 	if (isCanMove_)
 	{
-		actionTimer_.AddTime(1);
+		actionTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 		(this->*Action[(int32_t)state_])();
 	}
 
@@ -184,7 +185,7 @@ void EnemyRedNocturne::FireAttack()
 		fireEmitter_->isActive = false;
 	}
 
-	shotTimer_.AddTime(1);
+	shotTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 	if (shotTimer_.GetIsEnd()) {
 		isBulletShot_ = true;
 		shotTimer_.Reset();
@@ -296,7 +297,7 @@ void EnemyRedNocturne::StateUpdate(State state)
 	stateInit = true;
 	if (state == State::Idle)
 	{
-		actionTimer_.SetLimitTime(RRandom::Rand(100, 300));
+		actionTimer_.SetLimitTime((float)RRandom::Rand(100, 300));
 	}
 	else if (state == State::Wander)
 	{

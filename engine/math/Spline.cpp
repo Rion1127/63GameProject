@@ -8,16 +8,16 @@ Spline::Spline()
 	isEnd_ = false;
 }
 
-void Spline::Update()
+void Spline::Update(float speedRate)
 {
 	if (isStart_) {
-		SplineUpdate();
+		SplineUpdate(speedRate);
 	}
 }
 
-void Spline::SplineUpdate()
+void Spline::SplineUpdate(float speedRate)
 {
-	timer_.AddTime(1 * GameSpeed::GetPlayerSpeed());
+	timer_.AddTime(1 * speedRate);
 
 	float t = timer_.GetTimeRate();
 
