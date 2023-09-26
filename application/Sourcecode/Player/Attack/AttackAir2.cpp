@@ -81,7 +81,7 @@ void AttackAir2::MoveUpdate()
 
 	
 
-	spline_.Update();
+	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackCol_.at(0)->damageCoolTime = (uint32_t)timer_.GetLimitTimer() - (int32_t)timer_.GetTimer();
 	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 	swordPos_ = attackCol_.at(0)->col_.center;

@@ -40,7 +40,7 @@ void AttackAirAerialFinish::MoveUpdate()
 
 	selfActor_->AddaddVec(speed);
 
-	spline_.Update();
+	spline_.Update(GameSpeed::GetPlayerSpeed());
 
 	if (spline_.GetisEnd()) {
 		spline_.Reset();

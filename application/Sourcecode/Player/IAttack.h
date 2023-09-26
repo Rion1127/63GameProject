@@ -7,6 +7,7 @@
 #include "IActor.h"
 #include "Spline.h"
 #include "Timer.h"
+#include "GameSpeed.h"
 
 class IAttack
 {

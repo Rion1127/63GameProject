@@ -1,5 +1,5 @@
 #include "IAttack.h"
-#include "GameSpeed.h"
+
 
 IAttack::IAttack(IActor* selfActor, int32_t colNum, float maxTime, int32_t damage, int32_t damageCoolTime) :
 	selfActor_(selfActor)

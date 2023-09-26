@@ -66,7 +66,7 @@ void Attack2::MoveUpdate()
 
 	
 
-	spline_.Update();
+	spline_.Update(GameSpeed::GetPlayerSpeed());
 
 	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
 	swordPos_ = attackCol_.at(0)->col_.center;
