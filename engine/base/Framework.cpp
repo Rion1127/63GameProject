@@ -31,6 +31,8 @@ void Framework::Init()
 	LightGroup::StaticInit();
 
 	loadManager_.LoadAllResources();
+
+	bloom_ = std::make_unique<Bloom>();
 }
 
 void Framework::Finalize()
@@ -53,6 +55,9 @@ void Framework::Update()
 	Controller::Update();
 	MouseInput::GetInstance()->Updata();
 	SoundManager::Update();
+
+	bloom_->Update();
+
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
 	//ImGui::ShowDemoWindow();
@@ -79,10 +84,12 @@ void Framework::Run()
 
 void Framework::Draw()
 {
+	bloom_->PreDraw();
 	//描画コマンド
 	RDirectX::GetInstance()->PreDraw();
 	//ゲームシーン描画
-	SceneManager::Draw();
+	//SceneManager::Draw();
+	bloom_->Draw();
 	//imgui終了
 	ImGuiManager::Getinstance()->End();
 	//imgui描画

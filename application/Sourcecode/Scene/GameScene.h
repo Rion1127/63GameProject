@@ -52,6 +52,8 @@ public:
 	void Update()override;
 
 	void Draw()override;
+	void DrawPostEffect()override;
+
 private:
 	void CameraUpdate();
 

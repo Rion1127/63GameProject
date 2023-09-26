@@ -26,6 +26,8 @@ private:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	LoadManager loadManager_;
+
+	std::unique_ptr<Bloom> bloom_;
 public:
 	virtual ~Framework() = default;
 

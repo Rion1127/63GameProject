@@ -76,6 +76,10 @@ void TitleScene::Draw()
 	
 }
 
+void TitleScene::DrawPostEffect()
+{
+}
+
 void TitleScene::CameraUpdate()
 {
 	

@@ -110,6 +110,10 @@ void GameOverScene::Draw()
 
 }
 
+void GameOverScene::DrawPostEffect()
+{
+}
+
 void GameOverScene::CameraUpdate()
 {
 
