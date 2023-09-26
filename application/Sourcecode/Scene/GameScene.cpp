@@ -28,7 +28,7 @@ void GameScene::Ini()
 
 	player_ = std::move(std::make_unique<Player>());
 	gameCamera_.SetPlayer(player_.get());
-
+	gameCamera_.SetColosseumSystem(colosseumSystem_.get());
 	IEnemy::SetPlayer(player_.get());
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(stage_.get());
@@ -60,8 +60,8 @@ void GameScene::Update()
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
-	if (GetIsGameStop()) {
 		CameraUpdate();
+	if (GetIsGameStop()) {
 
 		stage_->Update();
 		player_->PreUpdate();
@@ -102,6 +102,8 @@ void GameScene::Update()
 			float rate = 1.f - ((float)nextRound / (float)maxRoundNum);
 			float colGB = 1.f * rate;
 			lightColor_ = { 1.f,colGB,colGB };
+
+			GameSpeed::SetGameSpeed(1.f);
 		}
 	}
 	colosseumSystem_->Update();

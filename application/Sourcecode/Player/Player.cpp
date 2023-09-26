@@ -154,6 +154,12 @@ void Player::InputVecUpdate()
 		frontVec_.y = 0;
 		frontVec_ = frontVec_.normalize();
 
+		playerFrontVec_ = {
+				sinf(GetWorldTransform()->rotation_.y),
+				0,
+				cosf(GetWorldTransform()->rotation_.y),
+		};
+
 		sideVec = upVec.cross(frontVec_);
 		sideVec = sideVec.normalize();
 

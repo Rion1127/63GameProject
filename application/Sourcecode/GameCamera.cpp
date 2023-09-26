@@ -1,5 +1,7 @@
 #include "GameCamera.h"
 #include <imgui.h>
+#include "Easing.h"
+#include "RRandom.h"
 
 GameCamera::GameCamera()
 {
@@ -14,20 +16,40 @@ GameCamera::GameCamera()
 
 	transSpeed_ = { 0.0000015f,0.0000015f };
 	lockOnCameraspeed_ = { 0.04f ,0.01f };
+
+	frontDist_ = 15.f;
+
+	gameCameraMode_ = GameCameraMode::NORMAL;
 }
 
 void GameCamera::Update(CameraMode cameraMode)
 {
-	UpdateCameraPos();
+
+	if (gameCameraMode_ == GameCameraMode::NORMAL) {
+		UpdateCameraPos();
+
+		if (clsumSystem_->GetIsClearCamera()) {
+			gameCameraMode_ = GameCameraMode::CLEAR;
+
+			frontDist_ = RRandom::RandF(15.f, 20.f);
+			randOffsetPos_ = {
+				RRandom::RandF(-3.f, 3.f),
+				RRandom::RandF(-1.f, 4.f),
+				0
+			};
+		}
+	}
+	else {
+		if (clsumSystem_->GetIsClearCamera() == false) {
+			gameCameraMode_ = GameCameraMode::NORMAL;
+		}
+	}
+
 	if (cameraMode == CameraMode::LookAT)
 	{
 		UpdateLookAT();
 	}
-	else if (cameraMode == CameraMode::LookTo)
-	{
-		UpdateLookTO();
-	}
-
+	
 	camera_->eye_ += (endEyePos_ - camera_->eye_) * cameraSpeed_;
 }
 
@@ -80,96 +102,101 @@ void GameCamera::UpdateCameraPos()
 
 void GameCamera::UpdateLookAT()
 {
-	IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
+	if (gameCameraMode_ == GameCameraMode::NORMAL) {
+		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
 
-	if (enemy != nullptr)
-	{
-		bool isHardLockOn = enemy->GetIsHardLockOn();
-		//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
-		if (isHardLockOn)
+		if (enemy != nullptr)
 		{
-			//敵のスクリーン上の座標
-			Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-			Vector2 windowSize = WinAPI::GetWindowSize();
-			Vector2 halfWindowSize = windowSize / 2.f;
-
-			Vector2 length = { 250,300 };
-			Vector2 EtoMidvec = screenPos - halfWindowSize;
-			EtoMidvec = EtoMidvec.normalize();
-			Vector2 addVec;
-
-			if (putOnCamera_ == false)
+			bool isHardLockOn = enemy->GetIsHardLockOn();
+			//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
+			if (isHardLockOn)
 			{
-				//敵が画面のどの位置にいるかの判定
-				getOutWay = GetOutScreenEnemy(screenPos, windowSize,enemy);
+				//敵のスクリーン上の座標
+				Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
+				Vector2 windowSize = WinAPI::GetWindowSize();
+				Vector2 halfWindowSize = windowSize / 2.f;
+
+				Vector2 length = { 250,300 };
+				Vector2 EtoMidvec = screenPos - halfWindowSize;
+				EtoMidvec = EtoMidvec.normalize();
+				Vector2 addVec;
+
+				if (putOnCamera_ == false)
+				{
+					//敵が画面のどの位置にいるかの判定
+					getOutWay = GetOutScreenEnemy(screenPos, windowSize, enemy);
+				}
+				else
+				{
+					if (screenPos.x > halfWindowSize.x - length.x &&
+						screenPos.x < halfWindowSize.x + length.x &&
+						screenPos.y > halfWindowSize.y - length.y &&
+						screenPos.y < halfWindowSize.y + length.y)
+					{
+						putOnCamera_ = false;
+					}
+				}
+				//ロックオンした敵が画面外に出そうだったら
+				if (getOutWay == GetOutEnemy::Right ||
+					getOutWay == GetOutEnemy::Left)
+				{
+					addVec.x = EtoMidvec.x * lockOnCameraspeed_.x;
+				}
+
+				if (getOutWay == GetOutEnemy::Up ||
+					getOutWay == GetOutEnemy::Down)
+				{
+					addVec.y = EtoMidvec.y * lockOnCameraspeed_.y;
+				}
+
+				if (getOutWay == GetOutEnemy::LookBack)
+				{
+					addVec.x = EtoMidvec.x * 0.1f;
+				}
+
+				moveDist += addVec;
 			}
+			//ロックオンしている敵がいない時のカメラ
 			else
 			{
-				if (screenPos.x > halfWindowSize.x - length.x &&
-					screenPos.x < halfWindowSize.x + length.x &&
-					screenPos.y > halfWindowSize.y - length.y &&
-					screenPos.y < halfWindowSize.y + length.y)
-				{
-					putOnCamera_ = false;
-				}
-			}
-			//ロックオンした敵が画面外に出そうだったら
-			if (getOutWay == GetOutEnemy::Right ||
-				getOutWay == GetOutEnemy::Left)
-			{
-				addVec.x = EtoMidvec.x * lockOnCameraspeed_.x;
-			}
 
-			if (getOutWay == GetOutEnemy::Up ||
-				getOutWay == GetOutEnemy::Down)
-			{
-				addVec.y = EtoMidvec.y * lockOnCameraspeed_.y;
 			}
-
-			if (getOutWay == GetOutEnemy::LookBack)
-			{
-				addVec.x = EtoMidvec.x * 0.1f;
-			}
-
-			moveDist += addVec;
 		}
-		//ロックオンしている敵がいない時のカメラ
-		else
-		{
-
+	}
+	else if (gameCameraMode_ == GameCameraMode::CLEAR) {
+		float rate = 0;
+		if (clsumSystem_->GetClearType() == ClearType::NextRound) {
+			rate = clsumSystem_->GetClearBlankTimer().GetTimeRate();
 		}
+		else if (clsumSystem_->GetClearType() == ClearType::GameClear) {
+			rate = clsumSystem_->GetGameClearBlankTimer().GetTimeRate();
+		}
+
+
+		frontDist_ = Easing::Sine::easeInOut(rate,15.f,-5.f,1.0f);
+
+		Vector3 frontVec = player_->GetPlayerFrontVec() * frontDist_;
+
+		offsetPos_ = {
+			Easing::Sine::easeInOut(rate,0.f,randOffsetPos_.x,1.0f),
+			Easing::Sine::easeInOut(rate,0.f,randOffsetPos_.y,1.0f),
+			0
+		};
+
+		Vector3 eyepos = {
+			player_->GetWorldTransform()->position_.x + frontVec.x,
+			player_->GetWorldTransform()->position_.y + player_->GetWorldTransform()->scale_.y,
+			player_->GetWorldTransform()->position_.z + frontVec.z
+		};
+		eyepos += offsetPos_;
+
+		endEyePos_ = eyepos;
 	}
 
 	endTargetPos_ = player_->GetWorldTransform()->position_;
 	endTargetPos_.y += player_->GetWorldTransform()->scale_.y;
 
 	camera_->target_ += (endTargetPos_ - camera_->target_) * cameraSpeed_;
-}
-
-void GameCamera::UpdateLookTO()
-{
-	//ロックオンしている敵がいる場合カメラが自動的に画面内に映すように移動する
-	if (player_->GetAttackManager()->GetLockOnEnemy())
-	{
-		Vector3 cameraToPlayer =
-			player_->GetWorldTransform()->position_ - camera_->eye_;
-		cameraToPlayer = cameraToPlayer.normalize();
-
-		Quaternion q;
-
-		q = DirectionToDirection({ 0,0,1 }, cameraToPlayer);
-
-		camera_->WT_.SetQuaternion(q);
-	}
-	//ロックオンしている敵がいない時のカメラ
-	else
-	{
-		Vector3 cameraToPlayer =
-			player_->GetWorldTransform()->position_ - camera_->eye_;
-		cameraToPlayer = cameraToPlayer.normalize();
-	}
-
-	camera_->rot_ += (endRot_ - camera_->rot_) * cameraSpeed_;
 }
 
 void GameCamera::Reset()

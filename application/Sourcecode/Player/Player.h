@@ -22,6 +22,7 @@ class Player final:
 private:
 	//ƒxƒNƒgƒ‹
 	Vector3 frontVec_;
+	Vector3 playerFrontVec_;
 	Vector3 lockOnVec_;
 	Vector2 inputVec_;
 	Vector2 moveVec_;
@@ -119,6 +120,7 @@ public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
 	MagicManager* GetMagicManager() { return command_.GetMagicManager(); }
 	Vector3 GetFrontVec() { return frontVec_; }
+	Vector3 GetPlayerFrontVec() { return playerFrontVec_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
 	Timer* GetFreezeTime() { return &freezeTimer_; }

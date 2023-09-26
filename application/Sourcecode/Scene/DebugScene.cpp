@@ -37,7 +37,7 @@ void DebugScene::Ini()
 
 	player_ = std::move(std::make_unique<Player>());
 	gameCamera_.SetPlayer(player_.get());
-
+	gameCamera_.SetColosseumSystem(colosseumSystem_.get());
 	IEnemy::SetPlayer(player_.get());
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(stage_.get());
@@ -46,6 +46,7 @@ void DebugScene::Ini()
 	enemyManager_->SetPlayer(player_.get());
 	colosseumSystem_->SetPlayer(player_.get());
 	colosseumSystem_->SetEnemy(enemyManager_.get());
+	
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
@@ -73,10 +74,11 @@ void DebugScene::Update()
 	}
 
 #endif // _DEBUG
+	CameraUpdate();
 	if (pauseMenu_->GetIsPause() == false) {
 		//colosseumSystem_->Update();
 
-		CameraUpdate();
+		
 		//“–‚½‚è”»’è‘OXV
 		stage_->Update();
 		player_->PreUpdate();

@@ -44,6 +44,8 @@ ColosseumSystem::ColosseumSystem()
 
 	roundNum_ = 1;
 	selectType_ = SelectType::Title;
+
+	isClearCamera_ = false;
 }
 
 void ColosseumSystem::Update()
@@ -97,20 +99,25 @@ void ColosseumSystem::Update()
 		//敵を全員倒したら
 		if (enemyManager_->GetEnemy()->size() <= 0)
 		{
-			GameSpeed::SetGameSpeed(0.2f);
+			if (isClearCamera_ == false) {
+				isClearCamera_ = true;
+				GameSpeed::SetGameSpeed(0.2f);
+			}
 			//すべてのラウンドをクリアしたら
 			if (roundNum_ >= maxRoundNum_)
 			{
+				clearType_ = ClearType::GameClear;
 				gameClearBlankTimer_.AddTime(1);
 				clearSprite_.SetIsStart(true);
-				
+
 				if (gameClearBlankTimer_.GetIsEnd()) {
 					isClear_ = true;
 				}
 			}
 			//まだ次のラウンドがある場合
-			else if (roundNum_ < maxRoundNum_)
+			else 
 			{
+				clearType_ = ClearType::NextRound;
 				clearBlankTimer_.AddTime(1);
 				if (clearBlankTimer_.GetIsEnd())
 				{
@@ -163,10 +170,13 @@ void ColosseumSystem::Reset()
 	isReset_ = true;
 	isStart_ = false;
 	isNext_ = false;
+	isClearCamera_ = false;
 	
 	clearBlankTimer_.Reset();
 	clearSprite_.Reset();
 	readyGoSprite_.Reset();
+
+	GameSpeed::SetGameSpeed(1.f);
 }
 
 void ColosseumSystem::ClearUpdate()
@@ -198,6 +208,7 @@ void ColosseumSystem::ClearUpdate()
 	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
 	{
+		GameSpeed::SetGameSpeed(1.f);
 		if (SceneManager::GetIsSetNext() == false)
 		{
 			SoundManager::Play("EnterSE", false, 1.5f);

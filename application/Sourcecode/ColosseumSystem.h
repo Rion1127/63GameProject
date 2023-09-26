@@ -47,6 +47,11 @@ public:
 	Timer GetReadyTimer() { return readyTimer_; }
 };
 
+enum class ClearType {
+	NextRound,
+	GameClear
+};
+
 class ColosseumSystem
 {
 private:
@@ -67,16 +72,18 @@ private:
 	uint32_t maxRoundNum_;
 	uint32_t roundNum_;
 
-	bool isStart_;
-	bool isNext_;
-	bool isReset_;
-	bool isClear_;
-	
+	bool isStart_;//ready表示中
+	bool isNext_;//次のラウンドへ移動する
+	bool isClearCamera_;//そのラウンドの敵を0にした場合true
+	bool isReset_;//リセットフラグ
+	bool isClear_;//全てのラウンドが終了
+
 	Timer clearBlankTimer_;
 	Timer blindTimer_;
 	Timer gameClearBlankTimer_;
 	
 	SelectType selectType_;
+	ClearType clearType_;
 public:
 	ColosseumSystem();
 	void Update();
@@ -94,6 +101,11 @@ public:
 	bool GetIsNext() { return isNext_; }
 	bool GetIsClear() { return isClear_; }
 	bool GetIsReset() { return isReset_; }
+	bool GetIsClearCamera() { return isClearCamera_; }
 	uint32_t GetRoundNum() { return roundNum_; }
+	ClearType GetClearType() { return clearType_; }
+
+	Timer GetClearBlankTimer() { return clearBlankTimer_; }
+	Timer GetGameClearBlankTimer() { return gameClearBlankTimer_; }
 };
 
