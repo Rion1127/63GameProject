@@ -21,7 +21,7 @@ public:
 	};
 private:
 	State state_;
-	Timer actionTimer_;
+	TimerFloat actionTimer_;
 
 	float followLength;
 	float moveSpeed;

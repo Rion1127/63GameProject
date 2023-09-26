@@ -14,11 +14,15 @@ void IActor::ObjUpdate()
 	{
 		addVec_ = { 0,0,0 };
 	}
-	obj_->WT_.position_ += addVec_ * GameSpeed::GetGameSpeed();
+
+	if (type_ == ActorType::Player) addVec_ *= GameSpeed::GetPlayerSpeed();
+	else if (type_ == ActorType::Enemy) addVec_ *= GameSpeed::GetEnemySpeed();
+
+	obj_->WT_.position_ += addVec_;
 	obj_->Update();
 }
 
-IActor::IActor()
+IActor::IActor(ActorType type)
 {
-	
+	type_ = type;
 }

@@ -4,7 +4,7 @@
 Player* IEnemy::splayer_ = nullptr;
 
 IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
-	: IActor()
+	: IActor(ActorType::Enemy)
 {
 	enemyType_ = type;
 	isGravityImpact_ = isGravityImpact;

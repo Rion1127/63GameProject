@@ -15,7 +15,8 @@
 #include "PlayerMagic.h"
 #include "GameSpeed.h"
 
-Player::Player() : IActor()
+Player::Player() :
+	IActor(ActorType::Player)
 {
 
 	gravity_.SetAddValue({ 0,-0.01f,0 });
@@ -104,7 +105,7 @@ void Player::GravityUpdate()
 {
 	Vector3 gravity = {
 		0,
-		-0.01f * GameSpeed::GetGameSpeed(),
+		-0.01f * GameSpeed::GetPlayerSpeed(),
 		0
 	};
 	gravity_.SetAddValue(gravity);
@@ -338,7 +339,7 @@ void Player::JumpUpdate()
 	{
 		if (jumpTime_ < Maxjumptimer)
 		{
-			jumpTime_ += 1 * GameSpeed::GetGameSpeed();
+			jumpTime_ += 1 * GameSpeed::GetPlayerSpeed();
 
 			gravity_.SetGrabity({ 0, jumpSpeed ,0 });
 		}

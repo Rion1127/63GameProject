@@ -4,9 +4,16 @@
 #include "Collision.h"
 #include "Gravity.h"
 #include "Timer.h"
+
+enum class ActorType {
+	Player,
+	Enemy
+};
+
 class IActor
 {
 protected:
+	ActorType type_;
 	//ƒ‚ƒfƒ‹
 	std::unique_ptr<Object3d> obj_;
 	Sphere col_;
@@ -22,7 +29,7 @@ protected:
 protected:
 	void ObjUpdate();
 public:
-	IActor();
+	IActor(ActorType type);
 	Sphere GetCol() { return col_; }
 	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
 	Vector3 GetAddVec() {

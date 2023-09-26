@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "DirectionalLight.h"
 #include "LightGroup.h"
+#include "GameSpeed.h"
 
 void Framework::Init()
 {
@@ -56,6 +57,8 @@ void Framework::Update()
 	MouseInput::GetInstance()->Updata();
 	SoundManager::Update();
 
+	GameSpeed::Update();
+
 	bloom_->Update();
 
 #ifdef _DEBUG
@@ -84,12 +87,12 @@ void Framework::Run()
 
 void Framework::Draw()
 {
-	bloom_->PreDraw();
+	//bloom_->PreDraw();
 	//•`‰æƒRƒ}ƒ“ƒh
 	RDirectX::GetInstance()->PreDraw();
 	//ƒQ[ƒ€ƒV[ƒ“•`‰æ
-	//SceneManager::Draw();
-	bloom_->Draw();
+	SceneManager::Draw();
+	//bloom_->Draw();
 	//imguiI—¹
 	ImGuiManager::Getinstance()->End();
 	//imgui•`‰æ

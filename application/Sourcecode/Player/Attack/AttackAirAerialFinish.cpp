@@ -62,9 +62,9 @@ void AttackAirAerialFinish::MoveUpdate()
 	if (index_ < 4) {
 		swordPos_ = attackCol_.at(0)->col_.center;
 		attackCol_.at(0)->col_.center = spline_.GetNowPoint();
-		int32_t limitTime = spline_.GetTimer().GetLimitTimer() * (int32_t)(spline_.GetsplinePos().size() - 1);
-		int32_t nowTime = spline_.GetTimer().GetTimer();
-		attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
+		float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size() - 1);
+		float nowTime = spline_.GetTimer().GetTimer();
+		attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 		selfActor_->GetGravity()->SetGrabity({ 0,0,0 });
 	}
 
@@ -115,7 +115,7 @@ void AttackAirAerialFinish::FirstAttackInit()
 
 	spline_.SetPositions(attackVec);
 
-	int32_t splineTime = attackInfo_.maxTime / 4;
+	float splineTime = attackInfo_.maxTime / 4;
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
 	spline_.SetLimitTime(splineTime);
@@ -166,7 +166,7 @@ void AttackAirAerialFinish::SecondAttackInit()
 	attackVec.push_back(fourthPos);
 
 	spline_.SetPositions(attackVec);
-	int32_t splineTime = attackInfo_.maxTime / 4;
+	float splineTime = attackInfo_.maxTime / 4;
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
 	spline_.SetLimitTime(splineTime);
@@ -204,7 +204,7 @@ void AttackAirAerialFinish::ThirdAttackInit()
 	attackVec.push_back(playerLeftPos);
 
 	spline_.SetPositions(attackVec);
-	int32_t splineTime = attackInfo_.maxTime / 4;
+	float splineTime = attackInfo_.maxTime / 4;
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
 	spline_.SetLimitTime(splineTime);
@@ -255,7 +255,7 @@ void AttackAirAerialFinish::FourthAttackInit()
 	attackVec.push_back(fourthPos);
 
 	spline_.SetPositions(attackVec);
-	int32_t splineTime = attackInfo_.maxTime / 4;
+	float splineTime = attackInfo_.maxTime / 4;
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
 	spline_.SetLimitTime(splineTime);

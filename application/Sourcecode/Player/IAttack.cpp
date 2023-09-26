@@ -1,6 +1,7 @@
 #include "IAttack.h"
+#include "GameSpeed.h"
 
-IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t damage, int32_t damageCoolTime) :
+IAttack::IAttack(IActor* selfActor, int32_t colNum, float maxTime, int32_t damage, int32_t damageCoolTime) :
 	selfActor_(selfActor)
 {
 	attackCol_.resize(colNum);
@@ -15,12 +16,12 @@ IAttack::IAttack(IActor* selfActor, int32_t colNum, int32_t maxTime, int32_t dam
 	}
 	attackInfo_.maxTime = maxTime;
 	spline_.SetIsStart(true);
-	timer_.SetLimitTime(maxTime);
+	timer_.SetLimitTime((float)maxTime);
 }
 
 void IAttack::Update()
 {
-	timer_.AddTime(1);
+	timer_.AddTime(1 * GameSpeed::GetPlayerSpeed());
 	if (selfActor_ != nullptr) {
 		MoveUpdate();
 	}

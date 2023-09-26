@@ -33,14 +33,14 @@ void AttackFinishBreak::Init()
 
 	hitNum_ = 5;
 
-	int32_t coolTime = attackInfo_.maxTime - splineTime_ * ((int32_t)spline_.GetsplinePos().size() - 2);
+	float coolTime = attackInfo_.maxTime - splineTime_ * ((int32_t)spline_.GetsplinePos().size() - 2);
 	coolTime /= hitNum_;
 
 	for (uint32_t i = 0; i < attackCol_.size(); i++) {
 		attackCol_.at(i)->col_.center = colPos;
 		attackCol_.at(i)->col_.radius = 1.2f;
 		attackCol_.at(i)->damage = 3;
-		attackCol_.at(i)->damageCoolTime = coolTime + 1;
+		attackCol_.at(i)->damageCoolTime = (int32_t)coolTime + 1;
 		//ノックバック力
 		attackCol_.at(i)->knockPower = { 0.f,1.0f,0.f };
 		attackCol_.at(i)->knockVecY = 0.3f;

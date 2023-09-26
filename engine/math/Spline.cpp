@@ -1,6 +1,6 @@
 #include "Spline.h"
 #include <imgui.h>
-
+#include "GameSpeed.h"
 Spline::Spline()
 {
 	index_ = 1;
@@ -17,7 +17,7 @@ void Spline::Update()
 
 void Spline::SplineUpdate()
 {
-	timer_.AddTime(1);
+	timer_.AddTime(1 * GameSpeed::GetPlayerSpeed());
 
 	float t = timer_.GetTimeRate();
 

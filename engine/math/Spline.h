@@ -15,7 +15,7 @@ private:
 	Vector3 nowPos_;
 	Vector3 headingVec_;	//進行方向ベクトル
 	uint32_t index_;
-	Timer timer_;
+	TimerFloat timer_;
 	bool isStart_;
 	bool isEnd_;
 public:
@@ -29,7 +29,7 @@ public:
 public:
 	void SetPositions(const std::vector<Vector3>& pos) { splinePos_ = pos; }
 	void AddPosition(const Vector3& pos, PosState state = PosState::Middle);
-	void SetLimitTime(const int32_t& time) { timer_.SetLimitTime(time); }
+	void SetLimitTime(float time) { timer_.SetLimitTime(time); }
 	void SetIsStart(bool flag) { isStart_ = flag; }
 public:
 	Vector3 GetNowPoint() { return nowPos_; }
@@ -37,7 +37,7 @@ public:
 	const std::vector<Vector3> GetsplinePos() { return splinePos_; }
 	bool GetisEnd() { return isEnd_; }
 	uint32_t GetIndex() { return index_; }
-	Timer GetTimer() { return timer_; }
+	TimerFloat GetTimer() { return timer_; }
 private:
 	void SplineUpdate();
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);

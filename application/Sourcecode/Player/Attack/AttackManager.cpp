@@ -149,7 +149,7 @@ void AttackManager::DrawDebug()
 	int num = (int)comboNum;
 	ImGui::SliderInt("combo", &num, 0, 10, "%d");
 	int time = 0;
-	if (nowAttack_ != nullptr) time = nowAttack_->GetTimer().GetTimer();
+	if (nowAttack_ != nullptr) time = (int)nowAttack_->GetTimer().GetTimer();
 	ImGui::SliderInt("time", &time, 0, 120, "%d");
 	if (ImGui::Button("colDisplay"))
 	{

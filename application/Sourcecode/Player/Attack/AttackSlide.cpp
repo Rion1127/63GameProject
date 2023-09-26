@@ -55,7 +55,7 @@ void AttackSlide::MoveUpdate()
 		{
 			state_ = State::SpeedDown;
 			float time = timer_.GetLimitTimer() * rate;
-			timer_.SetTime((int32_t)time);
+			timer_.SetTime(time);
 		}
 	}
 	else if (state_ == State::SpeedDown) {
@@ -69,6 +69,6 @@ void AttackSlide::MoveUpdate()
 	colPos += frontVec_.normalize() * 2.5f;
 	colPos.y += 0.7f;
 	attackCol_.at(0)->col_.center = colPos;
-	attackCol_.at(0)->damageCoolTime = timer_.GetLimitTimer() - timer_.GetTimer() + 1;
+	attackCol_.at(0)->damageCoolTime = (int32_t)timer_.GetLimitTimer() - (int32_t)timer_.GetTimer() + 1;
 	swordPos_ = attackCol_.at(0)->col_.center;
 }

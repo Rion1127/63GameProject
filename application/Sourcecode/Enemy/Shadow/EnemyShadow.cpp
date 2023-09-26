@@ -53,7 +53,7 @@ void EnemyShadow::SetState(State state)
 {
 	state_ = state;
 	actionTimer_.Reset();
-	int32_t randRange = RRandom::Rand(-randRange_, randRange_);
+	float randRange = (float)RRandom::Rand(-randRange_, randRange_);
 	if (State::Idle == state_)
 	{
 		actionTimer_.SetLimitTime(100 + randRange);
@@ -392,7 +392,7 @@ void EnemyShadow::StateUpdate(State state)
 	actionTimer_.Reset();
 	if (state == State::Idle)
 	{
-		actionTimer_.SetLimitTime(RRandom::Rand(100,300));
+		actionTimer_.SetLimitTime((float)RRandom::Rand(100,300));
 	}
 	else if (state == State::Following)
 	{

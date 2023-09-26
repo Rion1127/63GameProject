@@ -62,8 +62,8 @@ void AttackAirSweep::MoveUpdate()
 
 	//ダメージクールタイム
 	//攻撃が終わるまでの時間を計算する
-	int32_t limitTime = timer_.GetLimitTimer();
-	int32_t nowTime = timer_.GetTimer();
+	int32_t limitTime = (int32_t)timer_.GetLimitTimer();
+	int32_t nowTime = (int32_t)timer_.GetTimer();
 	attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
 	
 	if (timer_.GetTimeRate() < 0.8f) {

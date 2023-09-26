@@ -5,7 +5,7 @@ class AttackFinishBreak :
 {
 private:
 	float colRadius_;
-	int32_t splineTime_;
+	float splineTime_;
 	int32_t hitNum_;
 	//当たり判定が回転するスピード
 	float rotateSpeed_;

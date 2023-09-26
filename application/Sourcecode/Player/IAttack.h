@@ -24,11 +24,11 @@ private:
 		bool isCollision_ = false;
 	};
 	struct AttackInfo {
-		int32_t maxTime;	//çUåÇÇÃÉtÉåÅ[ÉÄêî
-		int32_t nowTime;
+		float maxTime;	//çUåÇÇÃÉtÉåÅ[ÉÄêî
+		float nowTime;
 	};
 protected:
-	Timer timer_;
+	TimerFloat timer_;
 	std::vector<std::unique_ptr<AttackCol>> attackCol_;
 	AttackInfo attackInfo_;
 	IActor* selfActor_;
@@ -38,7 +38,7 @@ protected:
 	Spline spline_;
 	Vector3 swordPos_;
 public:
-	IAttack(IActor* selfActor,int32_t colNum = 1, int32_t maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
+	IAttack(IActor* selfActor,int32_t colNum = 1, float maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
 	virtual ~IAttack(){};
 	void Update();
 	void DrawCol();
@@ -47,13 +47,13 @@ public:
 	//lockOnActorÇ÷âÒì]Ç≥ÇπÇÈ
 	void CalculateRotToLockOnActor(Vector3 frontVec);
 public:
-	void SetNowTime(int32_t time) { attackInfo_.nowTime = time; }
+	void SetNowTime(float time) { attackInfo_.nowTime = time; }
 	void SetLockOnActor(IActor* lockOnActor) { lockOnActor_ = lockOnActor; };
 public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
-	Timer GetTimer() { return timer_; }
+	TimerFloat GetTimer() { return timer_; }
 	Vector3 GetSwordPos() { return swordPos_; }
 public:
 	virtual void Init() = 0;
