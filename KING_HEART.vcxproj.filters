@@ -612,6 +612,9 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirSweep.cpp">
       <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\GameSpeed.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -982,6 +985,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirSweep.h">
       <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\GameSpeed.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

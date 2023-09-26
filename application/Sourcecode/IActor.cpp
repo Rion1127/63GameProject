@@ -1,6 +1,7 @@
 #include "IActor.h"
 #include "Util.h"
 #include "ParticleHitAttack.h"
+#include "GameSpeed.h"
 
 void IActor::ObjUpdate()
 {
@@ -13,7 +14,7 @@ void IActor::ObjUpdate()
 	{
 		addVec_ = { 0,0,0 };
 	}
-	obj_->WT_.position_ += addVec_;
+	obj_->WT_.position_ += addVec_ * GameSpeed::GetGameSpeed();
 	obj_->Update();
 }
 

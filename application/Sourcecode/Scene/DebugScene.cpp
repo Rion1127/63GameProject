@@ -12,6 +12,7 @@
 #include "ParticleTest.h"
 #include "ParticleEnemyDead.h"
 #include "ParticleFire.h"
+#include "GameSpeed.h"
 
 #include <time.h>
 
@@ -190,6 +191,14 @@ void DebugScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
+
+	ImGui::Begin("GameSpeed");
+
+	static float speed = 0;
+	ImGui::DragFloat("GameSpeed", &speed,0.1f);
+	GameSpeed::SetGameSpeed(speed);
+
+	ImGui::End();
 }
 
 void DebugScene::CameraUpdate()

@@ -13,6 +13,7 @@
 #include "PlayerAttack.h"
 #include "PlayerAirAttack.h"
 #include "PlayerMagic.h"
+#include "GameSpeed.h"
 
 Player::Player() : IActor()
 {
@@ -101,7 +102,12 @@ void Player::PostUpdate()
 
 void Player::GravityUpdate()
 {
-	gravity_.SetAddValue({ 0,-0.01f,0 });
+	Vector3 gravity = {
+		0,
+		-0.01f * GameSpeed::GetGameSpeed(),
+		0
+	};
+	gravity_.SetAddValue(gravity);
 	gravity_.Update();
 }
 void Player::ColPosUpdate()
@@ -326,13 +332,13 @@ void Player::Jump()
 void Player::JumpUpdate()
 {
 	float jumpSpeed = 0.2f;
-	int Maxjumptimer = 10;
+	float Maxjumptimer = 10;
 	//A‚ğ‰Ÿ‚µ‘±‚¯‚½•ª‚‚­ƒWƒƒƒ“ƒv‚·‚é
 	if (Controller::GetButtons(PAD::INPUT_A))
 	{
 		if (jumpTime_ < Maxjumptimer)
 		{
-			jumpTime_++;
+			jumpTime_ += 1 * GameSpeed::GetGameSpeed();
 
 			gravity_.SetGrabity({ 0, jumpSpeed ,0 });
 		}

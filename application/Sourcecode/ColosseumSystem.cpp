@@ -6,6 +6,7 @@
 #include "mSound.h"
 #include "SceneManager.h"
 #include "Easing.h"
+#include "GameSpeed.h"
 
 ColosseumSystem::ColosseumSystem()
 {

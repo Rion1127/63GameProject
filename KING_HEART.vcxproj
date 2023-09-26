@@ -25,6 +25,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\AttackShadow.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.cpp" />
     <ClCompile Include="application\Sourcecode\GameCamera.cpp" />
+    <ClCompile Include="application\Sourcecode\GameSpeed.cpp" />
     <ClCompile Include="application\Sourcecode\IActor.cpp" />
     <ClCompile Include="application\Sourcecode\IBullet.cpp" />
     <ClCompile Include="application\Sourcecode\IGauge.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\AttackShadow.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Shadow\EnemyShadow.h" />
     <ClInclude Include="application\Sourcecode\GameCamera.h" />
+    <ClInclude Include="application\Sourcecode\GameSpeed.h" />
     <ClInclude Include="application\Sourcecode\IActor.h" />
     <ClInclude Include="application\Sourcecode\IBullet.h" />
     <ClInclude Include="application\Sourcecode\IGauge.h" />

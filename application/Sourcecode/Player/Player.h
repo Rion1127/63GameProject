@@ -33,7 +33,7 @@ private:
 
 	bool isCanJump_;
 	bool isAlive_;
-	int jumpTime_;
+	float jumpTime_;
 
 	
 	PlayerCommand command_;
