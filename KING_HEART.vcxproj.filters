@@ -615,6 +615,9 @@
     <ClCompile Include="application\Sourcecode\GameSpeed.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -988,6 +991,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\GameSpeed.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

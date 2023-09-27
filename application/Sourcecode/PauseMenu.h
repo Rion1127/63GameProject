@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include <array>
 #include "Timer.h"
+#include "Particle2DSelect.h"
 
 struct PauseSprits {
 	std::unique_ptr<Sprite> sprite;
@@ -46,6 +47,8 @@ class PauseSelectSprite {
 private:
 	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
 	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
+
+	Particle2DSelect selectParticle_;
 public:
 	PauseSelectSprite();
 	void Update(int32_t index);

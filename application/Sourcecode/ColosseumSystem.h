@@ -5,6 +5,7 @@
 #include <array>
 #include "Timer.h"
 #include "Sprite.h"
+#include "Particle2DSelect.h"
 
 class ClearSprite {
 private:
@@ -51,6 +52,8 @@ class SelectSprite {
 private:
 	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
 	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
+
+	Particle2DSelect selectParticle_;
 public:
 	SelectSprite();
 	void Update(int32_t index);
@@ -80,7 +83,6 @@ private:
 	std::unique_ptr<Sprite> blindSprite_;
 
 	SelectSprite selectSprite_;
-	
 
 	uint32_t maxRoundNum_;
 	uint32_t roundNum_;

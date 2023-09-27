@@ -131,6 +131,7 @@ public:
 	Vector2 GetScale() { return Scale_; }
 	Vector2 GetPos() { return pos_; }
 	Color GetColor() { return color_; }
+	Texture GetTexture() { return texture_; }
 private:
 	void TransferVertex();
 };

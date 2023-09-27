@@ -324,6 +324,12 @@ void PauseSelectSprite::Update(int32_t index)
 		if (i == index) {
 			frameSprite_[i]->SetColor(selectColor);
 			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+
+			Vector2 pos = {
+				frameSprite_[i]->GetPos().x + frameSprite_[i]->GetTexture().size_.x / 4.5f,
+				frameSprite_[i]->GetPos().y - frameSprite_[i]->GetTexture().size_.y / 4.f
+			};
+			selectParticle_.SetPos(pos);
 		}
 		else {
 			frameSprite_[i]->SetColor(unSelectColor);
@@ -333,6 +339,8 @@ void PauseSelectSprite::Update(int32_t index)
 		frameSprite_[i]->Update();
 		texSprite_[i]->Update();
 	}
+
+	selectParticle_.Update();
 }
 
 void PauseSelectSprite::Draw()
@@ -344,5 +352,7 @@ void PauseSelectSprite::Draw()
 		frameSprite_[i]->DrawImGui();
 		texSprite_[i]->DrawImGui();
 	}
+
+	selectParticle_.Draw();
 }
 #pragma endregion
