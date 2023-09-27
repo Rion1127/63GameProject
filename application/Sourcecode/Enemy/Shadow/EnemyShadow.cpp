@@ -11,7 +11,7 @@
 #include "GameSpeed.h"
 
 EnemyShadow::EnemyShadow(Vector3 pos, Vector3 rot) :
-	IEnemy(EnemyType::Ground, true, 100)
+	IEnemy(EnemyType::Ground, true, 80)
 {
 	name_ = "Shadow";
 	obj_ = std::move(std::make_unique<Object3d>());

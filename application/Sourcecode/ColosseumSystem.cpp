@@ -11,16 +11,16 @@
 ColosseumSystem::ColosseumSystem()
 {
 	blindSprite_ = std::make_unique<Sprite>();
-	retrySprite_ = std::make_unique<Sprite>();
-	titleSprite_ = std::make_unique<Sprite>();
+	//retrySprite_ = std::make_unique<Sprite>();
+	//titleSprite_ = std::make_unique<Sprite>();
 	
 	blindSprite_->Ini();
-	retrySprite_->Ini();
-	titleSprite_->Ini();
+	//retrySprite_->Ini();
+	//titleSprite_->Ini();
 	
 	blindSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
-	retrySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
-	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
+	//retrySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
+	//titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
 	
 	blindSprite_->SetAnchor({ 0,0 });
 	blindSprite_->SetColor(Color(0, 0, 0, 0));
@@ -28,9 +28,9 @@ ColosseumSystem::ColosseumSystem()
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.4f
 	};
-	retrySprite_->SetPos(pos);
+	//retrySprite_->SetPos(pos);
 	pos.y = WinAPI::GetWindowSize().y / 1.2f;
-	titleSprite_->SetPos(pos);
+	//titleSprite_->SetPos(pos);
 
 	isStart_ = false;
 	isNext_ = false;
@@ -160,9 +160,11 @@ void ColosseumSystem::DrawSprite()
 	clearSprite_.Draw();
 	if (isClear_)
 	{
-		retrySprite_->Draw();
-		titleSprite_->Draw();
+		selectSprite_.Draw();
+		//retrySprite_->Draw();
+		//titleSprite_->Draw();
 	}
+		
 }
 
 void ColosseumSystem::Reset()
@@ -192,18 +194,19 @@ void ColosseumSystem::ClearUpdate()
 		selectType_ = (type) ? SelectType::Title : SelectType::Retry;
 	}
 
-	Color selectColor = { 200,50,50,255 };
+	
 	if (selectType_ == SelectType::Retry)
 	{
-		retrySprite_->SetColor(selectColor);
-		titleSprite_->SetColor(Color(255, 255, 255, 255));
+		//retrySprite_->SetColor(selectColor);
+		//titleSprite_->SetColor(Color(255, 255, 255, 255));
 
 	}
 	else if (selectType_ == SelectType::Title)
 	{
-		retrySprite_->SetColor(Color(255, 255, 255, 255));
-		titleSprite_->SetColor(selectColor);
+		//retrySprite_->SetColor(Color(255, 255, 255, 255));
+		//titleSprite_->SetColor(selectColor);
 	}
+	selectSprite_.Update((int32_t)selectType_);
 	//Œˆ’è
 	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
@@ -222,8 +225,10 @@ void ColosseumSystem::ClearUpdate()
 			SceneManager::SetChangeStart(SceneName::Title);
 		}
 	}
-	retrySprite_->Update();
-	titleSprite_->Update();
+	//retrySprite_->Update();
+	//titleSprite_->Update();
+
+	
 }
 
 #pragma region ClearSprite
@@ -444,5 +449,82 @@ void ReadyGoSprite::GoSpriteUpdate()
 	Color  goShapeColor = goShapeSprite_->GetColor();
 	goShapeColor.a = alpha;
 	goShapeSprite_->SetColor(goShapeColor);
+}
+#pragma endregion
+
+#pragma region SelectSprite
+SelectSprite::SelectSprite()
+{
+	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+		frameSprite_[i] = std::make_unique<Sprite>();
+		texSprite_[i] = std::make_unique<Sprite>();
+
+		frameSprite_[i]->Ini();
+		texSprite_[i]->Ini();
+
+		frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		Vector2 framePos = {
+			WinAPI::GetWindowSize().x / 2.f,
+			500.f+ 80.f * i
+		};
+		frameSprite_[i]->SetPos(framePos);
+		frameSprite_[i]->SetScale(Vector2(0.5f,0.6f));
+		texSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectTex"));
+		Vector2 texPos = {
+			WinAPI::GetWindowSize().x / 2.f + 10 * i,
+			500.f + 80.f * i
+		};
+		Vector2 leftTopPos = {
+			160.f * i,
+			0
+		};
+		Vector2 texSize = {
+			160.f,
+			38
+		};
+		Vector2 scale = {
+			0.3f,
+			0.6f
+		};
+		texSprite_[i]->SetPos(texPos);
+		texSprite_[i]->SetTex_LeftTop(leftTopPos);
+		texSprite_[i]->SetTex_Size(texSize);
+		texSprite_[i]->SetScale(scale);
+		
+		frameSprite_[i]->Update();
+		texSprite_[i]->Update();
+	}
+}
+
+void SelectSprite::Update(int32_t index)
+{
+	Color selectColor = { 230,50,50,255 };
+	Color unSelectColor = { 0,35,255,255 };
+
+	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+
+		if (i == index) {
+			frameSprite_[i]->SetColor(selectColor);
+			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+		}
+		else {
+			frameSprite_[i]->SetColor(unSelectColor);
+			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		}
+
+		frameSprite_[i]->Update();
+		texSprite_[i]->Update();
+	}
+}
+
+void SelectSprite::Draw()
+{
+	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+		frameSprite_[i]->Draw();
+		texSprite_[i]->Draw();
+
+		frameSprite_[i]->DrawImGui();
+		texSprite_[i]->DrawImGui();
+	}
 }
 #pragma endregion

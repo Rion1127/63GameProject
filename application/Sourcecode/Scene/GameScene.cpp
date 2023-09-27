@@ -101,7 +101,7 @@ void GameScene::Update()
 			uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData(cupName_).size();
 			float rate = 1.f - ((float)nextRound / (float)maxRoundNum);
 			float colGB = 1.f * rate;
-			lightColor_ = { 1.f,colGB,colGB };
+			lightColor_ = { 0.7f,colGB,colGB };
 
 			GameSpeed::SetGameSpeed(1.f);
 		}

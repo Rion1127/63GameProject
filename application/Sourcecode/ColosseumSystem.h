@@ -47,6 +47,18 @@ public:
 	Timer GetReadyTimer() { return readyTimer_; }
 };
 
+class SelectSprite {
+private:
+	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
+	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
+public:
+	SelectSprite();
+	void Update(int32_t index);
+	void Draw();
+
+};
+
+
 enum class ClearType {
 	NextRound,
 	GameClear
@@ -66,8 +78,9 @@ private:
 	ClearSprite clearSprite_;
 	ReadyGoSprite readyGoSprite_;
 	std::unique_ptr<Sprite> blindSprite_;
-	std::unique_ptr<Sprite> retrySprite_;
-	std::unique_ptr<Sprite> titleSprite_;
+
+	SelectSprite selectSprite_;
+	
 
 	uint32_t maxRoundNum_;
 	uint32_t roundNum_;

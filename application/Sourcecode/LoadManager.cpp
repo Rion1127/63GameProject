@@ -44,6 +44,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("readyShape.png", "ReadyShape");
 	LoadGraph("goShape.png", "GoShape");
 	LoadGraph("pause.png", "Pause");
+	LoadGraph("selectFrame.png", "SelectFrame");
+	LoadGraph("unselectFrame.png", "UnselectFrame");
+	LoadGraph("selectTex.png", "SelectTex");
 
 	
 	LoadGraph("commandTitle.png", "CommandTitle");
