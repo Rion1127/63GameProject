@@ -31,13 +31,13 @@ Stage::Stage()
 void Stage::Update()
 {
 	for (auto& obj : stageObj_) {
-		obj->Update();
+		obj.second->Update();
 	}
 }
 
 void Stage::Draw()
 {
 	for (auto& obj : stageObj_) {
-		obj->Draw();
+		obj.second->Draw();
 	}
 }

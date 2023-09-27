@@ -1052,6 +1052,9 @@
     <None Include="application\Resources\shader\SwordTrail.hlsli">
       <Filter>シェーダーファイル\application</Filter>
     </None>
+    <None Include="application\Resources\shader\SkySphere.hlsli">
+      <Filter>シェーダーファイル\application</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="application\Resources\shader\ParticlePS.hlsl">
@@ -1169,6 +1172,12 @@
       <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
     <FxCompile Include="application\Resources\shader\SwordTrailPS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SkySpherePS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\SkySphereVS.hlsl">
       <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
   </ItemGroup>

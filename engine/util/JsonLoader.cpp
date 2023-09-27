@@ -126,7 +126,7 @@ void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 	levelData_.insert(std::make_pair(dataName, std::move(levelData)));
 }
 
-void JsonLoader::SetObjects(std::vector<std::unique_ptr<Object3d>>* objects, std::string levelDataName) {
+void JsonLoader::SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, std::string levelDataName) {
 
 	LevelData* data = levelData_.at(levelDataName).get();
 	size_t num = data->object.size();
@@ -164,10 +164,23 @@ void JsonLoader::SetObjects(std::vector<std::unique_ptr<Object3d>>* objects, std
 			ParticleManager::GetInstance()->AddParticle("pillarFire", fireEmitter_);
 		}
 
+		if (modelName_ == "skySphere") {
+			newObj->SetAmbient("skySphere",Vector3(0.1f, 0.25f, 0.5f));
+		}
+		uint32_t index = 0;
+		//同じキーのモデルを見つけたら追加順に番号を振り分ける
+		while(objects->find(modelName_) != objects->end()){
+			index++;
+			
+			std::ostringstream numChar;
 
+			numChar << index;
+			modelName_ = modelName_ + numChar.str();
+			
+		}
+		//他のオブジェクトとキーが被っていなかったら代入する
+		objects->insert(std::make_pair(modelName_, std::move(newObj)));
 
-
-		objects->push_back(std::move(newObj));
 	}
 }
 

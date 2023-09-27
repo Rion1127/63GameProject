@@ -272,29 +272,6 @@
             },
             "model_name": "wall",
             "isvisible": 1
-        },
-        {
-            "type": "MESH",
-            "name": "Cube",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    90.00001525878906,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "model_name": "skySphere",
-            "isvisible": 1
         }
     ]
 }

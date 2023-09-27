@@ -25,7 +25,7 @@ public:
 
 	//JSONファイル読み込み dataNameで名前をつける
 	void LoadFile(std::string fileName, std::string dataName);
-	void SetObjects(std::vector<std::unique_ptr<Object3d>>* objects, std::string levelDataName);
+	void SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, std::string levelDataName);
 	void SetCamera(Camera* camera, std::string levelDataName);
 };
 
