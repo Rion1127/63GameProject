@@ -78,6 +78,8 @@ void LoadManager::LoadSound()
 	LoadWave("deathSE.wav", "DeathSE");
 	LoadWave("shineSE.wav", "ShineSE");
 	LoadWave("menuSE.wav", "MenuSE");
+	LoadWave("fireSE.wav", "FireSE");
+	LoadWave("roundClearSE.wav", "RoundClearSE");
 }
 
 void LoadManager::LoadEnemyPopData()

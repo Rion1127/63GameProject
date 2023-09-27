@@ -1,6 +1,7 @@
 #include "MagicManager.h"
 #include "Player.h"
 #include "MagicFire.h"
+#include "mSound.h"
 
 MagicManager::MagicManager()
 {
@@ -44,5 +45,7 @@ void MagicManager::ShotMagic(MagicType type)
 	magic->SetLockOnActor(enemy_);
 	magic->Init();
 	magics_.emplace_back(std::move(magic));
+
+	SoundManager::Play("FireSE", false, 1.f);
 }
 

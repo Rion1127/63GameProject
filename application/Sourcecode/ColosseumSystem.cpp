@@ -86,6 +86,8 @@ void ColosseumSystem::Update()
 			}
 			player_->SetIsCanMove(true);
 			player_->SetIsCanInput(true);
+
+			SoundManager::Play("ShineSE",false,1.2f,1.5f);
 		}
 	}
 
@@ -105,6 +107,7 @@ void ColosseumSystem::Update()
 				isClearCamera_ = true;
 				GameSpeed::SetGameSpeed(0.2f);
 				player_->SetIsCanInput(false);
+				SoundManager::Play("RoundClearSE",false,0.7f,0.7f);
 			}
 			//すべてのラウンドをクリアしたら
 			if (roundNum_ >= maxRoundNum_)
@@ -249,6 +252,7 @@ void ClearSprite::Update(Timer timer)
 		if (shineTimer_.GetTimer() == 0) {
 			float colRGB = 1000.f;
 			col = { colRGB ,colRGB ,colRGB ,255 };
+			SoundManager::Play("ShineSE");
 		}
 		shineTimer_.AddTime(1);
 
