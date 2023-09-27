@@ -100,11 +100,11 @@ private:
 public:
 	ColosseumSystem();
 	void Update();
+	void ClearUpdate();
 	void DrawSprite();
 
 	void Reset();
 private:
-	void ClearUpdate();
 public:
 	void SetPlayer(Player* actor) { player_ = actor; };
 	void SetEnemy(EnemyManager* actor) { enemyManager_ = actor; };

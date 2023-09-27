@@ -34,6 +34,7 @@ private:
 
 	bool isCanJump_;
 	bool isAlive_;
+	bool isCanInput_;
 	float jumpTime_;
 
 	
@@ -108,6 +109,7 @@ public:
 	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
 	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
+	void SetIsCanInput(bool flag) { isCanInput_ = flag; }
 	
 
 	void AddaddVec(Vector3 pos) { addVec_ += pos; }

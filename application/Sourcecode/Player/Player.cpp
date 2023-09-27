@@ -58,6 +58,8 @@ Player::Player() :
 
 	InitStateMachine();
 	GoToState(PlayerState::Idle);
+
+	isCanInput_ = true;
 }
 
 void Player::PreUpdate()
@@ -72,8 +74,9 @@ void Player::PreUpdate()
 	ColPosUpdate();
 
 	Update();
-
-	command_.Update();
+	if (isCanInput_) {
+		command_.Update();
+	}
 
 	MPCharge();
 
@@ -140,7 +143,7 @@ void Player::InitStateMachine()
 #pragma region “ü—Í
 void Player::InputVecUpdate()
 {
-	if (GetIsCanMove())
+	if (GetIsCanMove() && isCanInput_)
 	{
 
 		moveVec_ = { 0,0 };

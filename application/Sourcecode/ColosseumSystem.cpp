@@ -72,6 +72,7 @@ void ColosseumSystem::Update()
 			itr++;
 		}
 		player_->SetIsCanMove(false);
+		player_->SetIsCanInput(false);
 		
 		//Ready演出が終わったら
 		if (readyGoSprite_.GetReadyTimer().GetIsEnd())
@@ -84,6 +85,7 @@ void ColosseumSystem::Update()
 				itr++;
 			}
 			player_->SetIsCanMove(true);
+			player_->SetIsCanInput(true);
 		}
 	}
 
@@ -102,6 +104,7 @@ void ColosseumSystem::Update()
 			if (isClearCamera_ == false) {
 				isClearCamera_ = true;
 				GameSpeed::SetGameSpeed(0.2f);
+				player_->SetIsCanInput(false);
 			}
 			//すべてのラウンドをクリアしたら
 			if (roundNum_ >= maxRoundNum_)
@@ -141,12 +144,7 @@ void ColosseumSystem::Update()
 			Reset();
 		}
 	}
-	//すべてのラウンドが終了したときの処理
-	if (isClear_)
-	{
-		ClearUpdate();
-	}
-
+	
 	readyGoSprite_.Update(isStart_);
 	clearSprite_.Update(gameClearBlankTimer_);
 	blindSprite_->Update();
@@ -161,10 +159,7 @@ void ColosseumSystem::DrawSprite()
 	if (isClear_)
 	{
 		selectSprite_.Draw();
-		//retrySprite_->Draw();
-		//titleSprite_->Draw();
 	}
-		
 }
 
 void ColosseumSystem::Reset()
@@ -184,6 +179,7 @@ void ColosseumSystem::Reset()
 void ColosseumSystem::ClearUpdate()
 {
 	player_->SetIsCanMove(false);
+	player_->SetIsCanInput(false);
 	//メニュー選択
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
@@ -194,18 +190,6 @@ void ColosseumSystem::ClearUpdate()
 		selectType_ = (type) ? SelectType::Title : SelectType::Retry;
 	}
 
-	
-	if (selectType_ == SelectType::Retry)
-	{
-		//retrySprite_->SetColor(selectColor);
-		//titleSprite_->SetColor(Color(255, 255, 255, 255));
-
-	}
-	else if (selectType_ == SelectType::Title)
-	{
-		//retrySprite_->SetColor(Color(255, 255, 255, 255));
-		//titleSprite_->SetColor(selectColor);
-	}
 	selectSprite_.Update((int32_t)selectType_);
 	//決定
 	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
@@ -225,10 +209,6 @@ void ColosseumSystem::ClearUpdate()
 			SceneManager::SetChangeStart(SceneName::Title);
 		}
 	}
-	//retrySprite_->Update();
-	//titleSprite_->Update();
-
-	
 }
 
 #pragma region ClearSprite
@@ -483,7 +463,7 @@ SelectSprite::SelectSprite()
 			38
 		};
 		Vector2 scale = {
-			0.3f,
+			(1.f / 3.f) * 0.6f,
 			0.6f
 		};
 		texSprite_[i]->SetPos(texPos);

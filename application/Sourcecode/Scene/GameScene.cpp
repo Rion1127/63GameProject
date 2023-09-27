@@ -38,8 +38,8 @@ void GameScene::Ini()
 	colosseumSystem_->SetPlayer(player_.get());
 	colosseumSystem_->SetEnemy(enemyManager_.get());
 
-	JsonLoader::GetInstance()->LoadFile("stage.json","Stage");
-	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(),"Stage");
+	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
+	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 
 	cupName_ = "HadesCup";
 
@@ -60,7 +60,7 @@ void GameScene::Update()
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
 #endif // _DEBUG
-		
+
 	if (GetIsGameStop()) {
 		CameraUpdate();
 		stage_->Update();
@@ -72,7 +72,7 @@ void GameScene::Update()
 		enemyManager_->PostUpdate();
 		player_->PostUpdate();
 
-		
+
 		lightManager_->GetLightGroup()->SetDirLightColor(0, lightColor_);
 
 		lightManager_->Update();
@@ -105,9 +105,15 @@ void GameScene::Update()
 
 			GameSpeed::SetGameSpeed(1.f);
 		}
+		colosseumSystem_->Update();
 	}
-	colosseumSystem_->Update();
-	pauseMenu_->Update();
+	//クリアしていない時だけポーズ画面を開ける
+	if (colosseumSystem_->GetIsClear() == false) {
+		pauseMenu_->Update();
+	}
+	else {
+		colosseumSystem_->ClearUpdate();
+	}
 
 }
 
@@ -115,7 +121,7 @@ void GameScene::Draw()
 {
 
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-	
+
 	////////////////
 	//3Dオブジェクト//
 	////////////////
@@ -185,8 +191,8 @@ void GameScene::CameraUpdate()
 
 bool GameScene::GetIsGameStop()
 {
-	if (pauseMenu_->GetIsPause() == false && 
-		colosseumSystem_->GetIsClear() == false)
+	if (pauseMenu_->GetIsPause() == false/* &&
+		colosseumSystem_->GetIsClear() == false*/)
 	{
 		return true;
 	}
