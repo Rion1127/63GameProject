@@ -168,6 +168,8 @@ void GameScene::Draw()
 
 void GameScene::DrawPostEffect()
 {
+	PipelineManager::PreDraw("Particle", POINTLIST);
+	ParticleManager::GetInstance()->Draw();
 }
 
 void GameScene::CameraUpdate()
