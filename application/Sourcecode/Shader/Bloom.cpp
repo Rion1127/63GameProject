@@ -27,7 +27,7 @@ void Bloom::PreDraw()
 
 	compo_->PreDrawSceneAssin(0);
 	SceneManager::Draw();
-	SceneManager::DrawPostEffect();
+	//SceneManager::DrawPostEffect();
 	compo_->PostDrawSceneAssin(0);
 
 	compo_->PreDrawSceneAssin(1);

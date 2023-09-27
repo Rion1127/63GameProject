@@ -64,6 +64,19 @@ void PipelineManager::ObjShaderIni()
 	GetPipelineObjects("assimp")->AddrootParams(5);
 
 	Create("assimp", BACK, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
+
+	//“V‹…—p
+	AddPipeline("SkySphere");
+	GetPipelineObjects("SkySphere")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("SkySphere")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("SkySphere")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+
+	GetPipelineObjects("SkySphere")->Setshader("SkySphereVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("SkySphere")->Setshader("SkySpherePS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("SkySphere")->AddrootParams(4);
+
+	Create("SkySphere", BACK, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
 }
 void PipelineManager::PostEffectIni()
 {

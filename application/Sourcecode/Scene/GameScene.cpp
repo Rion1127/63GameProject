@@ -104,6 +104,9 @@ void GameScene::Update()
 			lightColor_ = { 0.7f,colGB,colGB };
 
 			GameSpeed::SetGameSpeed(1.f);
+
+			auto& skySphere = stage_->GetObjects()->find("skySphere")->second;
+			skySphere->SetAmbient("skySphere", lightColor_);
 		}
 		colosseumSystem_->Update();
 	}

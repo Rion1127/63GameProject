@@ -14,7 +14,7 @@ PSOutput main(VSOutput input) : SV_TARGET
 	//頂点から視点への方向ベクトル
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	//環境反射光
-    float3 ambient = m_ambient * 0.3f * ambientColor;
+    float3 ambient = m_ambient * 1.f * ambientColor;
 	//シェーディング
     float4 shadecolor = float4(ambient, m_alpha);
     float4 color = { 1, 1, 1, 1 };

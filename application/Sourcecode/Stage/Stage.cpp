@@ -38,6 +38,13 @@ void Stage::Update()
 void Stage::Draw()
 {
 	for (auto& obj : stageObj_) {
+		if (obj.first == "skySphere") {
+			PipelineManager::PreDraw("SkySphere", TRIANGLELIST);
+		}
+		else {
+			PipelineManager::PreDraw("Object3D", TRIANGLELIST);
+		}
 		obj.second->Draw();
 	}
+	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 }
