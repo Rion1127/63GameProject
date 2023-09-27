@@ -74,9 +74,8 @@ void Player::PreUpdate()
 	ColPosUpdate();
 
 	Update();
-	if (isCanInput_) {
-		command_.Update();
-	}
+
+	command_.Update();
 
 	MPCharge();
 
@@ -224,7 +223,7 @@ void Player::StateUpdate()
 	freezeTimer_.AddTime(1);
 	if (freezeTimer_.GetIsEnd())
 	{
-		
+
 		if (GetNowState()->GetId() != PlayerState::Knock)
 		{
 			sword_.SetState(Sword::SwordState::Idle);
@@ -557,7 +556,7 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	GoToState(PlayerState::Knock);
 	SoundManager::Play("HitSE", false, 0.5f);
 	guard_.SetisGurdNow_(false);
-	
+
 }
 
 void Player::GuardHit(Vector3 knockVec)

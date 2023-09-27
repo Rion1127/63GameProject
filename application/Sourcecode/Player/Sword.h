@@ -20,7 +20,7 @@ private:
 	SwordState state_;
 	Vector3 localPos_;
 	//Idle注にふわふわ浮くようにするタイマー
-	Timer floatingTimer_;
+	TimerFloat floatingTimer_;
 
 	Vector3 goalPos_;
 	Vector3 nowPos_;

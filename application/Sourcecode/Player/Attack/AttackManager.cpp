@@ -20,17 +20,19 @@ AttackManager::AttackManager()
 
 void AttackManager::Attack()
 {
-	if (Controller::GetTriggerButtons(PAD::INPUT_B))
-	{
-		//“G‚Æ©•ª‚Ì‹——£‚ğŒvZ
-		CalculatePtoELength();
-		//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
-		if (comboNum < MAX_COMBO)
+	if (player_->GetIsCanInput()) {
+		if (Controller::GetTriggerButtons(PAD::INPUT_B))
 		{
-			isNextAttack_ = true;
-		}
-		else {
-			isNextAttack_ = false;
+			//“G‚Æ©•ª‚Ì‹——£‚ğŒvZ
+			CalculatePtoELength();
+			//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
+			if (comboNum < MAX_COMBO)
+			{
+				isNextAttack_ = true;
+			}
+			else {
+				isNextAttack_ = false;
+			}
 		}
 	}
 }

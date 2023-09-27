@@ -128,6 +128,7 @@ public:
 	Timer* GetFreezeTime() { return &freezeTimer_; }
 	bool GetIsAlive() { return isAlive_; }
 	bool GetIsMPCharge() { return isMPCharge_; }
+	bool GetIsCanInput() { return isCanInput_; }
 
 	Vector3 GetLockOnVec() { return lockOnVec_; }
 	GuardClass* GetGuard() { return &guard_; }

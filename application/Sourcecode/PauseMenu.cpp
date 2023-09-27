@@ -10,26 +10,12 @@ PauseMenu::PauseMenu()
 {
 	backSprite_ = std::make_unique<Sprite>();
 	pauseSprite_ = std::make_unique<PauseSprite>();
-	continueSprite_ = std::make_unique<Sprite>();
-	titleSprite_ = std::make_unique<Sprite>();
 	backSprite_->Ini();
-	continueSprite_->Ini();
-	titleSprite_->Ini();
 
 	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
-	continueSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Continue"));
-	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
-
+	
 	backSprite_->SetColor(Color(0, 0, 0, 200.f));
 	backSprite_->SetAnchor({ 0,0 });
-
-	Vector2 pos = {
-		WinAPI::GetWindowSize().x / 2.f,
-		WinAPI::GetWindowSize().y / 1.4f
-	};
-	continueSprite_->SetPos(pos);
-	pos.y = WinAPI::GetWindowSize().y / 1.2f;
-	titleSprite_->SetPos(pos);
 
 	selectType_ = SelectType::Continue;
 }
@@ -57,17 +43,8 @@ void PauseMenu::Update()
 		}
 		//スプライトの色を変える
 		Color selectColor = { 200,50,50,255 };
-		if (selectType_ == SelectType::Continue)
-		{
-			continueSprite_->SetColor(selectColor);
-			titleSprite_->SetColor(Color(255, 255, 255, 255));
 
-		}
-		else if (selectType_ == SelectType::Title)
-		{
-			continueSprite_->SetColor(Color(255, 255, 255, 255));
-			titleSprite_->SetColor(selectColor);
-		}
+		pauseSelectSprite_.Update((int32_t)selectType_);
 		//決定
 		if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 			Key::TriggerKey(DIK_SPACE))
@@ -88,8 +65,7 @@ void PauseMenu::Update()
 
 		backSprite_->Update();
 		pauseSprite_->Update();
-		continueSprite_->Update();
-		titleSprite_->Update();
+		
 	}
 }
 
@@ -98,8 +74,7 @@ void PauseMenu::Draw()
 	if (isPause_) {
 		backSprite_->Draw();
 		pauseSprite_->Draw();
-		continueSprite_->Draw();
-		titleSprite_->Draw();
+		pauseSelectSprite_.Draw();
 	}
 }
 
@@ -291,3 +266,83 @@ void PauseSprite::Reset()
 	}
 	effectTimer_.Reset();
 }
+
+#pragma region PauseSelectSprite
+PauseSelectSprite::PauseSelectSprite()
+{
+	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+		frameSprite_[i] = std::make_unique<Sprite>();
+		texSprite_[i] = std::make_unique<Sprite>();
+
+		frameSprite_[i]->Ini();
+		texSprite_[i]->Ini();
+
+		frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		Vector2 framePos = {
+			WinAPI::GetWindowSize().x / 2.f,
+			500.f + 80.f * i
+		};
+		frameSprite_[i]->SetPos(framePos);
+		frameSprite_[i]->SetScale(Vector2(0.5f, 0.6f));
+		texSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectTex"));
+		Vector2 texPos = {
+			WinAPI::GetWindowSize().x / 2.f + 10 * i,
+			500.f + 80.f * i
+		};
+		float leftUpIndex = 0;
+		if (i == 0) leftUpIndex = 2;
+		if (i == 1) leftUpIndex = 1;
+		Vector2 leftTopPos = {
+			160.f * leftUpIndex,
+			0
+		};
+		Vector2 texSize = {
+			160.f,
+			38
+		};
+		Vector2 scale = {
+			(1.f / 3.f) * 0.6f,
+			0.6f
+		};
+		texSprite_[i]->SetPos(texPos);
+		texSprite_[i]->SetTex_LeftTop(leftTopPos);
+		texSprite_[i]->SetTex_Size(texSize);
+		texSprite_[i]->SetScale(scale);
+
+		frameSprite_[i]->Update();
+		texSprite_[i]->Update();
+	}
+}
+
+void PauseSelectSprite::Update(int32_t index)
+{
+	Color selectColor = { 230,50,50,255 };
+	Color unSelectColor = { 0,35,255,255 };
+
+	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+
+		if (i == index) {
+			frameSprite_[i]->SetColor(selectColor);
+			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+		}
+		else {
+			frameSprite_[i]->SetColor(unSelectColor);
+			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		}
+
+		frameSprite_[i]->Update();
+		texSprite_[i]->Update();
+	}
+}
+
+void PauseSelectSprite::Draw()
+{
+	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+		frameSprite_[i]->Draw();
+		texSprite_[i]->Draw();
+
+		frameSprite_[i]->DrawImGui();
+		texSprite_[i]->DrawImGui();
+	}
+}
+#pragma endregion

@@ -42,6 +42,19 @@ public:
 	void SetIsAvtive(bool flag) { isActive_ = flag; }
 };
 
+class PauseSelectSprite {
+private:
+	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
+	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
+public:
+	PauseSelectSprite();
+	void Update(int32_t index);
+	void Draw();
+
+};
+
+
+
 class PauseMenu
 {
 private:
@@ -52,8 +65,8 @@ private:
 private:
 	std::unique_ptr<Sprite> backSprite_;
 	std::unique_ptr<PauseSprite> pauseSprite_;
-	std::unique_ptr<Sprite> continueSprite_;
-	std::unique_ptr<Sprite> titleSprite_;
+	
+	PauseSelectSprite pauseSelectSprite_;
 
 	SelectType selectType_;
 	bool isPause_;

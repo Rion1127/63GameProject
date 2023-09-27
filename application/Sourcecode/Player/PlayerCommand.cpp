@@ -28,70 +28,67 @@ PlayerCommand::PlayerCommand()
 
 void PlayerCommand::Update()
 {
-	if (isMagicMenu_ == false) {
-
-	}
-
 
 	attackManager_.SetLockOnEnemy(lockOnEnemy_);
 	magicManager_.SetEnemy(lockOnEnemy_);
+	if (player_->GetIsCanInput()) {
+		//魔法を選択
+		if (isMagicMenu_) {
+			magicCommandSprite_->SetIsVisible(true);
 
-	//魔法を選択
-	if (isMagicMenu_) {
-		magicCommandSprite_->SetIsVisible(true);
-		
-		//キャンセル（魔法コマンドを閉じる）
-		if (Controller::GetTriggerButtons(PAD::INPUT_A))
-		{
-			isMagicMenu_ = false;
-			magicCommandSprite_->ResetEase();
-			commandNum_ = 0;
-		}
-		//MPがある時
-		if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-			if (player_->GetIsMPCharge() == false) {
+			//キャンセル（魔法コマンドを閉じる）
+			if (Controller::GetTriggerButtons(PAD::INPUT_A))
+			{
 				isMagicMenu_ = false;
 				magicCommandSprite_->ResetEase();
 				commandNum_ = 0;
-				//選択した魔法を撃つ
-				if (MagicType::Fire == (MagicType)magicNum_) {
-					magicManager_.ShotMagic(MagicType::Fire);
+			}
+			//MPがある時
+			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
+				if (player_->GetIsMPCharge() == false) {
+					isMagicMenu_ = false;
+					magicCommandSprite_->ResetEase();
+					commandNum_ = 0;
+					//選択した魔法を撃つ
+					if (MagicType::Fire == (MagicType)magicNum_) {
+						magicManager_.ShotMagic(MagicType::Fire);
+					}
+				}
+				//MPチャージ中の時
+				else {
+
 				}
 			}
-			//MPチャージ中の時
-			else {
-
+		}
+		else {
+			magicCommandSprite_->SetIsVisible(false);
+			//上下でコマンド選択
+			if (Controller::GetTriggerButtons(PAD::INPUT_UP)) {
+				commandNum_--;
+				if (commandNum_ < 0) {
+					commandNum_ = (uint16_t)Command::END - 1;
+				}
+				mainCommandSprite_->ResetEase();
+				SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
 			}
-		}
-	}
-	else {
-		magicCommandSprite_->SetIsVisible(false);
-		//上下でコマンド選択
-		if (Controller::GetTriggerButtons(PAD::INPUT_UP)) {
-			commandNum_--;
-			if (commandNum_ < 0) {
-				commandNum_ = (uint16_t)Command::END - 1;
+			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN)) {
+				commandNum_++;
+				if (commandNum_ >= (uint16_t)Command::END) {
+					commandNum_ = 0;
+				}
+				mainCommandSprite_->ResetEase();
+				SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
 			}
-			mainCommandSprite_->ResetEase();
-			SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
-		}
-		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN)) {
-			commandNum_++;
-			if (commandNum_ >= (uint16_t)Command::END) {
-				commandNum_ = 0;
+			//通常攻撃
+			if (selectCommand_ == Command::Attack) {
+				attackManager_.Attack();
 			}
-			mainCommandSprite_->ResetEase();
-			SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
-		}
-		//通常攻撃
-		if (selectCommand_ == Command::Attack) {
-			attackManager_.Attack();
-		}
-		//魔法コマンド選択
-		else if (selectCommand_ == Command::Magic) {
-			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-				isMagicMenu_ = true;
-				magicCommandSprite_->ResetEase();
+			//魔法コマンド選択
+			else if (selectCommand_ == Command::Magic) {
+				if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
+					isMagicMenu_ = true;
+					magicCommandSprite_->ResetEase();
+				}
 			}
 		}
 	}

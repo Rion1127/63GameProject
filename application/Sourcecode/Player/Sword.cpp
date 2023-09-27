@@ -45,7 +45,7 @@ void Sword::Update()
 		goalPos_ = pos - frontVec * 1.2f;
 		goalPos_.y += playerObj_->WT_.scale_.y;
 		//ã‰º‚É•‚‚©‚Î‚¹‚é
-		floatingTimer_.AddTime(1);
+		floatingTimer_.AddTime(1 * GameSpeed::GetGameSpeed());
 		float roundTime = (float)floatingTimer_.GetLimitTimer();
 		float timer = (float)floatingTimer_.GetTimer();
 		float floatingPos = UpAndDown(roundTime,0.3f, timer);
@@ -56,7 +56,7 @@ void Sword::Update()
 		obj_->SetPos(nowPos_);
 		//‰ñ“]ˆ—
 		//í‚É‰ñ“]‚³‚¹‚é
-		rot_ += 0.02f;
+		rot_ += 0.02f * GameSpeed::GetGameSpeed();
 		if (rot_ >= 3.14f) {
 			rot_ = -rot_;
 		}
