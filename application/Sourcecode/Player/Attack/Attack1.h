@@ -6,11 +6,14 @@ class Attack1 final :
 	public IAttack
 {
 private:
-	float frontDist_;
+	float attackSpeed_;
 public:
 	Attack1(IActor* selfActor);
 private:
 	void Init() override;
 	void MoveUpdate() override;
+
+private:
+	void SplineInit();
 };
 
