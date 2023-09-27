@@ -6,6 +6,8 @@
 #include "DirectX.h"
 #include "Util.h"
 #include "Timer.h"
+#include "ParticleManager.h"
+
 
 enum class SceneName {
 	Title,
@@ -32,6 +34,7 @@ public:
 
 	template <class NextScene>
 	static inline void Transition() {
+		ParticleManager::GetInstance()->AllClear();
 		scurrentScene_.reset();
 		scurrentScene_ = std::move(std::make_unique<NextScene>());
 		scurrentScene_->Ini();

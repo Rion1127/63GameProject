@@ -114,6 +114,7 @@ void SceneManager::SceneChange()
 
 	sisSetNext_ = false;
 
+	
 }
 
 void SceneManager::SetChangeStart(const SceneName sceneName) {

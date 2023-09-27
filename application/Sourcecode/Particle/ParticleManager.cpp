@@ -11,6 +11,16 @@ ParticleManager* ParticleManager::GetInstance()
 	return &instance;
 }
 
+void ParticleManager::AllReset()
+{
+	std::list<std::shared_ptr<IEmitter>>::iterator itr;
+	for (itr = emitters_.begin(); itr != emitters_.end();)
+	{
+		(*itr)->isActive = false;
+		itr++;
+	}
+}
+
 ParticleManager::ParticleManager()
 {
 }

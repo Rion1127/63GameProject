@@ -9,7 +9,6 @@
 
 GameScene::~GameScene()
 {
-
 }
 
 void GameScene::Ini()
@@ -49,6 +48,8 @@ void GameScene::Ini()
 	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
 
 	lightColor_ = { 1,1,1 };
+
+	GameSpeed::SetGameSpeed(1.f);
 }
 
 void GameScene::Update()
