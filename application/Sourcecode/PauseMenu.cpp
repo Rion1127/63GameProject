@@ -348,9 +348,6 @@ void PauseSelectSprite::Draw()
 	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
 		frameSprite_[i]->Draw();
 		texSprite_[i]->Draw();
-
-		frameSprite_[i]->DrawImGui();
-		texSprite_[i]->DrawImGui();
 	}
 
 	selectParticle_.Draw();
