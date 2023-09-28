@@ -20,6 +20,8 @@ GameCamera::GameCamera()
 	frontDist_ = 15.f;
 
 	gameCameraMode_ = GameCameraMode::NORMAL;
+
+	Reset();
 }
 
 void GameCamera::Update(CameraMode cameraMode)
