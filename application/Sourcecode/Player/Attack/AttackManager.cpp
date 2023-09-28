@@ -44,9 +44,8 @@ void AttackManager::Update()
 		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Æ‚Ì‚‚³‚Ì‹——£
 		float diffPosY = 0;
 		if (lockOnEnemy_ != nullptr) {
-			diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
+			diffPosY =lockOnEnemy_->GetWorldTransform()->position_.y - player_->GetWorldTransform()->position_.y;
 		}
-		diffPosY = fabs(diffPosY);
 		//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
 		if (nowAttack_ == nullptr)
 		{
