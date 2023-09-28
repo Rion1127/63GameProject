@@ -82,6 +82,12 @@ void Player::PreUpdate()
 	damageCoolTime_.AddTime(1);
 	hpGaugeUI_.Update(maxHealth_, health_);
 	mpGaugeUI_.Update(maxMP_, nowMP_);
+
+	playerFrontVec_ = {
+				sinf(GetWorldTransform()->rotation_.y),
+				0,
+				cosf(GetWorldTransform()->rotation_.y),
+	};
 }
 
 void Player::PostUpdate()
@@ -155,12 +161,6 @@ void Player::InputVecUpdate()
 			Camera::scurrent_->target_ - Camera::scurrent_->eye_;
 		frontVec_.y = 0;
 		frontVec_ = frontVec_.normalize();
-
-		playerFrontVec_ = {
-				sinf(GetWorldTransform()->rotation_.y),
-				0,
-				cosf(GetWorldTransform()->rotation_.y),
-		};
 
 		sideVec = upVec.cross(frontVec_);
 		sideVec = sideVec.normalize();
