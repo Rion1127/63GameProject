@@ -44,6 +44,10 @@ void SoundManager::Update()
 		}
 		itr++;
 	}
+
+	for (auto& map : ssndMap_) {
+		map.second.isAdded_ = false;
+	}
 }
 
 SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
@@ -124,9 +128,12 @@ bool SoundManager::IsPlaying(const SoundKey& key) {
 
 void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float picth)
 {
+	//“¯‚¶ƒtƒŒ[ƒ€‚É“¯‚¶‰¹Œ¹‚ð—¬‚·‚Ì‚ðŽ~‚ß‚é
+	if (ssndMap_[key].isAdded_ == true)return;
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	//SoundData* pSnd = &;
+	
 	ssndPlaying_.push_back(ssndMap_[key]);
+	ssndMap_[key].isAdded_ = true;
 	if (ssndPlaying_.back().sound_ != nullptr)
 	{
 		ssndPlaying_.back().sound_->Stop();

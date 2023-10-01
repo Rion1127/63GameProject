@@ -39,6 +39,8 @@ public:
 
 	IXAudio2SourceVoice* sound_;
 
+	bool isAdded_;
+
 	void Release() {
 
 		pBuffer_.clear();
