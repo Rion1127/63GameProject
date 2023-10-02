@@ -29,7 +29,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("particle.png", "Particle");
 	LoadGraph("fireCircle.png", "FireCircle");
 	LoadGraph("explosion_01.png", "Explosion_01");
-	LoadGraph("explosion_02.png", "Explosion_02");
+	//LoadGraph("explosion_02.png", "Explosion_02");
+	LoadGraph("explosion_02.dds", "Explosion_02");
 	LoadGraph("swordTrail.png", "SwordTrail");
 	LoadGraph("hitCircle.png", "HitCircle");
 	LoadGraph("triangle.png", "Triangle");

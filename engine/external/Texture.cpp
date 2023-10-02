@@ -114,14 +114,16 @@ void TextureManager::LoadGraph(const std::string& fileName, const std::string& n
 			WIC_FLAGS_NONE,
 			&metadata, scratchImg);
 	}
-
-	//ミップマップ生成
-	result = GenerateMipMaps(
-		scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result)) {
-		scratchImg = std::move(mipChain);
-		metadata = scratchImg.GetMetadata();
+	//拡張しがddsの場合ミップマップを生成しない
+	if (extension != "dds") {
+		//ミップマップ生成
+		result = GenerateMipMaps(
+			scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
+			TEX_FILTER_DEFAULT, 0, mipChain);
+		if (SUCCEEDED(result)) {
+			scratchImg = std::move(mipChain);
+			metadata = scratchImg.GetMetadata();
+		}
 	}
 	//読み込んだディフューズテクスチャをSRGBとして扱う
 	metadata.format = MakeSRGB(metadata.format);
