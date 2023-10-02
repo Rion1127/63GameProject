@@ -94,9 +94,16 @@ void TextureManager::LoadGraph(const std::string& fileName, const std::string& n
 	}
 	else if (extension == "tga")
 	{
-		//WICテクスチャダウンロード
+		//TGAテクスチャダウンロード
 		result = LoadFromTGAFile(
 			allFileName_w.c_str(),
+			&metadata, scratchImg);
+	}
+	else if (extension == "dds")
+	{
+		//DDSテクスチャダウンロード
+		result = LoadFromDDSFile(
+			allFileName_w.c_str(),DDS_FLAGS_NONE,
 			&metadata, scratchImg);
 	}
 
