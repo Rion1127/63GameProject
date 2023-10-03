@@ -74,6 +74,7 @@ private:
 
 	SelectType selectType_;
 	bool isPause_;
+	bool isConfig_;
 public:
 	PauseMenu();
 	void Update();
