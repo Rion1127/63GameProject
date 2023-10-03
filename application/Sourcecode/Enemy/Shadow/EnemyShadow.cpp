@@ -28,6 +28,8 @@ EnemyShadow::EnemyShadow(Vector3 pos, Vector3 rot) :
 
 	sinkTimer_.SetLimitTime(40);
 
+	slimeTimer_.SetLimitTime(7);
+
 	followLength = 5.f;
 	moveSpeed = 0.1f;
 	randRange_ = 30;
@@ -245,6 +247,20 @@ void EnemyShadow::JumpAttack()
 void EnemyShadow::KnockBack()
 {
 	stateName_ = "KnockBack";
+
+	slimeTimer_.AddTime(1);
+	Vector3 scale = {
+		1.f + UpAndDown(slimeTimer_.GetLimitTimer(),0.1f,slimeTimer_.GetTimer(),false),
+		1.f + UpAndDown(slimeTimer_.GetLimitTimer(),0.1f,slimeTimer_.GetTimer(),true),
+		1.f + UpAndDown(slimeTimer_.GetLimitTimer(),0.1f,slimeTimer_.GetTimer(),false),
+	};
+	if (slimeTimer_.GetIsEnd())
+	{
+		slimeTimer_.Reset();
+	}
+
+	obj_->SetScale(scale);
+
 	//一定時間経てばノック状態からアイドル状態に戻る
 	attack_.reset();
 	if (actionTimer_.GetIsEnd())
@@ -252,6 +268,9 @@ void EnemyShadow::KnockBack()
 		state_ = State::Idle;
 		isKnock_ = false;
 		actionTimer_.Reset();
+
+		obj_->SetScale(Vector3(1,1,1));
+		slimeTimer_.Reset();
 	}
 }
 

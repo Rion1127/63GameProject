@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "Texture.h"
 #include <array>
+#include "Particle2DSelect.h"
 
 enum class ConfigType {
 	CameraAxisX,
@@ -30,6 +31,8 @@ private:
 	bool isInversY_;
 
 	ConfigType type_ = ConfigType::CameraAxisX;
+
+	Particle2DSelect selectParticle_;
 
 	std::unique_ptr<ConfigSprite> axisX_;
 	std::unique_ptr<ConfigSprite> axisY_;

@@ -120,12 +120,14 @@ void ConfigMenuSprite::Update()
 
 	axisX_->Update();
 	axisY_->Update();
+	selectParticle_.Update();
 }
 
 void ConfigMenuSprite::Draw()
 {
 	axisX_->Draw();
 	axisY_->Draw();
+	selectParticle_.Draw();
 }
 #pragma endregion
 

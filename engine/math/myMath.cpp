@@ -395,9 +395,10 @@ float Radian(float angle) {
 
 
 
-float UpAndDown(float oneRoundTime, float range, float timer)
+float UpAndDown(float oneRoundTime, float range, float timer, bool isSinCos)
 {
-	return (sinf(PI * 2.f / oneRoundTime * timer) * range);
+	if (isSinCos == 0)return (sinf(PI * 2.f / oneRoundTime * timer) * range);
+	else return (cosf(PI * 2.f / oneRoundTime * timer) * range);
 }
 
 //float UpAndDown(float oneRoundTime, float range)

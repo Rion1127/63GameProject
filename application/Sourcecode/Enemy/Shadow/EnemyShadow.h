@@ -34,6 +34,8 @@ private:
 	bool isWanderInit_;
 	TimerFloat sinkTimer_;
 
+	TimerFloat slimeTimer_;
+
 	std::unordered_map<State, int32_t> priority_;
 private:
 	//デバッグ
