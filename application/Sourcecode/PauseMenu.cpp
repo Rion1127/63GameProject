@@ -23,14 +23,12 @@ PauseMenu::PauseMenu()
 
 void PauseMenu::Update()
 {
-	if (Controller::GetTriggerButtons(PAD::INPUT_START)/* ||
-		Controller::GetTriggerButtons(PAD::INPUT_B)*/)
+	if (Controller::GetTriggerButtons(PAD::INPUT_START))
 	{
 		if (isConfig_ == false)
 		{
 			isPause_ = (isPause_ == true) ? false : true;
 		}
-
 		pauseSprite_->SetIsActive(isPause_);
 		pauseSprite_->Reset();
 
@@ -41,6 +39,11 @@ void PauseMenu::Update()
 	{
 		if (isPause_)
 		{
+			if (Controller::GetTriggerButtons(PAD::INPUT_B))
+			{
+				isPause_ = false;
+			}
+
 			//メニュー選択
 			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 				Controller::GetTriggerButtons(PAD::INPUT_UP))
@@ -54,10 +57,6 @@ void PauseMenu::Update()
 
 				selectType_ = (SelectType)type;
 			}
-			//スプライトの色を変える
-			Color selectColor = { 200,50,50,255 };
-
-
 			//決定
 			if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 				Key::TriggerKey(DIK_SPACE))
