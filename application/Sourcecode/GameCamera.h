@@ -56,6 +56,7 @@ private:
 public:
 	GameCamera();
 	void Update(CameraMode cameraMode);
+	//コントローラでのカメラ処理
 	void UpdateCameraPos();
 	void UpdateLookAT();
 	void Reset();

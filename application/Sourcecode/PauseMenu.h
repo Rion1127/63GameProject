@@ -40,13 +40,13 @@ public:
 
 	void Reset();
 public:
-	void SetIsAvtive(bool flag) { isActive_ = flag; }
+	void SetIsActive(bool flag) { isActive_ = flag; }
 };
 
 class PauseSelectSprite {
 private:
-	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
-	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
+	std::array<std::unique_ptr<Sprite>, 3> frameSprite_;
+	std::array<std::unique_ptr<Sprite>, 3> texSprite_;
 
 	Particle2DSelect selectParticle_;
 public:
@@ -63,7 +63,8 @@ class PauseMenu
 private:
 	enum SelectType {
 		Continue,
-		Title
+		Config,
+		Title,
 	};
 private:
 	std::unique_ptr<Sprite> backSprite_;

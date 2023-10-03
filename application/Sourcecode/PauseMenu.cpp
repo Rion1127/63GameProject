@@ -25,7 +25,7 @@ void PauseMenu::Update()
 	if (Controller::GetTriggerButtons(PAD::INPUT_START)) {
 		isPause_ = (isPause_ == true) ? false : true;
 
-		pauseSprite_->SetIsAvtive(isPause_);
+		pauseSprite_->SetIsActive(isPause_);
 		pauseSprite_->Reset();
 
 		SoundManager::Play("MenuSE");
@@ -37,9 +37,13 @@ void PauseMenu::Update()
 			Controller::GetTriggerButtons(PAD::INPUT_UP))
 		{
 			SoundManager::Play("SelectSE");
-			bool type = (selectType_ == SelectType::Continue);
-			//現在選択しているものがコンティニューだったら
-			selectType_ = (type) ? SelectType::Title : SelectType::Continue;
+			int32_t type = (int32_t)(selectType_);
+			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN))type++;
+			if (Controller::GetTriggerButtons(PAD::INPUT_UP))type--;
+
+			type = Clamp(type,0,(int32_t)SelectType::Title);
+
+			selectType_ = (SelectType)type;
 		}
 		//スプライトの色を変える
 		Color selectColor = { 200,50,50,255 };
@@ -56,6 +60,10 @@ void PauseMenu::Update()
 			if (selectType_ == SelectType::Continue)
 			{
 				isPause_ = false;
+			}
+			else if (selectType_ == SelectType::Config)
+			{
+				
 			}
 			else if (selectType_ == SelectType::Title)
 			{
@@ -280,18 +288,24 @@ PauseSelectSprite::PauseSelectSprite()
 		frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		Vector2 framePos = {
 			WinAPI::GetWindowSize().x / 2.f,
-			500.f + 80.f * i
+			450.f + 60.f * i
 		};
 		frameSprite_[i]->SetPos(framePos);
 		frameSprite_[i]->SetScale(Vector2(0.5f, 0.6f));
 		texSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectTex"));
 		Vector2 texPos = {
-			WinAPI::GetWindowSize().x / 2.f + 10 * i,
-			500.f + 80.f * i
+			WinAPI::GetWindowSize().x / 2.f,
+			450.f + 60.f * i
 		};
+		if (i == 2)
+		{
+			texPos.x += 10 * (i - 1);
+		}
+
 		float leftUpIndex = 0;
 		if (i == 0) leftUpIndex = 2;
-		if (i == 1) leftUpIndex = 1;
+		if (i == 1) leftUpIndex = 3;
+		if (i == 2) leftUpIndex = 1;
 		Vector2 leftTopPos = {
 			160.f * leftUpIndex,
 			0
@@ -301,7 +315,7 @@ PauseSelectSprite::PauseSelectSprite()
 			38
 		};
 		Vector2 scale = {
-			(1.f / 3.f) * 0.6f,
+			(1.f / 4.f) * 0.6f,
 			0.6f
 		};
 		texSprite_[i]->SetPos(texPos);
