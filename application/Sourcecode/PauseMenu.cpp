@@ -23,10 +23,13 @@ PauseMenu::PauseMenu()
 
 void PauseMenu::Update()
 {
-	if (Controller::GetTriggerButtons(PAD::INPUT_START))
+	if (Controller::GetTriggerButtons(PAD::INPUT_START)/* ||
+		Controller::GetTriggerButtons(PAD::INPUT_B)*/)
 	{
-		isPause_ = (isPause_ == true) ? false : true;
-		isConfig_ = false;
+		if (isConfig_ == false)
+		{
+			isPause_ = (isPause_ == true) ? false : true;
+		}
 
 		pauseSprite_->SetIsActive(isPause_);
 		pauseSprite_->Reset();
@@ -84,7 +87,9 @@ void PauseMenu::Update()
 	}
 	else
 	{
-		if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
+		if (Controller::GetTriggerButtons(PAD::INPUT_START) ||
+			Controller::GetTriggerButtons(PAD::INPUT_B))
+		{
 			isConfig_ = false;
 		}
 		ConfigMenu::GetInstance()->Update();
@@ -96,11 +101,15 @@ void PauseMenu::Update()
 
 void PauseMenu::Draw()
 {
+	if (isPause_)
+	{
+		backSprite_->Draw();
+	}
+
 	if (isConfig_ == false)
 	{
 		if (isPause_)
 		{
-			backSprite_->Draw();
 			pauseSprite_->Draw();
 			pauseSelectSprite_.Draw();
 		}
