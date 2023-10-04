@@ -129,8 +129,8 @@ inline T Clamp(T value, T min, T max)
 float Angle(float radian);
 //角度からラジアン
 float Radian(float angle);
-
-float UpAndDown(float oneRoundTime, float range,float timer);
+//bool isSinCos : 0,sin 1,cos
+float UpAndDown(float oneRoundTime, float range,float timer,bool isSinCos = 0);
 
 float Vec2Angle(Vector2 vec);
 

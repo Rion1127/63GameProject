@@ -13,6 +13,7 @@
 #include "ParticleEnemyDead.h"
 #include "ParticleFire.h"
 #include "GameSpeed.h"
+#include "ConfigMenu.h"
 
 #include <time.h>
 
@@ -207,6 +208,8 @@ void DebugScene::Draw()
 	GameSpeed::SetEnemySpeed(enemyspeed);
 
 	ImGui::End();
+
+	ConfigMenu::GetInstance()->DrawImGui();
 }
 
 void DebugScene::DrawPostEffect()

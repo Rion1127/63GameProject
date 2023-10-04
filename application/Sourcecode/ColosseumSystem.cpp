@@ -467,7 +467,7 @@ SelectSprite::SelectSprite()
 			38
 		};
 		Vector2 scale = {
-			(1.f / 3.f) * 0.6f,
+			(1.f / 4.f) * 0.6f,
 			0.6f
 		};
 		texSprite_[i]->SetPos(texPos);

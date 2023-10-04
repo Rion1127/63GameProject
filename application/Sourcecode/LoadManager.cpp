@@ -48,6 +48,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("selectFrame.png", "SelectFrame");
 	LoadGraph("unselectFrame.png", "UnselectFrame");
 	LoadGraph("selectTex.png", "SelectTex");
+	LoadGraph("cameraInvTex.png", "CameraInvTex");
+	LoadGraph("configCameraTex.png", "ConfigCameraTex");
 
 	
 	LoadGraph("commandTitle.png", "CommandTitle");

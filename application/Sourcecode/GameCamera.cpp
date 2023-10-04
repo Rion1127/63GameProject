@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include "Easing.h"
 #include "RRandom.h"
+#include "ConfigMenu.h"
 
 GameCamera::GameCamera()
 {
@@ -65,10 +66,21 @@ void GameCamera::UpdateCameraPos()
 
 	float frontdist = 15;
 
+	bool isCameraInvX = ConfigMenu::GetInstance()->GetInvX();
+	bool isCameraInvY = ConfigMenu::GetInstance()->GetInvY();
+
+	int32_t cameraInvX = (isCameraInvX == false) ? 1 : -1;
+	int32_t cameraInvY = (isCameraInvY == false) ? 1 : -1;
+
+	Vector2 inputVec = {
+		Controller::GetRStick(deadZone_.x).x * cameraInvX,
+		Controller::GetRStick(deadZone_.y).y * cameraInvY
+	};
+
 	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
 	{
-		moveDist.x -= Controller::GetRStick(deadZone_.x).x * transSpeed_.x;
-		moveDist.y += Controller::GetRStick(deadZone_.y).y * transSpeed_.y;
+		moveDist.x -= inputVec.x * transSpeed_.x;
+		moveDist.y += inputVec.y * transSpeed_.y;
 		//カメラがどのくらいプレイヤーに近づくかClampをする
 		moveDist.y = Clamp(moveDist.y, -1.0f, 1.0f);
 	}
@@ -81,6 +93,7 @@ void GameCamera::UpdateCameraPos()
 	float minGamecameraY = 0.5f;
 
 	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY, maxGamecameraY);
+
 #ifdef _DEBUG
 	ImGui::Begin("GameCamera");
 	/* ここに追加したいGUIを書く */
@@ -106,7 +119,7 @@ void GameCamera::UpdateLookAT()
 {
 	if (gameCameraMode_ == GameCameraMode::NORMAL) {
 		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
-
+		//ロックオンしている敵がいる場合のカメラ処理
 		if (enemy != nullptr)
 		{
 			bool isHardLockOn = enemy->GetIsHardLockOn();
@@ -165,6 +178,7 @@ void GameCamera::UpdateLookAT()
 			}
 		}
 	}
+	//ゲームクリア時のカメラワーク
 	else if (gameCameraMode_ == GameCameraMode::CLEAR) {
 		float rate = 0;
 		if (clsumSystem_->GetClearType() == ClearType::NextRound) {
@@ -176,7 +190,7 @@ void GameCamera::UpdateLookAT()
 
 
 		frontDist_ = Easing::Sine::easeInOut(rate,15.f,-5.f,1.0f);
-
+		//プレイヤーの前方ベクトル * 距離を計算
 		Vector3 frontVec = player_->GetPlayerFrontVec() * frontDist_;
 
 		offsetPos_ = {

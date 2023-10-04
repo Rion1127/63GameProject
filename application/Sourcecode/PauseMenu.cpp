@@ -5,6 +5,7 @@
 #include "mSound.h"
 #include "Easing.h"
 #include "Util.h"
+#include "ConfigMenu.h"
 
 PauseMenu::PauseMenu()
 {
@@ -13,7 +14,7 @@ PauseMenu::PauseMenu()
 	backSprite_->Ini();
 
 	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
-	
+
 	backSprite_->SetColor(Color(0, 0, 0, 200.f));
 	backSprite_->SetAnchor({ 0,0 });
 
@@ -22,65 +23,107 @@ PauseMenu::PauseMenu()
 
 void PauseMenu::Update()
 {
-	if (Controller::GetTriggerButtons(PAD::INPUT_START)) {
-		isPause_ = (isPause_ == true) ? false : true;
-
-		pauseSprite_->SetIsAvtive(isPause_);
+	if (Controller::GetTriggerButtons(PAD::INPUT_START))
+	{
+		if (isConfig_ == false)
+		{
+			isPause_ = (isPause_ == true) ? false : true;
+		}
+		pauseSprite_->SetIsActive(isPause_);
 		pauseSprite_->Reset();
 
 		SoundManager::Play("MenuSE");
 	}
 
-	if (isPause_) {
-		//メニュー選択
-		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
-			Controller::GetTriggerButtons(PAD::INPUT_UP))
+	if (isConfig_ == false)
+	{
+		if (isPause_)
 		{
-			SoundManager::Play("SelectSE");
-			bool type = (selectType_ == SelectType::Continue);
-			//現在選択しているものがコンティニューだったら
-			selectType_ = (type) ? SelectType::Title : SelectType::Continue;
-		}
-		//スプライトの色を変える
-		Color selectColor = { 200,50,50,255 };
-
-		pauseSelectSprite_.Update((int32_t)selectType_);
-		//決定
-		if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
-			Key::TriggerKey(DIK_SPACE))
-		{
-			if (SceneManager::GetIsSetNext() == false)
-			{
-				SoundManager::Play("EnterSE", false, 1.5f);
-			}
-			if (selectType_ == SelectType::Continue)
+			if (Controller::GetTriggerButtons(PAD::INPUT_B))
 			{
 				isPause_ = false;
 			}
-			else if (selectType_ == SelectType::Title)
-			{
-				SceneManager::SetChangeStart(SceneName::Title);
-			}
-		}
 
-		backSprite_->Update();
-		pauseSprite_->Update();
-		
+			//メニュー選択
+			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
+				Controller::GetTriggerButtons(PAD::INPUT_UP))
+			{
+				SoundManager::Play("SelectSE");
+				int32_t type = (int32_t)(selectType_);
+				if (Controller::GetTriggerButtons(PAD::INPUT_DOWN))type++;
+				if (Controller::GetTriggerButtons(PAD::INPUT_UP))type--;
+
+				type = Clamp(type, 0, (int32_t)SelectType::Title);
+
+				selectType_ = (SelectType)type;
+			}
+			//決定
+			if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
+				Key::TriggerKey(DIK_SPACE))
+			{
+				if (SceneManager::GetIsSetNext() == false)
+				{
+					SoundManager::Play("EnterSE", false, 1.5f);
+				}
+				if (selectType_ == SelectType::Continue)
+				{
+					isPause_ = false;
+				}
+				else if (selectType_ == SelectType::Config)
+				{
+					isConfig_ = true;
+				}
+				else if (selectType_ == SelectType::Title)
+				{
+					SceneManager::SetChangeStart(SceneName::Title);
+				}
+			}
+			backSprite_->Update();
+			pauseSprite_->Update();
+			pauseSelectSprite_.Update((int32_t)selectType_);
+
+		}
 	}
+	else
+	{
+		if (Controller::GetTriggerButtons(PAD::INPUT_START) ||
+			Controller::GetTriggerButtons(PAD::INPUT_B))
+		{
+			isConfig_ = false;
+		}
+		ConfigMenu::GetInstance()->Update();
+		ConfigMenu::GetInstance()->SpriteUpdate();
+	}
+
+
 }
 
 void PauseMenu::Draw()
 {
-	if (isPause_) {
+	if (isPause_)
+	{
 		backSprite_->Draw();
-		pauseSprite_->Draw();
-		pauseSelectSprite_.Draw();
+	}
+
+	if (isConfig_ == false)
+	{
+		if (isPause_)
+		{
+			pauseSprite_->Draw();
+			pauseSelectSprite_.Draw();
+		}
+	}
+	else
+	{
+		ConfigMenu::GetInstance()->Draw();
 	}
 }
 
+#pragma region PauseSprite
 PauseSprite::PauseSprite()
 {
-	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++)
+	{
 		pauseSprite_[i] = std::make_unique<PauseSprits>();
 		pauseSprite_[i]->sprite = std::make_unique<Sprite>();
 		pauseSprite_[i]->sprite->Ini();
@@ -114,9 +157,10 @@ PauseSprite::PauseSprite()
 		pauseSprite_[i]->timer.SetLimitTime(30);
 		pauseSprite_[i]->sprite->SetColor(Color(255, 255, 255, 0));
 
-		if (i == pauseSprite_.size() - 1) {
+		if (i == pauseSprite_.size() - 1)
+		{
 			pauseSprite_[i]->sprite->SetRot(Radian(180));
-			pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f,0.0f));
+			pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f, 0.0f));
 
 			Vector2 easeEndpos = {
 			WinAPI::GetWindowSize().x / 2.f + (64 * i) - (64.f * 2.f),
@@ -137,9 +181,11 @@ PauseSprite::PauseSprite()
 void PauseSprite::Update()
 {
 	//徐々に文字をアクティブにしていく
-	if (isActive_) {
+	if (isActive_)
+	{
 		timer_.AddTime(1);
-		if (timer_.GetIsEnd()) {
+		if (timer_.GetIsEnd())
+		{
 			pauseSprite_[index_]->isActive = true;
 			index_++;
 
@@ -150,9 +196,12 @@ void PauseSprite::Update()
 		}
 	}
 
-	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
-		if (pauseSprite_[i]->isActive) {
-			if (state_ != State::Jump && state_ != State::Landing) {
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++)
+	{
+		if (pauseSprite_[i]->isActive)
+		{
+			if (state_ != State::Jump && state_ != State::Landing)
+			{
 				pauseSprite_[i]->timer.AddTime(1);
 
 				Vector2 start = pauseSprite_[i]->easeStartPos_;
@@ -171,13 +220,16 @@ void PauseSprite::Update()
 				pauseSprite_[i]->sprite->SetColor(color);
 			}
 
-			if (i == pauseSprite_.size() - 1) {
+			if (i == pauseSprite_.size() - 1)
+			{
 				//Eの文字が回転する
-				
-				if (pauseSprite_[i]->timer.GetIsEnd()) {
+
+				if (pauseSprite_[i]->timer.GetIsEnd())
+				{
 					effectTimer_.AddTime(1);
 
-					if (state_ == State::Collapse) {
+					if (state_ == State::Collapse)
+					{
 						//0.f → 1.f → 0.fのrateを計算する
 						float rate01 = 0.2f + fabs(0.5f - effectTimer_.GetTimeRate()) * 2.f;
 						float rate02 = 1.f - fabs(0.5f - effectTimer_.GetTimeRate()) * 2.f;
@@ -191,7 +243,8 @@ void PauseSprite::Update()
 						pauseSprite_[i]->sprite->SetScale(scale);
 					}
 					//飛び跳ねる
-					else if (state_ == State::Jump) {
+					else if (state_ == State::Jump)
+					{
 						Vector2 pos = pauseSprite_[i]->sprite->GetPos();
 
 						pos.y += gravity_;
@@ -199,26 +252,30 @@ void PauseSprite::Update()
 
 						pauseSprite_[i]->sprite->SetPos(pos);
 
-						float rot = Easing::Sine::easeOut(effectTimer_.GetTimeRate(),Radian(180), Radian(180),1.f);
+						float rot = Easing::Sine::easeOut(effectTimer_.GetTimeRate(), Radian(180), Radian(180), 1.f);
 						pauseSprite_[i]->sprite->SetRot(rot);
 
 						pos = pauseSprite_[i]->sprite->GetPos();
-						if (pos.y > pauseSprite_[i]->easeEndPos_.y - 32.f) {
+						if (pos.y > pauseSprite_[i]->easeEndPos_.y - 32.f)
+						{
 							state_ = State::Landing;
 							effectTimer_.Reset();
 							pos = pauseSprite_[i]->easeEndPos_;
 							pos.y -= 32.f;
 							pauseSprite_[i]->sprite->SetPos(pos);
 						}
-						
+
 					}
 					//着地する
-					else if (state_ == State::Landing) {
+					else if (state_ == State::Landing)
+					{
 
 					}
 
-					if (effectTimer_.GetIsEnd()) {
-						if (state_ == State::Collapse) {
+					if (effectTimer_.GetIsEnd())
+					{
+						if (state_ == State::Collapse)
+						{
 							state_ = State::Jump;
 							gravity_ = -10;
 							effectTimer_.Reset();
@@ -228,11 +285,12 @@ void PauseSprite::Update()
 							pos.y -= 32.f;
 							pauseSprite_[i]->sprite->SetPos(pos);
 						}
-						else if (state_ == State::Jump) {
-							
-							
+						else if (state_ == State::Jump)
+						{
+
+
 						}
-						
+
 					}
 				}
 			}
@@ -243,8 +301,10 @@ void PauseSprite::Update()
 
 void PauseSprite::Draw()
 {
-	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
-		if (pauseSprite_[i]->isActive) {
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++)
+	{
+		if (pauseSprite_[i]->isActive)
+		{
 			pauseSprite_[i]->sprite->Draw();
 		}
 	}
@@ -252,13 +312,15 @@ void PauseSprite::Draw()
 
 void PauseSprite::Reset()
 {
-	for (uint32_t i = 0; i < pauseSprite_.size(); i++) {
+	for (uint32_t i = 0; i < pauseSprite_.size(); i++)
+	{
 		pauseSprite_[i]->timer.Reset();
 		pauseSprite_[i]->isActive = false;
 		timer_.Reset();
 		index_ = 0;
 		state_ = State::Collapse;
-		if (i == pauseSprite_.size() - 1) {
+		if (i == pauseSprite_.size() - 1)
+		{
 			pauseSprite_[i]->sprite->SetRot(Radian(180));
 			pauseSprite_[i]->sprite->Update();
 			pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f, 0.0f));
@@ -266,11 +328,12 @@ void PauseSprite::Reset()
 	}
 	effectTimer_.Reset();
 }
-
+#pragma endregion
 #pragma region PauseSelectSprite
 PauseSelectSprite::PauseSelectSprite()
 {
-	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+	for (uint32_t i = 0; i < frameSprite_.size(); i++)
+	{
 		frameSprite_[i] = std::make_unique<Sprite>();
 		texSprite_[i] = std::make_unique<Sprite>();
 
@@ -280,18 +343,24 @@ PauseSelectSprite::PauseSelectSprite()
 		frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		Vector2 framePos = {
 			WinAPI::GetWindowSize().x / 2.f,
-			500.f + 80.f * i
+			450.f + 60.f * i
 		};
 		frameSprite_[i]->SetPos(framePos);
 		frameSprite_[i]->SetScale(Vector2(0.5f, 0.6f));
 		texSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectTex"));
 		Vector2 texPos = {
-			WinAPI::GetWindowSize().x / 2.f + 10 * i,
-			500.f + 80.f * i
+			WinAPI::GetWindowSize().x / 2.f,
+			450.f + 60.f * i
 		};
+		if (i == 2)
+		{
+			texPos.x += 10 * (i - 1);
+		}
+
 		float leftUpIndex = 0;
 		if (i == 0) leftUpIndex = 2;
-		if (i == 1) leftUpIndex = 1;
+		if (i == 1) leftUpIndex = 3;
+		if (i == 2) leftUpIndex = 1;
 		Vector2 leftTopPos = {
 			160.f * leftUpIndex,
 			0
@@ -301,7 +370,7 @@ PauseSelectSprite::PauseSelectSprite()
 			38
 		};
 		Vector2 scale = {
-			(1.f / 3.f) * 0.6f,
+			(1.f / 4.f) * 0.6f,
 			0.6f
 		};
 		texSprite_[i]->SetPos(texPos);
@@ -319,9 +388,11 @@ void PauseSelectSprite::Update(int32_t index)
 	Color selectColor = { 230,50,50,255 };
 	Color unSelectColor = { 0,35,255,255 };
 
-	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+	for (uint32_t i = 0; i < frameSprite_.size(); i++)
+	{
 
-		if (i == index) {
+		if (i == index)
+		{
 			frameSprite_[i]->SetColor(selectColor);
 			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
 
@@ -331,7 +402,8 @@ void PauseSelectSprite::Update(int32_t index)
 			};
 			selectParticle_.SetPos(pos);
 		}
-		else {
+		else
+		{
 			frameSprite_[i]->SetColor(unSelectColor);
 			frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		}
@@ -345,7 +417,8 @@ void PauseSelectSprite::Update(int32_t index)
 
 void PauseSelectSprite::Draw()
 {
-	for (uint32_t i = 0; i < frameSprite_.size(); i++) {
+	for (uint32_t i = 0; i < frameSprite_.size(); i++)
+	{
 		frameSprite_[i]->Draw();
 		texSprite_[i]->Draw();
 	}
