@@ -52,7 +52,7 @@ void GameCamera::Update(CameraMode cameraMode)
 	{
 		UpdateLookAT();
 	}
-	
+
 	camera_->eye_ += (endEyePos_ - camera_->eye_) * cameraSpeed_;
 }
 
@@ -77,20 +77,18 @@ void GameCamera::UpdateCameraPos()
 		Controller::GetRStick(deadZone_.y).y * cameraInvY
 	};
 
-	if (camera_->eye_.y < player_->GetWorldTransform()->position_.y + 30)
-	{
-		moveDist.x -= inputVec.x * transSpeed_.x;
-		moveDist.y += inputVec.y * transSpeed_.y;
-		//カメラがどのくらいプレイヤーに近づくかClampをする
-		moveDist.y = Clamp(moveDist.y, -1.0f, 1.0f);
-	}
+	moveDist.x -= inputVec.x * transSpeed_.x;
+	moveDist.y += inputVec.y * transSpeed_.y;
+	//カメラがどのくらいプレイヤーに近づくかClampをする
+	moveDist.y = Clamp(moveDist.y, -0.5f, 1.0f);
+
 	//球面座標代入
 	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
 	endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
 	endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
 
 	float maxGamecameraY = player_->GetWorldTransform()->position_.y + 25;
-	float minGamecameraY = 0.5f;
+	float minGamecameraY = 2.5f;
 
 	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY, maxGamecameraY);
 
@@ -110,7 +108,7 @@ void GameCamera::UpdateCameraPos()
 
 	ImGui::SliderFloat("moveDist.x", &moveDist.x, 0.0f, 2000.0f, "x = %.3f");
 	ImGui::SliderFloat("moveDist.y", &moveDist.y, 0.0f, 2000.0f, "y = %.3f");
-	
+
 	ImGui::End();
 #endif // _DEBUG
 }
@@ -189,7 +187,7 @@ void GameCamera::UpdateLookAT()
 		}
 
 
-		frontDist_ = Easing::Sine::easeInOut(rate,15.f,-5.f,1.0f);
+		frontDist_ = Easing::Sine::easeInOut(rate, 15.f, -5.f, 1.0f);
 		//プレイヤーの前方ベクトル * 距離を計算
 		Vector3 frontVec = player_->GetPlayerFrontVec() * frontDist_;
 

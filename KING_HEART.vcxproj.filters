@@ -612,14 +612,14 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirSweep.cpp">
       <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\GameSpeed.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\ConfigMenu.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\GameSpeed.cpp">
+      <Filter>application\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -992,14 +992,14 @@
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirSweep.h">
       <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\GameSpeed.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\ConfigMenu.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\GameSpeed.h">
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

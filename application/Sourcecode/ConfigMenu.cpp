@@ -1,6 +1,7 @@
 #include "ConfigMenu.h"
 #include <imgui.h>
 #include "mInput.h"
+#include "mSound.h"
 
 ConfigMenu* ConfigMenu::GetInstance()
 {
@@ -18,6 +19,7 @@ void ConfigMenu::Update()
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
+		SoundManager::Play("SelectSE");
 		int32_t typeNum = (int32_t)type_;
 		
 		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN))typeNum++;
@@ -33,6 +35,7 @@ void ConfigMenu::Update()
 	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT)||
 		Controller::GetTriggerButtons(PAD::INPUT_LEFT))
 	{
+		SoundManager::Play("SelectSE");
 		if (type_ == ConfigType::CameraAxisX)
 		{
 			isInversX_ = (isInversX_ == false) ? true : false;
@@ -101,6 +104,8 @@ void ConfigMenuSprite::Update()
 		axisY_->frameSprite_[isInversY_]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
 	}
 
+	Vector2 particlePos{};
+
 	if (type_ == ConfigType::CameraAxisX)
 	{
 		axisX_->itemFrameSprite_->SetColor(selectColor);
@@ -108,6 +113,13 @@ void ConfigMenuSprite::Update()
 
 		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
 		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+
+		particlePos = axisX_->itemFrameSprite_->GetPos();
+
+		particlePos = {
+			axisX_->itemFrameSprite_->GetPos().x + axisX_->itemFrameSprite_->GetTexture().size_.x / 4.5f,
+			axisX_->itemFrameSprite_->GetPos().y - axisX_->itemFrameSprite_->GetTexture().size_.y / 4.f
+		};
 	}
 	else if (type_ == ConfigType::CameraAxisY)
 	{
@@ -116,7 +128,14 @@ void ConfigMenuSprite::Update()
 
 		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+
+		particlePos = {
+			axisY_->itemFrameSprite_->GetPos().x + axisY_->itemFrameSprite_->GetTexture().size_.x / 4.5f,
+			axisY_->itemFrameSprite_->GetPos().y - axisY_->itemFrameSprite_->GetTexture().size_.y / 4.f
+		};
 	}
+
+	selectParticle_.SetPos(particlePos);
 
 	axisX_->Update();
 	axisY_->Update();

@@ -42,6 +42,7 @@ void PauseMenu::Update()
 			if (Controller::GetTriggerButtons(PAD::INPUT_B))
 			{
 				isPause_ = false;
+				SoundManager::Play("CancelSE");
 			}
 
 			//ƒƒjƒ…[‘I‘ð
@@ -90,6 +91,7 @@ void PauseMenu::Update()
 			Controller::GetTriggerButtons(PAD::INPUT_B))
 		{
 			isConfig_ = false;
+			SoundManager::Play("CancelSE");
 		}
 		ConfigMenu::GetInstance()->Update();
 		ConfigMenu::GetInstance()->SpriteUpdate();

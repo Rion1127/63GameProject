@@ -82,6 +82,7 @@ void LoadManager::LoadSound()
 	LoadWave("menuSE.wav", "MenuSE");
 	LoadWave("fireSE.wav", "FireSE");
 	LoadWave("roundClearSE.wav", "RoundClearSE");
+	LoadWave("cancelSE.wav", "CancelSE");
 }
 
 void LoadManager::LoadEnemyPopData()
