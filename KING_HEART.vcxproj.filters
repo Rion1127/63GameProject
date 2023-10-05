@@ -411,7 +411,7 @@
     <ClCompile Include="application\Sourcecode\Player\IAttack.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\IActor.cpp">
+    <ClCompile Include="application\Sourcecode\Interface\IActor.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp">
@@ -471,7 +471,7 @@
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\GameCamera.cpp">
+    <ClCompile Include="application\Sourcecode\MainSystem\GameCamera.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\LoadManager.cpp">
@@ -501,7 +501,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\EnemyLoader.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\ColosseumSystem.cpp">
+    <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.cpp">
@@ -513,13 +513,13 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\PauseMenu.cpp">
+    <ClCompile Include="application\Sourcecode\MainSystem\PauseMenu.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\IBullet.cpp">
+    <ClCompile Include="application\Sourcecode\Interface\IBullet.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\MagicFire.cpp">
@@ -567,7 +567,7 @@
     <ClCompile Include="application\Sourcecode\Player\PlayerGauge.cpp">
       <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\IGauge.cpp">
+    <ClCompile Include="application\Sourcecode\Interface\IGauge.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Attack\Attack2.cpp">
@@ -615,10 +615,10 @@
     <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\ConfigMenu.cpp">
+    <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\GameSpeed.cpp">
+    <ClCompile Include="application\Sourcecode\MainSystem\GameSpeed.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -788,7 +788,7 @@
     <ClInclude Include="application\Sourcecode\Player\IAttack.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\IActor.h">
+    <ClInclude Include="application\Sourcecode\Interface\IActor.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\ParticleWallHit.h">
@@ -845,7 +845,7 @@
     <ClInclude Include="application\Sourcecode\CollisionManager.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\GameCamera.h">
+    <ClInclude Include="application\Sourcecode\MainSystem\GameCamera.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\LoadManager.h">
@@ -875,7 +875,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\EnemyLoader.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\ColosseumSystem.h">
+    <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.h">
@@ -890,7 +890,7 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\PauseMenu.h">
+    <ClInclude Include="application\Sourcecode\MainSystem\PauseMenu.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Player.h">
@@ -899,7 +899,7 @@
     <ClInclude Include="application\Sourcecode\Player\MagicManager.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\IBullet.h">
+    <ClInclude Include="application\Sourcecode\Interface\IBullet.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\MagicFire.h">
@@ -947,7 +947,7 @@
     <ClInclude Include="application\Sourcecode\Player\PlayerGauge.h">
       <Filter>application\ヘッダーファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\IGauge.h">
+    <ClInclude Include="application\Sourcecode\Interface\IGauge.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir1.h">
@@ -995,10 +995,10 @@
     <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\ConfigMenu.h">
+    <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\GameSpeed.h">
+    <ClInclude Include="application\Sourcecode\MainSystem\GameSpeed.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
