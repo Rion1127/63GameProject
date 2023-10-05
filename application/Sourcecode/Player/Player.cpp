@@ -200,13 +200,33 @@ void Player::InputVecUpdate()
 		// 計算結果がオーバーフローしていなかったら値を更新
 		if (inputAngle >= 0)
 		{
-			inputAngle_ = inputAngle;
-			goalinputAngle_ += (inputAngle_ - goalinputAngle_) * 0.2f;
+			
 		}
 		if (Controller::GetLStick().x != 0 ||
 			Controller::GetLStick().y != 0)
 		{
-			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
+			float angle = 0;
+			angle = moveVec_.dot({ 0.0f, 1.0f }) / (moveVec_.length() * Vector2(0.0f, 1.0f).length());
+			angle = acos(angle);
+			angle = Angle(angle);
+
+			float dist1 = 360.f - goalinputAngle_;
+			float dist2 = goalinputAngle_;
+			//プレイヤーが180度よりも大きい角度を向いていた時
+			/*if (dist1 < dist2)
+			{*/
+				inputAngle_ += 180.f;
+				goalinputAngle_ += (inputAngle_ - goalinputAngle_) * 0.2f;
+			/*}
+			else
+			{
+				
+			}*/
+
+			inputAngle_ = inputAngle;
+			//goalinputAngle_ += -(goalinputAngle_ - inputAngle_) * 0.2f;
+			
+			obj_->WT_.rotation_ = { 0,Radian(goalinputAngle_) ,0 };
 		}
 	}
 }
