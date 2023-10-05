@@ -3,15 +3,23 @@
 //Dummy,Shadow,RedNocturne
 
 ROUND1
-
 SET,-3,4,0,RedNocturne
 
-
 ROUND2
-
 SET,-2,0,5,RedNocturne
 SET,2,0,5,Shadow
 
-
 ROUND3
 SET,0,0,5,Shadow
+
+ROUND4
+SET,0,0,5,Shadow
+
+ROUND5
+SET,0,0,5,Shadow
+SET,1,0,5,Shadow
+SET,2,0,5,Shadow
+SET,3,0,5,Shadow
+
+
+

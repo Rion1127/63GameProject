@@ -70,10 +70,16 @@ void DebugScene::Update()
 #ifdef _DEBUG
 	if (Key::TriggerKey(DIK_R))
 	{
+		ParticleManager::GetInstance()->AllClear();
 		JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
-
+	if (Key::TriggerKey(DIK_E))
+	{
+		std::string path = "application/Resources/EnemyPOP/";
+		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "DebugEnemy.csv", "Debug");
+		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "HadesCup.csv", "HadesCup");
+	}
 #endif // _DEBUG
 	
 	if (pauseMenu_->GetIsPause() == false) {
@@ -243,6 +249,7 @@ void DebugScene::CameraUpdate()
 
 void DebugScene::LoadEnemyImGui()
 {
+	static int roundNum = 1;
 	std::string fileName_;
 	ImGui::Begin("EnemyRound");
 
@@ -251,19 +258,21 @@ void DebugScene::LoadEnemyImGui()
 	auto datasize = EnemyLoader::GetInstance()->GetAllData();
 	for (auto itr = datasize.begin(); itr != datasize.end(); ++itr)
 	{
+		if (itr->first == "")continue;
 		fileName.push_back(itr->first);
 	}
 	//プルダウンメニューで読み込んだファイルを選択できるようにする
 	static std::string s_currentItem;
 	if (ImGui::BeginCombo("fileName", s_currentItem.c_str()))
 	{
-		for (int i = 0; i < fileName.size() - 1; ++i)
+		for (int i = 0; i < fileName.size(); ++i)
 		{
 			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
 			const bool is_selected = (s_currentItem == fileName[i]);
 			if (ImGui::Selectable(fileName[i].c_str(), is_selected))
 			{
 				s_currentItem = fileName[i].c_str();
+				roundNum = 1;
 			}
 			if (is_selected)
 			{
@@ -274,12 +283,18 @@ void DebugScene::LoadEnemyImGui()
 	}
 	//読み込んだファイルのラウンド数を入力
 	size_t RoundMax = EnemyLoader::GetInstance()->GetEnemyData(s_currentItem).size();
-	static int roundNum = 0;
+	
 	ImGui::DragInt("Round", &roundNum, 1.f, 1, (int)RoundMax);
 	//上記の内容でファイルをリロードする
 	if (ImGui::Button("RoundLoad"))
 	{
 		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), s_currentItem, roundNum);
+	}
+	if (ImGui::Button("HotReLoad"))
+	{
+		std::string path = "application/Resources/EnemyPOP/";
+		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "DebugEnemy.csv", "Debug");
+		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "HadesCup.csv", "HadesCup");
 	}
 	ImGui::End();
 }

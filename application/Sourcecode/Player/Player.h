@@ -27,6 +27,7 @@ private:
 	Vector2 inputVec_;
 	Vector2 moveVec_;
 	// --“ü—Í-- //
+	float goalinputAngle_;
 	float inputAngle_;	//“ü—Í‚³‚ê‚Ä‚¢‚é•ûŒü‚ÌŠp“x
 	float walklimitValue_;	//“ü—Í
 

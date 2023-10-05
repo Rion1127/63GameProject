@@ -13,6 +13,12 @@ EnemyLoader* EnemyLoader::GetInstance()
 
 void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::string& dataName)
 {
+	if (popDatas_.find(dataName) != popDatas_.end())
+	{
+		popDatas_.erase("");
+		popDatas_.erase(dataName);
+	}
+
 
 	std::vector<PopData> popDatas;
 	std::stringstream enemyPopCommands_;
@@ -75,7 +81,6 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 	}
 	//一つのファイルとdataNameをペアにして保存
 	popDatas_.insert(std::make_pair(dataName, std::move(popDatas)));
-	
 }
 
 void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std::string& dataName, int32_t roundNum)

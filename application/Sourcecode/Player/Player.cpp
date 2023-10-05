@@ -194,12 +194,6 @@ void Player::InputVecUpdate()
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
 
-		/*obj_->GetTransform()->position_ = {
-			Clamp(obj_->GetTransform()->position_.x, -77.f, 77.f),
-			Clamp(obj_->GetTransform()->position_.y, 0.f, 100.f),
-			Clamp(obj_->GetTransform()->position_.z, -77.f, 77.f)
-		};*/
-
 		// 入力しているベクトルの角度を求める
 		float inputAngle = Vec2Angle(moveVec_);
 
@@ -207,6 +201,7 @@ void Player::InputVecUpdate()
 		if (inputAngle >= 0)
 		{
 			inputAngle_ = inputAngle;
+			goalinputAngle_ += (inputAngle_ - goalinputAngle_) * 0.2f;
 		}
 		if (Controller::GetLStick().x != 0 ||
 			Controller::GetLStick().y != 0)
@@ -445,6 +440,9 @@ void Player::DrawImGui()
 	{
 		health_ = 100;
 	}
+
+	ImGui::SliderFloat("inputAngle", &inputAngle_, 0.f, 3.1415f, "x = %.3f");
+	ImGui::SliderFloat("endRot", &goalinputAngle_, 0.f, 3.1415f, "x = %.3f");
 
 	ImGui::End();
 
