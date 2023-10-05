@@ -58,18 +58,28 @@ void ConfigMenu::DrawImGui()
 {
 	ImGui::Begin("Config");
 
+	ImGui::Text("Camera");
+
 	if (ImGui::Button("InvX"))
 	{
 
 		isInversX_ = (isInversX_ == false) ? true : false;
 	}
-	
-	
+	std::string flagX;
+	if (isInversX_)flagX = "Normal";
+	else flagX = "Invers";
+	ImGui::SameLine();
+	ImGui::Text(flagX.c_str());
 
 	if (ImGui::Button("InvY"))
 	{
 		isInversY_ = (isInversY_ == false) ? true : false;
 	}
+	std::string flagY;
+	if (isInversY_)flagY = "Normal";
+	else flagY = "Invers";
+	ImGui::SameLine();
+	ImGui::Text(flagY.c_str());
 
 	ImGui::End();
 }

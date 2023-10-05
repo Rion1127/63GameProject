@@ -157,6 +157,14 @@ void AttackManager::DrawDebug()
 		isColDisplay++;
 		isColDisplay = isColDisplay & 1;
 	}
+	std::string flagstring;
+
+	if (isColDisplay)flagstring = "Display";
+	else flagstring = "Hide";
+
+	ImGui::SameLine();
+	ImGui::Text(flagstring.c_str());
+
 	ImGui::End();
 }
 
