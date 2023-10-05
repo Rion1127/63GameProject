@@ -600,6 +600,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;$(ProjectDir)application\Sourcecode\Player\Attack;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -626,6 +627,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;$(ProjectDir)application\Sourcecode\Player\Attack;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
