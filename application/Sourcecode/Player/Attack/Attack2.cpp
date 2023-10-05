@@ -36,6 +36,7 @@ void Attack2::Init()
 
 	spline_.SetPositions(attackVec);
 
+	attackCol_.at(0)->col_.SetPos(playerFrontPos);
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力

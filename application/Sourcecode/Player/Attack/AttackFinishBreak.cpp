@@ -38,6 +38,7 @@ void AttackFinishBreak::Init()
 		//ノックバック力
 		attackCol_.at(i)->knockPower = { 0.f,1.0f,0.f };
 		attackCol_.at(i)->knockVecY = 0.3f;
+		attackCol_.at(i)->col_.isActive = false;
 	}
 	colRadius_ = 1.8f;
 	rotateSpeed_ = 10.f;

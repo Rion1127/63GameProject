@@ -20,6 +20,7 @@ void Attack1::Init()
 	//スプライン曲線計算
 	SplineInit();
 
+	attackCol_.at(0)->col_.SetPos(spline_.GetsplinePos().at(0));
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力

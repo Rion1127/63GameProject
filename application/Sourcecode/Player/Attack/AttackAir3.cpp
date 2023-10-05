@@ -41,6 +41,7 @@ void AttackAir3::Init()
 
 	spline_.SetPositions(attackVec);
 
+	attackCol_.at(0)->col_.SetPos(playerrightPos);
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 20;
 	//ノックバック力
