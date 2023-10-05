@@ -244,6 +244,12 @@
     <Filter Include="application\ヘッダーファイル\Player\State">
       <UniqueIdentifier>{8db6c27a-b84f-4dbf-9df1-dc9933b7fafb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ヘッダーファイル\MainSystem">
+      <UniqueIdentifier>{cb6b5ab9-6c42-493d-8e19-0deccf9d08ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\MainSystem">
+      <UniqueIdentifier>{523e222f-9a2f-4b50-821e-ae68874c3a3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -408,7 +414,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\IAttack.cpp">
+    <ClCompile Include="application\Sourcecode\Interface\IAttack.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Interface\IActor.cpp">
@@ -429,13 +435,13 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleWallHit.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Guard.cpp">
+    <ClCompile Include="application\Sourcecode\Player\Action\Guard.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Player.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\DodgeRoll.cpp">
+    <ClCompile Include="application\Sourcecode\Player\Action\DodgeRoll.cpp">
       <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerInfo.cpp">
@@ -471,9 +477,6 @@
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainSystem\GameCamera.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\LoadManager.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
@@ -501,9 +504,6 @@
     <ClCompile Include="application\Sourcecode\Enemy\EnemyLoader.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.cpp">
       <Filter>application\ソースファイル\Enemy\RedNocturne</Filter>
     </ClCompile>
@@ -513,16 +513,13 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainSystem\PauseMenu.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\MagicManager.cpp">
+    <ClCompile Include="application\Sourcecode\Player\Magic\MagicManager.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Interface\IBullet.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\MagicFire.cpp">
+    <ClCompile Include="application\Sourcecode\Player\Magic\MagicFire.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
@@ -531,35 +528,32 @@
     <ClCompile Include="engine\util\StateMachine.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerIdle.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerIdle.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerMove.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerMove.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerDogeRoll.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerDogeRoll.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerJump.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerJump.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerGuard.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerGuard.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerFreeze.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerFreeze.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerKnock.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerKnock.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerAttack.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerAttack.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerAirAttack.cpp">
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerAirAttack.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\PlayerMagic.cpp">
-      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\UI\UIMp.cpp">
       <Filter>application\ソースファイル\UI</Filter>
@@ -600,12 +594,6 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Particle\SwordTrail.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Particle\ParticleTrail.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.cpp">
       <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
@@ -615,11 +603,29 @@
     <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp">
+      <Filter>application\ソースファイル\MainSystem</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
-      <Filter>application\ソースファイル</Filter>
+      <Filter>application\ソースファイル\MainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainSystem\GameCamera.cpp">
+      <Filter>application\ソースファイル\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\GameSpeed.cpp">
-      <Filter>application\ソースファイル</Filter>
+      <Filter>application\ソースファイル\MainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainSystem\PauseMenu.cpp">
+      <Filter>application\ソースファイル\MainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleTrail.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\SwordTrail.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\State\PlayerMagic.cpp">
+      <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -785,7 +791,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\IAttack.h">
+    <ClInclude Include="application\Sourcecode\Interface\IAttack.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Interface\IActor.h">
@@ -806,10 +812,10 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\DodgeRoll.h">
+    <ClInclude Include="application\Sourcecode\Player\Action\DodgeRoll.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Guard.h">
+    <ClInclude Include="application\Sourcecode\Player\Action\Guard.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerInfo.h">
@@ -845,9 +851,6 @@
     <ClInclude Include="application\Sourcecode\CollisionManager.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainSystem\GameCamera.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\LoadManager.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
@@ -875,9 +878,6 @@
     <ClInclude Include="application\Sourcecode\Enemy\EnemyLoader.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Enemy\RedNocturne\EnemyRedNocturne.h">
       <Filter>application\ヘッダーファイル\Enemy\RedNocturne</Filter>
     </ClInclude>
@@ -890,19 +890,16 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainSystem\PauseMenu.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Player.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\MagicManager.h">
+    <ClInclude Include="application\Sourcecode\Player\Magic\MagicManager.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Interface\IBullet.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\MagicFire.h">
+    <ClInclude Include="application\Sourcecode\Player\Magic\MagicFire.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
@@ -911,35 +908,32 @@
     <ClInclude Include="engine\util\StateMachine.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerIdle.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerIdle.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerMove.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerMove.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerDogeRoll.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerDogeRoll.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerJump.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerJump.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerGuard.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerGuard.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerFreeze.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerFreeze.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerKnock.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerKnock.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerAttack.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerAttack.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerAirAttack.h">
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerAirAttack.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\PlayerMagic.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\UI\UIMp.h">
       <Filter>application\ヘッダーファイル\UI</Filter>
@@ -980,12 +974,6 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Particle\SwordTrail.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Particle\ParticleTrail.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.h">
       <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
     </ClInclude>
@@ -995,11 +983,29 @@
     <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h">
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
+    </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h">
-      <Filter>application\ヘッダーファイル</Filter>
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainSystem\GameCamera.h">
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\GameSpeed.h">
-      <Filter>application\ヘッダーファイル</Filter>
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainSystem\PauseMenu.h">
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleTrail.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\SwordTrail.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\State\PlayerMagic.h">
+      <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
