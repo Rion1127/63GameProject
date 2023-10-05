@@ -10,18 +10,12 @@ AttackAirSweep::AttackAirSweep(IActor* selfActor) :
 void AttackAirSweep::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 		frontDist_ = 1;
 		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		frontDist = frontVec * frontDist_;
-		frontDist.y = 0;
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 

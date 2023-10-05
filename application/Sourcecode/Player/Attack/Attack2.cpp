@@ -8,8 +8,6 @@ Attack2::Attack2(IActor* selfActor) :
 void Attack2::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr)
 	{
 		frontDist_ = 0;
@@ -18,11 +16,6 @@ void Attack2::Init()
 		{
 			CalculateRotToLockOnActor(frontVec);
 		}
-		frontVec = frontVec.normalize();
-		frontDist = frontVec * frontDist_;
-		frontDist.y = 0;
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 	}
 	attackVec_ = frontVec;
 
@@ -43,8 +36,6 @@ void Attack2::Init()
 
 	spline_.SetPositions(attackVec);
 
-
-	attackCol_.at(0)->col_.center = colPos;
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力

@@ -8,18 +8,12 @@ AttackAir2::AttackAir2(IActor* selfActor) :
 void AttackAir2::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 		frontDist_ = 0;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		frontDist = frontVec * frontDist_;
-		frontDist.y = 0;
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 		selfActor_->GetGravity()->SetGrabity({0,0.1f,0});
 	}
 	attackVec_ = frontVec;
@@ -54,8 +48,6 @@ void AttackAir2::Init()
 
 	spline_.SetPositions(attackVec);
 
-
-	attackCol_.at(0)->col_.center = colPos;
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力

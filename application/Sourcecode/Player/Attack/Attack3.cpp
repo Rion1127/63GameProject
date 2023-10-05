@@ -8,19 +8,12 @@ Attack3::Attack3(IActor* selfActor) :
 void Attack3::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 		frontDist_ = selfActor_->GetWorldTransform()->scale_.x;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		frontVec = frontVec.normalize();
-		frontDist = frontVec * frontDist_;
-		frontDist.y = 0;
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 	}
 	attackVec_ = frontVec;
 
@@ -48,8 +41,6 @@ void Attack3::Init()
 
 	spline_.SetPositions(attackVec);
 
-
-	attackCol_.at(0)->col_.center = colPos;
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 20;
 	//ノックバック力

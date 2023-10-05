@@ -10,18 +10,12 @@ AttackAirAerialFinish::AttackAirAerialFinish(IActor* selfActor) :
 void AttackAirAerialFinish::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 		frontDist_ = 0;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		frontDist = frontVec * frontDist_;
-		frontDist.y = 0;
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 
@@ -235,8 +229,8 @@ void AttackAirAerialFinish::FourthAttackInit()
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
-	attackCol_.at(0)->knockPower = { 0.1f,0.1f,0.1f };
-	attackCol_.at(0)->knockVecY = 0.5f;
+	attackCol_.at(0)->knockPower = { 0.8f,0.1f,0.8f };
+	attackCol_.at(0)->knockVecY = 1.0f;
 
 
 	//スプライン曲線計算

@@ -9,21 +9,15 @@ void AttackSlide::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
 	frontVec_ = frontVec;
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 	}
 	attackVec_ = frontVec;
 
-	attackCol_.at(0)->col_.center = colPos;
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力

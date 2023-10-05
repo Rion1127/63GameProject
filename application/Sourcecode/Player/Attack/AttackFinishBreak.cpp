@@ -10,8 +10,6 @@ AttackFinishBreak::AttackFinishBreak(IActor* selfActor) :
 void AttackFinishBreak::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
-	Vector3 colPos{};
-	Vector3 frontDist{};
 	if (selfActor_ != nullptr)
 	{
 		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
@@ -21,9 +19,6 @@ void AttackFinishBreak::Init()
 		}
 
 		frontVec = frontVec.normalize();
-		frontDist.y = 0;
-		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
-		colPos.y += 1;
 	}
 	attackVec_ = frontVec;
 
@@ -37,7 +32,6 @@ void AttackFinishBreak::Init()
 	coolTime /= hitNum_;
 
 	for (uint32_t i = 0; i < attackCol_.size(); i++) {
-		attackCol_.at(i)->col_.center = colPos;
 		attackCol_.at(i)->col_.radius = 1.2f;
 		attackCol_.at(i)->damage = 3;
 		attackCol_.at(i)->damageCoolTime = (int32_t)coolTime + 1;
