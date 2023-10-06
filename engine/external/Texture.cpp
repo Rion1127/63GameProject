@@ -35,6 +35,16 @@ void TextureManager::Ini()
 
 void TextureManager::LoadGraph(const std::string& fileName, const std::string& name)
 {
+	//同じ画像があった場合読み込まない
+	bool isMatch = false;
+	for (uint32_t i = 0; i < texData.size(); i++) {
+		if (texData.find(name) != texData.end()) {
+			isMatch = true;
+			break;
+		}
+	}
+	if (isMatch)return;
+
 	auto& device = *RDirectX::GetInstance()->GetDevice();
 	HRESULT result = E_FAIL;
 	uint32_t graphHandle{};
@@ -69,17 +79,6 @@ void TextureManager::LoadGraph(const std::string& fileName, const std::string& n
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	//画像の名前を保存する
 	texture_->fileName_ = fileName;
-	//同じ画像があった場合その画像と同じ数値を返す
-	for (uint32_t i = 0; i < texData.size(); i++) {
-		if (name == "") {
-			continue;
-			if (texData.size() > 0) {
-				if (texData.find(name)->second->fileName_ == fileName) {
-					break;
-				}
-			}
-		}
-	}
 
 	//ファイルの拡張子を代入
 	std::string extension = FileExtension(fileName);
