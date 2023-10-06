@@ -90,30 +90,30 @@ void Camera::MoveTo(Vector3 goal, float speed)
 
 void Camera::UpdateLookAt()
 {
-	//‹“_À•W
+	//è¦–ç‚¹åº§æ¨™
 	Vector3 eyePosition = eye_;
-	//’‹“_À•W
+	//æ³¨è¦–ç‚¹åº§æ¨™
 	Vector3 targetPosition = target_;
-	//i‰¼‚Ìjã•ûŒü
+	//ï¼ˆä»®ã®ï¼‰ä¸Šæ–¹å‘
 	Vector3 upVector = up_;
 
-	//ƒJƒƒ‰Z²i‹ü•ûŒüj
+	//ã‚«ãƒ¡ãƒ©Zè»¸ï¼ˆè¦–ç·šæ–¹å‘ï¼‰
 	Vector3 cameraAxisZ = targetPosition - eyePosition;
-	//ƒxƒNƒgƒ‹‚ğ³‹K‰»
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 	cameraAxisZ = cameraAxisZ.normalize();
-	//ƒJƒƒ‰‚ÌX²i‰E•ûŒüj
+	//ã‚«ãƒ¡ãƒ©ã®Xè»¸ï¼ˆå³æ–¹å‘ï¼‰
 	Vector3 cameraAxisX;
-	//X²‚Íã•ûŒü¨Z²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Xè»¸ã¯ä¸Šæ–¹å‘â†’Zè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	cameraAxisX = upVector.cross(cameraAxisZ);
-	//ƒxƒNƒgƒ‹‚ğ³‹K‰»
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 	cameraAxisX = cameraAxisX.normalize();
-	//ƒJƒƒ‰‚ÌYÀ•Wiã•ûŒüj
+	//ã‚«ãƒ¡ãƒ©ã®Yåº§æ¨™ï¼ˆä¸Šæ–¹å‘ï¼‰
 	Vector3 cameraAxisY;
-	//Y²‚ÍZ²¨X²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Yè»¸ã¯Zè»¸â†’Xè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	cameraAxisY = cameraAxisZ.cross(cameraAxisX);
-	//ƒJƒƒ‰‰ñ“]s—ñ
+	//ã‚«ãƒ¡ãƒ©å›è»¢è¡Œåˆ—
 	Matrix4 matCameraRot{};
-	//ƒJƒƒ‰À•WŒn¨ƒ[ƒ‹ƒhÀ•WŒn‚Ì•ÏŠ·s—ñ
+	//ã‚«ãƒ¡ãƒ©åº§æ¨™ç³»â†’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®å¤‰æ›è¡Œåˆ—
 	matCameraRot.m[0][0] = cameraAxisX.x;
 	matCameraRot.m[0][1] = cameraAxisX.y;
 	matCameraRot.m[0][2] = cameraAxisX.z;
@@ -130,7 +130,7 @@ void Camera::UpdateLookAt()
 	matCameraRot.m[3][1] = 0;
 	matCameraRot.m[3][2] = 0;
 	matCameraRot.m[3][3] = 1;
-	//“]’u‚µ‚Ä‘ã“ü
+	//è»¢ç½®ã—ã¦ä»£å…¥
 
 	matView_.m[0][0] = matCameraRot.m[0][0];
 	matView_.m[1][0] = matCameraRot.m[0][1];
@@ -152,14 +152,14 @@ void Camera::UpdateLookAt()
 	matView_.m[2][3] = matCameraRot.m[3][2];
 	matView_.m[3][3] = matCameraRot.m[3][3];
 
-	//‹“_À•W‚É-1‚ğ“q‚¯‚½À•W
+	//è¦–ç‚¹åº§æ¨™ã«-1ã‚’è³­ã‘ãŸåº§æ¨™
 	Vector3 reverseEyePosition = eyePosition * -1;
-	//ƒrƒ…[s—ñ‚É•½sˆÚ“®¬•ª‚ğİ’è
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã«å¹³è¡Œç§»å‹•æˆåˆ†ã‚’è¨­å®š
 	matView_.m[3][0] = cameraAxisX.dot(reverseEyePosition);
 	matView_.m[3][1] = cameraAxisY.dot(reverseEyePosition);
 	matView_.m[3][2] = cameraAxisZ.dot(reverseEyePosition);
 	matView_.m[3][3] = 1.f;
-	//‘S•ûŒüƒrƒ‹ƒ{[ƒhs—ñ
+	//å…¨æ–¹å‘ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	matBillboard_.m[0][0] = cameraAxisX.x;
 	matBillboard_.m[0][1] = cameraAxisX.y;
 	matBillboard_.m[0][2] = cameraAxisX.z;
@@ -180,23 +180,23 @@ void Camera::UpdateLookAt()
 	matBillboard_.m[3][2] = 0;
 	matBillboard_.m[3][3] = 1;
 
-	////Y²ü‚èƒrƒ‹ƒ{[ƒhs—ñ
-	////ƒJƒƒ‰XYZ²
+	////Yè»¸å‘¨ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
+	////ã‚«ãƒ¡ãƒ©XYZè»¸
 	//XMVECTOR ybillCameraAxisX, ybillCameraAxisY, ybillCameraAxisZ;
-	////X²‚Í‹¤’Ê
+	////Xè»¸ã¯å…±é€š
 	//ybillCameraAxisX = cameraAxisX;
-	////Y²‚Íƒ[ƒ‹ƒhÀ•WŒn‚ÌY²
+	////Yè»¸ã¯ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®Yè»¸
 	//ybillCameraAxisY = XMVector3Normalize(upVector);
-	////Z²‚ÍX²¨Y²‚ÌŠOÏ‚Å‹‚Ü‚é
+	////Zè»¸ã¯Xè»¸â†’Yè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	//ybillCameraAxisZ = XMVector3Cross(cameraAxisX, cameraAxisY);
 
-	//////Y²‰ñ‚èƒrƒ‹ƒ{[ƒhs—ñ
+	//////Yè»¸å›ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	//matBillboardY_.r[0] = ybillCameraAxisX;
 	//matBillboardY_.r[1] = ybillCameraAxisY;
 	//matBillboardY_.r[2] = ybillCameraAxisZ;
 	//matBillboardY_.r[3] = XMVectorSet(0, 0, 0, 1);
 
-	//ƒJƒƒ‰ƒVƒFƒCƒNƒAƒbƒvƒf[ƒg
+	//ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 	ShakeUpdate();
 
 	UpdateMatProjection();
@@ -206,16 +206,16 @@ void Camera::UpdateLookTo()
 {
 	WT_.SetRotation(rot_);
 	WT_.Update();
-	//ƒJƒƒ‰À•W‚ÆY²AZ²‚ğæ“¾
+	//ã‚«ãƒ¡ãƒ©åº§æ¨™ã¨Yè»¸ã€Zè»¸ã‚’å–å¾—
 	Vector3 pos = eye_;
 	Vector3 axisY = WT_.GetMatWorld().GetAxisY();
 	Vector3 axisZ = WT_.GetMatWorld().GetAxisZ();
-	//’PˆÊs—ñ‚É‰Šú‰»
+	//å˜ä½è¡Œåˆ—ã«åˆæœŸåŒ–
 	matView_.UnitMatrix();
-	//Z²‚ÆY²‚ğæ“¾
+	//Zè»¸ã¨Yè»¸ã‚’å–å¾—
 	Vector3 xAxisVec = axisY.cross(axisZ).normalize();
 	Vector3 yAxisVec = axisZ.cross(xAxisVec).normalize();
-	//•½sˆÚ“®¬•ª‚ğİ’è
+	//å¹³è¡Œç§»å‹•æˆåˆ†ã‚’è¨­å®š
 	Vector3 transPos = {
 		-pos.dot(xAxisVec.normalize()),
 		-pos.dot(yAxisVec.normalize()),
@@ -266,11 +266,11 @@ void Camera::ShakeUpdate()
 	//Vector2 dist;
 	//if (shakeTime_ > 0) {
 	//	shakeTime_--;
-	//	//—”ƒV[ƒh¶¬Ší
+	//	//ä¹±æ•°ã‚·ãƒ¼ãƒ‰ç”Ÿæˆå™¨
 	//	std::random_device seed_gen;
-	//	//ƒƒ‹ƒZƒ“ƒkEƒcƒCƒXƒ^[‚Ì—”ƒGƒ“ƒWƒ“
+	//	//ãƒ¡ãƒ«ã‚»ãƒ³ãƒŒãƒ»ãƒ„ã‚¤ã‚¹ã‚¿ãƒ¼ã®ä¹±æ•°ã‚¨ãƒ³ã‚¸ãƒ³
 	//	std::mt19937_64 engine(seed_gen());
-	//	//U“®‚Ì‘å‚«‚³
+	//	//æŒ¯å‹•ã®å¤§ãã•
 	//	if (shakeTime_ > maxShakeTime_ * 0.8f) {
 	//		dist = { -(power_ * 0.8f) , power_ * 0.8f };
 	//	}
@@ -293,7 +293,7 @@ void Camera::ShakeUpdate()
 	//}
 	//else {
 	//	SetOriginalPos();
-	//	//Œ³‚ÌÀ•W‚ğ‘ã“ü‚·‚é
+	//	//å…ƒã®åº§æ¨™ã‚’ä»£å…¥ã™ã‚‹
 	//	//if (isShake == true) {
 	//		eye_ = originalPos_;
 	//		isShake_ = false;

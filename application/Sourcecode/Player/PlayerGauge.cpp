@@ -1,11 +1,11 @@
 #include "PlayerGauge.h"
 #include "Easing.h"
 
-#pragma region HPÉQÅ[ÉW
-PlayerHPGauge::PlayerHPGauge() : 
+#pragma region HP„Ç≤„Éº„Ç∏
+PlayerHPGauge::PlayerHPGauge() :
 	IGauge(Color(50.f, 205.f, 50.f, 255.f))
 {
-	
+
 	hpBarMiddle_ = std::move(std::make_unique<Sprite>());
 
 	hpBarMiddle_->Ini("");
@@ -68,8 +68,8 @@ void PlayerHPGauge::Damage()
 }
 #pragma endregion
 
-#pragma region MPÉQÅ[ÉW
-PlayerMPGauge::PlayerMPGauge() : 
+#pragma region MP„Ç≤„Éº„Ç∏
+PlayerMPGauge::PlayerMPGauge() :
 	IGauge(Color(0.f, 80.f, 255.f, 255.f))
 {
 	gauge_->SetTexture(TextureManager::GetInstance()->GetTexture("Gauge"));
@@ -115,14 +115,14 @@ void PlayerMPGauge::OriginalUpdate()
 	gauge_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
 	gaugeFrame_->SetPos(pos_);
 
-	//MPÉ`ÉÉÅ[ÉWíÜ
+	//MP„ÉÅ„É£„Éº„Ç∏‰∏≠
 	if (isCharge_ == true) {
 		if (easeTimer_.GetIsEnd()) {
-			
+
 		}
 		gauge_->SetColor(Color(200.f, 0.f, 170.f, 255.f));
 	}
-	//í èÌéû
+	//ÈÄöÂ∏∏ÊôÇ
 	else {
 		gauge_->SetColor(Color(0.f, 80.f, 255.f, 255.f));
 	}

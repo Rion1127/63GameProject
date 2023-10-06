@@ -1,7 +1,7 @@
 #include "Easing.h"
 #include <math.h>
-/// Œ³‚ÌƒR[ƒh
-//t Œo‰ßŠÔ    bÅ‰‚ÌˆÊ’u    cˆÚ“®—Ê    dˆÚ“®ŠÔ 
+/// å…ƒã®ã‚³ãƒ¼ãƒ‰
+//t çµŒéæ™‚é–“    bæœ€åˆã®ä½ç½®    cç§»å‹•é‡    dç§»å‹•æ™‚é–“ 
 #pragma region Back
 
 float Easing::Back::easeIn(float t, float b, float c, float d)
@@ -94,7 +94,7 @@ float Easing::Cubic::easeInOut(float t, float b, float c, float d)
 }
 #pragma endregion
 
-/// ‰ü•ÏŒãƒR[ƒh
+/// æ”¹å¤‰å¾Œã‚³ãƒ¼ãƒ‰
 
 #pragma region Back
 float Easing::Back::easeIn(float start, float end, float t)

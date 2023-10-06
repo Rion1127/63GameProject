@@ -5,7 +5,7 @@
 class CircleShadow
 {
 public:
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
 		Vector3 dir;
@@ -28,7 +28,7 @@ public:
 		this->factorAngleCos_.x = cosf(Radian(angle.x));
 		this->factorAngleCos_.y = cosf(Radian(angle.y));
 	}
-	void SetActive(bool active) {this->active_ = active;}
+	void SetActive(bool active) { this->active_ = active; }
 
 	Vector3 GetDir() { return dir_; }
 	float GetDistanceCasterLight() { return ditanveCasterLight_; }
@@ -36,19 +36,19 @@ public:
 	Vector3 GetAtten() { return atten_; }
 	Vector2 GetFactorAngleCos() { return factorAngleCos_; }
 	bool GetActive() { return active_; }
-	
+
 private:
-	//•ûŒü
+	//æ–¹å‘
 	Vector3 dir_ = { 1,0,0 };
-	//ƒLƒƒƒXƒ^[‚Æƒ‰ƒCƒg‚Ì‹——£
+	//ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¨ãƒ©ã‚¤ãƒˆã®è·é›¢
 	float ditanveCasterLight_ = 100.f;
-	//ƒLƒƒƒXƒ^[À•Wiƒ[ƒ‹ƒhÀ•WŒnj
+	//ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼åº§æ¨™ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ï¼‰
 	Vector3 casterPos_ = { 0,0,0 };
-	//‹——£Œ¸ŠŒW”
+	//è·é›¢æ¸›è¡°ä¿‚æ•°
 	Vector3 atten_ = { 0.5f,0.6f,0.0f };
-	//Œ¸ŠŠp“x
+	//æ¸›è¡°è§’åº¦
 	Vector2 factorAngleCos_ = { 0.2f,0.5f };
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active_ = false;
 };
 

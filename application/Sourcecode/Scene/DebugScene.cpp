@@ -47,7 +47,7 @@ void DebugScene::Ini()
 	enemyManager_->SetPlayer(player_.get());
 	colosseumSystem_->SetPlayer(player_.get());
 	colosseumSystem_->SetEnemy(enemyManager_.get());
-	
+
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
@@ -81,12 +81,12 @@ void DebugScene::Update()
 		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "HadesCup.csv", "HadesCup");
 	}
 #endif // _DEBUG
-	
+
 	if (pauseMenu_->GetIsPause() == false) {
 		//colosseumSystem_->Update();
 		CameraUpdate();
-		
-		//“–‚½‚è”»’è‘OXV
+
+		//å½“ãŸã‚Šåˆ¤å®šå‰æ›´æ–°
 		stage_->Update();
 		player_->PreUpdate();
 		enemyManager_->PreUpdate();
@@ -94,17 +94,17 @@ void DebugScene::Update()
 #ifdef _DEBUG
 		LoadEnemyImGui();
 #endif // _DEBUG
-		//“–‚½‚è”»’è
+		//å½“ãŸã‚Šåˆ¤å®š
 		colManager_->Update();
-		//“–‚½‚è”»’èŒãXV
+		//å½“ãŸã‚Šåˆ¤å®šå¾Œæ›´æ–°
 		enemyManager_->PostUpdate();
 		player_->PostUpdate();
-		//‚»‚Ì‘¼
+		//ãã®ä»–
 		lightManager_->DebugUpdate();
 		ParticleManager::GetInstance()->Update();
-		//UIXV
+		//UIæ›´æ–°
 		operationUI_->Update();
-		//ƒvƒŒƒCƒ„[‚ª€‚ñ‚¾‚çƒV[ƒ“•ÏX
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ­»ã‚“ã ã‚‰ã‚·ãƒ¼ãƒ³å¤‰æ›´
 		if (player_->GetIsAlive() == false)
 		{
 			SceneManager::SetChangeStart(SceneName::GameOver);
@@ -176,7 +176,7 @@ void DebugScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 
 	////////////////
-	//3DƒIƒuƒWƒFƒNƒg//
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ//
 	////////////////
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	stage_->Draw();
@@ -189,7 +189,7 @@ void DebugScene::Draw()
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
 	//obj_.Draw();
 	////////////
-	//ƒXƒvƒ‰ƒCƒg//
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ//
 	////////////
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	enemyManager_->SpriteDraw();
@@ -223,7 +223,7 @@ void DebugScene::DrawPostEffect()
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
 
-	
+
 }
 
 void DebugScene::CameraUpdate()
@@ -240,7 +240,7 @@ void DebugScene::CameraUpdate()
 	}
 	else
 	{
-		//ƒJƒƒ‰XV
+		//ã‚«ãƒ¡ãƒ©æ›´æ–°
 		debugCamera_.Update();
 		Camera::scurrent_ = debugCamera_.GetCamera();
 	}
@@ -253,7 +253,7 @@ void DebugScene::LoadEnemyImGui()
 	std::string fileName_;
 	ImGui::Begin("EnemyRound");
 
-	//ƒf[ƒ^ƒv[ƒ‹‚ÌƒnƒbƒVƒ…’l‚ğfileName‚É‘ã“ü
+	//ãƒ‡ãƒ¼ã‚¿ãƒ—ãƒ¼ãƒ«ã®ãƒãƒƒã‚·ãƒ¥å€¤ã‚’fileNameã«ä»£å…¥
 	std::vector<std::string> fileName;
 	auto datasize = EnemyLoader::GetInstance()->GetAllData();
 	for (auto itr = datasize.begin(); itr != datasize.end(); ++itr)
@@ -261,13 +261,13 @@ void DebugScene::LoadEnemyImGui()
 		if (itr->first == "")continue;
 		fileName.push_back(itr->first);
 	}
-	//ƒvƒ‹ƒ_ƒEƒ“ƒƒjƒ…[‚Å“Ç‚İ‚ñ‚¾ƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	//ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§èª­ã¿è¾¼ã‚“ã ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	static std::string s_currentItem;
 	if (ImGui::BeginCombo("fileName", s_currentItem.c_str()))
 	{
 		for (int i = 0; i < fileName.size(); ++i)
 		{
-			//‘I‘ğ‚µ‚½‚à‚Ì‚ÆƒnƒbƒVƒ…’l‚ªˆê’v‚µ‚½‚çs_currentItem‚ÉƒnƒbƒVƒ…’l‚ğ‘ã“ü
+			//é¸æŠã—ãŸã‚‚ã®ã¨ãƒãƒƒã‚·ãƒ¥å€¤ãŒä¸€è‡´ã—ãŸã‚‰s_currentItemã«ãƒãƒƒã‚·ãƒ¥å€¤ã‚’ä»£å…¥
 			const bool is_selected = (s_currentItem == fileName[i]);
 			if (ImGui::Selectable(fileName[i].c_str(), is_selected))
 			{
@@ -281,11 +281,11 @@ void DebugScene::LoadEnemyImGui()
 		}
 		ImGui::EndCombo();
 	}
-	//“Ç‚İ‚ñ‚¾ƒtƒ@ƒCƒ‹‚Ìƒ‰ƒEƒ“ƒh”‚ğ“ü—Í
+	//èª­ã¿è¾¼ã‚“ã ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ©ã‚¦ãƒ³ãƒ‰æ•°ã‚’å…¥åŠ›
 	size_t RoundMax = EnemyLoader::GetInstance()->GetEnemyData(s_currentItem).size();
-	
+
 	ImGui::DragInt("Round", &roundNum, 1.f, 1, (int)RoundMax);
-	//ã‹L‚Ì“à—e‚Åƒtƒ@ƒCƒ‹‚ğƒŠƒ[ƒh‚·‚é
+	//ä¸Šè¨˜ã®å†…å®¹ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 	if (ImGui::Button("RoundLoad"))
 	{
 		EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), s_currentItem, roundNum);

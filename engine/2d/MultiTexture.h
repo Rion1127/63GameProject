@@ -10,32 +10,32 @@
 class MultiTexture
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	std::vector<ComPtr<ID3D12Resource>> texBuff_;
 	ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
 
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> depthBuff_;
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	ComPtr<ID3D12Resource> vertBuff_;
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
-	//ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
 	std::vector<uint16_t> indices_;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì¶¬
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> indexBuff_ = nullptr;
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView_{};
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	ComPtr<ID3D12Resource> constBuff_ = nullptr;
 private:
-	//‰æ–ÊƒNƒŠƒAƒJƒ‰[
+	//ç”»é¢ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼
 	static const float clearColor_[4];
 public:
 	MultiTexture(int32_t texNum);
@@ -43,14 +43,14 @@ public:
 	void PUpdate();
 
 	void Draw(std::string pipelineName);
-	//ƒV[ƒ“‘Oˆ—
+	//ã‚·ãƒ¼ãƒ³å‰å‡¦ç†
 	void PreDrawScene();
-	//ƒV[ƒ“•`‰æŒãˆ—
+	//ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
 	void PostDrawScene();
 
-	//ƒV[ƒ“‘Oˆ—(texBuff‚ğw’è)
+	//ã‚·ãƒ¼ãƒ³å‰å‡¦ç†(texBuffã‚’æŒ‡å®š)
 	void PreDrawSceneAssin(uint32_t texbuffNum);
-	//ƒV[ƒ“•`‰æŒãˆ—(texBuff‚ğw’è)
+	//ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†(texBuffã‚’æŒ‡å®š)
 	void PostDrawSceneAssin(uint32_t texbuffNum);
 private:
 	void CreateVertBuff();

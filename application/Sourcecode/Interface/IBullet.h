@@ -14,15 +14,15 @@ private:
 		Object3d colObj_;
 		Sphere col_;
 		int32_t damage = 10;
-		//“G‚ÌUŒ‚“–‚½‚è”»’è—LŒø‚Ü‚Å‚ÌŠÔ
+		//æ•µã®æ”»æ’ƒå½“ãŸã‚Šåˆ¤å®šæœ‰åŠ¹ã¾ã§ã®æ™‚é–“
 		int32_t damageCoolTime = 20;
-		//ƒmƒbƒNƒoƒbƒN‚Ì‹­‚³
+		//ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã®å¼·ã•
 		Vector3 knockPower = { 0.5f,0.5f,0.5f };
-		//ã•ûŒü‚ÌƒmƒbƒNƒoƒbƒN
+		//ä¸Šæ–¹å‘ã®ãƒãƒƒã‚¯ãƒãƒƒã‚¯
 		float knockVecY = 0.5f;
 	};
 	struct AttackInfo {
-		int32_t maxTime;	//UŒ‚‚ÌƒtƒŒ[ƒ€”
+		int32_t maxTime;	//æ”»æ’ƒã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 		int32_t nowTime;
 	};
 protected:

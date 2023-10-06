@@ -28,7 +28,7 @@ void GameOverScene::Ini()
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.4f
 	};
-	
+
 	continueSprite_->SetPos(pos);
 
 	pos.y = WinAPI::GetWindowSize().y / 1.2f;
@@ -46,29 +46,29 @@ void GameOverScene::Update()
 {
 	CameraUpdate();
 
-	//ƒƒjƒ…[‘I‘ð
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠž
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
 		SoundManager::Play("SelectSE");
 		bool type = (selectType_ == SelectType::Continue);
-		//Œ»Ý‘I‘ð‚µ‚Ä‚¢‚é‚à‚Ì‚ªƒRƒ“ƒeƒBƒjƒ…[‚¾‚Á‚½‚ç
+		//ç¾åœ¨é¸æŠžã—ã¦ã„ã‚‹ã‚‚ã®ãŒã‚³ãƒ³ãƒ†ã‚£ãƒ‹ãƒ¥ãƒ¼ã ã£ãŸã‚‰
 		selectType_ = (type) ? SelectType::Title : SelectType::Continue;
 	}
-	
+
 	Color selectColor = { 200,50,50,255 };
 	if (selectType_ == SelectType::Continue)
 	{
 		continueSprite_->SetColor(selectColor);
 		titleSprite_->SetColor(Color(255, 255, 255, 255));
-		
+
 	}
 	else if (selectType_ == SelectType::Title)
 	{
 		continueSprite_->SetColor(Color(255, 255, 255, 255));
 		titleSprite_->SetColor(selectColor);
 	}
-	//Œˆ’è
+	//æ±ºå®š
 	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
 	{

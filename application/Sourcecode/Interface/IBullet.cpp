@@ -50,7 +50,7 @@ Vector3 IBullet::CalculateFrontVec()
 	if (IBullet::lockOnActor_ != nullptr)
 	{
 		Vector3& lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ð‚Æ‚é
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 		frontVec = {
 			lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
 			0,

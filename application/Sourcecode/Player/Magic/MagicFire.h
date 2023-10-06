@@ -1,7 +1,7 @@
 #pragma once
 #include "IBullet.h"
 class MagicFire :
-    public IBullet
+	public IBullet
 {
 private:
 	float frontDist_;

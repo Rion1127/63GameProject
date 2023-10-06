@@ -44,8 +44,8 @@ std::unique_ptr<Model> Model::CreateOBJ_uniptr(const std::string& modelname, boo
 void Model::SetModel(const Model* model)
 {
 
-	vert_.emplace_back(std::move(std::make_unique<Vertices>()));	//‹ó‚Ì’¸“_ƒf[ƒ^‚ğ“ü‚ê‚é
-	Vertices& vert = *vert_.back();		//‹ó‚Ìvert_‚ÌƒAƒhƒŒƒX‚ğvert‚É“ü‚ê‚é
+	vert_.emplace_back(std::move(std::make_unique<Vertices>()));	//ç©ºã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
+	Vertices& vert = *vert_.back();		//ç©ºã®vert_ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’vertã«å…¥ã‚Œã‚‹
 
 	for (int32_t i = 0; i < model->vert_[0]->vertices_.size(); i++)
 	{
@@ -69,7 +69,7 @@ void Model::SetModel(const Model* model)
 	//}
 
 	//materials_.insert(model->materials_.begin(), model->materials_.end());
-	// ƒƒbƒVƒ…‚Ìƒoƒbƒtƒ@¶¬
+	// ãƒ¡ãƒƒã‚·ãƒ¥ã®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	for (auto& m : vert_)
 	{
 		m->CreateBuffer();
@@ -80,11 +80,11 @@ void Model::LoadOBJ(const std::string& modelname)
 {
 	const std::string filename = modelname + ".obj";
 	const std::string directoryPath = kBaseDirectory + modelname + "/";
-	// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
-	// .objƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// .objãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(directoryPath + filename);
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
@@ -92,14 +92,14 @@ void Model::LoadOBJ(const std::string& modelname)
 
 	name_ = modelname;
 
-	std::string line;	//ƒtƒ@ƒCƒ‹‚Ì1s‚ğ“ü‚ê‚é•Ï”
+	std::string line;	//ãƒ•ã‚¡ã‚¤ãƒ«ã®1è¡Œã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 
-	std::vector<Vector3> positions{}; //’¸“_À•W
-	std::vector<Vector3> normals{};   // –@üƒxƒNƒgƒ‹
-	std::vector<Vector2> texcoords{}; // ƒeƒNƒXƒ`ƒƒUV
+	std::vector<Vector3> positions{}; //é ‚ç‚¹åº§æ¨™
+	std::vector<Vector3> normals{};   // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	std::vector<Vector2> texcoords{}; // ãƒ†ã‚¯ã‚¹ãƒãƒ£UV
 
-	
-	
+
+
 
 	uint16_t indexCountTex = 0;
 	uint16_t smoothIndex = 0;
@@ -109,7 +109,7 @@ void Model::LoadOBJ(const std::string& modelname)
 
 		std::stringstream line_stream(line);
 
-		// ”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		// åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		std::string key;
 		getline(line_stream, key, ' ');
 
@@ -118,21 +118,21 @@ void Model::LoadOBJ(const std::string& modelname)
 				indexCountTex = 0;
 				smoothIndex++;
 			}
-			vert_.emplace_back(new Vertices);	//‹ó‚Ì’¸“_ƒf[ƒ^‚ğ“ü‚ê‚é
+			vert_.emplace_back(new Vertices);	//ç©ºã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
 			smoothData_.emplace_back();
 		}
 
-		std::unique_ptr<Vertices>* vert = nullptr;		//‹ó‚Ìvert_‚ÌƒAƒhƒŒƒX‚ğvert‚É“ü‚ê‚é
+		std::unique_ptr<Vertices>* vert = nullptr;		//ç©ºã®vert_ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’vertã«å…¥ã‚Œã‚‹
 		if (vert_.size() > 0)vert = &vert_.back();
-		//ƒ}ƒeƒŠƒAƒ‹
+		//ãƒãƒ†ãƒªã‚¢ãƒ«
 		if (key == "mtllib")
 		{
-			// ƒ}ƒeƒŠƒAƒ‹‚Ìƒtƒ@ƒCƒ‹–¼“Ç‚İ‚İ
+			// ãƒãƒ†ãƒªã‚¢ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«åèª­ã¿è¾¼ã¿
 			std::string matfilename;
 			line_stream >> matfilename;
-			// ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+			// ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 			LoadMaterial(directoryPath, matfilename);
-			
+
 		}
 		if (key == "usemtl") {
 			line_stream >> (*vert)->materialName_;
@@ -140,7 +140,7 @@ void Model::LoadOBJ(const std::string& modelname)
 
 		if (key == "v")
 		{
-			// X,Y,ZÀ•W“Ç‚İ‚İ
+			// X,Y,Zåº§æ¨™èª­ã¿è¾¼ã¿
 			Vector3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
@@ -150,43 +150,43 @@ void Model::LoadOBJ(const std::string& modelname)
 
 		if (key == "vn")
 		{
-			// X,Y,Z¬•ª“Ç‚İ‚İ
+			// X,Y,Zæˆåˆ†èª­ã¿è¾¼ã¿
 			Vector3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
-			// –@üƒxƒNƒgƒ‹ƒf[ƒ^‚É’Ç‰Á
+			// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			normals.emplace_back(normal);
 		}
 
-		// æ“ª•¶š—ñ‚ªvt‚È‚çƒeƒNƒXƒ`ƒƒ
+		// å…ˆé ­æ–‡å­—åˆ—ãŒvtãªã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		if (key == "vt")
 		{
-			// U,V¬•ª“Ç‚İ‚İ
+			// U,Væˆåˆ†èª­ã¿è¾¼ã¿
 			Vector2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
-			// V•ûŒü”½“]
+			// Væ–¹å‘åè»¢
 			texcoord.y = 1.0f - texcoord.y;
-			// ƒeƒNƒXƒ`ƒƒÀ•Wƒf[ƒ^‚É’Ç‰Á
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			texcoords.emplace_back(texcoord);
 		}
 
 		if (key == "f")
 		{
 			uint32_t faceIndexCount = 0;
-			// ”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ì‘±‚«‚ğ“Ç‚İ‚Ş
+			// åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®ç¶šãã‚’èª­ã¿è¾¼ã‚€
 			std::string index_string;
 			while (getline(line_stream, index_string, ' '))
 			{
-				// ’¸“_ƒCƒ“ƒfƒbƒNƒX1ŒÂ•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+				// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹1å€‹åˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 				std::istringstream index_stream(index_string);
 				unsigned short indexPosition, indexNormal, indexTexcoord;
-				// ’¸“_”Ô†
+				// é ‚ç‚¹ç•ªå·
 				index_stream >> indexPosition;
-				index_stream.seekg(1, std::ios_base::cur); // ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				index_stream.seekg(1, std::ios_base::cur); // ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’é£›ã°ã™
 				index_stream >> indexTexcoord;
-				index_stream.seekg(1, std::ios_base::cur); // ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				index_stream.seekg(1, std::ios_base::cur); // ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’é£›ã°ã™
 				index_stream >> indexNormal;
 				Vertices::VertexPosNormalUv vertex{};
 				const int indexPos = indexPosition - 1;
@@ -197,18 +197,18 @@ void Model::LoadOBJ(const std::string& modelname)
 				vertex.uv = texcoords[indexTex];
 
 				(*vert)->AddVertices(vertex);
-				//ƒGƒbƒW•½ŠŠ‰»—p‚Ìƒf[ƒ^‚ğ’Ç‰Á
+				//ã‚¨ãƒƒã‚¸å¹³æ»‘åŒ–ç”¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
 				if (smoothing_)
 				{
 					unsigned short indexVertex = (unsigned short)(*vert)->GetVertexCount() - 1;
 					AddSmoothData(indexPosition, indexVertex, smoothIndex);
 				}
 
-				// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚Ì’Ç‰Á
+				// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã®è¿½åŠ 
 				if (faceIndexCount >= 3)
 				{
-					// lŠpŒ`ƒ|ƒŠƒSƒ“‚Ì4“_–Ú‚È‚Ì‚ÅA
-					// lŠpŒ`‚Ì0,1,2,3‚Ì“à 2,3,0‚ÅOŠpŒ`‚ğ\’z‚·‚é
+					// å››è§’å½¢ãƒãƒªã‚´ãƒ³ã®4ç‚¹ç›®ãªã®ã§ã€
+					// å››è§’å½¢ã®0,1,2,3ã®å†… 2,3,0ã§ä¸‰è§’å½¢ã‚’æ§‹ç¯‰ã™ã‚‹
 					(*vert)->AddIndex(indexCountTex - 1);
 					(*vert)->AddIndex(indexCountTex);
 					(*vert)->AddIndex(indexCountTex - 3);
@@ -232,11 +232,11 @@ void Model::LoadOBJ(const std::string& modelname)
 
 void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
-	// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
-	// ƒ}ƒeƒŠƒAƒ‹ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(directoryPath + filename);
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
@@ -244,42 +244,42 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 
 	Material* material = nullptr;
 
-	// 1s‚¸‚Â“Ç‚İ‚Ş
+	// 1è¡Œãšã¤èª­ã¿è¾¼ã‚€
 	std::string line;
 	while (getline(file, line))
 	{
-		// æ“ª‚Ìƒ^ƒu•¶š‚Í–³‹‚·‚é
+		// å…ˆé ­ã®ã‚¿ãƒ–æ–‡å­—ã¯ç„¡è¦–ã™ã‚‹
 		if (line[0] == '\t')
 		{
-			line.erase(line.begin()); // æ“ª‚Ì•¶š‚ğíœ
+			line.erase(line.begin()); // å…ˆé ­ã®æ–‡å­—ã‚’å‰Šé™¤
 		}
-		// 1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		// 1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 		std::istringstream line_stream(line);
 
-		// ”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		// åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		std::string key;
 		getline(line_stream, key, ' ');
 
-		// æ“ª‚Ìƒ^ƒu•¶š‚Í–³‹‚·‚é
+		// å…ˆé ­ã®ã‚¿ãƒ–æ–‡å­—ã¯ç„¡è¦–ã™ã‚‹
 		if (key[0] == '\t')
 		{
-			key.erase(key.begin()); // æ“ª‚Ì•¶š‚ğíœ
+			key.erase(key.begin()); // å…ˆé ­ã®æ–‡å­—ã‚’å‰Šé™¤
 		}
 
-		// æ“ª•¶š—ñ‚ªnewmtl‚È‚çƒ}ƒeƒŠƒAƒ‹–¼
+		// å…ˆé ­æ–‡å­—åˆ—ãŒnewmtlãªã‚‰ãƒãƒ†ãƒªã‚¢ãƒ«å
 		if (key == "newmtl")
 		{
 
-			// Šù‚Éƒ}ƒeƒŠƒAƒ‹‚ª‚ ‚ê‚Î
+			// æ—¢ã«ãƒãƒ†ãƒªã‚¢ãƒ«ãŒã‚ã‚Œã°
 			if (material)
 			{
-				// ƒ}ƒeƒŠƒAƒ‹‚ğƒRƒ“ƒeƒi‚É“o˜^
+				// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ã‚³ãƒ³ãƒ†ãƒŠã«ç™»éŒ²
 				AddMaterial(material);
 			}
 
-			// V‚µ‚¢ƒ}ƒeƒŠƒAƒ‹‚ğ¶¬
+			// æ–°ã—ã„ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ç”Ÿæˆ
 			material = new Material;
-			// ƒ}ƒeƒŠƒAƒ‹–¼“Ç‚İ‚İ
+			// ãƒãƒ†ãƒªã‚¢ãƒ«åèª­ã¿è¾¼ã¿
 			line_stream >> material->name_;
 
 		}
@@ -317,13 +317,13 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 			material->SetSpecular(specular);
 		}
 
-		// æ“ª•¶š—ñ‚ªmap_Kd‚È‚çƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+		// å…ˆé ­æ–‡å­—åˆ—ãŒmap_Kdãªã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 		if (key == "map_Kd")
 		{
-			// ƒeƒNƒXƒ`ƒƒ‚Ìƒtƒ@ƒCƒ‹–¼“Ç‚İ‚İ
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚¡ã‚¤ãƒ«åèª­ã¿è¾¼ã¿
 			line_stream >> material->textureFilename_;
 
-			// ƒtƒ‹ƒpƒX‚©‚çƒtƒ@ƒCƒ‹–¼‚ğæ‚èo‚·
+			// ãƒ•ãƒ«ãƒ‘ã‚¹ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å–ã‚Šå‡ºã™
 			size_t pos1;
 			pos1 = material->textureFilename_.rfind('\\');
 			if (pos1 != std::string::npos)
@@ -340,13 +340,13 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 			}
 		}
 	}
-	// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 	file.close();
 
 
 	if (material)
 	{
-		// ƒ}ƒeƒŠƒAƒ‹‚ğ“o˜^
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ç™»éŒ²
 		AddMaterial(material);
 	}
 }
@@ -359,16 +359,16 @@ void Model::LoadTexture()
 	{
 		Material& material = *m.second;
 
-		// ƒeƒNƒXƒ`ƒƒ‚ ‚è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚ã‚Š
 		if (material.textureFilename_.size() > 0)
 		{
-			// ƒ}ƒeƒŠƒAƒ‹‚ÉƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+			// ãƒãƒ†ãƒªã‚¢ãƒ«ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 			material.LoadTexture(directoryPath);
 		}
-		// ƒeƒNƒXƒ`ƒƒ‚È‚µ
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãªã—
 		else
 		{
-			// ƒ}ƒeƒŠƒAƒ‹‚ÉƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+			// ãƒãƒ†ãƒªã‚¢ãƒ«ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 			material.LoadTexture("white1x1.png");
 		}
 	}
@@ -376,7 +376,7 @@ void Model::LoadTexture()
 
 void Model::AddMaterial(Material* material)
 {
-	// ƒRƒ“ƒeƒi‚É“o˜^
+	// ã‚³ãƒ³ãƒ†ãƒŠã«ç™»éŒ²
 	materials_.emplace(material->name_, material);
 }
 
@@ -384,7 +384,7 @@ void Model::ModelIni(const std::string& modelname, bool smoothing)
 {
 	smoothing_ = smoothing;
 	LoadOBJ(modelname);
-	// ƒƒbƒVƒ…‚Ìƒoƒbƒtƒ@¶¬
+	// ãƒ¡ãƒƒã‚·ãƒ¥ã®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	for (auto& m : vert_)
 	{
 		m->CreateBuffer();
@@ -399,7 +399,7 @@ void Model::ModelIni(const std::string& modelname, bool smoothing)
 void Model::DrawOBJ(const WorldTransform& worldTransform)
 {
 	lightGroup_->Draw(3);
-	
+
 	for (uint32_t i = 0; i < vert_.size(); i++)
 	{
 		materials_.find(vert_[i]->materialName_)->second->Draw();
@@ -430,9 +430,9 @@ void Model::CalculateSmoothedVertexNormals()
 		auto itr = smoothData_[i].begin();
 		for (; itr != smoothData_[i].end(); ++itr)
 		{
-			//Še–Ê—p‚Ì‹¤’Ê’¸“_ƒRƒŒƒNƒVƒ‡ƒ“
+			//å„é¢ç”¨ã®å…±é€šé ‚ç‚¹ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³
 			std::vector<unsigned short>& v = itr->second;
-			//‘S’¸“_‚Ì–@ü‚ğ•½‹Ï‚·‚é
+			//å…¨é ‚ç‚¹ã®æ³•ç·šã‚’å¹³å‡ã™ã‚‹
 			Vector3 normal = {};
 			for (unsigned short index : v)
 			{
@@ -445,7 +445,7 @@ void Model::CalculateSmoothedVertexNormals()
 				normal.z += z;
 			}
 			normal = normal.normalize() / (float)v.size();
-			//‹¤’Ê–@ü‚ğg—p‚·‚é‚·‚×‚Ä‚Ì’¸“_ƒf[ƒ^‚É‘‚«‚Ş
+			//å…±é€šæ³•ç·šã‚’ä½¿ç”¨ã™ã‚‹ã™ã¹ã¦ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«æ›¸ãè¾¼ã‚€
 			for (unsigned short index : v)
 			{
 				float x = normal.x;

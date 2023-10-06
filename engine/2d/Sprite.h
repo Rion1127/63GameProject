@@ -17,10 +17,10 @@ private:
 		Vector2 uv;
 	};
 	enum VertNum {
-		LB,	//¶‰º
-		LT,	//¶ã
-		RB,	//‰E‰º
-		RT	//‰Eã
+		LB,	//å·¦ä¸‹
+		LT,	//å·¦ä¸Š
+		RB,	//å³ä¸‹
+		RT	//å³ä¸Š
 	};
 	struct ConstBufferDataMaterial {
 		Color color;
@@ -29,51 +29,51 @@ private:
 		Matrix4 mat;
 	};
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	static uint32_t SAllNum;
 	uint32_t spriteNum_ = 0;
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	std::vector<Vertex> vertices_;
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 	Vertex* vertMap_ = nullptr;
 
-	//ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
 	std::vector<uint16_t> indices_;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì¶¬
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> indexBuff_ = nullptr;
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView_{};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	ComPtr<ID3D12Resource> constBuffMaterial_ = nullptr;
 	ConstBufferDataMaterial* constMapMaterial_ = nullptr;
 
 	ComPtr<ID3D12Resource> constBuffTransform_ = nullptr;
 	ConstBufferDataTransform* constMapTransform_ = nullptr;
 	Matrix4 matProjection_;
-	
-	Matrix4 matWorld_{};// ƒ[ƒ‹ƒhs—ñ
-	
-	Color color_;//F
-	
-	float rot_;				//‰ñ“]
-	Vector2 pos_;			//À•W
-	Vector2 Scale_;			//ƒXƒP[ƒ‹
-	Vector2 anchorPoint_;	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
-	bool isFlipX_ = false;	//¶‰EƒtƒŠƒbƒv
-	bool isFlipY_ = false;	//ã‰ºƒtƒŠƒbƒv
-	bool isInvisible_ = false;					//”ñ•\¦ƒtƒ‰ƒO
-	Vector2 textureLeftTop_ = { 0.0f,0.0f };	//ƒeƒNƒXƒ`ƒƒ¶ãÀ•W
-	Vector2 textureSize_ = { 0.f,0.f };			//ƒeƒNƒXƒ`ƒƒØ‚èo‚µƒTƒCƒY
-	bool isImguiDisplay_ = false;				//imgui•\¦ƒtƒ‰ƒO
+
+	Matrix4 matWorld_{};// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+
+	Color color_;//è‰²
+
+	float rot_;				//å›è»¢
+	Vector2 pos_;			//åº§æ¨™
+	Vector2 Scale_;			//ã‚¹ã‚±ãƒ¼ãƒ«
+	Vector2 anchorPoint_;	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
+	bool isFlipX_ = false;	//å·¦å³ãƒ•ãƒªãƒƒãƒ—
+	bool isFlipY_ = false;	//ä¸Šä¸‹ãƒ•ãƒªãƒƒãƒ—
+	bool isInvisible_ = false;					//éè¡¨ç¤ºãƒ•ãƒ©ã‚°
+	Vector2 textureLeftTop_ = { 0.0f,0.0f };	//ãƒ†ã‚¯ã‚¹ãƒãƒ£å·¦ä¸Šåº§æ¨™
+	Vector2 textureSize_ = { 0.f,0.f };			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
+	bool isImguiDisplay_ = false;				//imguiè¡¨ç¤ºãƒ•ãƒ©ã‚°
 	uint32_t descriptorSize_ = 0;
-	Texture texture_;		//ƒeƒNƒXƒ`ƒƒ
+	Texture texture_;		//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 
 	//imgui
 	std::string guiName_;
@@ -86,48 +86,48 @@ public:
 
 	void DrawImGui();
 
-	//‰æ‘œƒTƒCƒY©“®æ“¾(•`‰æÀ•W‚Í’†S)
+	//ç”»åƒã‚µã‚¤ã‚ºè‡ªå‹•å–å¾—(æç”»åº§æ¨™ã¯ä¸­å¿ƒ)
 	void Draw();
-	//‰æ‘œ‚Ì’¸“_ƒf[ƒ^‚ğ©•ª‚Åw’è
+	//ç”»åƒã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’è‡ªåˆ†ã§æŒ‡å®š
 	void Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float LdY, float RdX, float RdY, UINT descriptorSize);
 	/// <summary>
-	/// ƒuƒŒƒ“ƒhİ’è
+	/// ãƒ–ãƒ¬ãƒ³ãƒ‰è¨­å®š
 	/// </summary>
-	/// <param name="BLEND_ALPHA">ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh</param>
-	/// <param name="BLEND_SUB">Œ¸Z‡¬</param>
-	/// <param name="BLEND_NEGA">F”½“]‡¬</param>
-	/// <param name="BLEND_NORMAL">”¼“§–¾‡¬</param>
+	/// <param name="BLEND_ALPHA">ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰</param>
+	/// <param name="BLEND_SUB">æ¸›ç®—åˆæˆ</param>
+	/// <param name="BLEND_NEGA">è‰²åè»¢åˆæˆ</param>
+	/// <param name="BLEND_NORMAL">åŠé€æ˜åˆæˆ</param>
 	static void SetBlend(uint32_t blend);
 
 	static void AddAllNum() { SAllNum++; }
 public:
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void Ini(const std::string& guiname = "");
-	//À•W‚ğ‘ã“ü‚·‚é
+	//åº§æ¨™ã‚’ä»£å…¥ã™ã‚‹
 	void SetPos(const Vector2& pos) { pos_ = pos; }
-	//‰ñ“]‚³‚¹‚é
+	//å›è»¢ã•ã›ã‚‹
 	void SetRot(float rot) { rot_ = rot; }
-	//ƒXƒP[ƒ‹İ’è
+	//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
 	void SetScale(const Vector2& scale) { Scale_ = scale; }
-	//‰æ‘œ‚Ì’†S‚ğŒˆ‚ß‚é
+	//ç”»åƒã®ä¸­å¿ƒã‚’æ±ºã‚ã‚‹
 	void SetAnchor(const Vector2& anchorPoint) { anchorPoint_ = anchorPoint; }
-	//F•ÏX
+	//è‰²å¤‰æ›´
 	void SetColor(const Color& color) { color_ = color; }
-	//¶‰E”½“]
+	//å·¦å³åè»¢
 	void SetFlipX(bool flip) { isFlipX_ = flip; }
-	//ã‰º”½“]
+	//ä¸Šä¸‹åè»¢
 	void SetFlipY(bool flip) { isFlipY_ = flip; }
-	//•\¦ƒtƒ‰ƒO
+	//è¡¨ç¤ºãƒ•ãƒ©ã‚°
 	void SetInvisivle(bool invisivle) { isInvisible_ = invisivle; }
-	//‰æ‘œ¶ã•ÏX
+	//ç”»åƒå·¦ä¸Šå¤‰æ›´
 	void SetTex_LeftTop(const Vector2& pos) { textureLeftTop_ = pos; }
-	//‰æ‘œUVÀ•W•ÏX
+	//ç”»åƒUVåº§æ¨™å¤‰æ›´
 	void SetTex_Size(const Vector2& pos) { textureSize_ = pos; }
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	void SetTexture(Texture* texture) { texture_ = *texture; }
 	void SetImGui(bool flag) { isImguiDisplay_ = flag; }
 public:
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	Vector2 GetScale() { return Scale_; }
 	Vector2 GetPos() { return pos_; }
 	Color GetColor() { return color_; }

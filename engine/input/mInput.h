@@ -1,31 +1,31 @@
 #pragma once
-#define DIRECTINPUT_VERSION		0x0800	//DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+#define DIRECTINPUT_VERSION		0x0800	//DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 #include <dinput.h>
 #include "Vector3.h"
 #include <WinUser.h>
 #include "WinAPI.h"
-//ƒRƒ“ƒgƒ[ƒ‰
+//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
 #include <Xinput.h>
 
 
-//ƒL[ƒ{[ƒh
+//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 class Key
 {
 private:
 	static IDirectInputDevice8* skeyboard_;
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	static BYTE skeys_[256];
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	static BYTE soldkeys_[256];
 public:
 	static void InputIni();
 	static void InputUpdata();
 
-	static bool PushKey(UINT8 key);		//‰Ÿ‚µ‚Á‚Ï‚È‚µ
-	static bool TriggerKey(UINT8 key);		//‰Ÿ‚µ‚½uŠÔ
+	static bool PushKey(UINT8 key);		//æŠ¼ã—ã£ã±ãªã—
+	static bool TriggerKey(UINT8 key);		//æŠ¼ã—ãŸç¬é–“
 	static bool GetKeyReleased(UINT8 key);
 };
-//ƒ}ƒEƒX
+//ãƒã‚¦ã‚¹
 enum {
 	MOUSE_LEFT,
 	MOUSE_RIGHT,
@@ -40,11 +40,11 @@ private:
 	DIMOUSESTATE prevmouseState_;
 public:
 	POINT p_;
-	//Œ»ƒtƒŒ[ƒ€‚Ìƒ}ƒEƒX‚ÌˆÊ’u
+	//ç¾ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒã‚¦ã‚¹ã®ä½ç½®
 	Vector3 mPos_;
-	//‘OƒtƒŒ[ƒ€‚Ìƒ}ƒEƒX‚ÌˆÊ’u
+	//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒã‚¦ã‚¹ã®ä½ç½®
 	Vector3 prevmPos_;
-	//ƒ}ƒEƒX‚ª“®‚¢‚½•ûŒü‚ÌƒxƒNƒgƒ‹
+	//ãƒã‚¦ã‚¹ãŒå‹•ã„ãŸæ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 mouseVec_;
 public:
 	static MouseInput* GetInstance();
@@ -52,22 +52,22 @@ public:
 	void MouseIni();
 	void Updata();
 
-	//ƒ}ƒEƒXƒ{ƒ^ƒ“î•ñ
-	//[0] MOUSE_LEFT= ¶ƒ{ƒ^ƒ“
-	//[1] MOUSE_RIGHT= ‰Eƒ{ƒ^ƒ“
-	//[2] MOUSE_WHEEL= ƒ}ƒEƒXƒzƒC[ƒ‹
+	//ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³æƒ…å ±
+	//[0] MOUSE_LEFT= å·¦ãƒœã‚¿ãƒ³
+	//[1] MOUSE_RIGHT= å³ãƒœã‚¿ãƒ³
+	//[2] MOUSE_WHEEL= ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«
 	bool IsMouseTrigger(BYTE button);
-	//[0] MOUSE_LEFT= ¶ƒ{ƒ^ƒ“
-	//[1] MOUSE_RIGHT= ‰Eƒ{ƒ^ƒ“
-	//[2] MOUSE_WHEEL= ƒ}ƒEƒXƒzƒC[ƒ‹
+	//[0] MOUSE_LEFT= å·¦ãƒœã‚¿ãƒ³
+	//[1] MOUSE_RIGHT= å³ãƒœã‚¿ãƒ³
+	//[2] MOUSE_WHEEL= ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«
 	bool IsMouseDown(BYTE button);
-	//[0] MOUSE_LEFT= ¶ƒ{ƒ^ƒ“
-	//[1] MOUSE_RIGHT= ‰Eƒ{ƒ^ƒ“
-	//[2] MOUSE_WHEEL= ƒ}ƒEƒXƒzƒC[ƒ‹
+	//[0] MOUSE_LEFT= å·¦ãƒœã‚¿ãƒ³
+	//[1] MOUSE_RIGHT= å³ãƒœã‚¿ãƒ³
+	//[2] MOUSE_WHEEL= ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«
 	bool IsMouseReleas(BYTE button);
 	int32_t IsMouseWheel();
-	
-	//ƒ}ƒEƒX‚ª1ƒtƒŒ[ƒ€‚ÉˆÚ“®‚µ‚½ƒxƒNƒgƒ‹‚ğæ“¾‚·‚é
+
+	//ãƒã‚¦ã‚¹ãŒ1ãƒ•ãƒ¬ãƒ¼ãƒ ã«ç§»å‹•ã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã™ã‚‹
 	Vector3 GetCursorMove();
 
 	float GetCursorMoveX();
@@ -75,25 +75,25 @@ public:
 	float GetCursorMoveZ();
 private:
 	MouseInput() {};
-	//ƒ}ƒEƒX‚ÌÀ•W‚ğæ“¾‚·‚é
+	//ãƒã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—ã™ã‚‹
 	void GetCursorPosition();
 };
 
-enum class PAD{
-	INPUT_UP				= 0x0001,
-	INPUT_DOWN				= 0x0002,
-	INPUT_LEFT				= 0x0004,
-	INPUT_RIGHT				= 0x0008,
-	INPUT_START				= 0x0010,
-	INPUT_BACK				= 0x0020,
-	INPUT_LEFT_THUMB		= 0x0040,
-	INPUT_RIGHT_THUMB		= 0x0080,
-	INPUT_LEFT_SHOULDER		= 0x0100,
-	INPUT_RIGHT_SHOULDER	= 0x0200,
-	INPUT_A					= 0x1000,
-	INPUT_B					= 0x2000,
-	INPUT_X					= 0x4000,
-	INPUT_Y					= 0x8000,
+enum class PAD {
+	INPUT_UP = 0x0001,
+	INPUT_DOWN = 0x0002,
+	INPUT_LEFT = 0x0004,
+	INPUT_RIGHT = 0x0008,
+	INPUT_START = 0x0010,
+	INPUT_BACK = 0x0020,
+	INPUT_LEFT_THUMB = 0x0040,
+	INPUT_RIGHT_THUMB = 0x0080,
+	INPUT_LEFT_SHOULDER = 0x0100,
+	INPUT_RIGHT_SHOULDER = 0x0200,
+	INPUT_A = 0x1000,
+	INPUT_B = 0x2000,
+	INPUT_X = 0x4000,
+	INPUT_Y = 0x8000,
 };
 
 enum DeadZone {
@@ -103,18 +103,18 @@ enum DeadZone {
 	Mul_3 = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE * 3,
 };
 
-//ƒRƒ“ƒgƒ[ƒ‰
+//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
 class Controller {
 private:
 	static XINPUT_STATE state_;
 	static XINPUT_STATE preState_;
 	static bool isConnect_;
 
-	//ƒoƒCƒuƒŒ[ƒVƒ‡ƒ“
+	//ãƒã‚¤ãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 	static XINPUT_VIBRATION vibration_;
 
 public:
-	
+
 	static void Ini();
 
 	static void Update();
@@ -124,8 +124,8 @@ public:
 	static WORD GetButtons(PAD button);
 	static WORD GetTriggerButtons(PAD button);
 	static WORD GetReleasButtons(PAD button);
-	//false	‰EƒXƒeƒBƒbƒN
-	//true	¶ƒXƒeƒBƒbƒN
+	//false	å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯
+	//true	å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯
 	static Vector2 GetLStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 	static Vector2 GetRStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 

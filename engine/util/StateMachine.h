@@ -11,40 +11,40 @@ private:
 public:
 
 	/// <summary>
-	/// V‚µ‚¢ó‘Ô‚ğì¬‚µ‚Ü‚·B
+	/// æ–°ã—ã„çŠ¶æ…‹ã‚’ä½œæˆã—ã¾ã™ã€‚
 	/// </summary>
-	/// <param name="id"> ó‘ÔID </param>
+	/// <param name="id"> çŠ¶æ…‹ID </param>
 	State(T id) :id_(id) {}
 
 	/// <summary>
-	/// ƒfƒtƒHƒ‹ƒgƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~State() = default;
 
 	/// <summary>
-	/// ó‘ÔID‚ğæ“¾‚µ‚Ü‚·B
+	/// çŠ¶æ…‹IDã‚’å–å¾—ã—ã¾ã™ã€‚
 	/// </summary>
 	const T& GetId() { return id_; }
 
 	/// <summary>
-	/// ó‘Ô‚É“ü‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚Ü‚·B
+	/// çŠ¶æ…‹ã«å…¥ã£ãŸã¨ãã«å‘¼ã°ã‚Œã¾ã™ã€‚
 	/// </summary>
 	virtual void SetUp() = 0;
 
 	/// <summary>
-	/// î•ñ‚ğXV‚µ‚Ü‚·B
+	/// æƒ…å ±ã‚’æ›´æ–°ã—ã¾ã™ã€‚
 	/// </summary>
-	/// <remarks> –ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚Ü‚·B </remarks>
+	/// <remarks> æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã¾ã™ã€‚ </remarks>
 	virtual void Update() = 0;
 
 	/// <summary>
-	/// •`‰æ‚ğXV‚µ‚Ü‚·B
+	/// æç”»ã‚’æ›´æ–°ã—ã¾ã™ã€‚
 	/// </sumamry>
-	/// <remarks> –ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚Ü‚·B </remarks>
+	/// <remarks> æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã¾ã™ã€‚ </remarks>
 	virtual void Draw() = 0;
 
 	/// <summary>
-	/// Ÿ‚Ìó‘Ô‚ÉˆÚ‚é‘O‚ÉŒÄ‚Î‚ê‚Ü‚·B
+	/// æ¬¡ã®çŠ¶æ…‹ã«ç§»ã‚‹å‰ã«å‘¼ã°ã‚Œã¾ã™ã€‚
 	/// </summary>
 	virtual void CleanUp() = 0;
 };
@@ -54,30 +54,30 @@ class StateMachine
 {
 private:
 	/// <summary>
-	/// ó‘ÔƒŠƒXƒg
+	/// çŠ¶æ…‹ãƒªã‚¹ãƒˆ
 	/// </summary>
 	std::unordered_map<T, std::shared_ptr<State<T>>> stateList_;
 
 	/// <summary>
-	/// Œ»İ‚Ìó‘Ô
+	/// ç¾åœ¨ã®çŠ¶æ…‹
 	/// </summary>
 	std::shared_ptr<State<T>> state_;
 public:
 
 	/// <summary>
-	/// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	StateMachine() = default;
 
 	/// <summary>
-	/// ƒfƒtƒHƒ‹ƒgƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~StateMachine() = default;
 
 	/// <summary>
-	/// Œ»İ‚Ìó‘Ô‚ÌID‚ğ•Ô‚µ‚Ü‚·B
+	/// ç¾åœ¨ã®çŠ¶æ…‹ã®IDã‚’è¿”ã—ã¾ã™ã€‚
 	/// </summary>
-	/// <returns> Œ»İ‚Ìó‘Ô‚ÌID </returns>
+	/// <returns> ç¾åœ¨ã®çŠ¶æ…‹ã®ID </returns>
 	const T GetCurrentStateName() const {
 		if (state_ == nullptr) {
 			return 0;
@@ -86,9 +86,9 @@ public:
 	}
 
 	/// <summary>
-	/// w’è‚Ìó‘Ô‚ÖˆÚs‚µ‚Ü‚·B
+	/// æŒ‡å®šã®çŠ¶æ…‹ã¸ç§»è¡Œã—ã¾ã™ã€‚
 	/// </summary>
-	/// <param name="nextStateId"> ˆÚsæ‚Ìó‘ÔID </param>
+	/// <param name="nextStateId"> ç§»è¡Œå…ˆã®çŠ¶æ…‹ID </param>
 	void GoToState(T nextStateId) {
 
 		if (!stateList_.contains(nextStateId)) {
@@ -105,15 +105,15 @@ public:
 	}
 
 	/// <summary>
-	/// ƒXƒe[ƒgƒ}ƒVƒ“‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
+	/// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™ã€‚
 	/// </summary>
-	/// <remarks> •K‚¸ƒI[ƒo[ƒ‰ƒCƒh‚µ‚Ü‚·B </remarks>
+	/// <remarks> å¿…ãšã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ã¾ã™ã€‚ </remarks>
 	virtual void InitStateMachine() = 0;
 
 	/// <summary>
-	/// ó‘Ô‚ğ’Ç‰Á‚µ‚Ü‚·B
+	/// çŠ¶æ…‹ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	/// </summary>
-	/// <param name="state"> ’Ç‰Á‚·‚éó‘Ô‚Ìstd::make_shared</param>
+	/// <param name="state"> è¿½åŠ ã™ã‚‹çŠ¶æ…‹ã®std::make_shared</param>
 	void AddState(const std::shared_ptr<State<T>>& state) {
 		if (state == nullptr) {
 			//Print << U"Error: This state is nullptr";
@@ -127,7 +127,7 @@ public:
 	}
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚Ü‚·Bî•ñ‚ğXV‚µ‚Ü‚·B
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã¾ã™ã€‚æƒ…å ±ã‚’æ›´æ–°ã—ã¾ã™ã€‚
 	/// </summary>
 	void Update() {
 		if (state_ == nullptr) {
@@ -137,7 +137,7 @@ public:
 	}
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚Ü‚·B•`‰æ‚ğXV‚µ‚Ü‚·B
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã¾ã™ã€‚æç”»ã‚’æ›´æ–°ã—ã¾ã™ã€‚
 	/// </summary>
 	void Draw() const {
 		if (state_ == nullptr) {

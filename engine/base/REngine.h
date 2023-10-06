@@ -1,5 +1,5 @@
 #pragma once
-//©ì
+//è‡ªä½œ
 #include "Vector2.h"
 #include "Vector3.h"
 #include "DirectX.h"

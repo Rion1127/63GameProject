@@ -3,7 +3,7 @@
 class IScene
 {
 public:
-	//‹ó‚ÌŠÖ”‚ğéŒ¾‚µ‚Ä‚¨‚­
+	//ç©ºã®é–¢æ•°ã‚’å®£è¨€ã—ã¦ãŠã
 	IScene() {
 	};
 	virtual void Ini() = 0;

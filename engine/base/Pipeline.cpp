@@ -6,17 +6,17 @@ const std::string kBaseDirectory = "application/Resources/shader/";
 
 D3D12_STATIC_SAMPLER_DESC SetSAMPLER_DESC()
 {
-	//ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[‚Ìİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã®è¨­å®š
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//‰¡ŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//cŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//‰œsŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					//‘S‚ÄƒŠƒjƒA•ÛŠÇ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									//ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f;												//ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//æ¨ªç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//ç¸¦ç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//å¥¥è¡Œç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ãƒœãƒ¼ãƒ€ãƒ¼ã®æ™‚ã¯é»’
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					//å…¨ã¦ãƒªãƒ‹ã‚¢ä¿ç®¡
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å¤§å€¤
+	samplerDesc.MinLOD = 0.0f;												//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å°å€¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚©‚ç‚Ì‚İg—p‰Â”\
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰ã®ã¿ä½¿ç”¨å¯èƒ½
 
 	return samplerDesc;
 }
@@ -25,39 +25,39 @@ void SetBlend(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc, uint32_t blend)
 {
 
 	D3D12_RENDER_TARGET_BLEND_DESC blenddesc{};
-	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;// RBGA‘S‚Ä‚Ìƒ`ƒƒƒ“ƒlƒ‹‚ğ•`‰æ
-	//‹¤’Êİ’èiƒAƒ‹ƒtƒ@’lj
-	blenddesc.BlendEnable = true;					//ƒuƒŒƒ“ƒh‚ğ—LŒø‚É‚·‚é
-	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//‰ÁZ
-	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ƒ\[ƒX‚Ì’l‚ğ100%g‚¤
-	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//ƒfƒXƒg‚Ì’l‚ğ  0%g‚¤
-	//‰ÁZ‡¬
+	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;// RBGAå…¨ã¦ã®ãƒãƒ£ãƒ³ãƒãƒ«ã‚’æç”»
+	//å…±é€šè¨­å®šï¼ˆã‚¢ãƒ«ãƒ•ã‚¡å€¤ï¼‰
+	blenddesc.BlendEnable = true;					//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’æœ‰åŠ¹ã«ã™ã‚‹
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//åŠ ç®—
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ã‚½ãƒ¼ã‚¹ã®å€¤ã‚’100%ä½¿ã†
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’  0%ä½¿ã†
+	//åŠ ç®—åˆæˆ
 	if (blend == BlendNum::ADD)
 	{
-		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//‰ÁZ
-		blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			//ƒ\[ƒX‚Ì’l‚ğ100%g‚¤
-		blenddesc.DestBlend = D3D12_BLEND_ONE;			//ƒfƒXƒg‚Ì’l‚ğ100%g‚¤
+		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//åŠ ç®—
+		blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			//ã‚½ãƒ¼ã‚¹ã®å€¤ã‚’100%ä½¿ã†
+		blenddesc.DestBlend = D3D12_BLEND_ONE;			//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’100%ä½¿ã†
 	}
-	//Œ¸Z‡¬
+	//æ¸›ç®—åˆæˆ
 	else if (blend == BlendNum::SUB)
 	{
-		blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;//ƒfƒXƒg‚©‚çƒ\[ƒX‚ğŒ¸Z
-		blenddesc.SrcBlend = D3D12_BLEND_ONE;			//ƒ\[ƒX‚Ì’l‚ğ100%g‚¤
-		blenddesc.DestBlend = D3D12_BLEND_ONE;			//ƒfƒXƒg‚Ì’l‚ğ100%g‚¤
+		blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;//ãƒ‡ã‚¹ãƒˆã‹ã‚‰ã‚½ãƒ¼ã‚¹ã‚’æ¸›ç®—
+		blenddesc.SrcBlend = D3D12_BLEND_ONE;			//ã‚½ãƒ¼ã‚¹ã®å€¤ã‚’100%ä½¿ã†
+		blenddesc.DestBlend = D3D12_BLEND_ONE;			//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’100%ä½¿ã†
 	}
-	//F”½“]
+	//è‰²åè»¢
 	else if (blend == BlendNum::NEGA)
 	{
-		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//‰ÁZ
-		blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;//1.0f-ƒfƒXƒgƒJƒ‰[‚Ì’l
-		blenddesc.DestBlend = D3D12_BLEND_ZERO;			//g‚í‚È‚¢
+		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//åŠ ç®—
+		blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;//1.0f-ãƒ‡ã‚¹ãƒˆã‚«ãƒ©ãƒ¼ã®å€¤
+		blenddesc.DestBlend = D3D12_BLEND_ZERO;			//ä½¿ã‚ãªã„
 	}
-	//”¼“§–¾‡¬
+	//åŠé€æ˜åˆæˆ
 	else if (blend == BlendNum::ALPHA)
 	{
-		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//‰ÁZ
-		blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;		//ƒ\[ƒX‚ÌƒAƒ‹ƒtƒ@’l
-		blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//1.0f-ƒ\[ƒX‚ÌƒAƒ‹ƒtƒ@’l
+		blenddesc.BlendOp = D3D12_BLEND_OP_ADD;			//åŠ ç®—
+		blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;		//ã‚½ãƒ¼ã‚¹ã®ã‚¢ãƒ«ãƒ•ã‚¡å€¤
+		blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//1.0f-ã‚½ãƒ¼ã‚¹ã®ã‚¢ãƒ«ãƒ•ã‚¡å€¤
 	}
 
 	pipelineDesc.BlendState.RenderTarget[0] = blenddesc;
@@ -70,9 +70,9 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 {
 	HRESULT result;
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“İ’è
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³è¨­å®š
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
-	// ƒVƒF[ƒ_[‚Ìİ’è
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®è¨­å®š
 	if (vsBlob_ != nullptr)
 	{
 		pipelineDesc.VS.pShaderBytecode = vsBlob_->GetBufferPointer();
@@ -89,29 +89,29 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 		pipelineDesc.GS.BytecodeLength = gsBlob_->GetBufferSize();
 	}
 
-	//ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[‚Ìİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã®è¨­å®š
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE(uvMode);					//‰¡ŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE(uvMode);					//cŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE(uvMode);					//‰œsŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					//‘S‚ÄƒŠƒjƒA•ÛŠÇ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									//ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f;												//ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE(uvMode);					//æ¨ªç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE(uvMode);					//ç¸¦ç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE(uvMode);					//å¥¥è¡Œç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ãƒœãƒ¼ãƒ€ãƒ¼ã®æ™‚ã¯é»’
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					//å…¨ã¦ãƒªãƒ‹ã‚¢ä¿ç®¡
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å¤§å€¤
+	samplerDesc.MinLOD = 0.0f;												//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å°å€¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚©‚ç‚Ì‚İg—p‰Â”\
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰ã®ã¿ä½¿ç”¨å¯èƒ½
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌƒVƒŠƒAƒ‰ƒCƒY
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚º
 	ComPtr<ID3DBlob> rootSigBlob;
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’è
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®š
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = rootParams_.data();	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ìæ“ªƒAƒhƒŒƒX
-	rootSignatureDesc.NumParameters = (UINT)rootParams_.size();			//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”
+	rootSignatureDesc.pParameters = rootParams_.data();	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+	rootSignatureDesc.NumParameters = (UINT)rootParams_.size();			//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ•°
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌƒVƒŠƒAƒ‰ƒCƒY
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚º
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &errorBlob_);
 	assert(SUCCEEDED(result));
@@ -119,16 +119,16 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 		CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 			IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(result));
-	// ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 	pipelineDesc.pRootSignature = rootSignature_.Get();
 
-	// ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Ìİ’è
-	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // •W€İ’è
+	// ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã®è¨­å®š
+	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // æ¨™æº–è¨­å®š
 
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE(cullmode); // ƒJƒŠƒ“ƒO‚µ‚È‚¢
-	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ
-	pipelineDesc.RasterizerState.DepthClipEnable = true; // [“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É
+	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE(cullmode); // ã‚«ãƒªãƒ³ã‚°ã—ãªã„
+	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—
+	pipelineDesc.RasterizerState.DepthClipEnable = true; // æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«
 
 	if (depthWriteMasc == WRIGHT_MASK::DEPTH_ENABLE_FALSE)
 	{
@@ -136,27 +136,27 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 	}
 	else
 	{
-		pipelineDesc.DepthStencilState.DepthEnable = true;	//[“xƒeƒXƒg‚ğs‚¤
-		pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK(depthWriteMasc);//‘‚«‚İ‹–‰Â
-		pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;//¬‚³‚¯‚ê‚Î‡Ši
-		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;//[“x’lƒtƒH[ƒ}ƒbƒg
+		pipelineDesc.DepthStencilState.DepthEnable = true;	//æ·±åº¦ãƒ†ã‚¹ãƒˆã‚’è¡Œã†
+		pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK(depthWriteMasc);//æ›¸ãè¾¼ã¿è¨±å¯
+		pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;//å°ã•ã‘ã‚Œã°åˆæ ¼
+		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	}
 
-	// ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout_.data();
 	pipelineDesc.InputLayout.NumElements = (UINT)inputLayout_.size();
 
-	// }Œ`‚ÌŒ`óİ’è
+	// å›³å½¢ã®å½¢çŠ¶è¨­å®š
 	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE(topologytype);
-	// ‚»‚Ì‘¼‚Ìİ’è
-	pipelineDesc.NumRenderTargets = 2; // •`‰æ‘ÎÛ‚Í1‚Â
-	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0~255w’è‚ÌRGBA
-	pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0~255w’è‚ÌRGBA
-	pipelineDesc.SampleDesc.Count = 1; // 1ƒsƒNƒZƒ‹‚É‚Â‚«1‰ñƒTƒ“ƒvƒŠƒ“ƒO
+	// ãã®ä»–ã®è¨­å®š
+	pipelineDesc.NumRenderTargets = 2; // æç”»å¯¾è±¡ã¯1ã¤
+	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0~255æŒ‡å®šã®RGBA
+	pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0~255æŒ‡å®šã®RGBA
+	pipelineDesc.SampleDesc.Count = 1; // 1ãƒ”ã‚¯ã‚»ãƒ«ã«ã¤ã1å›ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
 
-	// ƒuƒŒƒ“ƒhƒXƒe[ƒg
+	// ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆ
 	SetBlend(pipelineDesc, blendNum);
-	// ƒpƒCƒvƒ‰ƒ“ƒXƒe[ƒg‚Ì¶¬
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 	if (blendNum == BlendNum::ADD)
 	{
 		result = RDirectX::GetInstance()->GetDevice()->
@@ -183,7 +183,7 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 void PipelineObject::Setshader(std::string fileName, ShaderType shadertype)
 {
 	std::wstring allFileName = ToWideString(kBaseDirectory + fileName);
-	// ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+	// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 	if (shadertype == ShaderType::VS)
 	{
 		ShaderCompileFromFile(allFileName.c_str(), "main", "vs_5_0", &vsBlob_, errorBlob_.Get());
@@ -202,36 +202,36 @@ void PipelineObject::AddrootParams(int32_t addNum)
 {
 	rootParams_.clear();
 	int32_t size = 0;
-	//inputLayout + 1‚Ì”•ªrootParams_‚ğì‚é
+	//inputLayout + 1ã®æ•°åˆ†rootParams_ã‚’ä½œã‚‹
 	for (int32_t i = 0; i < addNum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};
-		//”z—ñ‚ÌÅ‰‚ÉƒeƒNƒXƒ`ƒƒ
+		//é…åˆ—ã®æœ€åˆã«ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		if (rootParams_.size() == 0)
 		{
-			//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
+			//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸ã®è¨­å®š
 			D3D12_DESCRIPTOR_RANGE* descriptorRange =
 				new D3D12_DESCRIPTOR_RANGE{};
 			std::vector<CD3DX12_DESCRIPTOR_RANGE> cDescRangeSRVs;
 
-			//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
-			descriptorRange->NumDescriptors = 1;					//ˆê“x‚Ì•`‰æ‚ÉD‚©‚¤ƒeƒNƒXƒ`ƒƒ‚ª1–‡‚È‚Ì‚Å1
+			//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸ã®è¨­å®š
+			descriptorRange->NumDescriptors = 1;					//ä¸€åº¦ã®æç”»ã«å¥½ã‹ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒ1æšãªã®ã§1
 			descriptorRange->RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-			descriptorRange->BaseShaderRegister = 0;				//ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”Ô
+			descriptorRange->BaseShaderRegister = 0;				//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿0ç•ª
 			descriptorRange->OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-			rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//í—Ş
-			rootParams.DescriptorTable.pDescriptorRanges = descriptorRange;//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
-			rootParams.DescriptorTable.NumDescriptorRanges = 1;						//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW”
-			rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+			rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//ç¨®é¡
+			rootParams.DescriptorTable.pDescriptorRanges = descriptorRange;//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸
+			rootParams.DescriptorTable.NumDescriptorRanges = 1;						//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸æ•°
+			rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 		}
 		else
 		{
-			//’è”ƒoƒbƒtƒ@
-			rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//’è”ƒoƒbƒtƒ@ƒrƒ…[
-			rootParams.Descriptor.ShaderRegister = size;					//’è”ƒoƒbƒtƒ@”Ô†
-			rootParams.Descriptor.RegisterSpace = 0;						//ƒfƒtƒHƒ‹ƒg’l
-			rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+			//å®šæ•°ãƒãƒƒãƒ•ã‚¡
+			rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+			rootParams.Descriptor.ShaderRegister = size;					//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+			rootParams.Descriptor.RegisterSpace = 0;						//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+			rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 			size++;
 		}
 
@@ -248,16 +248,16 @@ void PipelineObject::AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum
 	for (int32_t i = 0; i < addTexnum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};
-		//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
+		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸ã®è¨­å®š
 		CD3DX12_DESCRIPTOR_RANGE* descriptorRange =
 			new CD3DX12_DESCRIPTOR_RANGE{};
 
 		descriptorRange->Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, i);
 
-		rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//í—Ş
-		rootParams.DescriptorTable.pDescriptorRanges = descriptorRange;//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
-		rootParams.DescriptorTable.NumDescriptorRanges = 1;						//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW”
-		rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+		rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//ç¨®é¡
+		rootParams.DescriptorTable.pDescriptorRanges = descriptorRange;//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸
+		rootParams.DescriptorTable.NumDescriptorRanges = 1;						//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸æ•°
+		rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 
 		rootParams_.emplace_back(rootParams);
 	}
@@ -265,11 +265,11 @@ void PipelineObject::AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum
 	for (int32_t i = 0; i < addNum; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParams{};
-		//’è”ƒoƒbƒtƒ@
-		rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//’è”ƒoƒbƒtƒ@ƒrƒ…[
-		rootParams.Descriptor.ShaderRegister = size;					//’è”ƒoƒbƒtƒ@”Ô†
-		rootParams.Descriptor.RegisterSpace = 0;						//ƒfƒtƒHƒ‹ƒg’l
-		rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+		//å®šæ•°ãƒãƒƒãƒ•ã‚¡
+		rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+		rootParams.Descriptor.ShaderRegister = size;					//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+		rootParams.Descriptor.RegisterSpace = 0;						//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+		rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 		size++;
 
 		rootParams_.emplace_back(rootParams);

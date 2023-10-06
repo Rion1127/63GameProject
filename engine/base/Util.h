@@ -9,31 +9,31 @@
 #include <cassert>
 #include "Camera.h"
 
-//WARNING‚ÌÚ×•\¦
+//WARNINGã®è©³ç´°è¡¨ç¤º
 void DisplayWarningInfo(ID3D12Device* device);
 
-//ƒVƒF[ƒ_[“Ç‚İ‚İ
+//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼èª­ã¿è¾¼ã¿
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
 	ID3DBlob** blob, ID3DBlob* errorBlob);
 
-void MoveTo(const Vector3& goal, float speed,WorldTransform& WT);
+void MoveTo(const Vector3& goal, float speed, WorldTransform& WT);
 void MoveTo(const Vector3& goal, float speed, Vector3& value);
 
-//’è”ƒoƒbƒtƒ@
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 template <class MapClass>
-inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map) 
+inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 {
 	HRESULT result;
 	Microsoft::WRL::ComPtr<ID3D12Resource> buff;
-	//’è”ƒoƒbƒtƒ@‚Ìƒq[ƒvİ’è
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES heapProp{};
-	//’è”ƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒXİ’è
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resdesc{};
 
-	//’è”ƒoƒbƒtƒ@‚Ìƒq[ƒvİ’è
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒ’ãƒ¼ãƒ—è¨­å®š
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	//’è”ƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒXİ’è
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	resdesc.Width = (sizeof(MapClass) + 0xff) & ~0xff;
 	resdesc.Height = 1;
@@ -42,7 +42,7 @@ inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 	resdesc.SampleDesc.Count = 1;
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//’è”ƒoƒbƒtƒ@‚Ì¶¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -53,7 +53,7 @@ inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 	);
 	assert(SUCCEEDED(result));
 
-	//’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
 	result = buff->Map(0, nullptr, (void**)&map);
 	assert(SUCCEEDED(result));
 
@@ -63,13 +63,13 @@ inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 namespace fs = std::filesystem;
 
 std::wstring GetDirectoryPath(const std::wstring& origin);
-//Šg’£q‚ğ“ü‚ê‘Ö‚¦‚é
+//æ‹¡å¼µå­ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
 std::wstring ReplaceExtension(const std::wstring& origin, const char* ext);
-//wstring‚ğstd::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚É•ÏŠ·
+//wstringã‚’std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã«å¤‰æ›
 std::string ToUTF8(const std::wstring& value);
-// std::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚©‚çstd::wstring(ƒƒCƒh•¶š—ñ)‚ğ“¾‚é
+// std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã‹ã‚‰std::wstring(ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—)ã‚’å¾—ã‚‹
 std::wstring ToWideString(const std::string& str);
-// std::wstring(ƒƒCƒh•¶š—ñ)‚©‚çstd::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚ğ“¾‚é
+// std::wstring(ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—)ã‹ã‚‰std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã‚’å¾—ã‚‹
 std::string WStringToString(std::wstring oWString);
 
 

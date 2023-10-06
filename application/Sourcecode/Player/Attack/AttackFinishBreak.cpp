@@ -2,8 +2,8 @@
 #include "ParticleExplosion.h"
 #include "ParticleManager.h"
 
-AttackFinishBreak::AttackFinishBreak(IActor* selfActor) : 
-	IAttack(selfActor,3,80,20,60)
+AttackFinishBreak::AttackFinishBreak(IActor* selfActor) :
+	IAttack(selfActor, 3, 80, 20, 60)
 {
 }
 
@@ -12,7 +12,7 @@ void AttackFinishBreak::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr)
 	{
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr)
 		{
 			CalculateRotToLockOnActor(frontVec);
@@ -22,7 +22,7 @@ void AttackFinishBreak::Init()
 	}
 	attackVec_ = frontVec;
 
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	splineTime_ = 6;
 	SplineUpdate();
 
@@ -35,7 +35,7 @@ void AttackFinishBreak::Init()
 		attackCol_.at(i)->col_.radius = 1.2f;
 		attackCol_.at(i)->damage = 3;
 		attackCol_.at(i)->damageCoolTime = (int32_t)coolTime + 1;
-		//ƒmƒbƒNƒoƒbƒN—Í
+		//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 		attackCol_.at(i)->knockPower = { 0.f,1.0f,0.f };
 		attackCol_.at(i)->knockVecY = 0.3f;
 		attackCol_.at(i)->col_.isActive = false;
@@ -50,25 +50,25 @@ void AttackFinishBreak::Init()
 
 void AttackFinishBreak::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	attackVec_ = attackVec_.normalize();
-	//—\”õ“®ì‚ğ’x‚­“®‚©‚·
+	//äºˆå‚™å‹•ä½œã‚’é…ãå‹•ã‹ã™
 	if (spline_.GetIndex() <= 1) {
 		splineTime_ = 15;
 	}
-	//U‚è‚©‚Ô‚é‚Í‘¬‚­“®‚©‚·
+	//æŒ¯ã‚Šã‹ã¶ã‚‹æ™‚ã¯é€Ÿãå‹•ã‹ã™
 	else {
 		splineTime_ = 2;
 	}
 	spline_.Update(GameSpeed::GetPlayerSpeed());
-	//Œ•‚ğU‚èI‚í‚Á‚½‚çUŒ‚‚Ì”»’è‚ğ—LŒø‚É‚·‚é
+	//å‰£ã‚’æŒ¯ã‚Šçµ‚ã‚ã£ãŸã‚‰æ”»æ’ƒã®åˆ¤å®šã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	if (spline_.GetisEnd()) {
 		float changeColStateTime = (float)(attackCol_.at(0)->damageCoolTime * (hitNum_ - 1));
-		//“–‚½‚è”»’èˆ—
+		//å½“ãŸã‚Šåˆ¤å®šå‡¦ç†
 		for (uint32_t i = 0; i < attackCol_.size(); i++) {
-			//“–‚½‚è”»’è—LŒø
+			//å½“ãŸã‚Šåˆ¤å®šæœ‰åŠ¹
 			attackCol_.at(i)->col_.isActive = true;
-			//Šp“x‚ğŒvZ‚·‚é
+			//è§’åº¦ã‚’è¨ˆç®—ã™ã‚‹
 			float theta = (float)timer_.GetTimer() / rotateSpeed_;
 			float radian = Radian(360.f / attackCol_.size());
 			Vector3 colPos = {
@@ -78,14 +78,14 @@ void AttackFinishBreak::MoveUpdate()
 			};
 			attackCol_.at(i)->col_.center =
 				selfActor_->GetWorldTransform()->position_ + colPos;
-			//ÅŒã‚Ìˆê”­‚Í‹­‚ß‚ÌUŒ‚‚É‚·‚é
+			//æœ€å¾Œã®ä¸€ç™ºã¯å¼·ã‚ã®æ”»æ’ƒã«ã™ã‚‹
 			if (changeColStateTime < timer_.GetTimer()) {
 				attackCol_.at(i)->damage = 15;
-				//ƒmƒbƒNƒoƒbƒN—Í
+				//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 				attackCol_.at(i)->knockPower = { 1.0f,1.0f,1.0f };
 				attackCol_.at(i)->knockVecY = 0.5f;
 			}
-			//ƒp[ƒeƒBƒNƒ‹’Ç‰Á
+			//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«è¿½åŠ 
 			if (isParticleAdd_) {
 				emitter_[i] = std::make_shared<OneceEmitter>();
 				emitter_[i]->particle = std::make_unique<ParticleExplosion>();
@@ -111,7 +111,7 @@ void AttackFinishBreak::MoveUpdate()
 
 void AttackFinishBreak::SplineUpdate()
 {
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 3.f);
 	Vector3 playerUpPos =

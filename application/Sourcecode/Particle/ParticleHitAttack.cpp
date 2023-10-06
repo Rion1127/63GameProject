@@ -20,15 +20,15 @@ void ParticleHitAttack::Add()
 	color_ = { 255,175,60,255 };
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ð’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		hitAttackParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = hitAttackParticles_.back();
 
@@ -57,7 +57,7 @@ void ParticleHitAttack::Add()
 		p.baseScale = emitter_->scale;
 		p.addRot = addrot;
 		p.color = color_;
-		p.timer_.SetLimitTime(RRandom::RandF(5,10));
+		p.timer_.SetLimitTime(RRandom::RandF(5, 10));
 
 		baseP = p;
 	}
@@ -109,7 +109,7 @@ void ParticleHitAttack::MoveUpdate()
 		p.position += p.velocity /** GameSpeed::GetGameSpeed()*/;
 		p.rot += p.addRot * GameSpeed::GetGameSpeed();
 
-		p.scale = Easing::Quint::easeIn(p.baseScale,0.f, f);
+		p.scale = Easing::Quint::easeIn(p.baseScale, 0.f, f);
 
 		MoveTo({ 0,0,0 }, 0.001f, p.velocity);
 		MoveTo({ 0,0,0 }, 0.003f, p.addRot);
@@ -149,15 +149,15 @@ void ParticleHitCircle::Add()
 
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ð’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		hitCircleParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = hitCircleParticles_.back();
 
@@ -166,7 +166,7 @@ void ParticleHitCircle::Add()
 			0,
 			0.2f
 		};
-		
+
 		//p.position = emitter_->pos;
 		p.end_frame = emitter_->time;
 		p.scale = emitter_->scale;
@@ -229,15 +229,15 @@ void ParticleHitTriangle::Add()
 	color_ = { 255,175,60,255 };
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//Žw’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ð’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		hitTriangleParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌŽQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = hitTriangleParticles_.back();
 
@@ -257,7 +257,7 @@ void ParticleHitTriangle::Add()
 			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
 		float scale = RRandom::RandF(emitter_->scale / 2.f, emitter_->scale);
-		
+
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;
 		p.velocity = vec;
@@ -293,7 +293,7 @@ void ParticleHitTriangle::MoveUpdate()
 		p.timer_.AddTime(1.f * GameSpeed::GetGameSpeed());
 
 		float f = (float)p.frame / p.end_frame;
-		
+
 		p.velocity += p.addvelocity * GameSpeed::GetGameSpeed();
 
 		p.position += p.velocity * GameSpeed::GetGameSpeed();

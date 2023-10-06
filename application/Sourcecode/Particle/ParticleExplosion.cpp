@@ -5,7 +5,7 @@
 #include "ParticleManager.h"
 
 #pragma region ParticleExplosion
-ParticleExplosion::ParticleExplosion() : 
+ParticleExplosion::ParticleExplosion() :
 	IParticle("Fire"),
 	vertexCount(1)
 {
@@ -22,15 +22,15 @@ void ParticleExplosion::Add()
 	rgbColor_ = 700;
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		explosionParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = explosionParticles_.back();
 
@@ -90,7 +90,7 @@ void ParticleExplosion::MoveUpdate()
 		if (f >= endRate_) {
 			float rate = (1.f - f) / (1.f - endRate_);
 			rate = 1.f - rate;
-			p.color.a = Easing::Sine::easeIn(rate,255,-255,1.0f);
+			p.color.a = Easing::Sine::easeIn(rate, 255, -255, 1.0f);
 		}
 
 		particles_[index] = p;
@@ -115,15 +115,15 @@ void ParticleSmallExplosion::Add()
 {
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		smallExplosionParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = smallExplosionParticles_.back();
 
@@ -136,7 +136,7 @@ void ParticleSmallExplosion::Add()
 
 		baseP = p;
 	}
-	randOffset_ = RRandom::RandF(0.f,120.f);
+	randOffset_ = RRandom::RandF(0.f, 120.f);
 }
 
 void ParticleSmallExplosion::MoveUpdate()

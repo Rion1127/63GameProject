@@ -22,23 +22,23 @@ protected:
 	};
 	struct Particle
 	{
-		Vector3 position = {};	//À•W
-		float scale = 1.0f;		//ƒXƒP[ƒ‹
+		Vector3 position = {};	//åº§æ¨™
+		float scale = 1.0f;		//ã‚¹ã‚±ãƒ¼ãƒ«
 		Vector3 rot;
 		Vector2 ancorPoint_ = { 0,0 };
 		Color color = {};
 
-		float frame = 0;		//Œ»İƒtƒŒ[ƒ€
-		float end_frame = 0;	//I—¹ƒtƒŒ[ƒ€
+		float frame = 0;		//ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ 
+		float end_frame = 0;	//çµ‚äº†ãƒ•ãƒ¬ãƒ¼ãƒ 
 		float rate = 0;
 	};
 protected:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	std::vector<VertexParticle> vertices_;
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	ComPtr<ID3D12Resource> vertBuff_;
 
@@ -47,7 +47,7 @@ protected:
 	WorldTransform transform_;
 
 	int32_t maxParticleNum_;
-	//ƒp[ƒeƒBƒNƒ‹ƒf[ƒ^
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒ‡ãƒ¼ã‚¿
 	std::vector<Particle> particles_;
 
 	bool isBillBoard;
@@ -73,24 +73,24 @@ public:
 	size_t GetParticleNum() { return particles_.size(); }
 	PipeLineState GetPipelineState() { return state_; }
 private:
-	//ƒf[ƒ^“]‘—
+	//ãƒ‡ãƒ¼ã‚¿è»¢é€
 	void TransferBuff();
-	//end_frame‚ğ’´‚¦‚½‚çíœ
+	//end_frameã‚’è¶…ãˆãŸã‚‰å‰Šé™¤
 	void DeleteUpdate();
 protected:
 	void Init(int32_t vertexCount);
-	//Œp³æ‚Ìƒp[ƒeƒBƒNƒ‹‚Ìˆ—
-	//“®‚«XV
+	//ç¶™æ‰¿å…ˆã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®å‡¦ç†
+	//å‹•ãæ›´æ–°
 	virtual void MoveUpdate() = 0;
 };
 
 struct IEmitter {
 	std::unique_ptr<IParticle> particle;
-	int32_t addNum;	//“¯”­¶”
-	float time;	//ƒp[ƒeƒBƒNƒ‹¶‘¶ŠÔ
-	Vector3 pos;	//ƒGƒ~ƒbƒ^[’†SÀ•W
-	Vector3* parentPos = nullptr;	//ƒGƒ~ƒbƒ^[’†SÀ•W
-	Vector3 addVec;	//ˆÚ“®•ûŒüƒxƒNƒgƒ‹
+	int32_t addNum;	//åŒæ™‚ç™ºç”Ÿæ•°
+	float time;	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿå­˜æ™‚é–“
+	Vector3 pos;	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ä¸­å¿ƒåº§æ¨™
+	Vector3* parentPos = nullptr;	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ä¸­å¿ƒåº§æ¨™
+	Vector3 addVec;	//ç§»å‹•æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	float scale;
 	bool isActive = true;
 	Timer popCoolTime_;
@@ -99,8 +99,8 @@ struct IEmitter {
 struct OneceEmitter : public IEmitter {
 	OneceEmitter() { isActive = false; }
 };
-//ƒtƒ‰ƒO‚ªfalse‚É‚È‚é‚Ü‚Åo‘±‚¯‚é
+//ãƒ•ãƒ©ã‚°ãŒfalseã«ãªã‚‹ã¾ã§å‡ºç¶šã‘ã‚‹
 struct ContinuousEmitter : public IEmitter {
-	
+
 };
 

@@ -14,7 +14,7 @@ class IActor
 {
 protected:
 	ActorType type_;
-	//ƒ‚ƒfƒ‹
+	//ãƒ¢ãƒ‡ãƒ«
 	std::unique_ptr<Object3d> obj_;
 	Sphere col_;
 	Vector3 addVec_;

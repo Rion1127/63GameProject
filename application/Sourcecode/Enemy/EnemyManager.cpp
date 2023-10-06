@@ -35,7 +35,7 @@ void EnemyManager::PreUpdate()
 
 	static float pos[3] = {};
 
-	ImGui::DragFloat3("popPos",pos,0.1f,-30,30);
+	ImGui::DragFloat3("popPos", pos, 0.1f, -30, 30);
 
 	popPos = { pos[0],pos[1],pos[2] };
 
@@ -49,7 +49,7 @@ void EnemyManager::PreUpdate()
 	}
 	if (ImGui::Button("POP_EnemyShadow"))
 	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0),Vector3(0,Radian(180),0))));
+		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
 	}
 	if (ImGui::Button("POP_RedNocturne"))
 	{
@@ -66,15 +66,15 @@ void EnemyManager::PreUpdate()
 	ImGui::End();
 #endif // _DEBUG
 
-	
+
 	std::list<std::unique_ptr<IEnemy>>::iterator itr;
 	for (itr = enemys_.begin(); itr != enemys_.end();)
 	{
-		//“G‚ªŽ€‚ñ‚¾‚ç—v‘f‚ðÁ‚µ‚ÄŽŸ‚ÌƒCƒeƒŒ[ƒ^‚ÖˆÚ‚é
+		//æ•µãŒæ­»ã‚“ã ã‚‰è¦ç´ ã‚’æ¶ˆã—ã¦æ¬¡ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã¸ç§»ã‚‹
 		if ((*itr)->GetIsDead())
 		{
 			Vector3 pos = (*itr)->GetWorldTransform()->position_;
-			
+
 			itr = enemys_.erase(itr);
 
 			lockOnEnemy_ = nullptr;
@@ -96,7 +96,7 @@ void EnemyManager::PreUpdate()
 		else
 		{
 			(*itr)->PreUpdate();
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ÌƒAƒhƒŒƒX‚ð‘ã“ü
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä»£å…¥
 			if ((*itr)->GetIsSoftLockOn() ||
 				(*itr)->GetIsHardLockOn())
 			{
@@ -113,12 +113,12 @@ void EnemyManager::PreUpdate()
 
 	if (lockOnEnemy_ != nullptr)
 	{
-		//ƒƒbƒNƒIƒ“ƒXƒvƒ‰ƒCƒgXV
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 		LockOnSpriteUpdate();
 	}
 	else
 	{
-		//ƒƒbƒNƒIƒ“‚Å‚«‚é“G‚ª‚¢‚È‚¯‚ê‚ÎUI‚ðÁ‚·
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã§ãã‚‹æ•µãŒã„ãªã‘ã‚Œã°UIã‚’æ¶ˆã™
 		for (auto& lockOnSprite : lockOnSprite_)
 		{
 			lockOnSprite->SetInvisivle(true);
@@ -126,8 +126,8 @@ void EnemyManager::PreUpdate()
 	}
 
 	BulletUpdate();
-	
-	//hpƒQ[ƒW‚ÉƒƒbƒNƒIƒ“’†‚Ì“G‚ðƒZƒbƒg
+
+	//hpã‚²ãƒ¼ã‚¸ã«ãƒ­ãƒƒã‚¯ã‚ªãƒ³ä¸­ã®æ•µã‚’ã‚»ãƒƒãƒˆ
 	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
 
 	hpGauge_.Update();
@@ -209,13 +209,13 @@ void EnemyManager::LockOnSpriteUpdate()
 	lockOnSprite_[1]->SetRot(Radian(lockOnobjRot));
 	for (size_t i = 0; i < 2; i++)
 	{
-		//ƒn[ƒhƒƒbƒN
+		//ãƒãƒ¼ãƒ‰ãƒ­ãƒƒã‚¯
 		if (isHardLockOn)
 		{
 			lockOnSprite_[i]->SetInvisivle(false);
 			lockOnSprite_[i]->SetColor(Color(40, 30, 240, 255));
 		}
-		//ƒ\ƒtƒgƒƒbƒN
+		//ã‚½ãƒ•ãƒˆãƒ­ãƒƒã‚¯
 		else
 		{
 			lockOnSprite_[0]->SetInvisivle(true);

@@ -19,7 +19,7 @@
 #include "Spline.h"
 #include "Object3d.h"
 
-class GameScene final:
+class GameScene final :
 	public IScene
 {
 private:
@@ -31,9 +31,9 @@ private:
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 	Vector3 lightColor_;
 
-	//è∞
+	//Â∫ä
 	std::unique_ptr<Stage> stage_;
-	//ÉvÉåÉCÉÑÅ[
+	//„Éó„É¨„Ç§„É§„Éº
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<CollisionManager> colManager_;

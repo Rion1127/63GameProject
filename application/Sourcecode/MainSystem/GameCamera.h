@@ -32,23 +32,23 @@ private:
 	std::unique_ptr<Camera> camera_;
 	Player* player_;
 	ColosseumSystem* clsumSystem_;
-	
-	Vector3 moveDist{};	//‹…–ÊÀ•W
+
+	Vector3 moveDist{};	//çƒé¢åº§æ¨™
 
 	DeadZoneValue deadZone_;
 	CameraSpeed transSpeed_;
 	CameraSpeed lockOnCameraspeed_;
-	//ƒJƒƒ‰‚ÌÅI’n“_
+	//ã‚«ãƒ¡ãƒ©ã®æœ€çµ‚åœ°ç‚¹
 	Vector3 endEyePos_;
 	Vector3 endTargetPos_;
 	Vector3 endRot_;
 
 	float cameraSpeed_;
-	bool putOnCamera_;	//ƒƒbƒNƒIƒ“ƒJƒƒ‰‚ğ–ß‚·ƒtƒ‰ƒO
+	bool putOnCamera_;	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³æ™‚ã‚«ãƒ¡ãƒ©ã‚’æˆ»ã™ãƒ•ãƒ©ã‚°
 	GetOutEnemy getOutWay;
 	GameCameraMode gameCameraMode_;
 private:
-	//ƒNƒŠƒA‚ÌƒJƒƒ‰ƒ[ƒN‚Ég—p‚·‚é•Ï”
+	//ã‚¯ãƒªã‚¢æ™‚ã®ã‚«ãƒ¡ãƒ©ãƒ¯ãƒ¼ã‚¯ã«ä½¿ç”¨ã™ã‚‹å¤‰æ•°
 	float frontDist_;
 	Timer timer_;
 	Vector3 offsetPos_;
@@ -56,12 +56,12 @@ private:
 public:
 	GameCamera();
 	void Update(CameraMode cameraMode);
-	//ƒRƒ“ƒgƒ[ƒ‰‚Å‚ÌƒJƒƒ‰ˆ—
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã§ã®ã‚«ãƒ¡ãƒ©å‡¦ç†
 	void UpdateCameraPos();
 	void UpdateLookAT();
 	void Reset();
 private:
-	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos,const Vector2& winSize,IEnemy* enemy);
+	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos, const Vector2& winSize, IEnemy* enemy);
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetColosseumSystem(ColosseumSystem* clsumSystem) { clsumSystem_ = clsumSystem; }

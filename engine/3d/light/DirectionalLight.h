@@ -5,7 +5,7 @@
 class DirectionalLight
 {
 public:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	static DirectionalLight* Create();
@@ -23,9 +23,9 @@ public:
 	void SetLightDir(const Vector3& lightdir);
 
 	void SetLightColor(const Vector3& color);
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	void SetActive(bool active) { this->active_ = active; }
-	//—LŒøƒtƒ‰ƒOƒ`ƒFƒbƒN
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ãƒã‚§ãƒƒã‚¯
 	bool IsAvtive() { return active_; }
 
 	Vector3 GetLightDir() { return lightdir_; }
@@ -33,23 +33,23 @@ public:
 	Vector3 GetLightColor() { return lightcolor_; }
 
 	struct ConstBufferData {
-		Vector3 lightv;		//ƒ‰ƒCƒg‚Ì•ûŒü‚ğ•\‚·ƒxƒNƒgƒ‹
+		Vector3 lightv;		//ãƒ©ã‚¤ãƒˆã®æ–¹å‘ã‚’è¡¨ã™ãƒ™ã‚¯ãƒˆãƒ«
 		float pad1;
-		Vector3 lightColor;	//ƒ‰ƒCƒg‚ÌF
+		Vector3 lightColor;	//ãƒ©ã‚¤ãƒˆã®è‰²
 		//float pad2;
 		bool active;
 	};
 private:
 	ComPtr<ID3D12Resource> constBuff_;
 	ConstBufferData* constMap_;
-	//ƒ‰ƒCƒgŒõü•ûŒüi’PˆÊƒxƒNƒgƒ‹j
+	//ãƒ©ã‚¤ãƒˆå…‰ç·šæ–¹å‘ï¼ˆå˜ä½ãƒ™ã‚¯ãƒˆãƒ«ï¼‰
 	Vector3 lightdir_ = { 1,0,0 };
-	//ƒ‰ƒCƒg‚ÌF
+	//ãƒ©ã‚¤ãƒˆã®è‰²
 	Vector3 lightcolor_ = { 1,1,1 };
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool dirty_;
 
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active_ = false;
 };
 

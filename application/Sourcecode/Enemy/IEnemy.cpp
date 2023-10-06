@@ -34,7 +34,7 @@ void IEnemy::PreUpdate()
 	}
 	ColPosUpdate();
 
-	
+
 }
 
 void IEnemy::PostUpdate()
@@ -83,7 +83,7 @@ void IEnemy::Damage(Vector3 knockVec, int32_t damageValue, int32_t cooltime)
 
 void IEnemy::UpdateEtoPVec()
 {
-	//プレイヤーへのベクトル
+	//繝励Ξ繧､繝､繝ｼ縺ｸ縺ｮ繝吶け繝医Ν
 	Vector3& pos = splayer_->GetWorldTransform()->position_;
 	EtoPVec_ = pos - obj_->WT_.position_;
 	EtoPVec_.y = 0;

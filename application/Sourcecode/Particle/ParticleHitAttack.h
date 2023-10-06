@@ -1,8 +1,8 @@
 #pragma once
 #include "IParticle.h"
 #include "Timer.h"
-class ParticleHitAttack final:
-    public IParticle
+class ParticleHitAttack final :
+	public IParticle
 {
 private:
 	struct HitAttackParticle : public Particle
@@ -24,7 +24,7 @@ private:
 	int32_t vertexCount;
 
 	std::vector<HitAttackParticle> hitAttackParticles_;
-	
+
 	Color color_;
 };
 

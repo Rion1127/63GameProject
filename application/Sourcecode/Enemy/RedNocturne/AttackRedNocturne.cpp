@@ -5,7 +5,7 @@
 AttackRedNocturne::AttackRedNocturne(IActor* selfActor) :
 	IBullet(selfActor, 1, 120, 5, 120)
 {
-	
+
 }
 
 AttackRedNocturne::~AttackRedNocturne()
@@ -23,13 +23,13 @@ void AttackRedNocturne::Init()
 	attackCol_->col_.center = colPos;
 	attackCol_->col_.radius = 0.6f;
 	attackCol_->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_->knockPower = { 0.1f,0.3f,0.1f };
 	attackCol_->knockVecY = 0.5f;
 
 	Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
 	lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;
-	//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ð‚Æ‚é
+	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 	Vector3 frontVec = lockOnPos - selfActor_->GetWorldTransform()->position_;
 	frontVec = frontVec.normalize();
 	attackVec_ = frontVec;
@@ -58,12 +58,12 @@ void AttackRedNocturne::Init()
 void AttackRedNocturne::MoveUpdate()
 {
 	CalculateRotToLockOnActor(CalculateFrontVec());
-	//‰ñ“]î•ñ‚©‚çƒvƒŒƒCƒ„[‚Ö‚ÌƒxƒNƒgƒ‹‚ðŽæ“¾
+	//å›žè»¢æƒ…å ±ã‹ã‚‰ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 	Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
 	lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;
 	Vector3 frontVec = lockOnPos - attackCol_->col_.center;
 	frontVec = frontVec.normalize();
-	//‘«‚µ‚Ä‚¢‚­ƒxƒNƒgƒ‹‚ð™X‚ÉƒvƒŒƒCƒ„[‚Ì•ûŒü‚É•Ï‚¦‚Ä‚¢‚­
+	//è¶³ã—ã¦ã„ããƒ™ã‚¯ãƒˆãƒ«ã‚’å¾ã€…ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ–¹å‘ã«å¤‰ãˆã¦ã„ã
 	MoveTo(frontVec, 0.01f, attackVec_);
 
 	attackCol_->col_.center += attackVec_ * bulletSpeed_;

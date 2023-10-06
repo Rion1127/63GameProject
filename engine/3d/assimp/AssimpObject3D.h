@@ -18,16 +18,16 @@ class AssimpObject3D
 private:
 	std::unique_ptr<AssimpModel> model_;
 	WorldTransform worldTransform_;
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	static const int32_t MAX_BONES = 32;
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBuffDataSkin {
 		Matrix4 bones[MAX_BONES];
 	};
-	//’è”ƒoƒbƒtƒ@‚Ì¶¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> constBuff_ = nullptr;
-	//’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
 	ConstBuffDataSkin* constMap_ = nullptr;
 
 	Animation animation_;

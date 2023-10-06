@@ -4,7 +4,7 @@
 Vector3::Vector3() : x(0), y(0), z(0) {}
 
 Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
-// ƒxƒNƒgƒ‹‚Ìƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
+// ãƒ™ã‚¯ãƒˆãƒ«ã®ãƒãƒ«ãƒ (é•·ã•)ã‚’æ±‚ã‚ã‚‹
 float Vector3::length() const
 {
 	return sqrt(x * x + y * y + z * z);
@@ -13,7 +13,7 @@ float Vector3::length() const
 //{
 //	return x * x + y * y + z * z;
 //}
-// ƒxƒNƒgƒ‹‚ğ³‹K‰»
+// ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 Vector3 Vector3::normalize()
 {
 	Vector3 result = *this;
@@ -25,12 +25,12 @@ Vector3 Vector3::normalize()
 	}
 	return result;
 }
-// “àÏ‚ğ‹‚ß‚é
+// å†…ç©ã‚’æ±‚ã‚ã‚‹
 float Vector3::dot(const Vector3& v) const
 {
 	return x * v.x + y * v.y + z * v.z;
 }
-// ŠOÏ‚ğ‹‚ß‚é
+// å¤–ç©ã‚’æ±‚ã‚ã‚‹
 Vector3 Vector3::cross(const Vector3& v) const
 {
 	return Vector3(
@@ -49,13 +49,13 @@ Vector3 Vector3::SetLength(float l)
 
 	return *this;
 }
-// ’P€‰‰ZqƒI[ƒo[ƒ[ƒh
-//’P€‰‰Zq+‚ğg‚¦‚é‚æ‚¤‚É‚·‚é
+// å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+//å˜é …æ¼”ç®—å­+ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
 Vector3 Vector3::operator+() const
 {
 	return *this;
 }
-//	V	@-‚ğg‚¦‚é‚æ‚¤‚É‚·‚é
+//	ã€ƒ	ã€€-ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
 Vector3 Vector3::operator-() const
 {
 	return Vector3(-x, -y, -z);
@@ -69,8 +69,8 @@ Vector3 Vector3::operator*(Vector3 v)
 	return *this;
 }
 
-// ‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
-//+=‚ğg—p‚Å‚«‚é‚æ‚¤‚É‚·‚é
+// ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+//+=ã‚’ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 Vector3& Vector3::operator+=(const Vector3& v)
 {
 	x += v.x;
@@ -78,7 +78,7 @@ Vector3& Vector3::operator+=(const Vector3& v)
 	z += v.z;
 	return *this;
 }
-//-=‚ğg—p‚Å‚«‚é‚æ‚¤‚É‚·‚é
+//-=ã‚’ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 Vector3& Vector3::operator-=(const Vector3& v)
 {
 	x -= v.x;
@@ -86,7 +86,7 @@ Vector3& Vector3::operator-=(const Vector3& v)
 	z -= v.z;
 	return *this;
 }
-//ƒxƒNƒgƒ‹‚ğS”{‚É‚·‚é
+//ãƒ™ã‚¯ãƒˆãƒ«ã‚’Så€ã«ã™ã‚‹
 Vector3& Vector3::operator*=(float s)
 {
 	x *= s;
@@ -94,7 +94,7 @@ Vector3& Vector3::operator*=(float s)
 	z *= s;
 	return *this;
 }
-//ƒxƒNƒgƒ‹‚ğ1/S”{‚É‚·‚é
+//ãƒ™ã‚¯ãƒˆãƒ«ã‚’1/Så€ã«ã™ã‚‹
 Vector3& Vector3::operator/=(float s)
 {
 	x /= s;
@@ -119,8 +119,8 @@ Vector3& Vector3::operator-=(const Vector2& v)
 	return *this;
 }
 
-//2€‰‰ZqƒI[ƒo[ƒ[ƒh
-//¦‚¢‚ë‚ñ‚Èˆø”‚Ìƒpƒ^[ƒ“‚É‘Î‰(ˆø”‚Ì‡˜)‚·‚é‚½‚ßAˆÈ‰º‚Ì‚æ‚¤‚É€”õ‚µ‚Ä‚¢‚é
+//2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+//â€»ã„ã‚ã‚“ãªå¼•æ•°ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã«å¯¾å¿œ(å¼•æ•°ã®é †åº)ã™ã‚‹ãŸã‚ã€ä»¥ä¸‹ã®ã‚ˆã†ã«æº–å‚™ã—ã¦ã„ã‚‹
 const Vector3 operator+(const Vector3& v1, const Vector3& v2)
 {
 	Vector3 temp(v1);

@@ -7,7 +7,7 @@ class CrossFilter
 {
 private:
 	std::unique_ptr<HighLumi> highLumi_;
-	std::array<std::unique_ptr<LineBlur>,2> lineBlurs_;
+	std::array<std::unique_ptr<LineBlur>, 2> lineBlurs_;
 	std::unique_ptr<MultiTexture> compo_;
 public:
 	CrossFilter();

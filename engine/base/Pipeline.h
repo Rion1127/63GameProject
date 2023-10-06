@@ -13,16 +13,16 @@ enum BlendNum {
 	ALPHA,
 };
 
-//ƒTƒ“ƒvƒ‰[ƒfƒXƒN‚ğİ’è
+//ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒ‡ã‚¹ã‚¯ã‚’è¨­å®š
 D3D12_STATIC_SAMPLER_DESC SetSAMPLER_DESC();
 
 /// <summary>
-/// ƒuƒŒƒ“ƒhİ’è
+/// ãƒ–ãƒ¬ãƒ³ãƒ‰è¨­å®š
 /// </summary>
-/// <param name="BLEND_ALPHA">ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh</param>
-/// <param name="BLEND_SUB">Œ¸Z‡¬</param>
-/// <param name="BLEND_NEGA">F”½“]‡¬</param>
-/// <param name="BLEND_NORMAL">”¼“§–¾‡¬</param>
+/// <param name="BLEND_ALPHA">ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰</param>
+/// <param name="BLEND_SUB">æ¸›ç®—åˆæˆ</param>
+/// <param name="BLEND_NEGA">è‰²åè»¢åˆæˆ</param>
+/// <param name="BLEND_NORMAL">åŠé€æ˜åˆæˆ</param>
 void SetBlend(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc, uint32_t blend);
 
 enum CULL_MODE {
@@ -44,10 +44,10 @@ enum WRIGHT_MASK {
 	DEPTH_ENABLE_FALSE = 2
 };
 enum TEXTURE_ADDRESS_MODE {	//https://learn.microsoft.com/ja-jp/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_address_mode
-	MODE_WRAP = 1,		//ŒJ‚è•Ô‚µiƒ^ƒCƒŠƒ“ƒOj
-	MODE_MIRROR = 2,	//0 ~ 1‚Í’Êí, 1 ~ 2‚Í”½“] , 2 ~ 3 ‚Í’Êí
-	MODE_CLAMP = 3,		//0 ~ 1‚ÌŠÔ‚ÅCLAMP‚³‚ê‚é
-	MODE_BORDER = 4,	//HLSL ƒR[ƒh‚Åw’è‚³‚ê‚½‹«ŠEü‚ÌF‚Éİ’è‚³‚ê‚Ü‚·B
+	MODE_WRAP = 1,		//ç¹°ã‚Šè¿”ã—ï¼ˆã‚¿ã‚¤ãƒªãƒ³ã‚°ï¼‰
+	MODE_MIRROR = 2,	//0 ~ 1ã¯é€šå¸¸, 1 ~ 2ã¯åè»¢ , 2 ~ 3 ã¯é€šå¸¸
+	MODE_CLAMP = 3,		//0 ~ 1ã®é–“ã§CLAMPã•ã‚Œã‚‹
+	MODE_BORDER = 4,	//HLSL ã‚³ãƒ¼ãƒ‰ã§æŒ‡å®šã•ã‚ŒãŸå¢ƒç•Œç·šã®è‰²ã«è¨­å®šã•ã‚Œã¾ã™ã€‚
 	MODE_MIRROR_ONCE = 5//
 };
 
@@ -58,11 +58,11 @@ enum ShaderType {
 };
 class PipelineObject {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	ComPtr<ID3D12RootSignature> rootSignature_;
-	// ƒpƒCƒvƒ‰ƒ“ƒXƒe[ƒg
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ
 	ComPtr<ID3D12PipelineState> pipelineStateAdd_;
 	ComPtr<ID3D12PipelineState> pipelineStateSub_;
 	ComPtr<ID3D12PipelineState> pipelineStateNega_;
@@ -71,10 +71,10 @@ private:
 	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout_;
 	std::vector<D3D12_ROOT_PARAMETER> rootParams_;
 
-	ComPtr<ID3DBlob> vsBlob_ = nullptr; // ’¸“_ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	ComPtr<ID3DBlob> psBlob_ = nullptr; // ƒsƒNƒZƒ‹ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	ComPtr<ID3DBlob> gsBlob_ = nullptr; // ƒsƒNƒZƒ‹ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	ComPtr<ID3DBlob> errorBlob_ = nullptr; // ƒGƒ‰[ƒIƒuƒWƒFƒNƒg
+	ComPtr<ID3DBlob> vsBlob_ = nullptr; // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ComPtr<ID3DBlob> psBlob_ = nullptr; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ComPtr<ID3DBlob> gsBlob_ = nullptr; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ComPtr<ID3DBlob> errorBlob_ = nullptr; // ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 public:
 
 public:
@@ -84,11 +84,11 @@ public:
 		TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
 		TEXTURE_ADDRESS_MODE uvMode);
 
-	void Setshader(std::string fileName,ShaderType shadertype);
+	void Setshader(std::string fileName, ShaderType shadertype);
 
 	void AddrootParams(int32_t addNum);
 	void AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum);
-	void AddInputLayout(const char* semanticName, DXGI_FORMAT format,uint32_t index = 0);
+	void AddInputLayout(const char* semanticName, DXGI_FORMAT format, uint32_t index = 0);
 public:
 	ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }
 

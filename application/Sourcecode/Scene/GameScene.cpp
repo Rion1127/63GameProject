@@ -111,7 +111,7 @@ void GameScene::Update()
 		}
 		colosseumSystem_->Update();
 	}
-	//ƒNƒŠƒA‚µ‚Ä‚¢‚È‚¢‚¾‚¯ƒ|[ƒY‰æ–Ê‚ğŠJ‚¯‚é
+	//ã‚¯ãƒªã‚¢ã—ã¦ã„ãªã„æ™‚ã ã‘ãƒãƒ¼ã‚ºç”»é¢ã‚’é–‹ã‘ã‚‹
 	if (colosseumSystem_->GetIsClear() == false) {
 		pauseMenu_->Update();
 	}
@@ -127,7 +127,7 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 
 	////////////////
-	//3DƒIƒuƒWƒFƒNƒg//
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ//
 	////////////////
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	stage_->Draw();
@@ -140,7 +140,7 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
 
 	////////////
-	//ƒXƒvƒ‰ƒCƒg//
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ//
 	////////////
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	enemyManager_->SpriteDraw();
@@ -186,7 +186,7 @@ void GameScene::CameraUpdate()
 	}
 	else
 	{
-		//ƒJƒƒ‰XV
+		//ã‚«ãƒ¡ãƒ©æ›´æ–°
 		debugCamera_.Update();
 		Camera::scurrent_ = debugCamera_.GetCamera();
 	}

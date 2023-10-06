@@ -17,7 +17,7 @@ struct ConfigSprite {
 	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
 	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
 
-	ConfigSprite(Vector2 pos,int32_t itemIndex);
+	ConfigSprite(Vector2 pos, int32_t itemIndex);
 	void Update();
 	void Draw();
 };
@@ -25,7 +25,7 @@ struct ConfigSprite {
 class ConfigMenuSprite
 {
 private:
-	
+
 private:
 	bool isInversX_;
 	bool isInversY_;
@@ -49,7 +49,7 @@ public:
 class ConfigMenu
 {
 private:
-	
+
 private:
 	bool isInversX_;
 	bool isInversY_;

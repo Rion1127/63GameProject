@@ -18,10 +18,10 @@ void LoadManager::LoadTexture()
 	LoadGraph("white1280x720.png", "White1280x720");
 	LoadGraph("white1x1.png", "White");
 	LoadGraph("title.png", "Title");
-	//HPƒo[
+	//HPãƒãƒ¼
 	LoadGraph("hpBarBack.png", "HpBarBack");
 	LoadGraph("gauge.png", "Gauge");
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	LoadGraph("starParticle.png", "StarParticle");
 	LoadGraph("smoke.png", "Smoke");
 	LoadGraph("heart.png", "Heart");
@@ -51,7 +51,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("cameraInvTex.png", "CameraInvTex");
 	LoadGraph("configCameraTex.png", "ConfigCameraTex");
 
-	
+
 	LoadGraph("commandTitle.png", "CommandTitle");
 	LoadGraph("commandFrame.png", "CommandFrame");
 	LoadGraph("commandSelect.png", "CommandSelect");
@@ -59,10 +59,10 @@ void LoadManager::LoadTexture()
 	LoadGraph("CommandmagicTex.png", "CommandMagicTex");
 	LoadGraph("CommandmagicTitle.png", "CommandMagicTitle");
 
-	//ƒ{ƒ^ƒ“UI
+	//ãƒœã‚¿ãƒ³UI
 	LoadGraph("pressA.png", "PressA");
 	LoadGraph("OperationUI.png", "OperationUI");
-	//ƒQ[ƒ€ƒI[ƒo[UI
+	//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UI
 	LoadGraph("continueTex.png", "Continue");
 	LoadGraph("TitleTex.png", "TitleTex");
 

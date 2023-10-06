@@ -6,37 +6,37 @@
 #include "myMath.h"
 #include "WorldTransform.h"
 
-// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 struct ConstVPBuff {
-	Matrix4 view;       // ƒ[ƒ‹ƒh ¨ ƒrƒ…[•ÏŠ·s—ñ
-	Matrix4 projection; // ƒrƒ…[ ¨ ƒvƒƒWƒFƒNƒVƒ‡ƒ“•ÏŠ·s—ñ
-	Vector3 cameraPos;  // ƒJƒƒ‰À•Wiƒ[ƒ‹ƒhÀ•Wj
+	Matrix4 view;       // ãƒ¯ãƒ¼ãƒ«ãƒ‰ â†’ ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—
+	Matrix4 projection; // ãƒ“ãƒ¥ãƒ¼ â†’ ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³å¤‰æ›è¡Œåˆ—
+	Vector3 cameraPos;  // ã‚«ãƒ¡ãƒ©åº§æ¨™ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ï¼‰
 };
 
 enum class CameraMode {
-	LookAT,	//À•W‚Æ’‹“_À•W
-	LookTo	//À•W‚ÆƒIƒCƒ‰[Šp
+	LookAT,	//åº§æ¨™ã¨æ³¨è¦–ç‚¹åº§æ¨™
+	LookTo	//åº§æ¨™ã¨ã‚ªã‚¤ãƒ©ãƒ¼è§’
 };
 
 class Camera {
 public:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	Camera();
-	//ƒJƒƒ‰À•W
+	//ã‚«ãƒ¡ãƒ©åº§æ¨™
 	void SetEyePos(float x, float y, float z);
 	void SetEyePos(Vector3 pos);
-	//ƒ^[ƒQƒbƒgƒZƒbƒg
+	//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚»ãƒƒãƒˆ
 	void SetTarget(float x, float y, float z);
 	void SetTarget(Vector3 pos);
-	//ƒAƒbƒvƒxƒNƒgƒ‹
+	//ã‚¢ãƒƒãƒ—ãƒ™ã‚¯ãƒˆãƒ«
 	void SetUpVec(float x, float y, float z);
 	void SetUpVec(Vector3 upVec);
 	void MoveTo(Vector3 goal, float speed);
-	//À•W‚Æ’‹“_À•W‚Ås—ñŒvZ
+	//åº§æ¨™ã¨æ³¨è¦–ç‚¹åº§æ¨™ã§è¡Œåˆ—è¨ˆç®—
 	void UpdateLookAt();
-	//À•W‚ÆƒIƒCƒ‰[Šp‚Ås—ñŒvZ(‚±‚Á‚¿‚ÍƒfƒoƒbƒOƒJƒƒ‰‚ª‘Î‰‚µ‚Ä‚¢‚È‚¢‚½‚ßAƒoƒO‚é)
+	//åº§æ¨™ã¨ã‚ªã‚¤ãƒ©ãƒ¼è§’ã§è¡Œåˆ—è¨ˆç®—(ã“ã£ã¡ã¯ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ãŒå¯¾å¿œã—ã¦ã„ãªã„ãŸã‚ã€ãƒã‚°ã‚‹)
 	void UpdateLookTo();
 
 	void Update(CameraMode mode);
@@ -49,20 +49,20 @@ public:
 	WorldTransform WT_;
 
 	Matrix4 matView_{};
-	//“§‹“Š‰es—ñ‚ÌŒvZ
+	//é€è¦–æŠ•å½±è¡Œåˆ—ã®è¨ˆç®—
 	Matrix4 matProjection_{};
-	//ƒrƒ‹ƒ{[ƒhs—ñ
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	Matrix4 matBillboard_;
-	//Y²ü‚è‚Ìƒrƒ‹ƒ{[ƒh
+	//Yè»¸å‘¨ã‚Šã®ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰
 	Matrix4 matBillboardY_;
 
 	static Camera* scurrent_;
 public:
 	/// <summary>
-	/// ƒJƒƒ‰ƒVƒFƒCƒN
+	/// ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯
 	/// </summary>
-	/// <param name="time">—h‚ê‚éŠÔ</param>
-	/// <param name="power">—h‚ê‚é‘å‚«‚³</param>
+	/// <param name="time">æºã‚Œã‚‹æ™‚é–“</param>
+	/// <param name="power">æºã‚Œã‚‹å¤§ãã•</param>
 	void ShakeSet(uint32_t time, float power);
 	void ShakeUpdate();
 	void SetOriginalPos();
@@ -73,10 +73,10 @@ public:
 
 private:
 	void UpdateMatProjection();
-	// ƒrƒ…[ƒ|[ƒg‚ÌƒAƒXƒyƒNƒg”ä
+	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
 	float aspectRatio_;
 
-	//ƒVƒFƒCƒN‚·‚é‘O‚ÌêŠ
+	//ã‚·ã‚§ã‚¤ã‚¯ã™ã‚‹å‰ã®å ´æ‰€
 	Vector3 originalPos_;
 	bool isShake_ = false;
 	uint32_t maxShakeTime_;

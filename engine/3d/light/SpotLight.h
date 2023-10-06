@@ -5,15 +5,15 @@
 class SpotLight
 {
 public:
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData {
-		Vector3 lightv;		//•ûŒüƒxƒNƒgƒ‹
+		Vector3 lightv;		//æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 		float pad1;
-		Vector3 lightPos;	//À•W
+		Vector3 lightPos;	//åº§æ¨™
 		float pad2;
-		Vector3 lightColor;	//F
+		Vector3 lightColor;	//è‰²
 		float pad3;
-		Vector3 lightatten;	//‹——£Œ¸Š
+		Vector3 lightatten;	//è·é›¢æ¸›è¡°
 		float pad4;
 		Vector2 lightfactorranglecos;
 		uint32_t active;
@@ -36,17 +36,17 @@ public:
 	Vector3 GetLightAtten() { return lightAtten_; }
 	Vector2 GetLightFaactorAngleCos() { return lightFactorAngleCos_; }
 private:
-	//ƒ‰ƒCƒg•ûŒüi’PˆÊƒxƒNƒgƒ‹j
+	//ãƒ©ã‚¤ãƒˆæ–¹å‘ï¼ˆå˜ä½ãƒ™ã‚¯ãƒˆãƒ«ï¼‰
 	Vector3 lightdir_ = { 1,0,0 };
-	//ƒ‰ƒCƒgÀ•W
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™
 	Vector3 lightPos_ = { 0,0,0 };
-	//ƒ‰ƒCƒgF
+	//ãƒ©ã‚¤ãƒˆè‰²
 	Vector3 lightColor_ = { 1,1,1 };
-	//ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	Vector3 lightAtten_ = { 1.0f,1.0f,1.0f };
-	//ƒ‰ƒCƒgŒ¸ŠŠp“xiŠJnŠp“xAI—¹Šp“xj
+	//ãƒ©ã‚¤ãƒˆæ¸›è¡°è§’åº¦ï¼ˆé–‹å§‹è§’åº¦ã€çµ‚äº†è§’åº¦ï¼‰
 	Vector2 lightFactorAngleCos_ = { 0.5f,0.2f };
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active_ = false;
 };
 

@@ -23,7 +23,7 @@ public:
 	static JsonLoader* GetInstance();
 	JsonLoader();
 
-	//JSONファイル読み込み dataNameで名前をつける
+	//JSON繝輔ぃ繧､繝ｫ隱ｭ縺ｿ霎ｼ縺ｿ dataName縺ｧ蜷榊燕繧偵▽縺代ｋ
 	void LoadFile(std::string fileName, std::string dataName);
 	void SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, std::string levelDataName);
 	void SetCamera(Camera* camera, std::string levelDataName);

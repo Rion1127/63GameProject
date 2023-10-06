@@ -2,14 +2,14 @@
 #include "Sprite.h"
 #include "IGauge.h"
 #include "Timer.h"
-class PlayerHPGauge : 
+class PlayerHPGauge :
 	public IGauge
 {
 private:
-	std::unique_ptr<Sprite> hpBarMiddle_;	//ƒ_ƒ[ƒW‚ªŒ¸‚Á‚½•ª‚ðÔ‚­•\Ž¦‚·‚é
+	std::unique_ptr<Sprite> hpBarMiddle_;	//ãƒ€ãƒ¡ãƒ¼ã‚¸ãŒæ¸›ã£ãŸåˆ†ã‚’èµ¤ãè¡¨ç¤ºã™ã‚‹
 public:
 	PlayerHPGauge();
-	
+
 	void Damage();
 private:
 	void OriginalUpdate() override;
@@ -24,7 +24,7 @@ class PlayerMPGauge :
 private:
 	Timer easeTimer_;
 	Vector2 basePos_;
-	//‰æ–ÊŠO‚Ìƒ|ƒWƒVƒ‡ƒ“
+	//ç”»é¢å¤–ã®ãƒã‚¸ã‚·ãƒ§ãƒ³
 	Vector2 easeStartPos_;
 
 	bool isCharge_;

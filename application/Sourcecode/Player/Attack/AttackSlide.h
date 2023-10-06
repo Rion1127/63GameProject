@@ -1,7 +1,7 @@
 #pragma once
 #include "IAttack.h"
 class AttackSlide :
-    public IAttack
+	public IAttack
 {
 private:
 	enum State {

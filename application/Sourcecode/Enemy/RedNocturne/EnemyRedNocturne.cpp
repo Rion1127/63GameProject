@@ -25,7 +25,7 @@ EnemyRedNocturne::EnemyRedNocturne(Vector3 pos, Vector3 rot) :
 	actionTimer_.SetLimitTime(60);
 	shotTimer_.SetLimitTime(240);
 
-	//ƒvƒ‰ƒCƒIƒŠƒeƒB‚És“®ƒpƒ^[ƒ“‚ğ“o˜^
+	//ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã«è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ç™»éŒ²
 	priority_.insert(std::make_pair(State::Idle, 0));
 	priority_.insert(std::make_pair(State::Wander, 0));
 	priority_.insert(std::make_pair(State::FireAttack, 0));
@@ -63,7 +63,7 @@ void EnemyRedNocturne::Draw()
 
 void EnemyRedNocturne::MoveUpdate()
 {
-	//ƒXƒe[ƒ^ƒX‚²‚Æ‚Ì“®‚«‚ğ’Ç‰Á
+	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã”ã¨ã®å‹•ãã‚’è¿½åŠ 
 	void (EnemyRedNocturne:: * Action[]) () =
 	{
 		&EnemyRedNocturne::Idle,
@@ -81,7 +81,7 @@ void EnemyRedNocturne::MoveUpdate()
 	/*UpdateVector();*/
 	Vector3 lockOnPos = splayer_->GetWorldTransform()->position_;
 	Vector3 frontVec;
-	//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ğ‚Æ‚é
+	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 	frontVec = {
 		lockOnPos.x - GetWorldTransform()->position_.x,
 		0,
@@ -93,8 +93,8 @@ void EnemyRedNocturne::MoveUpdate()
 	};
 	float rotY = Radian(Vec2Angle(frontVec2));
 	GetWorldTransform()->rotation_ = { 0,rotY ,0 };
-	
-	//Às
+
+	//å®Ÿè¡Œ
 	if (isCanMove_)
 	{
 		actionTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
@@ -115,7 +115,7 @@ void EnemyRedNocturne::MoveUpdate()
 	if (state_ == State::FireAttack)			text += "FireAttack";
 	if (state_ == State::Wander)		text += "Wander";
 	if (state_ == State::Wander_FireAttack)		text += "Wander_FireAttack";
-	
+
 	ImGui::Text(text.c_str());
 
 	ImGui::End();
@@ -129,9 +129,9 @@ void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)
 	auto& bullet = bullets->back();
 	bullet->SetLockOnActor(splayer_);
 	bullet->Init();
-	
+
 	isBulletShot_ = false;
-	SoundManager::Play("FireSE",false,1.f);
+	SoundManager::Play("FireSE", false, 1.f);
 }
 
 void EnemyRedNocturne::Idle()
@@ -140,7 +140,7 @@ void EnemyRedNocturne::Idle()
 
 void EnemyRedNocturne::Wander()
 {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	if (stateInit)
 	{
 		stateInit = false;
@@ -162,7 +162,7 @@ void EnemyRedNocturne::Wander()
 	addVec_ = {
 		pos_.x - obj_->WT_.position_.x ,
 		0,
-		pos_.z-obj_->WT_.position_.z ,
+		pos_.z - obj_->WT_.position_.z ,
 	};
 	float rate = actionTimer_.GetTimeRate();
 	pos_ = {
@@ -176,7 +176,7 @@ void EnemyRedNocturne::Wander()
 void EnemyRedNocturne::FireAttack()
 {
 	if (fireEmitter_->isActive) {
-		//À•W‚ğXV
+		//åº§æ¨™ã‚’æ›´æ–°
 		Vector3 pos = obj_->GetPos();
 		pos.y += obj_->GetScale().y * 2.f;
 		fireEmitter_->pos = pos;
@@ -202,7 +202,7 @@ void EnemyRedNocturne::Wander_FireAttack()
 
 void EnemyRedNocturne::KnockBack()
 {
-	//ˆê’èŠÔŒo‚Ä‚ÎƒmƒbƒNó‘Ô‚©‚çƒAƒCƒhƒ‹ó‘Ô‚É–ß‚é
+	//ä¸€å®šæ™‚é–“çµŒã¦ã°ãƒãƒƒã‚¯çŠ¶æ…‹ã‹ã‚‰ã‚¢ã‚¤ãƒ‰ãƒ«çŠ¶æ…‹ã«æˆ»ã‚‹
 	attack_.reset();
 	if (actionTimer_.GetIsEnd())
 	{
@@ -226,7 +226,7 @@ void EnemyRedNocturne::SortPriority()
 	float length = EtoPVec.length();
 	float compareShortlength = compareShortVec.length();
 	float compareLonglength = compareLongVec.length();
-	//‹ß‹——£‚É‚¢‚é‚Æ‚«
+	//è¿‘è·é›¢ã«ã„ã‚‹ã¨ã
 	if (length <= compareShortlength)
 	{
 		priority_.at(State::FireAttack) += 10;
@@ -234,7 +234,7 @@ void EnemyRedNocturne::SortPriority()
 		priority_.at(State::Wander) += 100;
 		priority_.at(State::Idle) += 10;
 	}
-	//’†‹——£‚É‚¢‚é‚Æ‚«
+	//ä¸­è·é›¢ã«ã„ã‚‹ã¨ã
 	else if (length > compareShortlength &&
 		length < compareLonglength)
 	{
@@ -243,7 +243,7 @@ void EnemyRedNocturne::SortPriority()
 		priority_.at(State::Wander) += 100;
 		priority_.at(State::Idle) += 5;
 	}
-	//‰“‚­‚É‚¢‚é‚Æ‚«
+	//é ãã«ã„ã‚‹ã¨ã
 	else
 	{
 		priority_.at(State::FireAttack) += 80;
@@ -257,23 +257,23 @@ void EnemyRedNocturne::SortPriority()
 	int32_t allPriolityValue = 0;
 	for (const auto& p : priority_)
 	{
-		//ƒvƒ‰ƒCƒIƒŠƒeƒB‚ª0‚Ì‚à‚Ì‚ÍœŠO‚·‚é
+		//ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ãŒ0ã®ã‚‚ã®ã¯é™¤å¤–ã™ã‚‹
 		if (p.second == 0) continue;
 
 		arr.emplace_back(p);
-		//—Dæ“x‚Ì
+		//å„ªå…ˆåº¦ã®
 		allPriolityValue += p.second;
 	}
-	//~‡‚É•À‚Ñ•Ï‚¦‚é
+	//é™é †ã«ä¸¦ã³å¤‰ãˆã‚‹
 	std::sort(arr.begin(), arr.end(),
 		[](const auto& x, const auto& y) {return x.second > y.second; });
 
 	uint16_t rand = RRandom::Rand(0, allPriolityValue);
 
-	int32_t prePriolityValue = 0;	//—İŒv‚Ì—Dæ“x
+	int32_t prePriolityValue = 0;	//ç´¯è¨ˆã®å„ªå…ˆåº¦
 	for (uint32_t i = 0; i < arr.size(); i++)
 	{
-		int32_t nowPriolityValue = 0;	//Œ»İ‚Ì—Dæ“x
+		int32_t nowPriolityValue = 0;	//ç¾åœ¨ã®å„ªå…ˆåº¦
 
 		if (i >= 1)
 		{
@@ -281,12 +281,12 @@ void EnemyRedNocturne::SortPriority()
 		}
 		//
 		nowPriolityValue = prePriolityValue + arr[i].second;
-		//ƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ‚ß‚½’l‚ªA
-		//‘O‰ñ‚Ì—Dæ“x‚æ‚è‚à‚‚¢ & ‘O‰ñ‚Ì—Dæ“x + ¡‰ñ‚Ì—Dæ“x‚æ‚è‚à’á‚¢
+		//ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºã‚ãŸå€¤ãŒã€
+		//å‰å›ã®å„ªå…ˆåº¦ã‚ˆã‚Šã‚‚é«˜ã„ & å‰å›ã®å„ªå…ˆåº¦ + ä»Šå›ã®å„ªå…ˆåº¦ã‚ˆã‚Šã‚‚ä½ã„æ™‚
 		if (prePriolityValue <= rand &&
 			nowPriolityValue >= rand)
 		{
-			//ƒXƒe[ƒg‚ğ‘ã“ü
+			//ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä»£å…¥
 			StateUpdate(arr[i].first);
 		}
 	}
@@ -336,7 +336,7 @@ void EnemyRedNocturne::InitFireParticle()
 	fireEmitter_->time = 30;
 	fireEmitter_->pos = pos;
 	fireEmitter_->scale = 0.3f;
-	
+
 	fireCirclePos_ = obj_->GetPos();
 	fireCirclePos_.y += obj_->GetScale().y;
 	fireCircleEmitter_ = std::make_shared<OneceEmitter>();

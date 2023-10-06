@@ -1,8 +1,8 @@
 #pragma once
 #include "IPostEffect.h"
 
-class LineBlur final:
-    public IPostEffect
+class LineBlur final :
+	public IPostEffect
 {
 private:
 	struct ConstBuffRad {
@@ -11,13 +11,13 @@ private:
 
 	float radian_;
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 
 	ConstBuffRad* constMap_;
 protected:
-	//ƒVƒF[ƒ_[‚Ö’l‚ğ“n‚·
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸å€¤ã‚’æ¸¡ã™
 	void TransferBuff() override;
 	void SendToShader() override;
 public:

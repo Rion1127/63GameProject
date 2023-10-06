@@ -6,7 +6,7 @@
 class Object3d
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	std::unique_ptr<Model> model_ = nullptr;
 	bool isVisible_ = true;
@@ -15,15 +15,15 @@ public:
 public:
 	Object3d();
 	~Object3d();
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
 
 public:
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void SetModel(std::unique_ptr<Model> model) { model_ = std::move(model); }
 	void SetAmbient(std::string name, Vector3 ambient) { model_->materials_.find(name)->second->SetAmbient(ambient); }
 	void SetPos(const Vector3& pos) { WT_.position_ = pos; }
@@ -31,7 +31,7 @@ public:
 	void SetRot(const Vector3& rot) { WT_.rotation_ = rot; }
 	void SetIsVisible(bool flag) { isVisible_ = flag; }
 public:
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	WorldTransform* GetTransform() { return &WT_; }
 	Vector3 GetPos() { return WT_.position_; }
 	Vector3 GetScale() { return WT_.scale_; }

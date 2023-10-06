@@ -16,16 +16,16 @@ private:
 		Object3d colObj_;
 		Sphere col_;
 		int32_t damage = 10;
-		//“G‚ÌUŒ‚“–‚½‚è”»’è—LŒø‚Ü‚Å‚ÌŠÔ
+		//æ•µã®æ”»æ’ƒå½“ãŸã‚Šåˆ¤å®šæœ‰åŠ¹ã¾ã§ã®æ™‚é–“
 		int32_t damageCoolTime = 20;
-		//ƒmƒbƒNƒoƒbƒN‚Ì‹­‚³
+		//ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã®å¼·ã•
 		Vector3 knockPower = { 0.5f,0.5f,0.5f };
-		//ã•ûŒü‚ÌƒmƒbƒNƒoƒbƒN
+		//ä¸Šæ–¹å‘ã®ãƒãƒƒã‚¯ãƒãƒƒã‚¯
 		float knockVecY = 0.5f;
 		bool isCollision_ = false;
 	};
 	struct AttackInfo {
-		float maxTime;	//UŒ‚‚ÌƒtƒŒ[ƒ€”
+		float maxTime;	//æ”»æ’ƒã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 		float nowTime;
 	};
 protected:
@@ -35,17 +35,17 @@ protected:
 	IActor* selfActor_;
 	IActor* lockOnActor_;
 	Vector3 attackVec_;
-	//“–‚½‚è”»’è‚Ì‹O“¹
+	//å½“ãŸã‚Šåˆ¤å®šã®è»Œé“
 	Spline spline_;
 	Vector3 swordPos_;
 public:
-	IAttack(IActor* selfActor,int32_t colNum = 1, float maxTime = 20, int32_t damage = 10,int32_t damageCoolTime = 25);
-	virtual ~IAttack(){};
+	IAttack(IActor* selfActor, int32_t colNum = 1, float maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25);
+	virtual ~IAttack() {};
 	void Update();
 	void DrawCol();
-	//lockOnActor‚Ö‚ÌƒxƒNƒgƒ‹‚ğŒvZ‚·‚é
+	//lockOnActorã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—ã™ã‚‹
 	Vector3 CalculateFrontVec();
-	//lockOnActor‚Ö‰ñ“]‚³‚¹‚é
+	//lockOnActorã¸å›è»¢ã•ã›ã‚‹
 	void CalculateRotToLockOnActor(Vector3 frontVec);
 public:
 	void SetNowTime(float time) { attackInfo_.nowTime = time; }

@@ -7,111 +7,111 @@ void Vertices::Ini(ID3D12Device* device)
 {
 	HRESULT result;
 
-	vertices_.push_back({ { 0.0f, 0.0f, 0.0f },{0,0,1}, { 0,1 } });//‰Eã
+	vertices_.push_back({ { 0.0f, 0.0f, 0.0f },{0,0,1}, { 0,1 } });//å³ä¸Š
 
-	// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
 	UINT sizeVB;
 	UINT sizeIB;
 	sizeVB = static_cast<UINT>(sizeof(vertices_[0]) * vertices_.size());
 	sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices_.size());
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	// ƒq[ƒvİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES heapProp{};
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã¸ã®è»¢é€ç”¨
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeVB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	resDesc.Width = sizeVB; // é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//–@ü‚ÌŒvZ
+	//æ³•ç·šã®è¨ˆç®—
 	for (uint32_t i = 0; i < indices_.size() / 3; i++) {
-		//OŠpŒ`1‚Â‚²‚Æ‚ÉŒvZ‚µ‚Ä‚¢‚­
-		//OŠpŒ`‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ‚èo‚µ‚ÄAˆê“I‚È•Ï”‚É“ü‚ê‚é
+		//ä¸‰è§’å½¢1ã¤ã”ã¨ã«è¨ˆç®—ã—ã¦ã„ã
+		//ä¸‰è§’å½¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–ã‚Šå‡ºã—ã¦ã€ä¸€æ™‚çš„ãªå¤‰æ•°ã«å…¥ã‚Œã‚‹
 		unsigned short index0 = indices_[static_cast<std::vector<uint16_t, std::allocator<uint16_t>>::size_type>(i) * 3 + 0];
 		unsigned short index1 = indices_[static_cast<std::vector<uint16_t, std::allocator<uint16_t>>::size_type>(i) * 3 + 1];
 		unsigned short index2 = indices_[static_cast<std::vector<uint16_t, std::allocator<uint16_t>>::size_type>(i) * 3 + 2];
-		//OŠpŒ`‚ğ\¬‚·‚é’¸“_À•W‚ğƒxƒNƒgƒ‹‚É‘ã“ü
+		//ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹åº§æ¨™ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«ä»£å…¥
 		Vector3 p0 = vertices_[index0].pos;
 		Vector3 p1 = vertices_[index1].pos;
 		Vector3 p2 = vertices_[index2].pos;
-		//p0¨p1ƒxƒNƒgƒ‹Ap0¨p2ƒxƒNƒgƒ‹‚ğŒvZiƒxƒNƒgƒ‹‚ÌŒ¸Zj
-		Vector3 v1 = p1-p0;
-		Vector3 v2 = p2-p0;
-		//ŠOÏ‚Í—¼•û‚©‚ç‚’¼‚ÈƒxƒNƒgƒ‹
+		//p0â†’p1ãƒ™ã‚¯ãƒˆãƒ«ã€p0â†’p2ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—ï¼‰
+		Vector3 v1 = p1 - p0;
+		Vector3 v2 = p2 - p0;
+		//å¤–ç©ã¯ä¸¡æ–¹ã‹ã‚‰å‚ç›´ãªãƒ™ã‚¯ãƒˆãƒ«
 		Vector3 normal = v1.cross(v2);
-		//³‹K‰»i’·‚³‚ğ1‚É‚·‚éj
+		//æ­£è¦åŒ–ï¼ˆé•·ã•ã‚’1ã«ã™ã‚‹ï¼‰
 		normal = normal.normalize();
-		//‹‚ß‚½–@ü‚ğ’¸“_ƒf[ƒ^‚É‘ã“ü
+		//æ±‚ã‚ãŸæ³•ç·šã‚’é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«ä»£å…¥
 		vertices_[index0].normal = normal;
 		vertices_[index1].normal = normal;
 		vertices_[index2].normal = normal;
 
 	}
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc, // ƒŠƒ\[ƒXİ’è
+		&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
 
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	VertexPosNormalUv* vertMap = nullptr;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap[i] = vertices_[i]; // À•W‚ğƒRƒs[
+		vertMap[i] = vertices_[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff_->Unmap(0, nullptr);
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
-	// GPU‰¼‘zƒAƒhƒŒƒX
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+	// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-	// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	vbView_.SizeInBytes = sizeVB;
-	// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
 
 	if (indices_.size() != 0) {
-		//ƒŠƒ\[ƒXİ’è
+		//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		resDesc.Width = sizeIB; // ƒCƒ“ƒfƒbƒNƒXî•ñ‚ª“ü‚é•ª‚ÌƒTƒCƒY
+		resDesc.Width = sizeIB; // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æƒ…å ±ãŒå…¥ã‚‹åˆ†ã®ã‚µã‚¤ã‚º
 		resDesc.Height = 1;
 		resDesc.DepthOrArraySize = 1;
 		resDesc.MipLevels = 1;
 		resDesc.SampleDesc.Count = 1;
 		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-			&heapProp, // ƒq[ƒvİ’è
+			&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 			D3D12_HEAP_FLAG_NONE,
-			&resDesc, // ƒŠƒ\[ƒXİ’è
+			&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&indexBuff_));
 		assert(SUCCEEDED(result));
 
-		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒ}ƒbƒsƒ“ƒO
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°
 		uint16_t* indexMap = nullptr;
 		result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 		assert(SUCCEEDED(result));
-		// ‘SƒCƒ“ƒfƒbƒNƒX‚É‘Î‚µ‚Ä
+		// å…¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«å¯¾ã—ã¦
 		for (uint32_t i = 0; i < indices_.size(); i++) {
-			indexMap[i] = indices_[i]; // ƒCƒ“ƒfƒbƒNƒX‚ğƒRƒs[
+			indexMap[i] = indices_[i]; // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ã‚³ãƒ”ãƒ¼
 		}
-		// ƒ}ƒbƒsƒ“ƒO‰ğœ
+		// ãƒãƒƒãƒ”ãƒ³ã‚°è§£é™¤
 		indexBuff_->Unmap(0, nullptr);
 
 		ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
@@ -124,102 +124,102 @@ void Vertices::CreateBuffer()
 {
 	HRESULT result;
 
-	// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
 	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices_.size());
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	// ƒq[ƒvİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES heapProp{};
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã¸ã®è»¢é€ç”¨
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeVB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	resDesc.Width = sizeVB; // é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//–@ü‚ÌŒvZ
+	//æ³•ç·šã®è¨ˆç®—
 	for (uint32_t i = 0; i < indices_.size() / 3; i++) {
-		//OŠpŒ`1‚Â‚²‚Æ‚ÉŒvZ‚µ‚Ä‚¢‚­
-		//OŠpŒ`‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ‚èo‚µ‚ÄAˆê“I‚È•Ï”‚É“ü‚ê‚é
+		//ä¸‰è§’å½¢1ã¤ã”ã¨ã«è¨ˆç®—ã—ã¦ã„ã
+		//ä¸‰è§’å½¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–ã‚Šå‡ºã—ã¦ã€ä¸€æ™‚çš„ãªå¤‰æ•°ã«å…¥ã‚Œã‚‹
 		unsigned short index0 = indices_[static_cast<std::vector<uint16_t, std::allocator<uint16_t>>::size_type>(i) * 3 + 0];
 		unsigned short index1 = indices_[static_cast<std::vector<uint16_t, std::allocator<uint16_t>>::size_type>(i) * 3 + 1];
 		unsigned short index2 = indices_[static_cast<std::vector<uint16_t, std::allocator<uint16_t>>::size_type>(i) * 3 + 2];
-		//OŠpŒ`‚ğ\¬‚·‚é’¸“_À•W‚ğƒxƒNƒgƒ‹‚É‘ã“ü
+		//ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹åº§æ¨™ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«ä»£å…¥
 		Vector3 p0 = vertices_[index0].pos;
 		Vector3 p1 = vertices_[index1].pos;
 		Vector3 p2 = vertices_[index2].pos;
-		//p0¨p1ƒxƒNƒgƒ‹Ap0¨p2ƒxƒNƒgƒ‹‚ğŒvZiƒxƒNƒgƒ‹‚ÌŒ¸Zj
+		//p0â†’p1ãƒ™ã‚¯ãƒˆãƒ«ã€p0â†’p2ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—ï¼‰
 		Vector3 v1 = p1 - p0;
 		Vector3 v2 = p2 - p0;
-		//ŠOÏ‚Í—¼•û‚©‚ç‚’¼‚ÈƒxƒNƒgƒ‹
+		//å¤–ç©ã¯ä¸¡æ–¹ã‹ã‚‰å‚ç›´ãªãƒ™ã‚¯ãƒˆãƒ«
 		Vector3 normal = v1.cross(v2);
-		//³‹K‰»i’·‚³‚ğ1‚É‚·‚éj
+		//æ­£è¦åŒ–ï¼ˆé•·ã•ã‚’1ã«ã™ã‚‹ï¼‰
 		normal = normal.normalize();
-		//‹‚ß‚½–@ü‚ğ’¸“_ƒf[ƒ^‚É‘ã“ü
+		//æ±‚ã‚ãŸæ³•ç·šã‚’é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«ä»£å…¥
 		vertices_[index0].normal = normal;
 		vertices_[index1].normal = normal;
 		vertices_[index2].normal = normal;
 	}
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc, // ƒŠƒ\[ƒXİ’è
+		&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
 
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	VertexPosNormalUv* vertMap = nullptr;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap[i] = vertices_[i]; // À•W‚ğƒRƒs[
+		vertMap[i] = vertices_[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff_->Unmap(0, nullptr);
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
-	// GPU‰¼‘zƒAƒhƒŒƒX
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+	// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-	vbView_.SizeInBytes = sizeVB;				// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
-	vbView_.StrideInBytes = sizeof(vertices_[0]);	// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	vbView_.SizeInBytes = sizeVB;				// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
+	vbView_.StrideInBytes = sizeof(vertices_[0]);	// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 
 	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices_.size());
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeIB; // ƒCƒ“ƒfƒbƒNƒXî•ñ‚ª“ü‚é•ª‚ÌƒTƒCƒY
+	resDesc.Width = sizeIB; // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æƒ…å ±ãŒå…¥ã‚‹åˆ†ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc, // ƒŠƒ\[ƒXİ’è
+		&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&indexBuff_));
 	assert(SUCCEEDED(result));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒ}ƒbƒsƒ“ƒO
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°
 	uint16_t* indexMap = nullptr;
 	result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
-	// ‘SƒCƒ“ƒfƒbƒNƒX‚É‘Î‚µ‚Ä
+	// å…¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«å¯¾ã—ã¦
 	for (uint32_t i = 0; i < indices_.size(); i++) {
-		indexMap[i] = indices_[i]; // ƒCƒ“ƒfƒbƒNƒX‚ğƒRƒs[
+		indexMap[i] = indices_[i]; // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// ƒ}ƒbƒsƒ“ƒO‰ğœ
+	// ãƒãƒƒãƒ”ãƒ³ã‚°è§£é™¤
 	indexBuff_->Unmap(0, nullptr);
 
 	ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
@@ -231,16 +231,16 @@ void Vertices::CreateBuffer()
 void Vertices::Map()
 {
 	HRESULT result;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	VertexPosNormalUv* vertMap = nullptr;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap[i] = vertices_[i]; // À•W‚ğƒRƒs[
+		vertMap[i] = vertices_[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff_->Unmap(0, nullptr);
 }
 
@@ -248,43 +248,43 @@ void Vertices::Draw(uint32_t indexSize,
 	WorldTransform* worldTransform,
 	UINT descriptorSize)
 {
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		IASetIndexBuffer(&ibView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(0, worldTransform->constBuffTransform_->GetGPUVirtualAddress());
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawIndexedInstanced((UINT)indexSize, 1, 0, 0, 0);
 }
 
 void Vertices::Draw(const WorldTransform& worldTransform)
 {
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(1, worldTransform.constBuffTransform_->GetGPUVirtualAddress());
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
 void Vertices::DrawInstanced(WorldTransform* worldTransform, UINT descriptorSize)
 {
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	//commandList->IASetIndexBuffer(&ibView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(0, worldTransform->constBuffTransform_->GetGPUVirtualAddress());
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawInstanced((UINT)vertices_.size(), 1, 0, 0);
 }

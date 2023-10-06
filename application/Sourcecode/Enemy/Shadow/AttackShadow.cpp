@@ -12,12 +12,12 @@ void AttackShadow::Init()
 	Vector3 frontDist{};
 	if (selfActor_ != nullptr) {
 		frontDist_ = 0;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
 		else {
-			//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+			//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 			frontVec = {
 				sinf(selfActor_->GetWorldTransform()->rotation_.y),
 				0,
@@ -32,7 +32,7 @@ void AttackShadow::Init()
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 0.6f;
 		attackCol_.at(0)->damage = 10;
-		//ƒmƒbƒNƒoƒbƒN—Í
+		//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 		attackCol_.at(0)->knockPower = { 0.1f,0.3f,0.1f };
 		attackCol_.at(0)->knockVecY = 0.5f;
 	}
@@ -42,7 +42,7 @@ void AttackShadow::Init()
 
 void AttackShadow::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = attackVec_ * 0.06f;

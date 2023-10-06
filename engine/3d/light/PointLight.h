@@ -14,29 +14,29 @@ public:
 		Vector3 lightatten;
 		uint32_t active;
 	};
-	//À•W‘ã“ü
+	//åº§æ¨™ä»£å…¥
 	void SetLightPos(const Vector3& lightPos) { this->lightPos_ = lightPos; }
-	//À•Wæ“¾
+	//åº§æ¨™å–å¾—
 	Vector3& GetLightPos() { return lightPos_; }
-	//F‘ã“ü
+	//è‰²ä»£å…¥
 	void SetLightColor(const Vector3& lightColor) { this->lightColor_ = lightColor; }
-	//Fæ“¾
+	//è‰²å–å¾—
 	Vector3& GetLightColor() { return lightColor_; }
-	//‹——£Œ¸Š‘ã“ü
+	//è·é›¢æ¸›è¡°ä»£å…¥
 	void SetLightAtten(const Vector3& lightAtten) { this->lightAtten_ = lightAtten; }
-	//‹——£Œ¸Šæ“¾
+	//è·é›¢æ¸›è¡°å–å¾—
 	Vector3& GetLightAtten() { return lightAtten_; }
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	void SetActive(bool active) { this->active_ = active; }
 	bool GetActive() { return active_; }
 private:
-	//ƒ‰ƒCƒgÀ•W
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™
 	Vector3 lightPos_ = { 0,0,0 };
-	//ƒ‰ƒCƒgF
+	//ãƒ©ã‚¤ãƒˆè‰²
 	Vector3 lightColor_ = { 1,1,1 };
-	//ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	Vector3 lightAtten_ = { 1.0f,1.0f,1.0f };
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active_ = false;
 };
 

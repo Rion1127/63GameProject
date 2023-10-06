@@ -12,34 +12,34 @@
 #include "Vector2.h"
 
 struct Texture {
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff = nullptr;
-	//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 	std::string fileName_;
-	//İ’è‚µ‚½ƒeƒNƒXƒ`ƒƒ‚Ì–¼‘O
+	//è¨­å®šã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åå‰
 	std::string textureName_;
-	//ƒeƒNƒXƒ`ƒƒƒAƒhƒŒƒX
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¢ãƒ‰ãƒ¬ã‚¹
 	uint32_t textureHandle;
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º
 	Vector2 size_;
 };
 
 class TextureManager
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//ƒeƒNƒXƒ`ƒƒ‚Ìî•ñ‚ğŠi”[
-	std::map < std::string , std::unique_ptr<Texture>> texData{};
-	//Ÿ‚ÉŠi”[‚·‚éêŠ‚ÌƒAƒhƒŒƒX
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æƒ…å ±ã‚’æ ¼ç´
+	std::map < std::string, std::unique_ptr<Texture>> texData{};
+	//æ¬¡ã«æ ¼ç´ã™ã‚‹å ´æ‰€ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 	uint32_t textureHandle;
 
-	//SRV‚ÌÅ‘åŒÂ”
+	//SRVã®æœ€å¤§å€‹æ•°
 	const size_t kMaxSRVCount = 2056;
-	
-	//SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
+
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle{};
-	//İ’è‚ğ‚à‚Æ‚ÉSRV—p‚ÅƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//è¨­å®šã‚’ã‚‚ã¨ã«SRVç”¨ã§ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	ComPtr<ID3D12DescriptorHeap> srvHeap{};
 public:
 	static TextureManager* GetInstance();

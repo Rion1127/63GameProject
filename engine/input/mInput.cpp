@@ -4,76 +4,76 @@
 #pragma comment(lib, "Xinput.lib")
 #pragma comment(lib, "dinput8.lib")
 
-//DirectInput‚Ì‰Šú‰»
+//DirectInputã®åˆæœŸåŒ–
 static IDirectInput8* sdirectInput = nullptr;
 
 IDirectInputDevice8* Key::skeyboard_ = nullptr;
-//‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+//ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 BYTE Key::skeys_[256] = {};
-//‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+//ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 BYTE Key::soldkeys_[256] = {};
 
-#pragma region ƒL[ƒ{[ƒh
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 
-void Key::InputIni()	//‰Šú‰»
+void Key::InputIni()	//åˆæœŸåŒ–
 {
 	HRESULT result;
 
-	//DirectInput‚Ì‰Šú‰»
+	//DirectInputã®åˆæœŸåŒ–
 	result = DirectInput8Create(
 		WinAPI::GetInstance()->w_.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&sdirectInput, nullptr);
 	assert(SUCCEEDED(result));
 
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = sdirectInput->CreateDevice(GUID_SysKeyboard, &skeyboard_, NULL);
 	assert(SUCCEEDED(result));
 
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = skeyboard_->SetDataFormat(&c_dfDIKeyboard);	//•W€Œ`®
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = skeyboard_->SetDataFormat(&c_dfDIKeyboard);	//æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
 
-	//”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	//æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = skeyboard_->SetCooperativeLevel(
 		WinAPI::GetInstance()->hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
-	//g‚Á‚Ä‚¢‚éƒtƒ‰ƒO‚É‚Â‚¢‚Ä
-	//DISCL_FOREGROUND		‰æ–Ê‚ªè‘O‚É‚ ‚éê‡‚Ì‚İ“ü—Í‚ğó‚¯•t‚¯‚é
-	//DISCL_NONEXCLUSIVE	ƒfƒoƒCƒX‚ğ‚±‚ÌƒAƒvƒŠ‚¾‚¯‚Åè—L‚µ‚È‚¢
-	//DISCL_NOWINKEY		WindowsƒL[‚ğ–³Œø‰»‚·‚é 
+	//ä½¿ã£ã¦ã„ã‚‹ãƒ•ãƒ©ã‚°ã«ã¤ã„ã¦
+	//DISCL_FOREGROUND		ç”»é¢ãŒæ‰‹å‰ã«ã‚ã‚‹å ´åˆã®ã¿å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹
+	//DISCL_NONEXCLUSIVE	ãƒ‡ãƒã‚¤ã‚¹ã‚’ã“ã®ã‚¢ãƒ—ãƒªã ã‘ã§å æœ‰ã—ãªã„
+	//DISCL_NOWINKEY		Windowsã‚­ãƒ¼ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ 
 
-	//ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	skeyboard_->Acquire();
 }
 
-void Key::InputUpdata()	//ƒAƒbƒvƒf[ƒg
+void Key::InputUpdata()	//ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 {
 	for (uint32_t i = 0; i < 256; ++i)
 	{
 		soldkeys_[i] = skeys_[i];
 	}
-	//ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	skeyboard_->Acquire();
 	skeyboard_->GetDeviceState(sizeof(skeys_), skeys_);
 }
-//‰Ÿ‚µ‚Á‚Ï‚È‚µ
+//æŠ¼ã—ã£ã±ãªã—
 bool Key::PushKey(UINT8 key)
 {
 	return skeys_[key];
 }
-//‰Ÿ‚µ‚½uŠÔ
+//æŠ¼ã—ãŸç¬é–“
 bool Key::TriggerKey(UINT8 key)
 {
 	return skeys_[key] && !soldkeys_[key];
 }
-//—£‚µ‚½uŠÔ
+//é›¢ã—ãŸç¬é–“
 bool Key::GetKeyReleased(UINT8 key)
 {
 	return !skeys_[key] && soldkeys_[key];
 }
 #pragma endregion
 
-#pragma region ƒ}ƒEƒX
+#pragma region ãƒã‚¦ã‚¹
 #define MOUSE_INPUT 0x80
 
 MouseInput* MouseInput::GetInstance()
@@ -86,38 +86,38 @@ void MouseInput::MouseIni()
 {
 	HRESULT result;
 
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = sdirectInput->CreateDevice(GUID_SysMouse, &mouse_, NULL);
 	assert(SUCCEEDED(result));
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = mouse_->SetDataFormat(&c_dfDIMouse);	//•W€Œ`®
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = mouse_->SetDataFormat(&c_dfDIMouse);	//æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
 
-	//”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	//æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = mouse_->SetCooperativeLevel(
 		WinAPI::GetInstance()->hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
-	//g‚Á‚Ä‚¢‚éƒtƒ‰ƒO‚É‚Â‚¢‚Ä
-	//DISCL_FOREGROUND		‰æ–Ê‚ªè‘O‚É‚ ‚éê‡‚Ì‚İ“ü—Í‚ğó‚¯•t‚¯‚é
-	//DISCL_NONEXCLUSIVE	ƒfƒoƒCƒX‚ğ‚±‚ÌƒAƒvƒŠ‚¾‚¯‚Åè—L‚µ‚È‚¢
-	//DISCL_NOWINKEY		WindowsƒL[‚ğ–³Œø‰»‚·‚é 
+	//ä½¿ã£ã¦ã„ã‚‹ãƒ•ãƒ©ã‚°ã«ã¤ã„ã¦
+	//DISCL_FOREGROUND		ç”»é¢ãŒæ‰‹å‰ã«ã‚ã‚‹å ´åˆã®ã¿å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹
+	//DISCL_NONEXCLUSIVE	ãƒ‡ãƒã‚¤ã‚¹ã‚’ã“ã®ã‚¢ãƒ—ãƒªã ã‘ã§å æœ‰ã—ãªã„
+	//DISCL_NOWINKEY		Windowsã‚­ãƒ¼ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ 
 
-	//ƒ}ƒEƒXî•ñ‚Ìæ“¾ŠJn
+	//ãƒã‚¦ã‚¹æƒ…å ±ã®å–å¾—é–‹å§‹
 	mouse_->Acquire();
 }
 
 void MouseInput::GetCursorPosition()
 {
-	//ƒXƒNƒŠ[ƒ“‚©‚çŒ©‚½ƒ}ƒEƒX‚ÌÀ•W‚ğæ“¾‚·‚é
+	//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‹ã‚‰è¦‹ãŸãƒã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—ã™ã‚‹
 	GetCursorPos(&p_);
-	//ƒEƒBƒ“ƒhƒE‚©‚çŒ©‚½ƒ}ƒEƒX‚ÌÀ•W‚ğæ“¾‚·‚é
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‹ã‚‰è¦‹ãŸãƒã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—ã™ã‚‹
 	ScreenToClient(WinAPI::GetInstance()->hwnd_, &p_);
-	//‘OƒtƒŒ[ƒ€‚Ìó‘Ô‚ğ‘ã“ü‚·‚é
+	//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®çŠ¶æ…‹ã‚’ä»£å…¥ã™ã‚‹
 	prevmPos_ = mPos_;
-	//Œ»ƒtƒŒ[ƒ€‚ÌÀ•W‚ğ‘ã“ü‚·‚é
+	//ç¾ãƒ•ãƒ¬ãƒ¼ãƒ ã®åº§æ¨™ã‚’ä»£å…¥ã™ã‚‹
 	mPos_.x = (float)p_.x;
 	mPos_.y = (float)p_.y;
-	//ƒ}ƒEƒX‚ª‚Ç‚Ì•ûŒü‚É“®‚¢‚½‚©‚ÌƒxƒNƒgƒ‹‚ğæ“¾
+	//ãƒã‚¦ã‚¹ãŒã©ã®æ–¹å‘ã«å‹•ã„ãŸã‹ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 	mouseVec_ = mPos_ - prevmPos_;
 
 }
@@ -126,20 +126,20 @@ void MouseInput::Updata()
 {
 	HRESULT result;
 
-	//ƒ}ƒEƒXî•ñ‚Ìæ“¾ŠJn
-	mouse_->Acquire();	//‚±‚±‚É’u‚¢‚½‚±‚Æ‚Å‰ğŒˆ
+	//ãƒã‚¦ã‚¹æƒ…å ±ã®å–å¾—é–‹å§‹
+	mouse_->Acquire();	//ã“ã“ã«ç½®ã„ãŸã“ã¨ã§è§£æ±º
 
 	//std::string str = "OK\n";
-	//‘OƒtƒŒ[ƒ€‚Ìó‘Ô‚ğ‘ã“ü
+	//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®çŠ¶æ…‹ã‚’ä»£å…¥
 	prevmouseState_ = mouseState_;
-	//ƒ}ƒEƒXî•ñ‚Ìæ“¾ŠJn
+	//ãƒã‚¦ã‚¹æƒ…å ±ã®å–å¾—é–‹å§‹
 	result = mouse_->Poll();
 	if (result == DIERR_INPUTLOST) {
 		//str = "NG\n";
 	}
 
 	result = mouse_->GetDeviceState(sizeof(DIMOUSESTATE), &mouseState_);
-	//ƒEƒBƒ“ƒhƒE‚ÌŠO‚ğƒNƒŠƒbƒN‚µ‚½‚ç“ü—Íî•ñ‚ğ–³Œø‚É‚·‚é
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¤–ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‚‰å…¥åŠ›æƒ…å ±ã‚’ç„¡åŠ¹ã«ã™ã‚‹
 	if (FAILED(result)) {
 		mouseState_.lX = 0;
 		mouseState_.lY = 0;
@@ -150,10 +150,10 @@ void MouseInput::Updata()
 		mouseState_.rgbButtons[3] = 0;
 	}
 	//OutputDebugStringA(str.c_str());
-	//À•Wæ“¾
+	//åº§æ¨™å–å¾—
 	GetCursorPosition();
 }
-//¶ƒNƒŠƒbƒN‚³‚ê‚½‚ç
+//å·¦ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‚‰
 bool MouseInput::IsMouseTrigger(BYTE button)
 {
 	if (!prevmouseState_.rgbButtons[button] &&
@@ -206,12 +206,12 @@ float MouseInput::GetCursorMoveZ()
 }
 #pragma endregion
 
-#pragma region ƒRƒ“ƒgƒ[ƒ‰
+#pragma region ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
 XINPUT_STATE Controller::state_;
 XINPUT_STATE Controller::preState_;
 bool Controller::isConnect_;
 
-//ƒoƒCƒuƒŒ[ƒVƒ‡ƒ“
+//ãƒã‚¤ãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 XINPUT_VIBRATION Controller::vibration_;
 void Controller::Ini()
 {
@@ -269,10 +269,10 @@ Vector2 Controller::GetLStick(int32_t deadZone)
 {
 	Vector2 stickPos;
 
-	//¶ƒXƒeƒBƒbƒN
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯
 	stickPos.x = state_.Gamepad.sThumbLX;
 	stickPos.y = state_.Gamepad.sThumbLY;
-	//ƒfƒbƒhƒ][ƒ“‚ğİ’è
+	//ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã‚’è¨­å®š
 	if ((state_.Gamepad.sThumbLX < (SHORT)deadZone &&
 		state_.Gamepad.sThumbLX > -(SHORT)deadZone))
 	{
@@ -291,8 +291,8 @@ Vector2 Controller::GetLStick(int32_t deadZone)
 Vector2 Controller::GetRStick(int32_t deadZone)
 {
 	Vector2 stickPos;
-	//‰EƒXƒeƒBƒbƒN
-		//return‚·‚é•Ï”‚É’l‚ğ‘ã“ü
+	//å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯
+		//returnã™ã‚‹å¤‰æ•°ã«å€¤ã‚’ä»£å…¥
 	stickPos.x = state_.Gamepad.sThumbRX;
 	stickPos.y = state_.Gamepad.sThumbRY;
 	if ((state_.Gamepad.sThumbRX < (SHORT)deadZone &&
@@ -306,7 +306,7 @@ Vector2 Controller::GetRStick(int32_t deadZone)
 	{
 		stickPos.y = 0;
 	}
-	//ƒfƒbƒhƒ][ƒ“‚É“ü‚ç‚È‚©‚Á‚½‚ç’l‚ğ•Ô‚·
+	//ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã«å…¥ã‚‰ãªã‹ã£ãŸã‚‰å€¤ã‚’è¿”ã™
 	return stickPos;
 }
 

@@ -8,13 +8,13 @@ LineBlur::LineBlur()
 
 void LineBlur::TransferBuff()
 {
-	//定数バッファのマッピング
+	//螳壽焚繝舌ャ繝輔ぃ縺ｮ繝槭ャ繝斐Φ繧ｰ
 	ConstBuffRad* map{};
 	HRESULT result = constBuff_->Map(0, nullptr, (void**)&map);
 	assert(SUCCEEDED(result));
 
 	map->radian = radian_;
-	
+
 	constBuff_->Unmap(0, nullptr);
 }
 

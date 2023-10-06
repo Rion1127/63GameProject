@@ -19,7 +19,7 @@ void Timer::AddTime(int32_t addValue)
 	}
 	else
 	{
-		//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
+		//timer_ãŒendTime_ã¨åŒã˜å€¤ã«ãªã£ãŸã‚‰
 		if (timer_ >= limitTime_) isEnd_ = true;
 		else isEnd_ = false;
 	}
@@ -36,7 +36,7 @@ void Timer::SubTime(int32_t addValue)
 	}
 	else
 	{
-		//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
+		//timer_ãŒendTime_ã¨åŒã˜å€¤ã«ãªã£ãŸã‚‰
 		if (timer_ >= limitTime_) isEnd_ = true;
 		else isEnd_ = false;
 	}
@@ -68,7 +68,7 @@ void TimerFloat::AddTime(float addValue)
 	}
 	else
 	{
-		//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
+		//timer_ãŒendTime_ã¨åŒã˜å€¤ã«ãªã£ãŸã‚‰
 		if (timer_ >= limitTime_) isEnd_ = true;
 		else isEnd_ = false;
 	}
@@ -85,7 +85,7 @@ void TimerFloat::SubTime(float addValue)
 	}
 	else
 	{
-		//timer_‚ªendTime_‚Æ“¯‚¶’l‚É‚È‚Á‚½‚ç
+		//timer_ãŒendTime_ã¨åŒã˜å€¤ã«ãªã£ãŸã‚‰
 		if (timer_ >= limitTime_) isEnd_ = true;
 		else isEnd_ = false;
 	}

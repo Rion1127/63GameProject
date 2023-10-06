@@ -17,13 +17,13 @@ public:
 		a = col.a;
 	};
 
-	//’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+	//å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	Color operator+() const;
 	Color operator-() const;
 	Color operator*(const Color& c);
 	Color operator/(const Color& c);
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	Color& operator+=(const Color& v);
 	Color& operator-=(const Color& v);
 	Color& operator*=(float s);

@@ -19,7 +19,7 @@ PlayerCommand::PlayerCommand()
 	magicCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 	magicCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandMagicTex"));
 	magicCommandSprite_->SetIsVisible(false);
-	//‘I‘ğ‚µ‚Ä‚¢‚È‚¢ƒRƒ}ƒ“ƒh‚ğ“§‚¯‚È‚¢‚æ‚¤‚É‚·‚é
+	//é¸æŠã—ã¦ã„ãªã„ã‚³ãƒãƒ³ãƒ‰ã‚’é€ã‘ãªã„ã‚ˆã†ã«ã™ã‚‹
 	magicCommandSprite_->SetTranslucent(false);
 	magicType_ = MagicType::Fire;
 	magicNum_ = 0;
@@ -32,29 +32,29 @@ void PlayerCommand::Update()
 	attackManager_.SetLockOnEnemy(lockOnEnemy_);
 	magicManager_.SetEnemy(lockOnEnemy_);
 	if (player_->GetIsCanInput()) {
-		//–‚–@‚ğ‘I‘ğ
+		//é­”æ³•ã‚’é¸æŠ
 		if (isMagicMenu_) {
 			magicCommandSprite_->SetIsVisible(true);
 
-			//ƒLƒƒƒ“ƒZƒ‹i–‚–@ƒRƒ}ƒ“ƒh‚ğ•Â‚¶‚éj
+			//ã‚­ãƒ£ãƒ³ã‚»ãƒ«ï¼ˆé­”æ³•ã‚³ãƒãƒ³ãƒ‰ã‚’é–‰ã˜ã‚‹ï¼‰
 			if (Controller::GetTriggerButtons(PAD::INPUT_A))
 			{
 				isMagicMenu_ = false;
 				magicCommandSprite_->ResetEase();
 				commandNum_ = 0;
 			}
-			//MP‚ª‚ ‚é
+			//MPãŒã‚ã‚‹æ™‚
 			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
 				if (player_->GetIsMPCharge() == false) {
 					isMagicMenu_ = false;
 					magicCommandSprite_->ResetEase();
 					commandNum_ = 0;
-					//‘I‘ğ‚µ‚½–‚–@‚ğŒ‚‚Â
+					//é¸æŠã—ãŸé­”æ³•ã‚’æ’ƒã¤
 					if (MagicType::Fire == (MagicType)magicNum_) {
 						magicManager_.ShotMagic(MagicType::Fire);
 					}
 				}
-				//MPƒ`ƒƒ[ƒW’†‚Ì
+				//MPãƒãƒ£ãƒ¼ã‚¸ä¸­ã®æ™‚
 				else {
 
 				}
@@ -62,7 +62,7 @@ void PlayerCommand::Update()
 		}
 		else {
 			magicCommandSprite_->SetIsVisible(false);
-			//ã‰º‚ÅƒRƒ}ƒ“ƒh‘I‘ğ
+			//ä¸Šä¸‹ã§ã‚³ãƒãƒ³ãƒ‰é¸æŠ
 			if (Controller::GetTriggerButtons(PAD::INPUT_UP)) {
 				commandNum_--;
 				if (commandNum_ < 0) {
@@ -79,11 +79,11 @@ void PlayerCommand::Update()
 				mainCommandSprite_->ResetEase();
 				SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
 			}
-			//’ÊíUŒ‚
+			//é€šå¸¸æ”»æ’ƒ
 			if (selectCommand_ == Command::Attack) {
 				attackManager_.Attack();
 			}
-			//–‚–@ƒRƒ}ƒ“ƒh‘I‘ğ
+			//é­”æ³•ã‚³ãƒãƒ³ãƒ‰é¸æŠ
 			else if (selectCommand_ == Command::Magic) {
 				if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
 					isMagicMenu_ = true;

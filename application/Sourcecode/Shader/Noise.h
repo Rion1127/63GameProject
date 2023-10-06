@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectX.h"
 #include "IPostEffect.h"
-class Noise final:
+class Noise final :
 	public IPostEffect {
 private:
 	struct ConstBuffTime {
@@ -12,13 +12,13 @@ private:
 
 	int32_t time_;
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
-	
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+
 	ConstBuffTime* constMap_;
 protected:
-	//ƒVƒF[ƒ_[‚Ö’l‚ğ“n‚·
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸å€¤ã‚’æ¸¡ã™
 	void TransferBuff() override;
 	void SendToShader() override;
 public:

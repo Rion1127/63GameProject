@@ -8,10 +8,10 @@ Material::Material()
 {
 	HRESULT result;
 
-	//ƒq[ƒvÝ’è
+	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
 	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	//ƒŠƒ\[ƒXÝ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	cbResourceDesc.Width = (sizeof(ConstBuffMaterial) + 0xff) & ~0xff;
@@ -21,17 +21,17 @@ Material::Material()
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//’è”ƒoƒbƒtƒ@‚Ì¶¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-		&cbHeapProp,		//ƒq[ƒvÝ’è
+		&cbHeapProp,		//ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,	//ƒŠƒ\[ƒXÝ’è
+		&cbResourceDesc,	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBufferMat_));
 	assert(SUCCEEDED(result));
-	//’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
-	result = constBufferMat_->Map(0, nullptr, (void**)&constMapMat_);	//ƒ}ƒbƒsƒ“ƒO
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒžãƒƒãƒ”ãƒ³ã‚°
+	result = constBufferMat_->Map(0, nullptr, (void**)&constMapMat_);	//ãƒžãƒƒãƒ”ãƒ³ã‚°
 	assert(SUCCEEDED(result));
 	constMapMat_->ambient = ambient_;
 	constMapMat_->diffuse = diffuse_;
@@ -43,12 +43,12 @@ void Material::LoadTexture(const std::string& directoryPath)
 {
 	HRESULT result = S_FALSE;
 
-	// WICƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+	// WICãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
-	// ƒtƒ@ƒCƒ‹ƒpƒX‚ðŒ‹‡
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’çµåˆ
 	std::string filepath = "application/Resources/Object/" + directoryPath + textureFilename_;
-	// ƒeƒNƒXƒ`ƒƒ“Ç‚Ýž‚Ý
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	TextureManager::GetInstance()->LoadGraph(filepath, filepath);
 	texture_ = *TextureManager::GetInstance()->GetTexture(filepath);
 }
@@ -56,7 +56,7 @@ void Material::LoadTexture(const std::string& directoryPath)
 void Material::Draw(UINT descriptorSize)
 {
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(descriptorSize);
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”z—ñ2”Ô–Ú‚ðŽw’è
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿é…åˆ—2ç•ªç›®ã‚’æŒ‡å®š
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(2, constBufferMat_->GetGPUVirtualAddress());
 }
@@ -64,7 +64,7 @@ void Material::Draw(UINT descriptorSize)
 void Material::Draw()
 {
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”z—ñ2”Ô–Ú‚ðŽw’è
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿é…åˆ—2ç•ªç›®ã‚’æŒ‡å®š
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(2, constBufferMat_->GetGPUVirtualAddress());
 }

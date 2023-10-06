@@ -5,27 +5,27 @@
 
 void Framework::Init()
 {
-	//winAPI‰Šú‰»
+	//winAPIåˆæœŸåŒ–
 	WinAPI::GetInstance()->Ini();
 
-	//DirectX‰Šú‰»
+	//DirectXåˆæœŸåŒ–
 	RDirectX::GetInstance()->Ini(WinAPI::GetInstance());
 
-	//ƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[‰Šú‰»
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼åˆæœŸåŒ–
 	TextureManager::GetInstance()->Ini();
-	//ƒCƒ“ƒvƒbƒg‰Šú‰»
-	//ƒL[ƒ{[ƒh
+	//ã‚¤ãƒ³ãƒ—ãƒƒãƒˆåˆæœŸåŒ–
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 	Key::InputIni();
-	//ƒRƒ“ƒgƒ[ƒ‰[
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼
 	Controller::Ini();
-	//ƒ}ƒEƒX
+	//ãƒžã‚¦ã‚¹
 	MouseInput::GetInstance()->MouseIni();
-	//ƒTƒEƒ“ƒh‰Šú‰»
+	//ã‚µã‚¦ãƒ³ãƒ‰åˆæœŸåŒ–
 	SoundManager::GetInstance()->Init();
 
 	PipelineManager::Ini();
 
-	//imgui‰Šú‰»
+	//imguiåˆæœŸåŒ–
 	ImGuiManager::Getinstance()->Init();
 
 	DirectionalLight::StaticInit();
@@ -38,20 +38,20 @@ void Framework::Init()
 
 void Framework::Finalize()
 {
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ð“o˜^‰ðœ
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²è§£é™¤
 	WinAPI::GetInstance()->ReleaseClass();
-	//ƒTƒEƒ“ƒhŠÖ˜A‰ð•ú
+	//ã‚µã‚¦ãƒ³ãƒ‰é–¢é€£è§£æ”¾
 	SoundManager::GetInstance()->ReleaseAllSounds();
-	//imgui‰ð•ú
+	//imguiè§£æ”¾
 	ImGuiManager::Getinstance()->Finalize();
 }
 
 void Framework::Update()
 {
-	// ƒQ[ƒ€ƒ‹[ƒv
-	//imguiŠJŽn
+	// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
+	//imguié–‹å§‹
 	ImGuiManager::Getinstance()->Begin();
-	//ƒCƒ“ƒvƒbƒgŠÖ˜AXV
+	//ã‚¤ãƒ³ãƒ—ãƒƒãƒˆé–¢é€£æ›´æ–°
 	Key::InputUpdata();
 	Controller::Update();
 	MouseInput::GetInstance()->Updata();
@@ -62,41 +62,41 @@ void Framework::Update()
 	bloom_->Update();
 
 #ifdef _DEBUG
-	//ƒfƒ‚ƒEƒBƒ“ƒhƒE‚Ì•\Ž¦ƒIƒ“
+	//ãƒ‡ãƒ¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤ºã‚ªãƒ³
 	//ImGui::ShowDemoWindow();
 #endif // DEBUG
 }
 
 void Framework::Run()
 {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	Init();
 
 	while (true) {
 		if (WinAPI::GetInstance()->MsgCheck()) {
 			break;
 		}
-		//–ˆƒtƒŒ[ƒ€ˆ—
+		//æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 		Update();
-		//•`‰æ
+		//æç”»
 		Draw();
 	}
-	//ƒQ[ƒ€‚ÌI—¹
+	//ã‚²ãƒ¼ãƒ ã®çµ‚äº†
 	Finalize();
 }
 
 void Framework::Draw()
 {
 	bloom_->PreDraw();
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	RDirectX::GetInstance()->PreDraw();
-	//ƒQ[ƒ€ƒV[ƒ“•`‰æ
+	//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³æç”»
 	//SceneManager::Draw();
 	bloom_->Draw();
-	//imguiI—¹
+	//imguiçµ‚äº†
 	ImGuiManager::Getinstance()->End();
-	//imgui•`‰æ
+	//imguiæç”»
 	ImGuiManager::Getinstance()->Draw();
-	//•`‰æI—¹
+	//æç”»çµ‚äº†
 	RDirectX::GetInstance()->PostDraw();
 }

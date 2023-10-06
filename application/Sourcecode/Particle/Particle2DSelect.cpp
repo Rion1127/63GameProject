@@ -18,7 +18,7 @@ void Particle2DSelect::Update()
 	if (timer_.GetIsEnd()) {
 		timer_.Reset();
 	}
-	
+
 
 	offsetPos_ = {
 		UpAndDown(timer_.GetLimitTimer() / 3.f,20.f,timer_.GetTimer()),

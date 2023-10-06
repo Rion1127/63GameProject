@@ -14,24 +14,24 @@ public:
 	bool MsgCheck();
 
 	void ReleaseClass();
-	
+
 	static LRESULT WindowProcA(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-	
+
 	static Vector2 GetWindowSize() { return { win_width_ ,win_height_ }; };
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ìİ’è
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	WNDCLASSEX w_{};
 
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY{ XÀ•W YÀ•W ‰¡• c• }
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º{ Xåº§æ¨™ Yåº§æ¨™ æ¨ªå¹… ç¸¦å¹… }
 	RECT wrc_ = { 0, 0, win_width_, win_height_ };
 
 	HWND hwnd_;
 private:
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY
-	static const uint32_t win_width_ = 1280; // ‰¡•
-	static const uint32_t win_height_ = 720; // c•
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
+	static const uint32_t win_width_ = 1280; // æ¨ªå¹…
+	static const uint32_t win_height_ = 720; // ç¸¦å¹…
 private:
-	WinAPI(){};
+	WinAPI() {};
 };
 
 

@@ -1,7 +1,7 @@
 #include "Quaternion.h"
 #include <cmath>
 
-//’PˆÊQuaternion‚ğ•Ô‚·
+//å˜ä½Quaternionã‚’è¿”ã™
 Quaternion Quaternion::IdentityQuaternion()
 {
 	Quaternion identity = { 0,0,0,1 };
@@ -9,7 +9,7 @@ Quaternion Quaternion::IdentityQuaternion()
 
 	return identity;
 }
-//‹¤–ğQuaternion‚ğ•Ô‚·
+//å…±å½¹Quaternionã‚’è¿”ã™
 Quaternion Quaternion::Conjugate() const
 {
 	Quaternion result = {
@@ -20,12 +20,12 @@ Quaternion Quaternion::Conjugate() const
 	};
 	return result;
 }
-//Quaternion‚Ìnorm‚ğ•Ô‚·
+//Quaternionã®normã‚’è¿”ã™
 float Quaternion::Norm()
 {
 	return (float)sqrt(w * w + x * x + y * y + z * z);
 }
-//³‹K‰»‚µ‚½Quaternion‚ğ•Ô‚·
+//æ­£è¦åŒ–ã—ãŸQuaternionã‚’è¿”ã™
 Quaternion Quaternion::Normalize()
 {
 	Quaternion result = {
@@ -37,7 +37,7 @@ Quaternion Quaternion::Normalize()
 
 	return result;
 }
-//‹tQuaternion‚ğ•Ô‚·
+//é€†Quaternionã‚’è¿”ã™
 Quaternion Quaternion::Inverse()
 {
 	Quaternion result = {
@@ -49,7 +49,7 @@ Quaternion Quaternion::Inverse()
 
 	return result;
 }
-//Quaternion‚ÌÏ
+//Quaternionã®ç©
 Quaternion Quaternion::Multiply(const Quaternion& rhs)const
 {
 	Quaternion result = {
@@ -70,23 +70,23 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 		return *this;
 	}*/
 	if (isfinite(this->x) == false ||
-		isfinite(this->y) == false || 
-		isfinite(this->z) == false || 
+		isfinite(this->y) == false ||
+		isfinite(this->z) == false ||
 		isfinite(this->w) == false)
 	{
 		return q1;
 	}
 	Quaternion result{};
-	//this‚Æq1‚Ì“àÏ
+	//thisã¨q1ã®å†…ç©
 	float dot = this->w * q.w + this->x * q.x + this->y * q.y + this->z * q.z;
 	if (dot < 0)
 	{
-		result = { -this->x,-this->y,-this->z,-this->w };	//‚à‚¤•Ğ•û‚Ì‰ñ“]‚ğ—˜—p‚·‚é
-		dot = -dot;		//“àÏ‚à”½“]
+		result = { -this->x,-this->y,-this->z,-this->w };	//ã‚‚ã†ç‰‡æ–¹ã®å›è»¢ã‚’åˆ©ç”¨ã™ã‚‹
+		dot = -dot;		//å†…ç©ã‚‚åè»¢
 	}
 	else
 	{
-		//‚È‚·Šp‚ğ‹‚ß‚é
+		//ãªã™è§’ã‚’æ±‚ã‚ã‚‹
 		float theta = acos(dot);
 		float sinPh = sin(theta);
 
@@ -95,12 +95,12 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 
 		if (dot < 0.0 && theta > 3.1415f / 2.0)
 		{
-			//theta‚Æsin‚ğg‚Á‚Ä•âŠÔŒW”‚ğ‹‚ß‚é
+			//thetaã¨sinã‚’ä½¿ã£ã¦è£œé–“ä¿‚æ•°ã‚’æ±‚ã‚ã‚‹
 			dot = -this->w * q.w - this->x * q.x - this->y * q.y - this->z * q.z;
 
 			float s1 = sinTheta1subT / sinPh;
 			float s2 = sinThetaMulT / sinPh;
-			//‚»‚ê‚¼‚ê‚Ì•âŠÔŒW”‚ğ—˜—p‚µ‚Ä•ÛŠÇŒã‚Ì
+			//ãã‚Œãã‚Œã®è£œé–“ä¿‚æ•°ã‚’åˆ©ç”¨ã—ã¦ä¿ç®¡å¾Œã®
 			result.x = this->x * s1 - q.x * s2;
 			result.y = this->y * s1 - q.y * s2;
 			result.z = this->z * s1 - q.z * s2;
@@ -110,7 +110,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 		{
 			float s1 = 0.f;
 			float s2 = 0.f;
-			//‚O‚ÅŠ„‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+			//ï¼ã§å‰²ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
 			if (sinPh != 0.f) {
 				s1 = sinTheta1subT / sinPh;
 				s2 = sinThetaMulT / sinPh;
@@ -131,7 +131,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 
 	return result;
 }
-// ƒNƒH[ƒ^ƒjƒIƒ“‚ÌŠ|‚¯Z‚ğ‰‰ZqƒI[ƒo[ƒ[ƒh‚Å’è‹`‚·‚é
+// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®æ›ã‘ç®—ã‚’æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã§å®šç¾©ã™ã‚‹
 Quaternion Quaternion::operator*(const Quaternion& other) const {
 	float result_x = w * other.x + x * other.w + y * other.z - z * other.y;
 	float result_y = w * other.y - x * other.z + y * other.w + z * other.x;
@@ -153,7 +153,7 @@ bool Quaternion::operator==(const Quaternion& other) const
 	return false;
 }
 
-//”CˆÓ²‰ñ“]‚ğ•\‚·Quaternion‚Ì¶¬
+//ä»»æ„è»¸å›è»¢ã‚’è¡¨ã™Quaternionã®ç”Ÿæˆ
 Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 {
 	float Sin = sin(angle / 2.f);
@@ -171,22 +171,22 @@ Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 }
 Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 {
-	//u‚Æv‚ğ³‹K‰»
+	//uã¨vã‚’æ­£è¦åŒ–
 	Vector3 uNorm = u;
 	uNorm = uNorm.normalize();
 	Vector3 vNorm = v;
 	vNorm = vNorm.normalize();
 
-	//u‚Æv‚Ì“àÏ
+	//uã¨vã®å†…ç©
 	float dot = uNorm.dot(vNorm);
 
-	//ŠOÏ‚ğ‚Æ‚é
+	//å¤–ç©ã‚’ã¨ã‚‹
 	Vector3 cross = uNorm.cross(vNorm);
 
 	Vector3 axis = cross.normalize();
-	//’PˆÊƒxƒNƒgƒ‹‚Å“àÏ‚ğ‚Æ‚Á‚Ä‚¢‚é‚Ì‚Åacos‚ÅŠp“x‚ğ‹‚ß‚é
+	//å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã§å†…ç©ã‚’ã¨ã£ã¦ã„ã‚‹ã®ã§acosã§è§’åº¦ã‚’æ±‚ã‚ã‚‹
 	float theta = std::acos(dot);
-	//axis‚Ætheta‚Å”CˆÓ²‰ñ“]‚ğì‚Á‚Ä•Ô‚·
+	//axisã¨thetaã§ä»»æ„è»¸å›è»¢ã‚’ä½œã£ã¦è¿”ã™
 	return MakeAxisAngle(axis, theta);
 }
 Quaternion RotationBetweenVectors(Vector3 start, Vector3 dest)
@@ -198,13 +198,13 @@ Quaternion RotationBetweenVectors(Vector3 start, Vector3 dest)
 	Vector3 rotationAxis;
 
 	//if (cosTheta < -1 + 0.001f) {
-	//	// ƒxƒNƒgƒ‹‚ª”½‘Î•ûŒü‚ğŒü‚¢‚Ä‚¢‚é“Áê‚ÈƒP[ƒXF
-	//	// ’PˆÊ‰ñ“]²‚Í‚È‚¢‚Ì‚ÅA‚’¼‚È‚à‚Ì‚ğŒ©‚Â‚¯‚Ü‚·B
+	//	// ãƒ™ã‚¯ãƒˆãƒ«ãŒåå¯¾æ–¹å‘ã‚’å‘ã„ã¦ã„ã‚‹ç‰¹æ®Šãªã‚±ãƒ¼ã‚¹ï¼š
+	//	// å˜ä½å›è»¢è»¸ã¯ãªã„ã®ã§ã€å‚ç›´ãªã‚‚ã®ã‚’è¦‹ã¤ã‘ã¾ã™ã€‚
 	//	Vector3 up = { 0,0,1 };
 	//	Vector3 right = { 1,0,0 };
 
 	//	rotationAxis = up.cross(start);
-	//	if (rotationAxis.length() < 0.01) { // ‚à‚¤ˆê“xŒvZI
+	//	if (rotationAxis.length() < 0.01) { // ã‚‚ã†ä¸€åº¦è¨ˆç®—ï¼
 	//		rotationAxis = right.cross(start);
 	//	}
 	//	rotationAxis = rotationAxis.normalize();
@@ -237,7 +237,7 @@ Quaternion VecToDir(Vector3 vec)
 
 	return target;
 }
-//ƒxƒNƒgƒ‹‚ğQuaternion‚Å‰ñ“]‚³‚¹‚½Œ‹‰Ê‚ÌƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+//ãƒ™ã‚¯ãƒˆãƒ«ã‚’Quaternionã§å›è»¢ã•ã›ãŸçµæœã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹
 Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion)
 {
 
@@ -254,7 +254,7 @@ Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion)
 
 	result = result.Multiply(conj);
 
-	//ƒNƒH[ƒ^ƒjƒIƒ“~ƒxƒNƒgƒ‹~‹¤–ğƒNƒH[ƒ^ƒjƒIƒ“
+	//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³Ã—ãƒ™ã‚¯ãƒˆãƒ«Ã—å…±å½¹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 	return Vector3(result.x, result.y, result.z);
 }
 
@@ -262,7 +262,7 @@ Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Quaterni
 {
 	Matrix4 result;
 	result.UnitMatrix();
-	// •½sˆÚ“®AƒXƒP[ƒŠƒ“ƒOA‰ñ“]s—ñì¬
+	// å¹³è¡Œç§»å‹•ã€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã€å›è»¢è¡Œåˆ—ä½œæˆ
 	Matrix4 transMat;
 	Matrix4 scaleMat;
 	Matrix4 rotMat;
@@ -270,9 +270,9 @@ Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Quaterni
 	scaleMat.UnitMatrix();
 	rotMat.UnitMatrix();
 
-	transMat = ConvertTranslationMat(pos);	// •½sˆÚ“®
-	scaleMat = ConvertScalingMat(scale);	// ƒXƒP[ƒŠƒ“ƒO
-	rotMat = ConvertRotationMat(rot);		// ‰ñ“]
+	transMat = ConvertTranslationMat(pos);	// å¹³è¡Œç§»å‹•
+	scaleMat = ConvertScalingMat(scale);	// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
+	rotMat = ConvertRotationMat(rot);		// å›è»¢
 
 	result = scaleMat * rotMat * transMat;
 

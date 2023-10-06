@@ -20,8 +20,8 @@
 #include "Object3d.h"
 #include "AssimpObject3D.h"
 #include "AssimpLoader.h"
-class DebugScene final:
-    public IScene
+class DebugScene final :
+	public IScene
 {
 private:
 	SoundManager* sound_ = nullptr;
@@ -31,9 +31,9 @@ private:
 
 	std::shared_ptr<LightManager> lightManager_ = nullptr;
 
-	//è∞
+	//Â∫ä
 	std::unique_ptr<Stage> stage_;
-	//ÉvÉåÉCÉÑÅ[
+	//„Éó„É¨„Ç§„É§„Éº
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<CollisionManager> colManager_;

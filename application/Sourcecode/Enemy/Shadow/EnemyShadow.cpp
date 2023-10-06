@@ -35,7 +35,7 @@ EnemyShadow::EnemyShadow(Vector3 pos, Vector3 rot) :
 	randRange_ = 30;
 	isWanderInit_ = false;
 
-	//ƒvƒ‰ƒCƒIƒŠƒeƒB‚És“®ƒpƒ^[ƒ“‚ğ“o˜^
+	//ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã«è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ç™»éŒ²
 	priority_.insert(std::make_pair(State::Idle, 0));
 	priority_.insert(std::make_pair(State::Following, 0));
 	priority_.insert(std::make_pair(State::Wander, 0));
@@ -82,7 +82,7 @@ void EnemyShadow::MoveUpdate()
 	{
 		//health_ += 5;
 	}
-	//ƒXƒe[ƒ^ƒX‚²‚Æ‚Ì“®‚«‚ğ’Ç‰Á
+	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã”ã¨ã®å‹•ãã‚’è¿½åŠ 
 	void (EnemyShadow:: * Action[]) () =
 	{
 		&EnemyShadow::Idle,
@@ -102,7 +102,7 @@ void EnemyShadow::MoveUpdate()
 	UpdateEtoPVec();
 
 	actionTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
-	//Às
+	//å®Ÿè¡Œ
 	(this->*Action[(int32_t)state_])();
 
 	if (actionTimer_.GetIsEnd())
@@ -141,10 +141,10 @@ void EnemyShadow::Following()
 			EtoPVec_.x,
 			EtoPVec_.z
 	};
-	//is•ûŒü‚É‰ñ“]
+	//é€²è¡Œæ–¹å‘ã«å›è»¢
 	float rotY = Vec2Angle(dir);
 	obj_->WT_.rotation_.y = Radian(rotY);
-	//ˆê’è‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚çORˆê’èŠÔ’Ç‚¢‚©‚¯‚½‚ç
+	//ä¸€å®šè·é›¢ã¾ã§è¿‘ã¥ã„ãŸã‚‰ORä¸€å®šæ™‚é–“è¿½ã„ã‹ã‘ãŸã‚‰
 	if (length < followLength || actionTimer_.GetIsEnd())
 	{
 		state_ = State::Idle;
@@ -154,12 +154,12 @@ void EnemyShadow::Following()
 
 void EnemyShadow::Wander()
 {
-	//’n–Ê‚Éö‚Á‚ÄˆÚ“®‚·‚é
+	//åœ°é¢ã«æ½œã£ã¦ç§»å‹•ã™ã‚‹
 	stateName_ = "Wander";
 	WanderInit();
 	col_.isActive = false;
 
-	//ˆÚ“®‚·‚é
+	//ç§»å‹•ã™ã‚‹
 	if (spline_.GetisEnd() == false)
 	{
 		if (sinkTimer_.GetIsEnd() == false)
@@ -170,7 +170,7 @@ void EnemyShadow::Wander()
 		}
 		else
 		{
-			//ƒXƒvƒ‰ƒCƒ“‹ÈüXV
+			//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šæ›´æ–°
 			spline_.Update(GameSpeed::GetEnemySpeed());
 			obj_->WT_.SetPosition(spline_.GetNowPoint());
 			if (spline_.GetisEnd()) {
@@ -181,11 +181,11 @@ void EnemyShadow::Wander()
 			spline_.GetHeadingVec().x,
 			spline_.GetHeadingVec().z
 		};
-		//is•ûŒü‚É‰ñ“]
+		//é€²è¡Œæ–¹å‘ã«å›è»¢
 		float rotY = Vec2Angle(dir);
 		obj_->WT_.rotation_.y = Radian(rotY);
 	}
-	//ˆÚ“®‚ªI‚í‚Á‚½‚ç•Ê‚Ìƒpƒ^[ƒ“‚Ö
+	//ç§»å‹•ãŒçµ‚ã‚ã£ãŸã‚‰åˆ¥ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã¸
 	else
 	{
 		if (sinkTimer_.GetIsEnd() == false)
@@ -261,7 +261,7 @@ void EnemyShadow::KnockBack()
 
 	obj_->SetScale(scale);
 
-	//ˆê’èŠÔŒo‚Ä‚ÎƒmƒbƒNó‘Ô‚©‚çƒAƒCƒhƒ‹ó‘Ô‚É–ß‚é
+	//ä¸€å®šæ™‚é–“çµŒã¦ã°ãƒãƒƒã‚¯çŠ¶æ…‹ã‹ã‚‰ã‚¢ã‚¤ãƒ‰ãƒ«çŠ¶æ…‹ã«æˆ»ã‚‹
 	attack_.reset();
 	if (actionTimer_.GetIsEnd())
 	{
@@ -269,7 +269,7 @@ void EnemyShadow::KnockBack()
 		isKnock_ = false;
 		actionTimer_.Reset();
 
-		obj_->SetScale(Vector3(1,1,1));
+		obj_->SetScale(Vector3(1, 1, 1));
 		slimeTimer_.Reset();
 	}
 }
@@ -287,7 +287,7 @@ void EnemyShadow::SortPriority()
 	float length = EtoPVec.length();
 	float compareShortlength = compareShortVec.length();
 	float compareLonglength = compareLongVec.length();
-	//‹ß‹——£‚É‚¢‚é‚Æ‚«
+	//è¿‘è·é›¢ã«ã„ã‚‹ã¨ã
 	if (length <= compareShortlength)
 	{
 		priority_.at(State::Attack) += 70;
@@ -295,7 +295,7 @@ void EnemyShadow::SortPriority()
 		priority_.at(State::Wander) += 10;
 		priority_.at(State::Idle) += 20;
 	}
-	//’†‹——£‚É‚¢‚é‚Æ‚«
+	//ä¸­è·é›¢ã«ã„ã‚‹ã¨ã
 	else if (length > compareShortlength &&
 		length < compareLonglength)
 	{
@@ -305,7 +305,7 @@ void EnemyShadow::SortPriority()
 		priority_.at(State::Following) += 2;
 		priority_.at(State::Idle) += 10;
 	}
-	//‰“‚­‚É‚¢‚é‚Æ‚«
+	//é ãã«ã„ã‚‹ã¨ã
 	else
 	{
 		priority_.at(State::Wander) += 100;
@@ -318,23 +318,23 @@ void EnemyShadow::SortPriority()
 	int32_t allPriolityValue = 0;
 	for (const auto& p : priority_)
 	{
-		//ƒvƒ‰ƒCƒIƒŠƒeƒB‚ª0‚Ì‚à‚Ì‚ÍœŠO‚·‚é
+		//ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ãŒ0ã®ã‚‚ã®ã¯é™¤å¤–ã™ã‚‹
 		if (p.second == 0) continue;
 
 		arr.emplace_back(p);
-		//—Dæ“x‚ğ‘«‚µ‚Ä‚¢‚­
+		//å„ªå…ˆåº¦ã‚’è¶³ã—ã¦ã„ã
 		allPriolityValue += p.second;
 	}
-	//~‡‚É•À‚Ñ•Ï‚¦‚é
+	//é™é †ã«ä¸¦ã³å¤‰ãˆã‚‹
 	std::sort(arr.begin(), arr.end(),
 		[](const auto& x, const auto& y) {return x.second > y.second; });
 
 	uint16_t rand = RRandom::Rand(0, allPriolityValue);
 
-	int32_t prePriolityValue = 0;	//—İŒv‚Ì—Dæ“x
+	int32_t prePriolityValue = 0;	//ç´¯è¨ˆã®å„ªå…ˆåº¦
 	for (uint32_t i = 0; i < arr.size(); i++)
 	{
-		int32_t nowPriolityValue = 0;	//Œ»İ‚Ì—Dæ“x
+		int32_t nowPriolityValue = 0;	//ç¾åœ¨ã®å„ªå…ˆåº¦
 
 		if (i >= 1)
 		{
@@ -342,12 +342,12 @@ void EnemyShadow::SortPriority()
 		}
 		//
 		nowPriolityValue = prePriolityValue + arr[i].second;
-		//ƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ‚ß‚½’l‚ªA
-		//‘O‰ñ‚Ì—Dæ“x‚æ‚è‚à‚‚¢ & ‘O‰ñ‚Ì—Dæ“x + ¡‰ñ‚Ì—Dæ“x‚æ‚è‚à’á‚¢
+		//ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºã‚ãŸå€¤ãŒã€
+		//å‰å›ã®å„ªå…ˆåº¦ã‚ˆã‚Šã‚‚é«˜ã„ & å‰å›ã®å„ªå…ˆåº¦ + ä»Šå›ã®å„ªå…ˆåº¦ã‚ˆã‚Šã‚‚ä½ã„æ™‚
 		if (prePriolityValue <= rand &&
 			nowPriolityValue >= rand)
 		{
-			//ƒXƒe[ƒg‚ğ‘ã“ü
+			//ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä»£å…¥
 			StateUpdate(arr[i].first);
 		}
 	}
@@ -357,18 +357,18 @@ void EnemyShadow::WanderInit()
 {
 	if (isWanderInit_)
 	{
-		//íœ‚·‚é
+		//å‰Šé™¤ã™ã‚‹
 		spline_.DleteAllPoint();
 		spline_.Reset();
-		//‰Šú’n“_‚ğ‘}“ü
+		//åˆæœŸåœ°ç‚¹ã‚’æŒ¿å…¥
 		spline_.AddPosition(obj_->WT_.position_, PosState::Start);
 
-		//ˆÚ“®‚·‚éƒ|ƒCƒ“ƒg‚ğŒvZ‚·‚é
+		//ç§»å‹•ã™ã‚‹ãƒã‚¤ãƒ³ãƒˆã‚’è¨ˆç®—ã™ã‚‹
 		for (int32_t i = 0; i < 2; i++)
 		{
 			size_t index = spline_.GetsplinePos().size() - 1;
 			Vector3 splinePos = spline_.GetsplinePos().at(index);
-			//ƒXƒvƒ‰ƒCƒ“‚Ìƒ|ƒCƒ“ƒg‚©‚çtargetPos‚Ö‚ÌƒxƒNƒgƒ‹‚ğŒvZ
+			//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³ã®ãƒã‚¤ãƒ³ãƒˆã‹ã‚‰targetPosã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 			Vector3 targetPos = splayer_->GetWorldTransform()->position_;
 			targetPos += {
 				RRandom::RandF(-2.f, 2.f),
@@ -382,7 +382,7 @@ void EnemyShadow::WanderInit()
 				RRandom::RandF(3.f, 7.f),
 				0,
 				RRandom::RandF(3.f, 7.f));
-			//—”
+			//ä¹±æ•°
 
 			splinePos += EtoPVec;
 
@@ -391,13 +391,13 @@ void EnemyShadow::WanderInit()
 
 		size_t index = spline_.GetsplinePos().size() - 1;
 		Vector3 splinePos = spline_.GetsplinePos().at(index);
-		//ÅI’n“_‚ÍƒvƒŒƒCƒ„[‚Ì‹ß‚­‚Ös‚­
+		//æœ€çµ‚åœ°ç‚¹ã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¿‘ãã¸è¡Œã
 		Vector3 endPos = {
 			splinePos.x + RRandom::RandF(-3.f, 3.f),
 			0,
 			splinePos.z + RRandom::RandF(-3.f, 3.f),
 		};
-		//ÅI’n“_‚ğ‘ã“ü
+		//æœ€çµ‚åœ°ç‚¹ã‚’ä»£å…¥
 		spline_.AddPosition(endPos, PosState::End);
 		spline_.SetIsStart(true);
 		spline_.SetLimitTime(50);
@@ -412,7 +412,7 @@ void EnemyShadow::StateUpdate(State state)
 	actionTimer_.Reset();
 	if (state == State::Idle)
 	{
-		actionTimer_.SetLimitTime((float)RRandom::Rand(100,300));
+		actionTimer_.SetLimitTime((float)RRandom::Rand(100, 300));
 	}
 	else if (state == State::Following)
 	{

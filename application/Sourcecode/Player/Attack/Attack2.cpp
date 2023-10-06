@@ -11,7 +11,7 @@ void Attack2::Init()
 	if (selfActor_ != nullptr)
 	{
 		frontDist_ = 0;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr)
 		{
 			CalculateRotToLockOnActor(frontVec);
@@ -20,7 +20,7 @@ void Attack2::Init()
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 15);
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvŽZ(Œ•‚Ì‹““®)
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—(å‰£ã®æŒ™å‹•)
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
 
 	std::vector<Vector3>attackVec;
@@ -39,7 +39,7 @@ void Attack2::Init()
 	attackCol_.at(0)->col_.SetPos(playerFrontPos);
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
@@ -47,7 +47,7 @@ void Attack2::Init()
 
 void Attack2::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
+	//å›žè»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = attackVec_ * 0.06f;
@@ -56,7 +56,7 @@ void Attack2::MoveUpdate()
 
 	selfActor_->AddaddVec(speed);
 
-	
+
 
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 

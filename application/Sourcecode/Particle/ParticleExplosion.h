@@ -28,7 +28,7 @@ private:
 
 
 class ParticleExplosion :
-    public IParticle
+	public IParticle
 {
 private:
 	struct ExplosionParticle : public Particle

@@ -17,28 +17,28 @@ void DirectionalLight::StaticInit()
 
 void DirectionalLight::Init()
 {
-	// ÉqÅ[ÉvÉvÉçÉpÉeÉB
+	// „Éí„Éº„Éó„Éó„É≠„Éë„ÉÜ„Ç£
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// ÉäÉ\Å[ÉXê›íË
+	// „É™„ÇΩ„Éº„ÇπË®≠ÂÆö
 	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
 
 	HRESULT result;
-	// íËêîÉoÉbÉtÉ@ÇÃê∂ê¨
+	// ÂÆöÊï∞„Éê„ÉÉ„Éï„Ç°„ÅÆÁîüÊàê
 	result = RDirectX::GetInstance()->GetDevice()->
 		CreateCommittedResource(
-		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuff_));
+			&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+			IID_PPV_ARGS(&constBuff_));
 	assert(SUCCEEDED(result));
 
-	
+
 
 	TransferConstBuffer();
 }
 
 void DirectionalLight::Update()
 {
-	//ílÇÃïœçXÇ™Ç†Ç¡ÇΩéûÇæÇØíËêîÇŒÇ¡Ç™Ç…ì]ëóÇ∑ÇÈ
+	//ÂÄ§„ÅÆÂ§âÊõ¥„Åå„ÅÇ„Å£„ÅüÊôÇ„Å†„ÅëÂÆöÊï∞„Å∞„Å£„Åå„Å´Ëª¢ÈÄÅ„Åô„Çã
 	if (dirty_) {
 		TransferConstBuffer();
 		dirty_ = false;
@@ -54,7 +54,7 @@ void DirectionalLight::Draw(UINT rootParameterIndex)
 void DirectionalLight::TransferConstBuffer()
 {
 	HRESULT result;
-	// íËêîÉoÉbÉtÉ@ÇÃÉ}ÉbÉsÉìÉO
+	// ÂÆöÊï∞„Éê„ÉÉ„Éï„Ç°„ÅÆ„Éû„ÉÉ„Éî„É≥„Ç∞
 	result = constBuff_->Map(0, nullptr, (void**)&constMap_);
 	if (SUCCEEDED(result)) {
 		constMap_->lightv = -lightdir_;
@@ -65,7 +65,7 @@ void DirectionalLight::TransferConstBuffer()
 
 void DirectionalLight::SetLightDir(const Vector3& lightdir)
 {
-	//ê≥ãKâªÇ∑ÇÈ
+	//Ê≠£Ë¶èÂåñ„Åô„Çã
 	lightdir_ = lightdir;
 	lightdir_ = lightdir_.normalize();
 	dirty_ = true;

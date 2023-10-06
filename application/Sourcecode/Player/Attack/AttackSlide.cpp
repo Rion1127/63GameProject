@@ -11,7 +11,7 @@ void AttackSlide::Init()
 	frontVec_ = frontVec;
 	if (selfActor_ != nullptr) {
 
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
@@ -20,7 +20,7 @@ void AttackSlide::Init()
 
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.2f,0.2f,0.2f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 

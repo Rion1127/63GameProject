@@ -40,7 +40,7 @@ void WorldTransform::Update(uint32_t isBillboard)
 {
 	Matrix4 matScale, matRot, matTrans;
 
-	//ƒXƒP[ƒ‹A‰ñ“]A•½sˆÚ“®s—ñ‚ÌŒvŽZ
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã€å›žè»¢ã€å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	matScale = ConvertScalingMat(scale_);
 	matRot.UnitMatrix();
 	if (rotType == RotType::Euler)
@@ -59,18 +59,18 @@ void WorldTransform::Update(uint32_t isBillboard)
 	rotMat_ = matRot;
 	posMat_ = matTrans;
 
-	//eƒIƒuƒWƒF‚Ì‰ñ“]‚Ì‚Ý
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã®å›žè»¢ã®ã¿
 	if (parentRotMat_) {
 		matRot *= *parentRotMat_;
 	}
-	//eƒIƒuƒWƒF‚ÌÀ•W‚Ì‚Ý
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã®åº§æ¨™ã®ã¿
 	if (parentPosMat_) {
 		matTrans *= *parentPosMat_;
 	}
 
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
-	matWorld_.UnitMatrix();//•ÏŒ`‚ðƒŠƒZƒbƒg
-	//ƒrƒ‹ƒ{[ƒh
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
+	matWorld_.UnitMatrix();//å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰
 	if (isBillboard == 1)
 	{
 		matWorld_ *= Camera::scurrent_->matBillboard_;
@@ -80,19 +80,19 @@ void WorldTransform::Update(uint32_t isBillboard)
 		matWorld_ *= Camera::scurrent_->matBillboardY_;
 	}
 
-	matWorld_ *= matScale;			//ƒ[ƒ‹ƒhs—ñ‚ÉƒXƒP[ƒŠƒ“ƒO‚ð”½‰f
-	matWorld_ *= matRot;				//ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ð”½‰f
-	matWorld_ *= matTrans;			//ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ð”½‰f
+	matWorld_ *= matScale;			//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
+	matWorld_ *= matRot;				//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å›žè»¢ã‚’åæ˜ 
+	matWorld_ *= matTrans;			//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 
-	//eƒIƒuƒWƒFƒNƒg‚ª‚ ‚ê‚Î
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚ã‚Œã°
 	if (parent_)
 	{
-		//eƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒhs—ñ‚ðŠ|‚¯‚é
+		//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æŽ›ã‘ã‚‹
 		matWorld_ *= parent_->matWorld_;
 	}
-	
 
-	//’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	if (Camera::scurrent_ != nullptr)
 	{
 		constMapTransform_->mat = matWorld_;

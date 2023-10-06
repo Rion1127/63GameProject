@@ -1,4 +1,4 @@
-﻿#include <Windows.h>
+#include <Windows.h>
 #include "Game.h"
 #include "Framework.h"
 

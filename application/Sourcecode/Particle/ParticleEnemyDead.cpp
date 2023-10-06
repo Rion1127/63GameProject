@@ -4,7 +4,7 @@
 #include "Easing.h"
 #include "Util.h"
 
-#pragma region ‰Œƒp[ƒeƒBƒNƒ‹
+#pragma region ç…™ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 ParticleEnemyDead::ParticleEnemyDead() :
 	vertexCount(64), IParticle("Smoke")
 {
@@ -18,15 +18,15 @@ void ParticleEnemyDead::Add()
 	transform_.position_ = emitter_->pos;
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		enemyDeadParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = enemyDeadParticles_.back();
 
@@ -82,9 +82,9 @@ void ParticleEnemyDead::MoveUpdate()
 
 		float f = (float)p.frame / p.end_frame;
 
-		p.position += Vector3( 0,0.01f,0 ) * GameSpeed::GetGameSpeed();
+		p.position += Vector3(0, 0.01f, 0) * GameSpeed::GetGameSpeed();
 
-		if(f < 0.5f)p.color.a = f * 355.f;
+		if (f < 0.5f)p.color.a = f * 355.f;
 		else p.color.a = (1 - f) * 355.f;
 
 		p.scale = Easing::Circ::easeIn(f, p.baseScale, -p.baseScale, 1.0f);
@@ -99,7 +99,7 @@ void ParticleEnemyDead::MoveUpdate()
 }
 #pragma endregion
 
-#pragma region ƒn[ƒgƒp[ƒeƒBƒNƒ‹
+#pragma region ãƒãƒ¼ãƒˆãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 ParticleHeart::ParticleHeart() :
 	IParticle("Particle_Depth_False"),
 	vertexCount(1)
@@ -114,15 +114,15 @@ void ParticleHeart::Add()
 	transform_.position_ = emitter_->pos;
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		heartParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = heartParticles_.back();
 

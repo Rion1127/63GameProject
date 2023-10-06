@@ -1,7 +1,7 @@
 #include "AttackAir2.h"
 
 AttackAir2::AttackAir2(IActor* selfActor) :
-	IAttack(selfActor,1, 20, 10, 21)
+	IAttack(selfActor, 1, 20, 10, 21)
 {
 }
 
@@ -10,16 +10,16 @@ void AttackAir2::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
 		frontDist_ = 0;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
-		selfActor_->GetGravity()->SetGrabity({0,0.1f,0});
+		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 15);
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * -(selfActor_->GetWorldTransform()->scale_.y * 0.5f);
 	Vector3 playerDownPos =
@@ -51,7 +51,7 @@ void AttackAir2::Init()
 	attackCol_.at(0)->col_.SetPos(playerDownPos);
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
@@ -59,7 +59,7 @@ void AttackAir2::Init()
 
 void AttackAir2::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	Vector3 frontVec = {
 		sinf(selfActor_->GetWorldTransform()->rotation_.y),
 		0,
@@ -72,7 +72,7 @@ void AttackAir2::MoveUpdate()
 
 	selfActor_->AddaddVec(speed);
 
-	
+
 
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackCol_.at(0)->damageCoolTime = (uint32_t)timer_.GetLimitTimer() - (int32_t)timer_.GetTimer();

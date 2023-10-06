@@ -79,10 +79,10 @@ void GameCamera::UpdateCameraPos()
 
 	moveDist.x -= inputVec.x * transSpeed_.x;
 	moveDist.y += inputVec.y * transSpeed_.y;
-	//ƒJƒƒ‰‚ª‚Ç‚Ì‚­‚ç‚¢ƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­‚©Clamp‚ð‚·‚é
+	//ã‚«ãƒ¡ãƒ©ãŒã©ã®ãã‚‰ã„ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ãã‹Clampã‚’ã™ã‚‹
 	moveDist.y = Clamp(moveDist.y, -0.5f, 1.0f);
 
-	//‹…–ÊÀ•W‘ã“ü
+	//çƒé¢åº§æ¨™ä»£å…¥
 	endEyePos_.x = -frontdist * sinf(moveDist.x) * cosf(moveDist.y) + cameraTrans.x;
 	endEyePos_.y = frontdist * sinf(moveDist.y) + cameraTrans.y;
 	endEyePos_.z = -frontdist * cosf(moveDist.x) * cosf(moveDist.y) + cameraTrans.z;
@@ -94,7 +94,7 @@ void GameCamera::UpdateCameraPos()
 
 #ifdef _DEBUG
 	ImGui::Begin("GameCamera");
-	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ð‘‚­ */
+	/* ã“ã“ã«è¿½åŠ ã—ãŸã„GUIã‚’æ›¸ã */
 	// Menu Bar
 	if (ImGui::CollapsingHeader("Posision"))
 	{
@@ -117,14 +117,14 @@ void GameCamera::UpdateLookAT()
 {
 	if (gameCameraMode_ == GameCameraMode::NORMAL) {
 		IEnemy* enemy = player_->GetAttackManager()->GetLockOnEnemy();
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚éê‡‚ÌƒJƒƒ‰ˆ—
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹å ´åˆã®ã‚«ãƒ¡ãƒ©å‡¦ç†
 		if (enemy != nullptr)
 		{
 			bool isHardLockOn = enemy->GetIsHardLockOn();
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚éê‡ƒJƒƒ‰‚ªŽ©“®“I‚É‰æ–Ê“à‚É‰f‚·‚æ‚¤‚ÉˆÚ“®‚·‚é
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹å ´åˆã‚«ãƒ¡ãƒ©ãŒè‡ªå‹•çš„ã«ç”»é¢å†…ã«æ˜ ã™ã‚ˆã†ã«ç§»å‹•ã™ã‚‹
 			if (isHardLockOn)
 			{
-				//“G‚ÌƒXƒNƒŠ[ƒ“ã‚ÌÀ•W
+				//æ•µã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ä¸Šã®åº§æ¨™
 				Vector2 screenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
 				Vector2 windowSize = WinAPI::GetWindowSize();
 				Vector2 halfWindowSize = windowSize / 2.f;
@@ -136,7 +136,7 @@ void GameCamera::UpdateLookAT()
 
 				if (putOnCamera_ == false)
 				{
-					//“G‚ª‰æ–Ê‚Ì‚Ç‚ÌˆÊ’u‚É‚¢‚é‚©‚Ì”»’è
+					//æ•µãŒç”»é¢ã®ã©ã®ä½ç½®ã«ã„ã‚‹ã‹ã®åˆ¤å®š
 					getOutWay = GetOutScreenEnemy(screenPos, windowSize, enemy);
 				}
 				else
@@ -149,7 +149,7 @@ void GameCamera::UpdateLookAT()
 						putOnCamera_ = false;
 					}
 				}
-				//ƒƒbƒNƒIƒ“‚µ‚½“G‚ª‰æ–ÊŠO‚Éo‚»‚¤‚¾‚Á‚½‚ç
+				//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ãŸæ•µãŒç”»é¢å¤–ã«å‡ºãã†ã ã£ãŸã‚‰
 				if (getOutWay == GetOutEnemy::Right ||
 					getOutWay == GetOutEnemy::Left)
 				{
@@ -169,14 +169,14 @@ void GameCamera::UpdateLookAT()
 
 				moveDist += addVec;
 			}
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚È‚¢Žž‚ÌƒJƒƒ‰
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ãªã„æ™‚ã®ã‚«ãƒ¡ãƒ©
 			else
 			{
 
 			}
 		}
 	}
-	//ƒQ[ƒ€ƒNƒŠƒAŽž‚ÌƒJƒƒ‰ƒ[ƒN
+	//ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢æ™‚ã®ã‚«ãƒ¡ãƒ©ãƒ¯ãƒ¼ã‚¯
 	else if (gameCameraMode_ == GameCameraMode::CLEAR) {
 		float rate = 0;
 		if (clsumSystem_->GetClearType() == ClearType::NextRound) {
@@ -188,7 +188,7 @@ void GameCamera::UpdateLookAT()
 
 
 		frontDist_ = Easing::Sine::easeInOut(rate, 15.f, -5.f, 1.0f);
-		//ƒvƒŒƒCƒ„[‚Ì‘O•ûƒxƒNƒgƒ‹ * ‹——£‚ðŒvŽZ
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‰æ–¹ãƒ™ã‚¯ãƒˆãƒ« * è·é›¢ã‚’è¨ˆç®—
 		Vector3 frontVec = player_->GetPlayerFrontVec() * frontDist_;
 
 		offsetPos_ = {
@@ -225,13 +225,13 @@ GetOutEnemy GameCamera::GetOutScreenEnemy(const Vector2& screenPos, const Vector
 
 	Vector3 PToCDir = player_->GetWorldTransform()->position_ - camera_->eye_;
 	Vector3 EToCDir = enemy->GetWorldTransform()->position_ - camera_->eye_;
-	//ƒvƒŒƒCƒ„[->ƒJƒƒ‰‚Ì‹——£
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼->ã‚«ãƒ¡ãƒ©ã®è·é›¢
 	float PToCLength = PToCDir.length();
-	//“G->ƒJƒƒ‰‚Ì‹——£
+	//æ•µ->ã‚«ãƒ¡ãƒ©ã®è·é›¢
 	float EToCLength = EToCDir.length();
 
 	putOnCamera_ = true;
-	//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª“G‚ªƒJƒƒ‰‚ÌŒã‚ë‚És‚«‚»‚¤‚É‚È‚Á‚½‚çU‚è•Ô‚é
+	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒæ•µãŒã‚«ãƒ¡ãƒ©ã®å¾Œã‚ã«è¡Œããã†ã«ãªã£ãŸã‚‰æŒ¯ã‚Šè¿”ã‚‹
 	if (PToCLength > EToCLength)
 	{
 		if (screenPos.x < halfWindowSize.x - length.x ||
@@ -260,7 +260,7 @@ GetOutEnemy GameCamera::GetOutScreenEnemy(const Vector2& screenPos, const Vector
 	{
 		return GetOutEnemy::Down;
 	}
-	//ƒJƒƒ‰‚ð‹­§ˆÚ“®‚³‚¹‚éƒtƒ‰ƒO‚ðƒIƒt‚É‚·‚é
+	//ã‚«ãƒ¡ãƒ©ã‚’å¼·åˆ¶ç§»å‹•ã•ã›ã‚‹ãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ•ã«ã™ã‚‹
 	putOnCamera_ = false;
 	return GetOutEnemy::Middle;
 }

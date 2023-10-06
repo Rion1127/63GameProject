@@ -11,7 +11,7 @@ public:
 	void Update();
 
 public:
-	void SetGrabity(const Vector3 &gravity) { gravityVec_ = gravity; }
+	void SetGrabity(const Vector3& gravity) { gravityVec_ = gravity; }
 	void SetAddValue(Vector3 value) { addValue_ = value; }
 	void SetGravityLimit(Vector3 limit) { gravityLimit_ = limit; }
 public:

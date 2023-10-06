@@ -1,7 +1,7 @@
 #pragma once
 #include "IAttack.h"
 class AttackAir2 final :
-    public IAttack
+	public IAttack
 {
 private:
 	float frontDist_;

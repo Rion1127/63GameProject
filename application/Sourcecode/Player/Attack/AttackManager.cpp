@@ -23,9 +23,9 @@ void AttackManager::Attack()
 	if (player_->GetIsCanInput()) {
 		if (Controller::GetTriggerButtons(PAD::INPUT_B))
 		{
-			//“G‚Æ©•ª‚Ì‹——£‚ğŒvZ
+			//æ•µã¨è‡ªåˆ†ã®è·é›¢ã‚’è¨ˆç®—
 			CalculatePtoELength();
-			//MAX_COMBO‚æ‚ècomboNum‚ª¬‚³‚¯‚ê‚ÎUŒ‚‚Å‚«‚é
+			//MAX_COMBOã‚ˆã‚ŠcomboNumãŒå°ã•ã‘ã‚Œã°æ”»æ’ƒã§ãã‚‹
 			if (comboNum < MAX_COMBO)
 			{
 				isNextAttack_ = true;
@@ -39,14 +39,14 @@ void AttackManager::Attack()
 
 void AttackManager::Update()
 {
-	//Å‰‚ÌUŒ‚
+	//æœ€åˆã®æ”»æ’ƒ
 	if (isNextAttack_) {
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Æ‚Ì‚‚³‚Ì‹——£
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¨ã®é«˜ã•ã®è·é›¢
 		float diffPosY = 0;
 		if (lockOnEnemy_ != nullptr) {
-			diffPosY =lockOnEnemy_->GetWorldTransform()->position_.y - player_->GetWorldTransform()->position_.y;
+			diffPosY = lockOnEnemy_->GetWorldTransform()->position_.y - player_->GetWorldTransform()->position_.y;
 		}
-		//UŒ‚‚µ‚Ä‚¢‚È‚¢‚È‚çUŒ‚‚ğ‘ã“ü‚·‚é
+		//æ”»æ’ƒã—ã¦ã„ãªã„ãªã‚‰æ”»æ’ƒã‚’ä»£å…¥ã™ã‚‹
 		if (nowAttack_ == nullptr)
 		{
 			isNextAttack_ = false;
@@ -71,18 +71,18 @@ void AttackManager::Update()
 		}
 	}
 
-	
+
 	if (nowAttack_ != nullptr)
 	{
-		//UŒ‚’†ƒtƒ‰ƒO
+		//æ”»æ’ƒä¸­ãƒ•ãƒ©ã‚°
 		isAttacking = true;
-		//UŒ‚XV
+		//æ”»æ’ƒæ›´æ–°
 		nowAttack_->SetLockOnActor(lockOnEnemy_);
 		nowAttack_->Update();
-		//maxTime‚ğ’´‚¦‚½‚çnextAttack_‚ğnowAttack_‚É‘ã“ü‚·‚é
+		//maxTimeã‚’è¶…ãˆãŸã‚‰nextAttack_ã‚’nowAttack_ã«ä»£å…¥ã™ã‚‹
 		if (nowAttack_->GetTimer().GetIsEnd())
 		{
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Æ‚Ì‚‚³‚Ì‹——£
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¨ã®é«˜ã•ã®è·é›¢
 			float diffPosY = 0;
 			if (lockOnEnemy_ != nullptr) {
 				diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
@@ -91,14 +91,14 @@ void AttackManager::Update()
 				PtoELength_ = 0;
 			}
 			diffPosY = fabs(diffPosY);
-			//2ƒRƒ“ƒ{ˆÈ~‚Ìˆ—
+			//2ã‚³ãƒ³ãƒœä»¥é™ã®å‡¦ç†
 			if (isNextAttack_) {
 				if (nextAttack_ == nullptr)
 				{
 					isNextAttack_ = false;
 					if (player_->GetNowState()->GetId() == PlayerState::Attack)
 					{
-						//‚·‚Å‚ÉUŒ‚‚µ‚Ä‚¢‚éê‡‚ÍŸ‚ÌUŒ‚‚ğ“ü‚ê‚é
+						//ã™ã§ã«æ”»æ’ƒã—ã¦ã„ã‚‹å ´åˆã¯æ¬¡ã®æ”»æ’ƒã‚’å…¥ã‚Œã‚‹
 						if (comboNum == 1) {
 							if (PtoELength_ >= 4.f)nextAttack_ = std::make_unique<AttackSlide>(player_);
 							else if (diffPosY > 1.f)nowAttack_ = std::make_unique<AttackAirSweep>(player_);
@@ -115,14 +115,14 @@ void AttackManager::Update()
 			}
 
 			nowAttack_.swap(nextAttack_);
-			//UŒ‚‰Šú‰»
+			//æ”»æ’ƒåˆæœŸåŒ–
 			if (nowAttack_ != nullptr) {
 				nowAttack_->SetLockOnActor(lockOnEnemy_);
 				nowAttack_->Init();
 				float picth = RRandom::RandF(0.7f, 1.5f);
 				SoundManager::Play("SwingSE", false, 0.3f, picth);
 			}
-			//nextAttack_‚ğ‰ğ•ú‚·‚é
+			//nextAttack_ã‚’è§£æ”¾ã™ã‚‹
 			nextAttack_.reset();
 			nextAttack_ = nullptr;
 			comboNum++;

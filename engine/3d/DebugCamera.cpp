@@ -20,7 +20,7 @@ void DebugCamera::Update()
 {
 	if (Key::PushKey(DIK_LCONTROL))
 	{
-		//ƒ}ƒEƒX‚Ìî•ñ‚ÌXV
+		//ãƒã‚¦ã‚¹ã®æƒ…å ±ã®æ›´æ–°
 		CameraMove();
 		camera_.Update(CameraMode::LookAT);
 	}
@@ -59,12 +59,12 @@ void DebugCamera::CameraMove()
 		mInput_->GetCursorMoveX() * speedRate,
 		mInput_->GetCursorMoveY() * speedRate
 	};
-	//ƒJƒƒ‰‚ª’‹“_À•W‚æ‚è‰œ‚É‚¢‚é‚Æ‚«
+	//ã‚«ãƒ¡ãƒ©ãŒæ³¨è¦–ç‚¹åº§æ¨™ã‚ˆã‚Šå¥¥ã«ã„ã‚‹ã¨ã
 	if (camera_.up_.y <= 0) {
 		speed *= -1;
 	}
 
-	//ƒJƒƒ‰‚Ì³–ÊƒxƒNƒgƒ‹
+	//ã‚«ãƒ¡ãƒ©ã®æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«
 	frontVec_ = camera_.target_ - camera_.eye_;
 	frontVec_ = frontVec_.normalize();
 
@@ -72,27 +72,27 @@ void DebugCamera::CameraMove()
 
 	upVec_ = sideVec_.cross(frontVec_);
 
-	//•½sˆÚ“®
+	//å¹³è¡Œç§»å‹•
 	if (mInput_->IsMouseDown(MOUSE_WHEEL)) {
-		//ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ¶‰E‚É“®‚©‚µ‚½‚Æ‚«
+		//ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’å·¦å³ã«å‹•ã‹ã—ãŸã¨ã
 		cameraTrans_ -= sideVec_ * speed.x;
 		camera_.target_ -= sideVec_ * speed.x;
-		//ã‰º‚É“®‚©‚µ‚½‚Æ‚«
+		//ä¸Šä¸‹ã«å‹•ã‹ã—ãŸã¨ã
 		cameraTrans_ -= upVec_ * speed.y;
 		camera_.target_ -= upVec_ * speed.y;
 	}
-	//Šg‘åk¬
+	//æ‹¡å¤§ç¸®å°
 	else if (!mInput_->IsMouseDown(MOUSE_WHEEL)) {
 		frontdist_ += -(float)mInput_->IsMouseWheel() * (frontdist_ * 0.001f);
 	}
-	//‹…–ÊÀ•WˆÚ“®
+	//çƒé¢åº§æ¨™ç§»å‹•
 	if (mInput_->IsMouseDown(MOUSE_LEFT)) {
-		//ƒJƒƒ‰‚ªã‚ğŒü‚¢‚Ä‚é‚Æ‚«’Êí’Ê‚è‚ÉÀ•W‚ğ‘«‚·
+		//ã‚«ãƒ¡ãƒ©ãŒä¸Šã‚’å‘ã„ã¦ã‚‹ã¨ãé€šå¸¸é€šã‚Šã«åº§æ¨™ã‚’è¶³ã™
 		Vector3 moveDistVec{};
 		if (camera_.up_.y >= 0) {
 			moveDistVec += mInput_->GetCursorMove() * 0.005f;
 		}
-		//ƒJƒƒ‰‚ª‹t‚³‚Ü‚É‚È‚Á‚½X.ZÀ•W‚ğ”½“]‚³‚¹‚é
+		//ã‚«ãƒ¡ãƒ©ãŒé€†ã•ã¾ã«ãªã£ãŸæ™‚X.Zåº§æ¨™ã‚’åè»¢ã•ã›ã‚‹
 		else {
 			moveDistVec = {
 				-mInput_->GetCursorMoveX() * 0.005f,
@@ -104,7 +104,7 @@ void DebugCamera::CameraMove()
 		moveDist_ += moveDistVec;
 	}
 
-	//ƒJƒƒ‰up_•ÏŠ·
+	//ã‚«ãƒ¡ãƒ©up_å¤‰æ›
 	camera_.up_ = {
 		0,
 		cosf(moveDist_.y),

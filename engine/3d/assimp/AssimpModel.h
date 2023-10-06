@@ -21,7 +21,7 @@ struct Bone
 struct Node
 {
 	std::string name;
-	Vector3 pos = {0,0,0};
+	Vector3 pos = { 0,0,0 };
 	Vector3 scale = { 1,1,1 };
 	Vector3 rot = { 0,0,0 };
 	Matrix4 localTransformMat;

@@ -13,7 +13,7 @@ class Spline
 private:
 	std::vector<Vector3> splinePos_;
 	Vector3 nowPos_;
-	Vector3 headingVec_;	//is•ûŒüƒxƒNƒgƒ‹
+	Vector3 headingVec_;	//é€²è¡Œæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	uint32_t index_;
 	TimerFloat timer_;
 	bool isStart_;
@@ -41,7 +41,7 @@ public:
 private:
 	void SplineUpdate(float speedRate);
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
-	// Žn“_/I“_‚ÌÀ•W‚Æ ƒxƒNƒgƒ‹‚©‚çA‹Èü‚Ì‹O“¹ã‚ÌÀ•W‚ð•Ô‚·
+	// å§‹ç‚¹/çµ‚ç‚¹ã®åº§æ¨™ã¨ ãƒ™ã‚¯ãƒˆãƒ«ã‹ã‚‰ã€æ›²ç·šã®è»Œé“ä¸Šã®åº§æ¨™ã‚’è¿”ã™
 	Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t);
 };
 

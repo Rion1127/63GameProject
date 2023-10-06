@@ -22,7 +22,7 @@ private:
 	std::unique_ptr<Object3d> colObj_;
 
 	bool isGurdNow_;
-	//ƒK[ƒh‚ðŠJŽn‚µ‚Ä‚©‚ç—LŒø‚É‚È‚é‚Ü‚Å
+	//ã‚¬ãƒ¼ãƒ‰ã‚’é–‹å§‹ã—ã¦ã‹ã‚‰æœ‰åŠ¹ã«ãªã‚‹ã¾ã§
 	EnableTime enabledTime_;
 
 public:
@@ -30,7 +30,7 @@ public:
 	void Init();
 	void Update();
 	void DrawDebug();
-	//ƒK[ƒh¬Œ÷Žž‚Ìˆ—
+	//ã‚¬ãƒ¼ãƒ‰æˆåŠŸæ™‚ã®å‡¦ç†
 	void GuardHit();
 public:
 	void SetPlayer(Player* player) { player_ = player; }

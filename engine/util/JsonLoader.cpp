@@ -18,78 +18,78 @@ JsonLoader::JsonLoader()
 
 void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 {
-	//˜AŒ‹‚µ‚Äƒtƒ‹ƒpƒX‚ğ“¾‚é
+	//é€£çµã—ã¦ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’å¾—ã‚‹
 	const std::string fullpath = kDefaultBaseDirectory + fileName;
 
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(fullpath);
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	//JSON•¶š—ñ‚©‚ç‰ğ“€‚µ‚½ƒf[ƒ^
+	//JSONæ–‡å­—åˆ—ã‹ã‚‰è§£å‡ã—ãŸãƒ‡ãƒ¼ã‚¿
 	nlohmann::json deserialized;
 
-	//‰ğ“€
+	//è§£å‡
 	file >> deserialized;
 
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	// "name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	// "name"ã‚’æ–‡å­—åˆ—ã¨ã—ã¦å–å¾—
 	std::string name =
 		deserialized["name"].get<std::string>();
-	//‚½‚¾d“ü‚ê•Êƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//ãŸã ä»•å…¥ã‚Œåˆ¥ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(name.compare("scene") == 0);
 
-	//ƒŒƒxƒ‹ƒf[ƒ^Ši”[—pƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	std::unique_ptr<LevelData> levelData = std::move(std::make_unique<LevelData>());
 	levelData->fileName = fileName;
-	//"object"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	//"object"ã®å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’èµ°æŸ»
 	for (nlohmann::json& object : deserialized["objects"])
 	{
 		assert(object.contains("type"));
 
-		//í•Ê‚ğæ“¾
+		//ç¨®åˆ¥ã‚’å–å¾—
 		std::string type = object["type"].get<std::string>();
 
 
 		if (type.compare("MESH") == 0)
 		{
 			std::unique_ptr<Object3d> newobj = std::move(std::make_unique<Object3d>());
-			//ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+			//ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 			nlohmann::json& transform = object["transform"];
-			//•½sˆÚ“®
+			//å¹³è¡Œç§»å‹•
 			Vector3 pos = {
 				(float)transform["translation"][1],
 				(float)transform["translation"][2],
 				-(float)transform["translation"][0],
 			};
 			newobj->SetPos(pos);
-			//‰ñ“]Šp
+			//å›è»¢è§’
 			Vector3 rot = {
 				Radian(-(float)transform["rotation"][1]),
 				Radian(-(float)transform["rotation"][2]),
 				Radian((float)transform["rotation"][0]),
 			};
 			newobj->SetRot(rot);
-			//ƒXƒP[ƒŠƒ“ƒO
+			//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 			Vector3 scale = {
 				(float)transform["scaling"][1],
 				(float)transform["scaling"][2],
 				(float)transform["scaling"][0],
 			};
 			newobj->SetScale(scale);
-			//ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
+			//ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 			std::string modelName_ = object["model_name"].get<std::string>();
 			newobj->SetModel(Model::CreateOBJ_uniptr(modelName_, true));
-			//•\¦ƒtƒ‰ƒO‚ğ‘ã“ü
+			//è¡¨ç¤ºãƒ•ãƒ©ã‚°ã‚’ä»£å…¥
 			nlohmann::json& visible = object["isvisible"];
 			bool isVisible = visible.get<uint32_t>();
 
@@ -104,7 +104,7 @@ void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 				(float)transform["translation"][2],
 				-(float)transform["translation"][0],
 			};
-			//‰ñ“]Šp
+			//å›è»¢è§’
 			Vector3 rot = {
 				Radian(-(float)transform["rotation"][0] + 90.f),
 				Radian(-(float)transform["rotation"][2] + 90.f),
@@ -117,7 +117,7 @@ void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 	}
 
 	if (levelData_.size() > 0) {
-		//“¯‚¶ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ñ‚¾ê‡AV‚µ‚¢î•ñ‚É“ü‚ê‘Ö‚¦‚é
+		//åŒã˜ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã å ´åˆã€æ–°ã—ã„æƒ…å ±ã«å…¥ã‚Œæ›¿ãˆã‚‹
 		if (levelData_.find(dataName)->second->fileName == fileName) {
 			levelData_.erase(dataName);
 		}
@@ -132,10 +132,10 @@ void JsonLoader::SetObjects(std::unordered_map<std::string, std::unique_ptr<Obje
 	size_t num = data->object.size();
 
 	objects->clear();
-	
+
 	for (size_t i = 0; i < num; i++)
 	{
-		//“Ç‚İ‚ñ‚¾î•ñ‚ğ‘ã“ü‚µ‚Ä‚­
+		//èª­ã¿è¾¼ã‚“ã æƒ…å ±ã‚’ä»£å…¥ã—ã¦ã
 		std::unique_ptr<Object3d> newObj = std::move(std::make_unique<Object3d>());
 		newObj->SetPos(data->object.at(i)->GetPos());
 		newObj->SetRot(data->object.at(i)->GetRot());
@@ -165,20 +165,20 @@ void JsonLoader::SetObjects(std::unordered_map<std::string, std::unique_ptr<Obje
 		}
 
 		if (modelName_ == "skySphere") {
-			newObj->SetAmbient("skySphere",Vector3(0.1f, 0.25f, 0.5f));
+			newObj->SetAmbient("skySphere", Vector3(0.1f, 0.25f, 0.5f));
 		}
 		uint32_t index = 0;
-		//“¯‚¶ƒL[‚Ìƒ‚ƒfƒ‹‚ğŒ©‚Â‚¯‚½‚ç’Ç‰Á‡‚É”Ô†‚ğU‚è•ª‚¯‚é
-		while(objects->find(modelName_) != objects->end()){
+		//åŒã˜ã‚­ãƒ¼ã®ãƒ¢ãƒ‡ãƒ«ã‚’è¦‹ã¤ã‘ãŸã‚‰è¿½åŠ é †ã«ç•ªå·ã‚’æŒ¯ã‚Šåˆ†ã‘ã‚‹
+		while (objects->find(modelName_) != objects->end()) {
 			index++;
-			
+
 			std::ostringstream numChar;
 
 			numChar << index;
 			modelName_ = modelName_ + numChar.str();
-			
+
 		}
-		//‘¼‚ÌƒIƒuƒWƒFƒNƒg‚ÆƒL[‚ª”í‚Á‚Ä‚¢‚È‚©‚Á‚½‚ç‘ã“ü‚·‚é
+		//ä»–ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã‚­ãƒ¼ãŒè¢«ã£ã¦ã„ãªã‹ã£ãŸã‚‰ä»£å…¥ã™ã‚‹
 		objects->insert(std::make_pair(modelName_, std::move(newObj)));
 
 	}

@@ -16,19 +16,19 @@ void ImGuiManager::Init()
 
 	winApi_ = WinAPI::GetInstance();
 	directX_ = RDirectX::GetInstance();
-	//ImGui‚ÌƒRƒ“ƒeƒLƒXƒg‚ğ¶¬
+	//ImGuiã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆ
 	ImGui::CreateContext();
-	//ImGui‚ÌƒXƒ^ƒCƒ‹‚ğİ’è
+	//ImGuiã®ã‚¹ã‚¿ã‚¤ãƒ«ã‚’è¨­å®š
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplWin32_Init(winApi_->hwnd_);
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	desc.NumDescriptors = 1;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv¶¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ç”Ÿæˆ
 	result = directX_->GetDevice()->
 		CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
 	assert(SUCCEEDED(result));
@@ -42,24 +42,24 @@ void ImGuiManager::Init()
 	);
 
 	ImGuiIO& io = ImGui::GetIO();
-	//•W€ƒtƒHƒ“ƒg
+	//æ¨™æº–ãƒ•ã‚©ãƒ³ãƒˆ
 	io.Fonts->AddFontDefault();
-	//examples/example_win32_directx12/main.cpp‚ÉŒÄ‚Ño‚µ—á‚ª‚ ‚é
+	//examples/example_win32_directx12/main.cppã«å‘¼ã³å‡ºã—ä¾‹ãŒã‚ã‚‹
 }
 
 void ImGuiManager::Finalize()
 {
-	//Œãn––
+	//å¾Œå§‹æœ«
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğŠJ•ú
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’é–‹æ”¾
 	srvHeap_.Reset();
 }
 
 void ImGuiManager::Begin()
 {
-	//ImGuiƒtƒŒ[ƒ€ŠJn
+	//ImGuiãƒ•ãƒ¬ãƒ¼ãƒ é–‹å§‹
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -74,9 +74,9 @@ void ImGuiManager::Draw()
 {
 	ID3D12GraphicsCommandList* commandList = directX_->GetCommandList();
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì”z—ñ‚ğƒZƒbƒg‚·‚éƒRƒ}ƒ“ƒh
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®é…åˆ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { srvHeap_.Get() };
 	commandList->SetDescriptorHeaps((UINT)ppHeaps.size(), &ppHeaps.at(0));
-	//•`‰æƒRƒ}ƒ“ƒh‚ğ”­s
+	//æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’ç™ºè¡Œ
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }

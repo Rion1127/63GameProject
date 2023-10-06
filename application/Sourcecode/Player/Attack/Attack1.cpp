@@ -10,20 +10,20 @@ void Attack1::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr)
 	{
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr)
 		{
 			CalculateRotToLockOnActor(frontVec);
 		}
 	}
 	attackVec_ = frontVec;
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	SplineInit();
 
 	attackCol_.at(0)->col_.SetPos(spline_.GetsplinePos().at(0));
 	attackCol_.at(0)->col_.radius = 1.f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
@@ -33,18 +33,18 @@ void Attack1::Init()
 
 void Attack1::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	attackVec_ = attackVec_.normalize();
-	//ƒvƒŒƒCƒ„[‚ÌˆÚ“®‘¬“x‰ÁZ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•é€Ÿåº¦åŠ ç®—
 	Vector3 speed = attackVec_ * attackSpeed_;
 	float timerate = 1.f - timer_.GetTimeRate();
 	speed *= timerate;
 
 	selfActor_->AddaddVec(speed);
-	//“–‚½‚è”»’è‚ğƒXƒvƒ‰ƒCƒ“‹Èü‚ÅˆÚ“®‚³‚¹‚é
+	//å½“ãŸã‚Šåˆ¤å®šã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šã§ç§»å‹•ã•ã›ã‚‹
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackCol_.at(0)->col_.center = spline_.GetNowPoint();
-	//Œ•‚ÌˆÊ’u‚ğ‘ã“ü‚·‚é
+	//å‰£ã®ä½ç½®ã‚’ä»£å…¥ã™ã‚‹
 	swordPos_ = attackCol_.at(0)->col_.center;
 }
 

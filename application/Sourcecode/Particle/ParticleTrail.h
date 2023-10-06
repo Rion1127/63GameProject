@@ -12,7 +12,7 @@
 class ParticleTrail
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 protected:
 	struct SwordTrailVertex
@@ -23,8 +23,8 @@ protected:
 public:
 	struct PosBuffer
 	{
-		Vector3 head; //Œ•‚Ìæ’[‚ÌˆÊ’u
-		Vector3 tail; //Œ•‚Ì––’[‚ÌˆÊ’u
+		Vector3 head; //å‰£ã®å…ˆç«¯ã®ä½ç½®
+		Vector3 tail; //å‰£ã®æœ«ç«¯ã®ä½ç½®
 	};
 	struct colorBuffer
 	{
@@ -34,7 +34,7 @@ protected:
 	std::vector<PosBuffer> posArray_;
 	std::vector<SwordTrailVertex> vertex_;
 	uint32_t vertSize_;
-	//Œ»İƒtƒŒ[ƒ€‚Å‚ÌŒ•‚ÌˆÊ’u
+	//ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®å‰£ã®ä½ç½®
 	PosBuffer tempPos;
 
 	WorldTransform transform_;
@@ -42,18 +42,18 @@ protected:
 
 	bool isVisible_;
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	ComPtr<ID3D12Resource> vertBuff_;
 
-	//Fî•ñ
+	//è‰²æƒ…å ±
 	ComPtr<ID3D12Resource> constBuffColor_;
-	//Fî•ñ
+	//è‰²æƒ…å ±
 	colorBuffer* constMapColor_;
 
 	Color color_;
 protected:
-	//ƒfƒoƒbƒO
+	//ãƒ‡ãƒãƒƒã‚°
 	bool isStop_;
 public:
 	ParticleTrail(uint32_t vertSize);
@@ -65,7 +65,7 @@ public:
 	void Draw();
 	void DrawImgui();
 private:
-	//ƒf[ƒ^“]‘—
+	//ãƒ‡ãƒ¼ã‚¿è»¢é€
 	void TransferBuff();
 public:
 	Color GetColor() { return color_; }

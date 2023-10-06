@@ -20,18 +20,18 @@ class AttackManager
 private:
 	static Player* player_;
 	IEnemy* lockOnEnemy_;
-	//UŒ‚‚Ìƒf[ƒ^Eƒv[ƒ‹
+	//æ”»æ’ƒã®ãƒ‡ãƒ¼ã‚¿ãƒ»ãƒ—ãƒ¼ãƒ«
 	std::vector<std::unique_ptr<IAttack>> attacks_;
 
-	std::unique_ptr<IAttack> nowAttack_;	//Œ»İˆ—‚µ‚Ä‚¢‚éUŒ‚
-	std::unique_ptr<IAttack> nextAttack_;	//Ÿ‚Éˆ—‚·‚éUŒ‚
+	std::unique_ptr<IAttack> nowAttack_;	//ç¾åœ¨å‡¦ç†ã—ã¦ã„ã‚‹æ”»æ’ƒ
+	std::unique_ptr<IAttack> nextAttack_;	//æ¬¡ã«å‡¦ç†ã™ã‚‹æ”»æ’ƒ
 
 	const int32_t MAX_COMBO = 3;
 	int32_t comboNum;
 
 	bool isAttacking;
-	bool isHardLock_;	//false ‹ß‚¢“G‚ğƒƒbƒNƒIƒ“, true ƒƒbƒNƒIƒ“‚ğŒÅ’è
-	
+	bool isHardLock_;	//false è¿‘ã„æ•µã‚’ãƒ­ãƒƒã‚¯ã‚ªãƒ³, true ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã‚’å›ºå®š
+
 	float PtoELength_;
 
 	bool isNextAttack_;

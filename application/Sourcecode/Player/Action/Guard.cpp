@@ -25,12 +25,12 @@ void GuardClass::Init()
 	Vector2 frontVec2;
 	frontDist_ = 0.8f;
 	if (enemy != nullptr) {
-		//“G‚ğƒn[ƒhƒƒbƒN‚µ‚Ä‚¢‚é‚È‚ç“G‚Ì•ûŒü‚ÉŒü‚­
+		//æ•µã‚’ãƒãƒ¼ãƒ‰ãƒ­ãƒƒã‚¯ã—ã¦ã„ã‚‹ãªã‚‰æ•µã®æ–¹å‘ã«å‘ã
 		if (enemy->GetIsHardLockOn()) {
 			frontVec = player_->GetWorldTransform()->position_;
 
 			lockOnVec = player_->GetLockOnVec();
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ğ‚Æ‚é
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 			frontVec2 = {
 				lockOnVec.x,
 				lockOnVec.z
@@ -38,7 +38,7 @@ void GuardClass::Init()
 			float rotY = Radian(Vec2Angle(frontVec2));
 			player_->SetRot({ 0,rotY,0 });
 
-			//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+			//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 			frontVec = {
 				sinf(player_->GetWorldTransform()->rotation_.y),
 				0,
@@ -50,13 +50,13 @@ void GuardClass::Init()
 			frontVec.y = 0;
 		}
 		else {
-			//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+			//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 			frontVec = {
 				sinf(player_->GetWorldTransform()->rotation_.y),
 				0,
 				cosf(player_->GetWorldTransform()->rotation_.y),
 			};
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ğ‚Æ‚é
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 			frontVec2 = {
 				frontVec.x,
 				frontVec.z
@@ -64,19 +64,19 @@ void GuardClass::Init()
 		}
 	}
 	else {
-		//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+		//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 		frontVec = {
 			sinf(player_->GetWorldTransform()->rotation_.y),
 			0,
 			cosf(player_->GetWorldTransform()->rotation_.y),
 		};
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ğ‚Æ‚é
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 		frontVec2 = {
 			frontVec.x,
 			frontVec.z
 		};
 	}
-	
+
 	col_.center = player_->GetCol().center + frontVec;
 	col_.center.y += colObj_->GetTransform()->scale_.y;
 
@@ -90,7 +90,7 @@ void GuardClass::Init()
 
 void GuardClass::Update()
 {
-	//enabledTime_‚ÌŠÔ‚¾‚Á‚½‚ç“–‚½‚è”»’è‚ğ—LŒø‚É‚·‚é
+	//enabledTime_ã®é–“ã ã£ãŸã‚‰å½“ãŸã‚Šåˆ¤å®šã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	if (enabledTime_.start < timer_.GetTimer() &&
 		enabledTime_.end > timer_.GetTimer()) {
 		col_.isActive = true;
@@ -98,9 +98,9 @@ void GuardClass::Update()
 	else {
 		col_.isActive = false;
 	}
-	
+
 	Vector3 frontVec = player_->GetWorldTransform()->position_;
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	frontVec = {
 		sinf(player_->GetWorldTransform()->rotation_.y),
 		0,
@@ -130,7 +130,7 @@ void GuardClass::DrawDebug()
 
 void GuardClass::GuardHit()
 {
-	//ƒK[ƒh‚ª¬Œ÷‚µ‚½‚çƒK[ƒhŠÔ‚ğ‰„’·
+	//ã‚¬ãƒ¼ãƒ‰ãŒæˆåŠŸã—ãŸã‚‰ã‚¬ãƒ¼ãƒ‰æ™‚é–“ã‚’å»¶é•·
 	timer_.Reset();
 	timer_.SetTime(enabledTime_.start);
 	Init();

@@ -69,7 +69,7 @@ private:
 private:
 	std::unique_ptr<Sprite> backSprite_;
 	std::unique_ptr<PauseSprite> pauseSprite_;
-	
+
 	PauseSelectSprite pauseSelectSprite_;
 
 	SelectType selectType_;

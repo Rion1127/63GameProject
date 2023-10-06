@@ -12,19 +12,19 @@ private:
 public:
 	Timer();
 
-	//ƒJƒEƒ“ƒgƒAƒbƒv
+	//ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—
 	void AddTime(int32_t addValue);
-	//ƒJƒEƒ“ƒgƒ_ƒEƒ“
+	//ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³
 	void SubTime(int32_t addValue);
 	void Reset();
 public:
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void SetLimitTime(int32_t limitTime) { limitTime_ = limitTime; }
 	void SetTime(int32_t setValue) { timer_ = setValue; }
 	void SetIsEnd(bool flag) { isEnd_ = flag; }
 	void SetIsLoop(bool flag) { isLoop_ = flag; }
 public:
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	int32_t GetTimer() { return timer_; }
 	int32_t GetLimitTimer() { return limitTime_; }
 	bool GetIsEnd() { return isEnd_; }
@@ -42,19 +42,19 @@ private:
 public:
 	TimerFloat();
 
-	//ƒJƒEƒ“ƒgƒAƒbƒv
+	//ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—
 	void AddTime(float addValue);
-	//ƒJƒEƒ“ƒgƒ_ƒEƒ“
+	//ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³
 	void SubTime(float addValue);
 	void Reset();
 public:
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void SetLimitTime(float limitTime) { limitTime_ = limitTime; }
 	void SetTime(float setValue) { timer_ = setValue; }
 	void SetIsEnd(bool flag) { isEnd_ = flag; }
 	void SetIsLoop(bool flag) { isLoop_ = flag; }
 public:
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	float GetTimer() { return timer_; }
 	float GetLimitTimer() { return limitTime_; }
 	bool GetIsEnd() { return isEnd_; }

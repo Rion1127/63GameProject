@@ -3,9 +3,9 @@
 class RRandom
 {
 private:
-	//乱数シード生成器
+	//荵ｱ謨ｰ繧ｷ繝ｼ繝臥函謌仙勣
 	static std::random_device seed_gen;
-	////メルセンヌ・ツイスター
+	////繝｡繝ｫ繧ｻ繝ｳ繝後�ｻ繝�繧､繧ｹ繧ｿ繝ｼ
 	static std::mt19937_64 engine;
 public:
 	static float RandF(float min, float max);

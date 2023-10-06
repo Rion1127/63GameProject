@@ -15,15 +15,15 @@ void ParticleWallHit::Add()
 	transform_.position_ = emitter_->pos;
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		wallHitParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = wallHitParticles_.back();
 

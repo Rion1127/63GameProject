@@ -1,7 +1,7 @@
 #pragma once
 #include "ParticleTrail.h"
 
-class SwordTrail final:
+class SwordTrail final :
 	public ParticleTrail
 {
 public:

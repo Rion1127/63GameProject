@@ -1,7 +1,7 @@
 #include "AttackJumpShadow.h"
 
 AttackJumpShadow::AttackJumpShadow(IActor* selfActor) :
-	IAttack(selfActor,1,50,10,55)
+	IAttack(selfActor, 1, 50, 10, 55)
 {
 }
 
@@ -13,14 +13,14 @@ void AttackJumpShadow::Init()
 	if (selfActor_ != nullptr)
 	{
 		frontDist_ = 0;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr)
 		{
 			CalculateRotToLockOnActor(frontVec);
 		}
 		else
 		{
-			//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
+			//å›žè»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 			frontVec = {
 				sinf(selfActor_->GetWorldTransform()->rotation_.y),
 				0,
@@ -35,7 +35,7 @@ void AttackJumpShadow::Init()
 		attackCol_.at(0)->col_.center = colPos;
 		attackCol_.at(0)->col_.radius = 0.6f;
 		attackCol_.at(0)->damage = 10;
-		//ƒmƒbƒNƒoƒbƒN—Í
+		//ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 		attackCol_.at(0)->knockPower = { 0.1f,0.3f,0.1f };
 		attackCol_.at(0)->knockVecY = 0.5f;
 	}
@@ -47,7 +47,7 @@ void AttackJumpShadow::Init()
 
 void AttackJumpShadow::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
+	//å›žè»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = PToEVec_ / (float)attackInfo_.maxTime;
@@ -59,12 +59,12 @@ void AttackJumpShadow::MoveUpdate()
 	Vector3 attackVec = attackVec_ * (selfActor_->GetWorldTransform()->scale_.x * 1.f);
 	attackCol_.at(0)->col_.center = selfActor_->GetWorldTransform()->position_ + attackVec;
 	attackCol_.at(0)->col_.center.y += selfActor_->GetWorldTransform()->scale_.y;
-	//ã¸‚µ‚Ä‚¢‚é‚Æ‚«‚ÍUŒ‚”»’è‚ð–³‚­‚·
+	//ä¸Šæ˜‡ã—ã¦ã„ã‚‹ã¨ãã¯æ”»æ’ƒåˆ¤å®šã‚’ç„¡ãã™
 	if (selfActor_->GetGravity()->GetGravityValue().y > 0)
 	{
 		attackCol_.at(0)->col_.isActive = false;
 	}
-	//d—Í‚Å‰º‚ª‚Á‚Ä‚¢‚é‚Æ‚«‚ÍUŒ‚”»’è‚ð—LŒø‚É‚·‚é
+	//é‡åŠ›ã§ä¸‹ãŒã£ã¦ã„ã‚‹ã¨ãã¯æ”»æ’ƒåˆ¤å®šã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	else
 	{
 		attackCol_.at(0)->col_.isActive = true;

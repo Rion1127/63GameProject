@@ -1,17 +1,17 @@
 #pragma once
 #include "IAttack.h"
 class AttackFinishBreak :
-    public IAttack
+	public IAttack
 {
 private:
 	float colRadius_;
 	float splineTime_;
 	int32_t hitNum_;
-	//“–‚½‚è”»’è‚ª‰ñ“]‚·‚éƒXƒs[ƒh
+	//å½“ãŸã‚Šåˆ¤å®šãŒå›è»¢ã™ã‚‹ã‚¹ãƒ”ãƒ¼ãƒ‰
 	float rotateSpeed_;
 	bool isParticleAdd_;
-	//ƒGƒ~ƒbƒ^[
-	std::array<std::shared_ptr<OneceEmitter>,3> emitter_;
+	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼
+	std::array<std::shared_ptr<OneceEmitter>, 3> emitter_;
 public:
 	AttackFinishBreak(IActor* selfActor);
 private:

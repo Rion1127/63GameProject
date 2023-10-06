@@ -5,7 +5,7 @@ class EnemyHPGauge
 {
 private:
 	std::unique_ptr<Sprite> hpBar_;
-	std::unique_ptr<Sprite> hpBarMiddle_;	//ダメージが減った分を赤く表示する
+	std::unique_ptr<Sprite> hpBarMiddle_;	//繝繝｡繝ｼ繧ｸ縺梧ｸ帙▲縺溷��繧定ｵ､縺剰｡ｨ遉ｺ縺吶ｋ
 	std::unique_ptr<Sprite> hpBarBack_;
 
 	Vector2 offsetPos_;

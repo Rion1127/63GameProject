@@ -2,11 +2,11 @@
 #include "IAttack.h"
 #include "Timer.h"
 class AttackAirSweep :
-    public IAttack
+	public IAttack
 {
 private:
 	float frontDist_;
-	//“–‚½‚è”»’è‚ª‰ñ“]‚·‚éƒXƒs[ƒh
+	//å½“ãŸã‚Šåˆ¤å®šãŒå›è»¢ã™ã‚‹ã‚¹ãƒ”ãƒ¼ãƒ‰
 	float rotateSpeed_;
 	float colRadius_;
 public:

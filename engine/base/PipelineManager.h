@@ -36,6 +36,6 @@ private:
 	static void PostEffectIni();
 	static void ParticleShaderIni();
 public:
-	//ÉQÉbÉ^Å[
+	//„Ç≤„ÉÉ„Çø„Éº
 	static PipelineObject* GetPipelineObjects(const std::string& name) { return pipelineObjects_[name].get(); }
 };

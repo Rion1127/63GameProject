@@ -21,10 +21,10 @@ void ConfigMenu::Update()
 	{
 		SoundManager::Play("SelectSE");
 		int32_t typeNum = (int32_t)type_;
-		
+
 		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN))typeNum++;
 		if (Controller::GetTriggerButtons(PAD::INPUT_UP))typeNum--;
-		typeNum = Clamp(typeNum,0,(int32_t)ConfigType::ConfigTypeEND - 1);
+		typeNum = Clamp(typeNum, 0, (int32_t)ConfigType::ConfigTypeEND - 1);
 
 		type_ = (ConfigType)typeNum;
 
@@ -32,7 +32,7 @@ void ConfigMenu::Update()
 	}
 
 
-	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT)||
+	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT) ||
 		Controller::GetTriggerButtons(PAD::INPUT_LEFT))
 	{
 		SoundManager::Play("SelectSE");
@@ -40,7 +40,7 @@ void ConfigMenu::Update()
 		{
 			isInversX_ = (isInversX_ == false) ? true : false;
 		}
-		else if(type_ == ConfigType::CameraAxisY)
+		else if (type_ == ConfigType::CameraAxisY)
 		{
 			isInversY_ = (isInversY_ == false) ? true : false;
 		}
@@ -92,8 +92,8 @@ ConfigMenu::ConfigMenu() {
 #pragma region ConfigMenuSprite
 ConfigMenuSprite::ConfigMenuSprite()
 {
-	axisX_ = std::make_unique<ConfigSprite>(Vector2(0,0),0);
-	axisY_ = std::make_unique<ConfigSprite>(Vector2(0,60),1);
+	axisX_ = std::make_unique<ConfigSprite>(Vector2(0, 0), 0);
+	axisY_ = std::make_unique<ConfigSprite>(Vector2(0, 60), 1);
 }
 void ConfigMenuSprite::Update()
 {
@@ -183,7 +183,7 @@ ConfigSprite::ConfigSprite(Vector2 pos, int32_t itemIndex)
 			pos.x + WinAPI::GetWindowSize().x / 2.f + 200.f * i + (10 * i),
 			pos.y + 450.f
 		};
-		
+
 		float leftUpIndex = 0;
 		if (i == 0) leftUpIndex = 0;
 		if (i == 1) leftUpIndex = 1;

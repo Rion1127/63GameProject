@@ -12,7 +12,7 @@ void AttackAirAerialFinish::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
 		frontDist_ = 0;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
@@ -25,7 +25,7 @@ void AttackAirAerialFinish::Init()
 
 void AttackAirAerialFinish::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	Vector3 frontVec = CalculateFrontVec();
 	frontVec = frontVec.normalize();
 	Vector3 speed = frontVec * 0.08f;
@@ -74,17 +74,17 @@ void AttackAirAerialFinish::FirstAttackInit()
 {
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.1f,0.1f,0.1f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 
 
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	std::vector<Vector3>attackVec;
 	Vector3 frontVec = CalculateFrontVec();
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
 
-	//³–ÊÎ‚ß‰º
+	//æ­£é¢æ–œã‚ä¸‹
 	up = {
 		frontVec.normalize().x / 2.f,
 		frontVec.normalize().y / 2.f - selfActor_->GetWorldTransform()->scale_.y * 0.5f,
@@ -94,11 +94,11 @@ void AttackAirAerialFinish::FirstAttackInit()
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(fourthPos);
 	attackVec.push_back(fourthPos);
-	//³–Ê
+	//æ­£é¢
 	Vector3 thirdPos =
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
 	attackVec.push_back(thirdPos);
-	//Î‚ßã
+	//æ–œã‚ä¸Š
 	up = {
 		frontVec.normalize().x,
 		frontVec.normalize().y + selfActor_->GetWorldTransform()->scale_.y * 2.5f,
@@ -107,7 +107,7 @@ void AttackAirAerialFinish::FirstAttackInit()
 	Vector3 secondPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(secondPos);
-	//ã
+	//ä¸Š
 	Vector3 endPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(endPos);
@@ -132,20 +132,20 @@ void AttackAirAerialFinish::SecondAttackInit()
 {
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.1f,0.1f,0.1f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	std::vector<Vector3>attackVec;
 	Vector3 frontVec = CalculateFrontVec();
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
-	//ã
+	//ä¸Š
 	Vector3 endPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(endPos);
 	attackVec.push_back(endPos);
-	//Î‚ßã
+	//æ–œã‚ä¸Š
 	up = {
 		frontVec.normalize().x,
 		frontVec.normalize().y + selfActor_->GetWorldTransform()->scale_.y * 2.5f,
@@ -154,11 +154,11 @@ void AttackAirAerialFinish::SecondAttackInit()
 	Vector3 secondPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(secondPos);
-	//³–Ê
+	//æ­£é¢
 	Vector3 thirdPos =
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
 	attackVec.push_back(thirdPos);
-	//³–ÊÎ‚ß‰º
+	//æ­£é¢æ–œã‚ä¸‹
 	up = {
 		frontVec.normalize().x / 2.f,
 		frontVec.normalize().y / 2.f - selfActor_->GetWorldTransform()->scale_.y * 0.5f,
@@ -186,12 +186,12 @@ void AttackAirAerialFinish::ThirdAttackInit()
 {
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.1f,0.1f,0.1f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 
 
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
 	std::vector<Vector3>attackVec;
 	Vector3 rightVec = CalculateFrontVec().cross(Vector3(0, 1, 0));
@@ -228,21 +228,21 @@ void AttackAirAerialFinish::FourthAttackInit()
 {
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 0.8f,0.1f,0.8f };
 	attackCol_.at(0)->knockVecY = 1.0f;
 
 
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	std::vector<Vector3>attackVec;
 	Vector3 frontVec = CalculateFrontVec();
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
-	//ã
+	//ä¸Š
 	Vector3 endPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(endPos);
 	attackVec.push_back(endPos);
-	//Î‚ßã
+	//æ–œã‚ä¸Š
 	up = {
 		frontVec.normalize().x,
 		frontVec.normalize().y + selfActor_->GetWorldTransform()->scale_.y * 2.5f,
@@ -251,11 +251,11 @@ void AttackAirAerialFinish::FourthAttackInit()
 	Vector3 secondPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(secondPos);
-	//³–Ê
+	//æ­£é¢
 	Vector3 thirdPos =
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
 	attackVec.push_back(thirdPos);
-	//³–ÊÎ‚ß‰º
+	//æ­£é¢æ–œã‚ä¸‹
 	up = {
 		frontVec.normalize().x / 2.f,
 		frontVec.normalize().y / 2.f - selfActor_->GetWorldTransform()->scale_.y * 0.5f,

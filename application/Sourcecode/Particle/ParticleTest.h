@@ -1,7 +1,7 @@
 #pragma once
 #include "IParticle.h"
-class ParticleTest final:
-    public IParticle
+class ParticleTest final :
+	public IParticle
 {
 private:
 	struct TestParticle : public Particle

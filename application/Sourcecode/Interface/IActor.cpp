@@ -7,7 +7,7 @@ void IActor::ObjUpdate()
 {
 	addVec_ += gravity_.GetGravityValue();
 	addVec_ += knockVec_;
-	//ƒmƒbƒNƒoƒbƒN‚ÌƒxƒNƒgƒ‹‚ğ0‚É‚µ‚Ä‚¢‚­
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’0ã«ã—ã¦ã„ã
 	MoveTo({ 0,0,0 }, knockDecreaseValue, knockVec_);
 
 	if (isCanMove_ == false)

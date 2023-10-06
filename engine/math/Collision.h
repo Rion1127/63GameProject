@@ -1,44 +1,44 @@
 #pragma once
 #include "Vector3.h"
 #include "WorldTransform.h"
-//‹…
+//çƒ
 struct Sphere {
-	//’†SÀ•W
-	Vector3 center = {0,0,0};
-	//”¼Œa
+	//ä¸­å¿ƒåº§æ¨™
+	Vector3 center = { 0,0,0 };
+	//åŠå¾„
 	float radius = 1.0f;
 
 	void SetPos(Vector3 pos) {
 		center = pos;
 	};
 
-	// ƒtƒ‰ƒO
+	// ãƒ•ãƒ©ã‚°
 	bool isActive = true;
 };
-//•½–Ê
+//å¹³é¢
 struct Plane {
-	//–@üƒxƒNƒgƒ‹
-	Vector3 normal = { 0,1,0};
-	//Œ´“_(0,0,0)‚©‚ç‚Ì‹——£
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	Vector3 normal = { 0,1,0 };
+	//åŸç‚¹(0,0,0)ã‹ã‚‰ã®è·é›¢
 	float distance = 0.0f;
 };
-//–@ü•t‚«OŠpŒ`(Œv‰ñ‚è‚ª•\–Ê)
+//æ³•ç·šä»˜ãä¸‰è§’å½¢(æ™‚è¨ˆå›ã‚ŠãŒè¡¨é¢)
 struct Triangle {
-	//’¸“_À•W‚R‚Â
+	//é ‚ç‚¹åº§æ¨™ï¼“ã¤
 	Vector3 p0;
 	Vector3 p1;
 	Vector3 p2;
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 normal;
-	//–@”w‚ÌŒvZ
+	//æ³•èƒŒã®è¨ˆç®—
 	void ComputeNormal();
 };
-//ƒŒƒC(”¼’¼ü)
+//ãƒ¬ã‚¤(åŠç›´ç·š)
 struct Ray {
-	//n“_À•W
-	Vector3 start = { 0,0,0};
-	//•ûŒü
-	Vector3 dir = { 1,0,0};
+	//å§‹ç‚¹åº§æ¨™
+	Vector3 start = { 0,0,0 };
+	//æ–¹å‘
+	Vector3 dir = { 1,0,0 };
 };
 
 bool RayCollision(WorldTransform ray, WorldTransform obj);
@@ -47,23 +47,23 @@ bool BallCollision(const WorldTransform& a, const WorldTransform& b);
 
 bool BallCollision(const Vector3& a, const float& aSize, const Vector3& b, const float& bSize);
 
-//‹…‚Æ‹…
+//çƒã¨çƒ
 bool BallCollision(const Sphere& a, const Sphere& b);
-//•½–Ê‚Æ‹…
+//å¹³é¢ã¨çƒ
 bool Sphere2PlaneCol(const Sphere& sphere, const Plane& plane,
 	Vector3* inter = nullptr);
-//“_‚ÆOŠpŒ`
+//ç‚¹ã¨ä¸‰è§’å½¢
 void ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle, Vector3* closest);
-//‹…‚Æ–@ü•t‚«OŠpŒ`‚Ì“–‚½‚è”»’èƒ`ƒFƒbƒN
+//çƒã¨æ³•ç·šä»˜ãä¸‰è§’å½¢ã®å½“ãŸã‚Šåˆ¤å®šãƒã‚§ãƒƒã‚¯
 bool Sphere2TriangleCol(const Sphere& sphere, const Triangle& triangle,
 	Vector3* inter = nullptr);
-//ƒŒƒC‚Æ•½–Ê
+//ãƒ¬ã‚¤ã¨å¹³é¢
 bool CheckRay2Plane(const Ray& ray, const Plane& plane, float* distance = nullptr, Vector3* inter = nullptr);
 
-//ƒŒƒC‚Æ–@ü•t‚«OŠpŒ`‚Ì“–‚½‚è”»’è
+//ãƒ¬ã‚¤ã¨æ³•ç·šä»˜ãä¸‰è§’å½¢ã®å½“ãŸã‚Šåˆ¤å®š
 bool CheckRay2Traiangle(const Ray& ray, const Triangle& triangle,
 	float* distance = nullptr, Vector3* inter = nullptr);
 
-//ƒŒƒC‚Æ‹‰‚Ì“–‚½‚è”»’è
+//ãƒ¬ã‚¤ã¨ç´šã®å½“ãŸã‚Šåˆ¤å®š
 bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere,
 	float* distance = nullptr, Vector3* inter = nullptr);

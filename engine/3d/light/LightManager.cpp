@@ -6,7 +6,7 @@ LightManager::LightManager()
 	lightGroup = std::make_shared<LightGroup>();
 	lightGroup->Init();
 
-	//•½sŒõŒ¹
+	//å¹³è¡Œå…‰æº
 	if (lightType_ == LIGHTTYPE::DIRECTION_)
 	{
 		lightGroup->SetDirLightActive(0, true);
@@ -16,7 +16,7 @@ LightManager::LightManager()
 		lightColor0[1] = 1;
 		lightColor0[2] = 1;
 	}
-	//“_ŒõŒ¹
+	//ç‚¹å…‰æº
 	else if (lightType_ == LIGHTTYPE::POINT_)
 	{
 		lightGroup->SetPointLightActive(0, false);
@@ -26,7 +26,7 @@ LightManager::LightManager()
 		pointLightPos[0] = 1.0f;
 		pointLightPos[0] = 0.0f;
 	}
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 	else if (lightType_ == LIGHTTYPE::SPOT_)
 	{
 		lightGroup->SetSpotLightActive(0, false);
@@ -42,16 +42,16 @@ void LightManager::DebugUpdate()
 		lightType_++;
 		if (lightType_ >= LIGHTTYPE::NUMEND_)lightType_ = 0;
 
-		//•½sŒõŒ¹
+		//å¹³è¡Œå…‰æº
 		if (lightType_ == LIGHTTYPE::DIRECTION_)
 		{
 			lightGroup->SetDirLightActive(0, true);
 			lightGroup->SetDirLightActive(1, false);
 			lightGroup->SetDirLightActive(2, false);
-			//ƒXƒ|ƒbƒgƒ‰ƒCƒg–³Œø‰»
+			//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆç„¡åŠ¹åŒ–
 			lightGroup->SetSpotLightActive(0, false);
 		}
-		//“_ŒõŒ¹
+		//ç‚¹å…‰æº
 		else if (lightType_ == LIGHTTYPE::POINT_)
 		{
 			lightGroup->SetPointLightActive(0, true);
@@ -60,16 +60,16 @@ void LightManager::DebugUpdate()
 			pointLightPos[0] = 0.5f;
 			pointLightPos[0] = 1.0f;
 			pointLightPos[0] = 0.0f;
-			//•½sŒõŒ¹–³Œø‰»
+			//å¹³è¡Œå…‰æºç„¡åŠ¹åŒ–
 			lightGroup->SetDirLightActive(0, false);
 			lightGroup->SetDirLightActive(1, false);
 			lightGroup->SetDirLightActive(2, false);
 		}
-		//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+		//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 		else if (lightType_ == LIGHTTYPE::SPOT_)
 		{
 			lightGroup->SetSpotLightActive(0, true);
-			//“_ŒõŒ¹
+			//ç‚¹å…‰æº
 			lightGroup->SetPointLightActive(0, false);
 			lightGroup->SetPointLightActive(1, false);
 			lightGroup->SetPointLightActive(2, false);
@@ -78,7 +78,7 @@ void LightManager::DebugUpdate()
 
 	lightGroup->Update();
 
-	//•½sŒõŒ¹
+	//å¹³è¡Œå…‰æº
 	if (lightType_ == LIGHTTYPE::DIRECTION_)
 	{
 		DirectionalLightUpdate();
@@ -108,15 +108,15 @@ void LightManager::Update()
 void LightManager::DirectionalLightUpdate()
 {
 	//lightGroup->SetAmbientColor({ ambientColor0[0],ambientColor0[1] ,ambientColor0[2] });
-	//0”Ô–Ú‚Ì•½sŒõŒ¹
+	//0ç•ªç›®ã®å¹³è¡Œå…‰æº
 
 
 	lightGroup->SetDirLightDir(0, { lightDir0[0],lightDir0[1], lightDir0[2] });
 	lightGroup->SetDirLightColor(0, { lightColor0[0],lightColor0[1] ,lightColor0[2] });
-	//1”Ô–Ú‚Ì•½sŒõŒ¹
+	//1ç•ªç›®ã®å¹³è¡Œå…‰æº
 	lightGroup->SetDirLightDir(1, { lightDir1[0],lightDir1[1], lightDir1[2] });
 	lightGroup->SetDirLightColor(1, { lightColor1[0],lightColor1[1] ,lightColor1[2] });
-	//2”Ô–Ú‚Ì•½sŒõŒ¹
+	//2ç•ªç›®ã®å¹³è¡Œå…‰æº
 	lightGroup->SetDirLightDir(2, { lightDir2[0],lightDir2[1], lightDir2[2] });
 	lightGroup->SetDirLightColor(2, { lightColor2[0],lightColor2[1] ,lightColor2[2] });
 #ifdef _DEBUG
@@ -180,7 +180,7 @@ void LightManager::PointLightUpdate()
 	lightGroup->SetPointLightAtten(0, { pointLightAtten[0],pointLightAtten[1], pointLightAtten[2] });
 
 	ImGui::Begin("PointLight");
-	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ğ‘‚­ */
+	/* ã“ã“ã«è¿½åŠ ã—ãŸã„GUIã‚’æ›¸ã */
 
 	//ImGui::SetWindowPos(ImVec2(0, 0));
 	//ImGui::SetWindowSize(ImVec2(500, 200));
@@ -208,7 +208,7 @@ void LightManager::SpotLightUpdate()
 	lightGroup->SetSpotLightFactorAngle(0, { spotLightFactorAngle[0],spotLightFactorAngle[1] });
 
 	ImGui::Begin("SpotLight");
-	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ğ‘‚­ */
+	/* ã“ã“ã«è¿½åŠ ã—ãŸã„GUIã‚’æ›¸ã */
 
 	//ImGui::SetWindowPos(ImVec2(0, 0));
 	//ImGui::SetWindowSize(ImVec2(500, 200));

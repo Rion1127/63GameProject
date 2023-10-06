@@ -13,15 +13,15 @@ ColosseumSystem::ColosseumSystem()
 	blindSprite_ = std::make_unique<Sprite>();
 	//retrySprite_ = std::make_unique<Sprite>();
 	//titleSprite_ = std::make_unique<Sprite>();
-	
+
 	blindSprite_->Ini();
 	//retrySprite_->Ini();
 	//titleSprite_->Ini();
-	
+
 	blindSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 	//retrySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 	//titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
-	
+
 	blindSprite_->SetAnchor({ 0,0 });
 	blindSprite_->SetColor(Color(0, 0, 0, 0));
 	Vector2 pos = {
@@ -35,11 +35,11 @@ ColosseumSystem::ColosseumSystem()
 	isStart_ = false;
 	isNext_ = false;
 	isReset_ = false;
-	
-	
+
+
 	clearBlankTimer_.SetLimitTime(200);
 	blindTimer_.SetLimitTime(50);
-	
+
 	gameClearBlankTimer_.SetLimitTime(130);
 
 	roundNum_ = 1;
@@ -61,10 +61,10 @@ void ColosseumSystem::Update()
 	ImGui::End();
 #endif // _DEBUG
 
-	//Ready•\¦
+	//Readyè¡¨ç¤º
 	if (isStart_ == false)
 	{
-		//‘Sˆõ“®‚¯‚È‚­‚·‚é
+		//å…¨å“¡å‹•ã‘ãªãã™ã‚‹
 		std::list<std::unique_ptr<IEnemy>>::iterator itr;
 		for (itr = enemyManager_->GetEnemy()->begin(); itr != enemyManager_->GetEnemy()->end();)
 		{
@@ -73,12 +73,12 @@ void ColosseumSystem::Update()
 		}
 		player_->SetIsCanMove(false);
 		player_->SetIsCanInput(false);
-		
-		//Ready‰‰o‚ªI‚í‚Á‚½‚ç
+
+		//Readyæ¼”å‡ºãŒçµ‚ã‚ã£ãŸã‚‰
 		if (readyGoSprite_.GetReadyTimer().GetIsEnd())
 		{
 			isStart_ = true;
-			//‘Sˆõ“®‚¯‚é‚æ‚¤‚É‚·‚é
+			//å…¨å“¡å‹•ã‘ã‚‹ã‚ˆã†ã«ã™ã‚‹
 			for (itr = enemyManager_->GetEnemy()->begin(); itr != enemyManager_->GetEnemy()->end();)
 			{
 				itr->get()->SetIsCanMove(true);
@@ -87,7 +87,7 @@ void ColosseumSystem::Update()
 			player_->SetIsCanMove(true);
 			player_->SetIsCanInput(true);
 
-			SoundManager::Play("ShineSE",false,1.2f,1.5f);
+			SoundManager::Play("ShineSE", false, 1.2f, 1.5f);
 		}
 	}
 
@@ -100,16 +100,16 @@ void ColosseumSystem::Update()
 			color.a = 255.f * blindTimer_.GetTimeRate();
 			blindSprite_->SetColor(color);
 		}
-		//“G‚ğ‘Sˆõ“|‚µ‚½‚ç
+		//æ•µã‚’å…¨å“¡å€’ã—ãŸã‚‰
 		if (enemyManager_->GetEnemy()->size() <= 0)
 		{
 			if (isClearCamera_ == false) {
 				isClearCamera_ = true;
 				GameSpeed::SetGameSpeed(0.2f);
 				player_->SetIsCanInput(false);
-				SoundManager::Play("RoundClearSE",false,0.7f,0.7f);
+				SoundManager::Play("RoundClearSE", false, 0.7f, 0.7f);
 			}
-			//‚·‚×‚Ä‚Ìƒ‰ƒEƒ“ƒh‚ğƒNƒŠƒA‚µ‚½‚ç
+			//ã™ã¹ã¦ã®ãƒ©ã‚¦ãƒ³ãƒ‰ã‚’ã‚¯ãƒªã‚¢ã—ãŸã‚‰
 			if (roundNum_ >= maxRoundNum_)
 			{
 				clearType_ = ClearType::GameClear;
@@ -120,8 +120,8 @@ void ColosseumSystem::Update()
 					isClear_ = true;
 				}
 			}
-			//‚Ü‚¾Ÿ‚Ìƒ‰ƒEƒ“ƒh‚ª‚ ‚éê‡
-			else 
+			//ã¾ã æ¬¡ã®ãƒ©ã‚¦ãƒ³ãƒ‰ãŒã‚ã‚‹å ´åˆ
+			else
 			{
 				clearType_ = ClearType::NextRound;
 				clearBlankTimer_.AddTime(1);
@@ -147,7 +147,7 @@ void ColosseumSystem::Update()
 			Reset();
 		}
 	}
-	
+
 	readyGoSprite_.Update(isStart_);
 	clearSprite_.Update(gameClearBlankTimer_);
 	blindSprite_->Update();
@@ -171,7 +171,7 @@ void ColosseumSystem::Reset()
 	isStart_ = false;
 	isNext_ = false;
 	isClearCamera_ = false;
-	
+
 	clearBlankTimer_.Reset();
 	clearSprite_.Reset();
 	readyGoSprite_.Reset();
@@ -183,18 +183,18 @@ void ColosseumSystem::ClearUpdate()
 {
 	player_->SetIsCanMove(false);
 	player_->SetIsCanInput(false);
-	//ƒƒjƒ…[‘I‘ğ
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠ
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
 		SoundManager::Play("SelectSE");
 		bool type = (selectType_ == SelectType::Retry);
-		//Œ»İ‘I‘ğ‚µ‚Ä‚¢‚é‚à‚Ì‚ªƒRƒ“ƒeƒBƒjƒ…[‚¾‚Á‚½‚ç
+		//ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹ã‚‚ã®ãŒã‚³ãƒ³ãƒ†ã‚£ãƒ‹ãƒ¥ãƒ¼ã ã£ãŸã‚‰
 		selectType_ = (type) ? SelectType::Title : SelectType::Retry;
 	}
 
 	selectSprite_.Update((int32_t)selectType_);
-	//Œˆ’è
+	//æ±ºå®š
 	if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 		Key::TriggerKey(DIK_SPACE))
 	{
@@ -281,7 +281,7 @@ ReadyGoSprite::ReadyGoSprite()
 	readySprite_ = std::make_unique<Sprite>();
 	goShapeSprite_ = std::make_unique<Sprite>();
 	goSprite_ = std::make_unique<Sprite>();
-	
+
 	for (uint32_t i = 0; i < readyShapeSprite_.size(); i++)
 	{
 		readyShapeSprite_[i] = std::make_unique<Sprite>();
@@ -291,7 +291,7 @@ ReadyGoSprite::ReadyGoSprite()
 		readyShapeSprite_[i]->SetPos({ 0,WinAPI::GetWindowSize().y / 4.0f });
 		readyShapeSprite_[i]->SetRot(Radian(180.f * i));
 	}
-	
+
 	readySprite_->Ini();
 	goSprite_->Ini();
 	goShapeSprite_->Ini();
@@ -321,7 +321,7 @@ void ReadyGoSprite::Update(bool flag)
 	if (flag == false)
 	{
 		readyTimer_.AddTime(1);
-		//ReadyƒXƒvƒ‰ƒCƒg‚Ì“®‚«XV
+		//Readyã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å‹•ãæ›´æ–°
 		ReadySpriteUpdate();
 	}
 	else {
@@ -360,7 +360,7 @@ void ReadyGoSprite::Reset()
 
 void ReadyGoSprite::ReadySpriteUpdate()
 {
-	///Ready‚ÌF‚ÆƒXƒP[ƒ‹•ÏX
+	///Readyã®è‰²ã¨ã‚¹ã‚±ãƒ¼ãƒ«å¤‰æ›´
 	rdyEaseTimer_.AddTime(1);
 	float scale = Easing::Circ::easeOut(4.f, 1.f, rdyEaseTimer_.GetTimeRate());
 	readySprite_->SetScale({ scale ,scale });
@@ -369,7 +369,7 @@ void ReadyGoSprite::ReadySpriteUpdate()
 	readySprite_->SetColor(color);
 
 	float colorLight = readySprite_->GetColor().r;
-	//ReadyƒXƒvƒ‰ƒCƒg“®‚«XV
+	//Readyã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå‹•ãæ›´æ–°
 	if (readySprite_->GetScale().x <= 1)
 	{
 		int32_t limitTime = readyTimer_.GetLimitTimer() - rdyEaseTimer_.GetLimitTimer();
@@ -449,10 +449,10 @@ SelectSprite::SelectSprite()
 		frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		Vector2 framePos = {
 			WinAPI::GetWindowSize().x / 2.f,
-			500.f+ 80.f * i
+			500.f + 80.f * i
 		};
 		frameSprite_[i]->SetPos(framePos);
-		frameSprite_[i]->SetScale(Vector2(0.5f,0.6f));
+		frameSprite_[i]->SetScale(Vector2(0.5f, 0.6f));
 		texSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectTex"));
 		Vector2 texPos = {
 			WinAPI::GetWindowSize().x / 2.f + 10 * i,
@@ -474,7 +474,7 @@ SelectSprite::SelectSprite()
 		texSprite_[i]->SetTex_LeftTop(leftTopPos);
 		texSprite_[i]->SetTex_Size(texSize);
 		texSprite_[i]->SetScale(scale);
-		
+
 		frameSprite_[i]->Update();
 		texSprite_[i]->Update();
 	}

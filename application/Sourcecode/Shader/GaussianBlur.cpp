@@ -5,7 +5,7 @@
 
 void GaussianBlur::PreDraw()
 {
-	//レンダーテクスチャへの描画
+	//繝ｬ繝ｳ繝繝ｼ繝�繧ｯ繧ｹ繝√Ε縺ｸ縺ｮ謠冗判
 	PreDrawScene();
 	SceneManager::Draw();
 	PostDrawScene();
@@ -13,7 +13,7 @@ void GaussianBlur::PreDraw()
 
 void RadialBlur::PreDraw()
 {
-	//レンダーテクスチャへの描画
+	//繝ｬ繝ｳ繝繝ｼ繝�繧ｯ繧ｹ繝√Ε縺ｸ縺ｮ謠冗判
 	PreDrawScene();
 	SceneManager::Draw();
 	PostDrawScene();

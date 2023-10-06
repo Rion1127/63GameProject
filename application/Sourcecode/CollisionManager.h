@@ -9,7 +9,7 @@ private:
 	Stage* stage_;
 	EnemyManager* enemyManager_;
 private:
-	//ƒp[ƒeƒBƒNƒ‹—p
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨
 	Timer wallHitTimer_;
 public:
 	void Update();
@@ -20,25 +20,25 @@ public:
 	void SetFloor(Stage* floor) { stage_ = floor; }
 	void SetEnemys(EnemyManager* enemy) { enemyManager_ = enemy; }
 private:
-	//ƒvƒŒƒCƒ„[‚Æ°
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨åºŠ
 	void PlayerToFloor();
-	//ƒvƒŒƒCƒ„[‚Æ•Ç
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨å£
 	void PlayerToWall();
-	//“G‚Æ°
+	//æ•µã¨åºŠ
 	void EnemyToFloor();
-	//“G‚Æ°
+	//æ•µã¨åºŠ
 	void EnemyToWall();
-	//“GƒƒbƒNƒIƒ“
+	//æ•µãƒ­ãƒƒã‚¯ã‚ªãƒ³
 	void EnemyLockOn();
-	//ƒvƒŒƒCƒ„[‚Æ“G‰Ÿ‚µo‚µ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ•µæŠ¼ã—å‡ºã—
 	void PlayerToEnemy();
-	//ƒvƒŒƒCƒ„[UŒ‚‚Æ“G
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ”»æ’ƒã¨æ•µ
 	void PlayerAttackToEnemy();
-	//“GUŒ‚‚ÆƒvƒŒƒCƒ„[
+	//æ•µæ”»æ’ƒã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	void EnemyAttackToPlayer();
-	//“G’e‚ÆƒvƒŒƒCƒ„[
+	//æ•µå¼¾ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	void EnemyBulletToPlayer();
-	//“G’e‚Æ°
+	//æ•µå¼¾ã¨åºŠ
 	void EnemyBulletToFloor();
 };
 

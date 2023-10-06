@@ -1,7 +1,7 @@
 #include "Attack3.h"
 
 Attack3::Attack3(IActor* selfActor) :
-	IAttack(selfActor,1, 35, 10, 35)
+	IAttack(selfActor, 1, 35, 10, 35)
 {
 }
 
@@ -10,7 +10,7 @@ void Attack3::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
 		frontDist_ = selfActor_->GetWorldTransform()->scale_.x;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
@@ -18,7 +18,7 @@ void Attack3::Init()
 	attackVec_ = frontVec;
 
 	spline_.SetLimitTime(attackInfo_.maxTime - 20);
-	//ƒXƒvƒ‰ƒCƒ“‹ÈüŒvZ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šè¨ˆç®—
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
 
 	std::vector<Vector3>attackVec;
@@ -43,7 +43,7 @@ void Attack3::Init()
 
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 20;
-	//ƒmƒbƒNƒoƒbƒN—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯åŠ›
 	attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
 	attackCol_.at(0)->knockVecY = 0.8f;
 	swordPos_ = attackCol_.at(0)->col_.center;
@@ -51,7 +51,7 @@ void Attack3::Init()
 
 void Attack3::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ğæ“¾
+	//å›è»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	attackVec_ = attackVec_.normalize();
 
 	Vector3 speed = attackVec_ * 0.1f;

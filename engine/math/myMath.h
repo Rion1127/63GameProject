@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <vector>
 #include "Vector2.h"
 #include "Vector3.h"
@@ -29,7 +29,7 @@ struct FLOAT3 {
 	float z;
 
 	FLOAT3();
-	FLOAT3(float x, float y,float z);
+	FLOAT3(float x, float y, float z);
 
 	//単項演算子オーバーロード
 	FLOAT3 operator+() const;
@@ -50,7 +50,7 @@ struct FLOAT3 {
 	FLOAT3& operator-=(const Vector3& v);
 	FLOAT3& operator*=(const Vector3& v);
 	FLOAT3& operator/=(const Vector3& v);
-	
+
 };
 
 struct Matrix4 {
@@ -88,7 +88,7 @@ struct Vector4 {
 	float w; // w成分
 
 	// コンストラクタ
-	Vector4() : x(0), y(0), z(0), w(0){};                                   // 零ベクトルとする
+	Vector4() : x(0), y(0), z(0), w(0) {};                                   // 零ベクトルとする
 	Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}; // x成分, y成分, z成分 を指定しての生成
 };
 
@@ -130,7 +130,7 @@ float Angle(float radian);
 //角度からラジアン
 float Radian(float angle);
 //bool isSinCos : 0,sin 1,cos
-float UpAndDown(float oneRoundTime, float range,float timer,bool isSinCos = 0);
+float UpAndDown(float oneRoundTime, float range, float timer, bool isSinCos = 0);
 
 float Vec2Angle(Vector2 vec);
 

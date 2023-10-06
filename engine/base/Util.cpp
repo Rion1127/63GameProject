@@ -18,33 +18,33 @@ void DisplayWarningInfo(ID3D12Device* device)
 	}
 }
 
-//ƒVƒF[ƒ_[“Ç‚İ‚İ
+//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼èª­ã¿è¾¼ã¿
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
 	ID3DBlob** blob, ID3DBlob* errorBlob)
 {
 	HRESULT result;
 
-	// ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+	// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 	result = D3DCompileFromFile(
-		fileName, // ƒVƒF[ƒ_ƒtƒ@ƒCƒ‹–¼
+		fileName, // ã‚·ã‚§ãƒ¼ãƒ€ãƒ•ã‚¡ã‚¤ãƒ«å
 		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // ƒCƒ“ƒNƒ‹[ƒh‰Â”\‚É‚·‚é
-		entryPoint, target, // ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg–¼AƒVƒF[ƒ_[ƒ‚ƒfƒ‹w’è
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ƒfƒoƒbƒO—pİ’è
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰å¯èƒ½ã«ã™ã‚‹
+		entryPoint, target, // ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆåã€ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ¢ãƒ‡ãƒ«æŒ‡å®š
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ãƒ‡ãƒãƒƒã‚°ç”¨è¨­å®š
 		0,
 		blob, &errorBlob);
 
-	// ƒGƒ‰[‚È‚ç
+	// ã‚¨ãƒ©ãƒ¼ãªã‚‰
 	if (FAILED(result)) {
-		// errorBlob‚©‚çƒGƒ‰[“à—e‚ğstringŒ^‚ÉƒRƒs[
+		// errorBlobã‹ã‚‰ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’stringå‹ã«ã‚³ãƒ”ãƒ¼
 		std::string error;
 		error.resize(errorBlob->GetBufferSize());
 		std::copy_n((char*)errorBlob->GetBufferPointer(),
 			errorBlob->GetBufferSize(),
 			error.begin());
 		error += "\n";
-		// ƒGƒ‰[“à—e‚ğo—ÍƒEƒBƒ“ƒhƒE‚É•\¦
+		// ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
 		OutputDebugStringA(error.c_str());
 		assert(0);
 	}
@@ -58,13 +58,13 @@ std::wstring GetDirectoryPath(const std::wstring& origin)
 	fs::path p = origin.c_str();
 	return p.remove_filename().c_str();
 }
-//Šg’£q‚ğ“ü‚ê‘Ö‚¦‚é (const char* ext)‚Íu.v‚ğ‚Ê‚¢‚½Šg’£q‚ğ“ü—Í
+//æ‹¡å¼µå­ã‚’å…¥ã‚Œæ›¿ãˆã‚‹ (const char* ext)ã¯ã€Œ.ã€ã‚’ã¬ã„ãŸæ‹¡å¼µå­ã‚’å…¥åŠ›
 std::wstring ReplaceExtension(const std::wstring& origin, const char* ext)
 {
 	fs::path p = origin.c_str();
 	return p.replace_extension(ext).c_str();
 }
-//wstring‚ğstd::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚É•ÏŠ·
+//wstringã‚’std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã«å¤‰æ›
 std::string ToUTF8(const std::wstring& value)
 {
 	auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
@@ -76,7 +76,7 @@ std::string ToUTF8(const std::wstring& value)
 
 	return result;
 }
-// std::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚©‚çstd::wstring(ƒƒCƒh•¶š—ñ)‚ğ“¾‚é
+// std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã‹ã‚‰std::wstring(ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—)ã‚’å¾—ã‚‹
 std::wstring ToWideString(const std::string& str)
 {
 	auto num1 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, nullptr, 0);
@@ -89,27 +89,27 @@ std::wstring ToWideString(const std::string& str)
 	assert(num1 == num2);
 	return wstr;
 }
-// std::wstring(ƒƒCƒh•¶š—ñ)‚©‚çstd::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚ğ“¾‚é
+// std::wstring(ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—)ã‹ã‚‰std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã‚’å¾—ã‚‹
 std::string WStringToString(std::wstring oWString)
 {
-	// wstring ¨ SJIS
+	// wstring â†’ SJIS
 	uint32_t iBufferSize = WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str()
 		, -1, (char*)NULL, 0, NULL, NULL);
 
-	// ƒoƒbƒtƒ@‚Ìæ“¾
+	// ãƒãƒƒãƒ•ã‚¡ã®å–å¾—
 	std::vector<CHAR> cpMultiByte;
 	cpMultiByte.resize(iBufferSize);
-	// wstring ¨ SJIS
+	// wstring â†’ SJIS
 	WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str(), -1, cpMultiByte.data()
 		, iBufferSize, NULL, NULL);
 
-	// string‚Ì¶¬
+	// stringã®ç”Ÿæˆ
 	std::string oRet(cpMultiByte.data(), cpMultiByte.data() + iBufferSize - 1);
 
-	// ƒoƒbƒtƒ@‚Ì”jŠü
+	// ãƒãƒƒãƒ•ã‚¡ã®ç ´æ£„
 
 
-	// •ÏŠ·Œ‹‰Ê‚ğ•Ô‚·
+	// å¤‰æ›çµæœã‚’è¿”ã™
 	return(oRet);
 }
 
@@ -144,15 +144,15 @@ Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera)
 {
 	Vector2 result;
 
-	Vector4 pos(0,0,0,1);
+	Vector4 pos(0, 0, 0, 1);
 	Vector2 winSize = WinAPI::GetInstance()->GetWindowSize();
 	Matrix4 viewPort = {
 		winSize.x / 2.f,	           0,0,0,
-		              0,-winSize.y / 2.f,0,0,
-		              0,               0,1,0,
+					  0,-winSize.y / 2.f,0,0,
+					  0,               0,1,0,
 		winSize.x / 2.f, winSize.y / 2.f,0,1,
 	};
-	//‚RŸŒ³¨‚QŸŒ³‚Ì•ÏŠ·
+	//ï¼“æ¬¡å…ƒâ†’ï¼’æ¬¡å…ƒã®å¤‰æ›
 	pos = Vec4MulMat4(pos, WT.matWorld_);
 	pos = Vec4MulMat4(pos, camera.matView_);
 	pos = Vec4MulMat4(pos, camera.matProjection_);

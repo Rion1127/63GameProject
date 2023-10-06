@@ -14,7 +14,7 @@ private:
 		Floor,
 	};
 private:
-	std::unordered_map<std::string,std::unique_ptr<Object3d>> stageObj_;
+	std::unordered_map<std::string, std::unique_ptr<Object3d>> stageObj_;
 
 	std::array<std::unique_ptr<Plane>, 4> walls_;
 	std::unique_ptr<Plane> floor_;

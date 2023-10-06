@@ -49,11 +49,11 @@ void IAttack::DrawCol()
 
 Vector3 IAttack::CalculateFrontVec()
 {
-	Vector3 frontVec ={0,0,0};
+	Vector3 frontVec = { 0,0,0 };
 	if (IAttack::lockOnActor_ != nullptr)
 	{
 		Vector3& lockOnPos = IAttack::lockOnActor_->GetWorldTransform()->position_;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚Ö‚ÌƒxƒNƒgƒ‹‚ð‚Æ‚é
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã¨ã‚‹
 		frontVec = {
 			lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
 			0,

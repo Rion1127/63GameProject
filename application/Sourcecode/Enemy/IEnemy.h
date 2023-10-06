@@ -8,7 +8,7 @@
 #include "IBullet.h"
 
 enum class EnemyType {
-	Ground,	
+	Ground,
 	Air
 };
 
@@ -21,24 +21,24 @@ protected:
 
 	std::string name_;
 	EnemyType enemyType_;
-	//ƒ‚ƒfƒ‹
+	//ãƒ¢ãƒ‡ãƒ«
 
 	bool isSoftLockOn_;
 	bool isHardLockOn_;
-	bool isGravityImpact_;	//d—Í‚ğ—LŒø‚É‚·‚é
+	bool isGravityImpact_;	//é‡åŠ›ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	bool isDead_;
 	bool isKnock_;
 	bool isBulletShot_;
 
 	Vector3 EtoPVec_;
 
-	//‘Ì—Í
+	//ä½“åŠ›
 	int32_t health_;
 	int32_t maxHealth_;
 
 	std::unique_ptr<IAttack> attack_;
 public:
-	IEnemy(EnemyType type,bool isGravityImpact, int32_t health);
+	IEnemy(EnemyType type, bool isGravityImpact, int32_t health);
 	virtual ~IEnemy() {};
 	static void SetPlayer(Player* player) { splayer_ = player; }
 	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
@@ -50,7 +50,7 @@ public:
 	virtual void Draw();
 	void FloorColision(Vector3 pos);
 	void ColPosUpdate();
-	void Damage(Vector3 knockVec, int32_t damageValue,int32_t cooltime);
+	void Damage(Vector3 knockVec, int32_t damageValue, int32_t cooltime);
 
 	virtual void SetIsNock(bool flag) = 0;
 	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;
@@ -60,7 +60,7 @@ public:
 	bool GetIsSoftLockOn() { return isSoftLockOn_; }
 	bool GetIsHardLockOn() { return isHardLockOn_; }
 	bool GetIsDead() { return isDead_; }
-	bool GetIsBulletShot() {return isBulletShot_;}
+	bool GetIsBulletShot() { return isBulletShot_; }
 	Timer GetDamageCoolTime() { return damageCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }
 	int32_t GetHealth() { return health_; }
@@ -69,7 +69,7 @@ public:
 	std::string GetName() { return name_; }
 protected:
 	virtual void MoveUpdate() = 0;
-	
+
 	void UpdateEtoPVec();
 };
 

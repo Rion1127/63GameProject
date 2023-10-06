@@ -4,18 +4,18 @@
 class ImGuiManager
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	WinAPI* winApi_ = nullptr;
 	RDirectX* directX_ = nullptr;
 
-	//SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> srvHeap_;
 public:
 	static ImGuiManager* Getinstance();
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	
+
 	void Finalize();
 
 	void Begin();

@@ -26,7 +26,7 @@ void MagicFire::Init()
 	attackCol_->col_.center = colPos;
 	attackCol_->col_.radius = 0.6f;
 	attackCol_->damage = 10;
-	//�m�b�N�o�b�N��
+	//ノックバック力
 	attackCol_->knockPower = { 0.1f,0.3f,0.1f };
 	attackCol_->knockVecY = 0.5f;
 
@@ -35,7 +35,7 @@ void MagicFire::Init()
 	if (IBullet::lockOnActor_ != nullptr) {
 		Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
 		lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;
-		//���b�N�I�����Ă���G�ւ̃x�N�g�����Ƃ�
+		//ロックオンしている敵へのベクトルをとる
 		Vector3 frontVec = lockOnPos - selfActor_->GetWorldTransform()->position_;
 		frontVec.y = 0;
 		frontVec = frontVec.normalize();
@@ -74,13 +74,13 @@ void MagicFire::MoveUpdate()
 	}
 	if (IBullet::lockOnActor_ != nullptr) {
 		CalculateRotToLockOnActor(CalculateFrontVec());
-		//��]��񂩂�v���C���[�ւ̃x�N�g�����擾
+		//回転情報からプレイヤーへのベクトルを取得
 		Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
 		lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;
 		Vector3 frontVec = lockOnPos - attackCol_->col_.center;
 		frontVec.y = 0;
 		frontVec = frontVec.normalize();
-		//�����Ă����x�N�g�������X�Ƀv���C���[�̕����ɕς��Ă���
+		//足していくベクトルを徐々にプレイヤーの方向に変えていく
 		MoveTo(frontVec, 0.015f, attackVec_);
 	}
 

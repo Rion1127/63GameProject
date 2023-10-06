@@ -14,13 +14,13 @@ class Vertices
 public:
 	const static int MAX_BONES_VERTICES = 4;
 	struct VertexPosNormalUv {
-		Vector3 pos;		//xyzÀ•W
-		Vector3 normal;	//–@üƒxƒNƒgƒ‹
-		Vector2 uv;		//uvÀ•W
+		Vector3 pos;		//xyzåº§æ¨™
+		Vector3 normal;	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+		Vector2 uv;		//uvåº§æ¨™
 		std::array<uint32_t, MAX_BONES_VERTICES> m_BoneIDs;
 		std::array<float, MAX_BONES_VERTICES> m_Weights;
 	};
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	void Ini(ID3D12Device* device);
@@ -50,21 +50,21 @@ public:
 		WorldTransform* worldTransform,
 		UINT descriptorSize);
 private:
-	
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì¶¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> indexBuff_ = nullptr;
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_INDEX_BUFFER_VIEW ibView_{};
 
 public:
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	std::vector<VertexPosNormalUv> vertices_;
-	// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
-	//’¸“_ƒCƒ“ƒfƒbƒNƒX
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	std::vector<uint16_t> indices_;
 
 	std::string materialName_;

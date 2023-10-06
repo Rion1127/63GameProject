@@ -19,7 +19,7 @@ private:
 	Object3d* playerObj_;
 	SwordState state_;
 	Vector3 localPos_;
-	//Idle���ɂӂ�ӂ핂���悤�ɂ���^�C�}�[
+	//Idle注にふわふわ浮くようにするタイマー
 	TimerFloat floatingTimer_;
 
 	Vector3 goalPos_;

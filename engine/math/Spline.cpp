@@ -22,13 +22,13 @@ void Spline::SplineUpdate(float speedRate)
 	float t = timer_.GetTimeRate();
 
 	if (t >= 1.0f) {
-		//Ÿ‚Ì§Œä“_‚ª‚ ‚éê‡
+		//æ¬¡ã®åˆ¶å¾¡ç‚¹ãŒã‚ã‚‹å ´åˆ
 		if (index_ < splinePos_.size() - 2) {
 			index_++;
 			timer_.Reset();
 			t = timer_.GetTimeRate();
 		}
-		//ÅI’n“_‚¾‚Á‚½ê‡1.0f‚É‚µ‚Ä“®‚«‚ğ~‚ß‚é
+		//æœ€çµ‚åœ°ç‚¹ã ã£ãŸå ´åˆ1.0fã«ã—ã¦å‹•ãã‚’æ­¢ã‚ã‚‹
 		else {
 			isEnd_ = true;
 		}
@@ -58,7 +58,7 @@ void Spline::Reset()
 
 void Spline::AddPosition(const Vector3& pos, PosState state)
 {
-	//ƒXƒvƒ‰ƒCƒ“‹Èü‚Ì‚Í‚¶‚ß‚ÆI‚í‚è‚¾‚Á‚½‚ç2‰ñ‘}“ü‚·‚é
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šã®ã¯ã˜ã‚ã¨çµ‚ã‚ã‚Šã ã£ãŸã‚‰2å›æŒ¿å…¥ã™ã‚‹
 	if (state == PosState::Start ||
 		state == PosState::End) {
 		splinePos_.push_back(pos);
@@ -72,13 +72,13 @@ void Spline::AddPosition(const Vector3& pos, PosState state)
 
 const Vector3 Spline::SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t)
 {
-	////•âŠ®‚·‚×‚«“_‚Ì”
+	////è£œå®Œã™ã¹ãç‚¹ã®æ•°
 	size_t n = point.size() - 2;
 
-	if (startIndex > n)return point[n];//Pn‚Ì’l‚ğ•Ô‚·
-	if (startIndex < 1)return point[1];//P1‚Ì’l‚ğ•Ô‚·
+	if (startIndex > n)return point[n];//Pnã®å€¤ã‚’è¿”ã™
+	if (startIndex < 1)return point[1];//P1ã®å€¤ã‚’è¿”ã™
 
-	//p0~p3‚Ì§Œä“_‚ğæ“¾‚·‚é@¦p1~p2‚ğ•âŠ®‚·‚é
+	//p0~p3ã®åˆ¶å¾¡ç‚¹ã‚’å–å¾—ã™ã‚‹ã€€â€»p1~p2ã‚’è£œå®Œã™ã‚‹
 	Vector3 p0 = point[startIndex];
 	Vector3 p1 = point[startIndex + 1];
 	Vector3 p2;
@@ -105,7 +105,7 @@ const Vector3 Spline::SplinePosition(const std::vector<Vector3>& point, uint32_t
 	return position;
 }
 
-// n“_/I“_‚ÌÀ•W‚Æ ƒxƒNƒgƒ‹‚©‚çA‹Èü‚Ì‹O“¹ã‚ÌÀ•W‚ğ•Ô‚·
+// å§‹ç‚¹/çµ‚ç‚¹ã®åº§æ¨™ã¨ ãƒ™ã‚¯ãƒˆãƒ«ã‹ã‚‰ã€æ›²ç·šã®è»Œé“ä¸Šã®åº§æ¨™ã‚’è¿”ã™
 Vector3 Spline::GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t)
 {
 	Vector3 c0 = 2.0f * p0 + -2.0f * p1 + v0 + v1;

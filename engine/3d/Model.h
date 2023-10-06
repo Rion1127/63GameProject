@@ -18,25 +18,25 @@
 class Model
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	struct VertexPosNormalUv {
-		Vector3 pos;		//xyzÀ•W
-		Vector3 normal;	//–@üƒxƒNƒgƒ‹
-		Vector2 uv;		//uvÀ•W
+		Vector3 pos;		//xyzåº§æ¨™
+		Vector3 normal;	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+		Vector2 uv;		//uvåº§æ¨™
 	};
 
-	// –¼‘O
+	// åå‰
 	std::string name_;
 
-	//’¸“_–@üƒXƒ€[ƒWƒ“ƒO—pƒf[ƒ^
+	//é ‚ç‚¹æ³•ç·šã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ãƒ‡ãƒ¼ã‚¿
 	bool smoothing_ = false;
 	std::vector<std::unordered_map<unsigned short, std::vector<unsigned short>>> smoothData_;
 public:
 	std::vector<std::unique_ptr<Vertices>> vert_;
-	// ƒ}ƒeƒŠƒAƒ‹ƒRƒ“ƒeƒi
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚³ãƒ³ãƒ†ãƒŠ
 	std::map<std::string, std::unique_ptr<Material>> materials_;
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	static std::shared_ptr<LightGroup> lightGroup_;
 public:
 	Model() {};
@@ -44,27 +44,27 @@ public:
 
 	static Model* GetInstance();
 
-	//ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
+	//ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 	static Model* CreateOBJ(const std::string& modelname, bool smoothing = false);
-	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false);	
+	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false);
 
 	void SetModel(const Model* model);
 
 	static void SetLight(std::shared_ptr<LightGroup> lightGroup) { Model::lightGroup_ = lightGroup; }
 private:
-	//ƒ‚ƒfƒ‹‰Šú‰»(CreateOBJ()‚É“ü‚Á‚Ä‚¢‚é)
+	//ãƒ¢ãƒ‡ãƒ«åˆæœŸåŒ–(CreateOBJ()ã«å…¥ã£ã¦ã„ã‚‹)
 	void ModelIni(const std::string& modelname, bool smoothing);
-	//.OBJ‚©‚çî•ñ‚ğ“Ç‚İ‚Ş(ModelIni()‚É“ü‚Á‚Ä‚¢‚é)
+	//.OBJã‹ã‚‰æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€(ModelIni()ã«å…¥ã£ã¦ã„ã‚‹)
 	void LoadOBJ(const std::string& modelname);
-	//.mtl‚©‚çƒeƒNƒXƒ`ƒƒ‚ğ“Ç‚İ‚Ş
+	//.mtlã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚€
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
 	void LoadTexture();
 
 	void AddMaterial(Material* material);
 
-	void AddSmoothData(unsigned short indexPositon, unsigned short indexVertex,uint32_t dataindex);
-	//•½ŠŠ‰»‚³‚ê‚½’¸“_–@ü‚ÌŒvZ
+	void AddSmoothData(unsigned short indexPositon, unsigned short indexVertex, uint32_t dataindex);
+	//å¹³æ»‘åŒ–ã•ã‚ŒãŸé ‚ç‚¹æ³•ç·šã®è¨ˆç®—
 	void CalculateSmoothedVertexNormals();
 public:
 	void DrawOBJ(const WorldTransform& worldTransform);

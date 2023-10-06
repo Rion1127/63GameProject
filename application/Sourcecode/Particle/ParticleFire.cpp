@@ -3,7 +3,7 @@
 #include "Easing.h"
 #include "Util.h"
 
-#pragma region ‰ŠƒGƒtƒFƒNƒg
+#pragma region ç‚ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 ParticleFire::ParticleFire() :
 	IParticle("Fire"),
 	vertexCount(192)
@@ -19,15 +19,15 @@ void ParticleFire::Add()
 	//transform_.position_ = pos;
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		fireParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = fireParticles_.back();
 
@@ -81,7 +81,7 @@ void ParticleFire::MoveUpdate()
 		if (f < 0.5f)p.color.a = f * 355.f;
 		else p.color.a = (1 - f) * 355.f;
 
-		p.scale -=0.01f;
+		p.scale -= 0.01f;
 		p.scale = Max(0.f, p.scale);
 
 		p.rot.z += p.addRot.z;
@@ -92,7 +92,7 @@ void ParticleFire::MoveUpdate()
 }
 #pragma endregion
 
-#pragma region ‰Š‰~ƒGƒtƒFƒNƒg
+#pragma region ç‚å††ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 ParticleFireCircle::ParticleFireCircle() :
 	IParticle("Fire"),
 	vertexCount(2)
@@ -108,15 +108,15 @@ void ParticleFireCircle::Add()
 	parentPos_ = emitter_->parentPos;
 	for (int i = 0; i < emitter_->addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å’¸“_”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§é ‚ç‚¹æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= vertexCount)
 		{
 			return;
 		}
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
 		fireCircleParticles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		auto& baseP = particles_.back();
 		auto& p = fireCircleParticles_.back();
 
@@ -161,7 +161,7 @@ void ParticleFireCircle::MoveUpdate()
 
 		f *= 3.f;
 		f = Min(f, 1.f);
-		p.scale = Easing::Circ::easeOut(0.f, p.baseScale,f);
+		p.scale = Easing::Circ::easeOut(0.f, p.baseScale, f);
 
 		p.rot.x = Radian(90);
 		p.rot.y += p.addRot.y;

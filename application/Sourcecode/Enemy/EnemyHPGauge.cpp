@@ -49,7 +49,7 @@ void EnemyHPGauge::Update()
 	{
 		float scaleRate = (float)lockOnEnemy_->GetHealth() / lockOnEnemy_->GetMaxHealth();
 
-		hpBar_->SetScale({ scaleRate,hpBar_->GetScale().y});
+		hpBar_->SetScale({ scaleRate,hpBar_->GetScale().y });
 
 		Color color = hpBarMiddle_->GetColor();
 		color.a -= 1.5f;

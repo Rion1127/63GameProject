@@ -10,14 +10,14 @@ struct aiMaterial;
 struct aiNode;
 
 struct Mesh {
-	Vertices Vertices; // ’¸“_ƒf[ƒ^‚Ì”z—ñ
-	std::wstring diffuseMap; // ƒeƒNƒXƒ`ƒƒ‚Ìƒtƒ@ƒCƒ‹ƒpƒX
+	Vertices Vertices; // é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—
+	std::wstring diffuseMap; // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
 };
 
 class AssimpLoader
 {
 public:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	static AssimpLoader* GetInstance();
@@ -26,10 +26,10 @@ public:
 	static Matrix4 ConvertAiMatrixToMatrix(const aiMatrix4x4 aimat);
 private:
 	void LoadVertices(Vertices* vert, const aiMesh* aimesh);
-	void LoadMaterial(std::string fileName,Material* material, const aiMaterial* aimaterial);
+	void LoadMaterial(std::string fileName, Material* material, const aiMaterial* aimaterial);
 	void LoadSkin(AssimpModel* model, const aiMesh* aimesh);
 	void LoadNode(AssimpModel* model, Node* parent, const aiNode* node);
-	AssimpLoader(){};
+	AssimpLoader() {};
 private:
 };
 

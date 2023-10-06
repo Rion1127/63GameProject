@@ -9,101 +9,101 @@
 class LightGroup
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	static const uint32_t sDirLightNum = 3;
 	static const uint32_t sPointLightNum = 3;
 	static const uint32_t sSpotLightNum = 3;
 	static const uint32_t sCircleShadowNum = 1;
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData {
-		//ŠÂ‹«Œõ‚ÌF
+		//ç’°å¢ƒå…‰ã®è‰²
 		Vector3 ambientColor;
 		float pad1;
-		//•½sŒõŒ¹—p
+		//å¹³è¡Œå…‰æºç”¨
 		DirectionalLight::ConstBufferData dirLights[sDirLightNum];
-		//“_ŒõŒ¹—p
+		//ç‚¹å…‰æºç”¨
 		PointLight::ConstBufferData pointLights_[sPointLightNum];
-		//“_ŒõŒ¹—p
+		//ç‚¹å…‰æºç”¨
 		SpotLight::ConstBufferData spotLights[sSpotLightNum];
-		//ŠÛ‰e
+		//ä¸¸å½±
 		CircleShadow::ConstBufferData circleShadows[sCircleShadowNum];
 	};
 
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff_;
-	//ŠÂ‹«Œõ‚ÌF
+	//ç’°å¢ƒå…‰ã®è‰²
 	Vector3 ambientColor_ = { 1,1,1 };
-	//•½sŒõŒ¹‚Ì”z—ñ
+	//å¹³è¡Œå…‰æºã®é…åˆ—
 	DirectionalLight dirLights_[sDirLightNum];
-	//“_ŒõŒ¹‚Ì”z—ñ
+	//ç‚¹å…‰æºã®é…åˆ—
 	PointLight pointLights_[sPointLightNum];
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 	SpotLight spotLights_[sSpotLightNum];
-	//ŠÛ‰e
+	//ä¸¸å½±
 	CircleShadow circleShadows_[sCircleShadowNum];
 
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool dirty_ = false;
 public:
 	static void StaticInit();
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	static LightGroup* Create();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//’è”ƒoƒbƒtƒ@“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 	void TransferConstBuffer();
 
 	void SetAmbientColor(const Vector3& color);
-#pragma region •½sŒõŒ¹
+#pragma region å¹³è¡Œå…‰æº
 	/// <summary>
-	/// •½sŒõŒ¹‚Ì—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	/// å¹³è¡Œå…‰æºã®æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="acrive">—LŒøƒtƒ‰ƒO</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="acrive">æœ‰åŠ¹ãƒ•ãƒ©ã‚°</param>
 	void SetDirLightActive(uint32_t index, bool active);
 	/// <summary>
-	/// •½sŒõŒ¹‚Ìƒ‰ƒCƒg•ûŒü‚ğƒZƒbƒg
+	/// å¹³è¡Œå…‰æºã®ãƒ©ã‚¤ãƒˆæ–¹å‘ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="lightdir">ƒ‰ƒCƒg•ûŒü</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="lightdir">ãƒ©ã‚¤ãƒˆæ–¹å‘</param>
 	void SetDirLightDir(uint32_t index, const Vector3& lightdir);
 	/// <summary>
-	/// •½sŒõŒ¹‚ÌƒJƒ‰[‚ğƒZƒbƒg
+	/// å¹³è¡Œå…‰æºã®ã‚«ãƒ©ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="lightdir">ƒ‰ƒCƒgF</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="lightdir">ãƒ©ã‚¤ãƒˆè‰²</param>
 	void SetDirLightColor(uint32_t index, const Vector3& lightColor);
 #pragma endregion
-#pragma region “_ŒõŒ¹
+#pragma region ç‚¹å…‰æº
 	/// <summary>
-	/// “_ŒõŒ¹‚Ì—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	/// ç‚¹å…‰æºã®æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="acrive">—LŒøƒtƒ‰ƒO</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="acrive">æœ‰åŠ¹ãƒ•ãƒ©ã‚°</param>
 	void SetPointLightActive(uint32_t index, bool active);
 	/// <summary>
-	/// “_ŒõŒ¹‚ÌÀ•W‚ğƒZƒbƒg
+	/// ç‚¹å…‰æºã®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="lightdir">ƒ‰ƒCƒg•ûŒü</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="lightdir">ãƒ©ã‚¤ãƒˆæ–¹å‘</param>
 	void SetPointLightPos(uint32_t index, const Vector3& lightPos);
 	/// <summary>
-	/// “_ŒõŒ¹‚ÌƒJƒ‰[‚ğƒZƒbƒg
+	/// ç‚¹å…‰æºã®ã‚«ãƒ©ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="lightdir">ƒ‰ƒCƒgF</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="lightdir">ãƒ©ã‚¤ãƒˆè‰²</param>
 	void SetPointLightColor(uint32_t index, const Vector3& lightColor);
 	/// <summary>
-	/// “_ŒõŒ¹‚Ì‹——£Œ¸Š‚ğƒZƒbƒg
+	/// ç‚¹å…‰æºã®è·é›¢æ¸›è¡°ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="index">ƒ‰ƒCƒg”Ô†</param>
-	/// <param name="lightdir">ƒ‰ƒCƒgF</param>
+	/// <param name="index">ãƒ©ã‚¤ãƒˆç•ªå·</param>
+	/// <param name="lightdir">ãƒ©ã‚¤ãƒˆè‰²</param>
 	void SetPointLightAtten(uint32_t index, const Vector3& lightAtten);
 #pragma endregion
-#pragma region ƒXƒ|ƒbƒgƒ‰ƒCƒg
+#pragma region ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 	void SetSpotLightActive(uint32_t index, bool active);
 	void SetSpotLightDir(uint32_t index, const Vector3& lightdir);
 	void SetSpotLightPos(uint32_t index, const Vector3& lightPos);
@@ -111,7 +111,7 @@ public:
 	void SetSpotLightAtten(uint32_t index, const Vector3& lightAtten);
 	void SetSpotLightFactorAngle(uint32_t index, const Vector2& lightFactorAngle);
 #pragma endregion
-#pragma region ŠÛ‰e
+#pragma region ä¸¸å½±
 	void SetCircleShadowActive(uint32_t index, bool active);
 	void SetCircleShadowCasterPos(uint32_t index, const Vector3& casterPos);
 	void SetCircleShadowDir(uint32_t index, const Vector3& lightdir);
@@ -120,11 +120,11 @@ public:
 	void SetCircleShadowFactorAngle(uint32_t index, const Vector2& lightFactorAngle);
 #pragma endregion
 	/// <summary>
-	/// •W€‚Ìƒ‰ƒCƒgİ’è
+	/// æ¨™æº–ã®ãƒ©ã‚¤ãƒˆè¨­å®š
 	/// </summary>
 	void DefaultLightSetting();
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 

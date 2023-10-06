@@ -10,10 +10,10 @@ private:
 	Camera camera_;
 
 	Vector3 dist_{};
-	Vector3 moveDist_{};	//‹…–ÊÀ•W
-	Vector3 cameraTrans_{};//•½sˆÚ“®À•W
+	Vector3 moveDist_{};	//çƒé¢åº§æ¨™
+	Vector3 cameraTrans_{};//å¹³è¡Œç§»å‹•åº§æ¨™
 
-	//³–ÊE‰¡EãƒxƒNƒgƒ‹
+	//æ­£é¢ãƒ»æ¨ªãƒ»ä¸Šãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 frontVec_{};
 	Vector3 sideVec_{};
 	Vector3 upVec_{};

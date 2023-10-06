@@ -21,16 +21,16 @@ Player::Player() :
 
 	gravity_.SetAddValue({ 0,-0.01f,0 });
 
-	// “ü—Í‚³‚ê‚Ä‚¢‚é•ûŒü‚ÌŠp“x
+	// å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹æ–¹å‘ã®è§’åº¦
 	inputAngle_ = 0.0f;
 
-	//ˆÚ“®‘¬“x
+	//ç§»å‹•é€Ÿåº¦
 	moveSpeed_ = 0.2f;
 	walklimitValue_ = 0.7f;
 
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
-	//’…’nd’¼ŠÔ
+	//ç€åœ°ç¡¬ç›´æ™‚é–“
 	freezeTimer_.SetLimitTime(7);
 
 	col_.radius = obj_->GetTransform()->scale_.x;
@@ -65,10 +65,10 @@ Player::Player() :
 void Player::PreUpdate()
 {
 	addVec_ = { 0,0,0 };
-	//ƒvƒŒƒCƒ„[‚Ìó‘ÔXV
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹æ›´æ–°
 	StateUpdate();
 
-	////d—Í
+	////é‡åŠ›
 	GravityUpdate();
 
 	ColPosUpdate();
@@ -94,8 +94,8 @@ void Player::PostUpdate()
 {
 	sword_.Update();
 
-	//“–‚½‚è”»’è‚Ågravity‚Ì’l‚ğ•Ï‰»‚³‚¹‚Ä‚©‚ç
-	//PostUpdate‚ÅaddVec_‚É‘ã“ü‚µ‚Ä‚¢‚é
+	//å½“ãŸã‚Šåˆ¤å®šã§gravityã®å€¤ã‚’å¤‰åŒ–ã•ã›ã¦ã‹ã‚‰
+	//PostUpdateã§addVec_ã«ä»£å…¥ã—ã¦ã„ã‚‹
 	ObjUpdate();
 	if (command_.GetLockOnEnemy() != nullptr)
 	{
@@ -121,7 +121,7 @@ void Player::GravityUpdate()
 }
 void Player::ColPosUpdate()
 {
-	//ƒ‚ƒfƒ‹‚ÌŒ´“_‚ğ‰º‚É‚µ‚Ä‚¢‚é‚½‚ß‚»‚Ì•ª‚¸‚ç‚·
+	//ãƒ¢ãƒ‡ãƒ«ã®åŸç‚¹ã‚’ä¸‹ã«ã—ã¦ã„ã‚‹ãŸã‚ãã®åˆ†ãšã‚‰ã™
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
 		obj_->GetTransform()->position_.y + obj_->WT_.scale_.y,
@@ -133,7 +133,7 @@ void Player::ColPosUpdate()
 }
 void Player::InitStateMachine()
 {
-	//// ó‘Ô‚ğ’Ç‰Á‚µ‚Ä‚¢‚­B
+	//// çŠ¶æ…‹ã‚’è¿½åŠ ã—ã¦ã„ãã€‚
 	AddState(std::make_shared<PlayerIdle>(this));
 	AddState(std::make_shared<PlayerMove>(this));
 	AddState(std::make_shared<PlayerDogeRoll>(this));
@@ -145,7 +145,7 @@ void Player::InitStateMachine()
 	AddState(std::make_shared<PlayerAirAttack>(this));
 	AddState(std::make_shared<PlayerMagic>(this));
 }
-#pragma region “ü—Í
+#pragma region input
 void Player::InputVecUpdate()
 {
 	if (GetIsCanMove() && isCanInput_)
@@ -156,7 +156,7 @@ void Player::InputVecUpdate()
 		Vector3 upVec = { 0,1,0 };
 		inputVec_ = { 0,0 };
 
-		//ƒvƒŒƒCƒ„[‚Ì³–ÊƒxƒNƒgƒ‹
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«
 		frontVec_ =
 			Camera::scurrent_->target_ - Camera::scurrent_->eye_;
 		frontVec_.y = 0;
@@ -165,14 +165,14 @@ void Player::InputVecUpdate()
 		sideVec = upVec.cross(frontVec_);
 		sideVec = sideVec.normalize();
 
-		// ƒRƒ“ƒgƒ[ƒ‰[‚ªÚ‘±‚³‚ê‚Ä‚¢‚½‚ç
+		// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ãŒæ¥ç¶šã•ã‚Œã¦ã„ãŸã‚‰
 		if (Controller::GetActive())
 		{
 			float inputlength = 0;
-			// ¶ƒXƒeƒBƒbƒN‚Ì“ü—Í•ûŒüƒxƒNƒgƒ‹æ“¾
+			// å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«å–å¾—
 			inputVec_ = Controller::GetLStick() / 32768.f;
 			inputlength = inputVec_.length();
-			//ƒXƒeƒBƒbƒN‚ÌŒX‚«‚ª¬‚³‚¯‚ê‚Î•à‚­
+			//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ããŒå°ã•ã‘ã‚Œã°æ­©ã
 			if (inputlength <= walklimitValue_) {
 				inputVec_ = inputVec_.normalize() * 0.5f;
 			}
@@ -187,17 +187,17 @@ void Player::InputVecUpdate()
 				(float)Key::PushKey(DIK_W) - Key::PushKey(DIK_S)
 			};
 		}
-		//ƒJƒƒ‰‚©‚çŒ©‚½¶‰Eè‘O‰œˆÚ“®
+		//ã‚«ãƒ¡ãƒ©ã‹ã‚‰è¦‹ãŸå·¦å³æ‰‹å‰å¥¥ç§»å‹•
 		moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
 		moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
 		moveVec_ *= moveSpeed_;
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
 
-		// “ü—Í‚µ‚Ä‚¢‚éƒxƒNƒgƒ‹‚ÌŠp“x‚ğ‹‚ß‚é
+		// å…¥åŠ›ã—ã¦ã„ã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã®è§’åº¦ã‚’æ±‚ã‚ã‚‹
 		float inputAngle = Vec2Angle(moveVec_);
 
-		// ŒvZŒ‹‰Ê‚ªƒI[ƒo[ƒtƒ[‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç’l‚ğXV
+		// è¨ˆç®—çµæœãŒã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã—ã¦ã„ãªã‹ã£ãŸã‚‰å€¤ã‚’æ›´æ–°
 		if (inputAngle >= 0)
 		{
 			
@@ -212,7 +212,7 @@ void Player::InputVecUpdate()
 
 			float dist1 = 360.f - goalinputAngle_;
 			float dist2 = goalinputAngle_;
-			//ƒvƒŒƒCƒ„[‚ª180“x‚æ‚è‚à‘å‚«‚¢Šp“x‚ğŒü‚¢‚Ä‚¢‚½
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ180åº¦ã‚ˆã‚Šã‚‚å¤§ãã„è§’åº¦ã‚’å‘ã„ã¦ã„ãŸæ™‚
 			/*if (dist1 < dist2)
 			{*/
 				inputAngle_ += 180.f;
@@ -264,7 +264,7 @@ void Player::StateUpdate()
 
 void Player::MPCharge()
 {
-	//MP‚ª‹ó‚É‚È‚Á‚½‚ç
+	//MPãŒç©ºã«ãªã£ãŸã‚‰
 	if (nowMP_ < 0 || nowMP_ == 0) {
 		nowMP_ = 0;
 		if (isMPCharge_ == false) {
@@ -273,7 +273,7 @@ void Player::MPCharge()
 
 		}
 	}
-	//MP‚ğƒ`ƒƒ[ƒW‚·‚é
+	//MPã‚’ãƒãƒ£ãƒ¼ã‚¸ã™ã‚‹
 	if (isMPCharge_ == true) {
 		mpChargeTime_.AddTime(1);
 		mpChargeIntervalTimer_.AddTime(1);
@@ -294,7 +294,7 @@ void Player::MPCharge()
 
 void Player::DogeRoll()
 {
-	//ƒhƒbƒWƒ[ƒ‹
+	//ãƒ‰ãƒƒã‚¸ãƒ­ãƒ¼ãƒ«
 	if (GetIsCanDodge())
 	{
 		if (Controller::GetTriggerButtons(PAD::INPUT_X))
@@ -323,7 +323,7 @@ void Player::Guard()
 	{
 		if (Controller::GetTriggerButtons(PAD::INPUT_X))
 		{
-			//‹ó’†‚É‚¢‚é‚Æ‚«AƒmƒbƒNƒoƒbƒN‚ÌUŒ‚‚Ì‚ÍƒK[ƒh‚ª‚Å‚«‚È‚¢
+			//ç©ºä¸­ã«ã„ã‚‹ã¨ãã€ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã®æ™‚æ”»æ’ƒã®æ™‚ã¯ã‚¬ãƒ¼ãƒ‰ãŒã§ããªã„
 			SoundManager::Play("GuardSE", false, 0.5f);
 			guard_.Init();
 			GoToState(PlayerState::Guard);
@@ -347,7 +347,7 @@ void Player::GuardUpdate()
 void Player::Jump()
 {
 	if (Controller::GetTriggerButtons(PAD::INPUT_A)) {
-		//ƒWƒƒƒ“ƒv‚µ‚½‚çƒWƒƒƒ“ƒv‰Â”\ƒtƒ‰ƒO‚ğfalse‚É‚·‚é
+		//ã‚¸ãƒ£ãƒ³ãƒ—ã—ãŸã‚‰ã‚¸ãƒ£ãƒ³ãƒ—å¯èƒ½ãƒ•ãƒ©ã‚°ã‚’falseã«ã™ã‚‹
 		isCanJump_ = false;
 		GoToState(PlayerState::Jump);
 	}
@@ -357,7 +357,7 @@ void Player::JumpUpdate()
 {
 	float jumpSpeed = 0.2f;
 	float Maxjumptimer = 10;
-	//A‚ğ‰Ÿ‚µ‘±‚¯‚½•ª‚‚­ƒWƒƒƒ“ƒv‚·‚é
+	//Aã‚’æŠ¼ã—ç¶šã‘ãŸåˆ†é«˜ãã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
 	if (Controller::GetButtons(PAD::INPUT_A))
 	{
 		if (jumpTime_ < Maxjumptimer)
@@ -367,7 +367,7 @@ void Player::JumpUpdate()
 			gravity_.SetGrabity({ 0, jumpSpeed ,0 });
 		}
 	}
-	//“r’†‚ÅA‚ğ—£‚µ‚½‚ç’…’n‚·‚é‚Ü‚ÅƒWƒƒƒ“ƒv‚Å‚«‚È‚¢‚æ‚¤‚É‚·‚é
+	//é€”ä¸­ã§Aã‚’é›¢ã—ãŸã‚‰ç€åœ°ã™ã‚‹ã¾ã§ã‚¸ãƒ£ãƒ³ãƒ—ã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 	if (Controller::GetReleasButtons(PAD::INPUT_A))
 	{
 		jumpTime_ = Maxjumptimer;
@@ -410,7 +410,7 @@ void Player::Draw()
 void Player::DrawImGui()
 {
 	ImGui::Begin("Player");
-	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ğ‘‚­ */
+	/* ã“ã“ã«è¿½åŠ ã—ãŸã„GUIã‚’æ›¸ã */
 	// Menu Bar
 	float pos[3] = {
 		obj_->GetTransform()->position_.x,
@@ -418,14 +418,14 @@ void Player::DrawImGui()
 		obj_->GetTransform()->position_.z,
 	};
 	ImGui::Text("Pos x: %.2f y: %.2f z: %.2f ", pos[0], pos[1], pos[2]);
-	//‰ñ“]
+	//å›è»¢
 	float rot[3] = {
 		obj_->GetTransform()->rotation_.x,
 		obj_->GetTransform()->rotation_.y,
 		obj_->GetTransform()->rotation_.z,
 	};
 	ImGui::Text("Rot x: %.2f y: %.2f z: %.2f ", rot[0], rot[1], rot[2]);
-	//ƒXƒP[ƒ‹
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	float scale[3] = {
 		obj_->GetTransform()->scale_.x,
 		obj_->GetTransform()->scale_.y,
@@ -477,7 +477,7 @@ void Player::DrawSprite()
 
 void Player::FloorColision(Vector3 pos)
 {
-	//‘OƒtƒŒ[ƒ€‚Å’n–Ê‚ÉÚ‚µ‚Ä‚¢‚È‚©‚Á‚½‚Æ‚«
+	//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã§åœ°é¢ã«æ¥ã—ã¦ã„ãªã‹ã£ãŸã¨ã
 	if (isFloorCollision_ == false)
 	{
 		Freeze(7);
@@ -495,7 +495,7 @@ void Player::WallColision()
 	ObjUpdate();
 }
 
-#pragma region ‚»‚ê‚¼‚ês“®‚Å‚«‚éğŒ
+#pragma region GetIsCanMove
 bool Player::GetIsCanMove()
 {
 	if (isCanMove_ == false) return false;

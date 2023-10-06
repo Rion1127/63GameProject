@@ -9,7 +9,7 @@ Noise::Noise()
 
 void Noise::PreDraw()
 {
-	//レンダーテクスチャへの描画
+	//繝ｬ繝ｳ繝繝ｼ繝�繧ｯ繧ｹ繝√Ε縺ｸ縺ｮ謠冗判
 	PreDrawScene();
 	SceneManager::Draw();
 	PostDrawScene();
@@ -18,8 +18,8 @@ void Noise::PreDraw()
 void Noise::TransferBuff()
 {
 	time_++;
-	
-	//定数バッファのマッピング
+
+	//螳壽焚繝舌ャ繝輔ぃ縺ｮ繝槭ャ繝斐Φ繧ｰ
 	ConstBuffTime* map{};
 	HRESULT result = constBuff_->Map(0, nullptr, (void**)&map);
 	assert(SUCCEEDED(result));

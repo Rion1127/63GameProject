@@ -23,7 +23,7 @@
 class Framework
 {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	LoadManager loadManager_;
 
@@ -39,7 +39,7 @@ public:
 
 	virtual void Draw() = 0;
 
-	//Às
+	//å®Ÿè¡Œ
 	void Run();
 };
 

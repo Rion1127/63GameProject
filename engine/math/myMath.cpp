@@ -242,23 +242,23 @@ Matrix4 Matrix4::Inverse()
 	float sweepMat[4][8] = {};
 	float tmepNum = 0;
 
-	// ‘|‚«o‚µs—ñ‚Ì‰Šú‰»
+	// æƒãå‡ºã—è¡Œåˆ—ã®åˆæœŸåŒ–
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			// ˆø”‚Å‚à‚ç‚Á‚½s—ñi¶ 4 * 4j
+			// å¼•æ•°ã§ã‚‚ã‚‰ã£ãŸè¡Œåˆ—ï¼ˆå·¦ 4 * 4ï¼‰
 			sweepMat[i][j] = m[i][j];
 
-			// ’PˆÊs—ñi‰E 4 * 4j
+			// å˜ä½è¡Œåˆ—ï¼ˆå³ 4 * 4ï¼‰
 			sweepMat[i][j + 4] = (i == j) ? 1.0f : 0.0f;
 		}
 	}
 
-	// ‘|‚«o‚µ–@
+	// æƒãå‡ºã—æ³•
 	for (int i = 0; i < 4; i++)
 	{
-		// Å‘å¬•ª‚ğ’Tõ‚·‚é
+		// æœ€å¤§æˆåˆ†ã‚’æ¢ç´¢ã™ã‚‹
 		float max = fabsf(sweepMat[i][i]);
 		int maxIndex = i;
 		for (int j = i + 1; j < 4; j++)
@@ -269,23 +269,23 @@ Matrix4 Matrix4::Inverse()
 				maxIndex = j;
 			}
 		}
-		// ‹ts—ñ‹‚ß‚é‚©‚Ç‚¤‚©
+		// é€†è¡Œåˆ—æ±‚ã‚ã‚‹ã‹ã©ã†ã‹
 		if (fabsf(sweepMat[maxIndex][i]) <= 1.e-50)
 		{
-			// ‹‚ß‚ê‚È‚¢ê‡‚Í’PˆÊs—ñ‚ğ•Ô‚·
+			// æ±‚ã‚ã‚Œãªã„å ´åˆã¯å˜ä½è¡Œåˆ—ã‚’è¿”ã™
 			Matrix4 identity;
 			identity.UnitMatrix();
 			return identity;
 		}
 
-		// ‘ÎÛ‚Æ‚È‚és—ñ‚Ì‘ÎŠp¬•ª‚ğ1‚É‚·‚é
+		// å¯¾è±¡ã¨ãªã‚‹è¡Œåˆ—ã®å¯¾è§’æˆåˆ†ã‚’1ã«ã™ã‚‹
 		tmepNum = 1 / sweepMat[i][i];
 		for (int j = 0; j < 8; j++)
 		{
 			sweepMat[i][j] *= tmepNum;
 		}
 
-		// ‘ÎÛ‚Æ‚È‚és—ñ‚Ì‘ÎŠp¬•ªˆÈŠO‚ğ0‚É‚·‚é‚½‚ß
+		// å¯¾è±¡ã¨ãªã‚‹è¡Œåˆ—ã®å¯¾è§’æˆåˆ†ä»¥å¤–ã‚’0ã«ã™ã‚‹ãŸã‚
 		for (int j = 0; j < 4; j++)
 		{
 			if (i == j) continue;
@@ -298,7 +298,7 @@ Matrix4 Matrix4::Inverse()
 		}
 	}
 
-	// ‹ts—ñ‚ğ•Ô‚·
+	// é€†è¡Œåˆ—ã‚’è¿”ã™
 	Matrix4 inverseMat;
 	inverseMat.UnitMatrix();
 	for (int i = 0; i < 4; i++)
@@ -377,15 +377,15 @@ Matrix4 ConvertTranslationMat(const Vector3& pos)
 }
 #pragma endregion
 
-#pragma region •ÏŠ·
+#pragma region å¤‰æ›
 
-//ƒ‰ƒWƒAƒ“‚©‚çŠp“x
+//ãƒ©ã‚¸ã‚¢ãƒ³ã‹ã‚‰è§’åº¦
 float Angle(float radian) {
 	float angle = 180 / PI * radian;
 	return angle;
 }
 
-//Šp“x‚©‚çƒ‰ƒWƒAƒ“
+//è§’åº¦ã‹ã‚‰ãƒ©ã‚¸ã‚¢ãƒ³
 float Radian(float angle) {
 	float radian = PI / 180 * angle;
 	return radian;
@@ -413,10 +413,10 @@ float Vec2Angle(Vector2 vec) {
 	angle = acos(angle);
 	angle = Angle(angle);
 
-	// 180“x‚Ü‚Å‚µ‚©ŒvZ‚Å‚«‚È‚¢‚Ì‚Å360“x‚Ü‚Å‚Ì’l‚ÉC³
+	// 180åº¦ã¾ã§ã—ã‹è¨ˆç®—ã§ããªã„ã®ã§360åº¦ã¾ã§ã®å€¤ã«ä¿®æ­£
 	if (vec.x < 0) angle = 180.0f + (180.0f - angle);
 
-	// ŒvZŒ‹‰Ê‚ªƒI[ƒo[ƒtƒ[‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç’l‚ğXV
+	// è¨ˆç®—çµæœãŒã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã—ã¦ã„ãªã‹ã£ãŸã‚‰å€¤ã‚’æ›´æ–°
 	if (angle < 0)
 	{
 		return -1;
@@ -429,7 +429,7 @@ Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 
 {
 	Matrix4 result;
 	result.UnitMatrix();
-	// •½sˆÚ“®AƒXƒP[ƒŠƒ“ƒOA‰ñ“]s—ñì¬
+	// å¹³è¡Œç§»å‹•ã€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã€å›è»¢è¡Œåˆ—ä½œæˆ
 	Matrix4 transMat;
 	Matrix4 scaleMat;
 	Matrix4 rotMat;
@@ -437,11 +437,11 @@ Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 
 	scaleMat.UnitMatrix();
 	rotMat.UnitMatrix();
 
-	transMat = ConvertTranslationMat(pos);	// •½sˆÚ“®
-	scaleMat = ConvertScalingMat(scale);		// ƒXƒP[ƒŠƒ“ƒO
-	rotMat *= ConvertRotationZAxisMat(rot.z);	// z²‰ñ“]
-	rotMat *= ConvertRotationXAxisMat(rot.x);	// x²‰ñ“]
-	rotMat *= ConvertRotationYAxisMat(rot.y);	// y²‰ñ“]
+	transMat = ConvertTranslationMat(pos);	// å¹³è¡Œç§»å‹•
+	scaleMat = ConvertScalingMat(scale);		// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
+	rotMat *= ConvertRotationZAxisMat(rot.z);	// zè»¸å›è»¢
+	rotMat *= ConvertRotationXAxisMat(rot.x);	// xè»¸å›è»¢
+	rotMat *= ConvertRotationYAxisMat(rot.y);	// yè»¸å›è»¢
 
 	result = scaleMat * rotMat * transMat;
 
@@ -467,7 +467,7 @@ Vector4 Vec4MulMat4(Vector4 v, Matrix4 m)
 }
 
 Vector3 getEulerAnglesFromVector(const Vector3& vec) {
-	// ƒxƒNƒgƒ‹‚Ì’·‚³‚ğŒvZ
+	// ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’è¨ˆç®—
 	double length_xy = (double)std::sqrt(vec.x * vec.x + vec.y * vec.y);
 	double length_xyz = (double)std::sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 

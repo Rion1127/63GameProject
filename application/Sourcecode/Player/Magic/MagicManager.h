@@ -16,7 +16,7 @@ enum class MagicType {
 class MagicManager
 {
 private:
-	std::unordered_map<MagicType,std::unique_ptr<IBullet>> magicList_;
+	std::unordered_map<MagicType, std::unique_ptr<IBullet>> magicList_;
 	std::list<std::unique_ptr<IBullet>> magics_;
 
 	Player* player_;

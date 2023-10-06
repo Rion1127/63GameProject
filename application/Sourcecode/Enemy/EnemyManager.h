@@ -15,12 +15,12 @@ private:
 	std::list<std::unique_ptr<IBullet>> bullets_;
 
 	Player* player_;
-	IEnemy* lockOnEnemy_;	//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G
+	IEnemy* lockOnEnemy_;	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µ
 	Timer lockOnobjTimer_;
 	float lockOnobjRot;
 	float addRot;
 	EnemyHPGauge hpGauge_;
-	std::array<std::unique_ptr<Sprite>,2> lockOnSprite_;
+	std::array<std::unique_ptr<Sprite>, 2> lockOnSprite_;
 public:
 	EnemyManager();
 	void PreUpdate();

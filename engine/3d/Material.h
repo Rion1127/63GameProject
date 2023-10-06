@@ -10,7 +10,7 @@
 class Material
 {
 public:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	Material();
@@ -31,18 +31,18 @@ public:
 		constMapMat_->specular = specular_;
 	}
 
-	
+
 
 	void Draw(UINT descriptorSize);
 	void Draw();
 
-	std::string name_;            // ƒ}ƒeƒŠƒAƒ‹–¼
-	std::string textureFilename_; // ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-	// ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
+	std::string name_;            // ãƒãƒ†ãƒªã‚¢ãƒ«å
+	std::string textureFilename_; // ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
 	Texture texture_;
 private:
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBuffMaterial {
 		Vector3 ambient = { 0.3f,0.3f,0.3f };
 		float pad1;
@@ -51,9 +51,9 @@ private:
 		Vector3 specular = { 0.0f, 0.0f, 0.0f };
 		float alpha;
 	};
-	//’è”ƒoƒbƒtƒ@‚Ì¶¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> constBufferMat_ = nullptr;
-	//’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
 	ConstBuffMaterial* constMapMat_ = nullptr;
 
 	Vector3 ambient_ = { 0.3f,0.3f,0.3f };

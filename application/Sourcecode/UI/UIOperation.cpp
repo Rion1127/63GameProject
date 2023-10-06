@@ -11,7 +11,7 @@ UIOperation::UIOperation()
 		operationUI_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("OperationUI"));
 		operationUI_[i]->SetTex_Size({ 128,128 });
 
-		Vector2 pos = {225.f + i * 200.f,690};
+		Vector2 pos = { 225.f + i * 200.f,690 };
 		operationUI_[i]->SetPos(pos);
 		operationUI_[i]->SetScale(Vector2(0.3f, 0.6f));
 
@@ -20,12 +20,12 @@ UIOperation::UIOperation()
 		textUI_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("UItex"));
 		textUI_[i]->SetTex_Size({ 128,64 });
 
-		pos = { operationUI_[i]->GetPos().x + 100.f,650.f};
+		pos = { operationUI_[i]->GetPos().x + 100.f,650.f };
 		textUI_[i]->SetPos(pos);
-		textUI_[i]->SetScale(Vector2(0.4f,0.4f));
+		textUI_[i]->SetScale(Vector2(0.4f, 0.4f));
 	}
-	
-	operationUI_[0]->SetTex_LeftTop({128,32});
+
+	operationUI_[0]->SetTex_LeftTop({ 128,32 });
 	textUI_[0]->SetTex_LeftTop({ 0,0 });
 
 	operationUI_[1]->SetTex_LeftTop({ 256,32 });

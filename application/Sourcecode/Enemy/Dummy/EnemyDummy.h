@@ -3,7 +3,7 @@
 #include "Vector2.h"
 #include "Sprite.h"
 class EnemyDummy final :
-    public IEnemy 
+    public IEnemy
 {
 private:
     Vector2 pos2D;

@@ -14,7 +14,7 @@ Sword::Sword()
 
 	floatingTimer_.SetLimitTime(120);
 	floatingTimer_.SetIsLoop(true);
-	
+
 	trail_ = std::make_unique<SwordTrail>(10);
 
 	tailObj_.resize(2);
@@ -25,15 +25,15 @@ Sword::Sword()
 		tailObj_[i]->WT_.parent_ = &obj_->WT_;
 		tailObj_[i]->SetIsVisible(false);
 	}
-	trail_->SetColor(Color(255,175,60,255));
+	trail_->SetColor(Color(255, 175, 60, 255));
 }
 
 void Sword::Update()
 {
 	trail_->SetIsVisible(false);
-	//UŒ‚Žž‚ÌŒ•‚Ì“®‚«
+	//æ”»æ’ƒæ™‚ã®å‰£ã®å‹•ã
 	if (state_ == SwordState::Idle) {
-		//ƒvƒŒƒCƒ„[‚Ì”w’†‚ÉŒü‚©‚Á‚Ä™X‚ÉˆÚ“®‚·‚é
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®èƒŒä¸­ã«å‘ã‹ã£ã¦å¾ã€…ã«ç§»å‹•ã™ã‚‹
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = {
 				sinf(playerObj_->WT_.rotation_.y),
@@ -41,41 +41,41 @@ void Sword::Update()
 				cosf(playerObj_->WT_.rotation_.y),
 		};
 		frontVec = frontVec.normalize();
-		//À•WˆÚ“®
+		//åº§æ¨™ç§»å‹•
 		goalPos_ = pos - frontVec * 1.2f;
 		goalPos_.y += playerObj_->WT_.scale_.y;
-		//ã‰º‚É•‚‚©‚Î‚¹‚é
+		//ä¸Šä¸‹ã«æµ®ã‹ã°ã›ã‚‹
 		floatingTimer_.AddTime(1 * GameSpeed::GetGameSpeed());
 		float roundTime = (float)floatingTimer_.GetLimitTimer();
 		float timer = (float)floatingTimer_.GetTimer();
-		float floatingPos = UpAndDown(roundTime,0.3f, timer);
+		float floatingPos = UpAndDown(roundTime, 0.3f, timer);
 		goalPos_.y += floatingPos;
 
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
 		nowPos_ += (nowToGoalVec * 0.1f) * GameSpeed::GetGameSpeed();
 		obj_->SetPos(nowPos_);
-		//‰ñ“]ˆ—
-		//í‚É‰ñ“]‚³‚¹‚é
+		//å›žè»¢å‡¦ç†
+		//å¸¸ã«å›žè»¢ã•ã›ã‚‹
 		rot_ += 0.02f * GameSpeed::GetGameSpeed();
 		if (rot_ >= 3.14f) {
 			rot_ = -rot_;
 		}
 
-		Vector3 axisY = {0, 1, 0};
+		Vector3 axisY = { 0, 1, 0 };
 
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY,rot_), 0.1f);
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 0.1f);
 	}
 	else if (state_ == SwordState::Attack &&
 		attackManager_->GetNowAttack() != nullptr)
 	{
-		//‰ñ“]‚ÌeŽqŠÖŒW‚ð‰ðœ
+		//å›žè»¢ã®è¦ªå­é–¢ä¿‚ã‚’è§£é™¤
 		obj_->WT_.parentRotMat_ = nullptr;
-		//À•W
+		//åº§æ¨™
 		Vector3 pos = attackManager_->GetNowAttack()->GetSwordPos();
 		localPos_ = pos - playerObj_->WT_.position_;
 		obj_->SetPos(pos);
 		nowPos_ = pos;
-		//‰ñ“]î•ñ
+		//å›žè»¢æƒ…å ±
 		Vector3 PtoSVec = obj_->WT_.position_ - playerObj_->WT_.position_;
 		PtoSVec = PtoSVec.normalize();
 
@@ -85,9 +85,9 @@ void Sword::Update()
 		CalculateTrailPos();
 	}
 	else if (state_ == SwordState::Guard) {
-		//‰ñ“]s—ñ‚ðeŽqŠÖŒW‚É‚·‚é
+		//å›žè»¢è¡Œåˆ—ã‚’è¦ªå­é–¢ä¿‚ã«ã™ã‚‹
 		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
-		//À•W
+		//åº§æ¨™
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = {
 				sinf(playerObj_->WT_.rotation_.y),
@@ -104,7 +104,7 @@ void Sword::Update()
 		nowPos_ += (nowToGoalVec * 0.5f) * GameSpeed::GetGameSpeed();
 
 		obj_->SetPos(nowPos_);
-		//‰ñ“]î•ñ
+		//å›žè»¢æƒ…å ±
 		Quaternion guard = { 2.5f, 1, 0, 0 };
 		guard = guard.Normalize();
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(guard, 0.5f);
@@ -116,8 +116,8 @@ void Sword::Update()
 
 	obj_->Update();
 
-	
-	
+
+
 	trail_->Update();
 }
 
@@ -148,7 +148,7 @@ void Sword::Draw()
 		obj_->WT_.quaternion_.z,
 		obj_->WT_.quaternion_.w,
 	};
-	ImGui::DragFloat4("quaternion", value,0.1f);
+	ImGui::DragFloat4("quaternion", value, 0.1f);
 
 	obj_->WT_.quaternion_.x = value[0];
 	obj_->WT_.quaternion_.y = value[1];
@@ -175,7 +175,7 @@ void Sword::Draw()
 
 	ImGui::ColorEdit3("color 1", color);
 
-	Color col = { color[0],color[1], color[2], 255};
+	Color col = { color[0],color[1], color[2], 255 };
 	trail_->SetColor(col);
 
 	ImGui::End();

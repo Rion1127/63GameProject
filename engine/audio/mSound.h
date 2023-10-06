@@ -56,7 +56,7 @@ public:
 
 class SoundManager {
 private:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	static ComPtr<IXAudio2> sxAudio2_;
@@ -64,7 +64,7 @@ private:
 	static std::map<SoundKey, SoundData> ssndMap_;
 	static std::list<SoundData> ssndPlaying_;
 public:
-	
+
 	~SoundManager();
 	static SoundManager* GetInstance();
 	static void Init();
@@ -72,34 +72,34 @@ public:
 	static void Update();
 
 	/// <summary>
-	/// WAVƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	/// WAVãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="path">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="key">ƒL[ƒ[ƒh
+	/// <param name="path">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="key">ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰
 	/// </param>
 	static SoundKey LoadWave(const std::string& path, const SoundKey& key);
 	/// <summary>
-	/// ‰¹ºÄ¶’†‚©‚Ç‚¤‚©
+	/// éŸ³å£°å†ç”Ÿä¸­ã‹ã©ã†ã‹
 	/// </summary>
-	/// <param name="key">İ’è‚µ‚½ƒL[ƒ[ƒh</param>
-	/// <returns>‰¹ºÄ¶’†‚©‚Ç‚¤‚©</returns>
+	/// <param name="key">è¨­å®šã—ãŸã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰</param>
+	/// <returns>éŸ³å£°å†ç”Ÿä¸­ã‹ã©ã†ã‹</returns>
 	static bool IsPlaying(const SoundKey& key);
 	/// <summary>
-	/// Ä¶
+	/// å†ç”Ÿ
 	/// </summary>
-	/// <param name="key">ƒL[ƒ[ƒh</param>
-	/// <param name="loopFlag">ƒ‹[ƒv</param>
-	/// <param name="volum">‰¹—Ê
+	/// <param name="key">ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰</param>
+	/// <param name="loopFlag">ãƒ«ãƒ¼ãƒ—</param>
+	/// <param name="volum">éŸ³é‡
 	/// </param>
-	static void Play(const SoundKey& key, bool loopFlag = false, float volum = 1.0f,float picth = 1.0f);
+	static void Play(const SoundKey& key, bool loopFlag = false, float volum = 1.0f, float picth = 1.0f);
 	/// <summary>
-	/// ‚·‚Å‚É“Ç‚İ‚ñ‚¾‰¹Œ¹‚ğ•Ô‚·
+	/// ã™ã§ã«èª­ã¿è¾¼ã‚“ã éŸ³æºã‚’è¿”ã™
 	/// </summary>
-	/// <param name="key">ƒL[ƒ[ƒh</param>
+	/// <param name="key">ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰</param>
 	static SoundData* GetSoundData(const SoundKey& key);
 
 	static void Stop(const SoundKey& key);
-	
+
 	static void ReleaseAllSounds();
 
 private:

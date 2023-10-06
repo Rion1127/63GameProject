@@ -7,10 +7,10 @@
 #include "Quaternion.h"
 #include "myMath.h"
 
-//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ìi‚RD•ÏŠ·s—ñj
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ï¼ˆï¼“Då¤‰æ›è¡Œåˆ—ï¼‰
 struct ConstBufferDataTransform {
-	Matrix4 mat; //3D•ÏŠ·s—ñ
-	Matrix4 viewProj;	//ƒrƒ…[‚ÆƒvƒƒWƒFƒNƒVƒ‡ƒ“‡¬s—ñ
+	Matrix4 mat; //3Då¤‰æ›è¡Œåˆ—
+	Matrix4 viewProj;	//ãƒ“ãƒ¥ãƒ¼ã¨ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³åˆæˆè¡Œåˆ—
 	Vector3 cameraPos;
 };
 
@@ -22,7 +22,7 @@ enum class RotType {
 class WorldTransform
 {
 public:
-	//ƒGƒCƒŠƒAƒXƒeƒ“ƒvƒŒ[ƒg
+	//ã‚¨ã‚¤ãƒªã‚¢ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	WorldTransform();
@@ -41,35 +41,35 @@ public:
 	void AddRotation(Vector3 rot) { rotation_ += rot; }
 	void AddPosition(Vector3 pos) { position_ += pos; }
 	/// <summary>
-	/// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€XV
+	/// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ æ›´æ–°
 	/// </summary>
-	/// <param name="viewProjection">ƒJƒƒ‰</param>
-	/// <param name="isBillboard">0 = –³‚µ; 1 = ƒrƒ‹ƒ{[ƒh‚ ‚è; 2 = Y²ƒrƒ‹ƒ{[ƒh</param>
+	/// <param name="viewProjection">ã‚«ãƒ¡ãƒ©</param>
+	/// <param name="isBillboard">0 = ç„¡ã—; 1 = ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰ã‚ã‚Š; 2 = Yè»¸ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰</param>
 	void Update(uint32_t isBillboard = 0);
 
 	Matrix4 GetMatWorld() { return matWorld_; }
 	Vector3 GetWorldPos() { return Vector3(matWorld_.m[3][0], matWorld_.m[3][1], matWorld_.m[3][2]); }
 
-	//’è”ƒoƒbƒtƒ@is—ñ—pj
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ï¼ˆè¡Œåˆ—ç”¨ï¼‰
 	ComPtr<ID3D12Resource> constBuffTransform_;
-	//’è”ƒoƒbƒtƒ@ƒ}ƒbƒvis—ñ—pj
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ—ï¼ˆè¡Œåˆ—ç”¨ï¼‰
 	ConstBufferDataTransform* constMapTransform_;
-	//eƒIƒuƒWƒFƒNƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	WorldTransform* parent_ = nullptr;
 	Matrix4* parentRotMat_ = nullptr;
 	Matrix4* parentPosMat_ = nullptr;
 
-	//ƒAƒtƒBƒ“•ÏŠ·î•ñ
+	//ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›æƒ…å ±
 	Vector3 scale_ = { 1,1,1 };
 	Vector3 rotation_ = { 0,0,0 };
 	Vector3 position_ = { 0,0,0 };
-	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	Matrix4 scaleMat_;
 	Matrix4 rotMat_;
 	Matrix4 posMat_;
 	Matrix4 matWorld_;
 	RotType rotType;
-	//ƒNƒH[ƒ^ƒjƒIƒ“
+	//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 	Quaternion quaternion_ = { 0,1,0,0 };
 private:
 };

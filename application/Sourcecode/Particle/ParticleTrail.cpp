@@ -14,7 +14,7 @@ ParticleTrail::ParticleTrail(uint32_t vertSize) :
 	UINT sizeVB =
 		static_cast<UINT>(sizeof(SwordTrailVertex) * vertex_.size());
 
-	////’¸“_ƒoƒbƒtƒ@‚Ìİ’è
+	////é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	D3D12_HEAP_PROPERTIES heapprop{};
 	heapprop.Type = D3D12_HEAP_TYPE_UPLOAD;
 
@@ -40,7 +40,7 @@ ParticleTrail::ParticleTrail(uint32_t vertSize) :
 
 	vertBuff_->SetName(L"SWORDTRAIL VERT BUFF");
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 	vbView_.SizeInBytes = sizeVB;
 	vbView_.StrideInBytes = sizeof(vertex_[0]);
@@ -54,18 +54,18 @@ ParticleTrail::ParticleTrail(uint32_t vertSize) :
 void ParticleTrail::Update()
 {
 	if (isStop_) {
-		//æ“ª‚Ì’l‚ğ”z—ñ‚ÌŒã‚ë‚Ö‘ã“ü‚µ‚Ä‚¢‚­
+		//å…ˆé ­ã®å€¤ã‚’é…åˆ—ã®å¾Œã‚ã¸ä»£å…¥ã—ã¦ã„ã
 		for (size_t i = posArray_.size() - 1; i > 0; --i)
 		{
 			posArray_[i] = posArray_[i - 1];
 		}
 
-		//”z—ñ‚Ìæ“ª‚ÉŒ»İ‚ÌÀ•W‚ğ‘ã“ü
+		//é…åˆ—ã®å…ˆé ­ã«ç¾åœ¨ã®åº§æ¨™ã‚’ä»£å…¥
 		posArray_.front() = tempPos;
 		tempPos = PosBuffer();
 	}
 
-	////‹Èü‚ğì‚é
+	////æ›²ç·šã‚’ä½œã‚‹
 	//std::vector<PosBuffer> usedPosArray = posArray_;
 	//if (usedPosArray.empty())return;
 	//CreateCurveVertex(usedPosArray);
@@ -89,17 +89,17 @@ void ParticleTrail::Draw()
 
 		auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
 
-		// ’¸“_ƒf[ƒ^“]‘—
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿è»¢é€
 		cmdList.IASetVertexBuffers(0, 1, &vbView_);
 
-		// ’è”ƒoƒbƒtƒ@“]‘—
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 		cmdList.SetGraphicsRootConstantBufferView(
 			1, transform_.constBuffTransform_->GetGPUVirtualAddress());
-		// ’è”ƒoƒbƒtƒ@“]‘—
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 		cmdList.SetGraphicsRootConstantBufferView(
 			2, constBuffColor_->GetGPUVirtualAddress());
 
-		// ƒeƒNƒXƒ`ƒƒ
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
 
 		cmdList.DrawInstanced((UINT)std::distance(vertex_.begin(), vertex_.end()), 1, 0, 0);
@@ -128,23 +128,23 @@ void ParticleTrail::DrawImgui()
 void ParticleTrail::TransferBuff()
 {
 	HRESULT result;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	SwordTrailVertex* vertMap = nullptr;
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	//’¸“_ƒf[ƒ^‚ğXV‚·‚é
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
 	float amount = 1.0f / (posArray_.size() - 1);
 	float v = 0;
 	vertex_.clear();
 	vertex_.resize(posArray_.size() * 2);
 	for (size_t i = 0, j = 0; i < vertex_.size() && j < posArray_.size(); i += 2, ++j)
 	{
-		//’¸“_À•W‚ğ“ñ‚Â‘ã“ü‚·‚é
+		//é ‚ç‚¹åº§æ¨™ã‚’äºŒã¤ä»£å…¥ã™ã‚‹
 		vertex_[i].pos = posArray_[j].head;
 		vertex_[i].uv = Vector2(1.0f, v);
 		vertex_[i + 1].pos = posArray_[j].tail;
 		vertex_[i + 1].uv = Vector2(0.0f, v);
-		
+
 
 		v += amount;
 	}

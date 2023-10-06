@@ -17,21 +17,21 @@ Sprite SceneManager::whiteSprite_;
 void SceneManager::Ini()
 {
 #ifdef _DEBUG
-	//ƒrƒ‹ƒhŠJn‚ÌƒV[ƒ“
+	//ãƒ“ãƒ«ãƒ‰é–‹å§‹æ™‚ã®ã‚·ãƒ¼ãƒ³
 	Transition<DebugScene>();
 #else
-	//ƒrƒ‹ƒhŠJn‚ÌƒV[ƒ“
+	//ãƒ“ãƒ«ãƒ‰é–‹å§‹æ™‚ã®ã‚·ãƒ¼ãƒ³
 	Transition<TitleScene>();
 #endif // _DEBUG
 
-	
-	
+
+
 
 
 	animeTimer_.SetLimitTime(100);
 	whiteSprite_.Ini();
 	whiteSprite_.SetColor(Color(220, 220, 220, 0));
-	whiteSprite_.SetAnchor({0.f,0.f});
+	whiteSprite_.SetAnchor({ 0.f,0.f });
 	whiteSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 }
 
@@ -55,7 +55,7 @@ void SceneManager::Update()
 
 #endif // _DEBUG
 
-	//Ø‚è‘Ö‚¦ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+	//åˆ‡ã‚Šæ›¿ãˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
 	if (sisSetNext_)
 	{
 		animeTimer_.AddTime(1);
@@ -63,7 +63,7 @@ void SceneManager::Update()
 		color.a = 255.f * animeTimer_.GetTimeRate();
 		whiteSprite_.SetColor(color);
 		whiteSprite_.Update();
-		//ƒV[ƒ“‘JˆÚ
+		//ã‚·ãƒ¼ãƒ³é·ç§»
 		if (animeTimer_.GetIsEnd())
 		{
 			SceneChange();
@@ -85,10 +85,10 @@ void SceneManager::Update()
 
 void SceneManager::Draw()
 {
-	//ƒQ[ƒ€•`‰æ
+	//ã‚²ãƒ¼ãƒ æç”»
 	scurrentScene_->Draw();
 
-	PipelineManager::PreDraw("Sprite",TRIANGLELIST);
+	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	whiteSprite_.Draw();
 }
 
@@ -114,7 +114,7 @@ void SceneManager::SceneChange()
 
 	sisSetNext_ = false;
 
-	
+
 }
 
 void SceneManager::SetChangeStart(const SceneName sceneName) {
@@ -124,12 +124,12 @@ void SceneManager::SetChangeStart(const SceneName sceneName) {
 		ssceneName_ = sceneName;
 		sisSetNext_ = true;
 
-		//ƒQ[ƒ€ƒV[ƒ“‚Ö
+		//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã¸
 		if (sceneName == SceneName::Game)
 		{
 			animeTimer_.SetLimitTime(100);
 		}
-		//ƒQ[ƒ€ƒI[ƒo[ƒV[ƒ“‚Ö
+		//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã‚·ãƒ¼ãƒ³ã¸
 		else if (sceneName == SceneName::GameOver)
 		{
 			animeTimer_.SetLimitTime(120);

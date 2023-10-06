@@ -17,7 +17,7 @@ void IGauge::Update(int32_t maxHp, int32_t nowHp)
 	float scaleRate = (float)nowHp / maxHp;
 
 	gauge_->SetScale({ scaleRate,gauge_->GetScale().y });
-	//Œp³æ‚ÌXV
+	//ç¶™æ‰¿å…ˆã®æ›´æ–°
 	OriginalUpdate();
 
 	gauge_->Update();

@@ -1,7 +1,7 @@
 #pragma once
 #include "IAttack.h"
-class AttackShadow final:
-    public IAttack
+class AttackShadow final :
+	public IAttack
 {
 private:
 	float frontDist_;
@@ -10,6 +10,6 @@ public:
 private:
 	void Init() override;
 	void MoveUpdate() override;
-	
+
 };
 

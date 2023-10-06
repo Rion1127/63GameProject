@@ -26,7 +26,7 @@ void AssimpObject3D::Update()
 	result = constBuff_->Map(0, nullptr, (void**)&constMap);
 	if (model_->scene->HasAnimations()) {
 		for (int32_t i = 0; i < bones.size(); i++) {
-			//¡‚ÌŽp¨s—ñ
+			//ä»Šã®å§¿å‹¢è¡Œåˆ—
 			Matrix4 matCurrentPose;
 			matCurrentPose.UnitMatrix();
 
@@ -34,7 +34,7 @@ void AssimpObject3D::Update()
 		}
 	}
 	else {
-		//¡‚ÌŽp¨s—ñ
+		//ä»Šã®å§¿å‹¢è¡Œåˆ—
 		Matrix4 matCurrentPose;
 		matCurrentPose.UnitMatrix();
 		constMap->bones[0] = matCurrentPose;
@@ -47,8 +47,8 @@ void AssimpObject3D::Update()
 
 void AssimpObject3D::Draw()
 {
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”z—ñ4”Ô–Ú‚ðŽw’è
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿é…åˆ—4ç•ªç›®ã‚’æŒ‡å®š
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(4, constBuff_->GetGPUVirtualAddress());
 	model_->Draw(worldTransform_);
@@ -58,7 +58,7 @@ void AssimpObject3D::PlayAnimation()
 {
 	Matrix4 identity;
 	identity.UnitMatrix();
-	// ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶‚µ‚È‚¢
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿã—ãªã„
 	animation_.isPlay = true;
 	if (animation_.isPlay == false)
 	{
@@ -66,11 +66,11 @@ void AssimpObject3D::PlayAnimation()
 		return;
 	}
 
-	// Œ»Ý‚ÌƒtƒŒ[ƒ€
+	// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ 
 	float endTime = (float)model_->scene->mAnimations[animation_.index]->mDuration - 6.f;
 	float currentTime = animation_.timer.GetTimeRate() * endTime;
 	ParseNodeHeirarchy(currentTime, animation_.index, identity, model_->scene->mRootNode);
-	//ƒŠƒZƒbƒg‚µ‚½‚ç‚à‚¤s—ñ‚ðˆê“xŒvŽZ‚µ‚È‚¨‚·
+	//ãƒªã‚»ãƒƒãƒˆã—ãŸã‚‰ã‚‚ã†è¡Œåˆ—ã‚’ä¸€åº¦è¨ˆç®—ã—ãªãŠã™
 	if (currentTime >= endTime) {
 		animation_.timer.Reset();
 		currentTime = animation_.timer.GetTimeRate() * endTime;
@@ -96,25 +96,25 @@ void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t 
 
 	Matrix4 currentPoseMat = AssimpLoader::ConvertAiMatrixToMatrix(aiMat).Transpose();
 
-	// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ðŽæ“¾‚·‚é
+	// ãƒŽãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
 	std::string nodeName = rootNode->mName.C_Str();
-	aiAnimation* animation = model_->scene->mAnimations[index];  // “KØ‚ÈƒAƒjƒ[ƒVƒ‡ƒ“‚ð‘I‘ð‚·‚é•K—v‚ª‚ ‚è‚Ü‚·
+	aiAnimation* animation = model_->scene->mAnimations[index];  // é©åˆ‡ãªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é¸æŠžã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™
 
 	const aiNodeAnim* nodeAnim = FindNodeAnim(nodeName, animation);
 
-	// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ª‚ ‚éê‡Aƒm[ƒh‚Ì•ÏŠ·s—ñ‚ð•âŠ®‚·‚é
+	// ãƒŽãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒã‚ã‚‹å ´åˆã€ãƒŽãƒ¼ãƒ‰ã®å¤‰æ›è¡Œåˆ—ã‚’è£œå®Œã™ã‚‹
 	if (nodeAnim)
 	{
-		// ƒXƒP[ƒŠƒ“ƒO‚ð•âŠ®
+		// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’è£œå®Œ
 		Vector3 scale = CalcCurrentScale(nodeAnim, currentTime);
 
-		// ‰ñ“]‚ð•âŠ®
+		// å›žè»¢ã‚’è£œå®Œ
 		Quaternion rot = CalcCurrentRot(nodeAnim, currentTime);
 
-		// À•W‚ð•âŠ®
+		// åº§æ¨™ã‚’è£œå®Œ
 		Vector3 pos = CalcCurrentPos(nodeAnim, currentTime);
 
-		// s—ñ‚Ì‡¬
+		// è¡Œåˆ—ã®åˆæˆ
 		currentPoseMat = CalculateWorldMat(pos, scale, rot);
 	}
 
@@ -125,7 +125,7 @@ void AssimpObject3D::ParseNodeHeirarchy(const float currentTime, const uint32_t 
 	{
 		if (model_->bones[i].name == nodeName)
 		{
-			//ƒXƒP[ƒ‹‚ð–³—‚â‚è¬‚³‚­‚µ‚Ä‚¢‚é
+			//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ç„¡ç†ã‚„ã‚Šå°ã•ãã—ã¦ã„ã‚‹
 			Matrix4 scale = {
 				wscale.x,0,0,0,
 				0,wscale.y,0,0,

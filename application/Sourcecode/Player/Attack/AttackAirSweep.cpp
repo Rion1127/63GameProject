@@ -12,7 +12,7 @@ void AttackAirSweep::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
 		frontDist_ = 1;
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚é‚È‚ç
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ã‚‹ãªã‚‰
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);
 		}
@@ -27,7 +27,7 @@ void AttackAirSweep::Init()
 
 void AttackAirSweep::MoveUpdate()
 {
-	//‰ñ“]î•ñ‚©‚ç³–ÊƒxƒNƒgƒ‹(2D)‚ðŽæ“¾
+	//å›žè»¢æƒ…å ±ã‹ã‚‰æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«(2D)ã‚’å–å¾—
 	Vector3 frontVec = CalculateFrontVec();
 	frontVec = frontVec.normalize();
 	Vector3 speed = frontVec * 0.05f;
@@ -36,9 +36,9 @@ void AttackAirSweep::MoveUpdate()
 
 	selfActor_->AddaddVec(speed);
 
-	rotateSpeed_ = Easing::Quint::easeIn(1.7f,2.5f,timer_.GetTimeRate());
+	rotateSpeed_ = Easing::Quint::easeIn(1.7f, 2.5f, timer_.GetTimeRate());
 
-	//Šp“x‚ðŒvŽZ‚·‚é
+	//è§’åº¦ã‚’è¨ˆç®—ã™ã‚‹
 	float theta = (float)timer_.GetTimer() / rotateSpeed_;
 	float radian = Radian(360.f / attackCol_.size());
 
@@ -54,12 +54,12 @@ void AttackAirSweep::MoveUpdate()
 	attackCol_.at(0)->col_.center = colPos;
 	swordPos_ = attackCol_.at(0)->col_.center;
 
-	//ƒ_ƒ[ƒWƒN[ƒ‹ƒ^ƒCƒ€
-	//UŒ‚‚ªI‚í‚é‚Ü‚Å‚ÌŽžŠÔ‚ðŒvŽZ‚·‚é
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ 
+	//æ”»æ’ƒãŒçµ‚ã‚ã‚‹ã¾ã§ã®æ™‚é–“ã‚’è¨ˆç®—ã™ã‚‹
 	int32_t limitTime = (int32_t)timer_.GetLimitTimer();
 	int32_t nowTime = (int32_t)timer_.GetTimer();
 	attackCol_.at(0)->damageCoolTime = limitTime - nowTime;
-	
+
 	if (timer_.GetTimeRate() < 0.8f) {
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}

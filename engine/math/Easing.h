@@ -1,10 +1,10 @@
 #pragma once
 
-/// Œ³‚ÌƒR[ƒh
+/// å…ƒã®ã‚³ãƒ¼ãƒ‰
 
 namespace Easing {
 	namespace Back {
-		float easeIn (float t, float b, float c, float d);
+		float easeIn(float t, float b, float c, float d);
 		float easeOut(float t, float b, float c, float d);
 		float easeInOut(float t, float b, float c, float d);
 	}
@@ -40,7 +40,7 @@ namespace Easing {
 	};
 }
 
-/// ‰ü•ÏŒãƒR[ƒh
+/// æ”¹å¤‰å¾Œã‚³ãƒ¼ãƒ‰
 
 namespace Easing {
 	namespace Back {

@@ -22,9 +22,9 @@ private:
 	uint16_t currentNum_;
 
 	bool isVisible_;
-	bool isTranslucent_;//”¼“§–¾ƒtƒ‰ƒO
+	bool isTranslucent_;//åŠé€æ˜Žãƒ•ãƒ©ã‚°
 public:
-	CommandSprite(Color color,Vector2 basePos,uint32_t menuNum);
+	CommandSprite(Color color, Vector2 basePos, uint32_t menuNum);
 	void SpriteUpdate();
 
 	void DrawSprite();
@@ -32,8 +32,8 @@ public:
 	void ResetEase();
 public:
 	void SetTitleTex(Texture* texture) { commandTitle_->SetTexture(texture); };
-	void SetFrameTex(Texture* texture);	//ƒtƒŒ[ƒ€ƒeƒNƒXƒ`ƒƒ
-	void SetCharaTex(Texture* texture);	//•¶ŽšƒeƒNƒXƒ`ƒƒ
+	void SetFrameTex(Texture* texture);	//ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	void SetCharaTex(Texture* texture);	//æ–‡å­—ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	void SetCurrentNum(uint16_t num) { currentNum_ = num; }
 	void SetIsVisible(bool flag) { isVisible_ = flag; }
 	void SetTranslucent(bool flag) { isTranslucent_ = flag; }
@@ -55,7 +55,7 @@ private:
 private:
 	IEnemy* lockOnEnemy_;
 	Player* player_;
-	
+
 	AttackManager attackManager_;
 	MagicManager magicManager_;
 

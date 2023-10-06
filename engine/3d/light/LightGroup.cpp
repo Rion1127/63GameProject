@@ -4,15 +4,15 @@
 
 void LightGroup::StaticInit()
 {
-	
+
 }
 
 LightGroup* LightGroup::Create()
 {
-	//3DƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	LightGroup* instance = new LightGroup();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	instance->Init();
 
 	return instance;
@@ -20,17 +20,17 @@ LightGroup* LightGroup::Create()
 
 void LightGroup::Init()
 {
-	//•W€‚Ìƒ‰ƒCƒg‚Ìİ’è
+	//æ¨™æº–ã®ãƒ©ã‚¤ãƒˆã®è¨­å®š
 	DefaultLightSetting();
 
-	// ƒq[ƒvƒvƒƒpƒeƒB
+	// ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// ƒŠƒ\[ƒXİ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
 
 	HRESULT result;
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&constBuff_));
@@ -42,42 +42,42 @@ void LightGroup::Init()
 void LightGroup::TransferConstBuffer()
 {
 	HRESULT result;
-	// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
 	ConstBufferData* constMap = nullptr;
 	result = constBuff_->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 
 		constMap->ambientColor = ambientColor_;
-		//•½sªŒ¹
+		//å¹³è¡Œæ ¹æº
 		for (uint32_t i = 0; i < sDirLightNum; i++) {
-			//ƒ‰ƒCƒg‚ª—LŒø‚È‚çİ’è‚ğ“]‘—
+			//ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (dirLights_[i].IsAvtive()) {
 				constMap->dirLights[i].active = true;
 				constMap->dirLights[i].lightv = -dirLights_[i].GetLightDir();
 				constMap->dirLights[i].lightColor = dirLights_[i].GetLightColor();
 			}
-			//ƒ‰ƒCƒg‚ª–³Œø‚È‚ç“]‘—‚µ‚È‚¢
+			//ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰è»¢é€ã—ãªã„
 			else {
 				constMap->dirLights[i].active = false;
 			}
 		}
-		//“_ŒõŒ¹
+		//ç‚¹å…‰æº
 		for (uint32_t i = 0; i < sPointLightNum; i++) {
-			//ƒ‰ƒCƒg‚ª—LŒø‚È‚çİ’è‚ğ“]‘—
+			//ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (pointLights_[i].GetActive()) {
 				constMap->pointLights_[i].active = true;
 				constMap->pointLights_[i].lightPos = pointLights_[i].GetLightPos();
 				constMap->pointLights_[i].lightColor = pointLights_[i].GetLightColor();
 				constMap->pointLights_[i].lightatten = pointLights_[i].GetLightAtten();
 			}
-			//ƒ‰ƒCƒg‚ª–³Œø‚È‚çƒ‰ƒCƒgF‚ğ0‚É
+			//ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰ãƒ©ã‚¤ãƒˆè‰²ã‚’0ã«
 			else {
 				constMap->pointLights_[i].active = false;
 			}
 		}
-		//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+		//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 		for (uint32_t i = 0; i < sSpotLightNum; i++) {
-			//—LŒø‚È‚çİ’è‚ğ“]‘—
+			//æœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (spotLights_[i].GetActive()) {
 				constMap->spotLights[i].active = true;
 				constMap->spotLights[i].lightv = -spotLights_[i].GetLightDir().normalize();
@@ -87,25 +87,25 @@ void LightGroup::TransferConstBuffer()
 				constMap->spotLights[i].lightfactorranglecos =
 					spotLights_[i].GetLightFaactorAngleCos();
 			}
-			//ƒ‰ƒCƒg‚ª–³Œø‚È‚çƒ‰ƒCƒgF‚ğ‚O‚É
+			//ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰ãƒ©ã‚¤ãƒˆè‰²ã‚’ï¼ã«
 			else {
 				constMap->spotLights[i].active = false;
 			}
 		}
-		//ŠÛ‰e
+		//ä¸¸å½±
 		for (uint32_t i = 0; i < sCircleShadowNum; i++) {
-			//—LŒø‚È‚çİ’è‚ğ“]‘—
+			//æœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (circleShadows_[i].GetActive()) {
 				constMap->circleShadows[i].active = true;
 				constMap->circleShadows[i].dir = -circleShadows_[i].GetDir().normalize();
 				constMap->circleShadows[i].casterPos = circleShadows_[i].GetCasterPos();
-				constMap->circleShadows[i].distanceCasterLight = 
+				constMap->circleShadows[i].distanceCasterLight =
 					circleShadows_[i].GetDistanceCasterLight();
 				constMap->circleShadows[i].atten = circleShadows_[i].GetAtten();
 				constMap->circleShadows[i].factorAngleCos =
 					circleShadows_[i].GetFactorAngleCos();
 			}
-			//–³Œø‚È‚çF‚ğ0‚É
+			//ç„¡åŠ¹ãªã‚‰è‰²ã‚’0ã«
 			else {
 				constMap->circleShadows[i].active = false;
 			}
@@ -120,7 +120,7 @@ void LightGroup::SetAmbientColor(const Vector3& color)
 	ambientColor_ = color;
 	dirty_ = true;
 }
-#pragma region •½sŒõŒ¹
+#pragma region å¹³è¡Œå…‰æº
 void LightGroup::SetDirLightActive(uint32_t index, bool active)
 {
 	assert(0 <= index && index < sDirLightNum);
@@ -141,7 +141,7 @@ void LightGroup::SetDirLightColor(uint32_t index, const Vector3& lightColor)
 	dirty_ = true;
 }
 #pragma endregion
-#pragma region “_ŒõŒ¹
+#pragma region ç‚¹å…‰æº
 void LightGroup::SetPointLightActive(uint32_t index, bool active)
 {
 	assert(0 <= index && index < sDirLightNum);
@@ -169,7 +169,7 @@ void LightGroup::SetPointLightAtten(uint32_t index, const Vector3& lightAtten)
 	dirty_ = true;
 }
 #pragma endregion
-#pragma region ƒXƒ|ƒbƒgƒ‰ƒCƒg
+#pragma region ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 void LightGroup::SetSpotLightActive(uint32_t index, bool active)
 {
 	assert(0 <= index && index < sSpotLightNum);
@@ -212,7 +212,7 @@ void LightGroup::SetSpotLightFactorAngle(uint32_t index, const Vector2& lightFac
 	dirty_ = true;
 }
 #pragma endregion
-#pragma region ŠÛ‰e
+#pragma region ä¸¸å½±
 void LightGroup::SetCircleShadowActive(uint32_t index, bool active)
 {
 	assert(0 <= index && index < sSpotLightNum);
@@ -272,7 +272,7 @@ void LightGroup::DefaultLightSetting()
 
 void LightGroup::Update()
 {
-	//’l‚ÌXV‚ª‚ ‚Á‚½‚¾‚¯’è”ƒoƒbƒtƒ@‚É“]‘—‚·‚é
+	//å€¤ã®æ›´æ–°ãŒã‚ã£ãŸæ™‚ã ã‘å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«è»¢é€ã™ã‚‹
 	if (dirty_) {
 		TransferConstBuffer();
 		dirty_ = false;
@@ -281,7 +281,7 @@ void LightGroup::Update()
 
 void LightGroup::Draw(UINT rootParameterIndex)
 {
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒZƒbƒg
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	RDirectX::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
 		constBuff_->GetGPUVirtualAddress());
 }

@@ -19,7 +19,7 @@ void Sprite::Ini(const std::string& guiname)
 	Sprite::AddAllNum();
 
 	std::string noneString = "";
-	//‰½‚à“ü‚Á‚Ä‚¢‚È‚¢ê‡
+	//ä½•ã‚‚å…¥ã£ã¦ã„ãªã„å ´åˆ
 	if (guiname == noneString) {
 
 		std::ostringstream oss;
@@ -35,22 +35,22 @@ void Sprite::Ini(const std::string& guiname)
 	}
 
 	HRESULT result;
-#pragma region ’¸“_ƒf[ƒ^
-	//’¸“_ƒf[ƒ^
-	vertices_.push_back({ {   -0.0f,100.0f,0.0f },{0.0f,1.0f} });//¶‰º
-	vertices_.push_back({ {   -0.0f, +0.0f,0.0f },{0.0f,0.0f} });//¶ã
-	vertices_.push_back({ { +100.0f,100.0f,0.0f },{1.0f,1.0f} });//‰E‰º
-	vertices_.push_back({ { +100.0f, +0.0f,0.0f },{1.0f,0.0f} });//‰Eã
+#pragma region é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
+	vertices_.push_back({ {   -0.0f,100.0f,0.0f },{0.0f,1.0f} });//å·¦ä¸‹
+	vertices_.push_back({ {   -0.0f, +0.0f,0.0f },{0.0f,0.0f} });//å·¦ä¸Š
+	vertices_.push_back({ { +100.0f,100.0f,0.0f },{1.0f,1.0f} });//å³ä¸‹
+	vertices_.push_back({ { +100.0f, +0.0f,0.0f },{1.0f,0.0f} });//å³ä¸Š
 
-	// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices_[0]) * vertices_.size());
-	// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{}; // ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{}; // ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã¸ã®è»¢é€ç”¨
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeVB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	resDesc.Width = sizeVB; // é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
@@ -58,34 +58,34 @@ void Sprite::Ini(const std::string& guiname)
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc, // ƒŠƒ\[ƒXİ’è
+		&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
 
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap_[i] = vertices_[i]; // À•W‚ğƒRƒs[
+		vertMap_[i] = vertices_[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff_->Unmap(0, nullptr);
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
-	// GPU‰¼‘zƒAƒhƒŒƒX
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+	// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-	// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	vbView_.SizeInBytes = sizeVB;
-	// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
 #pragma endregion
 
-#pragma region ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+#pragma region ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
 	indices_.push_back(0);
 	indices_.push_back(1);
 	indices_.push_back(2);
@@ -93,11 +93,11 @@ void Sprite::Ini(const std::string& guiname)
 	indices_.push_back(2);
 	indices_.push_back(3);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices_.size());
 
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeIB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	resDesc.Width = sizeIB; // é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
@@ -106,41 +106,41 @@ void Sprite::Ini(const std::string& guiname)
 
 
 	result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc, // ƒŠƒ\[ƒXİ’è
+		&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&indexBuff_));
 	assert(SUCCEEDED(result));
 
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	uint16_t* indexMap = nullptr;
 	result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (uint32_t i = 0; i < indices_.size(); i++) {
-		indexMap[i] = indices_[i]; // À•W‚ğƒRƒs[
+		indexMap[i] = indices_[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	indexBuff_->Unmap(0, nullptr);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
 	ibView_.Format = DXGI_FORMAT_R16_UINT;
 	ibView_.SizeInBytes = sizeIB;
 
 #pragma endregion
 
-#pragma region ƒVƒF[ƒ_[‚ÉF‚ğ“n‚·
+#pragma region ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«è‰²ã‚’æ¸¡ã™
 
-	//ƒq[ƒvİ’è
+	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
-	//ƒŠƒ\[ƒXİ’è
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;	//256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;	//256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
@@ -156,42 +156,42 @@ void Sprite::Ini(const std::string& guiname)
 		IID_PPV_ARGS(&constBuffMaterial_));
 	assert(SUCCEEDED(result));
 
-	//’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
 	result = constBuffMaterial_->Map(0, nullptr, (void**)&constMapMaterial_);
 	assert(SUCCEEDED(result));
-	//’l‚ğ‘‚«‚Ş‚Æ©“®“I‚É“]‘—‚³‚ê‚é
+	//å€¤ã‚’æ›¸ãè¾¼ã‚€ã¨è‡ªå‹•çš„ã«è»¢é€ã•ã‚Œã‚‹
 	constMapMaterial_->color = Color(1, 1, 1, 1.0f);
 #pragma endregion
 
-#pragma region ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+#pragma region ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 	{
-		// ƒq[ƒvƒvƒƒpƒeƒB
+		// ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 		CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-		// ƒŠƒ\[ƒXİ’è
+		// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		CD3DX12_RESOURCE_DESC resourceDesc =
 			CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataTransform) + 0xff) & ~0xff);
 
-		// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = RDirectX::GetInstance()->GetDevice()->CreateCommittedResource(
 			&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr, IID_PPV_ARGS(&constBuffTransform_));
 		assert(SUCCEEDED(result));
 	}
 
-	// ’è”ƒoƒbƒtƒ@ƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ”ãƒ³ã‚°
 	result = constBuffTransform_->Map(0, nullptr, (void**)&constMapTransform_);
 	assert(SUCCEEDED(result));
-	//’PˆÊs—ñ‚ğ‘ã“ü
+	//å˜ä½è¡Œåˆ—ã‚’ä»£å…¥
 	constMapTransform_->mat.UnitMatrix();
 
-	// Ë‰es—ñŒvZ
+	// å°„å½±è¡Œåˆ—è¨ˆç®—
 	matProjection_ = {
 		2 / WinAPI::GetWindowSize().x,0,0,0,
 		0,-2 / WinAPI::GetWindowSize().y,0,0,
 		0,0,1,0,
 		-1,1,0,1
 	};
-	//ƒXƒP[ƒ‹
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	Scale_ = { 1.f,1.f };
 	anchorPoint_ = { 0.5f,0.5f };
 #pragma endregion
@@ -200,11 +200,11 @@ void Sprite::Ini(const std::string& guiname)
 void Sprite::DrawImGui()
 {
 	ImGui::Begin(gui_);
-	/* ‚±‚±‚É’Ç‰Á‚µ‚½‚¢GUI‚ğ‘‚­ */
+	/* ã“ã“ã«è¿½åŠ ã—ãŸã„GUIã‚’æ›¸ã */
 
 	//static int clicked_ = 0;
 	if (ImGui::Button("isInvisible_"))clicked_++;
-	//ƒNƒŠƒbƒN‚³‚ê‚½ê‡•\¦‚µ‚È‚¢
+	//ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸå ´åˆè¡¨ç¤ºã—ãªã„
 	if (clicked_ & 1)
 	{
 		ImGui::SameLine();
@@ -219,37 +219,37 @@ void Sprite::DrawImGui()
 
 	// Menu Bar
 	float pos[2] = { pos_.x,pos_.y };
-	ImGui::DragFloat2("pos", pos, 1.0f, 0.f,WinAPI::GetWindowSize().x);
+	ImGui::DragFloat2("pos", pos, 1.0f, 0.f, WinAPI::GetWindowSize().x);
 
 	pos_.x = pos[0];
 	pos_.y = pos[1];
-	// ƒXƒP[ƒ‹•ÏX
+	// ã‚¹ã‚±ãƒ¼ãƒ«å¤‰æ›´
 	float scale[2] = { Scale_.x,Scale_.y };
 	ImGui::DragFloat2("scale", scale, 0.1f, 0.0f, 10.0f);
 
 	Scale_.x = scale[0];
 	Scale_.y = scale[1];
 
-	//‰ñ“]
+	//å›è»¢
 	float rot = rot_;
 	ImGui::SliderFloat("Rot", &rot, 0.0f, Radian(360), "x = %.3f");
 	rot_ = rot;
 
-	// textureLeftTop•ÏX
+	// textureLeftTopå¤‰æ›´
 	float textureLeftTop[2] = { textureLeftTop_.x,textureLeftTop_.y };
 	ImGui::DragFloat2("textureLeftTop", textureLeftTop, 1.0f, 0.0f, 1280.0f);
 
 	textureLeftTop_.x = textureLeftTop[0];
 	textureLeftTop_.y = textureLeftTop[1];
 
-	// textureSize•ÏX
+	// textureSizeå¤‰æ›´
 	float textureSize[2] = { textureSize_.x,textureSize_.y };
 	ImGui::DragFloat2("textureSize", textureSize, 1.0f, 0.0f, 1280.0f);
 
 	textureSize_.x = textureSize[0];
 	textureSize_.y = textureSize[1];
 
-	// color•ÏX
+	// colorå¤‰æ›´
 	float color[4] = { color_.r,color_.g,color_.b,color_.a };
 	ImGui::DragFloat4("color", color, 1.0f, 0.0f, 255.0f);
 
@@ -268,15 +268,15 @@ void Sprite::Update()
 		return;
 	}
 
-	// ƒ[ƒ‹ƒhs—ñ‚ÌXV
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®æ›´æ–°
 	matWorld_.UnitMatrix();
 	matWorld_ *= ConvertScalingMat({ Scale_.x, Scale_.y, 0 });
 	matWorld_ *= ConvertRotationZAxisMat(rot_);
 	matWorld_ *= ConvertTranslationMat({ pos_.x, pos_.y, 0.0f });
 
-	// ’è”ƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 	constMapMaterial_->color = color_ / 255.f;
-	constMapTransform_->mat = matWorld_ * matProjection_; // s—ñ‚Ì‡¬
+	constMapTransform_->mat = matWorld_ * matProjection_; // è¡Œåˆ—ã®åˆæˆ
 
 #pragma endregion
 
@@ -294,18 +294,18 @@ void Sprite::Draw()
 	}
 
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(1, constBuffMaterial_->GetGPUVirtualAddress());
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
@@ -314,38 +314,38 @@ void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float L
 {
 	HRESULT result = S_OK;
 
-#pragma region ‰æ‘œ‚Ì’¸“_ƒf[ƒ^‚ğXV
-	vertices_.at(0).pos = { LdX,LdY,0 };//¶‰º
-	vertices_.at(1).pos = { LuX,LuY,0 };//¶ã
-	vertices_.at(2).pos = { RdX,RdY,0 };//‰E‰º
-	vertices_.at(3).pos = { RuX,RuY,0 };//‰Eã
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+#pragma region ç”»åƒã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°
+	vertices_.at(0).pos = { LdX,LdY,0 };//å·¦ä¸‹
+	vertices_.at(1).pos = { LuX,LuY,0 };//å·¦ä¸Š
+	vertices_.at(2).pos = { RdX,RdY,0 };//å³ä¸‹
+	vertices_.at(3).pos = { RuX,RuY,0 };//å³ä¸Š
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);
 
-	// ƒ[ƒ‹ƒhs—ñ‚ÌXV
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®æ›´æ–°
 	matWorld_.UnitMatrix();
 	matWorld_ *= ConvertScalingMat({ Scale_.x, Scale_.y, 0 });
 	matWorld_ *= ConvertRotationZAxisMat(rot_);
 	matWorld_ *= ConvertTranslationMat({ pos_.x, pos_.y, 0.0f });
 
-	// ’è”ƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 	constMapMaterial_->color = color_;
-	constMapTransform_->mat = matProjection_; // s—ñ‚Ì‡¬
+	constMapTransform_->mat = matProjection_; // è¡Œåˆ—ã®åˆæˆ
 
 #pragma endregion
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(descriptorSize);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(0, constBuffMaterial_->GetGPUVirtualAddress());
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
@@ -354,7 +354,7 @@ void Sprite::SetBlend(uint32_t blend)
 {
 	//if (blend > 3) blend = 3;
 	//else if (blend < 0) blend = 0;
-	//// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’èƒRƒ}ƒ“ƒh
+	//// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	//RDirectX::GetInstance()->GetCommandList()->SetPipelineState(
 	//	PipelineManager::GetSpritePipeline(blend)->gerPipelineState());
 
@@ -368,37 +368,37 @@ void Sprite::TransferVertex()
 	float right = (1.0f - anchorPoint_.x) * texture_.size_.x;
 	float top = (0.0f - anchorPoint_.y) * texture_.size_.y;
 	float bottom = (1.0f - anchorPoint_.y) * texture_.size_.y;
-	//¶‰E”½“]
+	//å·¦å³åè»¢
 	if (isFlipX_)
 	{
 		left = -left;
 		right = -right;
 	}
-	//ã‰º”½“]
+	//ä¸Šä¸‹åè»¢
 	if (isFlipY_)
 	{
 		top = -top;
 		bottom = -bottom;
 	}
 
-	vertices_.at(LB).pos = { left	, bottom	,0 };//¶‰º
-	vertices_.at(LT).pos = { left	, top		,0 };//¶ã
-	vertices_.at(RB).pos = { right	, bottom	,0 };//‰E‰º
-	vertices_.at(RT).pos = { right	, top		,0 };//‰Eã
+	vertices_.at(LB).pos = { left	, bottom	,0 };//å·¦ä¸‹
+	vertices_.at(LT).pos = { left	, top		,0 };//å·¦ä¸Š
+	vertices_.at(RB).pos = { right	, bottom	,0 };//å³ä¸‹
+	vertices_.at(RT).pos = { right	, top		,0 };//å³ä¸Š
 
 	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);
 
-	//Ø‚èæ‚è”ÍˆÍ‚ª‚Ç‚¿‚ç‚à0‚Ìê‡UVÀ•W‚Í•Ï‚¦‚È‚¢
+	//åˆ‡ã‚Šå–ã‚Šç¯„å›²ãŒã©ã¡ã‚‰ã‚‚0ã®å ´åˆUVåº§æ¨™ã¯å¤‰ãˆãªã„
 	if (textureSize_.x != 0 && textureSize_.y != 0)
 	{
 		float tex_left = textureLeftTop_.x / texture_.size_.x;
 		float tex_right = (textureLeftTop_.x + textureSize_.x) / texture_.size_.x;
 		float tex_top = textureLeftTop_.y / texture_.size_.y;
 		float tex_bottom = (textureLeftTop_.y + textureSize_.y) / texture_.size_.y;
-		//’¸“_‚ÌUV‚É”½‰f‚·‚é
-		vertices_.at(LB).uv = { tex_left	, tex_bottom };//¶‰º
-		vertices_.at(LT).uv = { tex_left	, tex_top };//¶ã
-		vertices_.at(RB).uv = { tex_right, tex_bottom };//‰E‰º
-		vertices_.at(RT).uv = { tex_right, tex_top };//‰Eã
+		//é ‚ç‚¹ã®UVã«åæ˜ ã™ã‚‹
+		vertices_.at(LB).uv = { tex_left	, tex_bottom };//å·¦ä¸‹
+		vertices_.at(LT).uv = { tex_left	, tex_top };//å·¦ä¸Š
+		vertices_.at(RB).uv = { tex_right, tex_bottom };//å³ä¸‹
+		vertices_.at(RT).uv = { tex_right, tex_top };//å³ä¸Š
 	}
 }

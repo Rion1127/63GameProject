@@ -2,7 +2,7 @@
 #include "IParticle.h"
 #include "Timer.h"
 class ParticleWallHit :
-    public IParticle
+	public IParticle
 {
 private:
 	struct WallHitParticle : public Particle

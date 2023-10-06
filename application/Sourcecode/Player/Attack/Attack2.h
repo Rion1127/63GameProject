@@ -2,7 +2,7 @@
 #include "IAttack.h"
 
 class Attack2 final :
-    public IAttack
+	public IAttack
 {
 private:
 	float frontDist_;

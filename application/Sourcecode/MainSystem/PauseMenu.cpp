@@ -45,7 +45,7 @@ void PauseMenu::Update()
 				SoundManager::Play("CancelSE");
 			}
 
-			//ƒƒjƒ…[‘I‘ğ
+			//ãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠ
 			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 				Controller::GetTriggerButtons(PAD::INPUT_UP))
 			{
@@ -58,7 +58,7 @@ void PauseMenu::Update()
 
 				selectType_ = (SelectType)type;
 			}
-			//Œˆ’è
+			//æ±ºå®š
 			if (Controller::GetTriggerButtons(PAD::INPUT_A) ||
 				Key::TriggerKey(DIK_SPACE))
 			{
@@ -182,7 +182,7 @@ PauseSprite::PauseSprite()
 
 void PauseSprite::Update()
 {
-	//™X‚É•¶š‚ğƒAƒNƒeƒBƒu‚É‚µ‚Ä‚¢‚­
+	//å¾ã€…ã«æ–‡å­—ã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã—ã¦ã„ã
 	if (isActive_)
 	{
 		timer_.AddTime(1);
@@ -224,7 +224,7 @@ void PauseSprite::Update()
 
 			if (i == pauseSprite_.size() - 1)
 			{
-				//E‚Ì•¶š‚ª‰ñ“]‚·‚é
+				//Eã®æ–‡å­—ãŒå›è»¢ã™ã‚‹
 
 				if (pauseSprite_[i]->timer.GetIsEnd())
 				{
@@ -232,7 +232,7 @@ void PauseSprite::Update()
 
 					if (state_ == State::Collapse)
 					{
-						//0.f ¨ 1.f ¨ 0.f‚Ìrate‚ğŒvZ‚·‚é
+						//0.f â†’ 1.f â†’ 0.fã®rateã‚’è¨ˆç®—ã™ã‚‹
 						float rate01 = 0.2f + fabs(0.5f - effectTimer_.GetTimeRate()) * 2.f;
 						float rate02 = 1.f - fabs(0.5f - effectTimer_.GetTimeRate()) * 2.f;
 
@@ -244,7 +244,7 @@ void PauseSprite::Update()
 
 						pauseSprite_[i]->sprite->SetScale(scale);
 					}
-					//”ò‚Ñ’µ‚Ë‚é
+					//é£›ã³è·³ã­ã‚‹
 					else if (state_ == State::Jump)
 					{
 						Vector2 pos = pauseSprite_[i]->sprite->GetPos();
@@ -268,7 +268,7 @@ void PauseSprite::Update()
 						}
 
 					}
-					//’…’n‚·‚é
+					//ç€åœ°ã™ã‚‹
 					else if (state_ == State::Landing)
 					{
 

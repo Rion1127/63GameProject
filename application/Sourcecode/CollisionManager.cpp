@@ -12,24 +12,24 @@ CollisionManager::CollisionManager()
 
 void CollisionManager::Update()
 {
-	//°‚ÆƒvƒŒƒCƒ„[
+	//åºŠã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	PlayerToFloor();
 	PlayerToWall();
-	//°‚Æ“G
+	//åºŠã¨æ•µ
 	EnemyToFloor();
-	//“G‚Æ•Ç
+	//æ•µã¨å£
 	EnemyToWall();
-	//ƒƒbƒNƒIƒ“‚·‚é“G
+	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹æ•µ
 	EnemyLockOn();
-	//ƒvƒŒƒCƒ„[‚Æ“G‰Ÿ‚µo‚µ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ•µæŠ¼ã—å‡ºã—
 	PlayerToEnemy();
-	//ƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ“G
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ”»æ’ƒã¨æ•µ
 	PlayerAttackToEnemy();
-	//“GUŒ‚‚ÆƒvƒŒƒCƒ„[
+	//æ•µæ”»æ’ƒã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	EnemyAttackToPlayer();
-	//“G’e‚ÆƒvƒŒƒCƒ„[
+	//æ•µå¼¾ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	EnemyBulletToPlayer();
-	//“G’e‚Æ°
+	//æ•µå¼¾ã¨åºŠ
 	EnemyBulletToFloor();
 }
 
@@ -39,10 +39,10 @@ void CollisionManager::PlayerToFloor()
 	Sphere col = player_->GetCol();
 	col.center += player_->GetGravity()->GetGravityValue();
 
-	//°‚ÆƒvƒŒƒCƒ„[
+	//åºŠã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	if (Sphere2PlaneCol(col, *floor))
 	{
-		//’n–Ê‚É‚ß‚èž‚Ü‚È‚¢‚æ‚¤ˆ—
+		//åœ°é¢ã«ã‚ã‚Šè¾¼ã¾ãªã„ã‚ˆã†å‡¦ç†
 		while (true)
 		{
 			float dist = player_->GetCol().center.y - floor->distance;
@@ -73,7 +73,7 @@ void CollisionManager::PlayerToWall()
 {
 	auto* walls = stage_->GetPlaneCol();
 
-	//•Ç‚ÆƒvƒŒƒCƒ„[
+	//å£ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	for (auto itr = walls->begin(); itr != walls->end(); ++itr) {
 		Vector3 interPos;
 		Sphere col = player_->GetCol();
@@ -81,7 +81,7 @@ void CollisionManager::PlayerToWall()
 		col.center += addvec;
 		if (Sphere2PlaneCol(col, *itr->get(), &interPos))
 		{
-			//‚ß‚èž‚Ü‚È‚¢‚æ‚¤ˆ—
+			//ã‚ã‚Šè¾¼ã¾ãªã„ã‚ˆã†å‡¦ç†
 			Vector3 colEdgePos =
 				col.center +
 				(col.radius * -itr->get()->normal);
@@ -89,7 +89,7 @@ void CollisionManager::PlayerToWall()
 			Vector3 pushBackVec = interPos - colEdgePos;
 			player_->AddaddVec(pushBackVec);
 
-			//ƒp[ƒeƒBƒNƒ‹
+			//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 			wallHitTimer_.AddTime(1);
 			if (wallHitTimer_.GetIsEnd()) {
 				Vector3 rot{};
@@ -119,10 +119,10 @@ void CollisionManager::EnemyToFloor()
 	{
 		Sphere col = enemy->GetCol();
 		col.center += enemy->GetAddVec();
-		//°‚ÆƒvƒŒƒCƒ„[
+		//åºŠã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 		if (Sphere2PlaneCol(col, *floor))
 		{
-			//’n–Ê‚É‚ß‚èž‚Ü‚È‚¢‚æ‚¤ˆ—
+			//åœ°é¢ã«ã‚ã‚Šè¾¼ã¾ãªã„ã‚ˆã†å‡¦ç†
 			while (true)
 			{
 				float dist = enemy->GetCol().center.y - floor->distance;
@@ -150,7 +150,7 @@ void CollisionManager::EnemyToWall()
 {
 	auto* walls = stage_->GetPlaneCol();
 
-	//•Ç‚ÆƒvƒŒƒCƒ„[
+	//å£ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	for (auto itr = walls->begin(); itr != walls->end(); ++itr) {
 		for (auto& enemy : *enemyManager_->GetEnemy())
 		{
@@ -160,7 +160,7 @@ void CollisionManager::EnemyToWall()
 			col.center += addvec;
 			if (Sphere2PlaneCol(col, *itr->get(), &interPos))
 			{
-				//‚ß‚èž‚Ü‚È‚¢‚æ‚¤ˆ—
+				//ã‚ã‚Šè¾¼ã¾ãªã„ã‚ˆã†å‡¦ç†
 				Vector3 colEdgePos =
 					col.center +
 					(col.radius * -itr->get()->normal);
@@ -177,7 +177,7 @@ void CollisionManager::EnemyLockOn()
 	IEnemy* lockOnEnemy = nullptr;
 	std::vector<IEnemy*> lockOnEnemys_;
 	bool isHardLockOn = false;
-	//UŒ‚‚ð‚µ‚Ä‚¢‚È‚¢A–”‚ÍAƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚é“G‚ª‚¢‚È‚¢Žž‚ÉƒƒbƒNƒIƒ“‘ÎÛ‚ð’T‚·
+	//æ”»æ’ƒã‚’ã—ã¦ã„ãªã„ã€åˆã¯ã€ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚‹æ•µãŒã„ãªã„æ™‚ã«ãƒ­ãƒƒã‚¯ã‚ªãƒ³å¯¾è±¡ã‚’æŽ¢ã™
 	if (player_->GetAttackManager()->GetIsAttacking() == false ||
 		enemyManager_->GetLockOnEnemy() == nullptr) {
 		for (auto& enemy : *enemyManager_->GetEnemy())
@@ -186,36 +186,36 @@ void CollisionManager::EnemyLockOn()
 			{
 				enemy->SetHardIsLockOn(false);
 			}
-			//ˆê‘Ì‚Å‚àƒn[ƒhƒƒbƒN‚ð‚µ‚Ä‚¢‚½‚çƒtƒ‰ƒO‚ðtrue‚É‚·‚é
+			//ä¸€ä½“ã§ã‚‚ãƒãƒ¼ãƒ‰ãƒ­ãƒƒã‚¯ã‚’ã—ã¦ã„ãŸã‚‰ãƒ•ãƒ©ã‚°ã‚’trueã«ã™ã‚‹
 			if (enemy->GetIsHardLockOn())
 			{
 				isHardLockOn = true;
 				break;
 			}
-			//ƒƒbƒNƒIƒ“—p‚Ì‘å‚«‚¢“–‚½‚è”»’è
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ç”¨ã®å¤§ãã„å½“ãŸã‚Šåˆ¤å®š
 			enemy->SetSoftIsLockOn(false);
 			Sphere serchCol = player_->GetCol();
 			serchCol.radius *= 20.f;
 			if (BallCollision(serchCol, enemy->GetCol()))
 			{
-				//ƒƒbƒNƒIƒ“Œ—“à‚É‚¢‚é“G‚ð’Ç‰Á‚µ‚Ä‚¢‚­
+				//ãƒ­ãƒƒã‚¯ã‚ªãƒ³åœå†…ã«ã„ã‚‹æ•µã‚’è¿½åŠ ã—ã¦ã„ã
 				lockOnEnemys_.push_back(enemy.get());
 			}
 		}
 		if (isHardLockOn == false)
 		{
-			//‰¼‚Ì‘å‚«‚¢’l‚ð“ü‚ê‚Ä‚¨‚­
+			//ä»®ã®å¤§ãã„å€¤ã‚’å…¥ã‚Œã¦ãŠã
 			float dist2d = 5000.f;
 			for (auto& enemy : lockOnEnemys_)
 			{
-				//ƒXƒNƒŠ[ƒ“À•W‚ðŽæ“¾‚µ‚Ä‰æ–Ê‚Ì’†‰›‚É‹ß‚¢“G‚ðƒƒbƒNƒIƒ“‚·‚é
+				//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’å–å¾—ã—ã¦ç”»é¢ã®ä¸­å¤®ã«è¿‘ã„æ•µã‚’ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹
 				Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
 
 				Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
 
 				Vector2 dist = halfWindowSize - ScreenPos;
 				float length = dist.length();
-				//”äŠr‚µ‚Ä’Z‚©‚Á‚½‚ç“G‚ð‘ã“ü‚·‚é
+				//æ¯”è¼ƒã—ã¦çŸ­ã‹ã£ãŸã‚‰æ•µã‚’ä»£å…¥ã™ã‚‹
 				if (dist2d > length)
 				{
 					dist2d = length;
@@ -233,11 +233,11 @@ void CollisionManager::EnemyLockOn()
 
 	if (enemyManager_->GetLockOnEnemy() != nullptr)
 	{
-		//Ž©•ª‚ÅƒƒbƒNƒIƒ“‚·‚é“G‚ðÝ’è
+		//è‡ªåˆ†ã§ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹æ•µã‚’è¨­å®š
 		if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 		{
 			SoundManager::Play("lockOnSE", false, 0.5f);
-			//ƒƒbƒNƒIƒ“‚µ‚Ä‚¢‚ê‚Î‰ðœA‚µ‚Ä‚¢‚È‚¯‚ê‚ÎƒƒbƒNƒIƒ“
+			//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã„ã‚Œã°è§£é™¤ã€ã—ã¦ã„ãªã‘ã‚Œã°ãƒ­ãƒƒã‚¯ã‚ªãƒ³
 			bool isLockOn = (enemyManager_->GetLockOnEnemy()->GetIsHardLockOn() == true) ?
 				false : true;
 			enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(isLockOn);
@@ -253,14 +253,14 @@ void CollisionManager::PlayerToEnemy()
 		if (BallCollision(player_->GetCol(), enemy->GetCol()))
 		{
 			Vector3 PtoEVec = player_->GetCol().center - enemy->GetCol().center;
-			//ƒxƒNƒgƒ‹‚Ì’·‚³‚ðŽæ“¾
+			//ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’å–å¾—
 			float length = PtoEVec.length();
 			PtoEVec = PtoEVec.normalize();
-			//Y¬•ª‚ð–³Œø‚É‚µ‚Ä‰Ÿ‚µo‚·
+			//Yæˆåˆ†ã‚’ç„¡åŠ¹ã«ã—ã¦æŠ¼ã—å‡ºã™
 			PtoEVec.y = 0;
-			//“ñ‚Â‚Ì“–‚½‚è”»’è‚Ì”¼Œa‚Ì’·‚³‚ð‘«‚·
+			//äºŒã¤ã®å½“ãŸã‚Šåˆ¤å®šã®åŠå¾„ã®é•·ã•ã‚’è¶³ã™
 			float backLength = player_->GetCol().radius + enemy->GetCol().radius;
-			//ƒxƒNƒgƒ‹‚Ì’·‚³‚ðˆø‚¢‚Ä‚ß‚èž‚ñ‚Å‚¢‚é’·‚³•ª‚¾‚¯‰Ÿ‚µ–ß‚·()
+			//ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’å¼•ã„ã¦ã‚ã‚Šè¾¼ã‚“ã§ã„ã‚‹é•·ã•åˆ†ã ã‘æŠ¼ã—æˆ»ã™()
 			backLength -= length;
 
 			Vector3 pushBackVec = (PtoEVec * backLength);
@@ -278,7 +278,7 @@ void CollisionManager::PlayerAttackToEnemy()
 	{
 		if (attackCol != nullptr)
 		{
-			//‹ßÚUŒ‚
+			//è¿‘æŽ¥æ”»æ’ƒ
 			for (auto& col : *attackCol->GetAttackCol())
 			{
 				if (enemy->GetDamageCoolTime().GetIsEnd())
@@ -286,16 +286,16 @@ void CollisionManager::PlayerAttackToEnemy()
 					if (BallCollision(col->col_, enemy->GetCol()))
 					{
 						col->isCollision_ = true;
-						//ƒvƒŒƒCƒ„[‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+						//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åå¯¾æ–¹å‘ã«ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 						Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
 						knockVec.y = col->knockVecY;
 						knockVec = knockVec.normalize();
 						knockVec = knockVec * col->knockPower;
-						//“G‚ÌƒmƒbƒNƒoƒbƒN’ïR—Í‚ðŠ|‚¯‚é
+						//æ•µã®ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯æŠµæŠ—åŠ›ã‚’æŽ›ã‘ã‚‹
 						knockVec = knockVec * enemy->GetKnockResist();
 						enemy->Damage(knockVec, col->damage, col->damageCoolTime);
 						enemy->SetIsNock(true);
-						//HPƒQ[ƒW”½‰f
+						//HPã‚²ãƒ¼ã‚¸åæ˜ 
 						enemyManager_->Damage();
 
 						Vector3 addVec = { 0.05f,0.05f,0.05f };
@@ -318,7 +318,7 @@ void CollisionManager::PlayerAttackToEnemy()
 		auto& bullets = *player_->GetMagicManager()->GetBullet();
 
 		if (bullets.size() == 0)continue;
-		//–‚–@UŒ‚
+		//é­”æ³•æ”»æ’ƒ
 		for (auto& bullet : bullets)
 		{
 
@@ -326,16 +326,16 @@ void CollisionManager::PlayerAttackToEnemy()
 			{
 				if (BallCollision(bullet->GetAttackCol()->get()->col_, enemy->GetCol()))
 				{
-					//ƒvƒŒƒCƒ„[‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+					//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åå¯¾æ–¹å‘ã«ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 					Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
 					knockVec.y = bullet->GetAttackCol()->get()->knockVecY;
 					knockVec = knockVec.normalize();
 					knockVec = knockVec * bullet->GetAttackCol()->get()->knockPower;
-					//“G‚ÌƒmƒbƒNƒoƒbƒN’ïR—Í‚ðŠ|‚¯‚é
+					//æ•µã®ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯æŠµæŠ—åŠ›ã‚’æŽ›ã‘ã‚‹
 					knockVec = knockVec * enemy->GetKnockResist();
 					enemy->Damage(knockVec, bullet->GetAttackCol()->get()->damage, bullet->GetAttackCol()->get()->damageCoolTime);
 					enemy->SetIsNock(true);
-					//HPƒQ[ƒW”½‰f
+					//HPã‚²ãƒ¼ã‚¸åæ˜ 
 					enemyManager_->Damage();
 
 					bullet->SetIsDead(true);
@@ -368,13 +368,13 @@ void CollisionManager::EnemyAttackToPlayer()
 		{
 			for (auto& col : *attackCol->GetAttackCol())
 			{
-				//ƒvƒŒƒCƒ„[‚Ìƒ_ƒ[ƒWƒN[ƒ‹ƒ^ƒCƒ€‚ªI‚í‚Á‚Ä‚¢‚ê‚Î
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ãŒçµ‚ã‚ã£ã¦ã„ã‚Œã°
 				if (player_->GetDamegeCoolTime()->GetIsEnd()) {
 
-					//ƒK[ƒh‚Ì“–‚½‚è”»’è
+					//ã‚¬ãƒ¼ãƒ‰ã®å½“ãŸã‚Šåˆ¤å®š
 					if (player_->GetGuard()->GetCol().isActive) {
 						if (BallCollision(col->col_, player_->GetGuard()->GetCol())) {
-							//“G‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+							//æ•µã®åå¯¾æ–¹å‘ã«ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 							Vector3 knockVec =
 								player_->GetWorldTransform()->position_ - enemy->GetCol().center;
 							knockVec.y = 0;
@@ -389,7 +389,7 @@ void CollisionManager::EnemyAttackToPlayer()
 
 					if (BallCollision(col->col_, player_->GetDamageCol()))
 					{
-						//“G‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+						//æ•µã®åå¯¾æ–¹å‘ã«ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 						Vector3 knockVec =
 							player_->GetWorldTransform()->position_ - enemy->GetCol().center;
 						knockVec.y = col->knockVecY;
@@ -421,12 +421,12 @@ void CollisionManager::EnemyBulletToPlayer()
 {
 	for (auto& bullet : *enemyManager_->GetBullet())
 	{
-		//ƒK[ƒh‚Ì“–‚½‚è”»’è
+		//ã‚¬ãƒ¼ãƒ‰ã®å½“ãŸã‚Šåˆ¤å®š
 		if (player_->GetGuard()->GetCol().isActive) {
 			if (BallCollision(bullet->GetAttackCol()->get()->col_, player_->GetGuard()->GetCol())) {
-				//ƒvƒŒƒCƒ„[‚Ìƒ_ƒ[ƒWƒN[ƒ‹ƒ^ƒCƒ€‚ªI‚í‚Á‚Ä‚¢‚ê‚Î
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ãŒçµ‚ã‚ã£ã¦ã„ã‚Œã°
 				if (player_->GetDamegeCoolTime()->GetIsEnd()) {
-					//“G‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+					//æ•µã®åå¯¾æ–¹å‘ã«ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 					Vector3 knockVec =
 						player_->GetWorldTransform()->position_ - bullet->GetAttackCol()->get()->col_.center;
 					knockVec.y = 0;
@@ -443,9 +443,9 @@ void CollisionManager::EnemyBulletToPlayer()
 
 		if (BallCollision(bullet->GetAttackCol()->get()->col_, player_->GetDamageCol()))
 		{
-			//ƒvƒŒƒCƒ„[‚Ìƒ_ƒ[ƒWƒN[ƒ‹ƒ^ƒCƒ€‚ªI‚í‚Á‚Ä‚¢‚ê‚Î
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ãŒçµ‚ã‚ã£ã¦ã„ã‚Œã°
 			if (player_->GetDamegeCoolTime()->GetIsEnd()) {
-				//“G‚Ì”½‘Î•ûŒü‚ÉƒmƒbƒNƒoƒbƒN‚·‚é
+				//æ•µã®åå¯¾æ–¹å‘ã«ãƒŽãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 				Vector3 knockVec =
 					player_->GetWorldTransform()->position_ - bullet->GetAttackCol()->get()->col_.center;
 				knockVec.y = bullet->GetAttackCol()->get()->knockVecY;
@@ -476,7 +476,7 @@ void CollisionManager::EnemyBulletToFloor()
 	for (auto& bullet : *enemyManager_->GetBullet())
 	{
 		Sphere col = bullet->GetAttackCol()->get()->col_;
-		//°‚ÆƒvƒŒƒCƒ„[
+		//åºŠã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 		if (Sphere2PlaneCol(col, *floor))
 		{
 			bullet->SetIsDead(true);

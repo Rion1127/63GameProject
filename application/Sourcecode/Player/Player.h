@@ -16,20 +16,20 @@
 
 #include "StateMachine.h"
 
-class Player final:
-	public IActor , public StateMachine<PlayerState>
+class Player final :
+	public IActor, public StateMachine<PlayerState>
 {
 private:
-	//ƒxƒNƒgƒ‹
+	//ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 frontVec_;
 	Vector3 playerFrontVec_;
 	Vector3 lockOnVec_;
 	Vector2 inputVec_;
 	Vector2 moveVec_;
-	// --“ü—Í-- //
+	// --å…¥åŠ›-- //
 	float goalinputAngle_;
-	float inputAngle_;	//“ü—Í‚³‚ê‚Ä‚¢‚é•ûŒü‚ÌŠp“x
-	float walklimitValue_;	//“ü—Í
+	float inputAngle_;	//å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹æ–¹å‘ã®è§’åº¦
+	float walklimitValue_;	//å…¥åŠ›
 
 	float moveSpeed_;
 
@@ -38,7 +38,7 @@ private:
 	bool isCanInput_;
 	float jumpTime_;
 
-	
+
 	PlayerCommand command_;
 	GuardClass guard_;
 	DodgeRoll dodgeRoll_;
@@ -65,24 +65,24 @@ public:
 
 	void ColPosUpdate();
 
-	// ƒXƒe[ƒgƒ}ƒVƒ“‚ð‰Šú‰»‚·‚éB
+	// ã‚¹ãƒ†ãƒ¼ãƒˆãƒžã‚·ãƒ³ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
 	void InitStateMachine() override;
 
 	void DogeRoll();
 	void DogeRollUpdate();
 	void Guard();
 	void GuardUpdate();
-	//ƒWƒƒƒ“ƒv
+	//ã‚¸ãƒ£ãƒ³ãƒ—
 	void Jump();
 	void JumpUpdate();
 	void Freeze(uint32_t time);
 	void FreezeUpdate();
-	//ˆÚ“®
+	//ç§»å‹•
 	void InputVecUpdate();
 private:
-	//d—Í
+	//é‡åŠ›
 	void GravityUpdate();
-	//ƒXƒe[ƒ^ƒXXV
+	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ›´æ–°
 	void StateUpdate();
 	void MPCharge();
 public:
@@ -108,10 +108,10 @@ public:
 	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
 	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
-	void SetKnockVec(Vector3 vec) override{ knockVec_ = vec; }
+	void SetKnockVec(Vector3 vec) override { knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 	void SetIsCanInput(bool flag) { isCanInput_ = flag; }
-	
+
 
 	void AddaddVec(Vector3 pos) { addVec_ += pos; }
 	void SetAddPos(Vector3 pos) { addVec_ = pos; }

@@ -28,7 +28,7 @@ private:
 	std::array<std::unique_ptr<Sprite>, 2> readyShapeSprite_;
 	std::unique_ptr<Sprite> goSprite_;
 	std::unique_ptr<Sprite> goShapeSprite_;
-	
+
 	Timer readyTimer_;
 	Timer rdyEaseTimer_;
 	Timer displayTimer_;
@@ -87,16 +87,16 @@ private:
 	uint32_t maxRoundNum_;
 	uint32_t roundNum_;
 
-	bool isStart_;//ready•\¦’†
-	bool isNext_;//Ÿ‚Ìƒ‰ƒEƒ“ƒh‚ÖˆÚ“®‚·‚é
-	bool isClearCamera_;//‚»‚Ìƒ‰ƒEƒ“ƒh‚Ì“G‚ğ0‚É‚µ‚½ê‡true
-	bool isReset_;//ƒŠƒZƒbƒgƒtƒ‰ƒO
-	bool isClear_;//‘S‚Ä‚Ìƒ‰ƒEƒ“ƒh‚ªI—¹
+	bool isStart_;//readyè¡¨ç¤ºä¸­
+	bool isNext_;//æ¬¡ã®ãƒ©ã‚¦ãƒ³ãƒ‰ã¸ç§»å‹•ã™ã‚‹
+	bool isClearCamera_;//ãã®ãƒ©ã‚¦ãƒ³ãƒ‰ã®æ•µã‚’0ã«ã—ãŸå ´åˆtrue
+	bool isReset_;//ãƒªã‚»ãƒƒãƒˆãƒ•ãƒ©ã‚°
+	bool isClear_;//å…¨ã¦ã®ãƒ©ã‚¦ãƒ³ãƒ‰ãŒçµ‚äº†
 
 	Timer clearBlankTimer_;
 	Timer blindTimer_;
 	Timer gameClearBlankTimer_;
-	
+
 	SelectType selectType_;
 	ClearType clearType_;
 public:

@@ -30,14 +30,14 @@ void ParticleManager::Update()
 	std::list<std::shared_ptr<IEmitter>>::iterator itr;
 	for (itr = emitters_.begin(); itr != emitters_.end();)
 	{
-		//ƒp[ƒeƒBƒNƒ‹‚Ì”‚ª0‚É‚È‚Á‚½‚ç
+		//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æ•°ãŒ0ã«ãªã£ãŸã‚‰
 		if ((*itr)->particle->GetParticleNum() == 0) {
 			itr = emitters_.erase(itr);
 			continue;
 		}
 
 		if ((*itr)->isActive) {
-			//À•W‚ðXV
+			//åº§æ¨™ã‚’æ›´æ–°
 			(*itr)->popCoolTime_.AddTime(1);
 			if ((*itr)->popCoolTime_.GetIsEnd()) {
 				(*itr)->particle->Add();
@@ -54,7 +54,7 @@ void ParticleManager::Update()
 void ParticleManager::Draw()
 {
 	std::string shaderName = "Particle";
-	
+
 	for (auto& emitter : emitters_)
 	{
 		PipelineManager::PreDraw(emitter->particle->GetShaderName(), POINTLIST, emitter->particle->GetPipelineState());

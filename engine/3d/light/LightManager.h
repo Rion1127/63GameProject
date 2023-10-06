@@ -12,12 +12,12 @@ private:
 		SPOT_,
 		NUMEND_
 	};
-	//ƒ‰ƒCƒg‚Ìƒ^ƒCƒv
+	//ãƒ©ã‚¤ãƒˆã®ã‚¿ã‚¤ãƒ—
 	uint32_t lightType_ = DIRECTION_;
 private:
 	float ambientColor0[3] = { 1,1,1 };
 
-	//Œõü•ûŒü‰Šú‰»’l
+	//å…‰ç·šæ–¹å‘åˆæœŸåŒ–å€¤
 	float lightDir0[3] = { 0,-1,0 };
 	float lightColor0[3] = { 1,0,0 };
 
@@ -27,19 +27,19 @@ private:
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 0,0,1 };
 
-	//“_ŒõŒ¹
+	//ç‚¹å…‰æº
 	float pointLightPos[3] = { 0,0,0 };
 	float pointLightColor[3] = { 1,1,1 };
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 	float spotlightDir[3] = { 0,-1,0 };
 	float spotlightPos[3] = { 0,5,0 };
 	float spotLightColor[3] = { 1,0,1 };
 	float spotLightAtten[3] = { 0.0f,0.0f, 0.0f };
 	float spotLightFactorAngle[2] = { 20.f,30.f };
 
-	//ŠÛ‰e
+	//ä¸¸å½±
 	float circleShadowDir[3] = { 0,-1,0 };
 	float circleShadowAtten[3] = { 0.5f,0.6f,0.0f };
 	float circleShadowFactorAngle[2] = { 0.0f,0.5f };

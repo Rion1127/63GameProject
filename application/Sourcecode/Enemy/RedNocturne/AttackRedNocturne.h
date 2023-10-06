@@ -1,8 +1,8 @@
 #pragma once
 #include "IBullet.h"
 #include "IParticle.h"
-class AttackRedNocturne final:
-    public IBullet
+class AttackRedNocturne final :
+	public IBullet
 {
 private:
 	float frontDist_;

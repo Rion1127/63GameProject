@@ -2,7 +2,7 @@
 #include "IEnemy.h"
 #include "IParticle.h"
 class EnemyRedNocturne :
-    public IEnemy
+	public IEnemy
 {
 public:
 	enum class State {

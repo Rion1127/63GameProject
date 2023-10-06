@@ -3,7 +3,7 @@
 #include "Util.h"
 
 IParticle::~IParticle() {
-	
+
 }
 
 void IParticle::Init(int32_t vertexCount)
@@ -12,7 +12,7 @@ void IParticle::Init(int32_t vertexCount)
 	vertices_.resize(vertexCount);
 	UINT sizeVB = static_cast<UINT>(sizeof(VertexParticle) * vertices_.size());
 
-	////’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	////é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	D3D12_HEAP_PROPERTIES heapprop{};
 	heapprop.Type = D3D12_HEAP_TYPE_UPLOAD;
 
@@ -38,7 +38,7 @@ void IParticle::Init(int32_t vertexCount)
 
 	vertBuff_->SetName(L"PARTICLE VERT BUFF");
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 	vbView_.SizeInBytes = sizeVB;
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
@@ -49,11 +49,11 @@ void IParticle::Init(int32_t vertexCount)
 void IParticle::Update()
 {
 	if (particles_.size() > 0) {
-		//end_frame‚ð’´‚¦‚½‚çíœ
+		//end_frameã‚’è¶…ãˆãŸã‚‰å‰Šé™¤
 		DeleteUpdate();
-		//“®‚«XV
+		//å‹•ãæ›´æ–°
 		MoveUpdate();
-		//ƒf[ƒ^“]‘—
+		//ãƒ‡ãƒ¼ã‚¿è»¢é€
 		TransferBuff();
 	}
 }
@@ -63,14 +63,14 @@ void IParticle::Draw()
 	if (particles_.size() > 0) {
 		auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
 
-		// ’¸“_ƒf[ƒ^“]‘—
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿è»¢é€
 		cmdList.IASetVertexBuffers(0, 1, &vbView_);
 
-		// ’è”ƒoƒbƒtƒ@“]‘—
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 		cmdList.SetGraphicsRootConstantBufferView(
 			1, transform_.constBuffTransform_->GetGPUVirtualAddress());
 
-		// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚ÉÝ’è
+		// SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è¨­å®š
 		TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture.textureHandle);
 
 		cmdList.DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
@@ -80,9 +80,9 @@ void IParticle::Draw()
 void IParticle::TransferBuff()
 {
 	HRESULT result;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰ž‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ðŽæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	VertexParticle* vertMap = nullptr;
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰ž‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ðŽæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	for (int32_t i = 0; i < particles_.size(); i++)
@@ -100,7 +100,7 @@ void IParticle::TransferBuff()
 	}
 	std::copy(vertices_.begin(), vertices_.end(), vertMap);
 
-	// Œq‚ª‚è‚ð‰ðœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff_->Unmap(0, nullptr);
 
 	transform_.Update(isBillBoard);

@@ -22,64 +22,64 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 
 	std::vector<PopData> popDatas;
 	std::stringstream enemyPopCommands_;
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	std::ifstream file;
 	file.open(fileName);
 	assert(file.is_open());
-	//ƒtƒ@ƒCƒ‹‚Ì“à—e‚ğ•¶š—ñƒXƒgƒŠ[ƒ€‚ÉƒRƒs[
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹ã‚’æ–‡å­—åˆ—ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ã‚³ãƒ”ãƒ¼
 	enemyPopCommands_ << file.rdbuf();
-	//ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 	file.close();
 
-	//1s•ª‚Ì•¶š—ñ‚ğ“ü‚ê‚é•Ï”
+	//1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 	std::string line;
-	//ƒRƒ}ƒ“ƒhÀsƒ‹[ƒv
+	//ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œãƒ«ãƒ¼ãƒ—
 	while (std::getline(enemyPopCommands_, line))
 	{
-		//1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		//1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 		std::istringstream line_stream(line);
 
 		std::string word;
-		//A‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		//ã€åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		std::getline(line_stream, word, ',');
-		// "//"‚©‚çn‚Ü‚és‚ÍƒRƒƒ“ƒg
+		// "//"ã‹ã‚‰å§‹ã¾ã‚‹è¡Œã¯ã‚³ãƒ¡ãƒ³ãƒˆ
 		if (word.find("//") == 0)
 		{
-			//ƒRƒƒ“ƒgs‚ğ”ò‚Î‚·
+			//ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã‚’é£›ã°ã™
 			continue;
 		}
 		if (word.find("ROUND") == 0)
 		{
 			std::string roundNum = word;
-			//ƒ‰ƒEƒ“ƒh‚Ì”’l‚¾‚¯‚ğc‚·
+			//ãƒ©ã‚¦ãƒ³ãƒ‰ã®æ•°å€¤ã ã‘ã‚’æ®‹ã™
 			roundNum.erase(0, 5);
-			//‚Pƒ‰ƒEƒ“ƒh•ª‚Ìƒf[ƒ^‚ğ¶¬
+			//ï¼‘ãƒ©ã‚¦ãƒ³ãƒ‰åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
 			popDatas.emplace_back();
 			popDatas.back().roundNum = (uint32_t)std::atof(roundNum.c_str());
 		}
 
-		//SETƒRƒ}ƒ“ƒh
+		//SETã‚³ãƒãƒ³ãƒ‰
 		if (word.find("SET") == 0)
 		{
 			EnemyData enemydata;
-			//À•W“Ç‚İ‚İ
+			//åº§æ¨™èª­ã¿è¾¼ã¿
 			Vector3 pos = GetPosLoad(line_stream, word, ',');
 			enemydata.pos = pos;
 
 			Vector3 rot = GetRotLoad(line_stream, word, ',');
 			enemydata.rot = rot;
 
-			//“G‚Ìí—Ş
+			//æ•µã®ç¨®é¡
 			std::getline(line_stream, word, ',');
 			std::string enemyType = word.c_str();
 
 			enemydata.name = enemyType;
 
-			//“G‚ğ¶¬‚·‚é‚Ì‚É•K—v‚Èƒf[ƒ^‚ğ‘}“ü
+			//æ•µã‚’ç”Ÿæˆã™ã‚‹ã®ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’æŒ¿å…¥
 			popDatas.back().enemyData.emplace_back(enemydata);
 		}
 	}
-	//ˆê‚Â‚Ìƒtƒ@ƒCƒ‹‚ÆdataName‚ğƒyƒA‚É‚µ‚Ä•Û‘¶
+	//ä¸€ã¤ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¨dataNameã‚’ãƒšã‚¢ã«ã—ã¦ä¿å­˜
 	popDatas_.insert(std::make_pair(dataName, std::move(popDatas)));
 }
 
@@ -89,10 +89,10 @@ void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std
 	int32_t min = 0;
 	int32_t max = (int32_t)popDatas_[dataName].size();
 	int32_t roundNum_ = Clamp(roundNum - 1, min, max);
-	//Œ©‚â‚·‚¢‚æ‚¤‚ÉQÆ“n‚µ‚·‚é
+	//è¦‹ã‚„ã™ã„ã‚ˆã†ã«å‚ç…§æ¸¡ã—ã™ã‚‹
 	std::vector<EnemyData>& enemyData = popDatas_[dataName][roundNum_].enemyData;
 	enemys->clear();
-	//“G‚ğƒZƒbƒg‚µ‚Ä‚¢‚­
+	//æ•µã‚’ã‚»ãƒƒãƒˆã—ã¦ã„ã
 	for (uint32_t i = 0; i < enemyData.size(); i++)
 	{
 		std::unique_ptr<IEnemy> newEnemy;
@@ -116,13 +116,13 @@ void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std
 
 Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& word, char _Delim)
 {
-	//xÀ•W
+	//xåº§æ¨™
 	std::getline(line_stream, word, ',');
 	float x = (float)std::atof(word.c_str());
-	//yÀ•W
+	//yåº§æ¨™
 	std::getline(line_stream, word, ',');
 	float y = (float)std::atof(word.c_str());
-	//ZÀ•W
+	//Zåº§æ¨™
 	std::getline(line_stream, word, ',');
 	float z = (float)std::atof(word.c_str());
 
@@ -131,13 +131,13 @@ Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& wo
 
 Vector3 EnemyLoader::GetRotLoad(std::istringstream& line_stream, std::string& word, char _Delim)
 {
-	//xÀ•W
+	//xåº§æ¨™
 	std::getline(line_stream, word, ',');
 	float x = Radian((float)std::atof(word.c_str()));
-	//yÀ•W
+	//yåº§æ¨™
 	std::getline(line_stream, word, ',');
 	float y = Radian((float)std::atof(word.c_str()));
-	//ZÀ•W
+	//Zåº§æ¨™
 	std::getline(line_stream, word, ',');
 	float z = Radian((float)std::atof(word.c_str()));
 

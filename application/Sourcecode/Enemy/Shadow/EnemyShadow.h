@@ -38,7 +38,7 @@ private:
 
 	std::unordered_map<State, int32_t> priority_;
 private:
-	//デバッグ
+	//繝�繝舌ャ繧ｰ
 	std::string stateName_;
 public:
 	EnemyShadow(Vector3 pos, Vector3 rot);

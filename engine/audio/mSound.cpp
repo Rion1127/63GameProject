@@ -33,7 +33,7 @@ void SoundManager::Update()
 		XAUDIO2_VOICE_STATE state;
 		itr->sound_->GetState(&state);
 		if (state.BuffersQueued <= 0) {
-			//���g�������Ă����炷�ׂĎ~�߂�
+			//中身が入っていたらすべて止める
 			if (itr->sound_ != nullptr) {
 				itr->sound_->Stop();
 			}
@@ -117,7 +117,7 @@ SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
 }
 
 bool SoundManager::IsPlaying(const SoundKey& key) {
-	IXAudio2SourceVoice* pSourceVoice = nullptr;//����ۑ����Ƃ��Ǝ~�߂���
+	IXAudio2SourceVoice* pSourceVoice = nullptr;//これ保存しとくと止められる
 	SoundData* pSnd = &ssndMap_[key];
 
 	sxAudio2_->CreateSourceVoice(&pSourceVoice, &pSnd->wfex_);
@@ -128,10 +128,10 @@ bool SoundManager::IsPlaying(const SoundKey& key) {
 
 void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float picth)
 {
-	//�����t���[���ɓ��������𗬂��̂��~�߂�
+	//同じフレームに同じ音源を流すのを止める
 	if (ssndMap_[key].isAdded_ == true)return;
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	
+
 	ssndPlaying_.push_back(ssndMap_[key]);
 	ssndMap_[key].isAdded_ = true;
 	if (ssndPlaying_.back().sound_ != nullptr)
@@ -147,7 +147,7 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float p
 	buf.AudioBytes = ssndPlaying_.back().bufferSize_;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 	if (loopFlag) buf.LoopCount = XAUDIO2_LOOP_INFINITE;
-	//�{�����[���Z�b�g
+	//ボリュームセット
 	pSourceVoice->SetVolume(volum);
 	pSourceVoice->SubmitSourceBuffer(&buf);
 	pSourceVoice->SetFrequencyRatio(picth);
@@ -176,7 +176,7 @@ void SoundManager::ReleaseAllSounds()
 {
 	for (auto itr = ssndMap_.begin(); itr != ssndMap_.end(); itr++)
 	{
-		//���g�������Ă����炷�ׂĎ~�߂�
+		//中身が入っていたらすべて止める
 		if (itr->second.sound_ != nullptr) {
 			itr->second.sound_->Stop();
 		}
