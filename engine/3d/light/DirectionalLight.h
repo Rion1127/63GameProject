@@ -16,7 +16,7 @@ public:
 
 	void Update();
 
-	void Draw(UINT rootParameterIndex);
+	void Draw();
 
 	void TransferConstBuffer();
 

@@ -23,7 +23,7 @@ public:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	void Ini(ID3D12Device* device);
+	void Ini();
 
 	void CreateBuffer();
 
@@ -39,16 +39,12 @@ public:
 
 	void Map();
 
-	void Draw(uint32_t indexSize,
-		WorldTransform* worldTransform,
-		UINT descriptorSize);
+	void Draw(uint32_t indexSize,WorldTransform* worldTransform);
 
 	void Draw(
 		const WorldTransform& worldTransform);
 
-	void DrawInstanced(
-		WorldTransform* worldTransform,
-		UINT descriptorSize);
+	void DrawInstanced(WorldTransform* worldTransform);
 private:
 
 	// 頂点バッファの生成

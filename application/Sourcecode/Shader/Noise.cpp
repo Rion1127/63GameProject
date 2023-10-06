@@ -21,7 +21,8 @@ void Noise::TransferBuff()
 
 	//定数バッファのマッピング
 	ConstBuffTime* map{};
-	HRESULT result = constBuff_->Map(0, nullptr, (void**)&map);
+	HRESULT result;
+	result = constBuff_->Map(0, nullptr, (void**)&map);
 	assert(SUCCEEDED(result));
 
 	map->time = time_;

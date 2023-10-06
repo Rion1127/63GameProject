@@ -41,8 +41,7 @@ void ParticleFire::Add()
 			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
 			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
-		float scale_ = RRandom::RandF(0.3f, emitter_->scale);
-
+		
 		p.position = emitter_->pos + vec;
 		p.basePos = emitter_->pos;
 		p.end_frame = emitter_->time;

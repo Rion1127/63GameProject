@@ -3,7 +3,7 @@
 #include "DirectX.h"
 #include "Vertices.h"
 
-void Vertices::Ini(ID3D12Device* device)
+void Vertices::Ini()
 {
 	HRESULT result;
 
@@ -245,8 +245,7 @@ void Vertices::Map()
 }
 
 void Vertices::Draw(uint32_t indexSize,
-	WorldTransform* worldTransform,
-	UINT descriptorSize)
+	WorldTransform* worldTransform)
 {
 	// 頂点バッファビューの設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
@@ -275,7 +274,7 @@ void Vertices::Draw(const WorldTransform& worldTransform)
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
-void Vertices::DrawInstanced(WorldTransform* worldTransform, UINT descriptorSize)
+void Vertices::DrawInstanced(WorldTransform* worldTransform)
 {
 	// 頂点バッファビューの設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);

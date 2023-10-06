@@ -10,7 +10,8 @@ void LineBlur::TransferBuff()
 {
 	//定数バッファのマッピング
 	ConstBuffRad* map{};
-	HRESULT result = constBuff_->Map(0, nullptr, (void**)&map);
+	HRESULT result;
+	result = constBuff_->Map(0, nullptr, (void**)&map);
 	assert(SUCCEEDED(result));
 
 	map->radian = radian_;

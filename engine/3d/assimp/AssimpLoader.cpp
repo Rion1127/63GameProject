@@ -14,7 +14,7 @@ AssimpLoader* AssimpLoader::GetInstance()
 	return &instance;
 }
 
-std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName, AssimpModel* model)
+std::unique_ptr<AssimpModel> AssimpLoader::Load(std::string fileName)
 {
 	std::unique_ptr<AssimpModel> result =
 		std::move(std::make_unique<AssimpModel>());

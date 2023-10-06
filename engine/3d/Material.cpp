@@ -41,8 +41,6 @@ Material::Material()
 
 void Material::LoadTexture(const std::string& directoryPath)
 {
-	HRESULT result = S_FALSE;
-
 	// WICテクスチャのロード
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};

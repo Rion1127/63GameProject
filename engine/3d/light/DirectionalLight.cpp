@@ -45,7 +45,7 @@ void DirectionalLight::Update()
 	}
 }
 
-void DirectionalLight::Draw(UINT rootParameterIndex)
+void DirectionalLight::Draw()
 {
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(3, constBuff_->GetGPUVirtualAddress());

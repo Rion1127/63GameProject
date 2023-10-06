@@ -164,9 +164,9 @@ PauseSprite::PauseSprite()
 			pauseSprite_[i]->sprite->SetRot(Radian(180));
 			pauseSprite_[i]->sprite->SetAnchor(Vector2(0.5f, 0.0f));
 
-			Vector2 easeEndpos = {
-			WinAPI::GetWindowSize().x / 2.f + (64 * i) - (64.f * 2.f),
-			WinAPI::GetWindowSize().y / 4.0f + 32.f
+			easeEndpos = {
+				WinAPI::GetWindowSize().x / 2.f + (64 * i) - (64.f * 2.f),
+				WinAPI::GetWindowSize().y / 4.0f + 32.f
 			};
 			pauseSprite_[i]->sprite->SetPos(easeEndpos);
 			pauseSprite_[i]->easeEndPos_ = easeEndpos;
@@ -385,7 +385,7 @@ PauseSelectSprite::PauseSelectSprite()
 	}
 }
 
-void PauseSelectSprite::Update(int32_t index)
+void PauseSelectSprite::Update(uint32_t index)
 {
 	Color selectColor = { 230,50,50,255 };
 	Color unSelectColor = { 0,35,255,255 };

@@ -60,7 +60,7 @@ void DebugScene::Ini()
 
 	std::string fileName = "application/Resources/Object/boneTest.fbx";
 
-	model_ = AssimpLoader::GetInstance()->Load(fileName, model_.get());
+	model_ = AssimpLoader::GetInstance()->Load(fileName);
 
 	//obj_.SetModel(std::move(model_));
 }

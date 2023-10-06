@@ -90,15 +90,7 @@ public:
 	void Draw();
 	//画像の頂点データを自分で指定
 	void Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float LdY, float RdX, float RdY, UINT descriptorSize);
-	/// <summary>
-	/// ブレンド設定
-	/// </summary>
-	/// <param name="BLEND_ALPHA">アルファブレンド</param>
-	/// <param name="BLEND_SUB">減算合成</param>
-	/// <param name="BLEND_NEGA">色反転合成</param>
-	/// <param name="BLEND_NORMAL">半透明合成</param>
-	static void SetBlend(uint32_t blend);
-
+	
 	static void AddAllNum() { SAllNum++; }
 public:
 	//セッター

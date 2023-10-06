@@ -9,7 +9,7 @@
 AssimpObject3D::AssimpObject3D()
 {
 	constBuff_ = CreateBuff(constMap_);
-	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/AMove.fbx", nullptr));
+	SetModel(AssimpLoader::GetInstance()->Load("application/Resources/boneTest/AMove.fbx"));
 	animation_.timer.SetLimitTime(180);
 }
 

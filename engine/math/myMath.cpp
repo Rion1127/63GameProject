@@ -469,8 +469,7 @@ Vector4 Vec4MulMat4(Vector4 v, Matrix4 m)
 Vector3 getEulerAnglesFromVector(const Vector3& vec) {
 	// ベクトルの長さを計算
 	double length_xy = (double)std::sqrt(vec.x * vec.x + vec.y * vec.y);
-	double length_xyz = (double)std::sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-
+	
 	Vector3 result;
 
 	result = {

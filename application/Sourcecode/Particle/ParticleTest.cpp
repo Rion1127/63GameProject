@@ -47,7 +47,7 @@ void ParticleTest::MoveUpdate()
 	{
 		p.frame++;
 
-		float f = (float)p.frame / p.end_frame;
+		//float f = (float)p.frame / p.end_frame;
 
 		p.rot.z += 0.01f;
 	}

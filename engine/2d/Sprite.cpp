@@ -312,8 +312,6 @@ void Sprite::Draw()
 
 void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float LdY, float RdX, float RdY, UINT descriptorSize)
 {
-	HRESULT result = S_OK;
-
 #pragma region 画像の頂点データを更新
 	vertices_.at(0).pos = { LdX,LdY,0 };//左下
 	vertices_.at(1).pos = { LuX,LuY,0 };//左上
@@ -348,18 +346,6 @@ void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float L
 	//描画コマンド
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
-}
-
-void Sprite::SetBlend(uint32_t blend)
-{
-	//if (blend > 3) blend = 3;
-	//else if (blend < 0) blend = 0;
-	//// パイプラインステートとルートシグネチャの設定コマンド
-	//RDirectX::GetInstance()->GetCommandList()->SetPipelineState(
-	//	PipelineManager::GetSpritePipeline(blend)->gerPipelineState());
-
-	//RDirectX::GetInstance()->GetCommandList()->SetGraphicsRootSignature(
-	//	PipelineManager::GetSpritePipeline(blend)->GetRootSignature());
 }
 
 void Sprite::TransferVertex()

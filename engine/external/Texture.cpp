@@ -208,15 +208,15 @@ Texture* TextureManager::GetTexture(const std::string& name)
 	return texData[name].get();
 }
 
-ID3D12Resource* TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
-{
-	auto& device = *RDirectX::GetInstance()->GetDevice();
-	std::vector<D3D12_SUBRESOURCE_DATA> subresources;
-	DirectX::PrepareUpload(&device, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
-	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
-	//ID3D12Resource* intermediateResource =
-	return nullptr;
-}
+//ID3D12Resource* TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
+//{
+//	auto& device = *RDirectX::GetInstance()->GetDevice();
+//	std::vector<D3D12_SUBRESOURCE_DATA> subresources;
+//	DirectX::PrepareUpload(&device, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+//	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
+//	//ID3D12Resource* intermediateResource =
+//	return nullptr;
+//}
 
 
 

@@ -40,8 +40,7 @@ void ParticleEnemyDead::Add()
 			RRandom::RandF(-emitter_->addVec.y,emitter_->addVec.y),
 			RRandom::RandF(-emitter_->addVec.z,emitter_->addVec.z)
 		};
-		float scale_ = RRandom::RandF(0.3f, emitter_->scale);
-
+		
 		p.position = vec;
 		p.end_frame = emitter_->time;
 		p.scale = emitter_->scale;

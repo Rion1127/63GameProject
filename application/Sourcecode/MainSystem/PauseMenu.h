@@ -51,7 +51,7 @@ private:
 	Particle2DSelect selectParticle_;
 public:
 	PauseSelectSprite();
-	void Update(int32_t index);
+	void Update(uint32_t index);
 	void Draw();
 
 };

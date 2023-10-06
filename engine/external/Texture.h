@@ -52,7 +52,7 @@ public:
 
 	Texture* GetTexture(const std::string& name);
 
-	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+	//ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 private:
 	TextureManager() {};
 };
