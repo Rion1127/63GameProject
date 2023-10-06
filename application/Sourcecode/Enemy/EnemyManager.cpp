@@ -33,11 +33,11 @@ void EnemyManager::PreUpdate()
 
 	Vector3 popPos;
 
-	static float pos[3] = {};
+	static float dragPos[3] = {};
 
-	ImGui::DragFloat3("popPos", pos, 0.1f, -30, 30);
+	ImGui::DragFloat3("popPos", dragPos, 0.1f, -30, 30);
 
-	popPos = { pos[0],pos[1],pos[2] };
+	popPos = { dragPos[0],dragPos[1],dragPos[2] };
 
 	if (ImGui::Button("POP_Dummy"))
 	{

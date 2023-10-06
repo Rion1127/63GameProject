@@ -364,16 +364,15 @@ void ReadyGoSprite::ReadySpriteUpdate()
 	rdyEaseTimer_.AddTime(1);
 	float scale = Easing::Circ::easeOut(4.f, 1.f, rdyEaseTimer_.GetTimeRate());
 	readySprite_->SetScale({ scale ,scale });
-	Color color = readySprite_->GetColor();
-	color.a = 255.f * rdyEaseTimer_.GetTimeRate();
-	readySprite_->SetColor(color);
+	Color readyTexcolor = readySprite_->GetColor();
+	readyTexcolor.a = 255.f * rdyEaseTimer_.GetTimeRate();
+	readySprite_->SetColor(readyTexcolor);
 
 	float colorLight = readySprite_->GetColor().r;
 	//Readyスプライト動き更新
 	if (readySprite_->GetScale().x <= 1)
 	{
 		int32_t limitTime = readyTimer_.GetLimitTimer() - rdyEaseTimer_.GetLimitTimer();
-		float halflimitTime = limitTime / 2.f;
 		limitTime /= 5;
 		int32_t time = readyTimer_.GetTimer() - rdyEaseTimer_.GetTimer();
 
@@ -386,9 +385,9 @@ void ReadyGoSprite::ReadySpriteUpdate()
 			if (rate <= 0.f)SoundManager::Play("ShineSE");
 		}
 
-		color = { colorLight ,colorLight ,colorLight ,color.a };
+		readyTexcolor = { colorLight ,colorLight ,colorLight ,readyTexcolor.a };
 
-		readySprite_->SetColor(color);
+		readySprite_->SetColor(readyTexcolor);
 	}
 
 	float rightStartPosX = 1050;
@@ -409,9 +408,9 @@ void ReadyGoSprite::ReadySpriteUpdate()
 		if (i == 0)pos.x = easerightPosx;
 		if (i == 1)pos.x = easeleftPosx;
 		readyShapeSprite_[i]->SetPos(pos);
-		Color color = readyShapeSprite_[i]->GetColor();
-		color.a = alpha;
-		readyShapeSprite_[i]->SetColor(color);
+		Color readyShapeColor = readyShapeSprite_[i]->GetColor();
+		readyShapeColor.a = alpha;
+		readyShapeSprite_[i]->SetColor(readyShapeColor);
 		readyShapeSprite_[i]->Update();
 	}
 }
@@ -480,7 +479,7 @@ SelectSprite::SelectSprite()
 	}
 }
 
-void SelectSprite::Update(int32_t index)
+void SelectSprite::Update(uint32_t index)
 {
 	Color selectColor = { 230,50,50,255 };
 	Color unSelectColor = { 0,35,255,255 };

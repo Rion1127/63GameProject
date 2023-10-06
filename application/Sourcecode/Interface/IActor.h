@@ -40,7 +40,7 @@ public:
 	void AddaddVec(Vector3 vec) { addVec_ += vec; }
 	void SetaddVec(Vector3 vec) { addVec_ = vec; }
 	void SetGravity(Vector3 vec) { gravity_.SetGrabity(vec); }
-	virtual void SetKnockVec(Vector3 vec) { knockVec_ = knockVec_; }
+	virtual void SetKnockVec(Vector3 vec) { knockVec_ = vec; }
 	void SetIsCanMove(bool flag) { isCanMove_ = flag; }
 	void SetFreezeTime(uint32_t time) { freezeTimer_.SetLimitTime(time); freezeTimer_.Reset(); }
 };

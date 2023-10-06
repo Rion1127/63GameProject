@@ -210,8 +210,8 @@ void Player::InputVecUpdate()
 			angle = acos(angle);
 			angle = Angle(angle);
 
-			float dist1 = 360.f - goalinputAngle_;
-			float dist2 = goalinputAngle_;
+			//float dist1 = 360.f - goalinputAngle_;
+			//float dist2 = goalinputAngle_;
 			//プレイヤーが180度よりも大きい角度を向いていた時
 			/*if (dist1 < dist2)
 			{*/
@@ -499,7 +499,6 @@ void Player::WallColision()
 bool Player::GetIsCanMove()
 {
 	if (isCanMove_ == false) return false;
-	auto state = GetNowState()->GetId();
 	if (state_ != PlayerState::Attack &&
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&

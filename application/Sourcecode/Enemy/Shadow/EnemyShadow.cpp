@@ -329,12 +329,12 @@ void EnemyShadow::SortPriority()
 	std::sort(arr.begin(), arr.end(),
 		[](const auto& x, const auto& y) {return x.second > y.second; });
 
-	uint16_t rand = RRandom::Rand(0, allPriolityValue);
+	uint32_t rand = RRandom::Rand(0, allPriolityValue);
 
-	int32_t prePriolityValue = 0;	//累計の優先度
+	uint32_t prePriolityValue = 0;	//累計の優先度
 	for (uint32_t i = 0; i < arr.size(); i++)
 	{
-		int32_t nowPriolityValue = 0;	//現在の優先度
+		uint32_t nowPriolityValue = 0;	//現在の優先度
 
 		if (i >= 1)
 		{

@@ -63,10 +63,10 @@ void EnemyLoader::LoadEnemyPopFile(const std::string& fileName, const std::strin
 		{
 			EnemyData enemydata;
 			//座標読み込み
-			Vector3 pos = GetPosLoad(line_stream, word, ',');
+			Vector3 pos = GetPosLoad(line_stream, word);
 			enemydata.pos = pos;
 
-			Vector3 rot = GetRotLoad(line_stream, word, ',');
+			Vector3 rot = GetRotLoad(line_stream, word);
 			enemydata.rot = rot;
 
 			//敵の種類
@@ -114,7 +114,7 @@ void EnemyLoader::SetEnemy(std::list<std::unique_ptr<IEnemy>>* enemys, const std
 	}
 }
 
-Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& word, char _Delim)
+Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& word)
 {
 	//x座標
 	std::getline(line_stream, word, ',');
@@ -129,7 +129,7 @@ Vector3 EnemyLoader::GetPosLoad(std::istringstream& line_stream, std::string& wo
 	return Vector3(x, y, z);
 }
 
-Vector3 EnemyLoader::GetRotLoad(std::istringstream& line_stream, std::string& word, char _Delim)
+Vector3 EnemyLoader::GetRotLoad(std::istringstream& line_stream, std::string& word)
 {
 	//x座標
 	std::getline(line_stream, word, ',');

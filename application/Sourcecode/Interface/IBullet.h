@@ -37,7 +37,7 @@ protected:
 	bool isDead_;
 	int32_t costMP_;
 public:
-	IBullet(IActor* selfActor, int32_t colNum = 1,
+	IBullet(IActor* selfActor,
 		int32_t maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25, int32_t costMP = 10);
 	virtual ~IBullet() {};
 	void Update();
