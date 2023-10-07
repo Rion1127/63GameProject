@@ -30,6 +30,8 @@ Player::Player() :
 
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	displayObj_ = std::move(std::make_unique<Object3d>());
+	displayObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	//着地硬直時間
 	freezeTimer_.SetLimitTime(7);
 
@@ -102,6 +104,20 @@ void Player::PostUpdate()
 		lockOnVec_ =
 			command_.GetLockOnEnemy()->GetWorldTransform()->position_ - obj_->GetTransform()->position_;
 	}
+	Vector3 displayPos = {
+		obj_->GetPos().x,
+		obj_->GetPos().y + obj_->GetScale().y,
+		obj_->GetPos().z,
+	};
+	Vector3 displayrot = {
+		obj_->GetRot().x,
+		obj_->GetRot().y,
+		obj_->GetRot().z,
+	};
+	displayObj_->SetPos(displayPos);
+	displayObj_->SetRot(displayrot);
+
+	displayObj_->Update();
 
 	if (health_ <= 0)
 	{
@@ -210,8 +226,10 @@ void Player::InputVecUpdate()
 			angle = acos(angle);
 			angle = Angle(angle);
 
-			//float dist1 = 360.f - goalinputAngle_;
-			//float dist2 = goalinputAngle_;
+			float dist1 = 360.f - goalinputAngle_;
+			float dist2 = goalinputAngle_;
+			dist1;
+			dist2;
 			//プレイヤーが180度よりも大きい角度を向いていた時
 			/*if (dist1 < dist2)
 			{*/
@@ -392,8 +410,8 @@ void Player::FreezeUpdate()
 
 void Player::Draw()
 {
-	Model::lightGroup_->SetCircleShadowCasterPos(0, obj_->WT_.position_);
-	obj_->Draw();
+	Model::lightGroup_->SetCircleShadowCasterPos(0, displayObj_->WT_.position_);
+	displayObj_->Draw();
 
 	sword_.Draw();
 

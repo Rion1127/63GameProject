@@ -20,6 +20,7 @@ class Player final :
 	public IActor, public StateMachine<PlayerState>
 {
 private:
+	std::unique_ptr<Object3d> displayObj_;
 	//ベクトル
 	Vector3 frontVec_;
 	Vector3 playerFrontVec_;
