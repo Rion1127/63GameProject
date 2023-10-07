@@ -69,13 +69,6 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 	{
 		return *this;
 	}*/
-	if (isfinite(this->x) == false ||
-		isfinite(this->y) == false ||
-		isfinite(this->z) == false ||
-		isfinite(this->w) == false)
-	{
-		return q1;
-	}
 	Quaternion result{};
 	//thisとq1の内積
 	float dot = this->w * q.w + this->x * q.x + this->y * q.y + this->z * q.z;
@@ -127,6 +120,14 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, float t)
 				result.w = q.w;
 			}
 		}
+	}
+
+	if (isfinite(result.x) == false ||
+		isfinite(result.y) == false ||
+		isfinite(result.z) == false ||
+		isfinite(result.w) == false)
+	{
+		return q1;
 	}
 
 	return result;
@@ -307,6 +308,23 @@ Matrix4 ConvertRotationMat(const Quaternion q)
 	};
 
 
+	return result;
+}
+
+Quaternion EulerAnglesToQuaternion(const Vector3& Euler)
+{
+	Quaternion result;
+	float cosRoll = cosf(Euler.x / 2.0f);
+	float sinRoll = sinf(Euler.x / 2.0f);
+	float cosPitch = cosf(Euler.y / 2.0f);
+	float sinPitch = sinf(Euler.y / 2.0f);
+	float cosYaw = cosf(Euler.z / 2.0f);
+	float sinYaw = sinf(Euler.z / 2.0f);
+
+	result.x = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
+	result.y = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
+	result.z = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
+	result.w = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
 	return result;
 }
 

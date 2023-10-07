@@ -62,6 +62,8 @@ Player::Player() :
 	GoToState(PlayerState::Idle);
 
 	isCanInput_ = true;
+
+	displayObj_->WT_.SetRotType(RotType::Quaternion);
 }
 
 void Player::PreUpdate()
@@ -213,40 +215,19 @@ void Player::InputVecUpdate()
 		// 入力しているベクトルの角度を求める
 		float inputAngle = Vec2Angle(moveVec_);
 
-		// 計算結果がオーバーフローしていなかったら値を更新
-		if (inputAngle >= 0)
-		{
-			
-		}
 		if (Controller::GetLStick().x != 0 ||
 			Controller::GetLStick().y != 0)
 		{
-			float angle = 0;
-			angle = moveVec_.dot({ 0.0f, 1.0f }) / (moveVec_.length() * Vector2(0.0f, 1.0f).length());
-			angle = acos(angle);
-			angle = Angle(angle);
-
-			float dist1 = 360.f - goalinputAngle_;
-			float dist2 = goalinputAngle_;
-			dist1;
-			dist2;
-			//プレイヤーが180度よりも大きい角度を向いていた時
-			/*if (dist1 < dist2)
-			{*/
-				inputAngle_ += 180.f;
-				goalinputAngle_ += (inputAngle_ - goalinputAngle_) * 0.2f;
-			/*}
-			else
-			{
-				
-			}*/
-
 			inputAngle_ = inputAngle;
-			//goalinputAngle_ += -(goalinputAngle_ - inputAngle_) * 0.2f;
-			
-			obj_->WT_.rotation_ = { 0,Radian(goalinputAngle_) ,0 };
+			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
+
+			Vector3 vecY = { 0, 1, 0 };
+			auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
+			obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 		}
 	}
+	
+	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
 }
 
 void Player::StateUpdate()

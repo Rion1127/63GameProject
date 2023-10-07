@@ -9,13 +9,7 @@ struct Quaternion
 	float w;
 
 	Matrix4 UpdateMatrix() {
-		/*Quaternion q1 = {
-		(float)(x * sin(w / 2)),
-		(float)(y * sin(w / 2)),
-		(float)(z * sin(w / 2)),
-		(float)(cos(w / 2))
-		};*/
-
+		
 		Quaternion q1 = { x,y,z,w };
 
 		q1.Normalize();
@@ -72,3 +66,4 @@ Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Quaternion rot);
 Matrix4 ConvertRotationMat(const Quaternion q); // クォータニオンで回転行列を生成する関数
 
+Quaternion EulerAnglesToQuaternion(const Vector3& Euler);
