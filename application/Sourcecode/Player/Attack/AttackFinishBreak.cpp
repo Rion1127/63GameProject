@@ -17,8 +17,11 @@ void AttackFinishBreak::Init()
 		{
 			CalculateRotToLockOnActor(frontVec);
 		}
-
-		frontVec = frontVec.normalize();
+		Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
+		float rot = Vec2Angle(vec);
+		Vector3 vecY = { 0, 1, 0 };
+		auto axisY = MakeAxisAngle(vecY, Radian(rot));
+		selfActor_->GetWorldTransform()->SetQuaternion(axisY);
 	}
 	attackVec_ = frontVec;
 

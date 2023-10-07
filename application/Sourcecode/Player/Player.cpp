@@ -118,6 +118,7 @@ void Player::PostUpdate()
 	};
 	displayObj_->SetPos(displayPos);
 	displayObj_->SetRot(displayrot);
+	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
 
 	displayObj_->Update();
 
@@ -220,14 +221,11 @@ void Player::InputVecUpdate()
 		{
 			inputAngle_ = inputAngle;
 			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
-
 			Vector3 vecY = { 0, 1, 0 };
 			auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
 			obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 		}
 	}
-	
-	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
 }
 
 void Player::StateUpdate()
