@@ -66,6 +66,7 @@ Player::Player() :
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 
 	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
+	shakeTimer_.SetLimitTime(40);
 }
 
 void Player::PreUpdate()
@@ -186,19 +187,22 @@ void Player::InputVecUpdate()
 		sideVec = upVec.cross(frontVec_);
 		sideVec = sideVec.normalize();
 
+		float inputlength = 0;
+		bool isDash = false;
 		// コントローラーが接続されていたら
 		if (Controller::GetActive())
 		{
-			float inputlength = 0;
 			// 左スティックの入力方向ベクトル取得
 			inputVec_ = Controller::GetLStick() / 32768.f;
 			inputlength = inputVec_.length();
 			//スティックの傾きが小さければ歩く
 			if (inputlength <= walklimitValue_) {
 				inputVec_ = inputVec_.normalize() * 0.5f;
+				isDash = false;
 			}
 			else {
 				inputVec_ = inputVec_.normalize();
+				isDash = true;
 			}
 		}
 		else
@@ -217,15 +221,39 @@ void Player::InputVecUpdate()
 
 		// 入力しているベクトルの角度を求める
 		float inputAngle = Vec2Angle(moveVec_);
-		
+		Quaternion q1 = { 0,0,0,1.f };
+		Quaternion q2 = { 0,0,0,1.f };
 		if (Controller::GetLStick().x != 0 ||
 			Controller::GetLStick().y != 0)
 		{
 			inputAngle_ = inputAngle;
 			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
+
+			
+			float dashRadian = 350 * inputVec_.length() * isDash;
+			float radian = Radian(-600 + dashRadian);
+			q1 = { 1,0,0,radian };
+
+			float addTime;
+			if (isDash)addTime = 1.5f;
+			else addTime = 1;
+
+			shakeTimer_.AddTime(addTime);
+
+			float shakeRadian =
+				UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
+			q2 = { 0,0,shakeRadian,1 };
+
+			if (shakeTimer_.GetIsEnd()) {
+				shakeTimer_.Reset();
+			}
+		}
+		else {
+			shakeTimer_.Reset();
 		}
 		Vector3 vecY = { 0, 1, 0 };
 		auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
+		axisY = axisY * q1.Conjugate() * q2.Conjugate();
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 	}
 

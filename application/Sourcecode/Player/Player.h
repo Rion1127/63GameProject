@@ -40,6 +40,7 @@ private:
 	bool isCanInput_;
 	float jumpTime_;
 
+	TimerFloat shakeTimer_;
 
 	PlayerCommand command_;
 	GuardClass guard_;
