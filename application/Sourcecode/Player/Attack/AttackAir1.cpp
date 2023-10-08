@@ -9,7 +9,6 @@ void AttackAir1::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
-		frontDist_ = 0;
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
 			CalculateRotToLockOnActor(frontVec);

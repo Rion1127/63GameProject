@@ -21,6 +21,7 @@ class Player final :
 {
 private:
 	std::unique_ptr<Object3d> displayObj_;
+	Quaternion systemQuaternion_;
 	//ベクトル
 	Vector3 frontVec_;
 	Vector3 playerFrontVec_;

@@ -35,15 +35,10 @@ void Sword::Update()
 	if (state_ == SwordState::Idle) {
 		//プレイヤーの背中に向かって徐々に移動する
 		Vector3 pos = playerObj_->WT_.position_;
-		Vector3 frontVec = {
-				sinf(playerObj_->WT_.rotation_.y),
-				0,
-				cosf(playerObj_->WT_.rotation_.y),
-		};
+		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
 		frontVec = frontVec.normalize();
 		//座標移動
 		goalPos_ = pos - frontVec * 1.2f;
-		goalPos_.y += playerObj_->WT_.scale_.y;
 		//上下に浮かばせる
 		floatingTimer_.AddTime(1 * GameSpeed::GetGameSpeed());
 		float roundTime = (float)floatingTimer_.GetLimitTimer();
@@ -89,16 +84,11 @@ void Sword::Update()
 		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
 		//座標
 		Vector3 pos = playerObj_->WT_.position_;
-		Vector3 frontVec = {
-				sinf(playerObj_->WT_.rotation_.y),
-				0,
-				cosf(playerObj_->WT_.rotation_.y),
-		};
+		Vector3 frontVec = RotateVector(Vector3(0,0,1), playerObj_->WT_.quaternion_);
 		frontVec = frontVec.normalize();
 
 		goalPos_ = pos + frontVec * 1.1f;
-		goalPos_.y += playerObj_->WT_.scale_.y * 1.5f;
-
+		
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
 
 		nowPos_ += (nowToGoalVec * 0.5f) * GameSpeed::GetGameSpeed();

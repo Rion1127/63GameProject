@@ -65,5 +65,5 @@ Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 
 Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Quaternion rot);
 Matrix4 ConvertRotationMat(const Quaternion q); // クォータニオンで回転行列を生成する関数
-
+//オイラー角からクォータニオンへ
 Quaternion EulerAnglesToQuaternion(const Vector3& Euler);

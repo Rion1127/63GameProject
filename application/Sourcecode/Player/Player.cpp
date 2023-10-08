@@ -54,7 +54,7 @@ Player::Player() :
 	knockDecreaseValue = 0.005f;
 
 	sword_.SetAttackManager(command_.GetAttackManager());
-	sword_.SetParent(obj_.get());
+	sword_.SetParent(displayObj_.get());
 
 	command_.SetPlayer(this);
 
@@ -64,6 +64,8 @@ Player::Player() :
 	isCanInput_ = true;
 
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
+
+	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
 }
 
 void Player::PreUpdate()
@@ -88,9 +90,9 @@ void Player::PreUpdate()
 	mpGaugeUI_.Update(maxMP_, nowMP_);
 
 	playerFrontVec_ = {
-				sinf(GetWorldTransform()->rotation_.y),
+				sinf(displayObj_->GetTransform()->rotation_.y),
 				0,
-				cosf(GetWorldTransform()->rotation_.y),
+				cosf(displayObj_->GetTransform()->rotation_.y),
 	};
 }
 
@@ -215,17 +217,18 @@ void Player::InputVecUpdate()
 
 		// 入力しているベクトルの角度を求める
 		float inputAngle = Vec2Angle(moveVec_);
-
+		
 		if (Controller::GetLStick().x != 0 ||
 			Controller::GetLStick().y != 0)
 		{
 			inputAngle_ = inputAngle;
 			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
-			Vector3 vecY = { 0, 1, 0 };
-			auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
-			obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 		}
+		Vector3 vecY = { 0, 1, 0 };
+		auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 	}
+
 }
 
 void Player::StateUpdate()
@@ -460,6 +463,14 @@ void Player::DrawImGui()
 
 	ImGui::SliderFloat("inputAngle", &inputAngle_, 0.f, 3.1415f, "x = %.3f");
 	ImGui::SliderFloat("endRot", &goalinputAngle_, 0.f, 3.1415f, "x = %.3f");
+
+	float value[4] = {
+		obj_->WT_.quaternion_.x,
+		obj_->WT_.quaternion_.y,
+		obj_->WT_.quaternion_.z,
+		obj_->WT_.quaternion_.w,
+	};
+	ImGui::DragFloat4("quaternion", value, 0.1f);
 
 	ImGui::End();
 

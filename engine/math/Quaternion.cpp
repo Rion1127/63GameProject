@@ -327,4 +327,3 @@ Quaternion EulerAnglesToQuaternion(const Vector3& Euler)
 	result.w = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
 	return result;
 }
-
