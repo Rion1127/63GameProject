@@ -9,6 +9,11 @@
 #include "Timer.h"
 #include "GameSpeed.h"
 
+enum class AttackType {
+	Normal,
+	Finish
+};
+
 class IAttack
 {
 private:
@@ -38,8 +43,11 @@ protected:
 	//当たり判定の軌道
 	Spline spline_;
 	Vector3 swordPos_;
+	AttackType attackType_;
 public:
-	IAttack(IActor* selfActor, int32_t colNum = 1, float maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25);
+	IAttack(IActor* selfActor, int32_t colNum = 1,
+		float maxTime = 20, int32_t damage = 10,
+		int32_t damageCoolTime = 25, AttackType attackType = AttackType::Normal);
 	virtual ~IAttack() {};
 	void Update();
 	void DrawCol();
@@ -56,6 +64,7 @@ public:
 	IActor* GetSelfActor() { return selfActor_; }
 	TimerFloat GetTimer() { return timer_; }
 	Vector3 GetSwordPos() { return swordPos_; }
+	AttackType GetAttackType() { return attackType_; }
 public:
 	virtual void Init() = 0;
 protected:

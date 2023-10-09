@@ -344,7 +344,9 @@ void CollisionManager::PlayerAttackToEnemy()
 						AddParticle("HitAttack", hitEmitter_);
 					SoundManager::Play("HitSE", false, 0.4f);
 
+					//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
 					if (isHitStop_ == false)continue;
+					if (attackCol->GetAttackType() != AttackType::Finish)continue;
 					player_->SetHitStopTimer(hitStopTimer_);
 					enemy->SetHitStopTimer(hitStopTimer_);
 					ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);

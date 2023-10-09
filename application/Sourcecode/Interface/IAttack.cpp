@@ -1,7 +1,8 @@
 #include "IAttack.h"
 
 
-IAttack::IAttack(IActor* selfActor, int32_t colNum, float maxTime, int32_t damage, int32_t damageCoolTime) :
+IAttack::IAttack(IActor* selfActor, int32_t colNum,
+	float maxTime, int32_t damage, int32_t damageCoolTime, AttackType attackType) :
 	selfActor_(selfActor)
 {
 	attackCol_.resize(colNum);
@@ -17,6 +18,8 @@ IAttack::IAttack(IActor* selfActor, int32_t colNum, float maxTime, int32_t damag
 	attackInfo_.maxTime = maxTime;
 	spline_.SetIsStart(true);
 	timer_.SetLimitTime((float)maxTime);
+
+	attackType_ = attackType;
 }
 
 void IAttack::Update()

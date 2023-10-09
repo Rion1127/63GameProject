@@ -63,6 +63,8 @@ public:
 	virtual ~IParticle();
 
 	void Update();
+	//データ転送
+	void TransferBuff();
 
 	void Draw();
 
@@ -73,8 +75,6 @@ public:
 	size_t GetParticleNum() { return particles_.size(); }
 	PipeLineState GetPipelineState() { return state_; }
 private:
-	//データ転送
-	void TransferBuff();
 	//end_frameを超えたら削除
 	void DeleteUpdate();
 protected:

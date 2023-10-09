@@ -53,8 +53,6 @@ void IParticle::Update()
 		DeleteUpdate();
 		//動き更新
 		MoveUpdate();
-		//データ転送
-		TransferBuff();
 	}
 }
 

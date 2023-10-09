@@ -28,27 +28,31 @@ ParticleManager::ParticleManager()
 void ParticleManager::Update()
 {
 	HitStopUpdate();
-	if (GetIsHitStopping())return;
+
 	std::list<std::shared_ptr<IEmitter>>::iterator itr;
 	for (itr = emitters_.begin(); itr != emitters_.end();)
 	{
-		//パーティクルの数が0になったら
-		if ((*itr)->particle->GetParticleNum() == 0) {
-			itr = emitters_.erase(itr);
-			continue;
-		}
-
-		if ((*itr)->isActive) {
-			//座標を更新
-			(*itr)->popCoolTime_.AddTime(1);
-			if ((*itr)->popCoolTime_.GetIsEnd()) {
-				(*itr)->particle->Add();
-
-				(*itr)->popCoolTime_.Reset();
+		if (GetIsHitStopping() == false) {
+			//パーティクルの数が0になったら
+			if ((*itr)->particle->GetParticleNum() == 0) {
+				itr = emitters_.erase(itr);
+				continue;
 			}
+
+			if ((*itr)->isActive) {
+				//座標を更新
+				(*itr)->popCoolTime_.AddTime(1);
+				if ((*itr)->popCoolTime_.GetIsEnd()) {
+					(*itr)->particle->Add();
+
+					(*itr)->popCoolTime_.Reset();
+				}
+			}
+
+			(*itr)->particle->Update();
 		}
 
-		(*itr)->particle->Update();
+		(*itr)->particle->TransferBuff();
 		itr++;
 	}
 }

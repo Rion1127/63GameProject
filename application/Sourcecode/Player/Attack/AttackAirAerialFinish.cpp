@@ -3,7 +3,7 @@
 #include "mSound.h"
 
 AttackAirAerialFinish::AttackAirAerialFinish(IActor* selfActor) :
-	IAttack(selfActor, 1, 70, 10, 5)
+	IAttack(selfActor, 1, 70, 10, 5, AttackType::Finish)
 {
 }
 
