@@ -3,7 +3,7 @@
 #include "ParticleFire.h"
 
 AttackRedNocturne::AttackRedNocturne(IActor* selfActor) :
-	IBullet(selfActor, 1, 120, 5, 120)
+	IBullet(selfActor,120, 5, 120)
 {
 
 }
