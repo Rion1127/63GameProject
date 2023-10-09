@@ -17,6 +17,7 @@ CollisionManager::CollisionManager()
 
 void CollisionManager::Update()
 {
+	//ヒットストップ中に更新しないようにする
 	HitStopUpdate();
 	if (GetIsHitStopping())return;
 	//床とプレイヤー
