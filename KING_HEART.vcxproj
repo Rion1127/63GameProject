@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
+    <ClCompile Include="application\Sourcecode\HitStop.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
+    <ClInclude Include="application\Sourcecode\HitStop.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.h" />

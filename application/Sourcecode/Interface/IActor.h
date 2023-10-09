@@ -4,13 +4,14 @@
 #include "Collision.h"
 #include "Gravity.h"
 #include "Timer.h"
+#include "HitStop.h"
 
 enum class ActorType {
 	Player,
 	Enemy
 };
 
-class IActor
+class IActor : public HitStop
 {
 protected:
 	ActorType type_;

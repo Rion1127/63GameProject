@@ -2,8 +2,9 @@
 #include "IParticle.h"
 #include <unordered_map>
 #include <list>
+#include "HitStop.h"
 
-class ParticleManager
+class ParticleManager : public HitStop
 {
 private:
 	std::list<std::shared_ptr<IEmitter>> emitters_;

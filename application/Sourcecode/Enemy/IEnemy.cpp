@@ -19,6 +19,7 @@ IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 
 void IEnemy::PreUpdate()
 {
+	if (GetIsHitStopping())return;
 	addVec_ = { 0,0,0 };
 	if (isGravityImpact_ == true)
 	{
@@ -34,12 +35,11 @@ void IEnemy::PreUpdate()
 	}
 	ColPosUpdate();
 
-
+	MoveUpdate();
 }
 
 void IEnemy::PostUpdate()
 {
-	MoveUpdate();
 	ObjUpdate();
 }
 

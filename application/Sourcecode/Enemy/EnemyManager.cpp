@@ -66,6 +66,8 @@ void EnemyManager::PreUpdate()
 	ImGui::End();
 #endif // _DEBUG
 
+	HitStopUpdate();
+	if (GetIsHitStopping())return;
 
 	std::list<std::unique_ptr<IEnemy>>::iterator itr;
 	for (itr = enemys_.begin(); itr != enemys_.end();)

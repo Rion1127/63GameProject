@@ -3,15 +3,22 @@
 #include "mSound.h"
 #include "ParticleWallHit.h"
 #include "ParticleHitAttack.h"
+#include <imgui.h>
+#include "ParticleManager.h"
 
 CollisionManager::CollisionManager()
 {
 	wallHitTimer_.SetLimitTime(40);
 	wallHitTimer_.SetTime(wallHitTimer_.GetLimitTimer());
+
+	isHitStop_ = true;
+	hitStopTimer_ = 5;
 }
 
 void CollisionManager::Update()
 {
+	HitStopUpdate();
+	if (GetIsHitStopping())return;
 	//床とプレイヤー
 	PlayerToFloor();
 	PlayerToWall();
@@ -31,6 +38,32 @@ void CollisionManager::Update()
 	EnemyBulletToPlayer();
 	//敵弾と床
 	EnemyBulletToFloor();
+}
+
+void CollisionManager::DrawImGui()
+{
+	uint16_t isHitstop = isHitStop_;
+	ImGui::Begin("CollisionManager");
+	
+	if (ImGui::Button("HitStop"))
+	{
+		isHitstop++;
+		isHitstop = isHitstop & 1;
+	}
+	std::string flagstring;
+
+	if (isHitstop)flagstring = "True";
+	else flagstring = "False";
+
+	ImGui::SameLine();
+	ImGui::Text(flagstring.c_str());
+
+
+	ImGui::SliderFloat("hitStopTime", &hitStopTimer_, 0.f, 100.f, "x = %.3f");
+
+	ImGui::End();
+
+	isHitStop_ = isHitstop;
 }
 
 void CollisionManager::PlayerToFloor()
@@ -274,43 +307,46 @@ void CollisionManager::PlayerToEnemy()
 void CollisionManager::PlayerAttackToEnemy()
 {
 	IAttack* attackCol = player_->GetAttackManager()->GetNowAttack();
+	if (attackCol == nullptr)return;
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
-		if (attackCol != nullptr)
+		//近接攻撃
+		for (auto& col : *attackCol->GetAttackCol())
 		{
-			//近接攻撃
-			for (auto& col : *attackCol->GetAttackCol())
+			if (enemy->GetDamageCoolTime().GetIsEnd())
 			{
-				if (enemy->GetDamageCoolTime().GetIsEnd())
+				if (BallCollision(col->col_, enemy->GetCol()))
 				{
-					if (BallCollision(col->col_, enemy->GetCol()))
-					{
-						col->isCollision_ = true;
-						//プレイヤーの反対方向にノックバックする
-						Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
-						knockVec.y = col->knockVecY;
-						knockVec = knockVec.normalize();
-						knockVec = knockVec * col->knockPower;
-						//敵のノックバック抵抗力を掛ける
-						knockVec = knockVec * enemy->GetKnockResist();
-						enemy->Damage(knockVec, col->damage, col->damageCoolTime);
-						enemy->SetIsNock(true);
-						//HPゲージ反映
-						enemyManager_->Damage();
+					col->isCollision_ = true;
+					//プレイヤーの反対方向にノックバックする
+					Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+					knockVec.y = col->knockVecY;
+					knockVec = knockVec.normalize();
+					knockVec = knockVec * col->knockPower;
+					//敵のノックバック抵抗力を掛ける
+					knockVec = knockVec * enemy->GetKnockResist();
+					enemy->Damage(knockVec, col->damage, col->damageCoolTime);
+					enemy->SetIsNock(true);
+					//HPゲージ反映
+					enemyManager_->Damage();
 
-						Vector3 addVec = { 0.05f,0.05f,0.05f };
+					Vector3 addVec = { 0.05f,0.05f,0.05f };
 
-						std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-						hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-						hitEmitter_->addNum = 3;
-						hitEmitter_->time = 40;
-						hitEmitter_->pos = enemy->GetCol().center;
-						hitEmitter_->addVec = addVec;
-						hitEmitter_->scale = 1.0f;
-						ParticleManager::GetInstance()->
-							AddParticle("HitAttack", hitEmitter_);
-						SoundManager::Play("HitSE", false, 0.4f);
-					}
+					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+					hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+					hitEmitter_->addNum = 3;
+					hitEmitter_->time = 40;
+					hitEmitter_->pos = enemy->GetCol().center;
+					hitEmitter_->addVec = addVec;
+					hitEmitter_->scale = 1.0f;
+					ParticleManager::GetInstance()->
+						AddParticle("HitAttack", hitEmitter_);
+					SoundManager::Play("HitSE", false, 0.4f);
+
+					if (isHitStop_ == false)continue;
+					player_->SetHitStopTimer(hitStopTimer_);
+					enemy->SetHitStopTimer(hitStopTimer_);
+					ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);
 				}
 			}
 		}
@@ -355,8 +391,6 @@ void CollisionManager::PlayerAttackToEnemy()
 			}
 		}
 	}
-
-
 }
 
 void CollisionManager::EnemyAttackToPlayer()

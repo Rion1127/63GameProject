@@ -5,20 +5,23 @@
 
 void IActor::ObjUpdate()
 {
-	addVec_ += gravity_.GetGravityValue();
-	addVec_ += knockVec_;
-	//ノックバックのベクトルを0にしていく
-	MoveTo({ 0,0,0 }, knockDecreaseValue, knockVec_);
+	HitStopUpdate();
+	if (GetIsHitStopping() == false) {
+		addVec_ += gravity_.GetGravityValue();
+		addVec_ += knockVec_;
+		//ノックバックのベクトルを0にしていく
+		MoveTo({ 0,0,0 }, knockDecreaseValue, knockVec_);
 
-	if (isCanMove_ == false)
-	{
-		addVec_ = { 0,0,0 };
+		if (isCanMove_ == false)
+		{
+			addVec_ = { 0,0,0 };
+		}
+
+		if (type_ == ActorType::Player) addVec_ *= GameSpeed::GetPlayerSpeed();
+		else if (type_ == ActorType::Enemy) addVec_ *= GameSpeed::GetEnemySpeed();
+
+		obj_->WT_.position_ += addVec_;
 	}
-
-	if (type_ == ActorType::Player) addVec_ *= GameSpeed::GetPlayerSpeed();
-	else if (type_ == ActorType::Enemy) addVec_ *= GameSpeed::GetEnemySpeed();
-
-	obj_->WT_.position_ += addVec_;
 	obj_->Update();
 }
 

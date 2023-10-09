@@ -8,7 +8,8 @@
 #include "mInput.h"
 #include "Player.h"
 #include "IBullet.h"
-class EnemyManager
+#include "HitStop.h"
+class EnemyManager : public HitStop
 {
 private:
 	std::list<std::unique_ptr<IEnemy>> enemys_;

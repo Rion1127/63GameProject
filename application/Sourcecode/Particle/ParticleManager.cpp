@@ -27,6 +27,8 @@ ParticleManager::ParticleManager()
 
 void ParticleManager::Update()
 {
+	HitStopUpdate();
+	if (GetIsHitStopping())return;
 	std::list<std::shared_ptr<IEmitter>>::iterator itr;
 	for (itr = emitters_.begin(); itr != emitters_.end();)
 	{

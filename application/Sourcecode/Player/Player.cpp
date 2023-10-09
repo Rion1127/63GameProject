@@ -71,6 +71,7 @@ Player::Player() :
 
 void Player::PreUpdate()
 {
+	if (GetIsHitStopping())return;
 	addVec_ = { 0,0,0 };
 	//プレイヤーの状態更新
 	StateUpdate();
@@ -99,11 +100,10 @@ void Player::PreUpdate()
 
 void Player::PostUpdate()
 {
+	ObjUpdate();
+
 	sword_.Update();
 
-	//当たり判定でgravityの値を変化させてから
-	//PostUpdateでaddVec_に代入している
-	ObjUpdate();
 	if (command_.GetLockOnEnemy() != nullptr)
 	{
 		lockOnVec_ =
@@ -609,7 +609,6 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	GoToState(PlayerState::Knock);
 	SoundManager::Play("HitSE", false, 0.5f);
 	guard_.SetisGurdNow_(false);
-
 }
 
 void Player::GuardHit(Vector3 knockVec)

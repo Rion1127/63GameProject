@@ -216,6 +216,7 @@ void DebugScene::Draw()
 	ImGui::End();
 
 	ConfigMenu::GetInstance()->DrawImGui();
+	colManager_->DrawImGui();
 }
 
 void DebugScene::DrawPostEffect()

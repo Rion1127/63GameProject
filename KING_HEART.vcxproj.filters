@@ -627,6 +627,9 @@
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMagic.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\HitStop.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -1006,6 +1009,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMagic.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\HitStop.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

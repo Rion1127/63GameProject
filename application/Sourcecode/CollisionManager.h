@@ -2,18 +2,21 @@
 #include "Player.h"
 #include "Stage.h"
 #include "EnemyManager.h"
-class CollisionManager
+#include "HitStop.h"
+class CollisionManager : public HitStop
 {
 private:
 	Player* player_;
 	Stage* stage_;
 	EnemyManager* enemyManager_;
+	bool isHitStop_;
+	float hitStopTimer_;
 private:
 	//パーティクル用
 	Timer wallHitTimer_;
 public:
 	void Update();
-
+	void DrawImGui();
 public:
 	CollisionManager();
 	void SetPlayer(Player* player) { player_ = player; }
