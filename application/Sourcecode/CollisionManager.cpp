@@ -63,6 +63,9 @@ void CollisionManager::DrawImGui()
 
 	ImGui::SliderFloat("hitStopTime", &hitStopTimer_, 0.f, 100.f, "x = %.3f");
 
+	ImGui::DragFloat("shakePower", &shakePower_, 0.1f, 0.1f, 5.f);
+	ImGui::DragFloat("shakeTimer", &shakeTimer_, 1.f,1,100.f);
+
 	ImGui::End();
 
 	isHitStop_ = isHitstop;
@@ -346,8 +349,9 @@ void CollisionManager::PlayerAttackToEnemy()
 					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 
 					//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
-					if (isHitStop_ == false)continue;
 					if (attackCol->GetAttackType() != AttackType::Finish)continue;
+					gameCamera_->SetCameraShake(shakeTimer_,shakePower_);
+					if (isHitStop_ == false)continue;
 					player_->SetHitStopTimer(hitStopTimer_);
 					enemy->SetHitStopTimer(hitStopTimer_);
 					ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);

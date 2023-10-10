@@ -3,14 +3,19 @@
 #include "Stage.h"
 #include "EnemyManager.h"
 #include "HitStop.h"
+#include "GameCamera.h"
 class CollisionManager : public HitStop
 {
 private:
 	Player* player_;
 	Stage* stage_;
 	EnemyManager* enemyManager_;
+	GameCamera* gameCamera_;
 	bool isHitStop_;
 	float hitStopTimer_;
+
+	float shakePower_;
+	float shakeTimer_;
 private:
 	//パーティクル用
 	Timer wallHitTimer_;
@@ -22,6 +27,7 @@ public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetFloor(Stage* floor) { stage_ = floor; }
 	void SetEnemys(EnemyManager* enemy) { enemyManager_ = enemy; }
+	void SetCamera(GameCamera* camera) { gameCamera_ = camera; }
 private:
 	//プレイヤーと床
 	void PlayerToFloor();

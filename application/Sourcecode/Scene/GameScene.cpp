@@ -32,6 +32,7 @@ void GameScene::Ini()
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(stage_.get());
 	colManager_->SetEnemys(enemyManager_.get());
+	colManager_->SetCamera(&gameCamera_);
 	AttackManager::SetPlayer(player_.get());
 	enemyManager_->SetPlayer(player_.get());
 	colosseumSystem_->SetPlayer(player_.get());

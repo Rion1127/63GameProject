@@ -10,7 +10,7 @@ MagicFire::~MagicFire()
 }
 
 MagicFire::MagicFire(IActor* selfActor) :
-	IBullet(selfActor, 1, 100, 5, 10)
+	IBullet(selfActor, 100, 5, 10)
 {
 
 }

@@ -53,6 +53,11 @@ private:
 	Timer timer_;
 	Vector3 offsetPos_;
 	Vector3 randOffsetPos_;
+private:
+	//カメラシェイク
+	TimerFloat cameraShakeTimer_;
+	Vector3 shakeOffsetpos_;
+	float shakePower_;
 public:
 	GameCamera();
 	void Update(CameraMode cameraMode);
@@ -60,11 +65,13 @@ public:
 	void UpdateCameraPos();
 	void UpdateLookAT();
 	void Reset();
+	void Shake();
 private:
 	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos, const Vector2& winSize, IEnemy* enemy);
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetColosseumSystem(ColosseumSystem* clsumSystem) { clsumSystem_ = clsumSystem; }
+	void SetCameraShake(float time, float power);
 public:
 	Camera* GetCamera() { return camera_.get(); }
 

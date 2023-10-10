@@ -23,6 +23,8 @@ GameCamera::GameCamera()
 	gameCameraMode_ = GameCameraMode::NORMAL;
 
 	Reset();
+
+	cameraShakeTimer_.SetIsEnd(true);
 }
 
 void GameCamera::Update(CameraMode cameraMode)
@@ -53,11 +55,18 @@ void GameCamera::Update(CameraMode cameraMode)
 		UpdateLookAT();
 	}
 
-	camera_->eye_ += (endEyePos_ - camera_->eye_) * cameraSpeed_;
+	Vector3 cameraDistance = (endEyePos_ - camera_->eye_);
+
+	camera_->eye_ += cameraDistance * cameraSpeed_;
 }
 
 void GameCamera::UpdateCameraPos()
 {
+	if (cameraShakeTimer_.GetIsEnd() == false)
+	{
+		Shake();
+	}
+
 	Vector3 cameraTrans = {
 		player_->GetWorldTransform()->position_.x,
 		player_->GetWorldTransform()->position_.y,
@@ -264,3 +273,25 @@ GetOutEnemy GameCamera::GetOutScreenEnemy(const Vector2& screenPos, const Vector
 	putOnCamera_ = false;
 	return GetOutEnemy::Middle;
 }
+
+void GameCamera::SetCameraShake(float time, float power)
+{
+	cameraShakeTimer_.SetLimitTime(time);
+	cameraShakeTimer_.Reset();
+	shakePower_ = power;
+}
+
+void GameCamera::Shake()
+{
+	cameraShakeTimer_.AddTime(1);
+
+	float power = shakePower_ * (1.f - cameraShakeTimer_.GetTimeRate());
+
+	camera_->eye_ += {
+		RRandom::RandF(-power, power),
+		RRandom::RandF(-power, power),
+		RRandom::RandF(-power, power),
+	};
+	
+}
+
