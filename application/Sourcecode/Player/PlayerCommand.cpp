@@ -5,6 +5,7 @@
 #include "Easing.h"
 #include "mSound.h"
 #include "Player.h"
+#include "SoundVolume.h"
 
 PlayerCommand::PlayerCommand()
 {
@@ -69,7 +70,7 @@ void PlayerCommand::Update()
 					commandNum_ = (uint16_t)Command::END - 1;
 				}
 				mainCommandSprite_->ResetEase();
-				SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
+				SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE(), 0.5f);
 			}
 			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN)) {
 				commandNum_++;
@@ -77,7 +78,7 @@ void PlayerCommand::Update()
 					commandNum_ = 0;
 				}
 				mainCommandSprite_->ResetEase();
-				SoundManager::Play("SelectSE", false, 1.0f, 0.5f);
+				SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE(), 0.5f);
 			}
 			//通常攻撃
 			if (selectCommand_ == Command::Attack) {

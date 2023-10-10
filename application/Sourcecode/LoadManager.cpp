@@ -50,6 +50,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("cameraInvTex.png", "CameraInvTex");
 	LoadGraph("configCameraTex.png", "ConfigCameraTex");
 	LoadGraph("bgmSeTex.png", "BgmSeTex");
+	LoadGraph("soundFrame.png", "SoundFrame");
 
 
 	LoadGraph("commandTitle.png", "CommandTitle");

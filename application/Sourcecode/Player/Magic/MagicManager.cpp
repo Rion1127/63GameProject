@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "MagicFire.h"
 #include "mSound.h"
+#include "SoundVolume.h"
 
 MagicManager::MagicManager()
 {
@@ -46,6 +47,6 @@ void MagicManager::ShotMagic(MagicType type)
 	magic->Init();
 	magics_.emplace_back(std::move(magic));
 
-	SoundManager::Play("FireSE", false, 1.f);
+	SoundManager::Play("FireSE", false, SoundVolume::GetValumeSE());
 }
 

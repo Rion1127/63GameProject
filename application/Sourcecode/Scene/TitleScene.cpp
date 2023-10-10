@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "GameScene.h"
+#include "SoundVolume.h"
 TitleScene::~TitleScene()
 {
 }
@@ -45,7 +46,7 @@ void TitleScene::Update()
 		Key::TriggerKey(DIK_SPACE))
 	{
 		if (SceneManager::GetIsSetNext() == false) {
-			SoundManager::Play("EnterSE", false, 1.5f);
+			SoundManager::Play("EnterSE", false, SoundVolume::GetValumeSE());
 		}
 		SceneManager::SetChangeStart(SceneName::Game);
 	}

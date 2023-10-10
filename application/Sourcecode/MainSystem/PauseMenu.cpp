@@ -6,6 +6,7 @@
 #include "Easing.h"
 #include "Util.h"
 #include "ConfigMenu.h"
+#include "SoundVolume.h"
 
 PauseMenu::PauseMenu()
 {
@@ -33,7 +34,7 @@ void PauseMenu::Update()
 		pauseSprite_->SetIsActive(isPause_);
 		pauseSprite_->Reset();
 
-		SoundManager::Play("MenuSE");
+		SoundManager::Play("MenuSE", false, SoundVolume::GetValumeSE());
 	}
 
 	if (isConfig_ == false)
@@ -44,14 +45,14 @@ void PauseMenu::Update()
 			{
 				isPause_ = false;
 				selectType_ = SelectType::Continue;
-				SoundManager::Play("CancelSE");
+				SoundManager::Play("CancelSE", false, SoundVolume::GetValumeSE());
 			}
 
 			//メニュー選択
 			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 				Controller::GetTriggerButtons(PAD::INPUT_UP))
 			{
-				SoundManager::Play("SelectSE");
+				SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE());
 				int32_t type = (int32_t)(selectType_);
 				if (Controller::GetTriggerButtons(PAD::INPUT_DOWN))type++;
 				if (Controller::GetTriggerButtons(PAD::INPUT_UP))type--;
@@ -66,7 +67,7 @@ void PauseMenu::Update()
 			{
 				if (SceneManager::GetIsSetNext() == false)
 				{
-					SoundManager::Play("EnterSE", false, 1.5f);
+					SoundManager::Play("EnterSE", false, SoundVolume::GetValumeSE());
 				}
 				if (selectType_ == SelectType::Continue)
 				{
@@ -94,7 +95,7 @@ void PauseMenu::Update()
 		{
 			isConfig_ = false;
 			selectType_ = SelectType::Continue;
-			SoundManager::Play("CancelSE");
+			SoundManager::Play("CancelSE", false, SoundVolume::GetValumeSE());
 		}
 		ConfigMenu::GetInstance()->Update();
 		ConfigMenu::GetInstance()->SpriteUpdate();

@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Easing.h"
 #include "GameSpeed.h"
+#include "SoundVolume.h"
 
 ColosseumSystem::ColosseumSystem()
 {
@@ -87,7 +88,7 @@ void ColosseumSystem::Update()
 			player_->SetIsCanMove(true);
 			player_->SetIsCanInput(true);
 
-			SoundManager::Play("ShineSE", false, 1.2f, 1.5f);
+			SoundManager::Play("ShineSE", false, SoundVolume::GetValumeSE(), 1.5f);
 		}
 	}
 
@@ -107,7 +108,7 @@ void ColosseumSystem::Update()
 				isClearCamera_ = true;
 				GameSpeed::SetGameSpeed(0.2f);
 				player_->SetIsCanInput(false);
-				SoundManager::Play("RoundClearSE", false, 0.7f, 0.7f);
+				SoundManager::Play("RoundClearSE", false, SoundVolume::GetValumeSE(), 0.7f);
 			}
 			//すべてのラウンドをクリアしたら
 			if (roundNum_ >= maxRoundNum_)
@@ -187,7 +188,7 @@ void ColosseumSystem::ClearUpdate()
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
-		SoundManager::Play("SelectSE");
+		SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE());
 		bool type = (selectType_ == SelectType::Retry);
 		//現在選択しているものがコンティニューだったら
 		selectType_ = (type) ? SelectType::Title : SelectType::Retry;
@@ -201,7 +202,7 @@ void ColosseumSystem::ClearUpdate()
 		GameSpeed::SetGameSpeed(1.f);
 		if (SceneManager::GetIsSetNext() == false)
 		{
-			SoundManager::Play("EnterSE", false, 1.5f);
+			SoundManager::Play("EnterSE", false, SoundVolume::GetValumeSE());
 		}
 		if (selectType_ == SelectType::Retry)
 		{
@@ -252,7 +253,7 @@ void ClearSprite::Update(Timer timer)
 		if (shineTimer_.GetTimer() == 0) {
 			float colRGB = 1000.f;
 			col = { colRGB ,colRGB ,colRGB ,255 };
-			SoundManager::Play("ShineSE");
+			SoundManager::Play("ShineSE", false, SoundVolume::GetValumeSE());
 		}
 		shineTimer_.AddTime(1);
 
@@ -382,7 +383,7 @@ void ReadyGoSprite::ReadySpriteUpdate()
 		if (time < limitTime)
 		{
 			colorLight = 455.f + 600.f * fabs(rate);
-			if (rate <= 0.f)SoundManager::Play("ShineSE");
+			if (rate <= 0.f)SoundManager::Play("ShineSE", false, SoundVolume::GetValumeSE());
 		}
 
 		readyTexcolor = { colorLight ,colorLight ,colorLight ,readyTexcolor.a };

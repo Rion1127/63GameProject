@@ -5,6 +5,7 @@
 #include "ParticleHitAttack.h"
 #include <imgui.h>
 #include "ParticleManager.h"
+#include "SoundVolume.h"
 
 CollisionManager::CollisionManager()
 {
@@ -270,7 +271,7 @@ void CollisionManager::EnemyLockOn()
 		//自分でロックオンする敵を設定
 		if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 		{
-			SoundManager::Play("lockOnSE", false, 0.5f);
+			SoundManager::Play("lockOnSE", false, SoundVolume::GetValumeSE());
 			//ロックオンしていれば解除、していなければロックオン
 			bool isLockOn = (enemyManager_->GetLockOnEnemy()->GetIsHardLockOn() == true) ?
 				false : true;
@@ -342,7 +343,7 @@ void CollisionManager::PlayerAttackToEnemy()
 					hitEmitter_->scale = 1.0f;
 					ParticleManager::GetInstance()->
 						AddParticle("HitAttack", hitEmitter_);
-					SoundManager::Play("HitSE", false, 0.4f);
+					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 
 					//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
 					if (isHitStop_ == false)continue;
@@ -389,7 +390,7 @@ void CollisionManager::PlayerAttackToEnemy()
 					hitEmitter_->scale = 1.0f;
 					ParticleManager::GetInstance()->
 						AddParticle("HitAttack", hitEmitter_);
-					SoundManager::Play("HitSE", false, 0.5f);
+					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 				}
 			}
 		}
@@ -420,7 +421,7 @@ void CollisionManager::EnemyAttackToPlayer()
 
 							player_->GuardHit(knockVec);
 
-							SoundManager::Play("GuardHitSE", false, 0.5f);
+							SoundManager::Play("GuardHitSE", false, SoundVolume::GetValumeSE());
 						}
 					}
 
@@ -446,7 +447,7 @@ void CollisionManager::EnemyAttackToPlayer()
 						hitEmitter_->scale = 1.0f;
 						ParticleManager::GetInstance()->
 							AddParticle("HitAttack", hitEmitter_);
-						SoundManager::Play("HitSE", false, 0.5f);
+						SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 					}
 				}
 			}
@@ -474,7 +475,7 @@ void CollisionManager::EnemyBulletToPlayer()
 				}
 				bullet->SetIsDead(true);
 
-				SoundManager::Play("GuardHitSE", false, 0.5f);
+				SoundManager::Play("GuardHitSE", false, SoundVolume::GetValumeSE());
 			}
 		}
 

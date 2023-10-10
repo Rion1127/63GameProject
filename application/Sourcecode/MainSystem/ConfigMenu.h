@@ -46,6 +46,8 @@ private:
 
 	bool isInversX_;
 	bool isInversY_;
+	int32_t bgmVolume_;
+	int32_t seVolume_;
 
 	ConfigType type_ = ConfigType::CameraAxisX;
 
@@ -63,6 +65,8 @@ public:
 public:
 	void SetInvX(bool flag) { isInversX_ = flag; }
 	void SetInvY(bool flag) { isInversY_ = flag; }
+	void SetBgmVolume(int32_t volume) { bgmVolume_ = volume; }
+	void SetSeVolume(int32_t volume) { seVolume_ = volume; }
 	void SetConfigType(ConfigType type) { type_ = type; }
 private:
 	void CameraConfigUpdate();
@@ -78,6 +82,8 @@ private:
 private:
 	bool isInversX_;
 	bool isInversY_;
+	int32_t bgmVolume_;
+	int32_t seVolume_;
 	ConfigType type_ = ConfigType::CameraAxisX;
 
 	ConfigMenuSprite sprite_;

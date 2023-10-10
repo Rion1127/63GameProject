@@ -14,6 +14,7 @@
 #include "PlayerAirAttack.h"
 #include "PlayerMagic.h"
 #include "GameSpeed.h"
+#include "SoundVolume.h"
 
 Player::Player() :
 	IActor(ActorType::Player)
@@ -352,7 +353,7 @@ void Player::Guard()
 		if (Controller::GetTriggerButtons(PAD::INPUT_X))
 		{
 			//空中にいるとき、ノックバックの時攻撃の時はガードができない
-			SoundManager::Play("GuardSE", false, 0.5f);
+			SoundManager::Play("GuardSE", false, SoundVolume::GetValumeSE());
 			guard_.Init();
 			GoToState(PlayerState::Guard);
 		}
@@ -607,7 +608,7 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	damageCoolTime_.Reset();
 	hpGaugeUI_.Damage();
 	GoToState(PlayerState::Knock);
-	SoundManager::Play("HitSE", false, 0.5f);
+	SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 	guard_.SetisGurdNow_(false);
 }
 

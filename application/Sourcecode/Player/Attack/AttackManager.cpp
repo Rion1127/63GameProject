@@ -3,6 +3,7 @@
 #include "RRandom.h"
 #include <imgui.h>
 #include "Player.h"
+#include "SoundVolume.h"
 
 #include "AttackSlide.h"
 #include "AttackFinishBreak.h"
@@ -65,7 +66,7 @@ void AttackManager::Update()
 				nowAttack_->SetLockOnActor(lockOnEnemy_);
 				nowAttack_->Init();
 				float picth = RRandom::RandF(0.7f, 1.5f);
-				SoundManager::Play("SwingSE", false, 0.3f, picth);
+				SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 			}
 			comboNum++;
 		}
@@ -120,7 +121,7 @@ void AttackManager::Update()
 				nowAttack_->SetLockOnActor(lockOnEnemy_);
 				nowAttack_->Init();
 				float picth = RRandom::RandF(0.7f, 1.5f);
-				SoundManager::Play("SwingSE", false, 0.3f, picth);
+				SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 			}
 			//nextAttack_を解放する
 			nextAttack_.reset();

@@ -7,7 +7,7 @@
 #include "ParticleEnemyDead.h"
 #include "EnemyRedNocturne.h"
 #include "IBullet.h"
-
+#include "SoundVolume.h"
 
 EnemyManager::EnemyManager()
 {
@@ -92,7 +92,7 @@ void EnemyManager::PreUpdate()
 
 			ParticleManager::GetInstance()->
 				AddParticle("EnemyDead", deadEmitter_);
-			SoundManager::Play("DeathSE", false, 1.0f, 0.6f);
+			SoundManager::Play("DeathSE", false, SoundVolume::GetValumeSE(), 0.6f);
 			continue;
 		}
 		else

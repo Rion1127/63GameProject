@@ -1,6 +1,7 @@
 #include "AttackAirAerialFinish.h"
 #include "RRandom.h"
 #include "mSound.h"
+#include "SoundVolume.h"
 
 AttackAirAerialFinish::AttackAirAerialFinish(IActor* selfActor) :
 	IAttack(selfActor, 1, 70, 10, 5, AttackType::Finish)
@@ -48,15 +49,15 @@ void AttackAirAerialFinish::MoveUpdate()
 		float picth = RRandom::RandF(0.7f, 1.5f);
 		if (index_ == 1) {
 			SecondAttackInit();
-			SoundManager::Play("SwingSE", false, 0.3f, picth);
+			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		}
 		else if (index_ == 2) {
 			ThirdAttackInit();
-			SoundManager::Play("SwingSE", false, 0.3f, picth);
+			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		}
 		else if (index_ == 3) {
 			FourthAttackInit();
-			SoundManager::Play("SwingSE", false, 0.3f, picth);
+			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		}
 	}
 

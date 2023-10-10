@@ -7,6 +7,7 @@
 #include "ParticleManager.h"
 #include "GameSpeed.h"
 #include "mSound.h"
+#include "SoundVolume.h"
 
 EnemyRedNocturne::EnemyRedNocturne(Vector3 pos, Vector3 rot) :
 	IEnemy(EnemyType::Air, false, 80)
@@ -131,7 +132,7 @@ void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)
 	bullet->Init();
 
 	isBulletShot_ = false;
-	SoundManager::Play("FireSE", false, 1.f);
+	SoundManager::Play("FireSE", false, SoundVolume::GetValumeSE());
 }
 
 void EnemyRedNocturne::Idle()

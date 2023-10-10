@@ -34,15 +34,34 @@ void ConfigMenu::Update()
 
 		sprite_.SetConfigType(type_);
 		
-		SoundManager::Play("SelectSE");
+		SoundManager::Play("SelectSE",false,SoundVolume::GetValumeSE());
 	}
 
 	//左右で選択した項目の設定変更
 	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT) ||
 		Controller::GetTriggerButtons(PAD::INPUT_LEFT))
 	{
-		SoundManager::Play("SelectSE");
-		if (type_ == ConfigType::CameraAxisX)
+		if (type_ == ConfigType::BGM)
+		{
+			if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT))bgmVolume_ += 1;
+			if (Controller::GetTriggerButtons(PAD::INPUT_LEFT))bgmVolume_ -= 1;
+
+			bgmVolume_ = Clamp(bgmVolume_, 0, 10);
+
+			float bgmVolume = (float)bgmVolume_ / 10.f;
+
+			SoundVolume::SetValumeBGM(bgmVolume);
+		}
+		else if (type_ == ConfigType::SE)
+		{
+			if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT))seVolume_ += 1;
+			if (Controller::GetTriggerButtons(PAD::INPUT_LEFT))seVolume_ -= 1;
+
+			seVolume_ = Clamp(seVolume_, 0, 10);
+			float seVolume = (float)seVolume_ / 10.f;
+			SoundVolume::SetValumeSE(seVolume);
+		}
+		else if (type_ == ConfigType::CameraAxisX)
 		{
 			isInversX_ = (isInversX_ == false) ? true : false;
 		}
@@ -50,9 +69,13 @@ void ConfigMenu::Update()
 		{
 			isInversY_ = (isInversY_ == false) ? true : false;
 		}
+
+		SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE());
 	}
 	sprite_.SetInvX(isInversX_);
 	sprite_.SetInvY(isInversY_);
+	sprite_.SetBgmVolume(bgmVolume_);
+	sprite_.SetSeVolume(seVolume_);
 }
 
 void ConfigMenu::Draw()
@@ -93,6 +116,8 @@ void ConfigMenu::DrawImGui()
 ConfigMenu::ConfigMenu() {
 	isInversX_ = false;
 	isInversY_ = false;
+	bgmVolume_ = 10;
+	seVolume_ = 10;
 }
 
 #pragma region ConfigMenuSprite
@@ -235,6 +260,27 @@ void ConfigMenuSprite::SpriteColorUpdate() {
 		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		bgmConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
 		seConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+	}
+
+	for (int32_t i = 0; i < bgmConfig_->frameSprite_.size(); i++)
+	{
+		if (i < bgmVolume_)
+		{
+			bgmConfig_->frameSprite_[i]->SetColor(selectColor);
+		}
+		else
+		{
+			bgmConfig_->frameSprite_[i]->SetColor(unSelectColor);
+		}
+
+		if (i < seVolume_)
+		{
+			seConfig_->frameSprite_[i]->SetColor(selectColor);
+		}
+		else
+		{
+			seConfig_->frameSprite_[i]->SetColor(unSelectColor);
+		}
 	}
 }
 #pragma endregion
@@ -387,17 +433,40 @@ SoundConfigSprite::SoundConfigSprite(Vector2 pos, int32_t itemIndex)
 
 	itemtexSprite_->Update();
 	itemFrameSprite_->Update();
+
+	for (uint32_t i = 0; i < frameSprite_.size(); i++)
+	{
+		frameSprite_[i] = std::make_unique<Sprite>();
+		frameSprite_[i]->Ini();
+
+		Vector2 soundPos = itemFrameSprite_->GetPos();
+		soundPos.x += 128 + 32 * i;
+
+		frameSprite_[i]->SetPos(soundPos);
+		frameSprite_[i]->SetScale(Vector2(0.4f,0.4f));
+		frameSprite_[i]->SetTexture(TextureManager::GetInstance()->GetTexture("SoundFrame"));
+		frameSprite_[i]->Update();
+	}
 }
 
 void SoundConfigSprite::Update()
 {
 	itemtexSprite_->Update();
 	itemFrameSprite_->Update();
+
+	for (uint32_t i = 0; i < frameSprite_.size(); i++)
+	{
+		frameSprite_[i]->Update();
+	}
 }
 
 void SoundConfigSprite::Draw()
 {
 	itemFrameSprite_->Draw();
 	itemtexSprite_->Draw();
+	for (uint32_t i = 0; i < frameSprite_.size(); i++)
+	{
+		frameSprite_[i]->Draw();
+	}
 }
 #pragma endregion

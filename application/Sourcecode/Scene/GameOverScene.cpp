@@ -3,6 +3,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "GameScene.h"
+#include "SoundVolume.h"
 GameOverScene::~GameOverScene()
 {
 }
@@ -50,7 +51,7 @@ void GameOverScene::Update()
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
-		SoundManager::Play("SelectSE");
+		SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE());
 		bool type = (selectType_ == SelectType::Continue);
 		//現在選択しているものがコンティニューだったら
 		selectType_ = (type) ? SelectType::Title : SelectType::Continue;
@@ -73,7 +74,7 @@ void GameOverScene::Update()
 		Key::TriggerKey(DIK_SPACE))
 	{
 		if (SceneManager::GetIsSetNext() == false) {
-			SoundManager::Play("EnterSE", false, 1.5f);
+			SoundManager::Play("EnterSE", false, SoundVolume::GetValumeSE());
 		}
 		if (selectType_ == SelectType::Continue)
 		{
