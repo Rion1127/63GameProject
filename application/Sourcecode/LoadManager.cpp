@@ -41,7 +41,6 @@ void LoadManager::LoadTexture()
 	LoadGraph("ready.png", "Ready");
 	LoadGraph("go.png", "Go");
 	LoadGraph("clear.png", "Clear");
-	LoadGraph("retry.png", "Retry");
 	LoadGraph("readyShape.png", "ReadyShape");
 	LoadGraph("goShape.png", "GoShape");
 	LoadGraph("pause.png", "Pause");
@@ -50,6 +49,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("selectTex.png", "SelectTex");
 	LoadGraph("cameraInvTex.png", "CameraInvTex");
 	LoadGraph("configCameraTex.png", "ConfigCameraTex");
+	LoadGraph("bgmSeTex.png", "BgmSeTex");
 
 
 	LoadGraph("commandTitle.png", "CommandTitle");

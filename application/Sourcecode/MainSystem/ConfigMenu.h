@@ -5,12 +5,14 @@
 #include "Particle2DSelect.h"
 
 enum class ConfigType {
+	BGM,
+	SE,
 	CameraAxisX,
 	CameraAxisY,
 
 	ConfigTypeEND
 };
-
+#pragma region CameraConfig
 struct ConfigSprite {
 	std::unique_ptr<Sprite> itemFrameSprite_;
 	std::unique_ptr<Sprite> itemtexSprite_;
@@ -21,12 +23,27 @@ struct ConfigSprite {
 	void Update();
 	void Draw();
 };
+#pragma endregion
+
+#pragma region Sound
+struct SoundConfigSprite {
+	std::unique_ptr<Sprite> itemFrameSprite_;
+	std::unique_ptr<Sprite> itemtexSprite_;
+	std::array<std::unique_ptr<Sprite>, 10> frameSprite_;
+	
+	SoundConfigSprite(Vector2 pos, int32_t itemIndex);
+	void Update();
+	void Draw();
+};
+#pragma endregion
 
 class ConfigMenuSprite
 {
 private:
 
 private:
+	Vector2 particlePos;
+
 	bool isInversX_;
 	bool isInversY_;
 
@@ -36,6 +53,9 @@ private:
 
 	std::unique_ptr<ConfigSprite> axisX_;
 	std::unique_ptr<ConfigSprite> axisY_;
+
+	std::unique_ptr<SoundConfigSprite> bgmConfig_;
+	std::unique_ptr<SoundConfigSprite> seConfig_;
 public:
 	ConfigMenuSprite();
 	void Update();
@@ -44,6 +64,11 @@ public:
 	void SetInvX(bool flag) { isInversX_ = flag; }
 	void SetInvY(bool flag) { isInversY_ = flag; }
 	void SetConfigType(ConfigType type) { type_ = type; }
+private:
+	void CameraConfigUpdate();
+	void SoundVolumeUpdate();
+	void SpriteColorUpdate();
+	
 };
 
 class ConfigMenu

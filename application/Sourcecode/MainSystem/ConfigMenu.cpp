@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include "mInput.h"
 #include "mSound.h"
+#include "SoundVolume.h"
 
 ConfigMenu* ConfigMenu::GetInstance()
 {
@@ -16,22 +17,27 @@ void ConfigMenu::SpriteUpdate()
 
 void ConfigMenu::Update()
 {
+	//上下で設定する項目を変更
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
 	{
-		SoundManager::Play("SelectSE");
 		int32_t typeNum = (int32_t)type_;
 
 		if (Controller::GetTriggerButtons(PAD::INPUT_DOWN))typeNum++;
 		if (Controller::GetTriggerButtons(PAD::INPUT_UP))typeNum--;
-		typeNum = Clamp(typeNum, 0, (int32_t)ConfigType::ConfigTypeEND - 1);
+
+		int32_t min = 0;
+		int32_t max = (int32_t)ConfigType::ConfigTypeEND - 1;
+		typeNum = Clamp(typeNum, min, max);
 
 		type_ = (ConfigType)typeNum;
 
 		sprite_.SetConfigType(type_);
+		
+		SoundManager::Play("SelectSE");
 	}
 
-
+	//左右で選択した項目の設定変更
 	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT) ||
 		Controller::GetTriggerButtons(PAD::INPUT_LEFT))
 	{
@@ -94,9 +100,34 @@ ConfigMenuSprite::ConfigMenuSprite()
 {
 	axisX_ = std::make_unique<ConfigSprite>(Vector2(0, 0), 0);
 	axisY_ = std::make_unique<ConfigSprite>(Vector2(0, 60), 1);
+
+	bgmConfig_ = std::make_unique<SoundConfigSprite>(Vector2(0, 330), 0);
+	seConfig_ = std::make_unique<SoundConfigSprite>(Vector2(0, 390), 1);
 }
 void ConfigMenuSprite::Update()
 {
+	CameraConfigUpdate();
+	SoundVolumeUpdate();
+
+	selectParticle_.SetPos(particlePos);
+
+	axisX_->Update();
+	axisY_->Update();
+	bgmConfig_->Update();
+	seConfig_->Update();
+	selectParticle_.Update();
+}
+
+void ConfigMenuSprite::Draw()
+{
+	axisX_->Draw();
+	axisY_->Draw();
+	bgmConfig_->Draw();
+	seConfig_->Draw();
+	selectParticle_.Draw();
+}
+
+void ConfigMenuSprite::CameraConfigUpdate() {
 	Color selectColor = { 230,50,50,255 };
 	Color unSelectColor = { 0,35,255,255 };
 	for (uint32_t i = 0; i < 2; i++)
@@ -114,16 +145,8 @@ void ConfigMenuSprite::Update()
 		axisY_->frameSprite_[isInversY_]->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
 	}
 
-	Vector2 particlePos{};
-
 	if (type_ == ConfigType::CameraAxisX)
 	{
-		axisX_->itemFrameSprite_->SetColor(selectColor);
-		axisY_->itemFrameSprite_->SetColor(unSelectColor);
-
-		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
-		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
-
 		particlePos = axisX_->itemFrameSprite_->GetPos();
 
 		particlePos = {
@@ -133,30 +156,86 @@ void ConfigMenuSprite::Update()
 	}
 	else if (type_ == ConfigType::CameraAxisY)
 	{
-		axisX_->itemFrameSprite_->SetColor(unSelectColor);
-		axisY_->itemFrameSprite_->SetColor(selectColor);
-
-		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
-		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
-
 		particlePos = {
 			axisY_->itemFrameSprite_->GetPos().x + axisY_->itemFrameSprite_->GetTexture().size_.x / 4.5f,
 			axisY_->itemFrameSprite_->GetPos().y - axisY_->itemFrameSprite_->GetTexture().size_.y / 4.f
 		};
 	}
 
-	selectParticle_.SetPos(particlePos);
-
-	axisX_->Update();
-	axisY_->Update();
-	selectParticle_.Update();
+	SpriteColorUpdate();
 }
 
-void ConfigMenuSprite::Draw()
-{
-	axisX_->Draw();
-	axisY_->Draw();
-	selectParticle_.Draw();
+void ConfigMenuSprite::SoundVolumeUpdate() {
+	if (type_ == ConfigType::BGM)
+	{
+		particlePos = bgmConfig_->itemFrameSprite_->GetPos();
+
+		particlePos = {
+			bgmConfig_->itemFrameSprite_->GetPos().x + bgmConfig_->itemFrameSprite_->GetTexture().size_.x / 4.5f,
+			bgmConfig_->itemFrameSprite_->GetPos().y - bgmConfig_->itemFrameSprite_->GetTexture().size_.y / 4.f
+		};
+	}
+	else if (type_ == ConfigType::SE)
+	{
+		particlePos = {
+			seConfig_->itemFrameSprite_->GetPos().x + seConfig_->itemFrameSprite_->GetTexture().size_.x / 4.5f,
+			seConfig_->itemFrameSprite_->GetPos().y - seConfig_->itemFrameSprite_->GetTexture().size_.y / 4.f
+		};
+	}
+}
+
+void ConfigMenuSprite::SpriteColorUpdate() {
+	Color selectColor = { 230,50,50,255 };
+	Color unSelectColor = { 0,35,255,255 };
+
+	if (type_ == ConfigType::CameraAxisX)
+	{
+		axisX_->itemFrameSprite_->SetColor(selectColor);
+		axisY_->itemFrameSprite_->SetColor(unSelectColor);
+		bgmConfig_->itemFrameSprite_->SetColor(unSelectColor);
+		seConfig_->itemFrameSprite_->SetColor(unSelectColor);
+
+		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		bgmConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		seConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+	}
+	else if (type_ == ConfigType::CameraAxisY)
+	{
+		axisY_->itemFrameSprite_->SetColor(selectColor);
+		axisX_->itemFrameSprite_->SetColor(unSelectColor);
+		bgmConfig_->itemFrameSprite_->SetColor(unSelectColor);
+		seConfig_->itemFrameSprite_->SetColor(unSelectColor);
+
+		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+		bgmConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		seConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+	}
+	else if (type_ == ConfigType::BGM)
+	{
+		bgmConfig_->itemFrameSprite_->SetColor(selectColor);
+		seConfig_->itemFrameSprite_->SetColor(unSelectColor);
+		axisY_->itemFrameSprite_->SetColor(unSelectColor);
+		axisX_->itemFrameSprite_->SetColor(unSelectColor);
+
+		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		bgmConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+		seConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+	}
+	else if (type_ == ConfigType::SE)
+	{
+		seConfig_->itemFrameSprite_->SetColor(selectColor);
+		bgmConfig_->itemFrameSprite_->SetColor(unSelectColor);
+		axisY_->itemFrameSprite_->SetColor(unSelectColor);
+		axisX_->itemFrameSprite_->SetColor(unSelectColor);
+
+		axisX_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		axisY_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		bgmConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+		seConfig_->itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("SelectFrame"));
+	}
 }
 #pragma endregion
 
@@ -263,5 +342,62 @@ void ConfigSprite::Draw()
 		frameSprite_[i]->Draw();
 		texSprite_[i]->Draw();
 	}
+}
+#pragma endregion
+
+#pragma region SoundConfigSprite
+SoundConfigSprite::SoundConfigSprite(Vector2 pos, int32_t itemIndex)
+{
+	itemtexSprite_ = std::make_unique<Sprite>();
+	itemFrameSprite_ = std::make_unique<Sprite>();
+
+	itemtexSprite_->Ini();
+	itemFrameSprite_->Ini();
+
+	Vector2 texPos = {
+			pos.x + WinAPI::GetWindowSize().x / 2.f - 200.f + 10 * itemIndex,
+			pos.y
+	};
+	Vector2 leftTopPos = {
+			120.f * itemIndex,
+			0
+	};
+	Vector2 texSize = {
+		120.f,
+		38
+	};
+	Vector2 scale = {
+		(1.f / 2.f) * 0.6f,
+		0.6f
+	};
+
+	itemtexSprite_->SetPos(texPos);
+	itemtexSprite_->SetTex_LeftTop(leftTopPos);
+	itemtexSprite_->SetTex_Size(texSize);
+	itemtexSprite_->SetScale(scale);
+	itemtexSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("BgmSeTex"));
+
+	Vector2 framePos = {
+			pos.x + WinAPI::GetWindowSize().x / 2.f - 200.f,
+			pos.y
+	};
+	itemFrameSprite_->SetPos(framePos);
+	itemFrameSprite_->SetScale(Vector2(0.5f, 0.6f));
+	itemFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("UnselectFrame"));
+
+	itemtexSprite_->Update();
+	itemFrameSprite_->Update();
+}
+
+void SoundConfigSprite::Update()
+{
+	itemtexSprite_->Update();
+	itemFrameSprite_->Update();
+}
+
+void SoundConfigSprite::Draw()
+{
+	itemFrameSprite_->Draw();
+	itemtexSprite_->Draw();
 }
 #pragma endregion

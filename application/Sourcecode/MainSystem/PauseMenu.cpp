@@ -25,6 +25,7 @@ void PauseMenu::Update()
 {
 	if (Controller::GetTriggerButtons(PAD::INPUT_START))
 	{
+		selectType_ = SelectType::Continue;
 		if (isConfig_ == false)
 		{
 			isPause_ = (isPause_ == true) ? false : true;
@@ -42,6 +43,7 @@ void PauseMenu::Update()
 			if (Controller::GetTriggerButtons(PAD::INPUT_B))
 			{
 				isPause_ = false;
+				selectType_ = SelectType::Continue;
 				SoundManager::Play("CancelSE");
 			}
 
@@ -91,6 +93,7 @@ void PauseMenu::Update()
 			Controller::GetTriggerButtons(PAD::INPUT_B))
 		{
 			isConfig_ = false;
+			selectType_ = SelectType::Continue;
 			SoundManager::Play("CancelSE");
 		}
 		ConfigMenu::GetInstance()->Update();

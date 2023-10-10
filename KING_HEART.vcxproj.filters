@@ -250,6 +250,12 @@
     <Filter Include="application\ソースファイル\MainSystem">
       <UniqueIdentifier>{523e222f-9a2f-4b50-821e-ae68874c3a3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\MainSystem\Config">
+      <UniqueIdentifier>{707c2ce8-17e5-4f5a-acef-3eeea0f0eacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\MainSystem\Config">
+      <UniqueIdentifier>{7c10a6c2-efa1-49b4-bec5-0d730618f086}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -606,13 +612,7 @@
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp">
       <Filter>application\ソースファイル\MainSystem</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
-      <Filter>application\ソースファイル\MainSystem</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\GameCamera.cpp">
-      <Filter>application\ソースファイル\MainSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainSystem\GameSpeed.cpp">
       <Filter>application\ソースファイル\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\PauseMenu.cpp">
@@ -629,6 +629,15 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\HitStop.cpp">
       <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
+      <Filter>application\ソースファイル\MainSystem\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainSystem\GameSpeed.cpp">
+      <Filter>application\ソースファイル\MainSystem\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainSystem\SoundVolume.cpp">
+      <Filter>application\ソースファイル\MainSystem\Config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -989,13 +998,7 @@
     <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h">
       <Filter>application\ヘッダーファイル\MainSystem</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h">
-      <Filter>application\ヘッダーファイル\MainSystem</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\GameCamera.h">
-      <Filter>application\ヘッダーファイル\MainSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainSystem\GameSpeed.h">
       <Filter>application\ヘッダーファイル\MainSystem</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\PauseMenu.h">
@@ -1012,6 +1015,15 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\HitStop.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainSystem\GameSpeed.h">
+      <Filter>application\ヘッダーファイル\MainSystem\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h">
+      <Filter>application\ヘッダーファイル\MainSystem\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainSystem\SoundVolume.h">
+      <Filter>application\ヘッダーファイル\MainSystem\Config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

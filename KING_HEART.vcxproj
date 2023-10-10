@@ -32,6 +32,7 @@
     <ClCompile Include="application\Sourcecode\Interface\IBullet.cpp" />
     <ClCompile Include="application\Sourcecode\Interface\IGauge.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
+    <ClCompile Include="application\Sourcecode\MainSystem\SoundVolume.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="application\Sourcecode\Interface\IBullet.h" />
     <ClInclude Include="application\Sourcecode\Interface\IGauge.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
+    <ClInclude Include="application\Sourcecode\MainSystem\SoundVolume.h" />
     <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h" />
