@@ -34,6 +34,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("hitCircle.png", "HitCircle");
 	LoadGraph("triangle.png", "Triangle");
 	LoadGraph("selectParticle.png", "SelectParticle");
+	LoadGraph("moveSmoke.png", "MoveSmoke");
 	//UI
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");

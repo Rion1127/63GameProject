@@ -627,9 +627,6 @@
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMagic.cpp">
       <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\HitStop.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
       <Filter>application\ソースファイル\MainSystem\Config</Filter>
     </ClCompile>
@@ -638,6 +635,15 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\SoundVolume.cpp">
       <Filter>application\ソースファイル\MainSystem\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleLanding.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\HitStop.cpp">
+      <Filter>application\ソースファイル\MainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleDash.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1013,9 +1019,6 @@
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMagic.h">
       <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\HitStop.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\GameSpeed.h">
       <Filter>application\ヘッダーファイル\MainSystem\Config</Filter>
     </ClInclude>
@@ -1024,6 +1027,15 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\SoundVolume.h">
       <Filter>application\ヘッダーファイル\MainSystem\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleLanding.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\HitStop.h">
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleDash.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -41,6 +41,7 @@ private:
 	float jumpTime_;
 
 	TimerFloat shakeTimer_;
+	TimerFloat dashParticleTimer_;
 
 	PlayerCommand command_;
 	GuardClass guard_;
@@ -133,6 +134,7 @@ public:
 	bool GetIsAlive() { return isAlive_; }
 	bool GetIsMPCharge() { return isMPCharge_; }
 	bool GetIsCanInput() { return isCanInput_; }
+	bool GetIsFloorCollision() { return isFloorCollision_; }
 
 	Vector3 GetLockOnVec() { return lockOnVec_; }
 	GuardClass* GetGuard() { return &guard_; }

@@ -105,7 +105,7 @@ void ParticleHitAttack::MoveUpdate()
 
 		p.velocity += p.addvelocity * GameSpeed::GetGameSpeed();
 
-		p.position += p.velocity /** GameSpeed::GetGameSpeed()*/;
+		p.position += p.velocity;
 		p.rot += p.addRot * GameSpeed::GetGameSpeed();
 
 		p.scale = Easing::Quint::easeIn(p.baseScale, 0.f, f);
