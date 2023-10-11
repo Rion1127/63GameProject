@@ -15,6 +15,9 @@ CollisionManager::CollisionManager()
 
 	isHitStop_ = true;
 	hitStopTimer_ = 5;
+
+	shakePower_ = 0.3f;
+	shakeTimer_ = 10;
 }
 
 void CollisionManager::Update()
@@ -79,22 +82,8 @@ void CollisionManager::PlayerToFloor()
 	col.center += player_->GetGravity()->GetGravityValue();
 
 	//床とプレイヤー
-	Vector3 interPos;
-	if (Sphere2PlaneCol(col, *floor, &interPos))
+	if (Sphere2PlaneCol(col, *floor))
 	{
-		if (player_->GetIsFloorCollision() == false) {
-			player_->SetIsFloorCollision(true);
-
-			std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-			hitEmitter_->particle = std::make_unique<ParticleLanding>();
-			hitEmitter_->addNum = 6;
-			hitEmitter_->time = 20;
-			hitEmitter_->pos = interPos;
-			hitEmitter_->scale = 0.7f;
-			ParticleManager::GetInstance()->
-				AddParticle("Landing", hitEmitter_);
-			//SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
-		}
 		//地面にめり込まないよう処理
 		while (true)
 		{

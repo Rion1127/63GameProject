@@ -17,6 +17,7 @@
 #include "SoundVolume.h"
 #include "ParticleDash.h"
 #include "ParticleManager.h"
+#include "ParticleLanding.h"
 
 Player::Player() :
 	IActor(ActorType::Player)
@@ -243,7 +244,7 @@ void Player::InputVecUpdate()
 			else addTime = 1;
 
 			shakeTimer_.AddTime(addTime);
-			dashParticleTimer_.AddTime(addTime);
+			
 
 			float shakeRadian =
 				UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
@@ -252,25 +253,34 @@ void Player::InputVecUpdate()
 			if (shakeTimer_.GetIsEnd()) {
 				shakeTimer_.Reset();
 			}
+			if (state_ == PlayerState::Move) {
+				dashParticleTimer_.AddTime(addTime);
 
-			if (dashParticleTimer_.GetIsEnd()) {
-				dashParticleTimer_.Reset();
-				Vector3 dashParticlePos =
-					displayObj_->GetTransform()->position_ - playerFrontVec_;
-				dashParticlePos.y = 0;
+				if (dashParticleTimer_.GetIsEnd()) {
+					
+					Vector3 dashParticlePos =
+						displayObj_->GetTransform()->position_ - playerFrontVec_;
+					dashParticlePos.y = 0;
 
-				std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-				hitEmitter_->particle = std::make_unique<ParticleDash>();
-				hitEmitter_->addNum = 6;
-				hitEmitter_->time = 20;
-				hitEmitter_->pos = dashParticlePos;
-				hitEmitter_->scale = 0.7f;
-				ParticleManager::GetInstance()->
-					AddParticle("Dash", hitEmitter_);
+					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+					hitEmitter_->particle = std::make_unique<ParticleDash>();
+					hitEmitter_->addNum = 6;
+					hitEmitter_->time = 20;
+					hitEmitter_->pos = dashParticlePos;
+					hitEmitter_->addVec = -playerFrontVec_;
+					hitEmitter_->scale = 0.7f;
+					ParticleManager::GetInstance()->
+						AddParticle("Dash", hitEmitter_);
+
+					dashParticleTimer_.Reset();
+				}
+			}
+			else {
+				shakeTimer_.Reset();
 			}
 		}
 		else {
-			shakeTimer_.Reset();
+			dashParticleTimer_.Reset();
 		}
 		Vector3 vecY = { 0, 1, 0 };
 		auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
@@ -538,6 +548,15 @@ void Player::FloorColision(Vector3 pos)
 	if (isFloorCollision_ == false)
 	{
 		Freeze(7);
+
+		std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+		hitEmitter_->particle = std::make_unique<ParticleLanding>();
+		hitEmitter_->addNum = 6;
+		hitEmitter_->time = 20;
+		hitEmitter_->pos = pos;
+		hitEmitter_->scale = 0.7f;
+		ParticleManager::GetInstance()->
+			AddParticle("Landing", hitEmitter_);
 	}
 	isFloorCollision_ = true;
 	isCanJump_ = true;

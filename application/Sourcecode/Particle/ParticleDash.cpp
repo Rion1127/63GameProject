@@ -9,7 +9,7 @@ ParticleDash::ParticleDash() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("MoveSmoke");
-	isBillBoard = true;
+	isBillBoard = false;
 	state_ = PipeLineState::Alpha;
 
 	speed_ = 0.1f;
@@ -38,8 +38,8 @@ void ParticleDash::Add()
 			0,
 			RRandom::RandF(-1,1),
 		};
-		addvec = addvec.normalize() * speed_;
-		p.addVec = addvec;
+		addvec = addvec.normalize();
+		p.addVec = emitter_->addVec * speed_;
 		p.end_frame = emitter_->time;
 		p.scale = emitter_->scale;
 		p.baseScale = emitter_->scale;
