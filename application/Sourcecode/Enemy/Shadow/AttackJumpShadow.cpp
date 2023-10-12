@@ -20,12 +20,7 @@ void AttackJumpShadow::Init()
 		}
 		else
 		{
-			//回転情報から正面ベクトル(2D)を取得
-			frontVec = {
-				sinf(selfActor_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(selfActor_->GetWorldTransform()->rotation_.y),
-			};
+			CalculateRotToLockOnActor();
 		}
 		frontVec = frontVec.normalize();
 		frontDist = frontVec * frontDist_;

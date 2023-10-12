@@ -12,16 +12,7 @@ void AttackAirAerialFinish::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
-		frontDist_ = 0;
-		//ロックオンしている敵がいるなら
-		if (IAttack::lockOnActor_ != nullptr) {
-			CalculateRotToLockOnActor();
-		}
-		Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
-		float rot = Vec2Angle(vec);
-		Vector3 vecY = { 0, 1, 0 };
-		auto axisY = MakeAxisAngle(vecY, Radian(rot));
-		selfActor_->GetWorldTransform()->SetQuaternion(axisY);
+		CalculateRotToLockOnActor();
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 

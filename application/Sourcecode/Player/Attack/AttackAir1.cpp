@@ -9,10 +9,7 @@ void AttackAir1::Init()
 {
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr) {
-		//ロックオンしている敵がいるなら
-		if (IAttack::lockOnActor_ != nullptr) {
-			CalculateRotToLockOnActor();
-		}
+		CalculateRotToLockOnActor();
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 

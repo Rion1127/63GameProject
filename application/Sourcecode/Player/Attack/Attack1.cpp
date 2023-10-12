@@ -10,11 +10,7 @@ void Attack1::Init()
 	Vector3 frontVec = CalculateFrontVec();
 	if (selfActor_ != nullptr)
 	{
-		//ロックオンしている敵がいるなら
-		if (IAttack::lockOnActor_ != nullptr)
-		{
-			CalculateRotToLockOnActor();
-		}
+		CalculateRotToLockOnActor();
 	}
 	attackVec_ = frontVec;
 	//スプライン曲線計算
