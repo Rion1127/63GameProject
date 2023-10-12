@@ -83,3 +83,20 @@ void IAttack::CalculateRotToLockOnActor(Vector3 frontVec)
 	float rotY = Radian(Vec2Angle(frontVec2));
 	selfActor_->GetWorldTransform()->rotation_ = { 0,rotY ,0 };
 }
+
+void IAttack::CalculateRotToLockOnActor()
+{
+	Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
+	float rot = Vec2Angle(vec);
+	Vector3 vecY = { 0, 1, 0 };
+	auto axisY = MakeAxisAngle(vecY, Radian(rot));
+	selfActor_->GetWorldTransform()->SetQuaternion(axisY);
+	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetWorldTransform()->quaternion_);
+	frontVec.y = 0;
+	Vector2 angleVec2 = {
+		frontVec.x,
+		frontVec.z
+	};
+	selfActor_->SetObjAngle(Vec2Angle(angleVec2));
+}
+

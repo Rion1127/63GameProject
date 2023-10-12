@@ -55,6 +55,7 @@ public:
 	Vector3 CalculateFrontVec();
 	//lockOnActorへ回転させる
 	void CalculateRotToLockOnActor(Vector3 frontVec);
+	void CalculateRotToLockOnActor();
 public:
 	void SetNowTime(float time) { attackInfo_.nowTime = time; }
 	void SetLockOnActor(IActor* lockOnActor) { lockOnActor_ = lockOnActor; };

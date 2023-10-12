@@ -96,11 +96,7 @@ void Player::PreUpdate()
 	hpGaugeUI_.Update(maxHealth_, health_);
 	mpGaugeUI_.Update(maxMP_, nowMP_);
 
-	playerFrontVec_ = {
-				sinf(displayObj_->GetTransform()->rotation_.y),
-				0,
-				cosf(displayObj_->GetTransform()->rotation_.y),
-	};
+	playerFrontVec_ = RotateVector(Vector3(0,0,1), obj_->WT_.quaternion_);
 }
 
 void Player::PostUpdate()
@@ -232,6 +228,7 @@ void Player::InputVecUpdate()
 			Controller::GetLStick().y != 0)
 		{
 			inputAngle_ = inputAngle;
+			objAngle_ = inputAngle_;
 			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
 
 			
@@ -253,6 +250,7 @@ void Player::InputVecUpdate()
 			if (shakeTimer_.GetIsEnd()) {
 				shakeTimer_.Reset();
 			}
+			//ダッシュパーティクル
 			if (state_ == PlayerState::Move) {
 				dashParticleTimer_.AddTime(addTime);
 
@@ -262,15 +260,15 @@ void Player::InputVecUpdate()
 						displayObj_->GetTransform()->position_ - playerFrontVec_;
 					dashParticlePos.y = 0;
 
-					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-					hitEmitter_->particle = std::make_unique<ParticleDash>();
-					hitEmitter_->addNum = 6;
-					hitEmitter_->time = 20;
-					hitEmitter_->pos = dashParticlePos;
-					hitEmitter_->addVec = -playerFrontVec_;
-					hitEmitter_->scale = 0.7f;
+					std::shared_ptr<OneceEmitter> dashEmitter_ = std::make_shared<OneceEmitter>();
+					dashEmitter_->particle = std::make_unique<ParticleDash>();
+					dashEmitter_->addNum = 6;
+					dashEmitter_->time = 20;
+					dashEmitter_->pos = dashParticlePos;
+					dashEmitter_->addVec = -playerFrontVec_;
+					dashEmitter_->scale = 0.7f;
 					ParticleManager::GetInstance()->
-						AddParticle("Dash", hitEmitter_);
+						AddParticle("Dash", dashEmitter_);
 
 					dashParticleTimer_.Reset();
 				}
@@ -283,10 +281,16 @@ void Player::InputVecUpdate()
 			dashParticleTimer_.Reset();
 		}
 		Vector3 vecY = { 0, 1, 0 };
-		auto axisY = MakeAxisAngle(vecY, Radian(inputAngle_));
+		auto axisY = MakeAxisAngle(vecY, Radian(objAngle_));
 		axisY = axisY * q1.Conjugate() * q2.Conjugate();
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 	}
+	Vector3 euler = QuaternionToEulerAngles(obj_->WT_.quaternion_);
+	euler = {
+		Angle(euler.x),
+		Angle(euler.y),
+		Angle(euler.z),
+	};
 
 }
 
@@ -530,6 +534,13 @@ void Player::DrawImGui()
 		obj_->WT_.quaternion_.w,
 	};
 	ImGui::DragFloat4("quaternion", value, 0.1f);
+
+	float frontVecvalue[3] = {
+		playerFrontVec_.x,
+		playerFrontVec_.y,
+		playerFrontVec_.z
+	};
+	ImGui::DragFloat3("frontVec", frontVecvalue, 0.1f);
 
 	ImGui::End();
 

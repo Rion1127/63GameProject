@@ -24,6 +24,7 @@ protected:
 	Vector3 knockResist_;
 	Timer damageCoolTime_;
 	Timer freezeTimer_;
+	float objAngle_;
 	bool isFloorCollision_ = false;
 	float knockDecreaseValue = 0.05f;
 	bool isCanMove_ = true;
@@ -37,6 +38,7 @@ public:
 		return addVec_;
 	}
 	Gravity* GetGravity() { return &gravity_; }
+	float GetObjAngle() { return objAngle_; }
 public:
 	void AddaddVec(Vector3 vec) { addVec_ += vec; }
 	void SetaddVec(Vector3 vec) { addVec_ = vec; }
@@ -44,5 +46,6 @@ public:
 	virtual void SetKnockVec(Vector3 vec) { knockVec_ = vec; }
 	void SetIsCanMove(bool flag) { isCanMove_ = flag; }
 	void SetFreezeTime(uint32_t time) { freezeTimer_.SetLimitTime(time); freezeTimer_.Reset(); }
+	void SetObjAngle(float angle) { objAngle_ = angle; }
 };
 

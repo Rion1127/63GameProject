@@ -16,7 +16,7 @@ void AttackJumpShadow::Init()
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr)
 		{
-			CalculateRotToLockOnActor(frontVec);
+			CalculateRotToLockOnActor();
 		}
 		else
 		{

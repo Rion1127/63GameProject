@@ -9,7 +9,7 @@ ParticleDash::ParticleDash() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("MoveSmoke");
-	isBillBoard = false;
+	isBillBoard = true;
 	state_ = PipeLineState::Alpha;
 
 	speed_ = 0.1f;

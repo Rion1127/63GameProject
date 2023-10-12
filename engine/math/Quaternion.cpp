@@ -327,3 +327,15 @@ Quaternion EulerAnglesToQuaternion(const Vector3& Euler)
 	result.w = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
 	return result;
 }
+
+Vector3 QuaternionToEulerAngles(const Quaternion q)
+{
+	Vector3 euler;
+	// クォータニオンからロールを計算します
+	euler.x = atan2f(2.0f * (q.w * q.x + q.y * q.z), 1.0f - 2.0f * (q.x * q.x + q.y * q.y));
+	// クォータニオンからピッチを計算します
+	euler.y = asinf(2.0f * (q.w * q.y - q.z * q.x));
+	// クォータニオンからヨーを計算します
+	euler.z = atan2f(2.0f * (q.w * q.z + q.x * q.y), 1.0f - 2.0f * (q.y * q.y + q.z * q.z));
+	return euler;
+}

@@ -11,13 +11,8 @@ void AttackAir1::Init()
 	if (selfActor_ != nullptr) {
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
-			CalculateRotToLockOnActor(frontVec);
+			CalculateRotToLockOnActor();
 		}
-		Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
-		float rot = Vec2Angle(vec);
-		Vector3 vecY = { 0, 1, 0 };
-		auto axisY = MakeAxisAngle(vecY, Radian(rot));
-		selfActor_->GetWorldTransform()->SetQuaternion(axisY);
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 
@@ -59,11 +54,8 @@ void AttackAir1::Init()
 void AttackAir1::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
-	Vector3 frontVec = {
-		sinf(selfActor_->GetWorldTransform()->rotation_.y),
-		0,
-		cosf(selfActor_->GetWorldTransform()->rotation_.y),
-	};
+	Vector3 frontVec = 
+		RotateVector(Vector3(0, 0, 1), selfActor_->GetWorldTransform()->quaternion_);
 	frontVec = frontVec.normalize();
 	Vector3 speed = frontVec * 0.1f;
 	float timerate = 1.f - timer_.GetTimeRate();

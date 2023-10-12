@@ -14,7 +14,7 @@ void Attack2::Init()
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr)
 		{
-			CalculateRotToLockOnActor(frontVec);
+			CalculateRotToLockOnActor();
 		}
 		Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
 		float rot = Vec2Angle(vec);

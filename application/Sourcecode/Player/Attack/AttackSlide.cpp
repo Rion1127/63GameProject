@@ -12,13 +12,13 @@ void AttackSlide::Init()
 	if (selfActor_ != nullptr) {
 		//ロックオンしている敵がいるなら
 		if (IAttack::lockOnActor_ != nullptr) {
-			CalculateRotToLockOnActor(frontVec);
+			CalculateRotToLockOnActor();
 		}
-		Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
+	/*	Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
 		float rot = Vec2Angle(vec);
 		Vector3 vecY = { 0, 1, 0 };
 		auto axisY = MakeAxisAngle(vecY, Radian(rot));
-		selfActor_->GetWorldTransform()->SetQuaternion(axisY);
+		selfActor_->GetWorldTransform()->SetQuaternion(axisY);*/
 	}
 	attackVec_ = frontVec;
 
