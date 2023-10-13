@@ -553,7 +553,7 @@ void Player::DrawSprite()
 	command_.DrawSprite();
 }
 
-void Player::FloorColision(Vector3 pos)
+void Player::FloorColision(const Vector3& pos)
 {
 	//前フレームで地面に接していなかったとき
 	if (isFloorCollision_ == false)
@@ -651,7 +651,7 @@ bool Player::GetIsCanAttack()
 }
 #pragma endregion
 
-void Player::Damage(int32_t damage, Vector3 knockVec)
+void Player::Damage(int32_t damage, const Vector3& knockVec)
 {
 	health_ -= damage;
 	knockVec_ = knockVec;
@@ -662,7 +662,7 @@ void Player::Damage(int32_t damage, Vector3 knockVec)
 	guard_.SetisGurdNow_(false);
 }
 
-void Player::GuardHit(Vector3 knockVec)
+void Player::GuardHit(const Vector3& knockVec)
 {
 	knockVec_ += knockVec;
 	guard_.GuardHit();

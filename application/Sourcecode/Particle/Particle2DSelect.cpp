@@ -38,7 +38,7 @@ void Particle2DSelect::Draw()
 	sprite_->Draw();
 }
 
-void Particle2DSelect::SetPos(Vector2 pos)
+void Particle2DSelect::SetPos(const Vector2& pos)
 {
 	endPos_ = pos;
 	if (isInitPos_) {

@@ -9,7 +9,7 @@
 #include "mSound.h"
 #include "SoundVolume.h"
 
-EnemyRedNocturne::EnemyRedNocturne(Vector3 pos, Vector3 rot) :
+EnemyRedNocturne::EnemyRedNocturne(const Vector3& pos, const Vector3& rot) :
 	IEnemy(EnemyType::Air, false, 80)
 {
 	name_ = "RedNocturne";

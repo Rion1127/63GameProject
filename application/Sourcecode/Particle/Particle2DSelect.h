@@ -18,6 +18,6 @@ public:
 	void Update();
 	void Draw();
 public:
-	void SetPos(Vector2 pos);
+	void SetPos(const Vector2& pos);
 };
 

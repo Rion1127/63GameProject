@@ -68,7 +68,7 @@ Vector3 IBullet::CalculateFrontVec()
 	return frontVec;
 }
 
-void IBullet::CalculateRotToLockOnActor(Vector3 frontVec)
+void IBullet::CalculateRotToLockOnActor(const Vector3& frontVec)
 {
 	Vector2 frontVec2 = {
 		frontVec.x,

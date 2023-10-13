@@ -96,7 +96,7 @@ public:
 
 	void DrawSprite();
 
-	void FloorColision(Vector3 pos);
+	void FloorColision(const Vector3& pos);
 	void WallColision();
 
 	bool GetIsCanMove();
@@ -105,20 +105,20 @@ public:
 	bool GetIsCanJump();
 	bool GetIsCanAttack();
 
-	void Damage(int32_t damage, Vector3 knockVec);
-	void GuardHit(Vector3 knockVec);
+	void Damage(int32_t damage, const Vector3& knockVec);
+	void GuardHit(const Vector3& knockVec);
 	void Reset();
 public:
-	void SetPos(Vector3 pos) { obj_->GetTransform()->SetPosition(pos); }
-	void SetRot(Vector3 rot) { obj_->GetTransform()->SetRotation(rot); }
-	void Setscale(Vector3 scale) { obj_->GetTransform()->SetScale(scale); }
-	void SetKnockVec(Vector3 vec) override { knockVec_ = vec; }
+	void SetPos(const Vector3& pos) { obj_->GetTransform()->SetPosition(pos); }
+	void SetRot(const Vector3& rot) { obj_->GetTransform()->SetRotation(rot); }
+	void Setscale(const Vector3& scale) { obj_->GetTransform()->SetScale(scale); }
+	void SetKnockVec(const Vector3& vec) override { knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 	void SetIsCanInput(bool flag) { isCanInput_ = flag; }
 
 
-	void AddaddVec(Vector3 pos) { addVec_ += pos; }
-	void SetAddPos(Vector3 pos) { addVec_ = pos; }
+	void AddaddVec(const Vector3& pos) { addVec_ += pos; }
+	void SetAddPos(const Vector3& pos) { addVec_ = pos; }
 	void SetLockOnEnemy(IEnemy* enemy) { command_.SetLockOnEnemy(enemy); }
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
 

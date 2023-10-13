@@ -9,7 +9,7 @@ private:
 	Timer dodgetimer_;
 	bool isDodge_;
 public:
-	void Begin(Vector2 frontVec);
+	void Begin(const Vector2& frontVec);
 	void Update();
 public:
 	Vector3 GetDodgeVec() { return dodgeVec_; }

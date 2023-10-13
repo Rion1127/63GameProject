@@ -74,7 +74,7 @@ Vector3 IAttack::CalculateFrontVec()
 	return frontVec;
 }
 
-void IAttack::CalculateRotToLockOnActor(Vector3 frontVec)
+void IAttack::CalculateRotToLockOnActor(const Vector3& frontVec)
 {
 	Vector2 frontVec2 = {
 		frontVec.x,

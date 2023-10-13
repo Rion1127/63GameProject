@@ -1,7 +1,7 @@
 #include "DodgeRoll.h"
 #include "Util.h"
 
-void DodgeRoll::Begin(Vector2 frontVec)
+void DodgeRoll::Begin(const Vector2& frontVec)
 {
 	speed_ = 0.5f;
 	dodgetimer_.SetLimitTime(30);

@@ -1,14 +1,13 @@
 #include "GameSpeed.h"
 
-float GameSpeed::gameSpeed_ = 1.f;
-float GameSpeed::playerSpeed_ = 1.f;
-float GameSpeed::enemySpeed_ = 1.f;
-
-float GameSpeed::resultPlayerSpeed_ = 1.f;
-float GameSpeed::resultEnemySpeed_ = 1.f;
+float GameSpeed::kGameSpeed_ = 1.f;
+float GameSpeed::kPlayerSpeed_ = 1.f;
+float GameSpeed::kEnemySpeed_ = 1.f;
+float GameSpeed::kResultPlayerSpeed_ = 1.f;
+float GameSpeed::kResultEnemySpeed_ = 1.f;
 
 void GameSpeed::Update()
 {
-	resultPlayerSpeed_ = gameSpeed_ * playerSpeed_;
-	resultEnemySpeed_ = gameSpeed_ * enemySpeed_;
+	kResultPlayerSpeed_ = kGameSpeed_ * kPlayerSpeed_;
+	kResultEnemySpeed_ = kGameSpeed_ * kEnemySpeed_;
 }

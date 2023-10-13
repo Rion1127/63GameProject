@@ -19,7 +19,7 @@ struct ConfigSprite {
 	std::array<std::unique_ptr<Sprite>, 2> frameSprite_;
 	std::array<std::unique_ptr<Sprite>, 2> texSprite_;
 
-	ConfigSprite(Vector2 pos, int32_t itemIndex);
+	ConfigSprite(const Vector2& pos, int32_t itemIndex);
 	void Update();
 	void Draw();
 };
@@ -31,7 +31,7 @@ struct SoundConfigSprite {
 	std::unique_ptr<Sprite> itemtexSprite_;
 	std::array<std::unique_ptr<Sprite>, 10> frameSprite_;
 	
-	SoundConfigSprite(Vector2 pos, int32_t itemIndex);
+	SoundConfigSprite(const Vector2& pos, int32_t itemIndex);
 	void Update();
 	void Draw();
 };

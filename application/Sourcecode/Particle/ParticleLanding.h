@@ -18,8 +18,6 @@ public:
 private:
 	void MoveUpdate() override;
 
-	void Test(std::vector<Particle> particle) { particle; }
-
 	int32_t vertexCount;
 
 	float speed_;

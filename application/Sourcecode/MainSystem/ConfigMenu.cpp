@@ -286,7 +286,7 @@ void ConfigMenuSprite::SpriteColorUpdate() {
 #pragma endregion
 
 #pragma region ConfigSprite
-ConfigSprite::ConfigSprite(Vector2 pos, int32_t itemIndex)
+ConfigSprite::ConfigSprite(const Vector2& pos, int32_t itemIndex)
 {
 	for (uint32_t i = 0; i < frameSprite_.size(); i++)
 	{
@@ -392,7 +392,7 @@ void ConfigSprite::Draw()
 #pragma endregion
 
 #pragma region SoundConfigSprite
-SoundConfigSprite::SoundConfigSprite(Vector2 pos, int32_t itemIndex)
+SoundConfigSprite::SoundConfigSprite(const Vector2& pos, int32_t itemIndex)
 {
 	itemtexSprite_ = std::make_unique<Sprite>();
 	itemFrameSprite_ = std::make_unique<Sprite>();

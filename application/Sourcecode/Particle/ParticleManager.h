@@ -15,7 +15,7 @@ public:
 
 	void Draw();
 
-	void AddParticle(std::string name, std::shared_ptr<IEmitter> emitter);
+	void AddParticle(const std::string& name,const std::shared_ptr<IEmitter>& emitter);
 
 	void AllClear() { emitters_.clear(); };
 

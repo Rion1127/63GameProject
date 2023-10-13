@@ -24,7 +24,7 @@ private:
 	bool isVisible_;
 	bool isTranslucent_;//半透明フラグ
 public:
-	CommandSprite(Color color, Vector2 basePos, uint32_t menuNum);
+	CommandSprite(const Color& color, const Vector2& basePos, uint32_t menuNum);
 	void SpriteUpdate();
 
 	void DrawSprite();

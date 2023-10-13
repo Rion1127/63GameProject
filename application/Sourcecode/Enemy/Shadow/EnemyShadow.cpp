@@ -10,7 +10,7 @@
 #include "AttackJumpShadow.h"
 #include "GameSpeed.h"
 
-EnemyShadow::EnemyShadow(Vector3 pos, Vector3 rot) :
+EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	IEnemy(EnemyType::Ground, true, 80)
 {
 	name_ = "Shadow";

@@ -12,31 +12,23 @@
 ColosseumSystem::ColosseumSystem()
 {
 	blindSprite_ = std::make_unique<Sprite>();
-	//retrySprite_ = std::make_unique<Sprite>();
-	//titleSprite_ = std::make_unique<Sprite>();
-
+	
 	blindSprite_->Ini();
-	//retrySprite_->Ini();
-	//titleSprite_->Ini();
-
+	
 	blindSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
-	//retrySprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
-	//titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleTex"));
-
+	
 	blindSprite_->SetAnchor({ 0,0 });
 	blindSprite_->SetColor(Color(0, 0, 0, 0));
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.4f
 	};
-	//retrySprite_->SetPos(pos);
+	
 	pos.y = WinAPI::GetWindowSize().y / 1.2f;
-	//titleSprite_->SetPos(pos);
 
 	isStart_ = false;
 	isNext_ = false;
 	isReset_ = false;
-
 
 	clearBlankTimer_.SetLimitTime(200);
 	blindTimer_.SetLimitTime(50);

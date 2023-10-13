@@ -3,7 +3,7 @@
 #include "Player.h"
 #include <imgui.h>
 
-EnemyDummy::EnemyDummy(Vector3 pos) : IEnemy(EnemyType::Ground, true, 100)
+EnemyDummy::EnemyDummy(const Vector3& pos) : IEnemy(EnemyType::Ground, true, 100)
 {
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("Player", true));

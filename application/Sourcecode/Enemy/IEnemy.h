@@ -43,14 +43,14 @@ public:
 	static void SetPlayer(Player* player) { splayer_ = player; }
 	void SetSoftIsLockOn(bool flag) { isSoftLockOn_ = flag; }
 	void SetHardIsLockOn(bool flag) { isHardLockOn_ = flag; }
-	void SetName(std::string name) { name_ = name; }
+	void SetName(const std::string& name) { name_ = name; }
 
 	void PreUpdate();
 	void PostUpdate();
 	virtual void Draw();
-	void FloorColision(Vector3 pos);
+	void FloorColision(const Vector3& pos);
 	void ColPosUpdate();
-	void Damage(Vector3 knockVec, int32_t damageValue, int32_t cooltime);
+	void Damage(const Vector3& knockVec, int32_t damageValue, int32_t cooltime);
 
 	virtual void SetIsNock(bool flag) = 0;
 	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;

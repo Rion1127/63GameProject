@@ -8,7 +8,7 @@ class EnemyDummy final :
 private:
     Vector2 pos2D;
 public:
-    EnemyDummy(Vector3 pos);
+    EnemyDummy(const Vector3& pos);
     void SetIsNock(bool flag) override {isKnock_ = flag; };
     void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override { bullets; };
 private:

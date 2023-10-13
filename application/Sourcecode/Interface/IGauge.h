@@ -14,7 +14,7 @@ protected:
 	int32_t maxValue_;
 	int32_t nowValue_;
 public:
-	IGauge(Color color);
+	IGauge(const Color& color);
 	void Update(int32_t maxHp, int32_t nowHp);
 	virtual void OriginalUpdate() = 0;
 	virtual void OriginalFrontDraw() = 0;

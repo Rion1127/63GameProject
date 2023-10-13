@@ -1,7 +1,7 @@
 #include "IGauge.h"
 
 
-IGauge::IGauge(Color color)
+IGauge::IGauge(const Color& color)
 {
 	gauge_ = std::move(std::make_unique<Sprite>());
 	gaugeFrame_ = std::move(std::make_unique<Sprite>());

@@ -40,10 +40,10 @@ public:
 	Gravity* GetGravity() { return &gravity_; }
 	float GetObjAngle() { return objAngle_; }
 public:
-	void AddaddVec(Vector3 vec) { addVec_ += vec; }
-	void SetaddVec(Vector3 vec) { addVec_ = vec; }
-	void SetGravity(Vector3 vec) { gravity_.SetGrabity(vec); }
-	virtual void SetKnockVec(Vector3 vec) { knockVec_ = vec; }
+	void AddaddVec(const Vector3& vec) { addVec_ += vec; }
+	void SetaddVec(const Vector3& vec) { addVec_ = vec; }
+	void SetGravity(const Vector3& vec) { gravity_.SetGrabity(vec); }
+	virtual void SetKnockVec(const Vector3& vec) { knockVec_ = vec; }
 	void SetIsCanMove(bool flag) { isCanMove_ = flag; }
 	void SetFreezeTime(uint32_t time) { freezeTimer_.SetLimitTime(time); freezeTimer_.Reset(); }
 	void SetObjAngle(float angle) { objAngle_ = angle; }

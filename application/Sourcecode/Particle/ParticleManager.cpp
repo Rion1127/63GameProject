@@ -68,10 +68,11 @@ void ParticleManager::Draw()
 	}
 }
 
-void ParticleManager::AddParticle(std::string name, std::shared_ptr<IEmitter> emitter)
+void ParticleManager::AddParticle(const std::string& name, const std::shared_ptr<IEmitter>& emitter)
 {
 	emitters_.emplace_back();
 	emitters_.back() = emitter;
 	emitters_.back()->particle->SetEmitter(emitter.get());
 	emitters_.back()->particle->Add();
+	name;
 }

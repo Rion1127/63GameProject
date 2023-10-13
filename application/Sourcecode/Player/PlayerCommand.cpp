@@ -125,7 +125,7 @@ void PlayerCommand::DrawSprite()
 }
 
 #pragma region CommandSprite
-CommandSprite::CommandSprite(Color color, Vector2 basePos, uint32_t menuNum)
+CommandSprite::CommandSprite(const Color& color, const Vector2& basePos, uint32_t menuNum)
 {
 	isVisible_ = true;
 	basePos_.resize(menuNum);
