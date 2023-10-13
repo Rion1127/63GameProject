@@ -294,7 +294,7 @@
     <ClCompile Include="engine\base\DirectX.cpp">
       <Filter>engine\ソース ファイル\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="engine\external\Texture.cpp">
+    <ClCompile Include="engine\util\Texture.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="engine\base\Util.cpp">
@@ -318,7 +318,7 @@
     <ClCompile Include="engine\base\Pipeline.cpp">
       <Filter>engine\ソース ファイル\DirectX\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="engine\external\ImGuiManager.cpp">
+    <ClCompile Include="engine\util\ImGuiManager.cpp">
       <Filter>engine\ソース ファイル\Util\imgui</Filter>
     </ClCompile>
     <ClCompile Include="engine\math\Quaternion.cpp">
@@ -680,7 +680,7 @@
     <ClInclude Include="engine\base\DirectX.h">
       <Filter>engine\ヘッダー ファイル\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="engine\external\Texture.h">
+    <ClInclude Include="engine\util\Texture.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\base\Util.h">
@@ -704,7 +704,7 @@
     <ClInclude Include="engine\base\Pipeline.h">
       <Filter>engine\ヘッダー ファイル\DirectX\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="engine\external\ImGuiManager.h">
+    <ClInclude Include="engine\util\ImGuiManager.h">
       <Filter>engine\ヘッダー ファイル\Util\imgui</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Quaternion.h">

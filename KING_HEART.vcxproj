@@ -111,7 +111,7 @@
     <ClCompile Include="engine\base\IScene.cpp" />
     <ClCompile Include="engine\base\Framework.cpp" />
     <ClCompile Include="engine\base\Game.cpp" />
-    <ClCompile Include="engine\external\ImGuiManager.cpp" />
+    <ClCompile Include="engine\util\ImGuiManager.cpp" />
     <ClCompile Include="engine\3d\light\DirectionalLight.cpp" />
     <ClCompile Include="engine\3d\light\LightGroup.cpp" />
     <ClCompile Include="engine\input\mInput.cpp" />
@@ -125,7 +125,7 @@
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\3d\light\SpotLight.cpp" />
     <ClCompile Include="engine\3d\Object3d.cpp" />
-    <ClCompile Include="engine\external\Texture.cpp" />
+    <ClCompile Include="engine\util\Texture.cpp" />
     <ClCompile Include="engine\base\Util.cpp" />
     <ClCompile Include="engine\math\Spline.cpp" />
     <ClCompile Include="engine\math\Vector2.cpp" />
@@ -243,7 +243,7 @@
     <ClInclude Include="engine\base\IScene.h" />
     <ClInclude Include="engine\base\Framework.h" />
     <ClInclude Include="engine\base\Game.h" />
-    <ClInclude Include="engine\external\ImGuiManager.h" />
+    <ClInclude Include="engine\util\ImGuiManager.h" />
     <ClInclude Include="engine\3d\light\DirectionalLight.h" />
     <ClInclude Include="engine\3d\light\LightGroup.h" />
     <ClInclude Include="engine\input\mInput.h" />
@@ -256,7 +256,7 @@
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\3d\light\SpotLight.h" />
     <ClInclude Include="engine\3d\Object3d.h" />
-    <ClInclude Include="engine\external\Texture.h" />
+    <ClInclude Include="engine\util\Texture.h" />
     <ClInclude Include="engine\base\Util.h" />
     <ClInclude Include="engine\math\Spline.h" />
     <ClInclude Include="engine\math\Vector2.h" />
