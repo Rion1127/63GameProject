@@ -26,11 +26,14 @@ Player::Player() :
 	gravity_.SetAddValue({ 0,-0.01f,0 });
 
 	// 入力されている方向の角度
-	inputAngle_ = 0.0f;
+	nowAngle_ = 0.0f;
 
 	//移動速度
 	moveSpeed_ = 0.2f;
 	walklimitValue_ = 0.7f;
+
+	jumpSpeed_ = 0.2f;
+	maxjumptimer = 10;
 
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
@@ -174,18 +177,18 @@ void Player::InputVecUpdate()
 	if (GetIsCanMove() && isCanInput_)
 	{
 
-		moveVec_ = { 0,0 };
 		Vector3 sideVec;
 		Vector3 upVec = { 0,1,0 };
+		moveVec_ = { 0,0 };
 		inputVec_ = { 0,0 };
 
 		//プレイヤーの正面ベクトル
-		frontVec_ =
+		cameraToPlayerVec_ =
 			Camera::scurrent_->target_ - Camera::scurrent_->eye_;
-		frontVec_.y = 0;
-		frontVec_ = frontVec_.normalize();
+		cameraToPlayerVec_.y = 0;
+		cameraToPlayerVec_ = cameraToPlayerVec_.normalize();
 
-		sideVec = upVec.cross(frontVec_);
+		sideVec = upVec.cross(cameraToPlayerVec_);
 		sideVec = sideVec.normalize();
 
 		float inputlength = 0;
@@ -214,8 +217,8 @@ void Player::InputVecUpdate()
 			};
 		}
 		//カメラから見た左右手前奥移動
-		moveVec_.x = -((frontVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
-		moveVec_.y = (frontVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
+		moveVec_.x = -((cameraToPlayerVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
+		moveVec_.y = (cameraToPlayerVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
 		moveVec_ *= moveSpeed_;
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
@@ -227,9 +230,9 @@ void Player::InputVecUpdate()
 		if (Controller::GetLStick().x != 0 ||
 			Controller::GetLStick().y != 0)
 		{
-			inputAngle_ = inputAngle;
-			objAngle_ = inputAngle_;
-			obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
+			nowAngle_ = inputAngle;
+			objAngle_ = nowAngle_;
+			obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
 
 			
 			float dashRadian = 350 * inputVec_.length() * isDash;
@@ -418,22 +421,20 @@ void Player::Jump()
 
 void Player::JumpUpdate()
 {
-	float jumpSpeed = 0.2f;
-	float Maxjumptimer = 10;
 	//Aを押し続けた分高くジャンプする
 	if (Controller::GetButtons(PAD::INPUT_A))
 	{
-		if (jumpTime_ < Maxjumptimer)
+		if (jumpTime_ < maxjumptimer)
 		{
 			jumpTime_ += 1 * GameSpeed::GetPlayerSpeed();
 
-			gravity_.SetGrabity({ 0, jumpSpeed ,0 });
+			gravity_.SetGrabity({ 0, jumpSpeed_ ,0 });
 		}
 	}
 	//途中でAを離したら着地するまでジャンプできないようにする
 	if (Controller::GetReleasButtons(PAD::INPUT_A))
 	{
-		jumpTime_ = Maxjumptimer;
+		jumpTime_ = maxjumptimer;
 	}
 }
 
@@ -524,7 +525,7 @@ void Player::DrawImGui()
 		health_ = 100;
 	}
 
-	ImGui::SliderFloat("inputAngle", &inputAngle_, 0.f, 3.1415f, "x = %.3f");
+	ImGui::SliderFloat("inputAngle", &nowAngle_, 0.f, 3.1415f, "x = %.3f");
 	ImGui::SliderFloat("endRot", &goalinputAngle_, 0.f, 3.1415f, "x = %.3f");
 
 	float value[4] = {
@@ -674,6 +675,6 @@ void Player::Reset()
 {
 	obj_->WT_.position_ = { 0,0,0 };
 	command_.SetLockOnEnemy(nullptr);
-	inputAngle_ = 0;
-	obj_->WT_.rotation_ = { 0,Radian(inputAngle_) ,0 };
+	nowAngle_ = 0;
+	obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
 }

@@ -20,38 +20,37 @@ class Player final :
 	public IActor, public StateMachine<PlayerState>
 {
 private:
-	std::unique_ptr<Object3d> displayObj_;
-	Quaternion systemQuaternion_;
+	std::unique_ptr<Object3d> displayObj_;	//描画に使用しているオブジェ
 	//ベクトル
-	Vector3 frontVec_;
-	Vector3 playerFrontVec_;
-	Vector3 lockOnVec_;
-	Vector2 inputVec_;
-	Vector2 moveVec_;
-	// --入力-- //
-	float goalinputAngle_;
-	float inputAngle_;	//入力されている方向の角度
-	float walklimitValue_;	//入力
+	Vector3 cameraToPlayerVec_;	//カメラ→プレイヤーのベクトル
+	Vector3 playerFrontVec_;	//プレイヤーが向いているベクトル
+	Vector3 lockOnVec_;			//ロックオンしている敵へのベクトル
+	Vector2 inputVec_;			//入力している敵へのベクトル
+	Vector2 moveVec_;			//1フレームの移動ベクトル
+	float goalinputAngle_;		//入力したY軸の角度
+	float nowAngle_;			//現在プレイヤーが向いている角度
+	float walklimitValue_;		//歩きと走るが切り替わる値
+	float moveSpeed_;			//移動スピード
 
-	float moveSpeed_;
+	bool isCanJump_;			//ジャンプ可能フラグ
+	bool isAlive_;				//生存フラグ
+	bool isCanInput_;			//入力可能フラグ
+	float maxjumptimer;			//ジャンプ可能なフレーム数
+	float jumpTime_;			//ジャンプしたフレーム数
+	float jumpSpeed_;			//ジャンプスピード
 
-	bool isCanJump_;
-	bool isAlive_;
-	bool isCanInput_;
-	float jumpTime_;
+	TimerFloat shakeTimer_;			//歩いているプレイヤーが横に揺れる動きを管理するタイマー
+	TimerFloat dashParticleTimer_;	//歩いているプレイヤーのパーティクル生成を管理するタイマー
 
-	TimerFloat shakeTimer_;
-	TimerFloat dashParticleTimer_;
+	PlayerCommand command_;			//コマンドの動きを管理する
+	GuardClass guard_;				//防御を管理する
+	DodgeRoll dodgeRoll_;			//ドッジロールを管理する
+	PlayerHPGauge hpGaugeUI_;		//HPゲージを管理する
+	PlayerMPGauge mpGaugeUI_;		//MPゲージを管理する
+	PlayerState state_;				//プレイヤーのステートを管理する
 
-	PlayerCommand command_;
-	GuardClass guard_;
-	DodgeRoll dodgeRoll_;
-	PlayerHPGauge hpGaugeUI_;
-	PlayerMPGauge mpGaugeUI_;
-	PlayerState state_;
-
-	int32_t maxHealth_;
-	int32_t health_;
+	int32_t maxHealth_;			//最大HP
+	int32_t health_;			//現在HP
 
 	int32_t maxMP_;
 	int32_t nowMP_;
@@ -126,7 +125,7 @@ public:
 public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
 	MagicManager* GetMagicManager() { return command_.GetMagicManager(); }
-	Vector3 GetFrontVec() { return frontVec_; }
+	Vector3 GetcameraToPlayerVec() { return cameraToPlayerVec_; }
 	Vector3 GetPlayerFrontVec() { return playerFrontVec_; }
 	PlayerState GetState() { return state_; }
 	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
