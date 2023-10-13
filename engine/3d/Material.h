@@ -7,6 +7,11 @@
 #include "Texture.h"
 #include "Vector3.h"
 
+/**
+ * @file Material.h
+ * @brief モデルの見た目に関することを管理している
+ */
+
 class Material
 {
 public:

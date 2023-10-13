@@ -1,6 +1,12 @@
 #pragma once
 #include "Vector3.h"
 #include "myMath.h"
+
+/**
+ * @file Quaternion.h
+ * @brief クォータニオンを使いやすいようにまとめたクラス
+ */
+
 struct Quaternion
 {
 	float x;

@@ -11,6 +11,11 @@
 #include <DirectXTex.h>
 #include "Vector2.h"
 
+/**
+ * @file Texture.h
+ * @brief DirectTexを用いた画像読み込み・管理
+ */
+
 struct Texture {
 	//テクスチャバッファの生成
 	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff = nullptr;

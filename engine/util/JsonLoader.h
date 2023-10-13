@@ -3,6 +3,13 @@
 #include "Object3D.h"
 #include "json.hpp"
 #include "Camera.h"
+
+/**
+ * @file JsonLoader.h
+ * @brief nlohmann::jsonを用いた.jsonファイルの読み込み
+ * @brief 地形オブジェの読み込みを行っている
+ */
+
 struct CameraInfo {
 	Vector3 pos;
 	Vector3 rot;

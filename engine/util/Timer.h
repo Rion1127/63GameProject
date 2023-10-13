@@ -1,6 +1,11 @@
 #pragma once
 #include <stdint.h>
 
+/**
+ * @file Timer.h
+ * @brief タイマーの機能を使える
+ */
+
 class Timer {
 private:
 	int32_t timer_;
@@ -16,6 +21,7 @@ public:
 	void AddTime(int32_t addValue);
 	//カウントダウン
 	void SubTime(int32_t addValue);
+	//リセットする
 	void Reset();
 public:
 	//セッター

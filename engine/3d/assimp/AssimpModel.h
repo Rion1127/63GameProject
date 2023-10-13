@@ -8,8 +8,11 @@
 #include "myMath.h"
 #include "Timer.h"
 #include <assimp/Importer.hpp>
-//#include <assimp/scene.h>
-//#include <assimp/cimport.h>
+
+/**
+ * @file AssimpModel.h
+ * @brief ボーンや頂点データを管理している
+ */
 
 struct Bone
 {

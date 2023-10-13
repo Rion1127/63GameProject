@@ -20,6 +20,11 @@
 #include "GaussianBlur.h"
 #include "CrossFilter.h"
 
+/**
+ * @file Framework.h
+ * @brief 処理の流れをまとめたクラス
+ */
+
 class Framework
 {
 private:

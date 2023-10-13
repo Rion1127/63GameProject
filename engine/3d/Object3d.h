@@ -3,6 +3,11 @@
 #include "LightGroup.h"
 #include "Model.h"
 
+/**
+ * @file Object3d.h
+ * @brief 読み込んだモデルを描画するクラス
+ */
+
 class Object3d
 {
 private:

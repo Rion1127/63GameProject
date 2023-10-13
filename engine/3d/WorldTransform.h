@@ -7,6 +7,11 @@
 #include "Quaternion.h"
 #include "myMath.h"
 
+/**
+ * @file WorldTransform.h
+ * @brief 座標・スケール・回転を管理しているクラス
+ */
+
 //定数バッファ用データ構造体（３D変換行列）
 struct ConstBufferDataTransform {
 	Matrix4 mat; //3D変換行列

@@ -8,6 +8,11 @@
 #include <DirectXMath.h>
 #include <d3dx12.h>
 
+/**
+ * @file MultiTexture.h
+ * @brief マルチレンダーターゲットを管理するクラス
+ */
+
 class MultiRenderTarget
 {
 private:

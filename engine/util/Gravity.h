@@ -1,5 +1,11 @@
 #pragma once
 #include "vector3.h"
+
+/**
+ * @file Gravity.h
+ * @brief 重力の機能を持ったクラス
+ */
+
 class Gravity
 {
 private:

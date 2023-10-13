@@ -9,6 +9,11 @@
 #include <cassert>
 #include "Camera.h"
 
+/**
+ * @file Util.h
+ * @brief 便利な関数をまとめている
+ */
+
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
@@ -18,7 +23,7 @@ void ShaderCompileFromFile(
 //goalまで値を変化させていく
 void MoveTo(const Vector3& goal, float speed, Vector3& value);
 
-//定数バッファ
+//定数バッファ生成
 template <class MapClass>
 inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 {

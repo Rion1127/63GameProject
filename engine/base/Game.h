@@ -1,5 +1,11 @@
 #pragma once
 #include "Framework.h"
+
+/**
+ * @file Game.h
+ * @brief 
+ */
+
 class Game final :
 	public Framework
 {

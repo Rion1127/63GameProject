@@ -8,6 +8,11 @@
 #include <DirectXMath.h>
 #include <d3dx12.h>
 
+/**
+ * @file IPostEffect.h
+ * @brief ポストエフェクトを使用する際に継承するインターフェースクラス
+ */
+
 class IPostEffect
 {
 private:

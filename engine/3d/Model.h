@@ -15,6 +15,11 @@
 #include "Material.h"
 #include "WorldTransform.h"
 
+/**
+ * @file Model.h
+ * @brief 読み込んだ頂点データ・マテリアルを管理している
+ */
+
 class Model
 {
 private:

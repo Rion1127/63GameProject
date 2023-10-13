@@ -1,6 +1,11 @@
 #pragma once
 #include "DirectX.h"
 #include "IPostEffect.h"
+
+/**
+ * @file Noise.h
+ * @brief 画面にノイズが走るポストエフェクト
+ */
 class Noise final :
 	public IPostEffect {
 private:

@@ -6,6 +6,11 @@
 #include "myMath.h"
 #include "WorldTransform.h"
 
+/**
+ * @file Camera.h
+ * @brief カメラのトランスフォームを管理している
+ */
+
 // 定数バッファ用データ構造体
 struct ConstVPBuff {
 	Matrix4 view;       // ワールド → ビュー変換行列

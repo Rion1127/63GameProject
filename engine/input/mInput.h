@@ -7,6 +7,10 @@
 //コントローラ
 #include <Xinput.h>
 
+/**
+ * @file mInput.h
+ * @brief 'dinput'や'Xinput'による入力を管理している
+ */
 
 //キーボード
 class Key

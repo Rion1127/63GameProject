@@ -3,6 +3,12 @@
 #include <d3d12.h>
 #include <stdint.h>
 #include "Vector2.h"
+
+/**
+ * @file WinAPI.h
+ * @brief WinAPIについてまとめたクラス
+ */
+
 class WinAPI
 {
 public:

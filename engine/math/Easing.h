@@ -1,6 +1,9 @@
 #pragma once
 
-/// 元のコード
+/**
+ * @file Easing.h
+ * @brief Easingの機能をまとめている
+ */
 
 namespace Easing {
 	namespace Back {

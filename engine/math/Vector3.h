@@ -1,5 +1,11 @@
 #pragma once
 #include "Vector2.h"
+
+/**
+ * @file Vector3.h
+ * @brief Vector3に関することをまとめたクラス
+ */
+
 class Vector3
 {
 public:

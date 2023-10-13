@@ -1,5 +1,11 @@
 #pragma once
 #include <stdint.h>
+
+/**
+ * @file IScene.h
+ * @brief シーンに継承するインターフェースクラス
+ */
+
 class IScene
 {
 public:

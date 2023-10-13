@@ -6,6 +6,11 @@
 
 #include "DirectX.h"
 
+/**
+ * @file Pipeline.h
+ * @brief パイプラインを使いやすくまとめたクラス
+ */
+
 enum BlendNum {
 	ADD,
 	SUB,

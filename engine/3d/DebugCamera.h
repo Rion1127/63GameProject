@@ -2,6 +2,12 @@
 #include "Vector3.h"
 #include "mInput.h"
 #include "Camera.h"
+
+/**
+ * @file DebugCamera.h
+ * @brief デバッグ用のカメラを管理している
+ */
+
 class DebugCamera
 {
 private:

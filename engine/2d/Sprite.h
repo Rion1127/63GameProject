@@ -9,6 +9,12 @@
 #include "Texture.h"
 #include "Color.h"
 #include "myMath.h"
+
+/**
+ * @file Sprite.h
+ * @brief 2Dスプライトに関するクラス
+ */
+
 class Sprite
 {
 private:

@@ -146,5 +146,9 @@ public:
 		state_->Draw();
 	}
 public:
+	/// <summary>
+	/// 現在のステータスを返す
+	/// </summary>
+	/// <returns></returns>
 	std::shared_ptr<State<T>> GetNowState() { return state_; }
 };

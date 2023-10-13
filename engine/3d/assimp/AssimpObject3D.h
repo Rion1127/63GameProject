@@ -4,6 +4,11 @@
 #include <assimp/anim.h>
 #include "Quaternion.h"
 
+/**
+ * @file AssimpObject3D.h
+ * @brief assimpModelを用いて描画を管理している
+ */
+
 struct aiNode;
 
 struct Animation

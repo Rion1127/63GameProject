@@ -1,6 +1,12 @@
 #pragma once
 #include "Vector3.h"
 #include "WorldTransform.h"
+
+/**
+ * @file Collision.h
+ * @brief 当たり判定に関する構造体・関数をまとめている
+ */
+
 //球
 struct Sphere {
 	//中心座標

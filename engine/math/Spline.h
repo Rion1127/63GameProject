@@ -3,6 +3,11 @@
 #include "Timer.h"
 #include <vector>
 
+/**
+ * @file Spline.h
+ * @brief スプライン曲線を使いやすいようにまとめたクラス
+ */
+
 enum class PosState {
 	Start,
 	Middle,
