@@ -9,6 +9,7 @@ private:
 	Timer dodgetimer_;
 	bool isDodge_;
 public:
+	DodgeRoll();
 	void Begin(const Vector2& frontVec);
 	void Update();
 public:

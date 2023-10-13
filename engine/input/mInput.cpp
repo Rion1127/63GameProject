@@ -285,7 +285,7 @@ Vector2 Controller::GetLStick(int32_t deadZone)
 		stickPos.y = 0;
 	}
 
-	return stickPos;
+	return stickPos / 32768.f;
 }
 
 Vector2 Controller::GetRStick(int32_t deadZone)

@@ -30,7 +30,8 @@ private:
 	float goalinputAngle_;		//入力したY軸の角度
 	float nowAngle_;			//現在プレイヤーが向いている角度
 	float walklimitValue_;		//歩きと走るが切り替わる値
-	float moveSpeed_;			//移動スピード
+	float dashSpeed_;			//移動スピード
+	float walkSpeed_;			//移動スピード
 
 	bool isCanJump_;			//ジャンプ可能フラグ
 	bool isAlive_;				//生存フラグ
@@ -52,15 +53,17 @@ private:
 	int32_t maxHealth_;			//最大HP
 	int32_t health_;			//現在HP
 
-	int32_t maxMP_;
-	int32_t nowMP_;
-	Timer mpChargeTime_;
-	Timer mpChargeIntervalTimer_;
-	bool isMPCharge_;
+	int32_t maxMP_;				//最大MP
+	int32_t nowMP_;				//現在MP
+	Timer mpChargeTime_;		//MPチャージ時間
+	Timer mpChargeIntervalTimer_;	//MPを一定時間ごとに回復するタイマー
+	bool isMPCharge_;			//MPチャージ中フラグ
 
-	Sphere damageCol_;
+	uint32_t landingTimer_;
 
-	Sword sword_;
+	Sphere damageCol_;			//攻撃を受ける当たり判定
+
+	Sword sword_;				//剣オブジェ
 public:
 	Player();
 	void PreUpdate();
@@ -103,6 +106,7 @@ public:
 	bool GetIsCanGuard();
 	bool GetIsCanJump();
 	bool GetIsCanAttack();
+	bool GetIsMove();
 
 	void Damage(int32_t damage, const Vector3& knockVec);
 	void GuardHit(const Vector3& knockVec);

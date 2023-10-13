@@ -29,7 +29,8 @@ Player::Player() :
 	nowAngle_ = 0.0f;
 
 	//移動速度
-	moveSpeed_ = 0.2f;
+	dashSpeed_ = 0.2f;
+	walkSpeed_ = 0.1f;
 	walklimitValue_ = 0.7f;
 
 	jumpSpeed_ = 0.2f;
@@ -75,6 +76,8 @@ Player::Player() :
 	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
 	shakeTimer_.SetLimitTime(40);
 	dashParticleTimer_.SetLimitTime(60);
+
+	landingTimer_ = 7;
 }
 
 void Player::PreUpdate()
@@ -99,7 +102,7 @@ void Player::PreUpdate()
 	hpGaugeUI_.Update(maxHealth_, health_);
 	mpGaugeUI_.Update(maxMP_, nowMP_);
 
-	playerFrontVec_ = RotateVector(Vector3(0,0,1), obj_->WT_.quaternion_);
+	playerFrontVec_ = RotateVector(Vector3(0, 0, 1), obj_->WT_.quaternion_);
 }
 
 void Player::PostUpdate()
@@ -182,7 +185,7 @@ void Player::InputVecUpdate()
 		moveVec_ = { 0,0 };
 		inputVec_ = { 0,0 };
 
-		//プレイヤーの正面ベクトル
+		//プレイヤーの正面ベクトル（Y成分は0にする）
 		cameraToPlayerVec_ =
 			Camera::scurrent_->target_ - Camera::scurrent_->eye_;
 		cameraToPlayerVec_.y = 0;
@@ -192,21 +195,24 @@ void Player::InputVecUpdate()
 		sideVec = sideVec.normalize();
 
 		float inputlength = 0;
+		float speed = 0;
 		bool isDash = false;
 		// コントローラーが接続されていたら
 		if (Controller::GetActive())
 		{
 			// 左スティックの入力方向ベクトル取得
-			inputVec_ = Controller::GetLStick() / 32768.f;
+			inputVec_ = Controller::GetLStick();
 			inputlength = inputVec_.length();
 			//スティックの傾きが小さければ歩く
 			if (inputlength <= walklimitValue_) {
-				inputVec_ = inputVec_.normalize() * 0.5f;
+				inputVec_ = inputVec_.normalize();
 				isDash = false;
+				speed = walkSpeed_;
 			}
 			else {
 				inputVec_ = inputVec_.normalize();
 				isDash = true;
+				speed = dashSpeed_;
 			}
 		}
 		else
@@ -219,36 +225,35 @@ void Player::InputVecUpdate()
 		//カメラから見た左右手前奥移動
 		moveVec_.x = -((cameraToPlayerVec_.z * -inputVec_.x) + (sideVec.z * inputVec_.y));
 		moveVec_.y = (cameraToPlayerVec_.z * inputVec_.y) + (sideVec.z * inputVec_.x);
-		moveVec_ *= moveSpeed_;
+		moveVec_ *= speed;
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
 
 		// 入力しているベクトルの角度を求める
 		float inputAngle = Vec2Angle(moveVec_);
-		Quaternion q1 = { 0,0,0,1.f };
-		Quaternion q2 = { 0,0,0,1.f };
-		if (Controller::GetLStick().x != 0 ||
-			Controller::GetLStick().y != 0)
+		Quaternion q1 = q1.IdentityQuaternion();
+		Quaternion q2 = q2.IdentityQuaternion();
+		if (GetIsMove())
 		{
 			nowAngle_ = inputAngle;
 			objAngle_ = nowAngle_;
 			obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
 
-			
+
 			float dashRadian = 350 * inputVec_.length() * isDash;
 			float radian = Radian(-600 + dashRadian);
-			q1 = { 1,0,0,radian };
+			q1.w = radian;
 
 			float addTime;
 			if (isDash)addTime = 1.5f;
 			else addTime = 1;
 
 			shakeTimer_.AddTime(addTime);
-			
+
 
 			float shakeRadian =
 				UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
-			q2 = { 0,0,shakeRadian,1 };
+			q2.z = shakeRadian;
 
 			if (shakeTimer_.GetIsEnd()) {
 				shakeTimer_.Reset();
@@ -258,7 +263,7 @@ void Player::InputVecUpdate()
 				dashParticleTimer_.AddTime(addTime);
 
 				if (dashParticleTimer_.GetIsEnd()) {
-					
+
 					Vector3 dashParticlePos =
 						displayObj_->GetTransform()->position_ - playerFrontVec_;
 					dashParticlePos.y = 0;
@@ -345,7 +350,7 @@ void Player::MPCharge()
 		mpChargeIntervalTimer_.AddTime(1);
 
 		if (mpChargeIntervalTimer_.GetIsEnd()) {
-			nowMP_ = (uint32_t)(100.f * mpChargeTime_.GetTimeRate());
+			nowMP_ = (uint32_t)(maxMP_ * mpChargeTime_.GetTimeRate());
 			mpChargeIntervalTimer_.Reset();
 		}
 
@@ -426,7 +431,7 @@ void Player::JumpUpdate()
 	{
 		if (jumpTime_ < maxjumptimer)
 		{
-			jumpTime_ += 1 * GameSpeed::GetPlayerSpeed();
+			jumpTime_ += GameSpeed::GetPlayerSpeed();
 
 			gravity_.SetGrabity({ 0, jumpSpeed_ ,0 });
 		}
@@ -559,7 +564,7 @@ void Player::FloorColision(const Vector3& pos)
 	//前フレームで地面に接していなかったとき
 	if (isFloorCollision_ == false)
 	{
-		Freeze(7);
+		Freeze(landingTimer_);
 
 		std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 		hitEmitter_->particle = std::make_unique<ParticleLanding>();
@@ -650,6 +655,16 @@ bool Player::GetIsCanAttack()
 {
 	return isCanMove_;
 }
+bool Player::GetIsMove()
+{
+	if (Controller::GetLStick().x != 0 ||
+		Controller::GetLStick().y != 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 #pragma endregion
 
 void Player::Damage(int32_t damage, const Vector3& knockVec)
@@ -668,7 +683,6 @@ void Player::GuardHit(const Vector3& knockVec)
 	knockVec_ += knockVec;
 	guard_.GuardHit();
 	damageCoolTime_.Reset();
-	damageCoolTime_.SetLimitTime(50);
 }
 
 void Player::Reset()

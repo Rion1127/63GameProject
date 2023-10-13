@@ -8,6 +8,8 @@
  * @brief スプライン曲線を使いやすいようにまとめたクラス
  */
 
+
+
 enum class PosState {
 	Start,
 	Middle,
@@ -15,6 +17,24 @@ enum class PosState {
 };
 class Spline
 {
+public:
+	enum class TimerType {
+		Notmal,
+		Easing
+	};
+	enum class EasingType {
+		Back,
+		Bounce,
+		Circ,
+		Quint,
+		Cubic,
+		Sine
+	};
+	enum class EasingTypeInOut {
+		In,
+		Out,
+		InOut
+	};
 private:
 	std::vector<Vector3> splinePos_;
 	Vector3 nowPos_;
@@ -23,6 +43,14 @@ private:
 	TimerFloat timer_;
 	bool isStart_;
 	bool isEnd_;
+
+	float maxTime_;
+	float nowTime_;
+	float testTime_;
+
+	TimerType timerType_;
+	EasingType easingType_;
+	EasingTypeInOut easeTypeInOut_;
 public:
 	Spline();
 
@@ -32,10 +60,14 @@ public:
 	void Reset();
 	void DleteAllPoint() { splinePos_.clear(); }
 public:
-	void SetPositions(const std::vector<Vector3>& pos) { splinePos_ = pos; }
+	void SetPositions(const std::vector<Vector3>& pos);
 	void AddPosition(const Vector3& pos, PosState state = PosState::Middle);
 	void SetLimitTime(float time) { timer_.SetLimitTime(time); }
+	void SetMaxTime(float time) { maxTime_ = time; }
 	void SetIsStart(bool flag) { isStart_ = flag; }
+	void SetTimerType_(TimerType timerType) { timerType_ = timerType; }
+	void SetEasingType_(EasingType easingType) { easingType_ = easingType; }
+	void SetEasingTypeInOut_(EasingTypeInOut easeTypeInOut) { easeTypeInOut_ = easeTypeInOut; }
 public:
 	Vector3 GetNowPoint() { return nowPos_; }
 	Vector3 GetHeadingVec() { return headingVec_; }
@@ -48,5 +80,9 @@ private:
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
 	// 始点/終点の座標と ベクトルから、曲線の軌道上の座標を返す
 	Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t);
+	void CalculateMaxTime();
+	void NormalUpdate(float speedRate);
+	void EasingUpdate(float speedRate);
+	void EaseUpdate();
 };
 
