@@ -22,7 +22,7 @@ public:
 
 	static AssimpLoader* GetInstance();
 
-	std::unique_ptr<AssimpModel> Load(std::string fileName);
+	std::unique_ptr<AssimpModel> Load(const std::string& fileName);
 	static Matrix4 ConvertAiMatrixToMatrix(const aiMatrix4x4 aimat);
 private:
 	void LoadVertices(Vertices* vert, const aiMesh* aimesh);

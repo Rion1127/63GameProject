@@ -8,7 +8,7 @@ struct Sphere {
 	//半径
 	float radius = 1.0f;
 
-	void SetPos(Vector3 pos) {
+	void SetPos(const Vector3& pos) {
 		center = pos;
 	};
 
@@ -41,7 +41,7 @@ struct Ray {
 	Vector3 dir = { 1,0,0 };
 };
 
-bool RayCollision(WorldTransform ray, WorldTransform obj);
+bool RayCollision(const WorldTransform& ray, const WorldTransform& obj);
 
 bool BallCollision(const WorldTransform& a, const WorldTransform& b);
 

@@ -10,6 +10,5 @@ private:
 public:
 	static float RandF(float min, float max);
 	static int32_t Rand(int32_t min, int32_t max);
-
 };
 

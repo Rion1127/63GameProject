@@ -13,13 +13,13 @@ JsonLoader* JsonLoader::GetInstance()
 
 JsonLoader::JsonLoader()
 {
-	kDefaultBaseDirectory = "application/Resources/JSON/";
+	defaultBaseDirectory = "application/Resources/JSON/";
 }
 
-void JsonLoader::LoadFile(std::string fileName, std::string dataName)
+void JsonLoader::LoadFile(const std::string& fileName, const std::string& dataName)
 {
 	//連結してフルパスを得る
-	const std::string fullpath = kDefaultBaseDirectory + fileName;
+	const std::string fullpath = defaultBaseDirectory + fileName;
 
 	//ファイルストリーム
 	std::ifstream file;
@@ -126,7 +126,7 @@ void JsonLoader::LoadFile(std::string fileName, std::string dataName)
 	levelData_.insert(std::make_pair(dataName, std::move(levelData)));
 }
 
-void JsonLoader::SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, std::string levelDataName) {
+void JsonLoader::SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, const std::string& levelDataName) {
 
 	LevelData* data = levelData_.at(levelDataName).get();
 	size_t num = data->object.size();
@@ -184,7 +184,7 @@ void JsonLoader::SetObjects(std::unordered_map<std::string, std::unique_ptr<Obje
 	}
 }
 
-void JsonLoader::SetCamera(Camera* camera, std::string levelDataName)
+void JsonLoader::SetCamera(Camera* camera, const std::string& levelDataName)
 {
 	LevelData* data = levelData_.at(levelDataName).get();
 	camera->eye_ = data->cameraInfo.pos;

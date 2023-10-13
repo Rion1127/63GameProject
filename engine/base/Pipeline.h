@@ -80,15 +80,15 @@ public:
 public:
 	std::string name_;
 
-	void Create(BlendNum blendNum, CULL_MODE cullmode,
-		TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
-		TEXTURE_ADDRESS_MODE uvMode);
+	void Create(const BlendNum& blendNum, const CULL_MODE& cullmode,
+		const TOPOLOGY_TYPE& topologytype, const WRIGHT_MASK& depthWriteMasc,
+		const TEXTURE_ADDRESS_MODE& uvMode);
 
-	void Setshader(std::string fileName, ShaderType shadertype);
+	void Setshader(const std::string& fileName, const ShaderType& shadertype);
 
 	void AddrootParams(int32_t addNum);
 	void AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum);
-	void AddInputLayout(const char* semanticName, DXGI_FORMAT format, uint32_t index = 0);
+	void AddInputLayout(const char* semanticName, const DXGI_FORMAT& format, uint32_t index = 0);
 public:
 	ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }
 

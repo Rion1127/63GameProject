@@ -64,9 +64,9 @@ void SetBlend(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc, uint32_t blend)
 	pipelineDesc.BlendState.RenderTarget[1] = blenddesc;
 }
 
-void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
-	TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
-	TEXTURE_ADDRESS_MODE uvMode)
+void PipelineObject::Create(const BlendNum& blendNum, const CULL_MODE& cullmode,
+	const TOPOLOGY_TYPE& topologytype, const WRIGHT_MASK& depthWriteMasc,
+	const TEXTURE_ADDRESS_MODE& uvMode)
 {
 	HRESULT result;
 
@@ -180,7 +180,7 @@ void PipelineObject::Create(BlendNum blendNum, CULL_MODE cullmode,
 	assert(SUCCEEDED(result));
 }
 
-void PipelineObject::Setshader(std::string fileName, ShaderType shadertype)
+void PipelineObject::Setshader(const std::string& fileName, const ShaderType& shadertype)
 {
 	std::wstring allFileName = ToWideString(kBaseDirectory + fileName);
 	// 頂点シェーダの読み込みとコンパイル
@@ -277,7 +277,7 @@ void PipelineObject::AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum
 	}
 }
 
-void PipelineObject::AddInputLayout(const char* semanticName, DXGI_FORMAT format, uint32_t index)
+void PipelineObject::AddInputLayout(const char* semanticName, const DXGI_FORMAT& format, uint32_t index)
 {
 	inputLayout_.push_back(
 		{

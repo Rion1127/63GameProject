@@ -289,9 +289,9 @@ void PipelineManager::ParticleShaderIni()
 }
 
 void PipelineManager::Create(
-	const std::string& pipelinename, CULL_MODE cullmode,
-	TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
-	TEXTURE_ADDRESS_MODE uvMode)
+	const std::string& pipelinename, const CULL_MODE& cullmode,
+	const TOPOLOGY_TYPE& topologytype, const WRIGHT_MASK& depthWriteMasc,
+	const TEXTURE_ADDRESS_MODE& uvMode)
 {
 	for (int32_t i = 0; i < 4; i++)
 	{
@@ -305,7 +305,8 @@ void PipelineManager::AddPipeline(const std::string& pipelinename)
 	obj->name_ = pipelinename;
 	pipelineObjects_.insert(std::make_pair(pipelinename, std::move(obj)));
 }
-void PipelineManager::PreDraw(std::string pipelinename, TopologyName topologyName, PipeLineState state)
+void PipelineManager::PreDraw(const std::string& pipelinename, const TopologyName& topologyName,
+	const PipeLineState& state)
 {
 	auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
 	// パイプラインステートとルートシグネチャの設定コマンド

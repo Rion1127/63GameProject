@@ -14,7 +14,7 @@ void Triangle::ComputeNormal()
 	normal = normal.normalize();
 }
 
-bool RayCollision(WorldTransform ray, WorldTransform obj)
+bool RayCollision(const WorldTransform& ray, const WorldTransform& obj)
 {
 	//レイの当たり判定
 

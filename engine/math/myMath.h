@@ -92,7 +92,7 @@ struct Vector4 {
 	Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}; // x成分, y成分, z成分 を指定しての生成
 };
 
-Matrix4 ConvertScalingMat(Vector3 scale);		// スケーリング行列を返す関数
+Matrix4 ConvertScalingMat(const Vector3& scale);		// スケーリング行列を返す関数
 Matrix4 ConvertRotationXAxisMat(float angle);	// 回転行列ｘ軸を返す関数
 Matrix4 ConvertRotationYAxisMat(float angle);	// 回転行列ｙ軸を返す関数
 Matrix4 ConvertRotationZAxisMat(float angle);	// 回転行列ｚ軸を返す関数
@@ -132,9 +132,9 @@ float Radian(float angle);
 //bool isSinCos : 0,sin 1,cos
 float UpAndDown(float oneRoundTime, float range, float timer, bool isSinCos = 0);
 
-float Vec2Angle(Vector2 vec);
+float Vec2Angle(const Vector2& vec);
 
-Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 rot);
-Vector4 Vec4MulMat4(Vector4 v, Matrix4 m);
+Matrix4 CalculateWorldMat(const Vector3& pos, const Vector3& scale, const Vector3& rot);
+Vector4 Vec4MulMat4(const Vector4& v,const Matrix4& m);
 
 Vector3 getEulerAnglesFromVector(const Vector3& vec);

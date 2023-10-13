@@ -121,9 +121,9 @@ public:
 
 	static bool GetActive() { return isConnect_; }
 
-	static WORD GetButtons(PAD button);
-	static WORD GetTriggerButtons(PAD button);
-	static WORD GetReleasButtons(PAD button);
+	static WORD GetButtons(const PAD& button);
+	static WORD GetTriggerButtons(const PAD& button);
+	static WORD GetReleasButtons(const PAD& button);
 	//false	右スティック
 	//true	左スティック
 	static Vector2 GetLStick(int32_t deadZone = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);

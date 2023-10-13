@@ -53,7 +53,7 @@ public:
 	//更新
 	void PUpdate();
 
-	void Draw(std::string pipelineName);
+	void Draw(const std::string& pipelineName);
 	//シーン前処理
 	void PreDrawScene();
 	//シーン描画後処理

@@ -10,7 +10,7 @@ public:
 public:
 	Color();
 	Color(float r, float g, float b, float a);
-	inline void SetColor(Color col) {
+	inline void SetColor(const Color& col) {
 		r = col.r;
 		g = col.g;
 		b = col.b;

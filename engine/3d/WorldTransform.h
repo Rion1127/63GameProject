@@ -27,19 +27,19 @@ public:
 
 	WorldTransform();
 
-	void SetScale(Vector3 scale) { scale_ = scale; }
-	void SetRotation(Vector3 rot) { rotation_ = rot; }
-	void SetPosition(Vector3 pos) { position_ = pos; }
-	void SetQuaternion(Quaternion q) { quaternion_ = q; }
-	void SetRotType(RotType type) { rotType = type; }
+	void SetScale(const Vector3& scale) { scale_ = scale; }
+	void SetRotation(const Vector3& rot) { rotation_ = rot; }
+	void SetPosition(const Vector3& pos) { position_ = pos; }
+	void SetQuaternion(const Quaternion& q) { quaternion_ = q; }
+	void SetRotType(const RotType& type) { rotType = type; }
 
 	void AddScale(float x, float y, float z);
 	void AddRotation(float x, float y, float z);
 	void AddPosition(float x, float y, float z);
 
-	void AddScale(Vector3 scale) { scale_ += scale; }
-	void AddRotation(Vector3 rot) { rotation_ += rot; }
-	void AddPosition(Vector3 pos) { position_ += pos; }
+	void AddScale(const Vector3& scale) { scale_ += scale; }
+	void AddRotation(const Vector3& rot) { rotation_ += rot; }
+	void AddPosition(const Vector3& pos) { position_ += pos; }
 	/// <summary>
 	/// ワールドトランスフォーム更新
 	/// </summary>

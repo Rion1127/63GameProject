@@ -27,7 +27,7 @@ void Camera::SetEyePos(float x, float y, float z)
 	eye_.z = z;
 }
 
-void Camera::SetEyePos(Vector3 pos)
+void Camera::SetEyePos(const Vector3& pos)
 {
 	if (isShake_)
 	{
@@ -50,7 +50,7 @@ void Camera::SetTarget(float x, float y, float z)
 	target_.z = z;
 }
 
-void Camera::SetTarget(Vector3 pos)
+void Camera::SetTarget(const Vector3& pos)
 {
 	target_.x = pos.x;
 	target_.y = pos.y;
@@ -64,14 +64,14 @@ void Camera::SetUpVec(float x, float y, float z)
 	up_.z = z;
 }
 
-void Camera::SetUpVec(Vector3 upVec)
+void Camera::SetUpVec(const Vector3& upVec)
 {
 	up_.x = upVec.x;
 	up_.y = upVec.y;
 	up_.z = upVec.z;
 }
 
-void Camera::MoveTo(Vector3 goal, float speed)
+void Camera::MoveTo(const Vector3& goal, float speed)
 {
 	Vector3 dir = goal - eye_;
 	float dirLength = dir.length();

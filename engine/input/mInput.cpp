@@ -234,7 +234,7 @@ void Controller::Update()
 	}
 }
 
-WORD Controller::GetButtons(PAD button)
+WORD Controller::GetButtons(const PAD& button)
 {
 	if (state_.Gamepad.wButtons == (WORD)button) {
 		return true;
@@ -243,7 +243,7 @@ WORD Controller::GetButtons(PAD button)
 	return false;
 }
 
-WORD Controller::GetTriggerButtons(PAD button)
+WORD Controller::GetTriggerButtons(const PAD& button)
 {
 	if ((state_.Gamepad.wButtons == (WORD)button) &&
 		(preState_.Gamepad.wButtons != (WORD)button))
@@ -254,7 +254,7 @@ WORD Controller::GetTriggerButtons(PAD button)
 	return false;
 }
 
-WORD Controller::GetReleasButtons(PAD button)
+WORD Controller::GetReleasButtons(const PAD& button)
 {
 	if ((state_.Gamepad.wButtons != (WORD)button) &&
 		(preState_.Gamepad.wButtons == (WORD)button))

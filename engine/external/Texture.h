@@ -29,14 +29,12 @@ class TextureManager
 private:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	//SRVの最大個数
+	const size_t kMaxSRVCount = 2056;
 	//テクスチャの情報を格納
 	std::map < std::string, std::unique_ptr<Texture>> texData{};
 	//次に格納する場所のアドレス
 	uint32_t textureHandle;
-
-	//SRVの最大個数
-	const size_t kMaxSRVCount = 2056;
-
 	//SRVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle{};
 	//設定をもとにSRV用でスクリプタヒープを生成

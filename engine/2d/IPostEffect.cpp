@@ -31,7 +31,7 @@ void IPostEffect::PUpdate()
 	TransferBuff();
 }
 
-void IPostEffect::Draw(std::string pipelineName)
+void IPostEffect::Draw(const std::string& pipelineName)
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->SetPipelineState(

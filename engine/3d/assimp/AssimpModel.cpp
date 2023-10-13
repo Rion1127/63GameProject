@@ -6,15 +6,16 @@ AssimpModel::AssimpModel()
 {
 }
 
-void AssimpModel::CreateModel(std::string fileName)
+void AssimpModel::CreateModel(const std::string& fileName)
 {
+	fileName;
 }
 
 void AssimpModel::PlayAnimetion()
 {
 }
 
-void AssimpModel::Draw(WorldTransform WT)
+void AssimpModel::Draw(const WorldTransform& WT)
 {
 	for (auto& m : materials_) {
 		m->Draw();

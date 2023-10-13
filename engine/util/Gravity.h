@@ -12,8 +12,8 @@ public:
 
 public:
 	void SetGrabity(const Vector3& gravity) { gravityVec_ = gravity; }
-	void SetAddValue(Vector3 value) { addValue_ = value; }
-	void SetGravityLimit(Vector3 limit) { gravityLimit_ = limit; }
+	void SetAddValue(const Vector3& value) { addValue_ = value; }
+	void SetGravityLimit(const Vector3& limit) { gravityLimit_ = limit; }
 public:
 	Vector3 GetGravityValue() { return gravityVec_; }
 	Vector3 GetAddValue() { return addValue_; }

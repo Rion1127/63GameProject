@@ -9,15 +9,13 @@
 #include <cassert>
 #include "Camera.h"
 
-//WARNINGの詳細表示
-void DisplayWarningInfo(ID3D12Device* device);
-
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
 	ID3DBlob** blob, ID3DBlob* errorBlob);
 
-void MoveTo(const Vector3& goal, float speed, WorldTransform& WT);
+
+//goalまで値を変化させていく
 void MoveTo(const Vector3& goal, float speed, Vector3& value);
 
 //定数バッファ
@@ -71,8 +69,7 @@ std::string ToUTF8(const std::wstring& value);
 std::wstring ToWideString(const std::string& str);
 // std::wstring(ワイド文字列)からstd::string(マルチバイト文字列)を得る
 std::string WStringToString(std::wstring oWString);
-
-
+//3D座標から2D座標に変換する
 Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera);
 
 template <class T>

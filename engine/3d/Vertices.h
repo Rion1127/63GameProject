@@ -32,9 +32,6 @@ public:
 
 	size_t GetVertexCount() { return vertices_.size(); }
 
-	//void ChangeColor(float x, float y, float z, float w);
-	//void ChangeColor(XMFLOAT4 color_);
-
 	inline const std::vector<uint16_t>& GetIndices() { return indices_; }
 
 	void Map();

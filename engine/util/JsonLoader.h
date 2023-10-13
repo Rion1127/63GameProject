@@ -16,16 +16,17 @@ struct LevelData {
 class JsonLoader
 {
 private:
-	std::string kDefaultBaseDirectory;
-
+	//ディレクトリ名
+	std::string defaultBaseDirectory;
+	//読み込んだオブジェデータ
 	std::map<std::string, std::unique_ptr<LevelData>> levelData_;
 public:
 	static JsonLoader* GetInstance();
 	JsonLoader();
 
 	//JSONファイル読み込み dataNameで名前をつける
-	void LoadFile(std::string fileName, std::string dataName);
-	void SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, std::string levelDataName);
-	void SetCamera(Camera* camera, std::string levelDataName);
+	void LoadFile(const std::string& fileName, const std::string& dataName);
+	void SetObjects(std::unordered_map<std::string, std::unique_ptr<Object3d>>* objects, const std::string& levelDataName);
+	void SetCamera(Camera* camera, const std::string& levelDataName);
 };
 

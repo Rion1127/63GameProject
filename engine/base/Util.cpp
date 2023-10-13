@@ -6,18 +6,6 @@ using namespace Microsoft::WRL;
 #include "DirectX.h"
 #include <filesystem>
 
-void DisplayWarningInfo(ID3D12Device* device)
-{
-	assert(device);
-	ComPtr<ID3D12DebugDevice> debugInterface;
-
-	if (SUCCEEDED(device->QueryInterface(debugInterface.GetAddressOf())))
-	{
-		debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
-		debugInterface->Release();
-	}
-}
-
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
@@ -111,20 +99,6 @@ std::string WStringToString(std::wstring oWString)
 
 	// 変換結果を返す
 	return(oRet);
-}
-
-
-void MoveTo(const Vector3& goal, float speed, WorldTransform& WT)
-{
-	Vector3 dir = goal - WT.position_;
-	float dirLength = dir.length();
-	if (dirLength < speed * speed)
-	{
-		WT.position_ = goal;
-		return;
-	}
-	WT.position_ =
-		WT.position_ + dir.SetLength(speed);
 }
 
 void MoveTo(const Vector3& goal, float speed, Vector3& value)

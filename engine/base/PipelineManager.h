@@ -25,12 +25,13 @@ public:
 	static void Ini();
 
 	static void Create(
-		const std::string& pipelinename, CULL_MODE cullmode,
-		TOPOLOGY_TYPE topologytype, WRIGHT_MASK depthWriteMasc,
-		TEXTURE_ADDRESS_MODE uvMode);
+		const std::string& pipelinename, const CULL_MODE& cullmode,
+		const TOPOLOGY_TYPE& topologytype, const WRIGHT_MASK& depthWriteMasc,
+		const TEXTURE_ADDRESS_MODE& uvMode);
 	static void AddPipeline(const std::string& pipelinename);
 
-	static void PreDraw(std::string pipelinename, TopologyName topologyName, PipeLineState state = PipeLineState::Alpha);
+	static void PreDraw(const std::string& pipelinename, const TopologyName& topologyName,
+		const PipeLineState& state = PipeLineState::Alpha);
 private:
 	static void ObjShaderIni();
 	static void PostEffectIni();

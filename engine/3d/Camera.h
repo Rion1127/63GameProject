@@ -26,14 +26,14 @@ public:
 	Camera();
 	//カメラ座標
 	void SetEyePos(float x, float y, float z);
-	void SetEyePos(Vector3 pos);
+	void SetEyePos(const Vector3& pos);
 	//ターゲットセット
 	void SetTarget(float x, float y, float z);
-	void SetTarget(Vector3 pos);
+	void SetTarget(const Vector3& pos);
 	//アップベクトル
 	void SetUpVec(float x, float y, float z);
-	void SetUpVec(Vector3 upVec);
-	void MoveTo(Vector3 goal, float speed);
+	void SetUpVec(const Vector3& upVec);
+	void MoveTo(const Vector3& goal, float speed);
 	//座標と注視点座標で行列計算
 	void UpdateLookAt();
 	//座標とオイラー角で行列計算(こっちはデバッグカメラが対応していないため、バグる)

@@ -25,7 +25,7 @@ public:
 public:
 	//セッター
 	void SetModel(std::unique_ptr<Model> model) { model_ = std::move(model); }
-	void SetAmbient(std::string name, Vector3 ambient) { model_->materials_.find(name)->second->SetAmbient(ambient); }
+	void SetAmbient(const std::string& name, const Vector3& ambient) { model_->materials_.find(name)->second->SetAmbient(ambient); }
 	void SetPos(const Vector3& pos) { WT_.position_ = pos; }
 	void SetScale(const Vector3& scale) { WT_.scale_ = scale; }
 	void SetRot(const Vector3& rot) { WT_.rotation_ = rot; }

@@ -45,7 +45,7 @@ void MultiTexture::PUpdate()
 
 }
 
-void MultiTexture::Draw(std::string pipelineName)
+void MultiTexture::Draw(const std::string& pipelineName)
 {
 	auto& cmdList = *RDirectX::GetInstance()->GetCommandList();
 	auto& device = *RDirectX::GetInstance()->GetDevice();

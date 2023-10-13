@@ -43,9 +43,9 @@ struct AssimpModel
 	std::vector<std::unique_ptr<Material>> materials_;
 public:
 	AssimpModel();
-	static void CreateModel(std::string fileName);
+	static void CreateModel(const std::string& fileName);
 
 	void PlayAnimetion();
 
-	void Draw(WorldTransform WT);
+	void Draw(const WorldTransform& WT);
 };

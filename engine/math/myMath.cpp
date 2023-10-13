@@ -325,7 +325,7 @@ Matrix4 Matrix4::Transpose()
 	return result;
 }
 
-Matrix4 ConvertScalingMat(Vector3 scale)
+Matrix4 ConvertScalingMat(const Vector3& scale)
 {
 	return
 	{
@@ -406,7 +406,7 @@ float UpAndDown(float oneRoundTime, float range, float timer, bool isSinCos)
 //	return (float)(sin(PI * 2 / oneRoundTime * GetNowCount()) * range);
 //}
 
-float Vec2Angle(Vector2 vec) {
+float Vec2Angle(const Vector2& vec) {
 	float angle = 0;
 	if (vec.length() == 0) return angle;
 	angle = vec.dot({ 0.0f, 1.0f }) / (vec.length() * Vector2(0.0f, 1.0f).length());
@@ -425,7 +425,7 @@ float Vec2Angle(Vector2 vec) {
 	return angle;
 }
 
-Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 rot)
+Matrix4 CalculateWorldMat(const Vector3& pos, const Vector3& scale, const Vector3& rot)
 {
 	Matrix4 result;
 	result.UnitMatrix();
@@ -448,7 +448,7 @@ Matrix4 CalculateWorldMat(const Vector3 pos, const Vector3 scale, const Vector3 
 	return result;
 }
 
-Vector4 Vec4MulMat4(Vector4 v, Matrix4 m)
+Vector4 Vec4MulMat4(const Vector4& v,const Matrix4& m)
 {
 	float w = m.m[0][3] * v.x + m.m[1][3] * v.y + m.m[2][3] * v.z + m.m[3][3];
 	Vector4 result = {
