@@ -1,7 +1,7 @@
 #include "AttackAir1.h"
 
 AttackAir1::AttackAir1(IActor* selfActor) :
-	IAttack(selfActor, 1, 25, 10, 21)
+	IAttack(selfActor, 1, 20, 10, 21)
 {
 }
 
@@ -13,7 +13,7 @@ void AttackAir1::Init()
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 20);
+	spline_.SetLimitTime(attackInfo_.maxTime - 15);
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
@@ -40,7 +40,7 @@ void AttackAir1::Init()
 	spline_.SetPositions(attackVec);
 
 	attackCol_.at(0)->col_.SetPos(playerUpPos);
-	attackCol_.at(0)->col_.radius = 0.8f;
+	attackCol_.at(0)->col_.radius = 1.0f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
 	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };

@@ -1,7 +1,7 @@
 #include "AttackAir2.h"
 
 AttackAir2::AttackAir2(IActor* selfActor) :
-	IAttack(selfActor, 1, 25, 10, 21)
+	IAttack(selfActor, 1, 20, 10, 21)
 {
 }
 
@@ -53,7 +53,7 @@ void AttackAir2::Init()
 	swordPos_ = attackCol_.at(0)->col_.center;
 
 	spline_.SetTimerType_(Spline::TimerType::Easing);
-	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingType_(Spline::EasingType::Sine);
 	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
 
