@@ -43,6 +43,10 @@ void Attack3::Init()
 	attackCol_.at(0)->knockPower = { 1.f,1.f,1.f };
 	attackCol_.at(0)->knockVecY = 0.8f;
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
 
 void Attack3::MoveUpdate()

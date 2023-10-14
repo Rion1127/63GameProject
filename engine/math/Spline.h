@@ -19,7 +19,7 @@ class Spline
 {
 public:
 	enum class TimerType {
-		Notmal,
+		Normal,
 		Easing
 	};
 	enum class EasingType {
@@ -63,7 +63,7 @@ public:
 	void SetPositions(const std::vector<Vector3>& pos);
 	void AddPosition(const Vector3& pos, PosState state = PosState::Middle);
 	void SetLimitTime(float time) { timer_.SetLimitTime(time); }
-	void SetMaxTime(float time) { maxTime_ = time; }
+	void SetMaxTime(float time) { maxTime_ = time; timer_.SetLimitTime(time); }
 	void SetIsStart(bool flag) { isStart_ = flag; }
 	void SetTimerType_(TimerType timerType) { timerType_ = timerType; }
 	void SetEasingType_(EasingType easingType) { easingType_ = easingType; }
@@ -75,6 +75,7 @@ public:
 	bool GetisEnd() { return isEnd_; }
 	uint32_t GetIndex() { return index_; }
 	TimerFloat GetTimer() { return timer_; }
+	float GetMaxTime() { return maxTime_; }
 private:
 	void SplineUpdate(float speedRate);
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);

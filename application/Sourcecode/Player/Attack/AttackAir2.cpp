@@ -1,7 +1,7 @@
 #include "AttackAir2.h"
 
 AttackAir2::AttackAir2(IActor* selfActor) :
-	IAttack(selfActor, 1, 20, 10, 21)
+	IAttack(selfActor, 1, 25, 10, 21)
 {
 }
 
@@ -17,7 +17,7 @@ void AttackAir2::Init()
 	spline_.SetLimitTime(attackInfo_.maxTime - 15);
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
-	Vector3 up = Vector3(0, 1, 0) * -(selfActor_->GetWorldTransform()->scale_.y * 0.5f);
+	Vector3 up = Vector3(0, -1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 0.5f);
 	Vector3 playerDownPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(playerDownPos);
@@ -36,7 +36,7 @@ void AttackAir2::Init()
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
 	attackVec.push_back(playerFrontPos);
 
-	up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
+	up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.f);
 	Vector3 playerUpPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(playerUpPos);
@@ -51,6 +51,10 @@ void AttackAir2::Init()
 	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
 
 void AttackAir2::MoveUpdate()

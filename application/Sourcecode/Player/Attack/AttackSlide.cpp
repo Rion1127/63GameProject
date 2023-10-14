@@ -32,6 +32,10 @@ void AttackSlide::Init()
 
 	speed_ = 0.6f;
 	stateSwitchRate_ = 0.5f;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
 
 void AttackSlide::MoveUpdate()

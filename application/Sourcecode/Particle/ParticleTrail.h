@@ -67,6 +67,7 @@ public:
 private:
 	//データ転送
 	void TransferBuff();
+	void CreateCurveVertex(std::vector<PosBuffer>& usedPosArray);
 public:
 	Color GetColor() { return color_; }
 };

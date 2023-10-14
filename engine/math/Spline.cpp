@@ -8,7 +8,7 @@ Spline::Spline()
 	timer_.SetLimitTime(120);
 	isEnd_ = false;
 
-	timerType_ = TimerType::Notmal;
+	timerType_ = TimerType::Normal;
 	easingType_ = EasingType::Sine;
 	easeTypeInOut_ = EasingTypeInOut::In;
 }
@@ -16,7 +16,7 @@ Spline::Spline()
 void Spline::Update(float speedRate)
 {
 	if (isStart_) {
-		if (timerType_ == TimerType::Notmal) {
+		if (timerType_ == TimerType::Normal) {
 			SplineUpdate(speedRate);
 		}else if (timerType_ == TimerType::Easing) {
 			EasingUpdate(speedRate);
@@ -63,6 +63,8 @@ void Spline::Reset()
 	timer_.Reset();
 	isEnd_ = false;
 	index_ = 1;
+	testTime_ = 0;
+	maxTime_ = 0;
 }
 
 void Spline::SetPositions(const std::vector<Vector3>& pos)

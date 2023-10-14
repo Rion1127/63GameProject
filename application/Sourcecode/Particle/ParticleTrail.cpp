@@ -163,3 +163,8 @@ void ParticleTrail::TransferBuff()
 
 	constMapColor_->color = color_ / 255.f;
 }
+
+void ParticleTrail::CreateCurveVertex(std::vector<PosBuffer>& usedPosArray)
+{
+	usedPosArray;
+}

@@ -1,7 +1,7 @@
 #include "Attack2.h"
 
 Attack2::Attack2(IActor* selfActor) :
-	IAttack(selfActor, 1, 25, 10, 26)
+	IAttack(selfActor, 1, 35, 10, 36)
 {
 }
 
@@ -38,6 +38,10 @@ void Attack2::Init()
 	attackCol_.at(0)->knockPower = { 0.2f,0.3f,0.2f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Back);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::Out);
 }
 
 void Attack2::MoveUpdate()
