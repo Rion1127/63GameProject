@@ -242,7 +242,7 @@ void Player::InputVecUpdate()
 
 			float dashRadian = 350 * inputVec_.length() * isDash;
 			float radian = Radian(-600 + dashRadian);
-			q1.w = radian;
+			q1 = {1,0,0, radian };
 
 			float addTime;
 			if (isDash)addTime = 1.5f;
