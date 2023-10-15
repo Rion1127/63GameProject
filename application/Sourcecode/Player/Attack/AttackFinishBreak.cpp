@@ -3,7 +3,7 @@
 #include "ParticleManager.h"
 
 AttackFinishBreak::AttackFinishBreak(IActor* selfActor) :
-	IAttack(selfActor, 3, 50, 20, 60,AttackType::Finish)
+	IAttack(selfActor, 3, 55, 20, 60,AttackType::Finish)
 {
 }
 
@@ -29,6 +29,11 @@ void AttackFinishBreak::Init()
 	splineTime_ = 5;
 	SplineUpdate();
 
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
+	spline_.SetMaxTime(attackInfo_.maxTime - 40/*4.f*/);
+
 	hitNum_ = 5;
 
 	float coolTime = attackInfo_.maxTime - splineTime_ * ((int32_t)spline_.GetsplinePos().size() - 2);
@@ -49,11 +54,6 @@ void AttackFinishBreak::Init()
 
 	spline_.Update();
 	swordPos_ = spline_.GetNowPoint();
-
-	spline_.SetTimerType_(Spline::TimerType::Easing);
-	spline_.SetEasingType_(Spline::EasingType::Circ);
-	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
-	spline_.SetLimitTime(attackInfo_.maxTime - 35);
 }
 
 void AttackFinishBreak::MoveUpdate()

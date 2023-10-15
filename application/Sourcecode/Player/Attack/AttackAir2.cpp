@@ -14,7 +14,7 @@ void AttackAir2::Init()
 	}
 	attackVec_ = frontVec;
 
-	spline_.SetMaxTime(attackInfo_.maxTime - 15);
+	spline_.SetMaxTime(attackInfo_.maxTime - 10);
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, -1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 0.5f);
@@ -72,8 +72,6 @@ void AttackAir2::MoveUpdate()
 	speed *= timerate;
 
 	selfActor_->AddaddVec(speed);
-
-
 
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackCol_.at(0)->damageCoolTime = (uint32_t)timer_.GetLimitTimer() - (int32_t)timer_.GetTimer();

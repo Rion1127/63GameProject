@@ -44,6 +44,8 @@ public:
 	void DrawDebug();
 private:
 	void CalculatePtoELength();
+	void FirstAttackUpdate();	//1コンボ目更新
+	void SwitchAttack();
 public:
 	bool GetIsAttacking() { return isAttacking; }
 public:

@@ -13,7 +13,7 @@ void AttackAir1::Init()
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 15);
+	spline_.SetLimitTime(attackInfo_.maxTime);
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);

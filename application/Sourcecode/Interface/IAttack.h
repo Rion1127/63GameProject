@@ -51,6 +51,7 @@ public:
 	virtual ~IAttack() {};
 	void Update();
 	void DrawCol();
+	void DrawSplinePoint();
 	//lockOnActorへのベクトルを計算する
 	Vector3 CalculateFrontVec();
 	//lockOnActorへ回転させる

@@ -14,7 +14,7 @@ void Attack2::Init()
 	}
 	attackVec_ = frontVec;
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 15);
+	spline_.SetMaxTime(attackInfo_.maxTime - 5);
 	//スプライン曲線計算(剣の挙動)
 	Vector3 attackBasePos = selfActor_->GetWorldTransform()->position_ + Vector3(0, 1, 0);
 

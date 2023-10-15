@@ -48,6 +48,10 @@ void IAttack::DrawCol()
 	{
 		col->colObj_.Draw();
 	}
+}
+
+void IAttack::DrawSplinePoint()
+{
 	spline_.DrawDebug();
 }
 
