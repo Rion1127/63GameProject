@@ -48,6 +48,7 @@ void IAttack::DrawCol()
 	{
 		col->colObj_.Draw();
 	}
+	spline_.DrawDebug();
 }
 
 Vector3 IAttack::CalculateFrontVec()

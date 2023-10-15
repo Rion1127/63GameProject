@@ -33,7 +33,6 @@ void AttackAir1::Init()
 
 	Vector3 playerFrontPos =
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
-	spline_.AddPosition(playerFrontPos, PosState::End);
 	attackVec.push_back(playerFrontPos);
 	attackVec.push_back(playerFrontPos);
 

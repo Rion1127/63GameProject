@@ -14,7 +14,7 @@ CollisionManager::CollisionManager()
 	wallHitTimer_.SetTime(wallHitTimer_.GetLimitTimer());
 
 	isHitStop_ = true;
-	hitStopTimer_ = 5;
+	hitStopTimer_ = 1;
 
 	shakePower_ = 0.3f;
 	shakeTimer_ = 10;

@@ -18,9 +18,14 @@ void Spline::Update(float speedRate)
 	if (isStart_) {
 		if (timerType_ == TimerType::Normal) {
 			SplineUpdate(speedRate);
-		}else if (timerType_ == TimerType::Easing) {
+		}
+		else if (timerType_ == TimerType::Easing) {
 			EasingUpdate(speedRate);
 		}
+	}
+
+	for (int32_t i = 0; i < splineObj_.size(); i++) {
+		splineObj_[i]->Update();
 	}
 }
 
@@ -51,6 +56,10 @@ void Spline::SplineUpdate(float speedRate)
 
 void Spline::DrawDebug()
 {
+	for (int32_t i = 0; i < splineObj_.size(); i++) {
+		splineObj_[i]->Draw();
+	}
+
 	ImGui::Begin("spline");
 	float pos[3] = { nowPos_.x,nowPos_.y,nowPos_.z };
 	ImGui::SliderFloat3("NowPos", pos, -100.0f, 100.0f);
@@ -72,6 +81,8 @@ void Spline::SetPositions(const std::vector<Vector3>& pos)
 	splinePos_ = pos;
 
 	CalculateMaxTime();
+
+	ObjInit();
 }
 
 void Spline::AddPosition(const Vector3& pos, PosState state)
@@ -88,6 +99,8 @@ void Spline::AddPosition(const Vector3& pos, PosState state)
 
 	if (state == PosState::End) {
 		CalculateMaxTime();
+
+		ObjInit();
 	}
 }
 
@@ -210,7 +223,7 @@ void Spline::EaseUpdate()
 {
 	if (easingType_ == EasingType::Back) {
 		if (easeTypeInOut_ == EasingTypeInOut::In) {
-			nowTime_ = Easing::Back::easeIn(0,maxTime_, timer_.GetTimeRate());
+			nowTime_ = Easing::Back::easeIn(0, maxTime_, timer_.GetTimeRate());
 		}
 		else if (easeTypeInOut_ == EasingTypeInOut::Out) {
 			nowTime_ = Easing::Back::easeOut(0, maxTime_, timer_.GetTimeRate());
@@ -221,7 +234,7 @@ void Spline::EaseUpdate()
 	}
 	else if (easingType_ == EasingType::Bounce) {
 		if (easeTypeInOut_ == EasingTypeInOut::In) {
-			nowTime_ = Easing::Bounce::easeIn(timer_.GetTimeRate(),0, maxTime_,1.f );
+			nowTime_ = Easing::Bounce::easeIn(timer_.GetTimeRate(), 0, maxTime_, 1.f);
 		}
 		else if (easeTypeInOut_ == EasingTypeInOut::Out) {
 			nowTime_ = Easing::Bounce::easeOut(timer_.GetTimeRate(), 0, maxTime_, 1.f);
@@ -273,5 +286,26 @@ void Spline::EaseUpdate()
 		else if (easeTypeInOut_ == EasingTypeInOut::InOut) {
 			nowTime_ = Easing::Sine::easeInOut(timer_.GetTimeRate(), 0, maxTime_, 1.f);
 		}
+	}
+}
+
+void Spline::ObjInit()
+{
+	splineObj_.resize(splinePos_.size() - 2);
+
+	std::vector<Vector3> pos;
+	for (int32_t i = 0; i < splinePos_.size(); i++) {
+		if (i > 0 && i < splinePos_.size() - 1) {
+			pos.emplace_back(splinePos_[i]);
+		}
+	}
+
+	for (int32_t i = 0; i < splineObj_.size(); i++) {
+		splineObj_[i] = std::make_unique<Object3d>();
+		splineObj_[i]->SetModel(Model::CreateOBJ_uniptr("cube", false));
+		splineObj_[i]->SetPos(pos[i]);
+		splineObj_[i]->SetScale(Vector3(0.3f, 0.3f, 0.3f));
+		Vector3 color = { i * 0.2f, i * 0.2f,i * 0.2f };
+		splineObj_[i]->SetAmbient("cube", color);
 	}
 }

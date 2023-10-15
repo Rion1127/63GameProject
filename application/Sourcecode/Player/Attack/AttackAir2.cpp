@@ -14,7 +14,7 @@ void AttackAir2::Init()
 	}
 	attackVec_ = frontVec;
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 15);
+	spline_.SetMaxTime(attackInfo_.maxTime - 15);
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, -1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 0.5f);
@@ -36,7 +36,11 @@ void AttackAir2::Init()
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
 	attackVec.push_back(playerFrontPos);
 
-	up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.f);
+	up = {
+		frontVec.normalize().x,
+		frontVec.normalize().y + selfActor_->GetWorldTransform()->scale_.y * 2.5f,
+		frontVec.normalize().z,
+	};
 	Vector3 playerUpPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(playerUpPos);

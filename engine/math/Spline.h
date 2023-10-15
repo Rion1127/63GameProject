@@ -2,6 +2,7 @@
 #include "Vector3.h"
 #include "Timer.h"
 #include <vector>
+#include "Object3d.h"
 
 /**
  * @file Spline.h
@@ -51,6 +52,8 @@ private:
 	TimerType timerType_;
 	EasingType easingType_;
 	EasingTypeInOut easeTypeInOut_;
+
+	std::vector<std::unique_ptr<Object3d>> splineObj_;
 public:
 	Spline();
 
@@ -85,5 +88,6 @@ private:
 	void NormalUpdate(float speedRate);
 	void EasingUpdate(float speedRate);
 	void EaseUpdate();
+	void ObjInit();		//スプラインポイントに配置するオブジェ初期化
 };
 
