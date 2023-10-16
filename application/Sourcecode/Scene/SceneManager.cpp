@@ -7,6 +7,7 @@
 #include "DebugScene.h"
 #include "TitleScene.h"
 #include "GameOverScene.h"
+#include "AttackEditorScene.h"
 
 std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
@@ -57,6 +58,10 @@ void SceneManager::Update()
 		if (Key::TriggerKey(DIK_0))
 		{
 			Transition<DebugScene>();
+		}
+		if (Key::TriggerKey(DIK_9))
+		{
+			Transition<AttackEditorScene>();
 		}
 	}
 

@@ -34,6 +34,7 @@ void Framework::Init()
 	loadManager_.LoadAllResources();
 
 	bloom_ = std::make_unique<Bloom>();
+	isPostEffect_ = true;
 }
 
 void Framework::Finalize()
@@ -64,6 +65,10 @@ void Framework::Update()
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
 	//ImGui::ShowDemoWindow();
+	if (ImGui::Button("PostEffect"))
+	{
+		isPostEffect_ = (isPostEffect_ == true) ? false : true;
+	}
 #endif // DEBUG
 }
 
@@ -87,12 +92,12 @@ void Framework::Run()
 
 void Framework::Draw()
 {
-	bloom_->PreDraw();
+	if(isPostEffect_) bloom_->PreDraw();
 	//描画コマンド
 	RDirectX::GetInstance()->PreDraw();
 	//ゲームシーン描画
-	//SceneManager::Draw();
-	bloom_->Draw();
+	if (isPostEffect_ == false)SceneManager::Draw();
+	if (isPostEffect_)bloom_->Draw();
 	//imgui終了
 	ImGuiManager::Getinstance()->End();
 	//imgui描画

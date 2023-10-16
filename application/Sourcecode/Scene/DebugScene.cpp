@@ -111,64 +111,8 @@ void DebugScene::Update()
 			SceneManager::SetChangeStart(SceneName::GameOver);
 		}
 
-		if (Key::TriggerKey(DIK_P))
-		{
-			std::shared_ptr<OneceEmitter> debugEmitter1 = std::make_shared<OneceEmitter>();
-			debugEmitter1->particle = std::make_unique<ParticleTest>();
-			debugEmitter1->addNum = 10;
-			debugEmitter1->time = 60000;
-			debugEmitter1->pos = { -3,3,0 };
-			debugEmitter1->addVec = { 1,1,1 };
-			debugEmitter1->scale = 1.0f;
-
-			ParticleManager::GetInstance()->
-				AddParticle("WallHit", debugEmitter1);
-
-			std::shared_ptr<OneceEmitter> debugEmitter2 = std::make_shared<OneceEmitter>();
-			debugEmitter2->particle = std::make_unique<ParticleEnemyDead>();
-			debugEmitter2->addNum = 64;
-			debugEmitter2->time = 60;
-			debugEmitter2->pos = { 3,3,0 };
-			debugEmitter2->addVec = { 1,1,1 };
-			debugEmitter2->scale = 1.0f;
-
-			ParticleManager::GetInstance()->
-				AddParticle("EnemyDead", debugEmitter2);
-		}
-
-		if (Key::TriggerKey(DIK_P))
-		{
-			Timer timer;
-			timer.SetLimitTime(1);
-			fireEmitter_ = std::make_shared<ContinuousEmitter>();
-			fireEmitter_->particle = std::make_unique<ParticleFire>();
-			fireEmitter_->addVec = { 0.2f,0.2f, 0.2f, };
-			fireEmitter_->addNum = 2;
-			fireEmitter_->isActive = true;
-			fireEmitter_->popCoolTime_ = timer;
-			fireEmitter_->time = 120;
-			fireEmitter_->pos = { 0,3,0 };
-			fireEmitter_->scale = 1.f;
-			ParticleManager::GetInstance()->AddParticle("fireBall", fireEmitter_);
-		}
-		if (fireEmitter_ != nullptr)
-		{
-			fireEmitter_->popCoolTime_.AddTime(1);
-			if (fireEmitter_->popCoolTime_.GetIsEnd()) {
-				fireEmitter_->particle->Add();
-
-				fireEmitter_->popCoolTime_.Reset();
-			}
-			fireEmitter_->particle->Update();
-		}
-
 	}
 	pauseMenu_->Update();
-
-	//obj_.SetPos({ 0, 2, 0 });
-	//obj_.SetScale({ 1,1,1 });
-
-	//obj_.Update();
 }
 
 void DebugScene::Draw()

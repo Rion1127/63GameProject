@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="application\Sourcecode\AttackEditor.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\HitStop.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp" />
@@ -77,6 +78,7 @@
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMagic.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMove.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\AttackEditorScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameOverScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="engine\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\Sourcecode\AttackEditor.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMagic.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMove.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />
+    <ClInclude Include="application\Sourcecode\Scene\AttackEditorScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameOverScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameScene.h" />

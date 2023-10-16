@@ -33,6 +33,7 @@ private:
 	LoadManager loadManager_;
 
 	std::unique_ptr<Bloom> bloom_;
+	bool isPostEffect_;
 public:
 	virtual ~Framework() = default;
 

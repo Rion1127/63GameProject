@@ -43,8 +43,6 @@ private:
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
 	std::unique_ptr<PauseMenu> pauseMenu_;
 
-	std::shared_ptr<ContinuousEmitter> fireEmitter_;
-
 	AssimpObject3D obj_;
 public:
 	~DebugScene();

@@ -76,6 +76,13 @@ void Spline::Reset()
 	maxTime_ = 0;
 }
 
+void Spline::AllClear()
+{
+	Reset();
+	splinePos_.clear();
+	splineObj_.clear();
+}
+
 void Spline::SetPositions(const std::vector<Vector3>& pos)
 {
 	splinePos_ = pos;
@@ -193,29 +200,26 @@ void Spline::EasingUpdate(float speedRate)
 
 	timer_.AddTime(speedRate);
 
-	float t = nowTime_ / maxTime_;
-
 	float pointNum = (float)(splinePos_.size() - 2);
-	float rate = 1.f / pointNum;
-	rate *= index_;
-	if (t >= rate) {
+	float offsetTime = maxTime_ / pointNum;
+	if (offsetTime <= (nowTime_ - testTime_)) {
 		//次の制御点がある場合
 		if (index_ < splinePos_.size() - 2) {
 			index_++;
-			t = rate;
-			testTime_ = t;
+
+			testTime_ += offsetTime;
 		}
 		//最終地点だった場合1.0fにして動きを止める
 		else {
 			isEnd_ = true;
 		}
 	}
-	float splineRate = (t - testTime_) / rate;
+	float splineRate = (nowTime_ - testTime_) / offsetTime;
 	nowPos_ = SplinePosition(splinePos_, index_, splineRate);
 	//少し先へのベクトルを取得する
-	t += 0.01f;
-	if (t <= 1.f) {
-		headingVec_ = SplinePosition(splinePos_, index_, t) - nowPos_;
+	splineRate += 0.01f;
+	if (splineRate <= 1.f) {
+		headingVec_ = SplinePosition(splinePos_, index_, splineRate) - nowPos_;
 	}
 }
 

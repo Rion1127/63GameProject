@@ -29,12 +29,14 @@ public:
 		Circ,
 		Quint,
 		Cubic,
-		Sine
+		Sine,
+		EasingTypeEnd
 	};
 	enum class EasingTypeInOut {
 		In,
 		Out,
-		InOut
+		InOut,
+		EasingTypeInOutEnd
 	};
 private:
 	std::vector<Vector3> splinePos_;
@@ -61,6 +63,7 @@ public:
 
 	void DrawDebug();
 	void Reset();
+	void AllClear();
 	void DleteAllPoint() { splinePos_.clear(); }
 public:
 	void SetPositions(const std::vector<Vector3>& pos);
@@ -79,6 +82,7 @@ public:
 	uint32_t GetIndex() { return index_; }
 	TimerFloat GetTimer() { return timer_; }
 	float GetMaxTime() { return maxTime_; }
+	TimerType GetTimerType() { return timerType_; }
 private:
 	void SplineUpdate(float speedRate);
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
