@@ -1,0 +1,8 @@
+AtatckInfo
+attackFrame = 10
+gapFrame = 0
+damege = 0
+gravityY = 0
+
+SplinePos -2.8 2.4 -7.4
+SplinePos 0.3 0.9 1.7

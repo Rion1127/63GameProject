@@ -10,9 +10,10 @@ class AttackEditor
 private:
 	struct AttackInfo {
 		float attackAllFrame;	//攻撃全体に掛かるフレーム
-		float attackFrame = 10;		//攻撃に掛かるフレーム
+		float attackFrame = 10;	//攻撃に掛かるフレーム
 		float gapFrame;			//後隙フレーム
 
+		Vector3 gravity;		//攻撃時に動く方向
 		float damage;			//ダメージ
 	};
 	struct AttackOutput {
@@ -42,5 +43,8 @@ public:
 private:
 	void ImGuiSetEasingType();	//イージングのタイプを選択する
 	void ImGuiSetEasingTypeInOut();	//イージングのタイプ(InOut)を選択する
+	void ImGuiADDSplinePos(const Vector3& pos = {0,0,0});	//イージングのタイプ(InOut)を選択する
+	void AttackSave(const std::string& string);
+	void AttackLoad(const std::string& string);
 };
 

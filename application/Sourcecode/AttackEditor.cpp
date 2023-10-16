@@ -1,4 +1,6 @@
 #include "AttackEditor.h"
+#include <fstream>
+#include <iostream>
 
 AttackEditor::AttackEditor()
 {
@@ -57,12 +59,24 @@ void AttackEditor::DrawImGui()
 	playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 
 	if (ImGui::Button("PlayerPosReset")) {
-		playerObj_->SetPos(Vector3(0,1,0));
+		playerpos[0] = 0;
+		playerpos[1] = 1;
+		playerpos[2] = 0;
 	}
 
+	static std::string saveName;
+	ImGui::InputText("SaveName", saveName.data(),10);
+	if (ImGui::Button("Save", ImVec2(50, 50))) {
+		AttackSave(saveName);
+	}
+	static std::string LoadName;
+	ImGui::InputText("LoadName", LoadName.data(), 10);
+	if (ImGui::Button("Load", ImVec2(50, 50))) {
+		AttackLoad(LoadName);
+	}
 	ImGui::End();
 	//スプラインポイントの変更・スプラインポイントの追加
-	ImGui::Begin("Spline");
+	ImGui::Begin("AttackSpline");
 	if (ImGui::Button("Play",ImVec2(50, 50))) {
 		if (splinePointPos_.size() > 1) {
 			isPlay_ = true;
@@ -85,12 +99,7 @@ void AttackEditor::DrawImGui()
 		}
 	}
 	if (ImGui::Button("AddSplinePoint")) {
-		std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
-		newObj->obj_ = std::make_unique<Object3d>();
-		newObj->obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
-		newObj->obj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
-		newObj->obj_->WT_.parent_ = &playerObj_->WT_;
-		splinePointPos_.emplace_back(std::move(newObj));
+		ImGuiADDSplinePos();
 	}
 	if (ImGui::Button("DeleteSplinePoint")) {
 		if (splinePointPos_.size() > 0) {
@@ -141,8 +150,11 @@ void AttackEditor::DrawImGui()
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackInfo");
 
-	ImGui::DragFloat("AttackTime", &attackInfo_.attackFrame, 1.0f, 0.f, 500.f);
-
+	ImGui::DragFloat("attackFrame", &attackInfo_.attackFrame, 1.0f, 0.f, 500.f);
+	ImGui::DragFloat("gapFrame", &attackInfo_.gapFrame, 1.0f, 0.f, 500.f);
+	ImGui::DragFloat("Damage", &attackInfo_.damage, 1.0f, 0.f, 500.f);
+	ImGui::DragFloat("gravity", &attackInfo_.gravity.y, 1.0f, 0.f, 500.f);
+	
 	ImGui::End();
 }
 
@@ -203,4 +215,111 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 		}
 		ImGui::EndCombo();
 	}
+}
+
+void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
+{
+	std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
+	newObj->obj_ = std::make_unique<Object3d>();
+	newObj->obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
+	newObj->obj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
+	newObj->obj_->WT_.parent_ = &playerObj_->WT_;
+	newObj->splinePointPos_ = pos;
+	splinePointPos_.emplace_back(std::move(newObj));
+}
+
+void AttackEditor::AttackSave(const std::string& string)
+{
+	std::string saveDir = "application/Resources/AttackInfo/";
+	saveDir.append(string.c_str());
+	saveDir += ".csv";
+	std::ofstream writing_file;
+	
+	writing_file.open(saveDir, std::ios::out);
+
+	std::string writing_text = "AtatckInfo";
+	writing_file << writing_text << std::endl;
+	writing_text = "attackFrame";
+	writing_file << writing_text << " = " << attackInfo_.attackFrame << std::endl;
+	writing_text = "gapFrame";
+	writing_file << writing_text << " = " << attackInfo_.gapFrame << std::endl;
+	writing_text = "damege";
+	writing_file << writing_text << " = " << attackInfo_.damage << std::endl;
+	writing_text = "gravityY";
+	writing_file << writing_text << " = " << attackInfo_.gravity.y << std::endl;
+	writing_file << std::endl;
+
+	writing_text = "SplinePos";
+	
+	spline_.AllClear();
+	for (int32_t i = 0; i < splinePointPos_.size(); i++) {
+
+		if (i == 0) {
+			spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Start);
+		}
+		else if (i == splinePointPos_.size() - 1) {
+			spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::End);
+		}
+		else {
+			spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Middle);
+		}
+	}
+	//スプライトの座標を出力する
+	for (auto& spline : splinePointPos_) {
+		Vector3& pos = spline->splinePointPos_;
+		writing_text = "SplinePos";
+		writing_file << writing_text << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+	}
+
+
+	writing_file.close();
+}
+
+void AttackEditor::AttackLoad(const std::string& string)
+{
+	std::string saveDir = "application/Resources/AttackInfo/";
+	saveDir.append(string.c_str());
+	saveDir += ".csv";
+
+	std::ifstream file(saveDir);  // 読み込むファイルのパスを指定
+	std::string line;
+
+	while (std::getline(file,line)) {  // 1行ずつ読み込む
+		std::cout << line << std::endl;
+
+		std::stringstream line_stream(line);
+
+		// 半角スペース区切りで行の先頭文字列を取得
+		std::string key;
+		getline(line_stream, key, ' ');
+		
+		std::string a;
+		if (key == "attackFrame") {
+			line_stream.ignore(1, '=');
+			line_stream >> attackInfo_.attackFrame;
+		}
+		else if (key == "gapFrame") {
+			line_stream.ignore(1, '=');
+			line_stream >> attackInfo_.gapFrame;
+		}
+		else if (key == "damege") {
+			line_stream.ignore(1, '=');
+			line_stream >> attackInfo_.damage;
+		}
+		else if (key == "gravityY") {
+			line_stream.ignore(1, '=');
+			line_stream >> attackInfo_.gravity.y;
+		}
+		if (key == "SplinePos") {
+			Vector3 splinePos;
+			
+			line_stream >> splinePos.x;
+			line_stream >> splinePos.y;
+			line_stream >> splinePos.z;
+
+			ImGuiADDSplinePos(splinePos);
+		}
+	}
+
+	
 }
