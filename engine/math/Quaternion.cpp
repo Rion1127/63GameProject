@@ -2,7 +2,7 @@
 #include <cmath>
 
 //単位Quaternionを返す
-Quaternion Quaternion::IdentityQuaternion()
+Quaternion IdentityQuaternion()
 {
 	Quaternion identity = { 0,0,0,1 };
 

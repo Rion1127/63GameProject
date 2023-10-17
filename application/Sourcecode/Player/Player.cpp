@@ -204,12 +204,14 @@ void Player::InputVecUpdate()
 			inputVec_ = Controller::GetLStick();
 			inputlength = inputVec_.length();
 			//スティックの傾きが小さければ歩く
-			if (inputlength <= walklimitValue_) {
+			if (inputlength <= walklimitValue_)
+			{
 				inputVec_ = inputVec_.normalize();
 				isDash = false;
 				speed = walkSpeed_;
 			}
-			else {
+			else
+			{
 				inputVec_ = inputVec_.normalize();
 				isDash = true;
 				speed = dashSpeed_;
@@ -231,38 +233,45 @@ void Player::InputVecUpdate()
 
 		// 入力しているベクトルの角度を求める
 		float inputAngle = Vec2Angle(moveVec_);
-		Quaternion q1 = q1.IdentityQuaternion();
-		Quaternion q2 = q2.IdentityQuaternion();
+		if (state_ != PlayerState::Jump)
+		{
+			axisX_ = IdentityQuaternion();
+			axisZ_ = IdentityQuaternion();
+		}
 		if (GetIsMove())
 		{
 			nowAngle_ = inputAngle;
 			objAngle_ = nowAngle_;
 			obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
+			float addTime = 0;
+			if (state_ != PlayerState::Jump || Controller::GetButtons(PAD::INPUT_A) == false)
+			{
+				float dashRadian = 200 * (-inputVec_.length() * isDash);
+				float radian = Radian(360 + dashRadian);
+				axisX_ = { 1,0,0, radian };
+
+				if (isDash)addTime = 1.5f;
+				else addTime = 1;
+
+				shakeTimer_.AddTime(addTime);
 
 
-			float dashRadian = 350 * inputVec_.length() * isDash;
-			float radian = Radian(-600 + dashRadian);
-			q1 = {1,0,0, radian };
+				float shakeRadian =
+					UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
+				axisZ_.z = shakeRadian;
 
-			float addTime;
-			if (isDash)addTime = 1.5f;
-			else addTime = 1;
-
-			shakeTimer_.AddTime(addTime);
-
-
-			float shakeRadian =
-				UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
-			q2.z = shakeRadian;
-
-			if (shakeTimer_.GetIsEnd()) {
-				shakeTimer_.Reset();
+				if (shakeTimer_.GetIsEnd())
+				{
+					shakeTimer_.Reset();
+				}
 			}
 			//ダッシュパーティクル
-			if (state_ == PlayerState::Move) {
+			if (state_ == PlayerState::Move)
+			{
 				dashParticleTimer_.AddTime(addTime);
 
-				if (dashParticleTimer_.GetIsEnd()) {
+				if (dashParticleTimer_.GetIsEnd())
+				{
 
 					Vector3 dashParticlePos =
 						displayObj_->GetTransform()->position_ - playerFrontVec_;
@@ -281,25 +290,20 @@ void Player::InputVecUpdate()
 					dashParticleTimer_.Reset();
 				}
 			}
-			else {
+			else
+			{
 				shakeTimer_.Reset();
 			}
 		}
-		else {
+		else
+		{
 			dashParticleTimer_.Reset();
 		}
 		Vector3 vecY = { 0, 1, 0 };
-		auto axisY = MakeAxisAngle(vecY, Radian(objAngle_));
-		axisY = axisY  * q1.Conjugate() * q2.Conjugate();
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
+		axisY_ = MakeAxisAngle(vecY, Radian(objAngle_));
+		playerQuaternion_ = axisY_ * axisX_ * axisZ_.Conjugate();
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(playerQuaternion_, 0.2f);
 	}
-	Vector3 euler = QuaternionToEulerAngles(obj_->WT_.quaternion_);
-	euler = {
-		Angle(euler.x),
-		Angle(euler.y),
-		Angle(euler.z),
-	};
-
 }
 
 void Player::StateUpdate()
@@ -336,25 +340,30 @@ void Player::StateUpdate()
 void Player::MPCharge()
 {
 	//MPが空になったら
-	if (nowMP_ < 0 || nowMP_ == 0) {
+	if (nowMP_ < 0 || nowMP_ == 0)
+	{
 		nowMP_ = 0;
-		if (isMPCharge_ == false) {
+		if (isMPCharge_ == false)
+		{
 			isMPCharge_ = true;
 			mpGaugeUI_.SetIsCharge(isMPCharge_);
 
 		}
 	}
 	//MPをチャージする
-	if (isMPCharge_ == true) {
+	if (isMPCharge_ == true)
+	{
 		mpChargeTime_.AddTime(1);
 		mpChargeIntervalTimer_.AddTime(1);
 
-		if (mpChargeIntervalTimer_.GetIsEnd()) {
+		if (mpChargeIntervalTimer_.GetIsEnd())
+		{
 			nowMP_ = (uint32_t)(maxMP_ * mpChargeTime_.GetTimeRate());
 			mpChargeIntervalTimer_.Reset();
 		}
 
-		if (mpChargeTime_.GetIsEnd()) {
+		if (mpChargeTime_.GetIsEnd())
+		{
 			mpChargeTime_.Reset();
 			isMPCharge_ = false;
 			mpGaugeUI_.SetIsCharge(isMPCharge_);
@@ -383,7 +392,8 @@ void Player::DogeRollUpdate()
 {
 	addVec_ += dodgeRoll_.GetDodgeVec();
 	dodgeRoll_.Update();
-	if (dodgeRoll_.GetIsDodge() == false) {
+	if (dodgeRoll_.GetIsDodge() == false)
+	{
 		GoToState(PlayerState::Idle);
 	}
 }
@@ -410,14 +420,16 @@ void Player::GuardUpdate()
 	{
 		sword_.SetState(Sword::SwordState::Guard);
 	}
-	else {
+	else
+	{
 		GoToState(PlayerState::Idle);
 	}
 }
 
 void Player::Jump()
 {
-	if (Controller::GetTriggerButtons(PAD::INPUT_A)) {
+	if (Controller::GetTriggerButtons(PAD::INPUT_A))
+	{
 		//ジャンプしたらジャンプ可能フラグをfalseにする
 		isCanJump_ = false;
 		GoToState(PlayerState::Jump);
@@ -434,6 +446,14 @@ void Player::JumpUpdate()
 			jumpTime_ += GameSpeed::GetPlayerSpeed();
 
 			gravity_.SetGrabity({ 0, jumpSpeed_ ,0 });
+
+			float rate = jumpTime_ / maxjumptimer;
+
+			Vector3 axisX = { 1,0,0 };
+
+			float rot = 6.28f * rate;
+
+			axisX_ = MakeAxisAngle(axisX, rot);
 		}
 	}
 	//途中でAを離したら着地するまでジャンプできないようにする
@@ -454,7 +474,8 @@ void Player::FreezeUpdate()
 {
 	freezeTimer_.AddTime(1);
 
-	if (freezeTimer_.GetIsEnd()) {
+	if (freezeTimer_.GetIsEnd())
+	{
 		GoToState(PlayerState::Idle);
 	}
 }
@@ -658,10 +679,12 @@ bool Player::GetIsCanAttack()
 bool Player::GetIsMove()
 {
 	if (Controller::GetLStick().x != 0 ||
-		Controller::GetLStick().y != 0) {
+		Controller::GetLStick().y != 0)
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 }

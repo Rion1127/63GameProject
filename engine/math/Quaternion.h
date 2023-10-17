@@ -42,8 +42,6 @@ struct Quaternion
 
 		return matRot;
 	};
-	//単位Quaternionを返す
-	Quaternion IdentityQuaternion();
 	//共役Quaternionを返す
 	Quaternion Conjugate() const;
 	//Quaternionのnormを返す
@@ -59,7 +57,8 @@ struct Quaternion
 	Quaternion operator*(const Quaternion& other) const;
 	bool operator==(const Quaternion& other) const;
 };
-
+//単位Quaternionを返す
+Quaternion IdentityQuaternion();
 //任意軸回転を表すQuaternionの生成
 Quaternion MakeAxisAngle(const Vector3& axis, float angle);
 //uからvへの回転を生成

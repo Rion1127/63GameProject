@@ -68,6 +68,7 @@ private:
 	Quaternion axisX_;
 	Quaternion axisY_;
 	Quaternion axisZ_;
+	Quaternion playerQuaternion_;
 public:
 	Player();
 	void PreUpdate();
