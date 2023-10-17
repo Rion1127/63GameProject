@@ -174,7 +174,7 @@ void Player::InitStateMachine()
 	AddState(std::make_shared<PlayerAirAttack>(this));
 	AddState(std::make_shared<PlayerMagic>(this));
 }
-#pragma region input
+
 void Player::InputVecUpdate()
 {
 	if (GetIsCanMove() && isCanInput_)
@@ -290,7 +290,7 @@ void Player::InputVecUpdate()
 		}
 		Vector3 vecY = { 0, 1, 0 };
 		auto axisY = MakeAxisAngle(vecY, Radian(objAngle_));
-		axisY = axisY * q1.Conjugate() * q2.Conjugate();
+		axisY = axisY  * q1.Conjugate() * q2.Conjugate();
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(axisY, 0.2f);
 	}
 	Vector3 euler = QuaternionToEulerAngles(obj_->WT_.quaternion_);

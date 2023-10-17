@@ -64,6 +64,10 @@ private:
 	Sphere damageCol_;			//攻撃を受ける当たり判定
 
 	Sword sword_;				//剣オブジェ
+
+	Quaternion axisX_;
+	Quaternion axisY_;
+	Quaternion axisZ_;
 public:
 	Player();
 	void PreUpdate();

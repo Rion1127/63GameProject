@@ -649,7 +649,7 @@
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1047,7 +1047,7 @@
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\AttackEditor.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
