@@ -69,18 +69,9 @@ void AttackEditor::DrawImGui()
 		playerpos[2] = 0;
 	}
 
-	static std::string saveName;
-	ImGui::InputText("SaveName", saveName.data(), 10);
-	if (ImGui::Button("Save", ImVec2(50, 50)))
-	{
-		AttackSave(saveName);
-	}
-	static std::string LoadName;
-	ImGui::InputText("LoadName", LoadName.data(), 10);
-	if (ImGui::Button("Load", ImVec2(50, 50)))
-	{
-		AttackLoad(LoadName);
-	}
+	ImGuiSave();
+	ImGuiLoad();
+
 	ImGui::End();
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackSpline");
@@ -94,7 +85,6 @@ void AttackEditor::DrawImGui()
 			spline_.SetMaxTime(attackInfo_.attackFrame);
 			for (int32_t i = 0; i < splinePointPos_.size(); i++)
 			{
-
 				if (i == 0)
 				{
 					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Start);
@@ -241,6 +231,67 @@ void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
 	newObj->obj_->WT_.parent_ = &playerObj_->WT_;
 	newObj->splinePointPos_ = pos;
 	splinePointPos_.emplace_back(std::move(newObj));
+}
+
+void AttackEditor::ImGuiSave()
+{
+	static std::string saveName;		//書き出すファイルの名前
+	static bool isProofSave = false;	//セーブの確認
+	ImGui::InputText("SaveName", saveName.data(), 10);
+
+	if (isProofSave)
+	{
+		ImGui::Text("Do you want to save?");
+		if (ImGui::Button("No", ImVec2(50, 50)))
+		{
+			isProofSave = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Yes", ImVec2(50, 50)))
+		{
+			isProofSave = false;
+			AttackSave(saveName);
+		}
+
+	}
+	else
+	{
+		if (ImGui::Button("Save", ImVec2(50, 50)))
+		{
+			isProofSave = true;
+
+		}
+	}
+}
+
+void AttackEditor::ImGuiLoad()
+{
+	static std::string LoadName;		//読み込むファイルの名前
+	static bool isProofLoad = false;	//ロードの確認
+
+	ImGui::InputText("LoadName", LoadName.data(), 10);
+	
+	if (isProofLoad)
+	{
+		ImGui::Text("Do you want to Load?");
+		if (ImGui::Button("No", ImVec2(50, 50)))
+		{
+			isProofLoad = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Yes", ImVec2(50, 50)))
+		{
+			isProofLoad = false;
+			AttackLoad(LoadName);
+		}
+	}
+	else
+	{
+		if (ImGui::Button("Load", ImVec2(50, 50)))
+		{
+			isProofLoad = true;
+		}
+	}
 }
 
 void AttackEditor::AttackSave(const std::string& string)

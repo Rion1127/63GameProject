@@ -48,6 +48,8 @@ private:
 	void ImGuiSetEasingType();	//イージングのタイプを選択する
 	void ImGuiSetEasingTypeInOut();	//イージングのタイプ(InOut)を選択する
 	void ImGuiADDSplinePos(const Vector3& pos = {0,0,0});	//イージングのタイプ(InOut)を選択する
+	void ImGuiSave();
+	void ImGuiLoad();
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 };
