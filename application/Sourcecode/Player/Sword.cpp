@@ -33,6 +33,8 @@ void Sword::Update()
 	trail_->SetIsVisible(false);
 	//攻撃時の剣の動き
 	if (state_ == SwordState::Idle) {
+		//回転行列を親子関係にする
+		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
 		//プレイヤーの背中に向かって徐々に移動する
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);

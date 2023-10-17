@@ -39,7 +39,7 @@ void Attack2::Init()
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
 
-	spline_.SetTimerType_(Spline::TimerType::Normal);
+	spline_.SetTimerType_(Spline::TimerType::Easing);
 	spline_.SetEasingType_(Spline::EasingType::Back);
 	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::Out);
 }

@@ -8,7 +8,7 @@ void PlayerAirAttack::Update()
 {
 	bool isAttacking = player_->GetAttackManager()->GetIsAttacking();
 	if (isAttacking == false) {
-		player_->GoToState(PlayerState::Idle);
+		player_->GoToState(PlayerState::Jump);
 	}
 }
 

@@ -92,6 +92,8 @@ void Player::PreUpdate()
 
 	ColPosUpdate();
 
+	PlayerRotUpdate();
+
 	Update();
 
 	command_.Update();
@@ -196,7 +198,6 @@ void Player::InputVecUpdate()
 
 		float inputlength = 0;
 		float speed = 0;
-		bool isDash = false;
 		// コントローラーが接続されていたら
 		if (Controller::GetActive())
 		{
@@ -207,13 +208,13 @@ void Player::InputVecUpdate()
 			if (inputlength <= walklimitValue_)
 			{
 				inputVec_ = inputVec_.normalize();
-				isDash = false;
+				isDash_ = false;
 				speed = walkSpeed_;
 			}
 			else
 			{
 				inputVec_ = inputVec_.normalize();
-				isDash = true;
+				isDash_ = true;
 				speed = dashSpeed_;
 			}
 		}
@@ -231,79 +232,8 @@ void Player::InputVecUpdate()
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
 
-		// 入力しているベクトルの角度を求める
-		float inputAngle = Vec2Angle(moveVec_);
-		if (state_ != PlayerState::Jump)
-		{
-			axisX_ = IdentityQuaternion();
-			axisZ_ = IdentityQuaternion();
-		}
-		if (GetIsMove())
-		{
-			nowAngle_ = inputAngle;
-			objAngle_ = nowAngle_;
-			obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
-			float addTime = 0;
-			if (state_ != PlayerState::Jump || Controller::GetButtons(PAD::INPUT_A) == false)
-			{
-				float dashRadian = 200 * (-inputVec_.length() * isDash);
-				float radian = Radian(360 + dashRadian);
-				axisX_ = { 1,0,0, radian };
-
-				if (isDash)addTime = 1.5f;
-				else addTime = 1;
-
-				shakeTimer_.AddTime(addTime);
-
-
-				float shakeRadian =
-					UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
-				axisZ_.z = shakeRadian;
-
-				if (shakeTimer_.GetIsEnd())
-				{
-					shakeTimer_.Reset();
-				}
-			}
-			//ダッシュパーティクル
-			if (state_ == PlayerState::Move)
-			{
-				dashParticleTimer_.AddTime(addTime);
-
-				if (dashParticleTimer_.GetIsEnd())
-				{
-
-					Vector3 dashParticlePos =
-						displayObj_->GetTransform()->position_ - playerFrontVec_;
-					dashParticlePos.y = 0;
-
-					std::shared_ptr<OneceEmitter> dashEmitter_ = std::make_shared<OneceEmitter>();
-					dashEmitter_->particle = std::make_unique<ParticleDash>();
-					dashEmitter_->addNum = 6;
-					dashEmitter_->time = 20;
-					dashEmitter_->pos = dashParticlePos;
-					dashEmitter_->addVec = -playerFrontVec_;
-					dashEmitter_->scale = 0.7f;
-					ParticleManager::GetInstance()->
-						AddParticle("Dash", dashEmitter_);
-
-					dashParticleTimer_.Reset();
-				}
-			}
-			else
-			{
-				shakeTimer_.Reset();
-			}
-		}
-		else
-		{
-			dashParticleTimer_.Reset();
-		}
-		Vector3 vecY = { 0, 1, 0 };
-		axisY_ = MakeAxisAngle(vecY, Radian(objAngle_));
-		playerQuaternion_ = axisY_ * axisX_ * axisZ_.Conjugate();
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(playerQuaternion_, 0.2f);
 	}
+	
 }
 
 void Player::StateUpdate()
@@ -372,6 +302,93 @@ void Player::MPCharge()
 	}
 }
 
+void Player::PlayerRotUpdate()
+{
+	if (state_ != PlayerState::Jump && state_ != PlayerState::DodgeRoll)
+	{
+		axisX_ = IdentityQuaternion();
+		axisZ_ = IdentityQuaternion();
+	}
+	//スティック入力している間は入力ベクトルを更新する
+	if (GetIsMove())
+	{
+		nowAngle_ = Vec2Angle(moveVec_);
+		objAngle_ = nowAngle_;
+		obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
+	}
+
+	if (state_ == PlayerState::Idle || state_ == PlayerState::Move ||
+		(state_ == PlayerState::Jump && Controller::GetButtons(PAD::INPUT_A) == false))
+	{
+		if (state_ == PlayerState::Move)
+		{
+			//動いているときは前傾姿勢にする
+			float dashRadian = 300 * (-inputVec_.length() * isDash_);
+			float radian = 0;
+			radian = Radian(600 + dashRadian);
+			axisX_ = { 1,0,0, radian };
+
+			//ダッシュしているときはタイマーを速くする
+			float addTime = 0;
+			if (isDash_)addTime = 1.5f;
+			else addTime = 1;
+			//左右に揺れる
+			shakeTimer_.AddTime(addTime);
+			float shakeRadian =
+				UpAndDown(shakeTimer_.GetLimitTimer(), 0.1f, shakeTimer_.GetTimer());
+			axisZ_.z = shakeRadian;
+
+			if (shakeTimer_.GetIsEnd())
+			{
+				shakeTimer_.Reset();
+			}
+
+			dashParticleTimer_.AddTime(addTime);
+
+			if (dashParticleTimer_.GetIsEnd())
+			{
+
+				Vector3 dashParticlePos =
+					displayObj_->GetTransform()->position_ - playerFrontVec_;
+				dashParticlePos.y = 0;
+
+				std::shared_ptr<OneceEmitter> dashEmitter_ = std::make_shared<OneceEmitter>();
+				dashEmitter_->particle = std::make_unique<ParticleDash>();
+				dashEmitter_->addNum = 6;
+				dashEmitter_->time = 20;
+				dashEmitter_->pos = dashParticlePos;
+				dashEmitter_->addVec = -playerFrontVec_;
+				dashEmitter_->scale = 0.7f;
+				ParticleManager::GetInstance()->
+					AddParticle("Dash", dashEmitter_);
+
+				dashParticleTimer_.Reset();
+			}
+
+			if (shakeTimer_.GetIsEnd())
+			{
+				shakeTimer_.Reset();
+			}
+		}
+		//通常姿勢にする
+		else
+		{
+			axisX_ = IdentityQuaternion();
+			axisZ_ = IdentityQuaternion();
+
+			shakeTimer_.Reset();
+		}
+	}
+	else
+	{
+		dashParticleTimer_.Reset();
+	}
+	Vector3 vecY = { 0, 1, 0 };
+	axisY_ = MakeAxisAngle(vecY, Radian(objAngle_));
+	playerQuaternion_ = axisY_ * axisX_ * axisZ_.Conjugate();
+	obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(playerQuaternion_, 0.3f);
+}
+
 void Player::DogeRoll()
 {
 	//ドッジロール
@@ -392,6 +409,13 @@ void Player::DogeRollUpdate()
 {
 	addVec_ += dodgeRoll_.GetDodgeVec();
 	dodgeRoll_.Update();
+
+	float rate = dodgeRoll_.GetdodgeTimer().GetTimeRate() * 2.f;
+	rate = Min(1.0f, rate);
+	Vector3 axisX = { 1,0,0 };
+	float rot = Radian(400) * rate;
+	axisX_ = MakeAxisAngle(axisX, rot);
+
 	if (dodgeRoll_.GetIsDodge() == false)
 	{
 		GoToState(PlayerState::Idle);
@@ -452,7 +476,6 @@ void Player::JumpUpdate()
 			Vector3 axisX = { 1,0,0 };
 
 			float rot = 6.28f * rate;
-
 			axisX_ = MakeAxisAngle(axisX, rot);
 		}
 	}

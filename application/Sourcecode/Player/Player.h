@@ -36,6 +36,7 @@ private:
 	bool isCanJump_;			//ジャンプ可能フラグ
 	bool isAlive_;				//生存フラグ
 	bool isCanInput_;			//入力可能フラグ
+	bool isDash_;			//入力可能フラグ
 	float maxjumptimer;			//ジャンプ可能なフレーム数
 	float jumpTime_;			//ジャンプしたフレーム数
 	float jumpSpeed_;			//ジャンプスピード
@@ -65,10 +66,10 @@ private:
 
 	Sword sword_;				//剣オブジェ
 
-	Quaternion axisX_;
-	Quaternion axisY_;
-	Quaternion axisZ_;
-	Quaternion playerQuaternion_;
+	Quaternion axisX_;				//プレイヤーX軸回転
+	Quaternion axisY_;				//プレイヤーY軸回転
+	Quaternion axisZ_;				//プレイヤーZ軸回転
+	Quaternion playerQuaternion_;	//X,Y,Z軸の合成
 public:
 	Player();
 	void PreUpdate();
@@ -96,6 +97,7 @@ private:
 	//ステータス更新
 	void StateUpdate();
 	void MPCharge();
+	void PlayerRotUpdate();
 public:
 	void Draw();
 
@@ -117,6 +119,7 @@ public:
 	void GuardHit(const Vector3& knockVec);
 	void Reset();
 public:
+	//セッター
 	void SetPos(const Vector3& pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(const Vector3& rot) { obj_->GetTransform()->SetRotation(rot); }
 	void Setscale(const Vector3& scale) { obj_->GetTransform()->SetScale(scale); }

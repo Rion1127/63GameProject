@@ -26,7 +26,7 @@ void Attack1::Init()
 
 	attackSpeed_ = 0.06f;
 
-	spline_.SetTimerType_(Spline::TimerType::Normal);
+	spline_.SetTimerType_(Spline::TimerType::Easing);
 	spline_.SetEasingType_(Spline::EasingType::Circ);
 	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
