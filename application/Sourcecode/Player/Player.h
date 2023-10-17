@@ -91,13 +91,14 @@ public:
 	void FreezeUpdate();
 	//移動
 	void InputVecUpdate();
+	void PlayerRotUpdate();
 private:
 	//重力
 	void GravityUpdate();
 	//ステータス更新
 	void StateUpdate();
 	void MPCharge();
-	void PlayerRotUpdate();
+	
 public:
 	void Draw();
 

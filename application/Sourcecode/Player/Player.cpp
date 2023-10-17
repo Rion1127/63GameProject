@@ -92,7 +92,7 @@ void Player::PreUpdate()
 
 	ColPosUpdate();
 
-	PlayerRotUpdate();
+	
 
 	Update();
 
@@ -233,7 +233,7 @@ void Player::InputVecUpdate()
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
 
 	}
-	
+	PlayerRotUpdate();
 }
 
 void Player::StateUpdate()

@@ -61,6 +61,7 @@
     <ClCompile Include="application\Sourcecode\Player\Action\DodgeRoll.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Action\Guard.cpp" />
     <ClCompile Include="application\Sourcecode\Interface\IAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\BaseAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerAirAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerDogeRoll.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="application\Sourcecode\Player\Action\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Action\Guard.h" />
     <ClInclude Include="application\Sourcecode\Interface\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\BaseAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerAirAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerDogeRoll.h" />

@@ -651,6 +651,9 @@
     <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Attack\BaseAttack.cpp">
+      <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -1048,6 +1051,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\AttackEditor.h">
       <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack\BaseAttack.h">
+      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

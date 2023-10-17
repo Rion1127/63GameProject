@@ -15,7 +15,7 @@ Player* AttackManager::player_ = nullptr;
 AttackManager::AttackManager()
 {
 	comboNum = 0;
-	//attacks_.emplace_back(std::move(std::make_unique<Attack1>()));
+	
 	isAttacking = false;
 }
 
@@ -208,4 +208,13 @@ void AttackManager::SwitchAttack()
 	nextAttack_.reset();
 	nextAttack_ = nullptr;
 	comboNum++;
+}
+
+AttackDataPool::AttackDataPool()
+{
+	LoadAllAttackFile();
+}
+
+void AttackDataPool::LoadAllAttackFile()
+{
 }

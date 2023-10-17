@@ -1,9 +1,11 @@
 #pragma once
+#include "BaseAttack.h"
 #include "IAttack.h"
 #include "IEnemy.h"
 #include "PlayerInfo.h"
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include "mInput.h"
 #include "Attack1.h"
 #include "Attack2.h"
@@ -20,9 +22,7 @@ class AttackManager
 private:
 	static Player* player_;
 	IEnemy* lockOnEnemy_;
-	//攻撃のデータ・プール
-	std::vector<std::unique_ptr<IAttack>> attacks_;
-
+	
 	std::unique_ptr<IAttack> nowAttack_;	//現在処理している攻撃
 	std::unique_ptr<IAttack> nextAttack_;	//次に処理する攻撃
 
@@ -46,6 +46,8 @@ private:
 	void CalculatePtoELength();
 	void FirstAttackUpdate();	//1コンボ目更新
 	void SwitchAttack();
+
+	
 public:
 	bool GetIsAttacking() { return isAttacking; }
 public:
@@ -56,3 +58,11 @@ public:
 	static void SetPlayer(Player* player) { player_ = player; }
 };
 
+class AttackDataPool {
+private:
+	//攻撃のデータ・プール
+	std::unordered_map<std::string,std::unique_ptr<BaseAttack>> attacks_;
+public:
+	AttackDataPool();
+	void LoadAllAttackFile();
+};

@@ -7,19 +7,16 @@
 
 class AttackEditor
 {
-private:
+public:
+	//一振り分の攻撃
 	struct AttackInfo {
-		float attackAllFrame;	//攻撃全体に掛かるフレーム
+		float attackAllFrame;	//一振りにかかる時間(後隙含む)
 		float attackFrame = 10;	//攻撃に掛かるフレーム
 		float gapFrame;			//後隙フレーム
 
 		Vector3 gravity;		//攻撃時に動く方向
 		float damage;			//ダメージ
-	};
-	struct AttackOutput {
-		AttackType type_;
-		Spline colSpline_;
-		Spline playerPospline_;
+		std::vector<Vector3> splinePos;
 	};
 	struct SplinePos {
 		std::unique_ptr<Object3d> obj_;

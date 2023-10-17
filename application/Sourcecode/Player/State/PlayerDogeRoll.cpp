@@ -7,6 +7,7 @@ void PlayerDogeRoll::SetUp()
 void PlayerDogeRoll::Update()
 {
 	player_->DogeRollUpdate();
+	player_->PlayerRotUpdate();
 }
 
 void PlayerDogeRoll::Draw()
