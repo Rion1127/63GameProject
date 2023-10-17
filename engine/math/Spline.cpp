@@ -37,7 +37,7 @@ void Spline::SplineUpdate(float speedRate)
 
 	if (t >= 1.0f) {
 		//次の制御点がある場合
-		if (index_ < splinePos_.size() - 2) {
+		if (index_ < splinePos_.size() - 3) {
 			index_++;
 			timer_.Reset();
 			t = timer_.GetTimeRate();
@@ -177,7 +177,7 @@ void Spline::NormalUpdate(float speedRate)
 
 	if (t >= 1.0f) {
 		//次の制御点がある場合
-		if (index_ < splinePos_.size() - 2) {
+		if (index_ < splinePos_.size() - 3) {
 			index_++;
 			timer_.Reset();
 			t = timer_.GetTimeRate();

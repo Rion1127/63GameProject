@@ -6,10 +6,10 @@ AttackEditor::AttackEditor()
 {
 	playerObj_ = std::make_unique<Object3d>();
 	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
-	
+
 	splineObj_ = std::make_unique<Object3d>();
 	splineObj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
-	splineObj_->SetAmbient("cube", Vector3(0.5f,0.5f,0));
+	splineObj_->SetAmbient("cube", Vector3(0.5f, 0.5f, 0));
 	splineObj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 	splineObj_->WT_.parent_ = &playerObj_->WT_;
 	isPlay_ = false;
@@ -18,17 +18,20 @@ AttackEditor::AttackEditor()
 
 void AttackEditor::Update()
 {
-	if (isPointErase_) {
+	if (isPointErase_)
+	{
 		isPointErase_ = false;
 		splinePointPos_.erase(splinePointPos_.begin() + (splinePointPos_.size() - 1));
 	}
-	for (int32_t i = 0; i < splinePointPos_.size();i++) {
+	for (int32_t i = 0; i < splinePointPos_.size(); i++)
+	{
 		splinePointPos_[i]->obj_->SetPos(splinePointPos_[i]->splinePointPos_);
 		splinePointPos_[i]->obj_->Update();
 	}
-	if (isPlay_) {
+	if (isPlay_)
+	{
 		spline_.Update();
-		
+
 		splineObj_->SetPos(spline_.GetNowPoint());
 
 		if (spline_.GetisEnd())isPlay_ = false;
@@ -40,10 +43,11 @@ void AttackEditor::Update()
 void AttackEditor::Draw()
 {
 	playerObj_->Draw();
-	if (isPlay_) {
-		splineObj_->Draw();
-	}
-	for (auto& spline : splinePointPos_) {
+
+	splineObj_->Draw();
+
+	for (auto& spline : splinePointPos_)
+	{
 		spline->obj_->Draw();
 	}
 }
@@ -53,60 +57,73 @@ void AttackEditor::DrawImGui()
 	//プレイヤー座標の変更を行う
 	ImGui::Begin("AttackEditor");
 
-	static float playerpos[3] = {0,1,0};
+	static float playerpos[3] = { 0,1,0 };
 
-	ImGui::DragFloat3("pos", playerpos,0.1f,100.f,100.f);
+	ImGui::DragFloat3("pos", playerpos, 0.1f, 100.f, 100.f);
 	playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 
-	if (ImGui::Button("PlayerPosReset")) {
+	if (ImGui::Button("PlayerPosReset"))
+	{
 		playerpos[0] = 0;
 		playerpos[1] = 1;
 		playerpos[2] = 0;
 	}
 
 	static std::string saveName;
-	ImGui::InputText("SaveName", saveName.data(),10);
-	if (ImGui::Button("Save", ImVec2(50, 50))) {
+	ImGui::InputText("SaveName", saveName.data(), 10);
+	if (ImGui::Button("Save", ImVec2(50, 50)))
+	{
 		AttackSave(saveName);
 	}
 	static std::string LoadName;
 	ImGui::InputText("LoadName", LoadName.data(), 10);
-	if (ImGui::Button("Load", ImVec2(50, 50))) {
+	if (ImGui::Button("Load", ImVec2(50, 50)))
+	{
 		AttackLoad(LoadName);
 	}
 	ImGui::End();
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackSpline");
-	if (ImGui::Button("Play",ImVec2(50, 50))) {
-		if (splinePointPos_.size() > 1) {
+	if (ImGui::Button("Play", ImVec2(50, 50)))
+	{
+		if (splinePointPos_.size() > 1)
+		{
 			isPlay_ = true;
 			spline_.SetIsStart(true);
 			spline_.AllClear();
 			spline_.SetMaxTime(attackInfo_.attackFrame);
-			for (int32_t i = 0; i < splinePointPos_.size(); i++) {
+			for (int32_t i = 0; i < splinePointPos_.size(); i++)
+			{
 
-				if (i == 0) {
+				if (i == 0)
+				{
 					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Start);
 				}
-				else if (i == splinePointPos_.size() - 1) {
+				else if (i == splinePointPos_.size() - 1)
+				{
 					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::End);
 				}
-				else {
+				else
+				{
 					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Middle);
 				}
 			}
 
 		}
 	}
-	if (ImGui::Button("AddSplinePoint")) {
+	if (ImGui::Button("AddSplinePoint"))
+	{
 		ImGuiADDSplinePos();
 	}
-	if (ImGui::Button("DeleteSplinePoint")) {
-		if (splinePointPos_.size() > 0) {
+	if (ImGui::Button("DeleteSplinePoint"))
+	{
+		if (splinePointPos_.size() > 0)
+		{
 			isPointErase_ = true;
 		}
 	}
-	if (ImGui::Button("SplineTimerType")) {
+	if (ImGui::Button("SplineTimerType"))
+	{
 		Spline::TimerType timerType;
 		bool flag = (spline_.GetTimerType() == Spline::TimerType::Easing);
 
@@ -119,7 +136,7 @@ void AttackEditor::DrawImGui()
 	else timerType = "Normal";
 	ImGui::SameLine();
 	ImGui::Text(timerType.c_str());
-	
+
 	ImGuiSetEasingType();
 	ImGuiSetEasingTypeInOut();
 
@@ -127,7 +144,8 @@ void AttackEditor::DrawImGui()
 	{
 		int32_t splinePosIndex = 0;
 		std::string splinePosName;
-		for (auto& spline : splinePointPos_) {
+		for (auto& spline : splinePointPos_)
+		{
 			std::ostringstream num;
 
 			num << splinePosIndex;
@@ -154,30 +172,28 @@ void AttackEditor::DrawImGui()
 	ImGui::DragFloat("gapFrame", &attackInfo_.gapFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("Damage", &attackInfo_.damage, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("gravity", &attackInfo_.gravity.y, 1.0f, 0.f, 500.f);
-	
+
 	ImGui::End();
 }
 
 void AttackEditor::ImGuiSetEasingType()
 {
-	std::vector<std::string> easingTypenames;
-	easingTypenames.emplace_back("Back");
-	easingTypenames.emplace_back("Bounce");
-	easingTypenames.emplace_back("Circ");
-	easingTypenames.emplace_back("Quint");
-	easingTypenames.emplace_back("Cubic");
-	easingTypenames.emplace_back("Sine");
+	easingTypeNames.emplace_back("Back");
+	easingTypeNames.emplace_back("Bounce");
+	easingTypeNames.emplace_back("Circ");
+	easingTypeNames.emplace_back("Quint");
+	easingTypeNames.emplace_back("Cubic");
+	easingTypeNames.emplace_back("Sine");
 	//プルダウンメニューで読み込んだファイルを選択できるようにする
-	static std::string s_currentItem = "Back";
-	if (ImGui::BeginCombo("EasingType", s_currentItem.c_str()))
+	if (ImGui::BeginCombo("EasingType", easingType_.c_str()))
 	{
 		for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; ++i)
 		{
 			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
-			const bool is_selected = (s_currentItem == easingTypenames[i]);
-			if (ImGui::Selectable(easingTypenames[i].c_str(), is_selected))
+			const bool is_selected = (easingType_ == easingTypeNames[i]);
+			if (ImGui::Selectable(easingTypeNames[i].c_str(), is_selected))
 			{
-				s_currentItem = easingTypenames[i].c_str();
+				easingType_ = easingTypeNames[i].c_str();
 				spline_.SetEasingType_((Spline::EasingType)i);
 			}
 			if (is_selected)
@@ -196,16 +212,15 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 	easingTypenames.emplace_back("Out");
 	easingTypenames.emplace_back("InOut");
 	//プルダウンメニューで読み込んだファイルを選択できるようにする
-	static std::string s_currentItem = "In";
-	if (ImGui::BeginCombo("InOut", s_currentItem.c_str()))
+	if (ImGui::BeginCombo("InOut", easingTypeInOut_.c_str()))
 	{
 		for (uint32_t i = 0; i < (uint32_t)Spline::EasingTypeInOut::EasingTypeInOutEnd; ++i)
 		{
 			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
-			const bool is_selected = (s_currentItem == easingTypenames[i]);
+			const bool is_selected = (easingTypeInOut_ == easingTypenames[i]);
 			if (ImGui::Selectable(easingTypenames[i].c_str(), is_selected))
 			{
-				s_currentItem = easingTypenames[i].c_str();
+				easingTypeInOut_ = easingTypenames[i].c_str();
 				spline_.SetEasingTypeInOut_((Spline::EasingTypeInOut)i);
 			}
 			if (is_selected)
@@ -234,10 +249,10 @@ void AttackEditor::AttackSave(const std::string& string)
 	saveDir.append(string.c_str());
 	saveDir += ".csv";
 	std::ofstream writing_file;
-	
+
 	writing_file.open(saveDir, std::ios::out);
 
-	std::string writing_text = "AtatckInfo";
+	std::string writing_text = "//--AtatckInfo--//";
 	writing_file << writing_text << std::endl;
 	writing_text = "attackFrame";
 	writing_file << writing_text << " = " << attackInfo_.attackFrame << std::endl;
@@ -249,34 +264,48 @@ void AttackEditor::AttackSave(const std::string& string)
 	writing_file << writing_text << " = " << attackInfo_.gravity.y << std::endl;
 	writing_file << std::endl;
 
-	writing_text = "SplinePos";
-	
-	spline_.AllClear();
-	for (int32_t i = 0; i < splinePointPos_.size(); i++) {
-
-		if (i == 0) {
-			spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Start);
-		}
-		else if (i == splinePointPos_.size() - 1) {
-			spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::End);
-		}
-		else {
-			spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Middle);
-		}
+	writing_text = "//--SplinePos--//";
+	writing_file << writing_text << std::endl;
+	//タイマータイプを出力
+	writing_text = "TimerType ";
+	std::string timerType;
+	//イージングの場合
+	if (spline_.GetTimerType() == Spline::TimerType::Normal)
+	{
+		timerType = "Normal";
+		writing_file << writing_text << timerType << std::endl;
 	}
+	else
+	{
+		std::string easingType;
+		timerType = "Easing";
+		writing_file << writing_text << timerType << std::endl;
+
+		writing_text = "EasingType ";
+		easingType = easingType_;
+		writing_file << writing_text << easingType << std::endl;
+
+		writing_text = "EasingTypeInOut ";
+		easingType = easingTypeInOut_;
+		writing_file << writing_text << easingTypeInOut_ << std::endl;
+	}
+	
+
+
 	//スプライトの座標を出力する
-	for (auto& spline : splinePointPos_) {
+	for (auto& spline : splinePointPos_)
+	{
 		Vector3& pos = spline->splinePointPos_;
 		writing_text = "SplinePos";
 		writing_file << writing_text << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
 	}
-
 
 	writing_file.close();
 }
 
 void AttackEditor::AttackLoad(const std::string& string)
 {
+	splinePointPos_.clear();
 	std::string saveDir = "application/Resources/AttackInfo/";
 	saveDir.append(string.c_str());
 	saveDir += ".csv";
@@ -284,7 +313,8 @@ void AttackEditor::AttackLoad(const std::string& string)
 	std::ifstream file(saveDir);  // 読み込むファイルのパスを指定
 	std::string line;
 
-	while (std::getline(file,line)) {  // 1行ずつ読み込む
+	while (std::getline(file, line))
+	{  // 1行ずつ読み込む
 		std::cout << line << std::endl;
 
 		std::stringstream line_stream(line);
@@ -292,27 +322,70 @@ void AttackEditor::AttackLoad(const std::string& string)
 		// 半角スペース区切りで行の先頭文字列を取得
 		std::string key;
 		getline(line_stream, key, ' ');
-		
-		std::string a;
-		if (key == "attackFrame") {
+
+		//各パラメータ読み込み
+		if (key == "attackFrame")
+		{
 			line_stream.ignore(1, '=');
 			line_stream >> attackInfo_.attackFrame;
 		}
-		else if (key == "gapFrame") {
+		else if (key == "gapFrame")
+		{
 			line_stream.ignore(1, '=');
 			line_stream >> attackInfo_.gapFrame;
 		}
-		else if (key == "damege") {
+		else if (key == "damege")
+		{
 			line_stream.ignore(1, '=');
 			line_stream >> attackInfo_.damage;
 		}
-		else if (key == "gravityY") {
+		else if (key == "gravityY")
+		{
 			line_stream.ignore(1, '=');
 			line_stream >> attackInfo_.gravity.y;
 		}
-		if (key == "SplinePos") {
+		//タイマー制御方法読み込み
+		if (key == "TimerType")
+		{
+			std::string timerTypeName;
+			line_stream >> timerTypeName;
+
+			Spline::TimerType timerType;
+			if (timerTypeName == "Normal")timerType = Spline::TimerType::Normal;
+			else timerType = Spline::TimerType::Easing;
+			spline_.SetTimerType_(timerType);
+		}
+		//イージングの種類読み込み
+		if (key == "EasingType")
+		{
+			line_stream >> easingType_;
+
+			for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
+			{
+				if (easingType_ == easingTypeNames[i])
+				{
+					spline_.SetEasingType_((Spline::EasingType)i);
+					break;
+				}
+			}
+		}
+		//イージング・インアウト読み込み
+		if (key == "EasingTypeInOut")
+		{
+			Spline::EasingTypeInOut typeInout;
+			line_stream >> easingTypeInOut_;
+
+			if (easingTypeInOut_ == "In")typeInout = Spline::EasingTypeInOut::In;
+			else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
+			else typeInout = Spline::EasingTypeInOut::InOut;
+
+			spline_.SetEasingTypeInOut_(typeInout);
+		}
+		//スプライン曲線読み込み
+		if (key == "SplinePos")
+		{
 			Vector3 splinePos;
-			
+
 			line_stream >> splinePos.x;
 			line_stream >> splinePos.y;
 			line_stream >> splinePos.z;
@@ -321,5 +394,5 @@ void AttackEditor::AttackLoad(const std::string& string)
 		}
 	}
 
-	
+
 }

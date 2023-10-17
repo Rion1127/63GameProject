@@ -28,8 +28,8 @@ void AttackEditorScene::Draw()
 {
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	stage_->Draw();
-	attackEditor_.Draw();
 	attackEditor_.DrawImGui();
+	attackEditor_.Draw();
 }
 
 void AttackEditorScene::DrawPostEffect()

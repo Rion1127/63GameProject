@@ -1,8 +1,13 @@
-AtatckInfo
-attackFrame = 10
+//--AtatckInfo--//
+attackFrame = 180
 gapFrame = 0
 damege = 0
 gravityY = 0
 
-SplinePos -2.8 2.4 -7.4
-SplinePos 0.3 0.9 1.7
+//--SplinePos--//
+TimerType Easing
+EasingType Bounce
+EasingTypeInOut In
+SplinePos 0 2 0
+SplinePos 0 1.6 1.6
+SplinePos 0 0 2.2

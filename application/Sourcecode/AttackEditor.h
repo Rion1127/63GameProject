@@ -31,7 +31,11 @@ private:
 	std::unique_ptr<Object3d> playerObj_;
 	std::unique_ptr<Object3d> splineObj_;
 	std::vector<std::unique_ptr<SplinePos>> splinePointPos_;
+
+	std::vector<std::string> easingTypeNames;
 	Spline spline_;
+	std::string easingType_;
+	std::string easingTypeInOut_;
 
 	bool isPlay_;
 	bool isPointErase_;
