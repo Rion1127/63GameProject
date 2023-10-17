@@ -444,6 +444,4 @@ void AttackEditor::AttackLoad(const std::string& string)
 			ImGuiADDSplinePos(splinePos);
 		}
 	}
-
-
 }

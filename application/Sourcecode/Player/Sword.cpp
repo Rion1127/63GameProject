@@ -35,6 +35,8 @@ void Sword::Update()
 	if (state_ == SwordState::Idle) {
 		//回転行列を親子関係にする
 		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
+		//回転の親子関係を解除
+		obj_->WT_.parent_ = nullptr;
 		//プレイヤーの背中に向かって徐々に移動する
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
@@ -63,13 +65,13 @@ void Sword::Update()
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 0.1f);
 	}
 	else if (state_ == SwordState::Attack &&
-		attackManager_->GetNowAttack() != nullptr)
+		attackManager_->GetBaseAttack() != nullptr)
 	{
 		//回転の親子関係を解除
-		obj_->WT_.parentRotMat_ = nullptr;
+		obj_->WT_.parent_ = &playerObj_->WT_;
 		//座標
-		Vector3 pos = attackManager_->GetNowAttack()->GetSwordPos();
-		localPos_ = pos - playerObj_->WT_.position_;
+		Vector3 pos = attackManager_->GetBaseAttack()->GetSwordPos();
+		localPos_ = pos ;
 		obj_->SetPos(pos);
 		nowPos_ = pos;
 		//回転情報
@@ -84,6 +86,8 @@ void Sword::Update()
 	else if (state_ == SwordState::Guard) {
 		//回転行列を親子関係にする
 		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
+		//回転の親子関係を解除
+		obj_->WT_.parent_ = nullptr;
 		//座標
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = RotateVector(Vector3(0,0,1), playerObj_->WT_.quaternion_);

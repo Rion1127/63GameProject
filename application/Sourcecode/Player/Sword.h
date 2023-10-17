@@ -40,7 +40,9 @@ private:
 	void CalculateTrailPos();
 public:
 	void SetAttackManager(AttackManager* attackManager) { attackManager_ = attackManager; }
-	void SetPos(const Vector3& pos) { obj_->SetPos(pos); }
+	void SetPos(const Vector3& pos) {
+		obj_->SetPos(pos);
+	}
 	void SetParent(Object3d* parent) { playerObj_ = parent; }
 	void SetState(const SwordState& state) {
 		if (state_ != SwordState::Debug) {

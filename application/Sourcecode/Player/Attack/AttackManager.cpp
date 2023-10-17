@@ -10,6 +10,9 @@
 #include "AttackAirAerialFinish.h"
 #include "AttackAirSweep.h"
 
+#include <fstream>
+#include <iostream>
+
 Player* AttackManager::player_ = nullptr;
 
 AttackManager::AttackManager()
@@ -17,6 +20,7 @@ AttackManager::AttackManager()
 	comboNum = 0;
 	
 	isAttacking = false;
+
 }
 
 void AttackManager::Attack()
@@ -24,12 +28,13 @@ void AttackManager::Attack()
 	if (player_->GetIsCanInput()) {
 		if (Controller::GetTriggerButtons(PAD::INPUT_B))
 		{
+			testBaseAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"],player_,lockOnEnemy_);
 			//敵と自分の距離を計算
 			CalculatePtoELength();
 			//MAX_COMBOよりcomboNumが小さければ攻撃できる
 			if (comboNum < MAX_COMBO)
 			{
-				isNextAttack_ = true;
+				//isNextAttack_ = true;
 			}
 			else {
 				isNextAttack_ = false;
@@ -43,6 +48,16 @@ void AttackManager::Update()
 	//最初の攻撃
 	if (isNextAttack_) {
 		FirstAttackUpdate();
+	}
+
+	if (testBaseAttack_ != nullptr) {
+		isAttacking = true;
+		testBaseAttack_->Update();
+		if (testBaseAttack_->GetIsAttaking() == false) {
+			testBaseAttack_.release();
+			testBaseAttack_ = nullptr;
+			isAttacking = false;
+		}
 	}
 
 	if (nowAttack_ != nullptr)
@@ -60,7 +75,7 @@ void AttackManager::Update()
 	}
 	else
 	{
-		isAttacking = false;
+		//isAttacking = false;
 		comboNum = 0;
 	}
 }
@@ -213,8 +228,106 @@ void AttackManager::SwitchAttack()
 AttackDataPool::AttackDataPool()
 {
 	LoadAllAttackFile();
+
+	LoadAttackFile("test");
 }
 
 void AttackDataPool::LoadAllAttackFile()
 {
+}
+
+void AttackDataPool::LoadAttackFile(std::string fileName)
+{
+	std::string saveDir = "application/Resources/AttackInfo/";
+	saveDir.append(fileName.c_str());
+	saveDir += ".csv";
+
+	std::ifstream file(saveDir);  // 読み込むファイルのパスを指定
+	std::string line;
+
+	BaseAttack::AttackInput newinput;
+	newinput.attackinfo.emplace_back();
+	auto& info = newinput.attackinfo.back();
+
+	while (std::getline(file, line))
+	{  // 1行ずつ読み込む
+		std::cout << line << std::endl;
+
+		std::stringstream line_stream(line);
+
+		// 半角スペース区切りで行の先頭文字列を取得
+		std::string key;
+		getline(line_stream, key, ' ');
+
+		//各パラメータ読み込み
+		if (key == "attackFrame")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> info.attackFrame;
+		}
+		else if (key == "gapFrame")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> info.gapFrame;
+		}
+		else if (key == "damege")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> info.damage;
+		}
+		else if (key == "gravityY")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> info.gravity.y;
+		}
+		////タイマー制御方法読み込み
+		//if (key == "TimerType")
+		//{
+		//	std::string timerTypeName;
+		//	line_stream >> timerTypeName;
+
+		//	Spline::TimerType timerType;
+		//	if (timerTypeName == "Normal")timerType = Spline::TimerType::Normal;
+		//	else timerType = Spline::TimerType::Easing;
+		//	spline_.SetTimerType_(timerType);
+		//}
+		////イージングの種類読み込み
+		//if (key == "EasingType")
+		//{
+		//	line_stream >> easingType_;
+
+		//	for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
+		//	{
+		//		if (easingType_ == easingTypeNames[i])
+		//		{
+		//			spline_.SetEasingType_((Spline::EasingType)i);
+		//			break;
+		//		}
+		//	}
+		//}
+		////イージング・インアウト読み込み
+		//if (key == "EasingTypeInOut")
+		//{
+		//	Spline::EasingTypeInOut typeInout;
+		//	line_stream >> easingTypeInOut_;
+
+		//	if (easingTypeInOut_ == "In")typeInout = Spline::EasingTypeInOut::In;
+		//	else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
+		//	else typeInout = Spline::EasingTypeInOut::InOut;
+
+		//	spline_.SetEasingTypeInOut_(typeInout);
+		//}
+		//スプライン曲線読み込み
+		if (key == "SplinePos")
+		{
+			info.splinePos.emplace_back();
+			auto& splinePos = info.splinePos.back();
+
+			line_stream >> splinePos.x;
+			line_stream >> splinePos.y;
+			line_stream >> splinePos.z;
+		}
+	}
+
+	attacks_.insert(std::make_pair(fileName, newinput));
 }
