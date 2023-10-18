@@ -2,6 +2,9 @@
 #include <imgui.h>
 #include "GameSpeed.h"
 #include "Easing.h"
+
+std::vector<std::string> Spline::sEaseTypeName_;
+
 Spline::Spline()
 {
 	index_ = 1;
@@ -11,6 +14,16 @@ Spline::Spline()
 	timerType_ = TimerType::Normal;
 	easingType_ = EasingType::Sine;
 	easeTypeInOut_ = EasingTypeInOut::In;
+}
+
+void Spline::StaticInit()
+{
+	sEaseTypeName_.emplace_back("Back");
+	sEaseTypeName_.emplace_back("Bounce");
+	sEaseTypeName_.emplace_back("Circ");
+	sEaseTypeName_.emplace_back("Quint");
+	sEaseTypeName_.emplace_back("Cubic");
+	sEaseTypeName_.emplace_back("Sine");
 }
 
 void Spline::Update(float speedRate)

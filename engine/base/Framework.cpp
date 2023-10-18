@@ -30,6 +30,7 @@ void Framework::Init()
 
 	DirectionalLight::StaticInit();
 	LightGroup::StaticInit();
+	Spline::StaticInit();
 
 	loadManager_.LoadAllResources();
 

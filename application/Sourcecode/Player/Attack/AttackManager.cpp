@@ -280,43 +280,45 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream.ignore(1, '=');
 			line_stream >> info.gravity.y;
 		}
-		////タイマー制御方法読み込み
-		//if (key == "TimerType")
-		//{
-		//	std::string timerTypeName;
-		//	line_stream >> timerTypeName;
+		//タイマー制御方法読み込み
+		if (key == "TimerType")
+		{
+			std::string timerTypeName;
+			line_stream >> timerTypeName;
 
-		//	Spline::TimerType timerType;
-		//	if (timerTypeName == "Normal")timerType = Spline::TimerType::Normal;
-		//	else timerType = Spline::TimerType::Easing;
-		//	spline_.SetTimerType_(timerType);
-		//}
-		////イージングの種類読み込み
-		//if (key == "EasingType")
-		//{
-		//	line_stream >> easingType_;
+			Spline::TimerType timerType;
+			if (timerTypeName == "Normal")timerType = Spline::TimerType::Normal;
+			else timerType = Spline::TimerType::Easing;
+			info.timerType = timerType;
+		}
+		//イージングの種類読み込み
+		if (key == "EasingType")
+		{
+			std::string easingType_;
+			line_stream >> easingType_;
 
-		//	for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
-		//	{
-		//		if (easingType_ == easingTypeNames[i])
-		//		{
-		//			spline_.SetEasingType_((Spline::EasingType)i);
-		//			break;
-		//		}
-		//	}
-		//}
-		////イージング・インアウト読み込み
-		//if (key == "EasingTypeInOut")
-		//{
-		//	Spline::EasingTypeInOut typeInout;
-		//	line_stream >> easingTypeInOut_;
+			for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
+			{
+				if (easingType_ == Spline::GetEaseTypeNames()[i])
+				{
+					info.easingType = (Spline::EasingType)i;
+					break;
+				}
+			}
+		}
+		//イージング・インアウト読み込み
+		if (key == "EasingTypeInOut")
+		{
+			std::string easingTypeInOut_;
+			line_stream >> easingTypeInOut_;
 
-		//	if (easingTypeInOut_ == "In")typeInout = Spline::EasingTypeInOut::In;
-		//	else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
-		//	else typeInout = Spline::EasingTypeInOut::InOut;
+			Spline::EasingTypeInOut typeInout;
+			if (easingTypeInOut_ == "In")typeInout = Spline::EasingTypeInOut::In;
+			else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
+			else typeInout = Spline::EasingTypeInOut::InOut;
 
-		//	spline_.SetEasingTypeInOut_(typeInout);
-		//}
+			info.inOutType = typeInout;
+		}
 		//スプライン曲線読み込み
 		if (key == "SplinePos")
 		{

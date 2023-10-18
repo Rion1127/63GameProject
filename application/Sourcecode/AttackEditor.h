@@ -16,6 +16,11 @@ public:
 
 		Vector3 gravity;		//攻撃時に動く方向
 		float damage;			//ダメージ
+
+		Spline::TimerType timerType;		//通常かイージングか
+		Spline::EasingType easingType;		//イージングの種類
+		Spline::EasingTypeInOut inOutType;	//イージングの動き方
+
 		std::vector<Vector3> splinePos;
 	};
 	struct SplinePos {

@@ -174,16 +174,16 @@ void AttackEditor::ImGuiSetEasingType()
 	easingTypeNames.emplace_back("Quint");
 	easingTypeNames.emplace_back("Cubic");
 	easingTypeNames.emplace_back("Sine");
-	//プルダウンメニューで読み込んだファイルを選択できるようにする
+	//プルダウンメニューでイージングタイプを選択できるようにする
 	if (ImGui::BeginCombo("EasingType", easingType_.c_str()))
 	{
 		for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; ++i)
 		{
 			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
-			const bool is_selected = (easingType_ == easingTypeNames[i]);
-			if (ImGui::Selectable(easingTypeNames[i].c_str(), is_selected))
+			const bool is_selected = (easingType_ == Spline::GetEaseTypeNames()[i]);
+			if (ImGui::Selectable(Spline::GetEaseTypeNames()[i].c_str(), is_selected))
 			{
-				easingType_ = easingTypeNames[i].c_str();
+				easingType_ = Spline::GetEaseTypeNames()[i].c_str();
 				spline_.SetEasingType_((Spline::EasingType)i);
 			}
 			if (is_selected)
@@ -201,7 +201,7 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 	easingTypenames.emplace_back("In");
 	easingTypenames.emplace_back("Out");
 	easingTypenames.emplace_back("InOut");
-	//プルダウンメニューで読み込んだファイルを選択できるようにする
+	//プルダウンメニューでイージングタイプインアウトを選択できるようにする
 	if (ImGui::BeginCombo("InOut", easingTypeInOut_.c_str()))
 	{
 		for (uint32_t i = 0; i < (uint32_t)Spline::EasingTypeInOut::EasingTypeInOutEnd; ++i)
@@ -238,7 +238,7 @@ void AttackEditor::ImGuiSave()
 	static std::string saveName;		//書き出すファイルの名前
 	static bool isProofSave = false;	//セーブの確認
 	ImGui::InputText("SaveName", saveName.data(), 10);
-
+	//セーブするか確認
 	if (isProofSave)
 	{
 		ImGui::Text("Do you want to save?");
@@ -270,7 +270,7 @@ void AttackEditor::ImGuiLoad()
 	static bool isProofLoad = false;	//ロードの確認
 
 	ImGui::InputText("LoadName", LoadName.data(), 10);
-	
+	//ロードするか確認
 	if (isProofLoad)
 	{
 		ImGui::Text("Do you want to Load?");
@@ -413,7 +413,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 
 			for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
 			{
-				if (easingType_ == easingTypeNames[i])
+				if (easingType_ == Spline::GetEaseTypeNames()[i])
 				{
 					spline_.SetEasingType_((Spline::EasingType)i);
 					break;

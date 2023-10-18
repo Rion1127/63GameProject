@@ -68,7 +68,7 @@ void Sword::Update()
 		attackManager_->GetBaseAttack() != nullptr)
 	{
 		//回転の親子関係を解除
-		obj_->WT_.parent_ = &playerObj_->WT_;
+		obj_->WT_.parentRotMat_ = nullptr;
 		//座標
 		Vector3 pos = attackManager_->GetBaseAttack()->GetSwordPos();
 		localPos_ = pos ;

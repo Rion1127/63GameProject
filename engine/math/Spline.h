@@ -56,8 +56,12 @@ private:
 	EasingTypeInOut easeTypeInOut_;
 
 	std::vector<std::unique_ptr<Object3d>> splineObj_;
+private:
+	static std::vector<std::string> sEaseTypeName_;
 public:
 	Spline();
+
+	static void StaticInit();
 
 	void Update(float speedRate = 1.f);
 
@@ -83,6 +87,10 @@ public:
 	TimerFloat GetTimer() { return timer_; }
 	float GetMaxTime() { return maxTime_; }
 	TimerType GetTimerType() { return timerType_; }
+	EasingType GetEasingType() { return easingType_; }
+	EasingTypeInOut GetEasingTypeInOut() { return easeTypeInOut_; }
+public:
+	static std::vector<std::string> GetEaseTypeNames() { return sEaseTypeName_; }
 private:
 	void SplineUpdate(float speedRate);
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
