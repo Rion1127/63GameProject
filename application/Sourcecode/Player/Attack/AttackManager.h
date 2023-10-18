@@ -36,10 +36,9 @@ private:
 	IEnemy* lockOnEnemy_;
 
 	AttackDataPool datapool_;
-	std::unique_ptr<BaseAttack> testBaseAttack_;
 	
-	std::unique_ptr<IAttack> nowAttack_;	//現在処理している攻撃
-	std::unique_ptr<IAttack> nextAttack_;	//次に処理する攻撃
+	std::unique_ptr<BaseAttack> nowAttack_;	//現在処理している攻撃
+	std::unique_ptr<BaseAttack> nextAttack_;	//次に処理する攻撃
 
 	const int32_t MAX_COMBO = 3;
 	int32_t comboNum;
@@ -66,8 +65,7 @@ public:
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
 public:
-	IAttack* GetNowAttack() { return nowAttack_.get(); }
-	BaseAttack* GetBaseAttack() { return testBaseAttack_.get(); }
+	BaseAttack* GetNowAttack() { return nowAttack_.get(); }
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
 	static void SetPlayer(Player* player) { player_ = player; }
 };

@@ -65,12 +65,12 @@ void Sword::Update()
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 0.1f);
 	}
 	else if (state_ == SwordState::Attack &&
-		attackManager_->GetBaseAttack() != nullptr)
+		attackManager_->GetNowAttack() != nullptr)
 	{
 		//回転の親子関係を解除
 		obj_->WT_.parentRotMat_ = nullptr;
 		//座標
-		Vector3 pos = attackManager_->GetBaseAttack()->GetSwordPos();
+		Vector3 pos = attackManager_->GetNowAttack()->GetSwordPos();
 		localPos_ = pos ;
 		obj_->SetPos(pos);
 		nowPos_ = pos;

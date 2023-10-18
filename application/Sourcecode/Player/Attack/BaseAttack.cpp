@@ -5,8 +5,7 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	selfActor_(selfActor),
 	lockOnActor_(lockOnActor)
 {
-	attackinput_.attackinfo.push_back(attackinput_.attackinfo[0]);
-
+	
 	index_ = 0;
 
 	CalculateRotToLockOnActor();
@@ -22,6 +21,11 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 		attackAllTime += info.attackFrame + info.gapFrame;
 	}
 	attackAllTime_.SetLimitTime(attackAllTime);
+
+	spline_.Update();
+	swordPos_ = spline_.GetNowPoint();
+
+	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
 }
 
 void BaseAttack::SetNextAttack()
@@ -63,7 +67,6 @@ void BaseAttack::SetNextAttack()
 
 void BaseAttack::Update()
 {
-
 	spline_.Update();
 	attackAllTime_.AddTime(1);
 	//攻撃が終了したら

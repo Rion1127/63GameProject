@@ -1,8 +1,8 @@
 //--AtatckInfo--//
-attackFrame = 22
-gapFrame = 7
+attackFrame = 15
+gapFrame = 3
 damege = 0
-gravityY = 0
+gravityY = 0.1
 
 //--SplinePos--//
 TimerType Easing

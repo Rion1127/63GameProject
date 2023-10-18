@@ -28,13 +28,12 @@ void AttackManager::Attack()
 	if (player_->GetIsCanInput()) {
 		if (Controller::GetTriggerButtons(PAD::INPUT_B))
 		{
-			testBaseAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"],player_,lockOnEnemy_);
 			//敵と自分の距離を計算
 			CalculatePtoELength();
 			//MAX_COMBOよりcomboNumが小さければ攻撃できる
 			if (comboNum < MAX_COMBO)
 			{
-				//isNextAttack_ = true;
+				isNextAttack_ = true;
 			}
 			else {
 				isNextAttack_ = false;
@@ -50,32 +49,15 @@ void AttackManager::Update()
 		FirstAttackUpdate();
 	}
 
-	if (testBaseAttack_ != nullptr) {
+	if (nowAttack_ != nullptr) {
 		isAttacking = true;
-		testBaseAttack_->Update();
-		if (testBaseAttack_->GetIsAttaking() == false) {
-			testBaseAttack_.release();
-			testBaseAttack_ = nullptr;
-			isAttacking = false;
-		}
-	}
-
-	if (nowAttack_ != nullptr)
-	{
-		//攻撃中フラグ
-		isAttacking = true;
-		//攻撃更新
-		nowAttack_->SetLockOnActor(lockOnEnemy_);
 		nowAttack_->Update();
-		//maxTimeを超えたらnextAttack_をnowAttack_に代入する
-		if (nowAttack_->GetTimer().GetIsEnd())
-		{
+		if (nowAttack_->GetIsAttaking() == false) {
 			SwitchAttack();
 		}
 	}
 	else
 	{
-		//isAttacking = false;
 		comboNum = 0;
 	}
 }
@@ -88,7 +70,7 @@ void AttackManager::DrawDebug()
 	{
 		if (nowAttack_ != nullptr)
 		{
-			nowAttack_->DrawCol();
+			//nowAttack_->DrawCol();
 		}
 	}
 
@@ -96,7 +78,7 @@ void AttackManager::DrawDebug()
 	{
 		if (nowAttack_ != nullptr)
 		{
-			nowAttack_->DrawSplinePoint();
+			//nowAttack_->DrawSplinePoint();
 		}
 	}
 
@@ -104,7 +86,7 @@ void AttackManager::DrawDebug()
 	int num = (int)comboNum;
 	ImGui::SliderInt("combo", &num, 0, 10, "%d");
 	int time = 0;
-	if (nowAttack_ != nullptr) time = (int)nowAttack_->GetTimer().GetTimer();
+	//if (nowAttack_ != nullptr) time = (int)nowAttack_->GetTimer().GetTimer();
 	ImGui::SliderInt("time", &time, 0, 120, "%d");
 	//当たり判定表示
 	if (ImGui::Button("colDisplay"))
@@ -159,17 +141,18 @@ void AttackManager::FirstAttackUpdate()
 		if (player_->GetNowState()->GetId() == PlayerState::Idle ||
 			player_->GetNowState()->GetId() == PlayerState::Move)
 		{
-			if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<AttackSlide>(player_);
-			else if (diffPosY > 1.f)nowAttack_ = std::make_unique<AttackAirSweep>(player_);
-			else nowAttack_ = std::make_unique<Attack1>(player_);
+			//遠くの敵にスライドして攻撃
+			if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+			//ジャンプして攻撃
+			else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+			//通常攻撃
+			else nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground1"], player_, lockOnEnemy_);
 		}
 		else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 		{
-			nowAttack_ = std::make_unique<AttackAir1>(player_);
+			nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Air1"], player_, lockOnEnemy_);
 		}
 		if (nowAttack_ != nullptr) {
-			nowAttack_->SetLockOnActor(lockOnEnemy_);
-			nowAttack_->Init();
 			float picth = RRandom::RandF(0.7f, 1.5f);
 			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		}
@@ -197,16 +180,22 @@ void AttackManager::SwitchAttack()
 			{
 				//すでに攻撃している場合は次の攻撃を入れる
 				if (comboNum == 1) {
-					if (PtoELength_ >= 4.f)nextAttack_ = std::make_unique<AttackSlide>(player_);
-					else if (diffPosY > 1.f)nowAttack_ = std::make_unique<AttackAirSweep>(player_);
-					else nextAttack_ = std::make_unique<Attack2>(player_);
+					//遠くの敵にスライドして攻撃
+					if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+					//ジャンプして攻撃
+					else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+					//通常攻撃
+					else nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
 				}
-				if (comboNum == 2)nextAttack_ = std::make_unique<AttackFinishBreak>(player_);
+				//フィニッシュ攻撃（エクスプロージョン）
+				if (comboNum == 2)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground3"], player_, lockOnEnemy_);
 			}
 			else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 			{
-				if (comboNum == 1)nextAttack_ = std::make_unique<AttackAir2>(player_);
-				if (comboNum == 2)nextAttack_ = std::make_unique<AttackAirAerialFinish>(player_);
+				//空中2コンボ目
+				if (comboNum == 1)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Air2"], player_, lockOnEnemy_);
+				//空中フィニッシュ
+				if (comboNum == 2)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Air3"], player_, lockOnEnemy_);
 			}
 		}
 	}
@@ -214,10 +203,11 @@ void AttackManager::SwitchAttack()
 	nowAttack_.swap(nextAttack_);
 	//攻撃初期化
 	if (nowAttack_ != nullptr) {
-		nowAttack_->SetLockOnActor(lockOnEnemy_);
-		nowAttack_->Init();
 		float picth = RRandom::RandF(0.7f, 1.5f);
 		SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
+	}
+	else {
+		isAttacking = false;
 	}
 	//nextAttack_を解放する
 	nextAttack_.reset();
@@ -230,6 +220,12 @@ AttackDataPool::AttackDataPool()
 	LoadAllAttackFile();
 
 	LoadAttackFile("test");
+	LoadAttackFile("Air1");
+	LoadAttackFile("Air2");
+	LoadAttackFile("Air3");
+	LoadAttackFile("Ground1");
+	LoadAttackFile("Ground2");
+	LoadAttackFile("Ground3");
 }
 
 void AttackDataPool::LoadAllAttackFile()

@@ -315,53 +315,53 @@ void CollisionManager::PlayerToEnemy()
 
 void CollisionManager::PlayerAttackToEnemy()
 {
-	IAttack* attackCol = player_->GetAttackManager()->GetNowAttack();
+	BaseAttack* attackCol = player_->GetAttackManager()->GetNowAttack();
 	if (attackCol == nullptr)return;
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
-		//近接攻撃
-		for (auto& col : *attackCol->GetAttackCol())
-		{
-			if (enemy->GetDamageCoolTime().GetIsEnd())
-			{
-				if (BallCollision(col->col_, enemy->GetCol()))
-				{
-					col->isCollision_ = true;
-					//プレイヤーの反対方向にノックバックする
-					Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
-					knockVec.y = col->knockVecY;
-					knockVec = knockVec.normalize();
-					knockVec = knockVec * col->knockPower;
-					//敵のノックバック抵抗力を掛ける
-					knockVec = knockVec * enemy->GetKnockResist();
-					enemy->Damage(knockVec, col->damage, col->damageCoolTime);
-					enemy->SetIsNock(true);
-					//HPゲージ反映
-					enemyManager_->Damage();
+		////近接攻撃
+		//for (auto& col : *attackCol->GetAttackCol())
+		//{
+		//	if (enemy->GetDamageCoolTime().GetIsEnd())
+		//	{
+		//		if (BallCollision(col->col_, enemy->GetCol()))
+		//		{
+		//			col->isCollision_ = true;
+		//			//プレイヤーの反対方向にノックバックする
+		//			Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+		//			knockVec.y = col->knockVecY;
+		//			knockVec = knockVec.normalize();
+		//			knockVec = knockVec * col->knockPower;
+		//			//敵のノックバック抵抗力を掛ける
+		//			knockVec = knockVec * enemy->GetKnockResist();
+		//			enemy->Damage(knockVec, col->damage, col->damageCoolTime);
+		//			enemy->SetIsNock(true);
+		//			//HPゲージ反映
+		//			enemyManager_->Damage();
 
-					Vector3 addVec = { 0.05f,0.05f,0.05f };
+		//			Vector3 addVec = { 0.05f,0.05f,0.05f };
 
-					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-					hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-					hitEmitter_->addNum = 3;
-					hitEmitter_->time = 40;
-					hitEmitter_->pos = enemy->GetCol().center;
-					hitEmitter_->addVec = addVec;
-					hitEmitter_->scale = 1.0f;
-					ParticleManager::GetInstance()->
-						AddParticle("HitAttack", hitEmitter_);
-					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
+		//			std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+		//			hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+		//			hitEmitter_->addNum = 3;
+		//			hitEmitter_->time = 40;
+		//			hitEmitter_->pos = enemy->GetCol().center;
+		//			hitEmitter_->addVec = addVec;
+		//			hitEmitter_->scale = 1.0f;
+		//			ParticleManager::GetInstance()->
+		//				AddParticle("HitAttack", hitEmitter_);
+		//			SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 
-					//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
-					if (attackCol->GetAttackType() != AttackType::Finish)continue;
-					gameCamera_->SetCameraShake(shakeTimer_,shakePower_);
-					if (isHitStop_ == false)continue;
-					player_->SetHitStopTimer(hitStopTimer_);
-					enemy->SetHitStopTimer(hitStopTimer_);
-					ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);
-				}
-			}
-		}
+		//			//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
+		//			if (attackCol->GetAttackType() != AttackType::Finish)continue;
+		//			gameCamera_->SetCameraShake(shakeTimer_,shakePower_);
+		//			if (isHitStop_ == false)continue;
+		//			player_->SetHitStopTimer(hitStopTimer_);
+		//			enemy->SetHitStopTimer(hitStopTimer_);
+		//			ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);
+		//		}
+		//	}
+		//}
 
 		auto& bullets = *player_->GetMagicManager()->GetBullet();
 
