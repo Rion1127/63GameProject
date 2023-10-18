@@ -5,18 +5,26 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	selfActor_(selfActor),
 	lockOnActor_(lockOnActor)
 {
+	attackinput_.attackinfo.push_back(attackinput_.attackinfo[0]);
 
 	index_ = 0;
 
 	CalculateRotToLockOnActor();
 
-	SetSpline();
+	SetNextAttack();
 	/*obj_->SetModel(Model::CreateOBJ_uniptr("sphere", false));
 	obj_->SetAmbient("sphere", { 1.0f, 0, 0 });
 	obj_->SetIsVisible(true);*/
+
+	//攻撃に掛かる時間を計算する
+	float attackAllTime = 0;
+	for (auto& info : attackinput_.attackinfo) {
+		attackAllTime += info.attackFrame + info.gapFrame;
+	}
+	attackAllTime_.SetLimitTime(attackAllTime);
 }
 
-void BaseAttack::SetSpline()
+void BaseAttack::SetNextAttack()
 {
 	spline_.AllClear();
 	spline_.SetIsStart(true);
@@ -55,25 +63,26 @@ void BaseAttack::SetSpline()
 
 void BaseAttack::Update()
 {
+
+	spline_.Update();
+	attackAllTime_.AddTime(1);
 	//攻撃が終了したら
-	if (spline_.GetisEnd()) {
+	if (attackAllTime_.GetTimer() > attackinput_.attackinfo[index_].attackAllFrame) {
 		//残りの攻撃がある場合は続ける
 		if (index_ < attackinput_.attackinfo.size() - 1) {
 			index_++;
-			SetSpline();
+			SetNextAttack();
 		}
-		//次の攻撃がない場合は終わる
-		else {
-			isAttaking_ = false;
-		}
+	}
+
+	if (attackAllTime_.GetIsEnd()) {
+		isAttaking_ = false;
 	}
 	else {
 		isAttaking_ = true;
 	}
-	swordPos_ = spline_.GetNowPoint();
-	
-	spline_.Update();
 
+	swordPos_ = spline_.GetNowPoint();
 }
 
 void BaseAttack::Draw()

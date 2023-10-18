@@ -2,6 +2,7 @@
 #include "AttackEditor.h"
 #include "Spline.h"
 #include "IActor.h"
+#include "Timer.h"
 #include <vector>
 
 class BaseAttack
@@ -16,6 +17,7 @@ private:
 	IActor* lockOnActor_;
 	float DamageCoolTime_;		//無敵時間
 	AttackInput attackinput_;	//攻撃の詳細
+	TimerFloat attackAllTime_;		//攻撃に掛かるフレーム
 	Spline spline_;
 	uint32_t index_;
 
@@ -27,7 +29,7 @@ private:
 public:
 	BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lockOnActor);
 	//初期化
-	void SetSpline();
+	void SetNextAttack();
 	//更新
 	void Update();
 	//スプライン曲線・当たり判定追加

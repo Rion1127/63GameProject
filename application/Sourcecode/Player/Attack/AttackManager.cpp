@@ -269,6 +269,8 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 		{
 			line_stream.ignore(1, '=');
 			line_stream >> info.gapFrame;
+
+			info.attackAllFrame = info.attackFrame + info.gapFrame;
 		}
 		else if (key == "damege")
 		{
@@ -330,6 +332,6 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> splinePos.z;
 		}
 	}
-
+	
 	attacks_.insert(std::make_pair(fileName, newinput));
 }

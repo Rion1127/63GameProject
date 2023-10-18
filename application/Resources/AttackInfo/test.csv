@@ -1,6 +1,6 @@
 //--AtatckInfo--//
-attackFrame = 35
-gapFrame = 0
+attackFrame = 40
+gapFrame = 7
 damege = 0
 gravityY = 0
 
