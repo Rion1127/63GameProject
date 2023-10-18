@@ -3,6 +3,7 @@
 #include "Spline.h"
 #include "IActor.h"
 #include "Timer.h"
+#include "Collision.h"
 #include <vector>
 
 class BaseAttack
@@ -15,7 +16,7 @@ public:
 private:
 	IActor* selfActor_;
 	IActor* lockOnActor_;
-	float DamageCoolTime_;		//無敵時間
+	float damageCoolTime_;		//無敵時間
 	AttackInput attackinput_;	//攻撃の詳細
 	TimerFloat attackAllTime_;		//攻撃に掛かるフレーム
 	Spline spline_;
@@ -24,6 +25,8 @@ private:
 	bool isAttaking_;	//攻撃中フラグ
 
 	Vector3 swordPos_;	//剣の座標
+
+	Sphere col_;
 
 	std::unique_ptr<Object3d> obj_;
 public:
@@ -41,5 +44,10 @@ public:
 	//ゲッター
 	bool GetIsAttaking() { return isAttaking_; }
 	Vector3 GetSwordPos() { return swordPos_; }
+	Sphere GetCol() { return col_; }
+	float GetDamageCoolTime() { return damageCoolTime_; }
+	int32_t GetDamage() { return attackinput_.attackinfo[index_].damage; }
+	AttackType GetAttackType() { return attackinput_.type_; }
+	Vector3 GetKnockVec() { return attackinput_.attackinfo[index_].knockVec; }
 };
 

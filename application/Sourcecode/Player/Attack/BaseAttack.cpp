@@ -1,4 +1,5 @@
 #include "BaseAttack.h"
+#include "GameSpeed.h"
 
 BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lockOnActor) :
 	attackinput_(input),
@@ -10,9 +11,6 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	CalculateRotToLockOnActor();
 
 	SetNextAttack();
-	/*obj_->SetModel(Model::CreateOBJ_uniptr("sphere", false));
-	obj_->SetAmbient("sphere", { 1.0f, 0, 0 });
-	obj_->SetIsVisible(true);*/
 
 	//攻撃に掛かる時間を計算する
 	float attackAllTime = 0;
@@ -25,6 +23,12 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	swordPos_ = spline_.GetNowPoint();
 
 	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
+
+	//剣の座標をに当たり判定代入
+	col_.center = swordPos_;
+	col_.radius = 1.0f;
+	float& attackTime = attackinput_.attackinfo[index_].attackFrame;
+	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
 }
 
 void BaseAttack::SetNextAttack()
@@ -66,8 +70,8 @@ void BaseAttack::SetNextAttack()
 
 void BaseAttack::Update()
 {
-	spline_.Update();
-	attackAllTime_.AddTime(1);
+	spline_.Update(GameSpeed::GetPlayerSpeed());
+	attackAllTime_.AddTime(GameSpeed::GetPlayerSpeed());
 	//攻撃が終了したら
 	if (attackAllTime_.GetTimer() > attackinput_.attackinfo[index_].attackAllFrame) {
 		//残りの攻撃がある場合は続ける
@@ -83,8 +87,21 @@ void BaseAttack::Update()
 	else {
 		isAttaking_ = true;
 	}
+	//ダメージクールタイム計算
+	float& attackTime = attackinput_.attackinfo[index_].attackFrame;
+	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
+
 
 	swordPos_ = spline_.GetNowPoint();
+	//剣の座標をに当たり判定代入
+	col_.center = swordPos_;
+	//当たり判定は剣を振っている間だけ
+	if (damageCoolTime_ == 0) {
+		col_.isActive = false;
+	}
+	else {
+		col_.isActive = true;
+	}
 }
 
 void BaseAttack::Draw()

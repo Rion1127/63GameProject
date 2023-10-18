@@ -15,7 +15,9 @@ public:
 		float gapFrame;			//後隙フレーム
 
 		Vector3 gravity;		//攻撃時に動く方向
-		float damage;			//ダメージ
+		int32_t damage;			//ダメージ
+
+		Vector3 knockVec;
 
 		Spline::TimerType timerType;		//通常かイージングか
 		Spline::EasingType easingType;		//イージングの種類

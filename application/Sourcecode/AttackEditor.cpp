@@ -164,7 +164,7 @@ void AttackEditor::DrawImGui()
 
 	ImGui::DragFloat("attackFrame", &attackInfo_.attackFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("gapFrame", &attackInfo_.gapFrame, 1.0f, 0.f, 500.f);
-	ImGui::DragFloat("Damage", &attackInfo_.damage, 1.0f, 0.f, 500.f);
+	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 500);
 	ImGui::DragFloat("gravity", &attackInfo_.gravity.y, 1.0f, 0.f, 500.f);
 
 	ImGui::End();

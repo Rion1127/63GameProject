@@ -181,9 +181,9 @@ void AttackManager::SwitchAttack()
 				//すでに攻撃している場合は次の攻撃を入れる
 				if (comboNum == 1) {
 					//遠くの敵にスライドして攻撃
-					if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+					if (PtoELength_ >= 4.f)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
 					//ジャンプして攻撃
-					else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+					else if (diffPosY > 1.f)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
 					//通常攻撃
 					else nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
 				}

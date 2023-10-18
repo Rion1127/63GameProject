@@ -141,7 +141,7 @@ public:
 	Vector3 GetcameraToPlayerVec() { return cameraToPlayerVec_; }
 	Vector3 GetPlayerFrontVec() { return playerFrontVec_; }
 	PlayerState GetState() { return state_; }
-	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
+	TimerFloat* GetDamegeCoolTime() { return &damageCoolTime_; }
 	Timer* GetFreezeTime() { return &freezeTimer_; }
 	bool GetIsAlive() { return isAlive_; }
 	bool GetIsMPCharge() { return isMPCharge_; }

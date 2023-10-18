@@ -22,7 +22,7 @@ protected:
 	Gravity gravity_;
 	Vector3 knockVec_;
 	Vector3 knockResist_;
-	Timer damageCoolTime_;
+	TimerFloat damageCoolTime_;
 	Timer freezeTimer_;
 	float objAngle_;
 	bool isFloorCollision_ = false;

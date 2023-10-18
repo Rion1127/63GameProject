@@ -15,7 +15,7 @@ private:
 		Sphere col_;
 		int32_t damage = 10;
 		//敵の攻撃当たり判定有効までの時間
-		int32_t damageCoolTime = 20;
+		float damageCoolTime = 20;
 		//ノックバックの強さ
 		Vector3 knockPower = { 0.5f,0.5f,0.5f };
 		//上方向のノックバック
@@ -38,7 +38,7 @@ protected:
 	int32_t costMP_;
 public:
 	IBullet(IActor* selfActor,
-		int32_t maxTime = 20, int32_t damage = 10, int32_t damageCoolTime = 25, int32_t costMP = 10);
+		int32_t maxTime = 20, int32_t damage = 10, float damageCoolTime = 25.f, int32_t costMP = 10);
 	virtual ~IBullet() {};
 	void Update();
 	void DrawCol();

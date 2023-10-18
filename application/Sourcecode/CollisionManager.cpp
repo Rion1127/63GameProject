@@ -50,7 +50,7 @@ void CollisionManager::DrawImGui()
 {
 	uint16_t isHitstop = isHitStop_;
 	ImGui::Begin("CollisionManager");
-	
+
 	if (ImGui::Button("HitStop"))
 	{
 		isHitstop++;
@@ -68,7 +68,7 @@ void CollisionManager::DrawImGui()
 	ImGui::SliderFloat("hitStopTime", &hitStopTimer_, 0.f, 100.f, "x = %.3f");
 
 	ImGui::DragFloat("shakePower", &shakePower_, 0.1f, 0.1f, 5.f);
-	ImGui::DragFloat("shakeTimer", &shakeTimer_, 1.f,1,100.f);
+	ImGui::DragFloat("shakeTimer", &shakeTimer_, 1.f, 1, 100.f);
 
 	ImGui::End();
 
@@ -319,49 +319,46 @@ void CollisionManager::PlayerAttackToEnemy()
 	if (attackCol == nullptr)return;
 	for (auto& enemy : *enemyManager_->GetEnemy())
 	{
-		////近接攻撃
-		//for (auto& col : *attackCol->GetAttackCol())
-		//{
-		//	if (enemy->GetDamageCoolTime().GetIsEnd())
-		//	{
-		//		if (BallCollision(col->col_, enemy->GetCol()))
-		//		{
-		//			col->isCollision_ = true;
-		//			//プレイヤーの反対方向にノックバックする
-		//			Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
-		//			knockVec.y = col->knockVecY;
-		//			knockVec = knockVec.normalize();
-		//			knockVec = knockVec * col->knockPower;
-		//			//敵のノックバック抵抗力を掛ける
-		//			knockVec = knockVec * enemy->GetKnockResist();
-		//			enemy->Damage(knockVec, col->damage, col->damageCoolTime);
-		//			enemy->SetIsNock(true);
-		//			//HPゲージ反映
-		//			enemyManager_->Damage();
+		//近接攻撃
+		if (enemy->GetDamageCoolTime().GetIsEnd())
+		{
+			if (BallCollision(attackCol->GetCol(), enemy->GetCol()))
+			{
+				//プレイヤーの反対方向にノックバックする
+				Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+				knockVec = knockVec.normalize() * attackCol->GetKnockVec();
+				//敵のノックバック抵抗力を掛ける
+				knockVec = knockVec * enemy->GetKnockResist();
+				enemy->Damage(knockVec,
+					(int32_t) attackCol->GetDamage(),
+					attackCol->GetDamageCoolTime());
+				enemy->SetIsNock(true);
+				//HPゲージ反映
+				enemyManager_->Damage();
 
-		//			Vector3 addVec = { 0.05f,0.05f,0.05f };
+				Vector3 addVec = { 0.05f,0.05f,0.05f };
+				//ヒットパーティクル生成
+				std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+				hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
+				hitEmitter_->addNum = 3;
+				hitEmitter_->time = 40;
+				hitEmitter_->pos = enemy->GetCol().center;
+				hitEmitter_->addVec = addVec;
+				hitEmitter_->scale = 1.0f;
+				ParticleManager::GetInstance()->
+					AddParticle("HitAttack", hitEmitter_);
+				SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 
-		//			std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-		//			hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-		//			hitEmitter_->addNum = 3;
-		//			hitEmitter_->time = 40;
-		//			hitEmitter_->pos = enemy->GetCol().center;
-		//			hitEmitter_->addVec = addVec;
-		//			hitEmitter_->scale = 1.0f;
-		//			ParticleManager::GetInstance()->
-		//				AddParticle("HitAttack", hitEmitter_);
-		//			SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
+				//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
+				if (attackCol->GetAttackType() != AttackType::Finish)continue;
+				gameCamera_->SetCameraShake(shakeTimer_, shakePower_);
+				if (isHitStop_ == false)continue;
+				player_->SetHitStopTimer(hitStopTimer_);
+				enemy->SetHitStopTimer(hitStopTimer_);
+				ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);
+			}
+		}
 
-		//			//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
-		//			if (attackCol->GetAttackType() != AttackType::Finish)continue;
-		//			gameCamera_->SetCameraShake(shakeTimer_,shakePower_);
-		//			if (isHitStop_ == false)continue;
-		//			player_->SetHitStopTimer(hitStopTimer_);
-		//			enemy->SetHitStopTimer(hitStopTimer_);
-		//			ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);
-		//		}
-		//	}
-		//}
 
 		auto& bullets = *player_->GetMagicManager()->GetBullet();
 
@@ -381,7 +378,9 @@ void CollisionManager::PlayerAttackToEnemy()
 					knockVec = knockVec * bullet->GetAttackCol()->get()->knockPower;
 					//敵のノックバック抵抗力を掛ける
 					knockVec = knockVec * enemy->GetKnockResist();
-					enemy->Damage(knockVec, bullet->GetAttackCol()->get()->damage, bullet->GetAttackCol()->get()->damageCoolTime);
+					enemy->Damage(knockVec,
+						bullet->GetAttackCol()->get()->damage,
+						bullet->GetAttackCol()->get()->damageCoolTime);
 					enemy->SetIsNock(true);
 					//HPゲージ反映
 					enemyManager_->Damage();

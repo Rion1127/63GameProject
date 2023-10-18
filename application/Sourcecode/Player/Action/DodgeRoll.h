@@ -6,7 +6,7 @@ class DodgeRoll
 private:
 	Vector3 dodgeVec_;
 	float speed_;
-	Timer dodgetimer_;
+	TimerFloat dodgetimer_;
 	bool isDodge_;
 public:
 	DodgeRoll();
@@ -15,6 +15,6 @@ public:
 public:
 	Vector3 GetDodgeVec() { return dodgeVec_; }
 	bool GetIsDodge() { return isDodge_; }
-	Timer GetdodgeTimer() { return dodgetimer_; }
+	TimerFloat GetdodgeTimer() { return dodgetimer_; }
 };
 

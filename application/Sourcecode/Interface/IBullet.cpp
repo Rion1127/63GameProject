@@ -1,7 +1,7 @@
 #include "IBullet.h"
 
 
-IBullet::IBullet(IActor* selfActor, int32_t maxTime, int32_t damage, int32_t damageCoolTime, int32_t costMP) :
+IBullet::IBullet(IActor* selfActor, int32_t maxTime, int32_t damage, float damageCoolTime, int32_t costMP) :
 	selfActor_(selfActor)
 {
 

@@ -398,7 +398,7 @@ void Player::DogeRoll()
 		{
 			dodgeRoll_.Begin(moveVec_.normalize());
 			damageCoolTime_.Reset();
-			uint32_t limit = dodgeRoll_.GetdodgeTimer().GetLimitTimer();
+			float limit = dodgeRoll_.GetdodgeTimer().GetLimitTimer();
 			damageCoolTime_.SetLimitTime(limit);
 			GoToState(PlayerState::DodgeRoll);
 		}
