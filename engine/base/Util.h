@@ -82,3 +82,10 @@ inline std::unique_ptr<T> MakeUnique()
 {
 	return std::move(std::make_unique<T>());
 }
+/// <summary>
+/// 同ディレクトリ内のファイル名を読み込む
+/// </summary>
+/// <param name="dir">ディレクトリ名指定</param>
+/// <param name="extension">拡張子指定</param>
+/// <returns></returns>
+std::vector<std::string> FindFileNames(const std::string& dir, const std::string& extension,bool isExtension = true);

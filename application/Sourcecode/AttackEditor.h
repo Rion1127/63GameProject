@@ -41,6 +41,8 @@ private:
 
 	bool isPlay_;
 	bool isPointErase_;
+
+	std::vector<std::string> allAttackFileNames;
 public:
 	AttackEditor();
 	void Update();

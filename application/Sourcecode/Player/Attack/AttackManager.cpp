@@ -219,13 +219,20 @@ AttackDataPool::AttackDataPool()
 {
 	LoadAllAttackFile();
 
-	LoadAttackFile("test");
+	/*LoadAttackFile("test");
 	LoadAttackFile("Air1");
 	LoadAttackFile("Air2");
 	LoadAttackFile("Air3");
 	LoadAttackFile("Ground1");
 	LoadAttackFile("Ground2");
-	LoadAttackFile("Ground3");
+	LoadAttackFile("Ground3");*/
+
+	std::string saveDir = "application/Resources/AttackInfo/";
+	std::vector<std::string> attackFileNames = FindFileNames(saveDir, ".csv",false);
+	//存在しているファイルを全て読み込む
+	for (auto& attackFileName : attackFileNames) {
+		LoadAttackFile(attackFileName);
+	}
 }
 
 void AttackDataPool::LoadAllAttackFile()

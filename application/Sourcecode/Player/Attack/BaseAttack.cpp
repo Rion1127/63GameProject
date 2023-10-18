@@ -5,7 +5,6 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	selfActor_(selfActor),
 	lockOnActor_(lockOnActor)
 {
-	
 	index_ = 0;
 
 	CalculateRotToLockOnActor();

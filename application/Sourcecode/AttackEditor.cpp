@@ -14,6 +14,10 @@ AttackEditor::AttackEditor()
 	splineObj_->WT_.parent_ = &playerObj_->WT_;
 	isPlay_ = false;
 	isPointErase_ = false;
+
+	//現在存在しているファイルを全て検索する
+	std:: string saveDir = "application/Resources/AttackInfo/";
+	allAttackFileNames = FindFileNames(saveDir, ".csv", false);
 }
 
 void AttackEditor::Update()
@@ -269,7 +273,25 @@ void AttackEditor::ImGuiLoad()
 	static std::string LoadName;		//読み込むファイルの名前
 	static bool isProofLoad = false;	//ロードの確認
 
-	ImGui::InputText("LoadName", LoadName.data(), 10);
+	//プルダウンメニューでイージングタイプを選択できるようにする
+	if (ImGui::BeginCombo("LoadFileName", LoadName.c_str()))
+	{
+		for (uint32_t i = 0; i < allAttackFileNames.size(); ++i)
+		{
+			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
+			const bool is_selected = (LoadName == allAttackFileNames[i]);
+			if (ImGui::Selectable(allAttackFileNames[i].c_str(), is_selected))
+			{
+				LoadName = allAttackFileNames[i].c_str();
+				spline_.SetEasingType_((Spline::EasingType)i);
+			}
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
 	//ロードするか確認
 	if (isProofLoad)
 	{
@@ -341,8 +363,6 @@ void AttackEditor::AttackSave(const std::string& string)
 		writing_file << writing_text << easingTypeInOut_ << std::endl;
 	}
 	
-
-
 	//スプライトの座標を出力する
 	for (auto& spline : splinePointPos_)
 	{
@@ -352,6 +372,9 @@ void AttackEditor::AttackSave(const std::string& string)
 	}
 
 	writing_file.close();
+	//現在存在しているファイルを全て検索する
+	saveDir = "application/Resources/AttackInfo/";
+	allAttackFileNames = FindFileNames(saveDir, ".csv",false);
 }
 
 void AttackEditor::AttackLoad(const std::string& string)
