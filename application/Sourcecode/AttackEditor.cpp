@@ -190,6 +190,14 @@ void AttackEditor::DrawImGui()
 	attackInfo_.playerMoveVec = { playerMoveVec [0],playerMoveVec[1], playerMoveVec[2] };
 	ImGui::DragFloat("gravity", &attackInfo_.deceleration, 0.01f, 0.01f, 500.f);
 
+	float knockVec[3] = {
+		attackInfo_.knockVec.x,
+		attackInfo_.knockVec.y,
+		attackInfo_.knockVec.z,
+	};
+	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
+	attackInfo_.knockVec = { knockVec[0],knockVec[1], knockVec[2] };
+
 	ImGui::End();
 }
 
@@ -358,6 +366,9 @@ void AttackEditor::AttackSave(const std::string& string)
 	writing_file << writing_text << " = " << attackInfo_.damage << std::endl;
 	writing_text = "gravityY";
 	writing_file << writing_text << " = " << attackInfo_.gravity.y << std::endl;
+	Vector3& knockVec = attackInfo_.knockVec;
+	writing_text = "KnockVec";
+	writing_file << writing_text << " " << knockVec.x << " " << knockVec.y << " " << knockVec.z << std::endl;
 	writing_file << std::endl;
 
 	writing_text = "//--SplinePos--//";
