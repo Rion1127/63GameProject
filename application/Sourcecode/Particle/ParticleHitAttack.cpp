@@ -4,6 +4,11 @@
 #include "Easing.h"
 #include "ParticleManager.h"
 
+/**
+ * @file ParticleHitAttack.cpp
+ * @brief 攻撃がヒットしたときのパーティクルクラス
+ */
+
 #pragma region ParticleHitAttack
 ParticleHitAttack::ParticleHitAttack() :
 	IParticle("Particle_Depth_False"),

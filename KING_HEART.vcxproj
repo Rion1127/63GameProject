@@ -92,9 +92,7 @@
     <ClCompile Include="application\Sourcecode\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
-    <ClCompile Include="application\Sourcecode\Stage\Floor.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
-    <ClCompile Include="application\Sourcecode\UI\UIMp.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
@@ -226,9 +224,7 @@
     <ClInclude Include="application\Sourcecode\Shader\HighLumi.h" />
     <ClInclude Include="application\Sourcecode\Shader\LineBlur.h" />
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
-    <ClInclude Include="application\Sourcecode\Stage\Floor.h" />
     <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
-    <ClInclude Include="application\Sourcecode\UI\UIMp.h" />
     <ClInclude Include="application\Sourcecode\UI\UIOperation.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />

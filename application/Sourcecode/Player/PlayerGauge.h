@@ -2,6 +2,12 @@
 #include "Sprite.h"
 #include "IGauge.h"
 #include "Timer.h"
+
+/**
+ * @file PlayerGauge.h
+ * @brief HP・MPゲージを描画するクラス
+ */
+
 class PlayerHPGauge :
 	public IGauge
 {

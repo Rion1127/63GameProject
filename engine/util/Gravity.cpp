@@ -1,6 +1,11 @@
 #include "Gravity.h"
 #include "Util.h"
 
+/**
+ * @file Gravity.cpp
+ * @brief 重力の機能を持ったクラス
+ */
+
 Gravity::Gravity()
 {
 	addValue_ = { 0, -0.015f,0 };

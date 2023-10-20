@@ -15,6 +15,11 @@
 #include "AttackAir2.h"
 #include "AttackAir3.h"
 
+/**
+ * @file AttackManager.h
+ * @brief プレイヤーの基本攻撃を管理するクラス
+ */
+
 class Player;
 
 class AttackDataPool {

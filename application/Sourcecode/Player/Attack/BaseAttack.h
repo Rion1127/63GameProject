@@ -6,6 +6,11 @@
 #include "Collision.h"
 #include <vector>
 
+/**
+ * @file BaseAttack.h
+ * @brief プレイヤーの基本攻撃の動作をするクラス
+ */
+
 class BaseAttack
 {
 public:

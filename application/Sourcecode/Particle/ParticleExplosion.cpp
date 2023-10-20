@@ -4,6 +4,11 @@
 #include "ParticleExplosion.h"
 #include "ParticleManager.h"
 
+/**
+ * @file ParticleExplosion.cpp
+ * @brief フィニッシュ攻撃のパーティクルクラス
+ */
+
 #pragma region ParticleExplosion
 ParticleExplosion::ParticleExplosion() :
 	IParticle("Fire"),

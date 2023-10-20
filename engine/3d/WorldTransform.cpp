@@ -1,8 +1,11 @@
-
 #include "Util.h"
 #include "Camera.h"
 #include "WorldTransform.h"
 
+/**
+ * @file WorldTransform.cpp
+ * @brief 座標・スケール・回転を管理しているクラス
+ */
 
 WorldTransform::WorldTransform()
 {

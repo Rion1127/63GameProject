@@ -4,6 +4,11 @@
 #include "WorldTransform.h"
 #include "Collision.h"
 
+/**
+ * @file Collision.cpp
+ * @brief 当たり判定に関する構造体・関数をまとめている
+ */
+
 void Triangle::ComputeNormal()
 {
 	Vector3 p0_p1 = p1 - p0;

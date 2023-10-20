@@ -9,13 +9,15 @@
 
 #include "JsonLoader.h"
 #include <imgui.h>
-#include "ParticleTest.h"
-#include "ParticleEnemyDead.h"
-#include "ParticleFire.h"
 #include "GameSpeed.h"
 #include "ConfigMenu.h"
 
 #include <time.h>
+
+/**
+ * @file DebugScene.cpp
+ * @brief デバッグ用のシーンクラス
+ */
 
 DebugScene::~DebugScene()
 {

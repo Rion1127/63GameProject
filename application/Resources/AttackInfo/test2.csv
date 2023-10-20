@@ -1,0 +1,13 @@
+//--AtatckInfo--//
+attackFrame = 70
+gapFrame = 71
+damege = 73
+gravityY = 74
+
+//--SplinePos--//
+TimerType Easing
+EasingType Circ
+EasingTypeInOut In
+SplinePos 0 2.6 0.2
+SplinePos 0 2.2 2.1
+SplinePos 0 0 2.7

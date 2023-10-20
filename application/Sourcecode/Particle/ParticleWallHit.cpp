@@ -1,6 +1,11 @@
 #include "ParticleWallHit.h"
 #include "Easing.h"
 
+/**
+ * @file ParticleWallHit.cpp
+ * @brief 壁に当たった時のエフェクト
+ */
+
 ParticleWallHit::ParticleWallHit() :
 	IParticle(),
 	vertexCount(1)

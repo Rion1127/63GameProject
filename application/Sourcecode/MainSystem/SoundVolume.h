@@ -1,4 +1,9 @@
 #pragma once
+
+/**
+ * @file SoundVolume.h
+ * @brief ゲーム全体の音量を管理しているクラス
+ */
 class SoundVolume
 {
 private:

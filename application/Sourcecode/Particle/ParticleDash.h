@@ -1,5 +1,11 @@
 #pragma once
 #include "IParticle.h"
+
+/**
+ * @file ParticleDash.h
+ * @brief 移動している時のパーティクルクラス
+ */
+
 class ParticleDash :
     public IParticle
 {

@@ -4,6 +4,12 @@
 #include "EnemyManager.h"
 #include "HitStop.h"
 #include "GameCamera.h"
+
+/**
+ * @file CollisionManager.h
+ * @brief 当たり判定をまとめているクラス
+ */
+
 class CollisionManager : public HitStop
 {
 private:

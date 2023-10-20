@@ -19,6 +19,11 @@
 #include "ParticleManager.h"
 #include "ParticleLanding.h"
 
+/**
+ * @file Player.cpp
+ * @brief プレイヤーの挙動全てを処理している
+ */
+
 Player::Player() :
 	IActor(ActorType::Player)
 {

@@ -7,6 +7,12 @@
 #include "PipelineManager.h"
 #include "GameSpeed.h"
 
+/**
+ * @file IParticle.h
+ * @brief インターフェースクラス
+ * @brief パーティクルクラスに継承するクラス
+ */
+
 struct IEmitter;
 
 class IParticle

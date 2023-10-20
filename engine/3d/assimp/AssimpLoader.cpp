@@ -6,7 +6,10 @@
 #include "AssimpLoader.h"
 #include "Util.h"
 
-
+/**
+ * @file AssimpLoader.cpp
+ * @brief 'assimp'を用いてファイルを読み込むクラス
+ */
 
 AssimpLoader* AssimpLoader::GetInstance()
 {

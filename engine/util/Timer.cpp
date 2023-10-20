@@ -1,5 +1,11 @@
 #include "Timer.h"
 #include "myMath.h"
+
+/**
+ * @file Timer.cpp
+ * @brief タイマーの機能を使える
+ */
+
 Timer::Timer()
 {
 	timer_ = 0;

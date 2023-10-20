@@ -3,6 +3,11 @@
 #include "Easing.h"
 #include "Util.h"
 
+/**
+ * @file ParticleLanding.cpp
+ * @brief 着地時パーティクルクラス
+ */
+
 ParticleLanding::ParticleLanding() :
 	IParticle("Fire"),
 	vertexCount(6)

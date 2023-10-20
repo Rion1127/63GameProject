@@ -1,6 +1,12 @@
 #pragma once
 #include "IParticle.h"
 #include <vector>
+
+/**
+ * @file ParticleExplosion.h
+ * @brief 敵が死んだときのパーティクルクラス
+ */
+
 class ParticleEnemyDead :
 	public IParticle
 {

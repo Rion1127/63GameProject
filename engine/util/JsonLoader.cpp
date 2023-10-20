@@ -5,6 +5,12 @@
 #include "ParticleFire.h"
 #include "Timer.h"
 
+/**
+ * @file JsonLoader.cpp
+ * @brief nlohmann::jsonを用いた.jsonファイルの読み込み
+ * @brief 地形オブジェの読み込みを行っている
+ */
+
 JsonLoader* JsonLoader::GetInstance()
 {
 	static JsonLoader instance;

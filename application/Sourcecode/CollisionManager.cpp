@@ -8,6 +8,11 @@
 #include "ParticleManager.h"
 #include "SoundVolume.h"
 
+/**
+ * @file CollisionManager.cpp
+ * @brief 当たり判定をまとめているクラス
+ */
+
 CollisionManager::CollisionManager()
 {
 	wallHitTimer_.SetLimitTime(40);

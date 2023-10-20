@@ -6,6 +6,11 @@ using namespace Microsoft::WRL;
 #include "DirectX.h"
 #include <filesystem>
 
+/**
+ * @file Util.cpp
+ * @brief 便利な関数をまとめている
+ */
+
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,

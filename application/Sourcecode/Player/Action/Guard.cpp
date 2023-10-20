@@ -3,6 +3,11 @@
 #include "mInput.h"
 #include "Util.h"
 
+/**
+ * @file Guard.cpp
+ * @brief プレイヤーのガード処理をしている
+ */
+
 GuardClass::GuardClass()
 {
 	col_.radius = 0.7f;

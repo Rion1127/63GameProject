@@ -1,6 +1,11 @@
 #include "AttackEditorScene.h"
 #include "JsonLoader.h"
 
+/**
+ * @file AttackEditorScene.cpp
+ * @brief アタックエディタ用のシーンクラス
+ */
+
 AttackEditorScene::~AttackEditorScene()
 {
 }

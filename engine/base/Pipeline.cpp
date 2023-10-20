@@ -2,6 +2,11 @@
 #include "Util.h"
 #include "Pipeline.h"
 
+/**
+ * @file Pipeline.cpp
+ * @brief パイプラインを使いやすくまとめたクラス
+ */
+
 const std::string kBaseDirectory = "application/Resources/shader/";
 
 D3D12_STATIC_SAMPLER_DESC SetSAMPLER_DESC()

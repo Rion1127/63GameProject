@@ -4,6 +4,12 @@
 #include <array>
 #include "Particle2DSelect.h"
 
+/**
+ * @file ConfigMenu.h
+ * @brief ゲーム内の設定を管理するクラス
+ * @brief SE・BGNとカメラの左右上下反転等
+ */
+
 enum class ConfigType {
 	BGM,
 	SE,

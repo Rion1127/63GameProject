@@ -3,6 +3,11 @@
 #include "RRandom.h"
 #include "Util.h"
 
+/**
+ * @file ParticleDash.cpp
+ * @brief 移動している時のパーティクルクラス
+ */
+
 ParticleDash::ParticleDash() :
 	IParticle("Fire"),
 	vertexCount(6)

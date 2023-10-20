@@ -1,5 +1,11 @@
 #pragma once
 #include "Timer.h"
+
+/**
+ * @file HitStop.h
+ * @brief ヒットストップを管理するクラス
+ */
+
 class HitStop
 {
 private:

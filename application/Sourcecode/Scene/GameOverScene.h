@@ -8,6 +8,11 @@
 #include "LightManager.h"
 #include "Object3d.h"
 
+/**
+ * @file GameOverScene.h
+ * @brief ゲームオーバーシーンクラス
+ */
+
 class GameOverScene final :
 	public IScene
 {

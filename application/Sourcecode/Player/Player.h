@@ -16,6 +16,11 @@
 
 #include "StateMachine.h"
 
+/**
+ * @file Player.h
+ * @brief プレイヤーの挙動全てを処理している
+ */
+
 class Player final :
 	public IActor, public StateMachine<PlayerState>
 {

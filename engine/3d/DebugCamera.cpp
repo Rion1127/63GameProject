@@ -2,6 +2,11 @@
 #include <WinUser.h>
 #include <imgui.h>
 
+/**
+ * @file DebugCamera.cpp
+ * @brief デバッグ用のカメラを管理している
+ */
+
 DebugCamera::DebugCamera()
 {
 	mInput_ = MouseInput::GetInstance();
@@ -24,30 +29,6 @@ void DebugCamera::Update()
 		CameraMove();
 		camera_.Update(CameraMode::LookAT);
 	}
-	//ImGui::Begin("debugCamera");
-	//float pos[3] = {
-	//	camera_.up_.x,
-	//	camera_.up_.y,
-	//	camera_.up_.z,
-	//};
-	///*static float target[3] = {
-	//	viewProjection_.target_.x,
-	//	viewProjection_.target_.y,
-	//	viewProjection_.target_.z,
-	//};*/
-	//ImGui::SliderFloat3("up", pos, -200.f, 200.f);
-	///*ImGui::SliderFloat3("target", target, -200.f, 200.f);*/
-
-
-	//ImGui::End();
-
-	/*viewProjection_.eye_.x = pos[0];
-	viewProjection_.eye_.y = pos[1];
-	viewProjection_.eye_.z = pos[2];
-
-	viewProjection_.target_.x = target[0];
-	viewProjection_.target_.y = target[1];
-	viewProjection_.target_.z = target[2];*/
 }
 
 void DebugCamera::CameraMove()

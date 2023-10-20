@@ -8,6 +8,10 @@
 #include "Timer.h"
 #include "ParticleManager.h"
 
+/**
+ * @file SceneManager.cpp
+ * @brief シーンを管理するクラス
+ */
 
 enum class SceneName {
 	Title,

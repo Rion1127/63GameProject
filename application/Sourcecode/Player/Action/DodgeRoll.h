@@ -1,6 +1,12 @@
 #pragma once
 #include "Vector3.h"
 #include "Timer.h"
+
+/**
+ * @file DodgeRoll.h
+ * @brief プレイヤーの回避の処理をしている
+ */
+
 class DodgeRoll
 {
 private:

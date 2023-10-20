@@ -4,6 +4,11 @@
 #include "Camera.h"
 #include <imgui.h>
 
+/**
+ * @file Camera.cpp
+ * @brief カメラのトランスフォームを管理している
+ */
+
 Camera* Camera::scurrent_ = nullptr;
 
 Camera::Camera()

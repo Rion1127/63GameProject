@@ -1,5 +1,10 @@
 #include "IBullet.h"
 
+/**
+ * @file IBullet.cpp
+ * @brief インターフェースクラス
+ * @brief 弾・遠距離魔法を作る際に継承するクラス
+ */
 
 IBullet::IBullet(IActor* selfActor, int32_t maxTime, int32_t damage, float damageCoolTime, int32_t costMP) :
 	selfActor_(selfActor)

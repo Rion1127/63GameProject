@@ -9,6 +9,11 @@
 #include "IBullet.h"
 #include "SoundVolume.h"
 
+/**
+ * @file EnemyManager.cpp
+ * @brief 全ての敵を管理するクラス
+ */
+
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);

@@ -1,5 +1,10 @@
 #include "Game.h"
 
+/**
+ * @file Game.cpp
+ * @brief ゲーム全体の処理をまとめたクラス
+ */
+
 Game::~Game()
 {
 }

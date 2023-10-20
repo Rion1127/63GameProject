@@ -3,6 +3,11 @@
 #include <unordered_map>
 #include <memory>
 
+/**
+ * @file StateMachine.h
+ * @brief ステートマシンについてまとめたクラス
+ */
+
 template<typename T>
 class State
 {

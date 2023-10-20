@@ -1,6 +1,12 @@
 #include "IEnemy.h"
 #include "Player.h"
 
+/**
+ * @file IEnemy.cpp
+ * @brief インターフェースクラス
+ * @brief 敵を作る際に継承するクラス
+ */
+
 Player* IEnemy::splayer_ = nullptr;
 
 IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)

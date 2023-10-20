@@ -3,6 +3,11 @@
 #include "Vector3.h"
 #include "Gravity.h"
 
+/**
+ * @file PlayerInfo.h
+ * @brief プレイヤーのステートを宣言をしている
+ */
+
 enum class PlayerState {
 	Idle,
 	Move,

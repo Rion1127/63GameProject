@@ -3,6 +3,11 @@
 #include "GameSpeed.h"
 #include "Easing.h"
 
+/**
+ * @file Spline.cpp
+ * @brief スプライン曲線を使いやすいようにまとめたクラス
+ */
+
 std::vector<std::string> Spline::sEaseTypeName_;
 
 Spline::Spline()

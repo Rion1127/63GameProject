@@ -1,5 +1,11 @@
 #include "PlayerKnock.h"
 
+/**
+ * @file PlayerKnock.cpp
+ * @brief ステートマシン
+ * @brief プレイヤーがノックバックしている状態
+ */
+
 void PlayerKnock::SetUp()
 {
 }

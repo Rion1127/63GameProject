@@ -6,6 +6,11 @@
 #include "AssimpLoader.h"
 #include "mInput.h"
 
+/**
+ * @file AssimpObject3D.cpp
+ * @brief assimpModelを用いて描画を管理している
+ */
+
 AssimpObject3D::AssimpObject3D()
 {
 	constBuff_ = CreateBuff(constMap_);

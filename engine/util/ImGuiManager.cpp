@@ -4,6 +4,11 @@
 #include "ImGuiManager.h"
 #include <cassert>
 
+/**
+ * @file ImGuiManager.cpp
+ * @brief 'ImGui'の機能を使いやすいようにまとめたクラス
+ */
+
 ImGuiManager* ImGuiManager::Getinstance()
 {
 	static ImGuiManager instance;

@@ -1,5 +1,12 @@
 #pragma once
 #include "Sprite.h"
+
+/**
+ * @file IGauge.h
+ * @brief インターフェースクラス
+ * @brief ゲージを作る際に継承するクラス
+ */
+
 class IGauge
 {
 protected:

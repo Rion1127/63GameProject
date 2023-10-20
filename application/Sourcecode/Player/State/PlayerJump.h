@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerKnock.h
+ * @brief ステートマシン
+ * @brief プレイヤーがノックバックしている状態
+ */
+
 class Player;
 
 class PlayerJump :

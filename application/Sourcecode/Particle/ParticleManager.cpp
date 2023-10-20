@@ -5,6 +5,11 @@
 #include "ParticleEnemyDead.h"
 #include "ParticleWallHit.h"
 
+/**
+ * @file ParticleManager.cpp
+ * @brief パーティクルを管理するクラス
+ */
+
 ParticleManager* ParticleManager::GetInstance()
 {
 	static ParticleManager instance;

@@ -4,6 +4,11 @@
 #include "RRandom.h"
 #include "ConfigMenu.h"
 
+/**
+ * @file GameCamera.cpp
+ * @brief メインカメラを管理するクラス
+ */
+
 GameCamera::GameCamera()
 {
 	camera_ = std::move(std::make_unique<Camera>());

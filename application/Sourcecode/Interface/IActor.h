@@ -6,6 +6,12 @@
 #include "Timer.h"
 #include "HitStop.h"
 
+/**
+ * @file IActor.h
+ * @brief インターフェースクラス
+ * @brief プレイヤーや敵・モブ等を作る際に継承するクラス
+ */
+
 enum class ActorType {
 	Player,
 	Enemy

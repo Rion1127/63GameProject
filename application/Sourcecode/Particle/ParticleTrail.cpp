@@ -5,6 +5,11 @@
 #include <imgui.h>
 #include "Util.h"
 
+/**
+ * @file ParticleTrail.cpp
+ * @brief 軌道エフェクトを作るクラス
+ */
+
 ParticleTrail::ParticleTrail(uint32_t vertSize) :
 	vertSize_(vertSize)
 {

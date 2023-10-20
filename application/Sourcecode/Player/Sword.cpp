@@ -5,6 +5,11 @@
 #include <imgui.h>
 #include "myMath.h"
 
+/**
+ * @file Sword.cpp
+ * @brief 剣の動きを管理するクラス
+ */
+
 Sword::Sword()
 {
 	obj_ = MakeUnique<Object3d>();

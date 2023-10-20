@@ -1,5 +1,10 @@
 #include "HitStop.h"
 
+/**
+ * @file HitStop.cpp
+ * @brief ヒットストップを管理するクラス
+ */
+
 void HitStop::HitStopUpdate()
 {
 	timer_.AddTime(1);

@@ -1,6 +1,12 @@
 #include "UIOperation.h"
 #include "Util.h"
 #include "Texture.h"
+
+/**
+ * @file UIOperation.cpp
+ * @brief 操作UIを描画するクラス
+ */
+
 UIOperation::UIOperation()
 {
 	operationUI_.resize(4);

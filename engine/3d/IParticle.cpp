@@ -2,6 +2,12 @@
 #include "DirectX.h"
 #include "Util.h"
 
+/**
+ * @file IParticle.cpp
+ * @brief インターフェースクラス
+ * @brief パーティクルクラスに継承するクラス
+ */
+
 IParticle::~IParticle() {
 
 }

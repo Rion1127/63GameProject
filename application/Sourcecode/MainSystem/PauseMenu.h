@@ -4,6 +4,11 @@
 #include "Timer.h"
 #include "Particle2DSelect.h"
 
+/**
+ * @file PauseMenu.h
+ * @brief ポーズ画面を管理するクラス
+ */
+
 struct PauseSprits {
 	std::unique_ptr<Sprite> sprite;
 	bool isActive;

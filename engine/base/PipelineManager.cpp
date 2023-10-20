@@ -1,5 +1,10 @@
 #include "PipelineManager.h"
 
+/**
+ * @file PipelineManager.cpp
+ * @brief パイプラインを生成、管理しているマネージャークラス
+ */
+
 std::map<std::string, std::unique_ptr<PipelineObject>> PipelineManager::pipelineObjects_;
 
 void PipelineManager::Ini() {

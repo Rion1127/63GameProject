@@ -3,6 +3,11 @@
 #include "DirectX.h"
 #include "Vertices.h"
 
+/**
+ * @file Vertices.cpp
+ * @brief 頂点データを管理しているクラス
+ */
+
 void Vertices::Ini()
 {
 	HRESULT result;

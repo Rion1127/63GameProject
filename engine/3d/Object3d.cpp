@@ -1,5 +1,10 @@
 #include "Object3d.h"
 
+/**
+ * @file Object3d.cpp
+ * @brief 読み込んだモデルを描画するクラス
+ */
+
 Object3d::Object3d()
 {
 }

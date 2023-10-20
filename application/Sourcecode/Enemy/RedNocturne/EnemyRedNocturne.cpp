@@ -9,6 +9,11 @@
 #include "mSound.h"
 #include "SoundVolume.h"
 
+/**
+ * @file EnemyRedNocturne.cpp
+ * @brief 空中の敵（レッドノクターン）のクラス
+ */
+
 EnemyRedNocturne::EnemyRedNocturne(const Vector3& pos, const Vector3& rot) :
 	IEnemy(EnemyType::Air, false, 80)
 {

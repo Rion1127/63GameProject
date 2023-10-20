@@ -7,6 +7,11 @@
 #include "IScene.h"
 #include "LightManager.h"
 
+/**
+ * @file TitleScene.h
+ * @brief タイトルを管理するクラス
+ */
+
 class TitleScene
 	final :
 	public IScene

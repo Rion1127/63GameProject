@@ -2,13 +2,18 @@
 #include <fstream>
 #include <iostream>
 
+/**
+ * @file AttackEditor.cpp
+ * @brief 攻撃を制作するエディタークラス
+ */
+
 AttackEditor::AttackEditor()
 {
 	playerObj_ = std::make_unique<Object3d>();
 	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 
 	splineObj_ = std::make_unique<Object3d>();
-	splineObj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
+	splineObj_->SetModel(Model::CreateOBJ_uniptr("cube", false));
 	splineObj_->SetAmbient("cube", Vector3(0.5f, 0.5f, 0));
 	splineObj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 	splineObj_->WT_.parent_ = &playerObj_->WT_;
@@ -230,7 +235,7 @@ void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
 {
 	std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
 	newObj->obj_ = std::make_unique<Object3d>();
-	newObj->obj_->SetModel(Model::CreateOBJ_uniptr("cube", true));
+	newObj->obj_->SetModel(Model::CreateOBJ_uniptr("cube", false));
 	newObj->obj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 	newObj->obj_->WT_.parent_ = &playerObj_->WT_;
 	newObj->splinePointPos_ = pos;

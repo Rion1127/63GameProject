@@ -3,6 +3,11 @@
 #include "Object3d.h"
 #include <unordered_map>
 
+/**
+ * @file Stage.h
+ * @brief 背景のステージを描画するクラス
+ */
+
 class Stage
 {
 private:

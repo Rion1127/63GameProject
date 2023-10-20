@@ -1,6 +1,11 @@
 #include "BaseAttack.h"
 #include "GameSpeed.h"
 
+/**
+ * @file BaseAttack.cpp
+ * @brief プレイヤーの基本攻撃の動作をするクラス
+ */
+
 BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lockOnActor) :
 	attackinput_(input),
 	selfActor_(selfActor),

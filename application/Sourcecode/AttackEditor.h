@@ -5,6 +5,11 @@
 #include <imgui.h>
 #include <vector>
 
+/**
+ * @file AttackEditor.h
+ * @brief 攻撃を制作するエディタークラス
+ */
+
 class AttackEditor
 {
 public:

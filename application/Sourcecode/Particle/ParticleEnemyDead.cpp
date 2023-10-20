@@ -4,6 +4,11 @@
 #include "Easing.h"
 #include "Util.h"
 
+/**
+ * @file ParticleExplosion.cpp
+ * @brief 敵が死んだときのパーティクルクラス
+ */
+
 #pragma region 煙パーティクル
 ParticleEnemyDead::ParticleEnemyDead() :
 	vertexCount(64), IParticle("Smoke")

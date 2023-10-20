@@ -2,6 +2,11 @@
 #include "mSound.h"
 #pragma comment(lib, "xaudio2.lib")
 
+/**
+ * @file mSound.cpp
+ * @brief サウンドの読み込み・再生の機能を持ったクラス
+ */
+
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
 IXAudio2MasteringVoice* SoundManager::smasterVoice_;
 std::map<SoundKey, SoundData> SoundManager::ssndMap_;

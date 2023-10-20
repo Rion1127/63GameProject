@@ -1,5 +1,11 @@
 #pragma once
 #include "IParticle.h"
+
+/**
+ * @file ParticleHitAttack.h
+ * @brief 火のパーティクルクラス
+ */
+
 class ParticleFire final :
 	public IParticle
 {

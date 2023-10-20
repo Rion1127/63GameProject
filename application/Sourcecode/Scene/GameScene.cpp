@@ -7,6 +7,11 @@
 #include "EnemyLoader.h"
 #include "JsonLoader.h"
 
+/**
+ * @file GameScene.cpp
+ * @brief メインのゲームシーンクラス
+ */
+
 GameScene::~GameScene()
 {
 }

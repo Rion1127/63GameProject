@@ -2,6 +2,11 @@
 #include "myMath.h"
 #define PI 3.141592f
 
+/**
+ * @file myMath.cpp
+ * @brief 数学に関するものをまとめたクラス
+ */
+
 #pragma region FLOAT2
 FLOAT2::FLOAT2() : x(0), y(0) {}
 

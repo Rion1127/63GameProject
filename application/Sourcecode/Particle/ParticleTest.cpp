@@ -3,6 +3,12 @@
 #include "RRandom.h"
 #include "Util.h"
 #include <imgui.h>
+
+/**
+ * @file ParticleTest.cpp
+ * @brief テスト用エフェクトクラス
+ */
+
 ParticleTest::ParticleTest() :
 	vertexCount(16)
 {

@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerFreeze.h
+ * @brief ステートマシン
+ * @brief プレイヤーが硬直している状態
+ */
+
 class Player;
 
 class PlayerFreeze :

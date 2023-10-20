@@ -3,7 +3,7 @@
 
 /**
  * @file Game.h
- * @brief 
+ * @brief ゲーム全体の処理をまとめたクラス
  */
 
 class Game final :

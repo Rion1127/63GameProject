@@ -1,5 +1,11 @@
 #pragma once
 #include "IEnemy.h"
+
+/**
+ * @file EnemyAirDummy.h
+ * @brief デバッグ用の空中の敵のクラス
+ */
+
 class EnemyAirDummy final :
     public IEnemy
 {

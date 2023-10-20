@@ -3,6 +3,11 @@
 #include  "Player.h"
 #include "ColosseumSystem.h"
 
+/**
+ * @file GameCamera.h
+ * @brief メインカメラを管理するクラス
+ */
+
 struct DeadZoneValue {
 	int32_t x;
 	int32_t y;

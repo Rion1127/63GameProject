@@ -5,6 +5,11 @@
 
 #include <unordered_map>
 
+/**
+ * @file EnemyShadow.h
+ * @brief 地上の敵（シャドウ）のクラス
+ */
+
 class EnemyShadow :
 	public IEnemy
 {

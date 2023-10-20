@@ -1,4 +1,11 @@
 #pragma once
+
+/**
+ * @file GameSpeed.h
+ * @brief ゲームの速度を管理するクラス
+ * @brief 主にスローモーションで利用する
+ */
+
 class GameSpeed
 {
 private:

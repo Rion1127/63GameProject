@@ -2,6 +2,11 @@
 #include "Texture.h"
 using namespace DirectX;
 
+/**
+ * @file Texture.cpp
+ * @brief DirectTexを用いた画像読み込み・管理
+ */
+
 #pragma region TextureManager
 
 

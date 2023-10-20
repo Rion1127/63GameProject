@@ -11,6 +11,11 @@
 #include <sstream>
 #include "myMath.h"
 
+/**
+ * @file Sprite.cpp
+ * @brief 2Dスプライトに関するクラス
+ */
+
 uint32_t Sprite::SAllNum = 0;
 
 void Sprite::Ini(const std::string& guiname)

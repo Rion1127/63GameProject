@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerDogeRoll.h
+ * @brief ステートマシン
+ * @brief プレイヤーが回避（ドッジロール）している状態
+ */
+
 class Player;
 
 class PlayerDogeRoll :

@@ -3,6 +3,11 @@
 #include "Easing.h"
 #include "Util.h"
 
+/**
+ * @file ParticleHitAttack.cpp
+ * @brief 火のパーティクルクラス
+ */
+
 #pragma region 炎エフェクト
 ParticleFire::ParticleFire() :
 	IParticle("Fire"),

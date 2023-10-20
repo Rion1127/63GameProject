@@ -1,5 +1,11 @@
 #include "PlayerJump.h"
 
+/**
+ * @file PlayerKnock.cpp
+ * @brief ステートマシン
+ * @brief プレイヤーがジャンプしている状態
+ */
+
 void PlayerJump::SetUp()
 {
 }

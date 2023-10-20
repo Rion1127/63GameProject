@@ -474,9 +474,6 @@
     <ClCompile Include="application\Sourcecode\Scene\TitleScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Stage\Floor.cpp">
-      <Filter>application\ソースファイル\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp">
       <Filter>application\ソースファイル\Stage</Filter>
     </ClCompile>
@@ -560,9 +557,6 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\State\PlayerAirAttack.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\UI\UIMp.cpp">
-      <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerGauge.cpp">
       <Filter>application\ソースファイル\UI</Filter>
@@ -872,9 +866,6 @@
     <ClInclude Include="application\Sourcecode\Stage\Stage.h">
       <Filter>application\ヘッダーファイル\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Stage\Floor.h">
-      <Filter>application\ヘッダーファイル\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\CollisionManager.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
@@ -961,9 +952,6 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\State\PlayerAirAttack.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\UI\UIMp.h">
-      <Filter>application\ヘッダーファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerGauge.h">
       <Filter>application\ヘッダーファイル\UI</Filter>

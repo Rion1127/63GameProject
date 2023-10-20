@@ -4,6 +4,11 @@
 #include "DirectX.h"
 using namespace DirectX;
 
+/**
+ * @file Material.cpp
+ * @brief モデルの見た目に関することを管理している
+ */
+
 Material::Material()
 {
 	HRESULT result;

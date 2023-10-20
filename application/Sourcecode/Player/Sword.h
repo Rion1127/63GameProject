@@ -4,6 +4,12 @@
 #include "IAttack.h"
 #include "Timer.h"
 #include "SwordTrail.h"
+
+/**
+ * @file Sword.h
+ * @brief 剣の動きを管理するクラス
+ */
+
 class Sword
 {
 public:

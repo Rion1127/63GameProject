@@ -9,6 +9,11 @@
 #include "GameOverScene.h"
 #include "AttackEditorScene.h"
 
+/**
+ * @file SceneManager.cpp
+ * @brief シーンを管理するクラス
+ */
+
 std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
 bool SceneManager::sisSetNext_ = false;

@@ -15,6 +15,12 @@
 #include "Object3d.h"
 
 #include "AttackEditor.h"
+
+/**
+ * @file AttackEditorScene.h
+ * @brief アタックエディタ用のシーンクラス
+ */
+
 class AttackEditorScene :
     public IScene
 {

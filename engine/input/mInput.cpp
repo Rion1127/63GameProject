@@ -4,6 +4,11 @@
 #pragma comment(lib, "Xinput.lib")
 #pragma comment(lib, "dinput8.lib")
 
+/**
+ * @file mInput.cpp
+ * @brief 'dinput'や'Xinput'による入力を管理している
+ */
+
 //DirectInputの初期化
 static IDirectInput8* sdirectInput = nullptr;
 

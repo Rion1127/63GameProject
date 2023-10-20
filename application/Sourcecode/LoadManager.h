@@ -2,6 +2,12 @@
 #include "Texture.h"
 #include "mSound.h"
 #include "EnemyLoader.h"
+
+/**
+ * @file LoadManager.h
+ * @brief リソースを読み込みをまとめている
+ */
+
 class LoadManager
 {
 private:

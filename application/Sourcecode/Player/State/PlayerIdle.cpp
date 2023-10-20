@@ -1,5 +1,11 @@
 #include "PlayerIdle.h"
 
+/**
+ * @file PlayerIdle.cpp
+ * @brief ステートマシン
+ * @brief プレイヤーが何もしていない状態
+ */
+
 void PlayerIdle::SetUp()
 {
 }

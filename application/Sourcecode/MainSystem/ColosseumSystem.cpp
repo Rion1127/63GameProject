@@ -9,6 +9,11 @@
 #include "GameSpeed.h"
 #include "SoundVolume.h"
 
+/**
+ * @file ColosseumSystem.cpp
+ * @brief ゲームのメインシステム（コロシアム）を管理しているクラス
+ */
+
 ColosseumSystem::ColosseumSystem()
 {
 	blindSprite_ = std::make_unique<Sprite>();

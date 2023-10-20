@@ -9,6 +9,12 @@
 #include "Player.h"
 #include "IBullet.h"
 #include "HitStop.h"
+
+/**
+ * @file EnemyManager.h
+ * @brief 全ての敵を管理するクラス
+ */
+
 class EnemyManager : public HitStop
 {
 private:

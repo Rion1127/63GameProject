@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerIdle.h
+ * @brief ステートマシン
+ * @brief プレイヤーが何もしていない状態
+ */
+
 class Player;
 
 class PlayerIdle :

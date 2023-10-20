@@ -3,6 +3,11 @@
 #include "LightGroup.h"
 #include "GameSpeed.h"
 
+/**
+ * @file Framework.ｃｐｐ
+ * @brief エンジン部分の処理の流れをまとめたクラス
+ */
+
 void Framework::Init()
 {
 	//winAPI初期化

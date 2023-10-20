@@ -4,6 +4,11 @@
 #include <list>
 #include "HitStop.h"
 
+/**
+ * @file ParticleManager.h
+ * @brief パーティクルを管理するクラス
+ */
+
 class ParticleManager : public HitStop
 {
 private:

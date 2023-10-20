@@ -1,5 +1,10 @@
 #include "EnemyAirDummy.h"
 
+/**
+ * @file EnemyAirDummy.cpp
+ * @brief デバッグ用の空中の敵のクラス
+ */
+
 EnemyAirDummy::EnemyAirDummy(const Vector3& pos) : IEnemy(EnemyType::Air, false, 100)
 {
 	obj_ = std::move(std::make_unique<Object3d>());

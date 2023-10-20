@@ -20,6 +20,12 @@
 #include "Object3d.h"
 #include "AssimpObject3D.h"
 #include "AssimpLoader.h"
+
+/**
+ * @file DebugScene.h
+ * @brief デバッグ用のシーンクラス
+ */
+
 class DebugScene final :
 	public IScene
 {

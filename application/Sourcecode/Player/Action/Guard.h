@@ -3,6 +3,11 @@
 #include "Timer.h"
 #include "Object3d.h"
 
+/**
+ * @file Guard.h
+ * @brief プレイヤーのガード処理をしている
+ */
+
 class Player;
 
 class GuardClass

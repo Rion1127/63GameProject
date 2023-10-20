@@ -1,5 +1,10 @@
 #include "RRandom.h"
 
+/**
+ * @file RRandom.cpp
+ * @brief メルセンヌツイスタを用いた乱数生成器
+ */
+
 //乱数シード生成器
 std::random_device RRandom::seed_gen;
 std::mt19937_64 RRandom::engine(seed_gen());

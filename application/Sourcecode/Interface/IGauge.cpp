@@ -1,5 +1,10 @@
 #include "IGauge.h"
 
+/**
+ * @file IGauge.cpp
+ * @brief インターフェースクラス
+ * @brief ゲージを作る際に継承するクラス
+ */
 
 IGauge::IGauge(const Color& color)
 {

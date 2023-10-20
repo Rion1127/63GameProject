@@ -1,6 +1,11 @@
 #include "Quaternion.h"
 #include <cmath>
 
+/**
+ * @file Quaternion.cpp
+ * @brief クォータニオンを使いやすいようにまとめたクラス
+ */
+
 //単位Quaternionを返す
 Quaternion IdentityQuaternion()
 {

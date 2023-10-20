@@ -7,6 +7,12 @@
 #include "IAttack.h"
 #include "IBullet.h"
 
+/**
+ * @file IEnemy.h
+ * @brief インターフェースクラス
+ * @brief 敵を作る際に継承するクラス
+ */
+
 enum class EnemyType {
 	Ground,
 	Air

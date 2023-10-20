@@ -8,6 +8,11 @@
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dxgi.lib")
 
+/**
+ * @file RDirectX.cpp
+ * @brief DirectX12の初期化や描画を管理しているクラス
+ */
+
 RDirectX* RDirectX::GetInstance()
 {
 	static RDirectX instance;

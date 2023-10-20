@@ -9,6 +9,11 @@
 #include "Texture.h"
 #include "Color.h"
 
+/**
+ * @file ParticleTrail.h
+ * @brief 軌道エフェクトを作るクラス
+ */
+
 class ParticleTrail
 {
 private:

@@ -1,6 +1,11 @@
 #include "DodgeRoll.h"
 #include "Util.h"
 
+/**
+ * @file DodgeRoll.cpp
+ * @brief プレイヤーの回避の処理をしている
+ */
+
 DodgeRoll::DodgeRoll()
 {
 	speed_ = 0.5f;

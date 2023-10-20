@@ -13,6 +13,11 @@
 #include <fstream>
 #include <iostream>
 
+/**
+ * @file AttackManager.cpp
+ * @brief プレイヤーの基本攻撃を管理するクラス
+ */
+
 Player* AttackManager::player_ = nullptr;
 
 AttackManager::AttackManager()

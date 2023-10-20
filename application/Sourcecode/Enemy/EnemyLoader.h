@@ -5,6 +5,12 @@
 #include <unordered_map>
 #include <sstream>
 #include <fstream>
+
+/**
+ * @file EnemyLoader.h
+ * @brief csvファイルから敵の情報を読み込むクラス
+ */
+
 class EnemyLoader
 {
 private:

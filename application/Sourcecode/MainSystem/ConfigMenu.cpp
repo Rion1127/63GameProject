@@ -4,6 +4,12 @@
 #include "mSound.h"
 #include "SoundVolume.h"
 
+/**
+ * @file ConfigMenu.cpp
+ * @brief ゲーム内の設定を管理するクラス
+ * @brief SE・BGNとカメラの左右上下反転等
+ */
+
 ConfigMenu* ConfigMenu::GetInstance()
 {
 	static ConfigMenu instance;

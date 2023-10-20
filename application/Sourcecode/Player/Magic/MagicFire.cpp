@@ -2,6 +2,11 @@
 #include "ParticleManager.h"
 #include "ParticleFire.h"
 
+/**
+ * @file MagicFire.cpp
+ * @brief プレイヤーの攻撃魔法
+ */
+
 MagicFire::~MagicFire()
 {
 	if (fireEmitter_ != nullptr) {

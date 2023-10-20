@@ -8,6 +8,12 @@
 #include <fstream>
 #include <sstream>
 #include "Util.h"
+
+/**
+ * @file Model.cpp
+ * @brief 読み込んだ頂点データ・マテリアルを管理している
+ */
+
 const std::string kBaseDirectory = "application/Resources/Object/";
 
 std::shared_ptr<LightGroup> Model::lightGroup_ = nullptr;

@@ -19,6 +19,11 @@
 #include "Spline.h"
 #include "Object3d.h"
 
+/**
+ * @file GameScene.h
+ * @brief メインのゲームシーンクラス
+ */
+
 class GameScene final :
 	public IScene
 {

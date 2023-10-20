@@ -8,6 +8,11 @@
 #include "ConfigMenu.h"
 #include "SoundVolume.h"
 
+/**
+ * @file PauseMenu.cpp
+ * @brief ポーズ画面を管理するクラス
+ */
+
 PauseMenu::PauseMenu()
 {
 	backSprite_ = std::make_unique<Sprite>();

@@ -1,5 +1,10 @@
 #include "EnemyHPGauge.h"
 
+/**
+ * @file EnemyHPGauge.cpp
+ * @brief 敵のHPを表示するクラス
+ */
+
 EnemyHPGauge::EnemyHPGauge()
 {
 	hpBar_ = std::move(std::make_unique<Sprite>());

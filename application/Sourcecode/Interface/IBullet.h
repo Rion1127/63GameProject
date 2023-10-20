@@ -7,6 +7,12 @@
 #include "IActor.h"
 #include "Spline.h"
 
+/**
+ * @file IBullet.h
+ * @brief インターフェースクラス
+ * @brief 弾・遠距離魔法を作る際に継承するクラス
+ */
+
 class IBullet
 {
 private:

@@ -10,6 +10,11 @@
 #include "AttackJumpShadow.h"
 #include "GameSpeed.h"
 
+/**
+ * @file EnemyShadow.cpp
+ * @brief 地上の敵（シャドウ）のクラス
+ */
+
 EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	IEnemy(EnemyType::Ground, true, 80)
 {

@@ -3,6 +3,11 @@
 #include "Player.h"
 #include <imgui.h>
 
+/**
+ * @file EnemyDummy.cpp
+ * @brief デバッグ用の地上の敵のクラス
+ */
+
 EnemyDummy::EnemyDummy(const Vector3& pos) : IEnemy(EnemyType::Ground, true, 100)
 {
 	obj_ = std::move(std::make_unique<Object3d>());

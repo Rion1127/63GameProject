@@ -2,6 +2,11 @@
 #include <imgui_impl_win32.h>
 #pragma comment(lib, "winmm.lib")
 
+/**
+ * @file WinAPI.cpp
+ * @brief WinAPIについてまとめたクラス
+ */
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
