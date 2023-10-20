@@ -2,6 +2,7 @@
 #include "Object3d.h"
 #include "Spline.h"
 #include "IAttack.h"
+#include "mInput.h"
 #include <imgui.h>
 #include <vector>
 
@@ -22,7 +23,9 @@ public:
 		Vector3 gravity;		//攻撃時に動く方向
 		int32_t damage;			//ダメージ
 
-		Vector3 knockVec;
+		Vector3 knockVec;		//ノックバック方向
+		Vector3 playerMoveVec;		//プレイヤーが動く方向
+		float deceleration;			//プレイヤーの速度減速値
 
 		Spline::TimerType timerType;		//通常かイージングか
 		Spline::EasingType easingType;		//イージングの種類
@@ -49,6 +52,8 @@ private:
 	bool isPlay_;
 	bool isPointErase_;
 
+	Vector3 moveVec_;
+
 	std::vector<std::string> allAttackFileNames;
 public:
 	AttackEditor();
@@ -63,5 +68,12 @@ private:
 	void ImGuiLoad();
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
+	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む
 };
 
+class FrameEditor {
+private:
+
+public:
+
+};

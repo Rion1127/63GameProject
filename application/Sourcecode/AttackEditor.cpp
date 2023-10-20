@@ -21,8 +21,9 @@ AttackEditor::AttackEditor()
 	isPointErase_ = false;
 
 	//現在存在しているファイルを全て検索する
-	std:: string saveDir = "application/Resources/AttackInfo/";
-	allAttackFileNames = FindFileNames(saveDir, ".csv", false);
+	FindAttackFile();
+
+	attackInfo_.deceleration = 0.1f;
 }
 
 void AttackEditor::Update()
@@ -45,6 +46,11 @@ void AttackEditor::Update()
 
 		if (spline_.GetisEnd())isPlay_ = false;
 	}
+
+	Vector3 playerPos = playerObj_->GetPos();
+	playerPos += moveVec_;
+	MoveTo(Vector3(0,0,0), attackInfo_.deceleration, moveVec_);
+	playerObj_->SetPos(playerPos);
 	splineObj_->Update();
 	playerObj_->Update();
 }
@@ -69,19 +75,26 @@ void AttackEditor::DrawImGui()
 	static float playerpos[3] = { 0,1,0 };
 
 	ImGui::DragFloat3("pos", playerpos, 0.1f, 100.f, 100.f);
-	playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
+	//playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 
 	if (ImGui::Button("PlayerPosReset"))
 	{
 		playerpos[0] = 0;
 		playerpos[1] = 1;
 		playerpos[2] = 0;
+		playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 	}
 
 	ImGuiSave();
 	ImGuiLoad();
 
+	if (ImGui::Button("FileReload"))
+	{
+		FindAttackFile();
+	}
+
 	ImGui::End();
+
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackSpline");
 	if (ImGui::Button("Play", ImVec2(50, 50)))
@@ -109,6 +122,7 @@ void AttackEditor::DrawImGui()
 			}
 
 		}
+		moveVec_ = attackInfo_.playerMoveVec;
 	}
 	if (ImGui::Button("AddSplinePoint"))
 	{
@@ -171,6 +185,23 @@ void AttackEditor::DrawImGui()
 	ImGui::DragFloat("gapFrame", &attackInfo_.gapFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 500);
 	ImGui::DragFloat("gravity", &attackInfo_.gravity.y, 1.0f, 0.f, 500.f);
+
+	float playerMoveVec[3] = { 
+		attackInfo_.playerMoveVec.x,
+		attackInfo_.playerMoveVec.y,
+		attackInfo_.playerMoveVec.z,
+	};
+	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, 0.f, 500.f);
+	attackInfo_.playerMoveVec = { playerMoveVec [0],playerMoveVec[1], playerMoveVec[2] };
+	ImGui::DragFloat("gravity", &attackInfo_.deceleration, 0.01f, 0.01f, 500.f);
+
+	float knockVec[3] = {
+		attackInfo_.knockVec.x,
+		attackInfo_.knockVec.y,
+		attackInfo_.knockVec.z,
+	};
+	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
+	attackInfo_.knockVec = { knockVec[0],knockVec[1], knockVec[2] };
 
 	ImGui::End();
 }
@@ -340,6 +371,9 @@ void AttackEditor::AttackSave(const std::string& string)
 	writing_file << writing_text << " = " << attackInfo_.damage << std::endl;
 	writing_text = "gravityY";
 	writing_file << writing_text << " = " << attackInfo_.gravity.y << std::endl;
+	Vector3& knockVec = attackInfo_.knockVec;
+	writing_text = "KnockVec";
+	writing_file << writing_text << " " << knockVec.x << " " << knockVec.y << " " << knockVec.z << std::endl;
 	writing_file << std::endl;
 
 	writing_text = "//--SplinePos--//";
@@ -378,8 +412,7 @@ void AttackEditor::AttackSave(const std::string& string)
 
 	writing_file.close();
 	//現在存在しているファイルを全て検索する
-	saveDir = "application/Resources/AttackInfo/";
-	allAttackFileNames = FindFileNames(saveDir, ".csv",false);
+	FindAttackFile();
 }
 
 void AttackEditor::AttackLoad(const std::string& string)
@@ -472,4 +505,10 @@ void AttackEditor::AttackLoad(const std::string& string)
 			ImGuiADDSplinePos(splinePos);
 		}
 	}
+}
+
+void AttackEditor::FindAttackFile()
+{
+	std::string dir = "application/Resources/AttackInfo/";
+	allAttackFileNames = FindFileNames(dir, ".csv", false);
 }
