@@ -76,6 +76,7 @@ Player::Player() :
 
 	isCanInput_ = true;
 
+	obj_->WT_.SetRotType(RotType::Quaternion);
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 
 	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
@@ -136,7 +137,8 @@ void Player::PostUpdate()
 	displayObj_->SetPos(displayPos);
 	displayObj_->SetRot(displayrot);
 	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
-
+	
+	obj_->Update();
 	displayObj_->Update();
 
 	if (health_ <= 0)

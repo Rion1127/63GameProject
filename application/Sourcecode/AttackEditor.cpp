@@ -75,7 +75,7 @@ void AttackEditor::DrawImGui()
 	static float playerpos[3] = { 0,1,0 };
 
 	ImGui::DragFloat3("pos", playerpos, 0.1f, 100.f, 100.f);
-	//playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
+	playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 
 	if (ImGui::Button("PlayerPosReset"))
 	{
@@ -193,7 +193,7 @@ void AttackEditor::DrawImGui()
 	};
 	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, 0.f, 500.f);
 	attackInfo_.playerMoveVec = { playerMoveVec [0],playerMoveVec[1], playerMoveVec[2] };
-	ImGui::DragFloat("gravity", &attackInfo_.deceleration, 0.01f, 0.01f, 500.f);
+	ImGui::DragFloat("deceleration", &attackInfo_.deceleration, 0.01f, 0.01f, 500.f);
 
 	float knockVec[3] = {
 		attackInfo_.knockVec.x,

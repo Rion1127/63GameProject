@@ -35,7 +35,7 @@ void Spline::Update(float speedRate)
 {
 	if (isStart_) {
 		if (timerType_ == TimerType::Normal) {
-			SplineUpdate(speedRate);
+			NormalUpdate(speedRate);
 		}
 		else if (timerType_ == TimerType::Easing) {
 			EasingUpdate(speedRate);
@@ -44,31 +44,6 @@ void Spline::Update(float speedRate)
 
 	for (int32_t i = 0; i < splineObj_.size(); i++) {
 		splineObj_[i]->Update();
-	}
-}
-
-void Spline::SplineUpdate(float speedRate)
-{
-	timer_.AddTime(speedRate);
-
-	float t = timer_.GetTimeRate();
-
-	if (t >= 1.0f) {
-		//次の制御点がある場合
-		if (index_ < splinePos_.size() - 3) {
-			index_++;
-			timer_.Reset();
-			t = timer_.GetTimeRate();
-		}
-		//最終地点だった場合1.0fにして動きを止める
-		else {
-			isEnd_ = true;
-		}
-	}
-	nowPos_ = SplinePosition(splinePos_, index_, t);
-	t += 0.01f;
-	if (t <= 1.f) {
-		headingVec_ = SplinePosition(splinePos_, index_, t) - nowPos_;
 	}
 }
 
@@ -127,6 +102,12 @@ void Spline::AddPosition(const Vector3& pos, PosState state)
 
 		ObjInit();
 	}
+}
+
+void Spline::SetParent(WorldTransform* parent)
+{
+	worldTransform_.parent_ = parent;
+	worldTransform_.rotType = parent->rotType;
 }
 
 
@@ -205,10 +186,22 @@ void Spline::NormalUpdate(float speedRate)
 			isEnd_ = true;
 		}
 	}
-	nowPos_ = SplinePosition(splinePos_, index_, t);
-	t += 0.01f;
-	if (t <= 1.f) {
-		headingVec_ = SplinePosition(splinePos_, index_, t) - nowPos_;
+	worldTransform_.Update();
+	if (worldTransform_.parent_ != nullptr) {
+		std::vector<Vector3> splinePos;
+		ParentUpdate(splinePos);
+		nowPos_ = SplinePosition(splinePos, index_, t);
+		t += 0.01f;
+		if (t <= 1.f) {
+			headingVec_ = SplinePosition(splinePos, index_, t) - nowPos_;
+		}
+	}
+	else {
+		nowPos_ = SplinePosition(splinePos_, index_, t);
+		t += 0.01f;
+		if (t <= 1.f) {
+			headingVec_ = SplinePosition(splinePos_, index_, t) - nowPos_;
+		}
 	}
 }
 
@@ -233,11 +226,22 @@ void Spline::EasingUpdate(float speedRate)
 		}
 	}
 	float splineRate = (nowTime_ - testTime_) / offsetTime;
-	nowPos_ = SplinePosition(splinePos_, index_, splineRate);
-	//少し先へのベクトルを取得する
-	splineRate += 0.01f;
-	if (splineRate <= 1.f) {
-		headingVec_ = SplinePosition(splinePos_, index_, splineRate) - nowPos_;
+
+	if (worldTransform_.parent_ != nullptr) {
+		std::vector<Vector3> splinePos;
+		ParentUpdate(splinePos);
+		nowPos_ = SplinePosition(splinePos, index_, splineRate);
+		splineRate += 0.01f;
+		if (splineRate <= 1.f) {
+			headingVec_ = SplinePosition(splinePos, index_, splineRate) - nowPos_;
+		}
+	}
+	else {
+		nowPos_ = SplinePosition(splinePos_, index_, splineRate);
+		splineRate += 0.01f;
+		if (splineRate <= 1.f) {
+			headingVec_ = SplinePosition(splinePos_, index_, splineRate) - nowPos_;
+		}
 	}
 }
 
@@ -329,5 +333,15 @@ void Spline::ObjInit()
 		splineObj_[i]->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 		Vector3 color = { i * 0.2f, i * 0.2f,i * 0.2f };
 		splineObj_[i]->SetAmbient("cube", color);
+	}
+}
+
+void Spline::ParentUpdate(std::vector<Vector3>& pos)
+{
+	for (int32_t i = 0; i < splinePos_.size();i++) {
+		worldTransform_.position_ = splinePos_[i];
+		worldTransform_.Update();
+
+		pos.emplace_back(worldTransform_.GetWorldPos());
 	}
 }

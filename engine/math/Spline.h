@@ -37,6 +37,7 @@ public:
 		EasingTypeInOutEnd
 	};
 private:
+	WorldTransform worldTransform_;
 	std::vector<Vector3> splinePos_;
 	Vector3 nowPos_;
 	Vector3 headingVec_;	//進行方向ベクトル
@@ -66,7 +67,7 @@ public:
 	void DrawDebug();
 	void Reset();
 	void AllClear();
-	void DleteAllPoint() { splinePos_.clear(); }
+	void DeleteAllPoint() { splinePos_.clear(); }
 public:
 	void SetPositions(const std::vector<Vector3>& pos);
 	void AddPosition(const Vector3& pos, PosState state = PosState::Middle);
@@ -76,6 +77,7 @@ public:
 	void SetTimerType_(TimerType timerType) { timerType_ = timerType; }
 	void SetEasingType_(EasingType easingType) { easingType_ = easingType; }
 	void SetEasingTypeInOut_(EasingTypeInOut easeTypeInOut) { easeTypeInOut_ = easeTypeInOut; }
+	void SetParent(WorldTransform* parent);
 public:
 	Vector3 GetNowPoint() { return nowPos_; }
 	Vector3 GetHeadingVec() { return headingVec_; }
@@ -90,7 +92,6 @@ public:
 public:
 	static std::vector<std::string> GetEaseTypeNames() { return sEaseTypeName_; }
 private:
-	void SplineUpdate(float speedRate);
 	const Vector3 SplinePosition(const std::vector<Vector3>& point, uint32_t startIndex, const float t);
 	// 始点/終点の座標と ベクトルから、曲線の軌道上の座標を返す
 	Vector3 GetPoint(const Vector3& p0, const Vector3& p1, const Vector3& v0, const Vector3& v1, float t);
@@ -99,5 +100,6 @@ private:
 	void EasingUpdate(float speedRate);
 	void EaseUpdate();
 	void ObjInit();		//スプラインポイントに配置するオブジェ初期化
+	void ParentUpdate(std::vector<Vector3>& pos);
 };
 

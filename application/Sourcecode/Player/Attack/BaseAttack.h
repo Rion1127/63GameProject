@@ -45,6 +45,7 @@ public:
 private:
 	Vector3 CalculateFrontVec();
 	void CalculateRotToLockOnActor();
+	void SplinePosUpdate();
 public:
 	//ゲッター
 	bool GetIsAttaking() { return isAttaking_; }

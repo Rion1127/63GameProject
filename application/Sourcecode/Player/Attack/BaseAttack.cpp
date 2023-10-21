@@ -11,6 +11,7 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	selfActor_(selfActor),
 	lockOnActor_(lockOnActor)
 {
+	spline_.SetParent(selfActor_->GetWorldTransform());
 	index_ = 0;
 
 	CalculateRotToLockOnActor();
@@ -44,37 +45,13 @@ void BaseAttack::SetNextAttack()
 	spline_.SetEasingType_(attackinput_.attackinfo[index_].easingType);
 	spline_.SetEasingTypeInOut_(attackinput_.attackinfo[index_].inOutType);
 	spline_.SetMaxTime(attackinput_.attackinfo[index_].attackFrame);
-	auto& attackpoint = attackinput_.attackinfo[index_].splinePos;
-	//プレイヤートランスフォームと親子関係にしてスプラインの座標を変化させる
-	WorldTransform parent;
-	parent.SetRotType(RotType::Quaternion);
-	parent.position_ = selfActor_->GetWorldTransform()->position_;
-	parent.quaternion_ = selfActor_->GetWorldTransform()->quaternion_;
-	parent.Update();
-	for (int32_t i = 0; i < attackpoint.size(); i++)
-	{
-		WorldTransform spline;
-		spline.position_ = attackpoint[i];
-		spline.parent_ = &parent;
-		spline.Update();
-		Vector3 splinePos = spline.GetWorldPos();
-		if (i == 0)
-		{
-			spline_.AddPosition(splinePos, PosState::Start);
-		}
-		else if (i == attackpoint.size() - 1)
-		{
-			spline_.AddPosition(splinePos, PosState::End);
-		}
-		else
-		{
-			spline_.AddPosition(splinePos, PosState::Middle);
-		}
-	}
+	SplinePosUpdate();
 }
 
 void BaseAttack::Update()
 {
+	//SplinePosUpdate();
+
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackAllTime_.AddTime(GameSpeed::GetPlayerSpeed());
 	//攻撃が終了したら
@@ -148,4 +125,26 @@ void BaseAttack::CalculateRotToLockOnActor()
 		frontVec.z
 	};
 	selfActor_->SetObjAngle(Vec2Angle(angleVec2));
+}
+
+void BaseAttack::SplinePosUpdate()
+{
+	spline_.DeleteAllPoint();
+	auto& attackpoint = attackinput_.attackinfo[index_].splinePos;
+	for (int32_t i = 0; i < attackpoint.size(); i++)
+	{
+		Vector3 splinePos = attackpoint[i];
+		if (i == 0)
+		{
+			spline_.AddPosition(splinePos, PosState::Start);
+		}
+		else if (i == attackpoint.size() - 1)
+		{
+			spline_.AddPosition(splinePos, PosState::End);
+		}
+		else
+		{
+			spline_.AddPosition(splinePos, PosState::Middle);
+		}
+	}
 }
