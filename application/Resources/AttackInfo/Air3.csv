@@ -4,6 +4,8 @@ gapFrame = 10
 damege = 15
 gravityY = 0.1
 KnockVec 0 0 0
+addVec 0 0 0.1
+deceleration = 0.005
 
 //--SplinePos--//
 TimerType Easing

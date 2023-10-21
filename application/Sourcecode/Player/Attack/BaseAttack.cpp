@@ -46,12 +46,14 @@ void BaseAttack::SetNextAttack()
 	spline_.SetEasingTypeInOut_(attackinput_.attackinfo[index_].inOutType);
 	spline_.SetMaxTime(attackinput_.attackinfo[index_].attackFrame);
 	SplinePosUpdate();
+
+	auto& addVec = attackinput_.attackinfo[index_].playerMoveVec;
+
+	addVec = RotateVector(addVec, selfActor_->GetWorldTransform()->quaternion_);
 }
 
 void BaseAttack::Update()
 {
-	//SplinePosUpdate();
-
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackAllTime_.AddTime(GameSpeed::GetPlayerSpeed());
 	//攻撃が終了したら
@@ -62,7 +64,7 @@ void BaseAttack::Update()
 			SetNextAttack();
 		}
 	}
-
+	//攻撃中フラグ
 	if (attackAllTime_.GetIsEnd()) {
 		isAttaking_ = false;
 	}
@@ -73,17 +75,12 @@ void BaseAttack::Update()
 	float& attackTime = attackinput_.attackinfo[index_].attackFrame;
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
 
+	//プレイヤーの移動
+	PlayerMove();
 
 	swordPos_ = spline_.GetNowPoint();
-	//剣の座標をに当たり判定代入
-	col_.center = swordPos_;
-	//当たり判定は剣を振っている間だけ
-	if (damageCoolTime_ == 0) {
-		col_.isActive = false;
-	}
-	else {
-		col_.isActive = true;
-	}
+	//当たり判定更新
+	ColUpdate();
 }
 
 void BaseAttack::Draw()
@@ -146,5 +143,26 @@ void BaseAttack::SplinePosUpdate()
 		{
 			spline_.AddPosition(splinePos, PosState::Middle);
 		}
+	}
+}
+
+void BaseAttack::PlayerMove()
+{
+	selfActor_->AddaddVec(attackinput_.attackinfo[index_].playerMoveVec);
+	if (attackinput_.attackinfo[index_].playerMoveVec.length() != 0) {
+		MoveTo(Vector3(0, 0, 0), attackinput_.attackinfo[index_].deceleration, attackinput_.attackinfo[index_].playerMoveVec);
+	}
+}
+
+void BaseAttack::ColUpdate()
+{
+	//剣の座標をに当たり判定代入
+	col_.center = swordPos_;
+	//当たり判定は剣を振っている間だけ
+	if (damageCoolTime_ == 0) {
+		col_.isActive = false;
+	}
+	else {
+		col_.isActive = true;
 	}
 }

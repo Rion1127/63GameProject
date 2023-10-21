@@ -43,9 +43,11 @@ public:
 	//スプライン曲線・当たり判定追加
 	void Draw();
 private:
-	Vector3 CalculateFrontVec();
-	void CalculateRotToLockOnActor();
+	Vector3 CalculateFrontVec();	//正面ベクトルを計算
+	void CalculateRotToLockOnActor();//ロックオンしている方向にプレイヤーを向ける
 	void SplinePosUpdate();
+	void PlayerMove();	//攻撃中のプレイヤーの動き
+	void ColUpdate();	//当たり判定更新
 public:
 	//ゲッター
 	bool GetIsAttaking() { return isAttaking_; }

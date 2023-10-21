@@ -75,7 +75,7 @@ void AttackEditor::DrawImGui()
 	static float playerpos[3] = { 0,1,0 };
 
 	ImGui::DragFloat3("pos", playerpos, 0.1f, 100.f, 100.f);
-	playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
+	//playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 
 	if (ImGui::Button("PlayerPosReset"))
 	{
@@ -193,7 +193,7 @@ void AttackEditor::DrawImGui()
 	};
 	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, 0.f, 500.f);
 	attackInfo_.playerMoveVec = { playerMoveVec [0],playerMoveVec[1], playerMoveVec[2] };
-	ImGui::DragFloat("deceleration", &attackInfo_.deceleration, 0.01f, 0.01f, 500.f);
+	ImGui::DragFloat("deceleration", &attackInfo_.deceleration, 0.001f, 0.001f, 500.f);
 
 	float knockVec[3] = {
 		attackInfo_.knockVec.x,
@@ -374,6 +374,11 @@ void AttackEditor::AttackSave(const std::string& string)
 	Vector3& knockVec = attackInfo_.knockVec;
 	writing_text = "KnockVec";
 	writing_file << writing_text << " " << knockVec.x << " " << knockVec.y << " " << knockVec.z << std::endl;
+	Vector3& addVec = attackInfo_.playerMoveVec;
+	writing_text = "addVec";
+	writing_file << writing_text << " " << addVec.x << " " << addVec.y << " " << addVec.z << std::endl;
+	writing_text = "deceleration";
+	writing_file << writing_text << " = " << attackInfo_.deceleration << std::endl;
 	writing_file << std::endl;
 
 	writing_text = "//--SplinePos--//";
@@ -455,6 +460,23 @@ void AttackEditor::AttackLoad(const std::string& string)
 		{
 			line_stream.ignore(1, '=');
 			line_stream >> attackInfo_.gravity.y;
+		}
+		else if (key == "KnockVec")
+		{
+			line_stream >> attackInfo_.knockVec.x;
+			line_stream >> attackInfo_.knockVec.y;
+			line_stream >> attackInfo_.knockVec.z;
+		}
+		else if (key == "addVec")
+		{
+			line_stream >> attackInfo_.playerMoveVec.x;
+			line_stream >> attackInfo_.playerMoveVec.y;
+			line_stream >> attackInfo_.playerMoveVec.z;
+		}
+		else if (key == "deceleration")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> attackInfo_.deceleration;
 		}
 		//タイマー制御方法読み込み
 		if (key == "TimerType")

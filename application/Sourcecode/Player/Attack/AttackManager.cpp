@@ -290,6 +290,23 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream.ignore(1, '=');
 			line_stream >> info.gravity.y;
 		}
+		else if (key == "KnockVec")
+		{
+			line_stream >> info.knockVec.x;
+			line_stream >> info.knockVec.y;
+			line_stream >> info.knockVec.z;
+		}
+		else if (key == "addVec")
+		{
+			line_stream >> info.playerMoveVec.x;
+			line_stream >> info.playerMoveVec.y;
+			line_stream >> info.playerMoveVec.z;
+		}
+		else if (key == "deceleration")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> info.deceleration;
+		}
 		//タイマー制御方法読み込み
 		if (key == "TimerType")
 		{
