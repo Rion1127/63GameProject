@@ -147,7 +147,7 @@ void AttackManager::FirstAttackUpdate()
 			player_->GetNowState()->GetId() == PlayerState::Move)
 		{
 			//遠くの敵にスライドして攻撃
-			if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+			if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Slide"], player_, lockOnEnemy_);
 			//ジャンプして攻撃
 			else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["AirSweep"], player_, lockOnEnemy_);
 			//通常攻撃
