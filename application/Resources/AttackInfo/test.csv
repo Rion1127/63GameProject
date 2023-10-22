@@ -4,8 +4,8 @@ gapFrame = 20
 damege = 0
 gravityY = 0
 KnockVec 0 0 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.24
+deceleration = 0.02
 
 //--SplinePos--//
 TimerType Easing
@@ -21,8 +21,8 @@ gapFrame = 20
 damege = 0
 gravityY = 0
 KnockVec 0 0 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.21
+deceleration = 0.031
 
 //--SplinePos--//
 TimerType Easing

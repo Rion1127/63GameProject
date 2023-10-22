@@ -13,12 +13,10 @@ AttackEditor::AttackEditor()
 	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	playerObj_->SetPos(Vector3(0, 1, 0));
 
-	splineObj_ = std::make_unique<Object3d>();
-	splineObj_->SetModel(Model::CreateOBJ_uniptr("cube", false));
-	splineObj_->SetAmbient("cube", Vector3(0.5f, 0.5f, 0));
-	splineObj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
-	splineObj_->WT_.parent_ = &playerObj_->WT_;
+	swordObj_ = std::make_unique<Sword>();
+	
 	isPlay_ = false;
+	isAllPlay_ = false;
 	isPointErase_ = false;
 
 	//現在存在しているファイルを全て検索する
@@ -30,6 +28,7 @@ AttackEditor::AttackEditor()
 
 	splinePointPos_.emplace_back();
 
+	swordObj_->SetParent(playerObj_.get());
 }
 
 void AttackEditor::Update()
@@ -44,20 +43,47 @@ void AttackEditor::Update()
 		splinePointPos_[currentSwingNum_][i]->obj_->SetPos(splinePointPos_[currentSwingNum_][i]->splinePointPos_);
 		splinePointPos_[currentSwingNum_][i]->obj_->Update();
 	}
+	//選択している一振りだけ再生
 	if (isPlay_)
 	{
+		timer_.AddTime(1);
 		spline_.Update();
 
-		splineObj_->SetPos(spline_.GetNowPoint());
+		swordObj_->SetPos(spline_.GetNowPoint());
+		swordObj_->SetState(Sword::SwordState::Attack);
 
-		if (spline_.GetisEnd())isPlay_ = false;
+		if (timer_.GetIsEnd()) {
+			isPlay_ = false;
+			swordObj_->SetState(Sword::SwordState::Idle);
+		}
+	}
+	//選択している攻撃全てを再生
+	if (isAllPlay_) {
+		timer_.AddTime(1);
+		spline_.Update();
+
+		swordObj_->SetPos(spline_.GetNowPoint());
+		swordObj_->SetState(Sword::SwordState::Attack);
+
+		if (timer_.GetIsEnd()) {
+			if (currentSwingNum_ < attackInfo_.size() - 1) {
+				currentSwingNum_++;
+				AttackPlay();
+			}
+			else {
+				isAllPlay_ = false;
+				swordObj_->SetState(Sword::SwordState::Idle);
+			}
+		}
 	}
 
 	Vector3 playerPos = playerObj_->GetPos();
 	playerPos += moveVec_;
 	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
 	playerObj_->SetPos(playerPos);
-	splineObj_->Update();
+
+	swordObj_->EditorUpdate(playerPos + spline_.GetNowPoint());
+
 	playerObj_->Update();
 }
 
@@ -65,7 +91,7 @@ void AttackEditor::Draw()
 {
 	playerObj_->Draw();
 
-	splineObj_->Draw();
+	swordObj_->Draw();
 
 	for (auto& spline : splinePointPos_[currentSwingNum_])
 	{
@@ -100,33 +126,9 @@ void AttackEditor::DrawImGui()
 
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackSpline");
-	if (ImGui::Button("Play", ImVec2(50, 50)))
-	{
-		if (splinePointPos_[currentSwingNum_].size() > 1)
-		{
-			isPlay_ = true;
-			spline_.SetIsStart(true);
-			spline_.AllClear();
-			spline_.SetMaxTime(attackInfo_[currentSwingNum_].attackFrame);
-			for (int32_t i = 0; i < splinePointPos_[currentSwingNum_].size(); i++)
-			{
-				if (i == 0)
-				{
-					spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Start);
-				}
-				else if (i == splinePointPos_.size() - 1)
-				{
-					spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::End);
-				}
-				else
-				{
-					spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Middle);
-				}
-			}
-
-		}
-		moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
-	}
+	ImGuiPlay();
+	ImGui::SameLine();
+	ImGuiAllPlay();
 	if (ImGui::Button("AddSplinePoint"))
 	{
 		ImGuiADDSplinePos();
@@ -277,7 +279,7 @@ void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
 	std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
 	newObj->obj_ = std::make_unique<Object3d>();
 	newObj->obj_->SetModel(Model::CreateOBJ_uniptr("cube", false));
-	newObj->obj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
+	newObj->obj_->SetScale(Vector3(0.2f, 0.2f, 0.2f));
 	newObj->obj_->WT_.parent_ = &playerObj_->WT_;
 	newObj->splinePointPos_ = pos;
 	splinePointPos_[currentSwingNum_].emplace_back(std::move(newObj));
@@ -358,6 +360,31 @@ void AttackEditor::ImGuiLoad()
 		if (ImGui::Button("Load", ImVec2(50, 50)))
 		{
 			isProofLoad = true;
+		}
+	}
+}
+
+void AttackEditor::ImGuiPlay()
+{
+	if (ImGui::Button("Play", ImVec2(50, 50)))
+	{
+		if (splinePointPos_[currentSwingNum_].size() > 1)
+		{
+			isPlay_ = true;
+			AttackPlay();
+		}
+	}
+}
+
+void AttackEditor::ImGuiAllPlay()
+{
+	if (ImGui::Button("AllPlay", ImVec2(60, 50)))
+	{
+		currentSwingNum_ = 0;
+		if (splinePointPos_[currentSwingNum_].size() > 1)
+		{
+			isAllPlay_ = true;
+			AttackPlay();
 		}
 	}
 }
@@ -603,4 +630,31 @@ void AttackEditor::FindAttackFile()
 {
 	std::string dir = "application/Resources/AttackInfo/";
 	allAttackFileNames = FindFileNames(dir, ".csv", false);
+}
+
+void AttackEditor::AttackPlay()
+{
+	timer_.Reset();
+	float limitTime = 
+		attackInfo_[currentSwingNum_].attackFrame + attackInfo_[currentSwingNum_].gapFrame;
+	timer_.SetLimitTime(limitTime);
+	spline_.SetIsStart(true);
+	spline_.AllClear();
+	spline_.SetMaxTime(attackInfo_[currentSwingNum_].attackFrame);
+	for (int32_t i = 0; i < splinePointPos_[currentSwingNum_].size(); i++)
+	{
+		if (i == 0)
+		{
+			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Start);
+		}
+		else if (i == splinePointPos_[currentSwingNum_].size() - 1)
+		{
+			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::End);
+		}
+		else
+		{
+			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Middle);
+		}
+	}
+	moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
 }

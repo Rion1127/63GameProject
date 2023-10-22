@@ -66,7 +66,6 @@ Player::Player() :
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
 
-	sword_.SetAttackManager(command_.GetAttackManager());
 	sword_.SetParent(displayObj_.get());
 
 	command_.SetPlayer(this);
@@ -84,6 +83,8 @@ Player::Player() :
 	dashParticleTimer_.SetLimitTime(60);
 
 	landingTimer_ = 7;
+
+	Model::lightGroup_->SetCircleShadowActive(0, true);
 }
 
 void Player::PreUpdate()
@@ -117,7 +118,16 @@ void Player::PostUpdate()
 {
 	ObjUpdate();
 
-	sword_.Update();
+	Vector3 swordPos;
+
+	if (command_.GetAttackManager()->GetNowAttack() != nullptr) {
+		swordPos = command_.GetAttackManager()->GetNowAttack()->GetSwordPos();
+	}
+	else {
+		swordPos = sword_.GetNowPos();
+	}
+
+	sword_.Update(swordPos);
 
 	if (command_.GetLockOnEnemy() != nullptr)
 	{
@@ -145,6 +155,11 @@ void Player::PostUpdate()
 	{
 		isAlive_ = false;
 	}
+	Vector3 shadowPos = displayObj_->WT_.position_;
+
+	shadowPos.y -= displayObj_->WT_.scale_.y;
+
+	Model::lightGroup_->SetCircleShadowCasterPos(0, shadowPos);
 }
 
 void Player::GravityUpdate()
@@ -512,7 +527,6 @@ void Player::FreezeUpdate()
 
 void Player::Draw()
 {
-	Model::lightGroup_->SetCircleShadowCasterPos(0, displayObj_->WT_.position_);
 	displayObj_->Draw();
 
 	sword_.Draw();

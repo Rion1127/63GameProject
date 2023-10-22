@@ -67,6 +67,7 @@ void Spline::Reset()
 	index_ = 1;
 	testTime_ = 0;
 	maxTime_ = 0;
+	nowTime_ = 0;
 }
 
 void Spline::AllClear()

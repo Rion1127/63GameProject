@@ -151,7 +151,7 @@ void AttackManager::FirstAttackUpdate()
 			//ジャンプして攻撃
 			else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["AirSweep"], player_, lockOnEnemy_);
 			//通常攻撃
-			else nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
+			else nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground1"], player_, lockOnEnemy_);
 		}
 		else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 		{

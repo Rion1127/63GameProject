@@ -3,6 +3,8 @@
 #include "Spline.h"
 #include "IAttack.h"
 #include "mInput.h"
+#include "Sword.h"
+#include "Timer.h"
 #include <imgui.h>
 #include <vector>
 
@@ -41,7 +43,7 @@ private:
 	std::vector<AttackInfo> attackInfo_;
 
 	std::unique_ptr<Object3d> playerObj_;
-	std::unique_ptr<Object3d> splineObj_;
+	std::unique_ptr<Sword> swordObj_;
 	std::vector<std::vector<std::unique_ptr<SplinePos>>> splinePointPos_;
 
 	std::vector<std::string> easingTypeNames;
@@ -50,10 +52,12 @@ private:
 	std::string easingTypeInOut_;
 
 	bool isPlay_;
+	bool isAllPlay_;
 	bool isPointErase_;
 	int32_t currentSwingNum_;
 
 	Vector3 moveVec_;
+	TimerFloat timer_;
 
 	std::vector<std::string> allAttackFileNames;
 public:
@@ -68,10 +72,13 @@ private:
 	void ImGuiADDSplinePos(const Vector3& pos = {0,0,0});	//イージングのタイプ(InOut)を選択する
 	void ImGuiSave();
 	void ImGuiLoad();
+	void ImGuiPlay();
+	void ImGuiAllPlay();
 	void ImGuiSwingCount();
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む
+	void AttackPlay();
 };
 
 class FrameEditor {
