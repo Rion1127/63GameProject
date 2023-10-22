@@ -42,6 +42,7 @@ public:
 	Sword();
 	void Update();
 	void Draw();
+	void DrawImGui();
 private:
 	void CalculateTrailPos();
 public:

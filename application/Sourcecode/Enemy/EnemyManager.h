@@ -38,6 +38,8 @@ public:
 
 	void BulletUpdate();
 	void Reset();
+
+	void DebugUpdate();
 private:
 	void LockOnSpriteUpdate();
 public:

@@ -25,7 +25,7 @@ public:
 
 		Vector3 knockVec;		//ノックバック方向
 		Vector3 playerMoveVec;		//プレイヤーが動く方向
-		float deceleration;			//プレイヤーの速度減速値
+		float deceleration = 0.1f;			//プレイヤーの速度減速値
 
 		Spline::TimerType timerType;		//通常かイージングか
 		Spline::EasingType easingType;		//イージングの種類
@@ -38,11 +38,11 @@ public:
 		Vector3 splinePointPos_;
 	};
 private:
-	AttackInfo attackInfo_;
+	std::vector<AttackInfo> attackInfo_;
 
 	std::unique_ptr<Object3d> playerObj_;
 	std::unique_ptr<Object3d> splineObj_;
-	std::vector<std::unique_ptr<SplinePos>> splinePointPos_;
+	std::vector<std::vector<std::unique_ptr<SplinePos>>> splinePointPos_;
 
 	std::vector<std::string> easingTypeNames;
 	Spline spline_;
@@ -51,6 +51,7 @@ private:
 
 	bool isPlay_;
 	bool isPointErase_;
+	int32_t currentSwingNum_;
 
 	Vector3 moveVec_;
 
@@ -61,11 +62,13 @@ public:
 	void Draw();
 	void DrawImGui();
 private:
+	void ImGuiDisplaySplitePoint();	//スプライン曲線の制御点を描画
 	void ImGuiSetEasingType();	//イージングのタイプを選択する
 	void ImGuiSetEasingTypeInOut();	//イージングのタイプ(InOut)を選択する
 	void ImGuiADDSplinePos(const Vector3& pos = {0,0,0});	//イージングのタイプ(InOut)を選択する
 	void ImGuiSave();
 	void ImGuiLoad();
+	void ImGuiSwingCount();
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む

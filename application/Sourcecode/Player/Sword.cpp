@@ -131,7 +131,10 @@ void Sword::Draw()
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i]->Draw();
 	}
-#ifdef _DEBUG
+}
+
+void Sword::DrawImGui()
+{
 	ImGui::Begin("sword");
 
 	if (ImGui::Button("debugMode")) {
@@ -172,15 +175,13 @@ void Sword::Draw()
 		trail_->GetColor().g,
 		trail_->GetColor().b
 	};
-	//ImGui::DragFloat4("color", color, 0.1f);
-
+	
 	ImGui::ColorEdit3("color 1", color);
 
 	Color col = { color[0],color[1], color[2], 255 };
 	trail_->SetColor(col);
 
 	ImGui::End();
-#endif // _DEBUG
 }
 
 void Sword::CalculateTrailPos()

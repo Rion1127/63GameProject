@@ -516,15 +516,6 @@ void Player::Draw()
 	displayObj_->Draw();
 
 	sword_.Draw();
-
-
-#ifdef _DEBUG
-	DrawImGui();
-
-	command_.GetAttackManager()->DrawDebug();
-	//guard_.DrawDebug();
-	command_.Draw();
-#endif // _DEBUG
 }
 
 void Player::DrawImGui()
@@ -601,6 +592,9 @@ void Player::DrawImGui()
 
 	ImGui::End();
 
+	command_.GetAttackManager()->DrawDebug();
+
+	sword_.DrawImGui();
 }
 
 void Player::DrawSprite()

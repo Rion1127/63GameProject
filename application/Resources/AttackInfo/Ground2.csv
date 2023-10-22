@@ -11,5 +11,6 @@ deceleration = 0.007
 TimerType Easing
 EasingType Quint
 EasingTypeInOut In
-SplinePos 0 1 1.3
-SplinePos 0 1 2.9
+SplinePos 0 0 1.3
+SplinePos 0 0 2.9
+

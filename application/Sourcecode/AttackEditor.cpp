@@ -11,6 +11,7 @@ AttackEditor::AttackEditor()
 {
 	playerObj_ = std::make_unique<Object3d>();
 	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	playerObj_->SetPos(Vector3(0, 1, 0));
 
 	splineObj_ = std::make_unique<Object3d>();
 	splineObj_->SetModel(Model::CreateOBJ_uniptr("cube", false));
@@ -23,7 +24,12 @@ AttackEditor::AttackEditor()
 	//現在存在しているファイルを全て検索する
 	FindAttackFile();
 
-	attackInfo_.deceleration = 0.1f;
+	currentSwingNum_ = 0;
+	attackInfo_.emplace_back();
+	attackInfo_[currentSwingNum_].deceleration = 0.1f;
+
+	splinePointPos_.emplace_back();
+
 }
 
 void AttackEditor::Update()
@@ -31,12 +37,12 @@ void AttackEditor::Update()
 	if (isPointErase_)
 	{
 		isPointErase_ = false;
-		splinePointPos_.erase(splinePointPos_.begin() + (splinePointPos_.size() - 1));
+		splinePointPos_[currentSwingNum_].erase(splinePointPos_[currentSwingNum_].begin() + (splinePointPos_[currentSwingNum_].size() - 1));
 	}
-	for (int32_t i = 0; i < splinePointPos_.size(); i++)
+	for (int32_t i = 0; i < splinePointPos_[currentSwingNum_].size(); i++)
 	{
-		splinePointPos_[i]->obj_->SetPos(splinePointPos_[i]->splinePointPos_);
-		splinePointPos_[i]->obj_->Update();
+		splinePointPos_[currentSwingNum_][i]->obj_->SetPos(splinePointPos_[currentSwingNum_][i]->splinePointPos_);
+		splinePointPos_[currentSwingNum_][i]->obj_->Update();
 	}
 	if (isPlay_)
 	{
@@ -49,7 +55,7 @@ void AttackEditor::Update()
 
 	Vector3 playerPos = playerObj_->GetPos();
 	playerPos += moveVec_;
-	MoveTo(Vector3(0,0,0), attackInfo_.deceleration, moveVec_);
+	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
 	playerObj_->SetPos(playerPos);
 	splineObj_->Update();
 	playerObj_->Update();
@@ -61,7 +67,7 @@ void AttackEditor::Draw()
 
 	splineObj_->Draw();
 
-	for (auto& spline : splinePointPos_)
+	for (auto& spline : splinePointPos_[currentSwingNum_])
 	{
 		spline->obj_->Draw();
 	}
@@ -79,9 +85,6 @@ void AttackEditor::DrawImGui()
 
 	if (ImGui::Button("PlayerPosReset"))
 	{
-		playerpos[0] = 0;
-		playerpos[1] = 1;
-		playerpos[2] = 0;
 		playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
 	}
 
@@ -99,30 +102,30 @@ void AttackEditor::DrawImGui()
 	ImGui::Begin("AttackSpline");
 	if (ImGui::Button("Play", ImVec2(50, 50)))
 	{
-		if (splinePointPos_.size() > 1)
+		if (splinePointPos_[currentSwingNum_].size() > 1)
 		{
 			isPlay_ = true;
 			spline_.SetIsStart(true);
 			spline_.AllClear();
-			spline_.SetMaxTime(attackInfo_.attackFrame);
-			for (int32_t i = 0; i < splinePointPos_.size(); i++)
+			spline_.SetMaxTime(attackInfo_[currentSwingNum_].attackFrame);
+			for (int32_t i = 0; i < splinePointPos_[currentSwingNum_].size(); i++)
 			{
 				if (i == 0)
 				{
-					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Start);
+					spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Start);
 				}
 				else if (i == splinePointPos_.size() - 1)
 				{
-					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::End);
+					spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::End);
 				}
 				else
 				{
-					spline_.AddPosition(splinePointPos_[i]->splinePointPos_, PosState::Middle);
+					spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Middle);
 				}
 			}
 
 		}
-		moveVec_ = attackInfo_.playerMoveVec;
+		moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
 	}
 	if (ImGui::Button("AddSplinePoint"))
 	{
@@ -152,12 +155,47 @@ void AttackEditor::DrawImGui()
 
 	ImGuiSetEasingType();
 	ImGuiSetEasingTypeInOut();
+	ImGuiDisplaySplitePoint();
 
+	ImGui::End();
+
+	ImGuiSwingCount();
+
+	//スプラインポイントの変更・スプラインポイントの追加
+	ImGui::Begin("AttackInfo");
+
+	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
+	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
+	ImGui::DragInt("Damage", &attackInfo_[currentSwingNum_].damage, 1, 0, 500);
+	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, 0.f, 500.f);
+
+	float playerMoveVec[3] = {
+		attackInfo_[currentSwingNum_].playerMoveVec.x,
+		attackInfo_[currentSwingNum_].playerMoveVec.y,
+		attackInfo_[currentSwingNum_].playerMoveVec.z,
+	};
+	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, 0.f, 500.f);
+	attackInfo_[currentSwingNum_].playerMoveVec = { playerMoveVec[0],playerMoveVec[1], playerMoveVec[2] };
+	ImGui::DragFloat("deceleration", &attackInfo_[currentSwingNum_].deceleration, 0.001f, 0.001f, 500.f);
+
+	float knockVec[3] = {
+		attackInfo_[currentSwingNum_].knockVec.x,
+		attackInfo_[currentSwingNum_].knockVec.y,
+		attackInfo_[currentSwingNum_].knockVec.z,
+	};
+	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
+	attackInfo_[currentSwingNum_].knockVec = { knockVec[0],knockVec[1], knockVec[2] };
+
+	ImGui::End();
+}
+
+void AttackEditor::ImGuiDisplaySplitePoint()
+{
 	if (ImGui::CollapsingHeader("SplinePointPosision"))
 	{
 		int32_t splinePosIndex = 0;
 		std::string splinePosName;
-		for (auto& spline : splinePointPos_)
+		for (auto& spline : splinePointPos_[currentSwingNum_])
 		{
 			std::ostringstream num;
 
@@ -176,34 +214,6 @@ void AttackEditor::DrawImGui()
 			splinePosIndex++;
 		}
 	}
-	ImGui::End();
-
-	//スプラインポイントの変更・スプラインポイントの追加
-	ImGui::Begin("AttackInfo");
-
-	ImGui::DragFloat("attackFrame", &attackInfo_.attackFrame, 1.0f, 0.f, 500.f);
-	ImGui::DragFloat("gapFrame", &attackInfo_.gapFrame, 1.0f, 0.f, 500.f);
-	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 500);
-	ImGui::DragFloat("gravity", &attackInfo_.gravity.y, 1.0f, 0.f, 500.f);
-
-	float playerMoveVec[3] = { 
-		attackInfo_.playerMoveVec.x,
-		attackInfo_.playerMoveVec.y,
-		attackInfo_.playerMoveVec.z,
-	};
-	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, 0.f, 500.f);
-	attackInfo_.playerMoveVec = { playerMoveVec [0],playerMoveVec[1], playerMoveVec[2] };
-	ImGui::DragFloat("deceleration", &attackInfo_.deceleration, 0.001f, 0.001f, 500.f);
-
-	float knockVec[3] = {
-		attackInfo_.knockVec.x,
-		attackInfo_.knockVec.y,
-		attackInfo_.knockVec.z,
-	};
-	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
-	attackInfo_.knockVec = { knockVec[0],knockVec[1], knockVec[2] };
-
-	ImGui::End();
 }
 
 void AttackEditor::ImGuiSetEasingType()
@@ -270,7 +280,7 @@ void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
 	newObj->obj_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 	newObj->obj_->WT_.parent_ = &playerObj_->WT_;
 	newObj->splinePointPos_ = pos;
-	splinePointPos_.emplace_back(std::move(newObj));
+	splinePointPos_[currentSwingNum_].emplace_back(std::move(newObj));
 }
 
 void AttackEditor::ImGuiSave()
@@ -352,6 +362,39 @@ void AttackEditor::ImGuiLoad()
 	}
 }
 
+void AttackEditor::ImGuiSwingCount()
+{
+	ImGui::Begin("SwingCount");
+
+	std::string swingCountStr;
+	std::ostringstream num;
+
+	num << attackInfo_.size();
+	swingCountStr = "SwingCount = " + num.str();
+	ImGui::Text(swingCountStr.c_str());
+
+	if (ImGui::Button("Add",ImVec2(50,50))) {
+		attackInfo_.emplace_back();
+		splinePointPos_.emplace_back();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Delete", ImVec2(50, 50))) {
+		if (attackInfo_.size() > 1) {
+			attackInfo_.erase(attackInfo_.begin() + (attackInfo_.size() - 1));
+			splinePointPos_.erase(splinePointPos_.begin() + (splinePointPos_.size() - 1));
+			currentSwingNum_--;
+		}
+	}
+	ImGui::Text("currentSwingNum");
+	ImGui::InputInt(" ", &currentSwingNum_);
+
+	int32_t min = 0;
+	int32_t max = (int32_t)(attackInfo_.size() - 1);
+	currentSwingNum_ = Clamp(currentSwingNum_, min, max);
+
+	ImGui::End();
+}
+
 void AttackEditor::AttackSave(const std::string& string)
 {
 	std::string saveDir = "application/Resources/AttackInfo/";
@@ -361,60 +404,67 @@ void AttackEditor::AttackSave(const std::string& string)
 
 	writing_file.open(saveDir, std::ios::out);
 
-	std::string writing_text = "//--AtatckInfo--//";
-	writing_file << writing_text << std::endl;
-	writing_text = "attackFrame";
-	writing_file << writing_text << " = " << attackInfo_.attackFrame << std::endl;
-	writing_text = "gapFrame";
-	writing_file << writing_text << " = " << attackInfo_.gapFrame << std::endl;
-	writing_text = "damege";
-	writing_file << writing_text << " = " << attackInfo_.damage << std::endl;
-	writing_text = "gravityY";
-	writing_file << writing_text << " = " << attackInfo_.gravity.y << std::endl;
-	Vector3& knockVec = attackInfo_.knockVec;
-	writing_text = "KnockVec";
-	writing_file << writing_text << " " << knockVec.x << " " << knockVec.y << " " << knockVec.z << std::endl;
-	Vector3& addVec = attackInfo_.playerMoveVec;
-	writing_text = "addVec";
-	writing_file << writing_text << " " << addVec.x << " " << addVec.y << " " << addVec.z << std::endl;
-	writing_text = "deceleration";
-	writing_file << writing_text << " = " << attackInfo_.deceleration << std::endl;
-	writing_file << std::endl;
+	uint16_t splineIndex = 0;
 
-	writing_text = "//--SplinePos--//";
-	writing_file << writing_text << std::endl;
-	//タイマータイプを出力
-	writing_text = "TimerType ";
-	std::string timerType;
-	//イージングの場合
-	if (spline_.GetTimerType() == Spline::TimerType::Normal)
-	{
-		timerType = "Normal";
-		writing_file << writing_text << timerType << std::endl;
+	for (auto& attackinfo : attackInfo_) {
+		std::string writing_text = "//--AtatckInfo--//";
+		writing_file << writing_text << std::endl;
+		writing_text = "attackFrame";
+		writing_file << writing_text << " = " << attackinfo.attackFrame << std::endl;
+		writing_text = "gapFrame";
+		writing_file << writing_text << " = " << attackinfo.gapFrame << std::endl;
+		writing_text = "damege";
+		writing_file << writing_text << " = " << attackinfo.damage << std::endl;
+		writing_text = "gravityY";
+		writing_file << writing_text << " = " << attackinfo.gravity.y << std::endl;
+		Vector3& knockVec = attackinfo.knockVec;
+		writing_text = "KnockVec";
+		writing_file << writing_text << " " << knockVec.x << " " << knockVec.y << " " << knockVec.z << std::endl;
+		Vector3& addVec = attackinfo.playerMoveVec;
+		writing_text = "addVec";
+		writing_file << writing_text << " " << addVec.x << " " << addVec.y << " " << addVec.z << std::endl;
+		writing_text = "deceleration";
+		writing_file << writing_text << " = " << attackinfo.deceleration << std::endl;
+		writing_file << std::endl;
+
+		writing_text = "//--SplinePos--//";
+		writing_file << writing_text << std::endl;
+		//タイマータイプを出力
+		writing_text = "TimerType ";
+		std::string timerType;
+		//イージングの場合
+		if (spline_.GetTimerType() == Spline::TimerType::Normal)
+		{
+			timerType = "Normal";
+			writing_file << writing_text << timerType << std::endl;
+		}
+		else
+		{
+			std::string easingType;
+			timerType = "Easing";
+			writing_file << writing_text << timerType << std::endl;
+
+			writing_text = "EasingType ";
+			easingType = easingType_;
+			writing_file << writing_text << easingType << std::endl;
+
+			writing_text = "EasingTypeInOut ";
+			easingType = easingTypeInOut_;
+			writing_file << writing_text << easingTypeInOut_ << std::endl;
+		}
+
+		//スプライトの座標を出力する
+
+		for (auto& spline : splinePointPos_[splineIndex])
+		{
+			Vector3& pos = spline->splinePointPos_;
+			writing_text = "SplinePos";
+			writing_file << writing_text << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+		}
+		splineIndex++;
+
+		writing_file << std::endl;
 	}
-	else
-	{
-		std::string easingType;
-		timerType = "Easing";
-		writing_file << writing_text << timerType << std::endl;
-
-		writing_text = "EasingType ";
-		easingType = easingType_;
-		writing_file << writing_text << easingType << std::endl;
-
-		writing_text = "EasingTypeInOut ";
-		easingType = easingTypeInOut_;
-		writing_file << writing_text << easingTypeInOut_ << std::endl;
-	}
-	
-	//スプライトの座標を出力する
-	for (auto& spline : splinePointPos_)
-	{
-		Vector3& pos = spline->splinePointPos_;
-		writing_text = "SplinePos";
-		writing_file << writing_text << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
-	}
-
 	writing_file.close();
 	//現在存在しているファイルを全て検索する
 	FindAttackFile();
@@ -423,12 +473,17 @@ void AttackEditor::AttackSave(const std::string& string)
 void AttackEditor::AttackLoad(const std::string& string)
 {
 	splinePointPos_.clear();
+	attackInfo_.clear();
 	std::string saveDir = "application/Resources/AttackInfo/";
 	saveDir.append(string.c_str());
 	saveDir += ".csv";
 
 	std::ifstream file(saveDir);  // 読み込むファイルのパスを指定
 	std::string line;
+
+	AttackInfo* attackinfo = nullptr;
+	std::vector<std::unique_ptr<SplinePos>>* splinePos = nullptr;
+	currentSwingNum_ = -1;
 
 	while (std::getline(file, line))
 	{  // 1行ずつ読み込む
@@ -440,43 +495,56 @@ void AttackEditor::AttackLoad(const std::string& string)
 		std::string key;
 		getline(line_stream, key, ' ');
 
+		if (key == "//--AtatckInfo--//")
+		{
+			attackInfo_.emplace_back();
+			attackinfo = &attackInfo_.back();
+		}
+		if (attackinfo == nullptr) continue;
 		//各パラメータ読み込み
 		if (key == "attackFrame")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> attackInfo_.attackFrame;
+			line_stream >> attackinfo->attackFrame;
 		}
 		else if (key == "gapFrame")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> attackInfo_.gapFrame;
+			line_stream >> attackinfo->gapFrame;
 		}
 		else if (key == "damege")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> attackInfo_.damage;
+			line_stream >> attackinfo->damage;
 		}
 		else if (key == "gravityY")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> attackInfo_.gravity.y;
+			line_stream >> attackinfo->gravity.y;
 		}
 		else if (key == "KnockVec")
 		{
-			line_stream >> attackInfo_.knockVec.x;
-			line_stream >> attackInfo_.knockVec.y;
-			line_stream >> attackInfo_.knockVec.z;
+			line_stream >> attackinfo->knockVec.x;
+			line_stream >> attackinfo->knockVec.y;
+			line_stream >> attackinfo->knockVec.z;
 		}
 		else if (key == "addVec")
 		{
-			line_stream >> attackInfo_.playerMoveVec.x;
-			line_stream >> attackInfo_.playerMoveVec.y;
-			line_stream >> attackInfo_.playerMoveVec.z;
+			line_stream >> attackinfo->playerMoveVec.x;
+			line_stream >> attackinfo->playerMoveVec.y;
+			line_stream >> attackinfo->playerMoveVec.z;
 		}
 		else if (key == "deceleration")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> attackInfo_.deceleration;
+			line_stream >> attackinfo->deceleration;
+		}
+
+		if (key == "//--SplinePos--//")
+		{
+			splinePointPos_.emplace_back();
+			splinePos = &splinePointPos_.back();
+			currentSwingNum_++;
 		}
 		//タイマー制御方法読み込み
 		if (key == "TimerType")
@@ -518,15 +586,17 @@ void AttackEditor::AttackLoad(const std::string& string)
 		//スプライン曲線読み込み
 		if (key == "SplinePos")
 		{
-			Vector3 splinePos;
+			Vector3 pos;
 
-			line_stream >> splinePos.x;
-			line_stream >> splinePos.y;
-			line_stream >> splinePos.z;
+			line_stream >> pos.x;
+			line_stream >> pos.y;
+			line_stream >> pos.z;
 
-			ImGuiADDSplinePos(splinePos);
+			ImGuiADDSplinePos(pos);
 		}
 	}
+
+	currentSwingNum_ = 0;
 }
 
 void AttackEditor::FindAttackFile()

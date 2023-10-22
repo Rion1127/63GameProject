@@ -1,5 +1,8 @@
 #include "BaseAttack.h"
 #include "GameSpeed.h"
+#include "RRandom.h"
+#include "mSound.h"
+#include "SoundVolume.h"
 
 /**
  * @file BaseAttack.cpp
@@ -62,6 +65,9 @@ void BaseAttack::Update()
 		if (index_ < attackinput_.attackinfo.size() - 1) {
 			index_++;
 			SetNextAttack();
+
+			float picth = RRandom::RandF(0.7f, 1.5f);
+			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		}
 	}
 	//攻撃中フラグ
@@ -131,6 +137,7 @@ void BaseAttack::SplinePosUpdate()
 	for (int32_t i = 0; i < attackpoint.size(); i++)
 	{
 		Vector3 splinePos = attackpoint[i];
+		splinePos.y += selfActor_->GetWorldTransform()->scale_.y;
 		if (i == 0)
 		{
 			spline_.AddPosition(splinePos, PosState::Start);

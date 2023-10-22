@@ -151,7 +151,7 @@ void AttackManager::FirstAttackUpdate()
 			//ジャンプして攻撃
 			else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["AirSweep"], player_, lockOnEnemy_);
 			//通常攻撃
-			else nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground1"], player_, lockOnEnemy_);
+			else nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["test"], player_, lockOnEnemy_);
 		}
 		else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 		{
@@ -254,8 +254,8 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 	std::string line;
 
 	BaseAttack::AttackInput newinput;
-	newinput.attackinfo.emplace_back();
-	auto& info = newinput.attackinfo.back();
+	
+	AttackEditor::AttackInfo* info = nullptr;
 
 	while (std::getline(file, line))
 	{  // 1行ずつ読み込む
@@ -268,44 +268,50 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 		getline(line_stream, key, ' ');
 
 		//各パラメータ読み込み
+		if (key == "//--AtatckInfo--//")
+		{
+			newinput.attackinfo.emplace_back();
+			info = &newinput.attackinfo.back();
+		}
+		if (info == nullptr)continue;
 		if (key == "attackFrame")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> info.attackFrame;
+			line_stream >> info->attackFrame;
 		}
 		else if (key == "gapFrame")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> info.gapFrame;
+			line_stream >> info->gapFrame;
 
-			info.attackAllFrame = info.attackFrame + info.gapFrame;
+			info->attackAllFrame = info->attackFrame + info->gapFrame;
 		}
 		else if (key == "damege")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> info.damage;
+			line_stream >> info->damage;
 		}
 		else if (key == "gravityY")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> info.gravity.y;
+			line_stream >> info->gravity.y;
 		}
 		else if (key == "KnockVec")
 		{
-			line_stream >> info.knockVec.x;
-			line_stream >> info.knockVec.y;
-			line_stream >> info.knockVec.z;
+			line_stream >> info->knockVec.x;
+			line_stream >> info->knockVec.y;
+			line_stream >> info->knockVec.z;
 		}
 		else if (key == "addVec")
 		{
-			line_stream >> info.playerMoveVec.x;
-			line_stream >> info.playerMoveVec.y;
-			line_stream >> info.playerMoveVec.z;
+			line_stream >> info->playerMoveVec.x;
+			line_stream >> info->playerMoveVec.y;
+			line_stream >> info->playerMoveVec.z;
 		}
 		else if (key == "deceleration")
 		{
 			line_stream.ignore(1, '=');
-			line_stream >> info.deceleration;
+			line_stream >> info->deceleration;
 		}
 		//タイマー制御方法読み込み
 		if (key == "TimerType")
@@ -316,7 +322,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			Spline::TimerType timerType;
 			if (timerTypeName == "Normal")timerType = Spline::TimerType::Normal;
 			else timerType = Spline::TimerType::Easing;
-			info.timerType = timerType;
+			info->timerType = timerType;
 		}
 		//イージングの種類読み込み
 		if (key == "EasingType")
@@ -328,7 +334,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			{
 				if (easingType_ == Spline::GetEaseTypeNames()[i])
 				{
-					info.easingType = (Spline::EasingType)i;
+					info->easingType = (Spline::EasingType)i;
 					break;
 				}
 			}
@@ -344,13 +350,13 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
 			else typeInout = Spline::EasingTypeInOut::InOut;
 
-			info.inOutType = typeInout;
+			info->inOutType = typeInout;
 		}
 		//スプライン曲線読み込み
 		if (key == "SplinePos")
 		{
-			info.splinePos.emplace_back();
-			auto& splinePos = info.splinePos.back();
+			info->splinePos.emplace_back();
+			auto& splinePos = info->splinePos.back();
 
 			line_stream >> splinePos.x;
 			line_stream >> splinePos.y;

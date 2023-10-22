@@ -71,6 +71,7 @@ public:
 	void UpdateLookAT();
 	void Reset();
 	void Shake();
+	void DrawImGui();
 private:
 	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos, const Vector2& winSize, IEnemy* enemy);
 public:

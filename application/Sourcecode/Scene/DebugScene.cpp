@@ -92,10 +92,11 @@ void DebugScene::Update()
 		//当たり判定前更新
 		stage_->Update();
 		player_->PreUpdate();
+		enemyManager_->DebugUpdate();
 		enemyManager_->PreUpdate();
 
 #ifdef _DEBUG
-		LoadEnemyImGui();
+		//LoadEnemyImGui();
 #endif // _DEBUG
 		//当たり判定
 		colManager_->Update();
@@ -164,6 +165,8 @@ void DebugScene::Draw()
 
 	ConfigMenu::GetInstance()->DrawImGui();
 	colManager_->DrawImGui();
+	player_->DrawImGui();
+	gameCamera_.DrawImGui();
 }
 
 void DebugScene::DrawPostEffect()

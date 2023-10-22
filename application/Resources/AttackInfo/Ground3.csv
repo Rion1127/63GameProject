@@ -11,6 +11,7 @@ deceleration = 0.007
 TimerType Easing
 EasingType Circ
 EasingTypeInOut In
-SplinePos -2 1 0.2
-SplinePos 0 1 2.6
-SplinePos 2 1 0.2
+SplinePos -2 0 0.2
+SplinePos 0 0 2.6
+SplinePos 2 0 0.2
+
