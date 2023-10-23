@@ -231,8 +231,8 @@ AttackDataPool::AttackDataPool()
 	LoadAttackFile("Ground1");
 	LoadAttackFile("Ground2");
 	LoadAttackFile("Ground3");*/
-
-	std::string saveDir = "application/Resources/AttackInfo/";
+	
+	std::string saveDir = "application/Resources/Attack/AttackInfo/";
 	std::vector<std::string> attackFileNames = FindFileNames(saveDir, ".csv",false);
 	//存在しているファイルを全て読み込む
 	for (auto& attackFileName : attackFileNames) {
@@ -246,11 +246,11 @@ void AttackDataPool::LoadAllAttackFile()
 
 void AttackDataPool::LoadAttackFile(std::string fileName)
 {
-	std::string saveDir = "application/Resources/AttackInfo/";
-	saveDir.append(fileName.c_str());
-	saveDir += ".csv";
+	std::string loadDir = "application/Resources/Attack/AttackInfo/";
+	loadDir.append(fileName.c_str());
+	loadDir += ".csv";
 
-	std::ifstream file(saveDir);  // 読み込むファイルのパスを指定
+	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
 	std::string line;
 
 	BaseAttack::AttackInput newinput;

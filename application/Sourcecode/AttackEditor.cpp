@@ -522,7 +522,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 {
 	splinePointPos_.clear();
 	attackInfo_.clear();
-	std::string saveDir = "application/Resources/AttackInfo/";
+	std::string saveDir = "application/Resources/Attack/AttackInfo/";
 	saveDir.append(string.c_str());
 	saveDir += ".csv";
 
