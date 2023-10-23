@@ -23,7 +23,7 @@ Player* AttackManager::player_ = nullptr;
 AttackManager::AttackManager()
 {
 	comboNum = 0;
-	
+
 	isAttacking = false;
 
 }
@@ -142,21 +142,27 @@ void AttackManager::FirstAttackUpdate()
 	//攻撃していないなら攻撃を代入する
 	if (nowAttack_ == nullptr)
 	{
+		std::string keyName;
 		isNextAttack_ = false;
 		if (player_->GetNowState()->GetId() == PlayerState::Idle ||
 			player_->GetNowState()->GetId() == PlayerState::Move)
 		{
 			//遠くの敵にスライドして攻撃
-			if (PtoELength_ >= 4.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Slide"], player_, lockOnEnemy_);
+			if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
 			//ジャンプして攻撃
-			else if (diffPosY > 1.f)nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["AirSweep"], player_, lockOnEnemy_);
+			else if (diffPosY > 1.f)keyName = datapool_.GetKeyName()["JumpAttack"];
 			//通常攻撃
-			else nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground1"], player_, lockOnEnemy_);
+			else keyName = datapool_.GetKeyName()["Ground1"];
 		}
 		else if (player_->GetNowState()->GetId() == PlayerState::Jump)
 		{
-			nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Air1"], player_, lockOnEnemy_);
+			//空中攻撃
+			keyName = datapool_.GetKeyName()["Air1"];
 		}
+		if (keyName == "")return;
+		//条件に合ったキーで攻撃を生成
+		nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()[keyName], player_, lockOnEnemy_);
+
 		if (nowAttack_ != nullptr) {
 			float picth = RRandom::RandF(0.7f, 1.5f);
 			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
@@ -180,28 +186,32 @@ void AttackManager::SwitchAttack()
 	if (isNextAttack_) {
 		if (nextAttack_ == nullptr)
 		{
+			std::string keyName;
 			isNextAttack_ = false;
 			if (player_->GetNowState()->GetId() == PlayerState::Attack)
 			{
 				//すでに攻撃している場合は次の攻撃を入れる
 				if (comboNum == 1) {
 					//遠くの敵にスライドして攻撃
-					if (PtoELength_ >= 4.f)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
+					if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
 					//ジャンプして攻撃
-					else if (diffPosY > 1.f)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
+					else if (diffPosY > 1.f)keyName = datapool_.GetKeyName()["JumpAttack"];
 					//通常攻撃
-					else nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground2"], player_, lockOnEnemy_);
+					else keyName = datapool_.GetKeyName()["Ground2"];
 				}
 				//フィニッシュ攻撃（エクスプロージョン）
-				if (comboNum == 2)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Ground3"], player_, lockOnEnemy_);
+				if (comboNum == 2)keyName = datapool_.GetKeyName()["Ground3"];
 			}
 			else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 			{
 				//空中2コンボ目
-				if (comboNum == 1)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Air2"], player_, lockOnEnemy_);
+				if (comboNum == 1)keyName = datapool_.GetKeyName()["Air2"];
 				//空中フィニッシュ
-				if (comboNum == 2)nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()["Air3"], player_, lockOnEnemy_);
+				if (comboNum == 2)keyName = datapool_.GetKeyName()["Air3"];
 			}
+			if (keyName == "")return;
+			//条件に合ったキーで攻撃を生成
+			nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()[keyName], player_, lockOnEnemy_);
 		}
 	}
 
@@ -222,26 +232,15 @@ void AttackManager::SwitchAttack()
 
 AttackDataPool::AttackDataPool()
 {
-	LoadAllAttackFile();
 
-	/*LoadAttackFile("test");
-	LoadAttackFile("Air1");
-	LoadAttackFile("Air2");
-	LoadAttackFile("Air3");
-	LoadAttackFile("Ground1");
-	LoadAttackFile("Ground2");
-	LoadAttackFile("Ground3");*/
-	
 	std::string saveDir = "application/Resources/Attack/AttackInfo/";
-	std::vector<std::string> attackFileNames = FindFileNames(saveDir, ".csv",false);
+	std::vector<std::string> attackFileNames = FindFileNames(saveDir, ".csv", false);
 	//存在しているファイルを全て読み込む
 	for (auto& attackFileName : attackFileNames) {
 		LoadAttackFile(attackFileName);
 	}
-}
 
-void AttackDataPool::LoadAllAttackFile()
-{
+	LoadattackKeys("AttackKey");
 }
 
 void AttackDataPool::LoadAttackFile(std::string fileName)
@@ -254,7 +253,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 	std::string line;
 
 	BaseAttack::AttackInput newinput;
-	
+
 	AttackEditor::AttackInfo* info = nullptr;
 
 	while (std::getline(file, line))
@@ -363,6 +362,32 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> splinePos.z;
 		}
 	}
-	
+
 	attacks_.insert(std::make_pair(fileName, newinput));
+}
+
+void AttackDataPool::LoadattackKeys(std::string fileName)
+{
+	std::string loadDir = "application/Resources/Attack/";
+	loadDir.append(fileName.c_str());
+	loadDir += ".csv";
+
+	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
+	std::string line;
+
+	while (std::getline(file, line))
+	{  // 1行ずつ読み込む
+		std::cout << line << std::endl;
+
+		std::stringstream line_stream(line);
+
+		// 半角スペース区切りで行の先頭文字列を取得
+		std::string key;
+		getline(line_stream, key, ' ');
+
+		std::string keyName;
+		line_stream >> keyName;
+
+		attackKeys_.insert(std::make_pair(key, keyName));
+	}
 }

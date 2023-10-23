@@ -31,6 +31,8 @@ AttackEditor::AttackEditor()
 	swordObj_->SetParent(playerObj_.get());
 
 	spline_.SetParent(playerObj_->GetTransform());
+	//キー読み込み
+	AttackKeyLoad();
 }
 
 void AttackEditor::Update()
@@ -190,6 +192,8 @@ void AttackEditor::DrawImGui()
 	attackInfo_[currentSwingNum_].knockVec = { knockVec[0],knockVec[1], knockVec[2] };
 
 	ImGui::End();
+
+	ImGuiSettingCombo();
 }
 
 void AttackEditor::ImGuiDisplaySplitePoint()
@@ -443,6 +447,69 @@ void AttackEditor::ImGuiSwingCount()
 	ImGui::End();
 }
 
+void AttackEditor::ImGuiSettingCombo()
+{
+	ImGui::Begin("SettingCombo");
+
+	
+	static std::string setKeyName;		//読み込むファイルの名前
+	//プルダウンメニューでキーを選択
+	if (ImGui::BeginCombo("KeyName", setKeyName.c_str()))
+	{
+		for (auto& key : attackKeys_)
+		{
+			
+			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
+			const bool is_selected = (setKeyName == key.first);
+			if (ImGui::Selectable(key.first.c_str(), is_selected))
+			{
+				setKeyName = key.first.c_str();
+			}
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	static std::string setComboName;		//読み込むファイルの名前
+	//プルダウンメニューでコンボを選択
+	if (ImGui::BeginCombo("AttackName", setComboName.c_str()))
+	{
+		for (uint32_t i = 0; i < allAttackFileNames.size(); ++i)
+		{
+			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
+			const bool is_selected = (setComboName == allAttackFileNames[i]);
+			if (ImGui::Selectable(allAttackFileNames[i].c_str(), is_selected))
+			{
+				setComboName = allAttackFileNames[i].c_str();
+			}
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	if (ImGui::Button("Set", ImVec2(50, 50))) {
+		attackKeys_.at(setKeyName) = setComboName;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Save", ImVec2(50, 50))) {
+		AttackKeySave();
+	}
+	//表示
+	ImGui::Text("KeyName : AttackName");
+	for (auto& keyName : attackKeys_) {
+		std::string text = keyName.first + " : " + keyName.second;
+		ImGui::Text(text.c_str());
+	}
+
+	ImGui::End();
+}
+
 void AttackEditor::AttackSave(const std::string& string)
 {
 	std::string saveDir = "application/Resources/AttackInfo/";
@@ -649,7 +716,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 
 void AttackEditor::FindAttackFile()
 {
-	std::string dir = "application/Resources/AttackInfo/";
+	std::string dir = "application/Resources/Attack/AttackInfo/";
 	allAttackFileNames = FindFileNames(dir, ".csv", false);
 }
 
@@ -685,5 +752,45 @@ void AttackEditor::SetSplinePos()
 		{
 			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Middle);
 		}
+	}
+}
+
+void AttackEditor::AttackKeySave()
+{
+	std::string saveDir = "application/Resources/Attack/AttackKey";
+	saveDir += ".csv";
+	std::ofstream writing_file;
+
+	writing_file.open(saveDir, std::ios::out);
+
+
+	for (auto& keys : attackKeys_) {
+		writing_file << keys.first << " " << keys.second << std::endl;
+	}
+	writing_file.close();
+}
+
+void AttackEditor::AttackKeyLoad()
+{
+	std::string loadDir = "application/Resources/Attack/AttackKey";
+	loadDir += ".csv";
+
+	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
+	std::string line;
+
+	while (std::getline(file, line))
+	{  // 1行ずつ読み込む
+		std::cout << line << std::endl;
+
+		std::stringstream line_stream(line);
+
+		// 半角スペース区切りで行の先頭文字列を取得
+		std::string key;
+		getline(line_stream, key, ' ');
+
+		std::string keyName;
+		line_stream >> keyName;
+
+		attackKeys_.insert(std::make_pair(key, keyName));
 	}
 }

@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include <imgui.h>
 #include <vector>
+#include <map>
 
 /**
  * @file AttackEditor.h
@@ -60,6 +61,9 @@ private:
 	TimerFloat timer_;
 
 	std::vector<std::string> allAttackFileNames;
+	std::vector<std::string> allAttackKeyNames;
+
+	std::map<std::string, std::string> attackKeys_;
 public:
 	AttackEditor();
 	void Update();
@@ -75,11 +79,14 @@ private:
 	void ImGuiPlay();
 	void ImGuiAllPlay();
 	void ImGuiSwingCount();
+	void ImGuiSettingCombo();
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む
 	void AttackPlay();
 	void SetSplinePos();
+	void AttackKeySave();
+	void AttackKeyLoad();
 };
 
 class FrameEditor {
