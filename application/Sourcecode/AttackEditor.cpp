@@ -512,7 +512,7 @@ void AttackEditor::ImGuiSettingCombo()
 
 void AttackEditor::AttackSave(const std::string& string)
 {
-	std::string saveDir = "application/Resources/AttackInfo/";
+	std::string saveDir = "application/Resources/Attack/AttackInfo/";
 	saveDir.append(string.c_str());
 	saveDir += ".csv";
 	std::ofstream writing_file;
