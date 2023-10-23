@@ -143,14 +143,14 @@ void AttackEditor::DrawImGui()
 	if (ImGui::Button("SplineTimerType"))
 	{
 		Spline::TimerType timerType;
-		bool flag = (spline_.GetTimerType() == Spline::TimerType::Easing);
+		bool flag = (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing);
 
 		timerType = flag ? Spline::TimerType::Normal : Spline::TimerType::Easing;
 
-		spline_.SetTimerType_(timerType);
+		attackInfo_[currentSwingNum_].timerType = timerType;
 	}
 	std::string timerType;
-	if (spline_.GetTimerType() == Spline::TimerType::Easing) timerType = "Easing";
+	if (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing) timerType = "Easing";
 	else timerType = "Normal";
 	ImGui::SameLine();
 	ImGui::Text(timerType.c_str());
@@ -236,7 +236,7 @@ void AttackEditor::ImGuiSetEasingType()
 			if (ImGui::Selectable(Spline::GetEaseTypeNames()[i].c_str(), is_selected))
 			{
 				easingType_ = Spline::GetEaseTypeNames()[i].c_str();
-				spline_.SetEasingType_((Spline::EasingType)i);
+				attackInfo_[currentSwingNum_].easingType = ((Spline::EasingType)i);
 			}
 			if (is_selected)
 			{
@@ -263,7 +263,7 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 			if (ImGui::Selectable(easingTypenames[i].c_str(), is_selected))
 			{
 				easingTypeInOut_ = easingTypenames[i].c_str();
-				spline_.SetEasingTypeInOut_((Spline::EasingTypeInOut)i);
+				attackInfo_[currentSwingNum_].inOutType = ((Spline::EasingTypeInOut)i);
 			}
 			if (is_selected)
 			{
@@ -412,12 +412,33 @@ void AttackEditor::ImGuiSwingCount()
 			currentSwingNum_--;
 		}
 	}
+	int32_t preCurrentSwingNum = currentSwingNum_;
 	ImGui::Text("currentSwingNum");
 	ImGui::InputInt(" ", &currentSwingNum_);
 
 	int32_t min = 0;
 	int32_t max = (int32_t)(attackInfo_.size() - 1);
 	currentSwingNum_ = Clamp(currentSwingNum_, min, max);
+	//もし選択している数字が異なったら
+	if (preCurrentSwingNum != currentSwingNum_) {
+		auto& currentInfo = attackInfo_[currentSwingNum_];
+		//プルダウンメニューの更新
+		for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
+		{
+			if (currentInfo.easingType == Spline::EasingType(i))
+			{
+				easingType_ = Spline::GetEaseTypeNames()[i];
+				break;
+			}
+		}
+
+		std::string inoutString;
+		if (currentInfo.inOutType == Spline::EasingTypeInOut::In)inoutString = "In";
+		else if (currentInfo.inOutType == Spline::EasingTypeInOut::Out)inoutString = "Out";
+		else inoutString = "InOut";
+		
+		easingTypeInOut_ = inoutString;
+	}
 
 	ImGui::End();
 }
@@ -582,7 +603,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 			Spline::TimerType timerType;
 			if (timerTypeName == "Normal")timerType = Spline::TimerType::Normal;
 			else timerType = Spline::TimerType::Easing;
-			spline_.SetTimerType_(timerType);
+			attackinfo->timerType = timerType;
 		}
 		//イージングの種類読み込み
 		if (key == "EasingType")
@@ -593,7 +614,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 			{
 				if (easingType_ == Spline::GetEaseTypeNames()[i])
 				{
-					spline_.SetEasingType_((Spline::EasingType)i);
+					attackinfo->easingType = ((Spline::EasingType)i);
 					break;
 				}
 			}
@@ -608,7 +629,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 			else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
 			else typeInout = Spline::EasingTypeInOut::InOut;
 
-			spline_.SetEasingTypeInOut_(typeInout);
+			attackinfo->inOutType = typeInout;
 		}
 		//スプライン曲線読み込み
 		if (key == "SplinePos")
@@ -641,6 +662,9 @@ void AttackEditor::AttackPlay()
 	spline_.SetIsStart(true);
 	spline_.AllClear();
 	spline_.SetMaxTime(attackInfo_[currentSwingNum_].attackFrame);
+	spline_.SetTimerType_(attackInfo_[currentSwingNum_].timerType);
+	spline_.SetEasingType_(attackInfo_[currentSwingNum_].easingType);
+	spline_.SetEasingTypeInOut_(attackInfo_[currentSwingNum_].inOutType);
 	for (int32_t i = 0; i < splinePointPos_[currentSwingNum_].size(); i++)
 	{
 		if (i == 0)
