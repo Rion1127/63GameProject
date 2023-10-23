@@ -50,6 +50,26 @@ void Spline::Update(float speedRate)
 	for (int32_t i = 0; i < splineObj_.size(); i++) {
 		splineObj_[i]->Update();
 	}
+	for (int32_t i = 0; i < splineObj_.size(); i++) {
+		
+		Vector3 nextVec;
+		Quaternion q;
+		//次のオブジェがある時
+		if (i <= splineObj_.size() - 2) {
+			nextVec = splineObj_[i + 1]->WT_.GetWorldPos() - splineObj_[i]->WT_.GetWorldPos();
+			nextVec = nextVec.normalize();
+			q = DirectionToDirection(Vector3(0, 1, 0), nextVec);
+		}
+		//最後のオブジェの時
+		else {
+			nextVec = splineObj_[i]->WT_.GetWorldPos() - splineObj_[i - 1]->WT_.GetWorldPos();
+			nextVec = nextVec.normalize();
+			q = DirectionToDirection(Vector3(0, 1, 0), nextVec);
+		}
+		splineObj_[i]->WT_.quaternion_ = q;
+
+		splineObj_[i]->Update();
+	}
 }
 
 void Spline::DrawDebug()
@@ -330,11 +350,10 @@ void Spline::ObjInit()
 
 	for (int32_t i = 0; i < splineObj_.size(); i++) {
 		splineObj_[i] = std::make_unique<Object3d>();
-		splineObj_[i]->SetModel(Model::CreateOBJ_uniptr("cube", false));
+		splineObj_[i]->SetModel(Model::CreateOBJ_uniptr("cone", false));
 		splineObj_[i]->SetPos(pos[i]);
-		splineObj_[i]->SetScale(Vector3(0.1f, 0.1f, 0.1f));
-		Vector3 color = { i * 0.2f, i * 0.2f,i * 0.2f };
-		splineObj_[i]->SetAmbient("cube", color);
+		splineObj_[i]->SetScale(Vector3(0.5f, 0.5f, 0.5f));
+		splineObj_[i]->WT_.rotType = RotType::Quaternion;
 		splineObj_[i]->WT_.parent_ = worldTransform_.parent_;
 	}
 }

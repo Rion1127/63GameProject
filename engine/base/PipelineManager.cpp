@@ -91,7 +91,7 @@ void PipelineManager::ObjShaderIni()
 
 	GetPipelineObjects("Line3D")->AddrootParamsNoneTexture(2);
 
-	Create("Line3D", NONE, TOPOLOGY_LINE, DEPTH_WRITE_MASK_ZERO, MODE_WRAP);
+	Create("Line3D", NONE, TOPOLOGY_LINE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
 }
 void PipelineManager::PostEffectIni()
 {

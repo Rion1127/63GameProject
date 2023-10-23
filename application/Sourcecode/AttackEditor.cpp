@@ -643,8 +643,8 @@ void AttackEditor::AttackLoad(const std::string& string)
 			ImGuiADDSplinePos(pos);
 		}
 	}
-	SetSplinePos();
 	currentSwingNum_ = 0;
+	SetSplinePos();
 }
 
 void AttackEditor::FindAttackFile()
