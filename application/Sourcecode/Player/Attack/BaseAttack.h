@@ -28,6 +28,7 @@ private:
 	uint32_t index_;
 
 	bool isAttaking_;	//攻撃中フラグ
+	float nextAttackFrame_;
 
 	Vector3 swordPos_;	//剣の座標
 

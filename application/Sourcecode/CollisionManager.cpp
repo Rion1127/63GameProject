@@ -310,10 +310,10 @@ void CollisionManager::PlayerToEnemy()
 			//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
 			backLength -= length;
 
-			Vector3 pushBackVec = PtoEVec * backLength;
+			Vector3 pushBackVec = (PtoEVec * backLength) / 2.f;
 
-			player_->AddaddVec(pushBackVec / 2.f);
-			enemy->AddaddVec(-pushBackVec / 2.f);
+			player_->AddaddVec(pushBackVec);
+			enemy->AddaddVec(-pushBackVec);
 		}
 	}
 }

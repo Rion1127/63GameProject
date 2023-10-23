@@ -31,13 +31,13 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	spline_.Update();
 	swordPos_ = spline_.GetNowPoint();
 
-	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
-
 	//剣の座標をに当たり判定代入
 	col_.center = swordPos_;
 	col_.radius = 1.0f;
 	float& attackTime = attackinput_.attackinfo[index_].attackFrame;
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
+
+	nextAttackFrame_ += attackinput_.attackinfo[index_].attackAllFrame;
 }
 
 void BaseAttack::SetNextAttack()
@@ -53,6 +53,8 @@ void BaseAttack::SetNextAttack()
 	auto& addVec = attackinput_.attackinfo[index_].playerMoveVec;
 
 	addVec = RotateVector(addVec, selfActor_->GetWorldTransform()->quaternion_);
+
+	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
 }
 
 void BaseAttack::Update()
@@ -60,10 +62,11 @@ void BaseAttack::Update()
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	attackAllTime_.AddTime(GameSpeed::GetPlayerSpeed());
 	//攻撃が終了したら
-	if (attackAllTime_.GetTimer() > attackinput_.attackinfo[index_].attackAllFrame) {
+	if (attackAllTime_.GetTimer() > nextAttackFrame_) {
 		//残りの攻撃がある場合は続ける
 		if (index_ < attackinput_.attackinfo.size() - 1) {
 			index_++;
+			nextAttackFrame_ += attackinput_.attackinfo[index_].attackAllFrame;
 			SetNextAttack();
 
 			float picth = RRandom::RandF(0.7f, 1.5f);
