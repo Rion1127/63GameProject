@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include <vector>
 #include "Object3d.h"
+#include "Line3D.h"
 
 /**
  * @file Spline.h
@@ -45,6 +46,7 @@ private:
 	TimerFloat timer_;
 	bool isStart_;
 	bool isEnd_;
+	bool isLineDisplay_;
 
 	float maxTime_;
 	float nowTime_;
@@ -55,6 +57,8 @@ private:
 	EasingTypeInOut easeTypeInOut_;
 
 	std::vector<std::unique_ptr<Object3d>> splineObj_;
+	std::unique_ptr<Line3D> line3D_;
+	std::vector<Vector3> preSplinePos_;
 private:
 	static std::vector<std::string> sEaseTypeName_;
 public:
@@ -101,5 +105,6 @@ private:
 	void EaseUpdate();
 	void ObjInit();		//スプラインポイントに配置するオブジェ初期化
 	void ParentUpdate(std::vector<Vector3>& pos);
+	void Line3DUpdate();
 };
 

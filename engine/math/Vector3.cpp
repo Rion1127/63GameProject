@@ -124,6 +124,16 @@ Vector3& Vector3::operator-=(const Vector2& v)
 	return *this;
 }
 
+bool Vector3::operator!=(const Vector3& v)
+{
+	if (x == v.x &&
+		y == v.y &&
+		z == v.z) {
+		return false;
+	}
+	return true;
+}
+
 //2項演算子オーバーロード
 //※いろんな引数のパターンに対応(引数の順序)するため、以下のように準備している
 const Vector3 operator+(const Vector3& v1, const Vector3& v2)

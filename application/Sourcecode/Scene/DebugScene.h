@@ -21,6 +21,8 @@
 #include "AssimpObject3D.h"
 #include "AssimpLoader.h"
 
+#include "Line3D.h"
+
 /**
  * @file DebugScene.h
  * @brief デバッグ用のシーンクラス

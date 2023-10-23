@@ -19,6 +19,9 @@ Spline::Spline()
 	timerType_ = TimerType::Normal;
 	easingType_ = EasingType::Sine;
 	easeTypeInOut_ = EasingTypeInOut::In;
+	isLineDisplay_ = false;
+
+	line3D_ = std::make_unique<Line3D>(50);
 }
 
 void Spline::StaticInit()
@@ -41,6 +44,8 @@ void Spline::Update(float speedRate)
 			EasingUpdate(speedRate);
 		}
 	}
+	Line3DUpdate();
+	line3D_->Update();
 
 	for (int32_t i = 0; i < splineObj_.size(); i++) {
 		splineObj_[i]->Update();
@@ -49,15 +54,11 @@ void Spline::Update(float speedRate)
 
 void Spline::DrawDebug()
 {
+	line3D_->Draw();
+	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	for (int32_t i = 0; i < splineObj_.size(); i++) {
 		splineObj_[i]->Draw();
 	}
-
-	ImGui::Begin("spline");
-	float pos[3] = { nowPos_.x,nowPos_.y,nowPos_.z };
-	ImGui::SliderFloat3("NowPos", pos, -100.0f, 100.0f);
-
-	ImGui::End();
 }
 
 void Spline::Reset()
@@ -331,18 +332,49 @@ void Spline::ObjInit()
 		splineObj_[i] = std::make_unique<Object3d>();
 		splineObj_[i]->SetModel(Model::CreateOBJ_uniptr("cube", false));
 		splineObj_[i]->SetPos(pos[i]);
-		splineObj_[i]->SetScale(Vector3(0.3f, 0.3f, 0.3f));
+		splineObj_[i]->SetScale(Vector3(0.1f, 0.1f, 0.1f));
 		Vector3 color = { i * 0.2f, i * 0.2f,i * 0.2f };
 		splineObj_[i]->SetAmbient("cube", color);
+		splineObj_[i]->WT_.parent_ = worldTransform_.parent_;
 	}
 }
 
 void Spline::ParentUpdate(std::vector<Vector3>& pos)
 {
-	for (int32_t i = 0; i < splinePos_.size();i++) {
+	for (int32_t i = 0; i < splinePos_.size(); i++) {
 		worldTransform_.position_ = splinePos_[i];
 		worldTransform_.Update();
 
 		pos.emplace_back(worldTransform_.GetWorldPos());
 	}
+}
+
+void Spline::Line3DUpdate()
+{
+	if (splinePos_.size() == 0)return;
+	std::vector<Vector3> pos;
+
+	float t = 0;
+	float addRate = 1.f / line3D_->GetVertSize() * (splinePos_.size() - 2);
+	int32_t index = 1;
+
+	std::vector<Vector3> splinePos;
+	if (worldTransform_.parent_ != nullptr) {
+		ParentUpdate(splinePos);
+	}
+	else {
+		splinePos = splinePos_;
+	}
+
+	while (index < splinePos.size() - 2) {
+		//次の制御点がある場合
+		if (t >= 1.0f) {
+			index++;
+			t = 0;
+		}
+
+		pos.emplace_back(SplinePosition(splinePos, index, t));
+		t += addRate;
+	}
+	line3D_->SetVertPos(pos);
 }

@@ -36,7 +36,6 @@ public:
 		std::vector<Vector3> splinePos;
 	};
 	struct SplinePos {
-		std::unique_ptr<Object3d> obj_;
 		Vector3 splinePointPos_;
 	};
 private:
@@ -54,6 +53,7 @@ private:
 	bool isPlay_;
 	bool isAllPlay_;
 	bool isPointErase_;
+	bool isValueChange_;
 	int32_t currentSwingNum_;
 
 	Vector3 moveVec_;
@@ -79,6 +79,7 @@ private:
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む
 	void AttackPlay();
+	void SetSplinePos();
 };
 
 class FrameEditor {

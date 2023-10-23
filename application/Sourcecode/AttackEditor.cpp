@@ -29,6 +29,8 @@ AttackEditor::AttackEditor()
 	splinePointPos_.emplace_back();
 
 	swordObj_->SetParent(playerObj_.get());
+
+	spline_.SetParent(playerObj_->GetTransform());
 }
 
 void AttackEditor::Update()
@@ -38,29 +40,23 @@ void AttackEditor::Update()
 		isPointErase_ = false;
 		splinePointPos_[currentSwingNum_].erase(splinePointPos_[currentSwingNum_].begin() + (splinePointPos_[currentSwingNum_].size() - 1));
 	}
-	for (int32_t i = 0; i < splinePointPos_[currentSwingNum_].size(); i++)
-	{
-		splinePointPos_[currentSwingNum_][i]->obj_->SetPos(splinePointPos_[currentSwingNum_][i]->splinePointPos_);
-		splinePointPos_[currentSwingNum_][i]->obj_->Update();
-	}
 	//選択している一振りだけ再生
 	if (isPlay_)
 	{
 		timer_.AddTime(1);
-		spline_.Update();
-
-		swordObj_->SetPos(spline_.GetNowPoint());
+		Vector3 pos = spline_.GetNowPoint() - playerObj_->GetPos();
+		swordObj_->SetPos(pos);
 		swordObj_->SetState(Sword::SwordState::Attack);
 
 		if (timer_.GetIsEnd()) {
 			isPlay_ = false;
 			swordObj_->SetState(Sword::SwordState::Idle);
+			spline_.SetIsStart(false);
 		}
 	}
 	//選択している攻撃全てを再生
 	if (isAllPlay_) {
 		timer_.AddTime(1);
-		spline_.Update();
 
 		swordObj_->SetPos(spline_.GetNowPoint());
 		swordObj_->SetState(Sword::SwordState::Attack);
@@ -73,16 +69,24 @@ void AttackEditor::Update()
 			else {
 				isAllPlay_ = false;
 				swordObj_->SetState(Sword::SwordState::Idle);
+				spline_.SetIsStart(false);
 			}
 		}
 	}
+	if (isAllPlay_ == false && isPlay_ == false) {
+		if (isValueChange_) {
+			SetSplinePos();
+			isValueChange_ = false;
+		}
+	}
+	spline_.Update();
 
 	Vector3 playerPos = playerObj_->GetPos();
 	playerPos += moveVec_;
 	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
 	playerObj_->SetPos(playerPos);
 
-	swordObj_->EditorUpdate(playerPos + spline_.GetNowPoint());
+	swordObj_->EditorUpdate(spline_.GetNowPoint());
 
 	playerObj_->Update();
 }
@@ -93,10 +97,7 @@ void AttackEditor::Draw()
 
 	swordObj_->Draw();
 
-	for (auto& spline : splinePointPos_[currentSwingNum_])
-	{
-		spline->obj_->Draw();
-	}
+	spline_.DrawDebug();
 }
 
 void AttackEditor::DrawImGui()
@@ -197,22 +198,23 @@ void AttackEditor::ImGuiDisplaySplitePoint()
 	{
 		int32_t splinePosIndex = 0;
 		std::string splinePosName;
+		Vector3 prePos;
 		for (auto& spline : splinePointPos_[currentSwingNum_])
 		{
+			prePos = spline->splinePointPos_;
 			std::ostringstream num;
 
 			num << splinePosIndex;
-			splinePosName = "Sprite" + num.str();
+			splinePosName = "Sprine" + num.str();
 
 			float splinePos[3] = {
 				spline->splinePointPos_.x,
 				spline->splinePointPos_.y,
 				spline->splinePointPos_.z,
 			};
-			ImGui::DragFloat3(splinePosName.c_str(), splinePos, 0.1f, 100.f, 100.f);
-
+			ImGui::DragFloat3(splinePosName.c_str(), splinePos, 0.1f, 100.f, 100.f,"%.3f");
 			spline->splinePointPos_ = { splinePos[0], splinePos[1],  splinePos[2] };
-
+			if (prePos != spline->splinePointPos_)isValueChange_ = true;
 			splinePosIndex++;
 		}
 	}
@@ -277,12 +279,9 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
 {
 	std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
-	newObj->obj_ = std::make_unique<Object3d>();
-	newObj->obj_->SetModel(Model::CreateOBJ_uniptr("cube", false));
-	newObj->obj_->SetScale(Vector3(0.2f, 0.2f, 0.2f));
-	newObj->obj_->WT_.parent_ = &playerObj_->WT_;
 	newObj->splinePointPos_ = pos;
 	splinePointPos_[currentSwingNum_].emplace_back(std::move(newObj));
+	SetSplinePos();
 }
 
 void AttackEditor::ImGuiSave()
@@ -438,6 +437,7 @@ void AttackEditor::ImGuiSwingCount()
 		else inoutString = "InOut";
 		
 		easingTypeInOut_ = inoutString;
+		SetSplinePos();
 	}
 
 	ImGui::End();
@@ -643,7 +643,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 			ImGuiADDSplinePos(pos);
 		}
 	}
-
+	SetSplinePos();
 	currentSwingNum_ = 0;
 }
 
@@ -660,6 +660,12 @@ void AttackEditor::AttackPlay()
 		attackInfo_[currentSwingNum_].attackFrame + attackInfo_[currentSwingNum_].gapFrame;
 	timer_.SetLimitTime(limitTime);
 	spline_.SetIsStart(true);
+	SetSplinePos();
+	moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
+}
+
+void AttackEditor::SetSplinePos()
+{
 	spline_.AllClear();
 	spline_.SetMaxTime(attackInfo_[currentSwingNum_].attackFrame);
 	spline_.SetTimerType_(attackInfo_[currentSwingNum_].timerType);
@@ -680,5 +686,4 @@ void AttackEditor::AttackPlay()
 			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Middle);
 		}
 	}
-	moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
 }

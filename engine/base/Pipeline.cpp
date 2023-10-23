@@ -244,6 +244,26 @@ void PipelineObject::AddrootParams(int32_t addNum)
 	}
 }
 
+void PipelineObject::AddrootParamsNoneTexture(int32_t addNum)
+{
+	rootParams_.clear();
+	int32_t size = 0;
+	//inputLayout + 1の数分rootParams_を作る
+	for (int32_t i = 0; i < addNum; i++)
+	{
+		D3D12_ROOT_PARAMETER rootParams{};
+
+		//定数バッファ
+		rootParams.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー
+		rootParams.Descriptor.ShaderRegister = size;					//定数バッファ番号
+		rootParams.Descriptor.RegisterSpace = 0;						//デフォルト値
+		rootParams.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+		size++;
+
+		rootParams_.emplace_back(rootParams);
+	}
+}
+
 void PipelineObject::AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum)
 {
 	rootParams_.clear();

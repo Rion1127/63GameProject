@@ -648,6 +648,9 @@
     <ClCompile Include="application\Sourcecode\Player\Attack\BaseAttack.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="engine\3d\Line3D.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -1043,6 +1046,9 @@
     <ClInclude Include="application\Sourcecode\Player\Attack\BaseAttack.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="engine\3d\Line3D.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1102,6 +1108,9 @@
     </None>
     <None Include="application\Resources\shader\SkySphere.hlsli">
       <Filter>シェーダーファイル\application</Filter>
+    </None>
+    <None Include="application\Resources\shader\Line3D.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1227,6 +1236,12 @@
     </FxCompile>
     <FxCompile Include="application\Resources\shader\SkySphereVS.hlsl">
       <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Line3DVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Line3DPS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
