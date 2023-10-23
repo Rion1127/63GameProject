@@ -232,9 +232,9 @@ void AttackManager::SwitchAttack()
 
 AttackDataPool::AttackDataPool()
 {
-
-	std::string saveDir = "application/Resources/Attack/AttackInfo/";
-	std::vector<std::string> attackFileNames = FindFileNames(saveDir, ".csv", false);
+	attackInfoDir_ = "application/Resources/Attack/AttackInfo/";
+	attackKeyDir_ = "application/Resources/Attack/";
+	std::vector<std::string> attackFileNames = FindFileNames(attackInfoDir_, ".csv", false);
 	//存在しているファイルを全て読み込む
 	for (auto& attackFileName : attackFileNames) {
 		LoadAttackFile(attackFileName);
@@ -245,7 +245,7 @@ AttackDataPool::AttackDataPool()
 
 void AttackDataPool::LoadAttackFile(std::string fileName)
 {
-	std::string loadDir = "application/Resources/Attack/AttackInfo/";
+	std::string loadDir = attackInfoDir_;
 	loadDir.append(fileName.c_str());
 	loadDir += ".csv";
 
@@ -368,7 +368,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 
 void AttackDataPool::LoadattackKeys(std::string fileName)
 {
-	std::string loadDir = "application/Resources/Attack/";
+	std::string loadDir = attackKeyDir_;
 	loadDir.append(fileName.c_str());
 	loadDir += ".csv";
 

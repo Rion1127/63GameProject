@@ -28,6 +28,10 @@ private:
 	std::unordered_map<std::string, BaseAttack::AttackInput> attacks_;
 	//データプールから攻撃を指定する文字列を指定する
 	std::unordered_map<std::string, std::string> attackKeys_;
+
+	//ディレクトリ名
+	std::string attackInfoDir_;
+	std::string attackKeyDir_;
 public:
 	AttackDataPool();
 	

@@ -64,6 +64,8 @@ private:
 	std::vector<std::string> allAttackKeyNames;
 
 	std::map<std::string, std::string> attackKeys_;
+	std::string attackInfoDir_;
+	std::string attackKeyDir_;
 public:
 	AttackEditor();
 	void Update();

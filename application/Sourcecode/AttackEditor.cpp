@@ -9,6 +9,9 @@
 
 AttackEditor::AttackEditor()
 {
+	attackInfoDir_ = "application/Resources/Attack/AttackInfo/";
+	attackKeyDir_ = "application/Resources/Attack/AttackKey";
+
 	playerObj_ = std::make_unique<Object3d>();
 	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	playerObj_->SetPos(Vector3(0, 1, 0));
@@ -512,7 +515,7 @@ void AttackEditor::ImGuiSettingCombo()
 
 void AttackEditor::AttackSave(const std::string& string)
 {
-	std::string saveDir = "application/Resources/Attack/AttackInfo/";
+	std::string saveDir = attackInfoDir_;
 	saveDir.append(string.c_str());
 	saveDir += ".csv";
 	std::ofstream writing_file;
@@ -589,11 +592,11 @@ void AttackEditor::AttackLoad(const std::string& string)
 {
 	splinePointPos_.clear();
 	attackInfo_.clear();
-	std::string saveDir = "application/Resources/Attack/AttackInfo/";
-	saveDir.append(string.c_str());
-	saveDir += ".csv";
+	std::string loadDir = attackInfoDir_;
+	loadDir.append(string.c_str());
+	loadDir += ".csv";
 
-	std::ifstream file(saveDir);  // 読み込むファイルのパスを指定
+	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
 	std::string line;
 
 	AttackInfo* attackinfo = nullptr;
@@ -716,7 +719,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 
 void AttackEditor::FindAttackFile()
 {
-	std::string dir = "application/Resources/Attack/AttackInfo/";
+	std::string dir = attackInfoDir_;
 	allAttackFileNames = FindFileNames(dir, ".csv", false);
 }
 
@@ -757,7 +760,7 @@ void AttackEditor::SetSplinePos()
 
 void AttackEditor::AttackKeySave()
 {
-	std::string saveDir = "application/Resources/Attack/AttackKey";
+	std::string saveDir = attackKeyDir_;
 	saveDir += ".csv";
 	std::ofstream writing_file;
 
@@ -772,7 +775,7 @@ void AttackEditor::AttackKeySave()
 
 void AttackEditor::AttackKeyLoad()
 {
-	std::string loadDir = "application/Resources/Attack/AttackKey";
+	std::string loadDir = attackKeyDir_;
 	loadDir += ".csv";
 
 	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
