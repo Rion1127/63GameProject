@@ -350,7 +350,7 @@ void Spline::ObjInit()
 
 	for (int32_t i = 0; i < splineObj_.size(); i++) {
 		splineObj_[i] = std::make_unique<Object3d>();
-		splineObj_[i]->SetModel(Model::CreateOBJ_uniptr("cone", false));
+		splineObj_[i]->SetModel(Model::CreateOBJ_uniptr("cone", false,false));
 		splineObj_[i]->SetPos(pos[i]);
 		splineObj_[i]->SetScale(Vector3(0.5f, 0.5f, 0.5f));
 		splineObj_[i]->WT_.rotType = RotType::Quaternion;

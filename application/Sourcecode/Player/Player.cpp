@@ -159,7 +159,7 @@ void Player::PostUpdate()
 
 	shadowPos.y -= displayObj_->WT_.scale_.y;
 
-	Model::lightGroup_->SetCircleShadowCasterPos(0, shadowPos);
+	//Model::lightGroup_->SetCircleShadowCasterPos(0, shadowPos);
 }
 
 void Player::GravityUpdate()

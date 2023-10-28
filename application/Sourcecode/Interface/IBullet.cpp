@@ -11,7 +11,7 @@ IBullet::IBullet(IActor* selfActor, int32_t maxTime, int32_t damage, float damag
 {
 
 	attackCol_ = std::move(std::make_unique<AttackCol>());
-	attackCol_->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false));
+	attackCol_->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false,false));
 	attackCol_->colObj_.SetAmbient("sphere", { 1.0f, 0, 0 });
 	attackCol_->colObj_.SetIsVisible(false);
 	attackCol_->damageCoolTime = damageCoolTime;

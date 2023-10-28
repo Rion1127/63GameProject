@@ -25,7 +25,7 @@ Sword::Sword()
 	tailObj_.resize(2);
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i] = std::make_unique<Object3d>();
-		tailObj_[i]->SetModel(Model::CreateOBJ_uniptr("sphere"));
+		tailObj_[i]->SetModel(Model::CreateOBJ_uniptr("sphere",false,false));
 		tailObj_[i]->SetScale({ 0.5f,0.5f, 0.5f });
 		tailObj_[i]->WT_.parent_ = &obj_->WT_;
 		tailObj_[i]->SetIsVisible(false);

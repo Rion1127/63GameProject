@@ -37,6 +37,8 @@ private:
 	//頂点法線スムージング用データ
 	bool smoothing_ = false;
 	std::vector<std::unordered_map<unsigned short, std::vector<unsigned short>>> smoothData_;
+	uint32_t shadowNum_;
+	bool isShadowActive_;
 public:
 	std::vector<std::unique_ptr<Vertices>> vert_;
 	// マテリアルコンテナ
@@ -44,14 +46,14 @@ public:
 	//ライト
 	static std::shared_ptr<LightGroup> lightGroup_;
 public:
-	Model() {};
+	Model(bool isShadowSet = true);
 	~Model();
 
 	static Model* GetInstance();
 
 	//モデルを読み込む
 	static Model* CreateOBJ(const std::string& modelname, bool smoothing = false);
-	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false);
+	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false, bool isShadow = true);
 
 	void SetModel(const Model* model);
 
@@ -72,6 +74,7 @@ private:
 	//平滑化された頂点法線の計算
 	void CalculateSmoothedVertexNormals();
 public:
+	void ShadowUpdate(Vector3 pos);
 	void DrawOBJ(const WorldTransform& worldTransform);
 	void DrawOBJ(const WorldTransform& worldTransform, uint32_t textureHandle);
 public:

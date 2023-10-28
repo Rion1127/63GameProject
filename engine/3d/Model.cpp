@@ -18,8 +18,18 @@ const std::string kBaseDirectory = "application/Resources/Object/";
 
 std::shared_ptr<LightGroup> Model::lightGroup_ = nullptr;
 
+Model::Model(bool isShadowSet)
+{
+	isShadowActive_ = isShadowSet;
+	if (isShadowActive_) {
+		shadowNum_ = lightGroup_->GetIsNotAvtiveCircleShadow();
+		lightGroup_->SetCircleShadowActive(shadowNum_,true);
+	}
+}
+
 Model::~Model()
 {
+	lightGroup_->SetCircleShadowActive(shadowNum_, false);
 	materials_.clear();
 	vert_.clear();
 }
@@ -39,9 +49,9 @@ Model* Model::CreateOBJ(const std::string& modelname, bool smoothing)
 	return instance;
 }
 
-std::unique_ptr<Model> Model::CreateOBJ_uniptr(const std::string& modelname, bool smoothing)
+std::unique_ptr<Model> Model::CreateOBJ_uniptr(const std::string& modelname, bool smoothing, bool isShadow)
 {
-	std::unique_ptr<Model> instance = std::make_unique<Model>();
+	std::unique_ptr<Model> instance = std::make_unique<Model>(isShadow);
 	instance->ModelIni(modelname, smoothing);
 
 	return instance;
@@ -399,6 +409,17 @@ void Model::ModelIni(const std::string& modelname, bool smoothing)
 	if (smoothing)
 	{
 		CalculateSmoothedVertexNormals();
+	}
+}
+
+void Model::ShadowUpdate(Vector3 pos)
+{
+	if (isShadowActive_) {
+		lightGroup_->SetCircleShadowActive(shadowNum_, true);
+		lightGroup_->SetCircleShadowCasterPos(shadowNum_, pos);
+		lightGroup_->SetCircleShadowDir(shadowNum_, { 0,-1,0 });
+		lightGroup_->SetCircleShadowAtten(shadowNum_, { 0.5f,0.6f,0.0f });
+		lightGroup_->SetCircleShadowFactorAngle(shadowNum_, { 0.0f,0.5f });
 	}
 }
 

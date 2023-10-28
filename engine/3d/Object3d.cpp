@@ -19,6 +19,7 @@ void Object3d::Init()
 
 void Object3d::Update()
 {
+	model_->ShadowUpdate(WT_.position_);
 	WT_.Update();
 }
 
