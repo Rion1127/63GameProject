@@ -395,5 +395,8 @@ void Spline::Line3DUpdate()
 		pos.emplace_back(SplinePosition(splinePos, index, t));
 		t += addRate;
 	}
-	line3D_->SetVertPos(pos);
+	if (splinePos_.size() > 2)
+	{
+		line3D_->SetVertPos(pos);
+	}
 }
