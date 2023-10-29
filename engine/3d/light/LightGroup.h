@@ -131,5 +131,6 @@ public:
 	void Draw(UINT rootParameterIndex);
 public:
 	uint32_t GetIsNotAvtiveCircleShadow();
+	CircleShadow GetShadowInfo(uint32_t index) { return circleShadows_[index]; }
 };
 

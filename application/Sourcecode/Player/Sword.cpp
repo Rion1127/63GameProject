@@ -16,6 +16,9 @@ Sword::Sword()
 	obj_->SetModel(Model::CreateOBJ_uniptr("sword"));
 	obj_->SetScale({ 0.5f,0.5f, 0.5f });
 	obj_->WT_.SetRotType(RotType::Quaternion);
+	obj_->SetShadowOffsetPos(Vector3(0, -0.7f, 0));
+	obj_->SetShadowAtten(Vector3(1, 1.5f, 0));
+	obj_->SetShadowFactorAngle(Vector2(0.05f, 0.25f));
 
 	floatingTimer_.SetLimitTime(120);
 	floatingTimer_.SetIsLoop(true);
@@ -185,10 +188,13 @@ void Sword::Draw()
 	trail_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	obj_->Draw();
+	obj_->GetModel()->DrawShadowInfo("swordShadow");
 
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i]->Draw();
 	}
+
+	
 }
 
 void Sword::DrawImGui()

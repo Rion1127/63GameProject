@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <imgui.h>
 #include "Util.h"
 
 /**
@@ -24,6 +25,8 @@ Model::Model(bool isShadowSet)
 	if (isShadowActive_) {
 		shadowNum_ = lightGroup_->GetIsNotAvtiveCircleShadow();
 		lightGroup_->SetCircleShadowActive(shadowNum_,true);
+		shadowAtten_ = { 0.5f,0.6f,0.0f };
+		shadowFactorAngle_ = { 0.0f,0.5f };
 	}
 }
 
@@ -416,10 +419,10 @@ void Model::ShadowUpdate(Vector3 pos)
 {
 	if (isShadowActive_) {
 		lightGroup_->SetCircleShadowActive(shadowNum_, true);
-		lightGroup_->SetCircleShadowCasterPos(shadowNum_, pos);
+		lightGroup_->SetCircleShadowCasterPos(shadowNum_, pos + shadowOffsetPos_);
 		lightGroup_->SetCircleShadowDir(shadowNum_, { 0,-1,0 });
-		lightGroup_->SetCircleShadowAtten(shadowNum_, { 0.5f,0.6f,0.0f });
-		lightGroup_->SetCircleShadowFactorAngle(shadowNum_, { 0.0f,0.5f });
+		lightGroup_->SetCircleShadowAtten(shadowNum_, shadowAtten_);
+		lightGroup_->SetCircleShadowFactorAngle(shadowNum_, shadowFactorAngle_);
 	}
 }
 
@@ -444,6 +447,23 @@ void Model::DrawOBJ(const WorldTransform& worldTransform, uint32_t textureHandle
 	{
 		v->Draw(worldTransform);
 	}
+}
+
+void Model::DrawShadowInfo(const std::string& imguiName)
+{
+	ImGui::Begin(imguiName.c_str());
+
+	float atten[3] = { shadowAtten_.x,shadowAtten_.y, shadowAtten_.z};
+	ImGui::DragFloat3("Atten", atten,0.01f);
+
+	shadowAtten_ = { atten[0],atten[1] ,atten[2] };
+
+	float factorAngle[2] = { shadowFactorAngle_.x,shadowFactorAngle_.y};
+	ImGui::DragFloat2("FactorAngle", factorAngle, 0.01f);
+
+	shadowFactorAngle_ = { factorAngle[0],factorAngle[1]};
+	
+	ImGui::End();
 }
 
 void Model::AddSmoothData(unsigned short indexPositon, unsigned short indexVertex, uint32_t dataindex)

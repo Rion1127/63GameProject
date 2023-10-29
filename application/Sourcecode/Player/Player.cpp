@@ -77,6 +77,7 @@ Player::Player() :
 
 	obj_->WT_.SetRotType(RotType::Quaternion);
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
+	displayObj_->SetShadowOffsetPos(Vector3(0,-1,0));
 
 	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
 	shakeTimer_.SetLimitTime(40);

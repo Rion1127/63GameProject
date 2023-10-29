@@ -39,6 +39,9 @@ private:
 	std::vector<std::unordered_map<unsigned short, std::vector<unsigned short>>> smoothData_;
 	uint32_t shadowNum_;
 	bool isShadowActive_;
+	Vector3 shadowOffsetPos_;
+	Vector3 shadowAtten_;
+	Vector2 shadowFactorAngle_;
 public:
 	std::vector<std::unique_ptr<Vertices>> vert_;
 	// マテリアルコンテナ
@@ -56,6 +59,9 @@ public:
 	static std::unique_ptr<Model> CreateOBJ_uniptr(const std::string& modelname, bool smoothing = false, bool isShadow = true);
 
 	void SetModel(const Model* model);
+	void SetShadowOffsetPos(const Vector3& pos) { shadowOffsetPos_ = pos; }
+	void SetShadowAtten(const Vector3& atten) { shadowAtten_ = atten; }
+	void SetShadowFactorAngle(const Vector2& angle) { shadowFactorAngle_ = angle; }
 
 	static void SetLight(std::shared_ptr<LightGroup> lightGroup) { Model::lightGroup_ = lightGroup; }
 private:
@@ -77,6 +83,7 @@ public:
 	void ShadowUpdate(Vector3 pos);
 	void DrawOBJ(const WorldTransform& worldTransform);
 	void DrawOBJ(const WorldTransform& worldTransform, uint32_t textureHandle);
+	void DrawShadowInfo(const std::string& imguiName);
 public:
 	std::string GetModelName() { return name_; }
 };

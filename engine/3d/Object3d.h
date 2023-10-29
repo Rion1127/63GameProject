@@ -35,6 +35,9 @@ public:
 	void SetScale(const Vector3& scale) { WT_.scale_ = scale; }
 	void SetRot(const Vector3& rot) { WT_.rotation_ = rot; }
 	void SetIsVisible(bool flag) { isVisible_ = flag; }
+	void SetShadowOffsetPos(const Vector3& pos) { model_->SetShadowOffsetPos(pos); }
+	void SetShadowAtten(const Vector3& Atten) { model_->SetShadowAtten(Atten); }
+	void SetShadowFactorAngle(const Vector2& FactorAngle) { model_->SetShadowFactorAngle(FactorAngle); }
 public:
 	//ゲッター
 	WorldTransform* GetTransform() { return &WT_; }
