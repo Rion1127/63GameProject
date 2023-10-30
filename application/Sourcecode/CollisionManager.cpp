@@ -41,6 +41,8 @@ void CollisionManager::Update()
 	EnemyLockOn();
 	//プレイヤーと敵押し出し
 	PlayerToEnemy();
+	//敵同士の押し出し
+	EnemyToEnemy();
 	//プレイヤーの攻撃と敵
 	PlayerAttackToEnemy();
 	//敵攻撃とプレイヤー
@@ -314,6 +316,34 @@ void CollisionManager::PlayerToEnemy()
 
 			player_->AddaddVec(pushBackVec);
 			enemy->AddaddVec(-pushBackVec);
+		}
+	}
+}
+
+void CollisionManager::EnemyToEnemy()
+{
+	for (auto& enemy1 : *enemyManager_->GetEnemy())
+	{
+		for (auto& enemy2 : *enemyManager_->GetEnemy())
+		{
+			if (BallCollision(enemy2->GetCol(), enemy1->GetCol()))
+			{
+				Vector3 PtoEVec = enemy2->GetCol().center - enemy1->GetCol().center;
+				//ベクトルの長さを取得
+				float length = PtoEVec.length();
+				PtoEVec = PtoEVec.normalize();
+				//Y成分を無効にして押し出す
+				PtoEVec.y = 0;
+				//二つの当たり判定の半径の長さを足す
+				float backLength = enemy2->GetCol().radius + enemy1->GetCol().radius;
+				//ベクトルの長さを引いてめり込んでいる長さ分だけ押し戻す()
+				backLength -= length;
+
+				Vector3 pushBackVec = (PtoEVec * backLength) / 2.f;
+
+				enemy2->AddaddVec(pushBackVec);
+				enemy1->AddaddVec(-pushBackVec);
+			}
 		}
 	}
 }

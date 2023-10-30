@@ -42,7 +42,7 @@ Player::Player() :
 	maxjumptimer = 10;
 
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	obj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	//着地硬直時間
