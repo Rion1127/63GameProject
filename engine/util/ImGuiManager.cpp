@@ -47,8 +47,11 @@ void ImGuiManager::Init()
 	);
 
 	ImGuiIO& io = ImGui::GetIO();
+	ImFontConfig config;
+	config.MergeMode = true;
 	//標準フォント
 	io.Fonts->AddFontDefault();
+	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, &config, io.Fonts->GetGlyphRangesJapanese());
 	//examples/example_win32_directx12/main.cppに呼び出し例がある
 }
 

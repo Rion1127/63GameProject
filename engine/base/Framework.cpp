@@ -70,7 +70,7 @@ void Framework::Update()
 
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
-	//ImGui::ShowDemoWindow();
+	ImGui::ShowDemoWindow();
 	if (ImGui::Button("PostEffect"))
 	{
 		isPostEffect_ = (isPostEffect_ == true) ? false : true;

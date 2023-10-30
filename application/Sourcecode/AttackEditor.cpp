@@ -109,6 +109,23 @@ void AttackEditor::DrawImGui()
 {
 	//プレイヤー座標の変更を行う
 	ImGui::Begin("AttackEditor");
+	
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("PlayerPosReset : posの値にプレイヤーの座標を移動させる");
+		ImGui::TextUnformatted("Save           : SaveNameに入力した名前でファイルを保存する");
+		ImGui::TextUnformatted("保存ファイル場所 : \"application/Resources/Attack/AttackInfo/\"");
+		ImGui::TextUnformatted("Load           : 選択したファイルを読み込む");
+		ImGui::TextUnformatted("FileReload     : 外部からファイルを導入した際のホットリロード");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
 
 	static float playerpos[3] = { 0,1,0 };
 
@@ -132,6 +149,27 @@ void AttackEditor::DrawImGui()
 
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackSpline");
+
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("Play                : 現在選択しているスプライン曲線を再生する");
+		ImGui::TextUnformatted("AllPlay             : SwingCount分のスプライン曲線を再生する");
+		ImGui::TextUnformatted("AddSplinePoint      : 制御点を追加する");
+		ImGui::TextUnformatted("DeleteSplinePoint   : 制御点を削除する");
+		ImGui::TextUnformatted("SplineTimerType     : スプラインの進み方を変更する(Normal or Easing)");
+		ImGui::TextUnformatted("EasingType          : イージングの種類を変更する");
+		ImGui::TextUnformatted("InOut               : イージングのInOutの種類を変更する");
+		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+
 	ImGuiPlay();
 	ImGui::SameLine();
 	ImGuiAllPlay();
@@ -171,6 +209,26 @@ void AttackEditor::DrawImGui()
 
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("AttackInfo");
+
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("attackFrame         : スプライン曲線の時間");
+		ImGui::TextUnformatted("gapFrame            : 攻撃の後隙");
+		ImGui::TextUnformatted("Damage              : 敵に与えるダメージ");
+		ImGui::TextUnformatted("gravity             : 攻撃時の上方向の動き");
+		ImGui::TextUnformatted("playerMoveVec       : プレイヤーの前方向移動");
+		ImGui::TextUnformatted("deceleration        : playerMoveVecの減速速度");
+		ImGui::TextUnformatted("knockVec            : イージングのInOutの種類を変更する");
+		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
 
 	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
@@ -399,6 +457,22 @@ void AttackEditor::ImGuiSwingCount()
 {
 	ImGui::Begin("SwingCount");
 
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("SwingCount       : 一回の攻撃で剣を振る回数");
+		ImGui::TextUnformatted("Add              : 剣を振る回数を増やす");
+		ImGui::TextUnformatted("Delete           : 剣を振る回数を減らす");
+		ImGui::TextUnformatted("currentSwingNum  : 編集するスプライン曲線を選択する");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+
 	std::string swingCountStr;
 	std::ostringstream num;
 
@@ -454,7 +528,22 @@ void AttackEditor::ImGuiSettingCombo()
 {
 	ImGui::Begin("SettingCombo");
 
-	
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("KeyName    : どのコンボにセットするか選択する");
+		ImGui::TextUnformatted("AttackName : セットする攻撃を選択する");
+		ImGui::TextUnformatted("Set        : 選択した攻撃をセットする");
+		ImGui::TextUnformatted("Save       : ファイルに出力する");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+
 	static std::string setKeyName;		//読み込むファイルの名前
 	//プルダウンメニューでキーを選択
 	if (ImGui::BeginCombo("KeyName", setKeyName.c_str()))

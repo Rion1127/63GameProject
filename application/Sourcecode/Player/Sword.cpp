@@ -188,8 +188,7 @@ void Sword::Draw()
 	trail_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	obj_->Draw();
-	obj_->GetModel()->DrawShadowInfo("swordShadow");
-
+	
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i]->Draw();
 	}
