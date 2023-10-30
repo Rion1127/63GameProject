@@ -96,7 +96,7 @@ void DebugScene::Update()
 		enemyManager_->PreUpdate();
 
 #ifdef _DEBUG
-		//LoadEnemyImGui();
+		LoadEnemyImGui();
 #endif // _DEBUG
 		//当たり判定
 		colManager_->Update();

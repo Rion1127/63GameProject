@@ -78,7 +78,7 @@ std::wstring ToWideString(const std::string& str)
 	wstr.resize(num1);
 
 	auto num2 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, &wstr[0], num1);
-
+	num2;
 	assert(num1 == num2);
 	return wstr;
 }

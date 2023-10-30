@@ -240,7 +240,7 @@ void AttackEditor::DrawImGui()
 		attackInfo_[currentSwingNum_].playerMoveVec.y,
 		attackInfo_[currentSwingNum_].playerMoveVec.z,
 	};
-	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, 0.f, 500.f);
+	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, -10.f, 500.f);
 	attackInfo_[currentSwingNum_].playerMoveVec = { playerMoveVec[0],playerMoveVec[1], playerMoveVec[2] };
 	ImGui::DragFloat("deceleration", &attackInfo_[currentSwingNum_].deceleration, 0.001f, 0.001f, 500.f);
 
@@ -353,7 +353,7 @@ void AttackEditor::ImGuiSave()
 {
 	static std::string saveName;		//書き出すファイルの名前
 	static bool isProofSave = false;	//セーブの確認
-	ImGui::InputText("SaveName", saveName.data(), 10);
+	ImGui::InputText("SaveName", saveName.data(), 15);
 	//セーブするか確認
 	if (isProofSave)
 	{
@@ -468,7 +468,7 @@ void AttackEditor::ImGuiSwingCount()
 		ImGui::TextUnformatted("SwingCount       : 一回の攻撃で剣を振る回数");
 		ImGui::TextUnformatted("Add              : 剣を振る回数を増やす");
 		ImGui::TextUnformatted("Delete           : 剣を振る回数を減らす");
-		ImGui::TextUnformatted("currentSwingNum  : 編集するスプライン曲線を選択する");
+		ImGui::TextUnformatted("currentSwingNum   : 編集するスプライン曲線を選択する");
 		ImGui::PopTextWrapPos();
 		ImGui::EndTooltip();
 	}
