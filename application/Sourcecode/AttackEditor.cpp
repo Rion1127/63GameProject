@@ -15,6 +15,8 @@ AttackEditor::AttackEditor()
 	playerObj_ = std::make_unique<Object3d>();
 	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	playerObj_->SetPos(Vector3(0, 1, 0));
+	playerObj_->WT_.SetRotType(RotType::Quaternion);
+	playerObj_->WT_.quaternion_ = IdentityQuaternion();
 
 	swordObj_ = std::make_unique<Sword>();
 	
@@ -30,6 +32,7 @@ AttackEditor::AttackEditor()
 	attackInfo_[currentSwingNum_].deceleration = 0.1f;
 
 	splinePointPos_.emplace_back();
+	quaternions_.emplace_back();
 
 	swordObj_->SetParent(playerObj_.get());
 
@@ -58,6 +61,12 @@ void AttackEditor::Update()
 			swordObj_->SetState(Sword::SwordState::Idle);
 			spline_.SetIsStart(false);
 		}
+
+		Quaternion result = playerObj_->WT_.quaternion_;
+
+		result = /*result.Slerp()*/quaternions_[currentSwingNum_].at(0).q;
+
+		playerObj_->WT_.SetQuaternion(result);
 	}
 	//選択している攻撃全てを再生
 	if (isAllPlay_) {
@@ -90,6 +99,8 @@ void AttackEditor::Update()
 	playerPos += moveVec_;
 	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
 	playerObj_->SetPos(playerPos);
+
+	
 
 	swordObj_->EditorUpdate(spline_.GetNowPoint());
 
@@ -175,7 +186,7 @@ void AttackEditor::DrawImGui()
 	ImGuiAllPlay();
 	if (ImGui::Button("AddSplinePoint"))
 	{
-		ImGuiADDSplinePos();
+		ImGuiADDSplinePos(Vector3(0,0,0),currentSwingNum_);
 	}
 	if (ImGui::Button("DeleteSplinePoint"))
 	{
@@ -255,6 +266,8 @@ void AttackEditor::DrawImGui()
 	ImGui::End();
 
 	ImGuiSettingCombo();
+	//姿勢制御
+	ImGuiQuaternion();
 }
 
 void AttackEditor::ImGuiDisplaySplitePoint()
@@ -341,11 +354,11 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 	}
 }
 
-void AttackEditor::ImGuiADDSplinePos(const Vector3& pos)
+void AttackEditor::ImGuiADDSplinePos(const Vector3& pos, uint32_t index)
 {
 	std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
 	newObj->splinePointPos_ = pos;
-	splinePointPos_[currentSwingNum_].emplace_back(std::move(newObj));
+	splinePointPos_[index].emplace_back(std::move(newObj));
 	SetSplinePos();
 }
 
@@ -483,12 +496,15 @@ void AttackEditor::ImGuiSwingCount()
 	if (ImGui::Button("Add",ImVec2(50,50))) {
 		attackInfo_.emplace_back();
 		splinePointPos_.emplace_back();
+		quaternions_.emplace_back();
 	}
 	ImGui::SameLine();
+	//要素の削除
 	if (ImGui::Button("Delete", ImVec2(50, 50))) {
 		if (attackInfo_.size() > 1) {
 			attackInfo_.erase(attackInfo_.begin() + (attackInfo_.size() - 1));
 			splinePointPos_.erase(splinePointPos_.begin() + (splinePointPos_.size() - 1));
+			quaternions_.erase(quaternions_.begin() + (quaternions_.size() - 1));
 			currentSwingNum_--;
 		}
 	}
@@ -602,6 +618,55 @@ void AttackEditor::ImGuiSettingCombo()
 	ImGui::End();
 }
 
+void AttackEditor::ImGuiQuaternion()
+{
+	ImGui::Begin("Quaternion");
+
+	if (ImGui::Button("Add", ImVec2(50, 50)))
+	{
+		quaternions_[currentSwingNum_].emplace_back();
+		auto& q = quaternions_[currentSwingNum_].back();
+		q.q = IdentityQuaternion();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Delete", ImVec2(50, 50)))
+	{
+		quaternions_[currentSwingNum_].emplace_back();
+		auto& q = quaternions_[currentSwingNum_].back();
+		q.q = IdentityQuaternion();
+	}
+	if (ImGui::CollapsingHeader("Quaternion"))
+	{
+		std::string IndexNumString;
+		std::string frameString;
+		std::string quaternionString;
+		uint32_t index = 0;
+		for (auto& q : quaternions_[currentSwingNum_])
+		{
+			std::ostringstream num;
+
+			num << index;
+			IndexNumString = "Num : " + num.str();
+			frameString = "Frame" + num.str();
+			quaternionString = "Quaternion" + num.str();
+
+			float maxTime = attackInfo_[currentSwingNum_].attackFrame + attackInfo_[currentSwingNum_].gapFrame;
+			ImGui::Text(IndexNumString.c_str());
+			ImGui::DragFloat(frameString.c_str(), &q.frame, 1.f, 0, maxTime);
+
+			float quaternion[4] = { q.q.x, q.q.y, q.q.z, q.q.w };
+			ImGui::DragFloat4(quaternionString.c_str(), quaternion, 0.01f,-3.14f, 3.14f);
+			q.q.x = quaternion[0];
+			q.q.y = quaternion[1];
+			q.q.z = quaternion[2];
+			q.q.w = quaternion[3];
+
+			index++;
+		}
+	}
+	ImGui::End();
+}
+
 void AttackEditor::AttackSave(const std::string& string)
 {
 	std::string saveDir = attackInfoDir_;
@@ -611,7 +676,7 @@ void AttackEditor::AttackSave(const std::string& string)
 
 	writing_file.open(saveDir, std::ios::out);
 
-	uint16_t splineIndex = 0;
+	uint16_t index = 0;
 
 	for (auto& attackinfo : attackInfo_) {
 		std::string writing_text = "//--AtatckInfo--//";
@@ -661,15 +726,24 @@ void AttackEditor::AttackSave(const std::string& string)
 		}
 
 		//スプライトの座標を出力する
-
-		for (auto& spline : splinePointPos_[splineIndex])
+		for (auto& spline : splinePointPos_[index])
 		{
 			Vector3& pos = spline->splinePointPos_;
 			writing_text = "SplinePos";
 			writing_file << writing_text << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
 		}
-		splineIndex++;
-
+		
+		writing_file << std::endl;
+		writing_text = "//--Quaternion--//";
+		writing_file << writing_text << std::endl;
+		for (auto& q : quaternions_[index])
+		{
+			writing_text = "flame";
+			writing_file << writing_text << " " << q.frame << std::endl;
+			writing_text = "Quaternion";
+			writing_file << writing_text << " " << q.q.x << " " << q.q.y << " " << q.q.z << " " << q.q.w <<  std::endl;
+		}
+		index++;
 		writing_file << std::endl;
 	}
 	writing_file.close();
@@ -680,6 +754,7 @@ void AttackEditor::AttackSave(const std::string& string)
 void AttackEditor::AttackLoad(const std::string& string)
 {
 	splinePointPos_.clear();
+	quaternions_.clear();
 	attackInfo_.clear();
 	std::string loadDir = attackInfoDir_;
 	loadDir.append(string.c_str());
@@ -690,7 +765,9 @@ void AttackEditor::AttackLoad(const std::string& string)
 
 	AttackInfo* attackinfo = nullptr;
 	std::vector<std::unique_ptr<SplinePos>>* splinePos = nullptr;
+	std::vector<QuaternionControl>* quaternionColtrol = nullptr;
 	currentSwingNum_ = -1;
+	int32_t quaternionIndex = -1;
 
 	while (std::getline(file, line))
 	{  // 1行ずつ読み込む
@@ -799,7 +876,34 @@ void AttackEditor::AttackLoad(const std::string& string)
 			line_stream >> pos.y;
 			line_stream >> pos.z;
 
-			ImGuiADDSplinePos(pos);
+			ImGuiADDSplinePos(pos, currentSwingNum_);
+		}
+
+		if (key == "//--Quaternion--//")
+		{
+			quaternions_.emplace_back();
+			quaternionColtrol = &quaternions_.back();
+			quaternionIndex++;
+		}
+		if (quaternionColtrol == nullptr) continue;
+		//スプライン曲線読み込み
+		if (key == "flame")
+		{
+			quaternionColtrol->emplace_back();
+			float frame;
+			line_stream >> frame;
+
+			quaternionColtrol->back().frame = frame;
+		}
+		if (key == "Quaternion")
+		{
+			Quaternion q{};
+			line_stream >> q.x;
+			line_stream >> q.y;
+			line_stream >> q.z;
+			line_stream >> q.w;
+
+			quaternionColtrol->back().q = q;
 		}
 	}
 	currentSwingNum_ = 0;
