@@ -32,7 +32,6 @@ private:
 	float nextAttackFrame_;
 	float slerpSpeed_;
 
-	Quaternion playerQuaternion_;
 	Quaternion resultQuaternion_;
 	Quaternion playerAxisY_;
 

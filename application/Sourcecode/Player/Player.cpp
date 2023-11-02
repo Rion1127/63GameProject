@@ -112,7 +112,7 @@ void Player::PreUpdate()
 	hpGaugeUI_.Update(maxHealth_, health_);
 	mpGaugeUI_.Update(maxMP_, nowMP_);
 
-	playerFrontVec_ = RotateVector(Vector3(0, 0, 1), obj_->WT_.quaternion_);
+	playerFrontVec_ = RotateVector(Vector3(0, 0, 1), displayObj_->WT_.quaternion_);
 }
 
 void Player::PostUpdate()
@@ -147,7 +147,7 @@ void Player::PostUpdate()
 	};
 	displayObj_->SetPos(displayPos);
 	displayObj_->SetRot(displayrot);
-	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
+	//displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
 	
 	obj_->Update();
 	displayObj_->Update();
@@ -409,7 +409,8 @@ void Player::PlayerRotUpdate()
 	Vector3 vecY = { 0, 1, 0 };
 	axisY_ = MakeAxisAngle(vecY, Radian(objAngle_));
 	playerQuaternion_ = axisY_ * axisX_ * axisZ_.Conjugate();
-	obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(playerQuaternion_, 0.3f);
+	obj_->WT_.quaternion_ = axisY_;
+	displayObj_->WT_.quaternion_ = displayObj_->WT_.quaternion_.Slerp(playerQuaternion_, 0.3f);
 }
 
 void Player::DogeRoll()

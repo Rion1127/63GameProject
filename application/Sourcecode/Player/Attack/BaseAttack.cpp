@@ -17,8 +17,7 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	spline_.SetParent(selfActor_->GetWorldTransform());
 	index_ = 0;
 
-	playerQuaternion_ = selfActor_->GetWorldTransform()->quaternion_;
-	resultQuaternion_ = playerQuaternion_;
+	resultQuaternion_ = selfActor_->GetWorldTransform()->quaternion_;
 
 	CalculateRotToLockOnActor();
 
@@ -69,7 +68,7 @@ void BaseAttack::SetNextAttack()
 
 	auto& addVec = attackinput_.attackinfo[index_].playerMoveVec;
 
-	addVec = RotateVector(addVec, selfActor_->GetWorldTransform()->quaternion_);
+	addVec = RotateVector(addVec, selfActor_->GetAxisY());
 
 	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
 	quaternionIndex_ = 0;
@@ -131,7 +130,7 @@ Vector3 BaseAttack::CalculateFrontVec()
 	}
 	else
 	{
-		frontVec = RotateVector(Vector3(0, 0, 1), playerQuaternion_);
+		frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetAxisY());
 	}
 	return frontVec.normalize();
 }
@@ -142,14 +141,15 @@ void BaseAttack::CalculateRotToLockOnActor()
 	float rot = Vec2Angle(vec);
 	Vector3 vecY = { 0, 1, 0 };
 	auto axisY = MakeAxisAngle(vecY, Radian(rot));
-	selfActor_->GetWorldTransform()->SetQuaternion(axisY);
-	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerQuaternion_);
+	selfActor_->SetAxisY(axisY);
+	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetAxisY());
 	frontVec.y = 0;
 	Vector2 angleVec2 = {
 		frontVec.x,
 		frontVec.z
 	};
 	selfActor_->SetObjAngle(Vec2Angle(angleVec2));
+	selfActor_->GetWorldTransform()->quaternion_ = axisY;
 }
 
 void BaseAttack::SplinePosUpdate()
@@ -212,5 +212,5 @@ void BaseAttack::QuaternionUpdate()
 
 	resultQuaternion_ = resultQuaternion_.Slerp(currentQuaternion, 0.3f);
 
-	selfActor_->GetWorldTransform()->SetQuaternion(resultQuaternion_);
+	selfActor_->GetDisplayWorldTransform()->SetQuaternion(resultQuaternion_);
 }

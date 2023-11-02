@@ -23,6 +23,7 @@ protected:
 	ActorType type_;
 	//モデル
 	std::unique_ptr<Object3d> obj_;
+	std::unique_ptr<Object3d> displayObj_;	//描画に使用しているオブジェ
 	Sphere col_;
 	Vector3 addVec_;
 	Gravity gravity_;
@@ -43,6 +44,7 @@ public:
 	IActor(ActorType type);
 	Sphere GetCol() { return col_; }
 	WorldTransform* GetWorldTransform() { return obj_->GetTransform(); }
+	WorldTransform* GetDisplayWorldTransform() { return displayObj_->GetTransform(); }
 	Vector3 GetAddVec() {
 		return addVec_;
 	}
@@ -60,5 +62,6 @@ public:
 	void SetIsCanMove(bool flag) { isCanMove_ = flag; }
 	void SetFreezeTime(uint32_t time) { freezeTimer_.SetLimitTime(time); freezeTimer_.Reset(); }
 	void SetObjAngle(float angle) { objAngle_ = angle; }
+	void SetAxisY(Quaternion q) { axisY_ = q; }
 };
 

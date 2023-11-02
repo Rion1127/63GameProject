@@ -25,7 +25,6 @@ class Player final :
 	public IActor, public StateMachine<PlayerState>
 {
 private:
-	std::unique_ptr<Object3d> displayObj_;	//描画に使用しているオブジェ
 	//ベクトル
 	Vector3 cameraToPlayerVec_;	//カメラ→プレイヤーのベクトル
 	Vector3 playerFrontVec_;	//プレイヤーが向いているベクトル

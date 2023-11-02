@@ -16,5 +16,6 @@ SplinePos 0 1.4 2.1
 SplinePos 0 -0.4 2.7
 
 //--Quaternion--//
-flame 1
-Quaternion 3.14 0 0 1
+flame 3
+Quaternion 0.23 0 0 1
+

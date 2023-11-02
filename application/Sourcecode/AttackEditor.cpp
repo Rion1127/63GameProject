@@ -938,6 +938,7 @@ void AttackEditor::AttackPlay()
 	moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
 
 	playerObj_->WT_.SetQuaternion(IdentityQuaternion());
+	playerObj_->Update();
 	currentquaternion_ = 0;
 }
 

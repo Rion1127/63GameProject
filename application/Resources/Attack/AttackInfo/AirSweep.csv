@@ -22,6 +22,24 @@ SplinePos -2 0 0
 SplinePos 0 0 2
 
 //--Quaternion--//
-flame 1
-Quaternion 3.14 0 0 1
+flame 3
+Quaternion 0 0.4 0 1
+flame 6
+Quaternion 0 0.8 0 0.6
+flame 9
+Quaternion 0 1 0 0.2
+flame 12
+Quaternion 0 0.6 0 -0.2
+flame 15
+Quaternion 0 0.2 0 -0.6
+flame 18
+Quaternion 0 -0.2 0 -1
+flame 21
+Quaternion 0 -0.6 0 -0.6
+flame 24
+Quaternion 0 -1 0 -0.2
+flame 27
+Quaternion 0 -0.6 0 0.2
+flame 30
+Quaternion 0 0 0 1
 
