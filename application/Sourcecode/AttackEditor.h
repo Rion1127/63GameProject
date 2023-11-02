@@ -50,6 +50,7 @@ private:
 	std::vector<AttackInfo> attackInfo_;
 	//プレイヤー
 	std::unique_ptr<Object3d> playerObj_;
+	std::unique_ptr<Object3d> displayPlayerObj_;
 	//剣
 	std::unique_ptr<Sword> swordObj_;
 	//スプラインの制御点
@@ -72,6 +73,8 @@ private:
 	bool isValueChange_;
 	//現在選択している一振り
 	int32_t currentSwingNum_;
+	int32_t currentquaternion_;
+	float slerpSpeed_;
 	//プレイヤーが動くベクトル
 	Vector3 moveVec_;
 	//攻撃時間
@@ -108,11 +111,5 @@ private:
 	void SetSplinePos();
 	void AttackKeySave();
 	void AttackKeyLoad();
-};
-
-class FrameEditor {
-private:
-
-public:
-
+	void QuaternionUpdate();
 };

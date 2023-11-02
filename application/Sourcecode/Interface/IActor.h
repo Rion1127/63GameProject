@@ -34,6 +34,9 @@ protected:
 	bool isFloorCollision_ = false;
 	float knockDecreaseValue = 0.05f;
 	bool isCanMove_ = true;
+	Quaternion axisX_;				//プレイヤーX軸回転
+	Quaternion axisY_;				//プレイヤーY軸回転
+	Quaternion axisZ_;				//プレイヤーZ軸回転
 protected:
 	void ObjUpdate();
 public:
@@ -45,6 +48,10 @@ public:
 	}
 	Gravity* GetGravity() { return &gravity_; }
 	float GetObjAngle() { return objAngle_; }
+
+	Quaternion GetAxisY() {
+		return axisY_;
+	}
 public:
 	void AddaddVec(const Vector3& vec) { addVec_ += vec; }
 	void SetaddVec(const Vector3& vec) { addVec_ = vec; }

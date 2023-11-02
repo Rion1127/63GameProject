@@ -255,6 +255,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 	BaseAttack::AttackInput newinput;
 
 	AttackEditor::AttackInfo* info = nullptr;
+	AttackEditor::QuaternionControl* quaternionControl = nullptr;
 
 	while (std::getline(file, line))
 	{  // 1行ずつ読み込む
@@ -360,6 +361,34 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> splinePos.x;
 			line_stream >> splinePos.y;
 			line_stream >> splinePos.z;
+		}
+
+		if (key == "//--Quaternion--//")
+		{
+			
+		}
+		//if (quaternionControl == nullptr) continue;
+		//スプライン曲線読み込み
+		if (key == "flame")
+		{
+			info->quaternion.emplace_back();
+			quaternionControl = &info->quaternion.back();
+
+			quaternionControl->frame;
+			float frame;
+			line_stream >> frame;
+
+			quaternionControl->frame = frame;
+		}
+		if (key == "Quaternion")
+		{
+			Quaternion q{};
+			line_stream >> q.x;
+			line_stream >> q.y;
+			line_stream >> q.z;
+			line_stream >> q.w;
+
+			quaternionControl->q = q;
 		}
 	}
 

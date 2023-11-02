@@ -17,6 +17,12 @@ AttackEditor::AttackEditor()
 	playerObj_->SetPos(Vector3(0, 1, 0));
 	playerObj_->WT_.SetRotType(RotType::Quaternion);
 	playerObj_->WT_.quaternion_ = IdentityQuaternion();
+	
+	displayPlayerObj_ = std::make_unique<Object3d>();
+	displayPlayerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	displayPlayerObj_->SetPos(Vector3(0, 1, 0));
+	displayPlayerObj_->WT_.SetRotType(RotType::Quaternion);
+	displayPlayerObj_->WT_.quaternion_ = IdentityQuaternion();
 
 	swordObj_ = std::make_unique<Sword>();
 	
@@ -34,7 +40,7 @@ AttackEditor::AttackEditor()
 	splinePointPos_.emplace_back();
 	quaternions_.emplace_back();
 
-	swordObj_->SetParent(playerObj_.get());
+	swordObj_->SetParent(displayPlayerObj_.get());
 
 	spline_.SetParent(playerObj_->GetTransform());
 	//キー読み込み
@@ -62,11 +68,7 @@ void AttackEditor::Update()
 			spline_.SetIsStart(false);
 		}
 
-		Quaternion result = playerObj_->WT_.quaternion_;
-
-		result = /*result.Slerp()*/quaternions_[currentSwingNum_].at(0).q;
-
-		playerObj_->WT_.SetQuaternion(result);
+		QuaternionUpdate();
 	}
 	//選択している攻撃全てを再生
 	if (isAllPlay_) {
@@ -86,6 +88,8 @@ void AttackEditor::Update()
 				spline_.SetIsStart(false);
 			}
 		}
+
+		QuaternionUpdate();
 	}
 	if (isAllPlay_ == false && isPlay_ == false) {
 		if (isValueChange_) {
@@ -105,11 +109,15 @@ void AttackEditor::Update()
 	swordObj_->EditorUpdate(spline_.GetNowPoint());
 
 	playerObj_->Update();
+
+	displayPlayerObj_->SetPos(playerObj_->GetPos());
+
+	displayPlayerObj_->Update();
 }
 
 void AttackEditor::Draw()
 {
-	playerObj_->Draw();
+	displayPlayerObj_->Draw();
 
 	swordObj_->Draw();
 
@@ -146,6 +154,7 @@ void AttackEditor::DrawImGui()
 	if (ImGui::Button("PlayerPosReset"))
 	{
 		playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
+		displayPlayerObj_->WT_.SetQuaternion(IdentityQuaternion());
 	}
 
 	ImGuiSave();
@@ -905,6 +914,8 @@ void AttackEditor::AttackLoad(const std::string& string)
 
 			quaternionColtrol->back().q = q;
 		}
+
+
 	}
 	currentSwingNum_ = 0;
 	SetSplinePos();
@@ -925,6 +936,9 @@ void AttackEditor::AttackPlay()
 	spline_.SetIsStart(true);
 	SetSplinePos();
 	moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
+
+	playerObj_->WT_.SetQuaternion(IdentityQuaternion());
+	currentquaternion_ = 0;
 }
 
 void AttackEditor::SetSplinePos()
@@ -989,4 +1003,24 @@ void AttackEditor::AttackKeyLoad()
 
 		attackKeys_.insert(std::make_pair(key, keyName));
 	}
+}
+
+void AttackEditor::QuaternionUpdate()
+{
+	Quaternion result = displayPlayerObj_->WT_.quaternion_;
+	if (timer_.GetTimer() > quaternions_[currentSwingNum_].at(currentquaternion_).frame)
+	{
+		if (currentquaternion_ < quaternions_[currentSwingNum_].size() - 1)
+		{
+			currentquaternion_++;
+
+			float time = (quaternions_[currentSwingNum_].at(currentquaternion_).frame - timer_.GetTimer());
+			slerpSpeed_ = 1.f / time;
+		}
+	}
+	auto& currentQuaternion = quaternions_[currentSwingNum_].at(currentquaternion_).q;
+
+	result = result.Slerp(currentQuaternion, slerpSpeed_);
+
+	displayPlayerObj_->WT_.SetQuaternion(result);
 }

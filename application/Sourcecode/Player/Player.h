@@ -71,9 +71,7 @@ private:
 
 	Sword sword_;				//剣オブジェ
 
-	Quaternion axisX_;				//プレイヤーX軸回転
-	Quaternion axisY_;				//プレイヤーY軸回転
-	Quaternion axisZ_;				//プレイヤーZ軸回転
+	
 	Quaternion playerQuaternion_;	//X,Y,Z軸の合成
 public:
 	Player();

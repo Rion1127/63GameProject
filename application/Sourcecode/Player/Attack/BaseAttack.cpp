@@ -17,6 +17,9 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	spline_.SetParent(selfActor_->GetWorldTransform());
 	index_ = 0;
 
+	playerQuaternion_ = selfActor_->GetWorldTransform()->quaternion_;
+	resultQuaternion_ = playerQuaternion_;
+
 	CalculateRotToLockOnActor();
 
 	SetNextAttack();
@@ -38,6 +41,20 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
 
 	nextAttackFrame_ += attackinput_.attackinfo[index_].attackAllFrame;
+
+	playerAxisY_ = selfActor_->GetAxisY();
+	
+
+	float time = (attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
+	slerpSpeed_ = 1.f / time;
+
+	for (auto& info : attackinput_.attackinfo)
+	{
+		for (auto& q : info.quaternion)
+		{
+			q.q = selfActor_->GetAxisY() * q.q;
+		}
+	}
 }
 
 void BaseAttack::SetNextAttack()
@@ -55,6 +72,7 @@ void BaseAttack::SetNextAttack()
 	addVec = RotateVector(addVec, selfActor_->GetWorldTransform()->quaternion_);
 
 	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
+	quaternionIndex_ = 0;
 }
 
 void BaseAttack::Update()
@@ -86,6 +104,7 @@ void BaseAttack::Update()
 
 	//プレイヤーの移動
 	PlayerMove();
+	QuaternionUpdate();
 
 	swordPos_ = spline_.GetNowPoint();
 	//当たり判定更新
@@ -112,7 +131,7 @@ Vector3 BaseAttack::CalculateFrontVec()
 	}
 	else
 	{
-		frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetWorldTransform()->quaternion_);
+		frontVec = RotateVector(Vector3(0, 0, 1), playerQuaternion_);
 	}
 	return frontVec.normalize();
 }
@@ -124,7 +143,7 @@ void BaseAttack::CalculateRotToLockOnActor()
 	Vector3 vecY = { 0, 1, 0 };
 	auto axisY = MakeAxisAngle(vecY, Radian(rot));
 	selfActor_->GetWorldTransform()->SetQuaternion(axisY);
-	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetWorldTransform()->quaternion_);
+	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerQuaternion_);
 	frontVec.y = 0;
 	Vector2 angleVec2 = {
 		frontVec.x,
@@ -175,4 +194,23 @@ void BaseAttack::ColUpdate()
 	else {
 		col_.isActive = true;
 	}
+}
+
+void BaseAttack::QuaternionUpdate()
+{
+	if (attackAllTime_.GetTimer() > attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame)
+	{
+		if (quaternionIndex_ < attackinput_.attackinfo[index_].quaternion.size() - 1)
+		{
+			quaternionIndex_++;
+
+			float time = (attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
+			slerpSpeed_ = 1.f / time;
+		}
+	}
+	auto& currentQuaternion = attackinput_.attackinfo[index_].quaternion[quaternionIndex_].q;
+
+	resultQuaternion_ = resultQuaternion_.Slerp(currentQuaternion, 0.3f);
+
+	selfActor_->GetWorldTransform()->SetQuaternion(resultQuaternion_);
 }

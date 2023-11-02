@@ -15,6 +15,10 @@ SplinePos 0 -2 0
 SplinePos 0 0 2
 SplinePos 0 2 0
 
+//--Quaternion--//
+flame 11
+Quaternion -0.24 0 0 1
+
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 3
@@ -31,6 +35,10 @@ EasingTypeInOut In
 SplinePos 0 2 0
 SplinePos 0 0 2
 SplinePos 0 -2 0
+
+//--Quaternion--//
+flame 1
+Quaternion 0.38 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 10
@@ -49,6 +57,12 @@ SplinePos -2 0 0
 SplinePos 0 0 2
 SplinePos 2 0 0
 
+//--Quaternion--//
+flame 1
+Quaternion 0 -0.32 0 1
+flame 9
+Quaternion 0 0.43 0 1
+
 //--AtatckInfo--//
 attackFrame = 20
 gapFrame = 20
@@ -65,4 +79,8 @@ EasingTypeInOut In
 SplinePos 2 0 0
 SplinePos 0 0 2
 SplinePos -2 0 0
+
+//--Quaternion--//
+flame 10
+Quaternion 0 -0.32 0 1
 

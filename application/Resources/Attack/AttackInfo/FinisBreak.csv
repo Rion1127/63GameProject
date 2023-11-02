@@ -16,6 +16,10 @@ SplinePos 0 1.9 0.9
 SplinePos 0 2.3 0
 SplinePos 0 0 -1.9
 
+//--Quaternion--//
+flame 1
+Quaternion 3.14 0 0 1
+
 //--AtatckInfo--//
 attackFrame = 20
 gapFrame = 5
@@ -31,4 +35,8 @@ EasingType Quint
 EasingTypeInOut In
 SplinePos 0 0 1.3
 SplinePos 0 0 3.5
+
+//--Quaternion--//
+flame 1
+Quaternion 3.14 0 0 1
 

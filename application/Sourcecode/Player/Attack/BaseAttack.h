@@ -26,9 +26,15 @@ private:
 	TimerFloat attackAllTime_;		//攻撃に掛かるフレーム
 	Spline spline_;
 	uint32_t index_;
+	uint32_t quaternionIndex_;
 
 	bool isAttaking_;	//攻撃中フラグ
 	float nextAttackFrame_;
+	float slerpSpeed_;
+
+	Quaternion playerQuaternion_;
+	Quaternion resultQuaternion_;
+	Quaternion playerAxisY_;
 
 	Vector3 swordPos_;	//剣の座標
 
@@ -49,6 +55,7 @@ private:
 	void SplinePosUpdate();
 	void PlayerMove();	//攻撃中のプレイヤーの動き
 	void ColUpdate();	//当たり判定更新
+	void QuaternionUpdate();
 public:
 	//ゲッター
 	bool GetIsAttaking() { return isAttaking_; }
