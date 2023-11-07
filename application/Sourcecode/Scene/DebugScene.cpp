@@ -171,10 +171,15 @@ void DebugScene::Draw()
 
 void DebugScene::DrawRenderTexture()
 {
+	
+
+
+}
+
+void DebugScene::DrawPostEffect()
+{
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
-
-
 }
 
 void DebugScene::CameraUpdate()

@@ -4,8 +4,8 @@
 PostureDisplay::PostureDisplay()
 {
 	obj_ = std::make_unique<Object3d>();
-	obj_->SetModel(Model::CreateOBJ_uniptr("player", true));
-	obj_->SetPos(Vector3(0, 1, 0));
+	obj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
+	obj_->SetPos(Vector3(0, 0, 0));
 	obj_->WT_.SetRotType(RotType::Quaternion);
 	obj_->WT_.quaternion_ = IdentityQuaternion();
 
@@ -15,7 +15,9 @@ PostureDisplay::PostureDisplay()
 void PostureDisplay::Update(Quaternion q)
 {
 	obj_->WT_.SetQuaternion(q);
+	camera_.SetFrontDist(3.8f);
 	camera_.Update();
+
 	obj_->Update(camera_.GetCamera());
 }
 

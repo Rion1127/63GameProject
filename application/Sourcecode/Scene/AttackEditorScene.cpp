@@ -42,6 +42,10 @@ void AttackEditorScene::DrawRenderTexture()
 	attackEditor_.DrawRenderTexture();
 }
 
+void AttackEditorScene::DrawPostEffect()
+{
+}
+
 void AttackEditorScene::CameraUpdate()
 {
 }

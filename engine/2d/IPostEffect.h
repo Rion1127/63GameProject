@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "myMath.h"
 #include <vector>
+#include <array>
 #include <wrl.h>
 #include <DirectXMath.h>
 #include <d3dx12.h>
@@ -15,6 +16,21 @@
 
 class IPostEffect
 {
+private:
+	//画面クリアカラー
+	static const float clearColor_[4];
+	static const uint32_t vertNum_;
+	struct VertexPosUV {
+		Vector3 pos;
+		Vector2 uv;
+	};
+public:
+	enum class VertName {
+		LB,	//左下
+		LT,	//左上
+		RB,	//右下
+		RT	//右上
+	};
 private:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -30,6 +46,7 @@ private:
 
 	//頂点データ
 	ComPtr<ID3D12Resource> vertBuff_;
+	std::array<VertexPosUV,4> vertices_;
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	//インデックスデータ
@@ -44,14 +61,6 @@ private:
 	};
 protected:
 	ComPtr<ID3D12Resource> constBuff_ = nullptr;
-private:
-	//画面クリアカラー
-	static const float clearColor_[4];
-	static const uint32_t vertNum_;
-	struct VertexPosUV {
-		Vector3 pos;
-		Vector2 uv;
-	};
 public:
 	IPostEffect();
 	virtual ~IPostEffect() {};
@@ -59,12 +68,15 @@ public:
 	void PUpdate();
 
 	void Draw(const std::string& pipelineName);
+	void DrawImGui();
 	//シーン前処理
 	void PreDrawScene();
 	//シーン描画後処理
 	void PostDrawScene();
 
 	void SetTexture();
+public:
+	void SetVerTex(VertName name,Vector2 pos);
 protected:
 	//継承先でoverrideする関数は下の二つだけ
 	//シェーダーへ値を渡す

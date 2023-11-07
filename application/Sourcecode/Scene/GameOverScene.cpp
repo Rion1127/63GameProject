@@ -121,6 +121,10 @@ void GameOverScene::DrawRenderTexture()
 {
 }
 
+void GameOverScene::DrawPostEffect()
+{
+}
+
 void GameOverScene::CameraUpdate()
 {
 

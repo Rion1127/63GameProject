@@ -263,6 +263,24 @@ void Sprite::DrawImGui()
 	color_.b = color[2];
 	color_.a = color[3];
 
+	ImGui::Checkbox("vertChange", &isVertChange);
+	// color変更
+	float Ld[2] = { vertices_.at(0).pos.x,vertices_.at(0).pos.y};
+	ImGui::DragFloat2("Ld", Ld, 1.0f, 0.0f, 10000.0f);
+	float Lu[2] = { vertices_.at(1).pos.x,vertices_.at(1).pos.y };
+	ImGui::DragFloat2("Lu", Lu, 1.0f, 0.0f, 10000.0f);
+	float Rd[2] = { vertices_.at(2).pos.x,vertices_.at(2).pos.y };
+	ImGui::DragFloat2("Rd", Rd, 1.0f, 0.0f, 10000.0f);
+	float Ru[2] = { vertices_.at(3).pos.x,vertices_.at(3).pos.y };
+	ImGui::DragFloat2("Ru", Ru, 1.0f, 0.0f, 10000.0f);
+
+	vertices_.at(0).pos = { Ld[0],Ld[1],0};//左下
+	vertices_.at(1).pos = { Lu[0],Lu[1],0 };//左上
+	vertices_.at(2).pos = { Rd[0],Rd[1],0 };//右下
+	vertices_.at(3).pos = { Ru[0],Ru[1],0 };//右上
+	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
+	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);
+
 	ImGui::End();
 }
 
@@ -299,6 +317,26 @@ void Sprite::Draw()
 	}
 
 	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
+	//定数バッファビュー(CBV)の設定コマンド
+	RDirectX::GetInstance()->GetCommandList()->
+		SetGraphicsRootConstantBufferView(1, constBuffMaterial_->GetGPUVirtualAddress());
+	// 頂点バッファビューの設定コマンド
+	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
+	//インデックスバッファビューの設定コマンド
+	RDirectX::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView_);
+	//定数バッファビュー(CBV)の設定コマンド
+	RDirectX::GetInstance()->GetCommandList()->
+		SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
+
+	//描画コマンド
+	RDirectX::GetInstance()->GetCommandList()->
+		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
+}
+
+void Sprite::DrawTest() {
+
+	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
+	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);
 	//定数バッファビュー(CBV)の設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->
 		SetGraphicsRootConstantBufferView(1, constBuffMaterial_->GetGPUVirtualAddress());
@@ -372,10 +410,13 @@ void Sprite::TransferVertex()
 		bottom = -bottom;
 	}
 
-	vertices_.at(LB).pos = { left	, bottom	,0 };//左下
-	vertices_.at(LT).pos = { left	, top		,0 };//左上
-	vertices_.at(RB).pos = { right	, bottom	,0 };//右下
-	vertices_.at(RT).pos = { right	, top		,0 };//右上
+	if (isVertChange)
+	{
+		vertices_.at(LB).pos = { left	, bottom	,0 };//左下
+		vertices_.at(LT).pos = { left	, top		,0 };//左上
+		vertices_.at(RB).pos = { right	, bottom	,0 };//右下
+		vertices_.at(RT).pos = { right	, top		,0 };//右上
+	}
 
 	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);
 

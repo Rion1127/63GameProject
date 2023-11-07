@@ -1,6 +1,7 @@
 #include "IPostEffect.h"
 #include "WinAPI.h"
 #include <d3dcompiler.h>
+#include <imgui.h>
 
 #include "DirectX.h"
 #include "PipelineManager.h"
@@ -66,6 +67,40 @@ void IPostEffect::Draw(const std::string& pipelineName)
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
+void IPostEffect::DrawImGui()
+{
+	ImGui::Begin("IPostEffect");
+
+	// color変更
+	float Ld[2] = { vertices_.at(0).pos.x,vertices_.at(0).pos.y };
+	ImGui::DragFloat2("Ld", Ld, 0.01f, -1.0f, 1.0f);
+	float Lu[2] = { vertices_.at(1).pos.x,vertices_.at(1).pos.y };
+	ImGui::DragFloat2("Lu", Lu, 0.01f, -1.0f, 1.0f);
+	float Rd[2] = { vertices_.at(2).pos.x,vertices_.at(2).pos.y };
+	ImGui::DragFloat2("Rd", Rd, 0.01f, -1.0f, 1.0f);
+	float Ru[2] = { vertices_.at(3).pos.x,vertices_.at(3).pos.y };
+	ImGui::DragFloat2("Ru", Ru, 0.01f, -1.0f, 1.0f);
+
+	vertices_.at(0).pos = { Ld[0],Ld[1],0 };//左下
+	vertices_.at(1).pos = { Lu[0],Lu[1],0 };//左上
+	vertices_.at(2).pos = { Rd[0],Rd[1],0 };//右下
+	vertices_.at(3).pos = { Ru[0],Ru[1],0 };//右上
+	
+	//頂点バッファへのデータ転送
+	VertexPosUV* vertMap = nullptr;
+	HRESULT result;
+	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
+	if (SUCCEEDED(result))
+	{
+		memcpy(vertMap, vertices_.data(), sizeof(vertices_));
+		vertBuff_->Unmap(0, nullptr);
+	}
+
+	ImGui::End();
+	
+
+}
+
 void IPostEffect::SetTexture() {
 	//SRVヒープの設定コマンド
 	std::vector<ID3D12DescriptorHeap*> heaps = { descHeapSRV_.Get() };
@@ -75,6 +110,15 @@ void IPostEffect::SetTexture() {
 	srvGpuHandle = descHeapSRV_.Get()->GetGPUDescriptorHandleForHeapStart();
 	//SRVヒープの先頭にあるSRVをルートパラメータ0番に設定
 	RDirectX::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, srvGpuHandle);
+}
+
+void IPostEffect::SetVerTex(VertName name, Vector2 pos)
+{
+	vertices_.at((int32_t)name).pos = {
+		pos.x,
+		pos.y,
+		0
+	};
 }
 
 void IPostEffect::PreDrawScene()
@@ -137,18 +181,18 @@ void IPostEffect::CreateVertBuff()
 			nullptr,
 			IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
+
 	//頂点データ
-	VertexPosUV vertices[vertNum_] = {
-		{{-1.f,-1.f,0.0f},{0.f,1.f}},//左下
-		{{-1.f,+1.f,0.0f},{0.f,0.f}},//左上
-		{{+1.f,-1.f,0.0f},{1.f,1.f}},//右下
-		{{+1.f,+1.f,0.0f},{1.f,0.f}},//右上
-	};
+	vertices_.at(0) = { { -1.f,-1.f,0.0f }, { 0.f,1.f } };//左下
+	vertices_.at(1) = { {-1.f,+1.f,0.0f},{0.f,0.f} };//左上
+	vertices_.at(2) = { {+1.f,-1.f,0.0f},{1.f,1.f} };//右下
+	vertices_.at(3) = { {+1.f,+1.f,0.0f},{1.f,0.f} };//右上
 	//頂点バッファへのデータ転送
 	VertexPosUV* vertMap = nullptr;
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
-	if (SUCCEEDED(result)) {
-		memcpy(vertMap, vertices, sizeof(vertices));
+	if (SUCCEEDED(result))
+	{
+		memcpy(vertMap, vertices_.data(), sizeof(vertices_));
 		vertBuff_->Unmap(0, nullptr);
 	}
 

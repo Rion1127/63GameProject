@@ -87,6 +87,8 @@ private:
 	const char* gui_;
 
 	std::string name_;
+
+	bool isVertChange = true;
 public:
 	void Update();
 
@@ -94,6 +96,7 @@ public:
 
 	//画像サイズ自動取得(描画座標は中心)
 	void Draw();
+	void DrawTest();
 	//画像の頂点データを自分で指定
 	void Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float LdY, float RdX, float RdY, UINT descriptorSize);
 	

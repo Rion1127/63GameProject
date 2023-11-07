@@ -16,6 +16,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void DrawRenderTexture() = 0;
+	virtual void DrawPostEffect() = 0;
 
 	uint32_t GetIsNext() { return isNext_; }
 	void SetIsNext(uint32_t isnext) { isNext_ = isnext; }

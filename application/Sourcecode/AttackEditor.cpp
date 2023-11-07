@@ -137,7 +137,7 @@ void AttackEditor::DrawRenderTexture()
 
 void AttackEditor::DrawImGui()
 {
-	postureDisplay.DrawImGui();
+	//postureDisplay.DrawImGui();
 	//プレイヤー座標の変更を行う
 	ImGui::Begin("AttackEditor");
 	

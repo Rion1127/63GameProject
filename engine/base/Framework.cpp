@@ -41,7 +41,12 @@ void Framework::Init()
 
 	bloom_ = std::make_unique<Bloom>();
 	test_ = std::make_unique<HighLumi>();
+	test_->SetVerTex(IPostEffect::VertName::LB,Vector2(-1.0f,0.5f));
+	test_->SetVerTex(IPostEffect::VertName::LT,Vector2(-1.0f,1.0f));
+	test_->SetVerTex(IPostEffect::VertName::RB,Vector2(-0.5f,0.5f));
+	test_->SetVerTex(IPostEffect::VertName::RT,Vector2(-0.5f,1.0f));
 	isPostEffect_ = true;
+
 }
 
 void Framework::Finalize()
@@ -99,20 +104,27 @@ void Framework::Run()
 
 void Framework::Draw()
 {
-	test_->PreDrawScene();
-	SceneManager::DrawPostEffect();
-	test_->PostDrawScene();
-
-
+	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
+	{
+		test_->PreDrawScene();
+		SceneManager::DrawRenderTexture();
+		test_->PostDrawScene();
+	}
 
 	if(isPostEffect_) bloom_->PreDraw();
 	//描画コマンド
 	RDirectX::GetInstance()->PreDraw();
-	test_->Draw("HighLumi");
+
+	
 	//ゲームシーン描画
 	if (isPostEffect_ == false)SceneManager::Draw();
 	if (isPostEffect_)bloom_->Draw();
 
+	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
+	{
+		test_->DrawImGui();
+		test_->Draw("PostEffect");
+	}
 	
 	//imgui終了
 	ImGuiManager::Getinstance()->End();

@@ -134,7 +134,7 @@ void Sword::EditorUpdate(const Vector3& swordPos)
 		obj_->WT_.parent_ = nullptr;
 		//プレイヤーの背中に向かって徐々に移動する
 		Vector3 pos = playerObj_->WT_.position_;
-		Vector3 frontVec = RotateVector(Vector3(0, 0, -1), playerObj_->WT_.quaternion_);
+		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
 		frontVec = frontVec.normalize();
 		//座標移動
 		goalPos_ = pos - frontVec * 1.2f;

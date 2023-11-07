@@ -87,6 +87,10 @@ void TitleScene::DrawRenderTexture()
 {
 }
 
+void TitleScene::DrawPostEffect()
+{
+}
+
 void TitleScene::CameraUpdate()
 {
 

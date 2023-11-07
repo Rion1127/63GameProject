@@ -175,6 +175,11 @@ void GameScene::Draw()
 
 void GameScene::DrawRenderTexture()
 {
+	
+}
+
+void GameScene::DrawPostEffect()
+{
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
 }

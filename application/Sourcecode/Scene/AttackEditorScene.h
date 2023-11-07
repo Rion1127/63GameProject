@@ -44,6 +44,7 @@ public:
 	void Draw()override;
 
 	void DrawRenderTexture()override;
+	void DrawPostEffect() override;
 private:
 	void CameraUpdate();
 

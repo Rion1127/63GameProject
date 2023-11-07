@@ -43,5 +43,6 @@ public:
 	Camera* GetCamera() { return &camera_; }
 public:
 	void SetDebugCameraMode(DebugCameraMode mode) { debugCameraMode_ = mode; }
+	void SetFrontDist(float value) { frontdist_ = value; }
 };
 
