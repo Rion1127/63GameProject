@@ -1,5 +1,4 @@
 #pragma once
-#include "Framework.h"
 #include "mInput.h"
 #include "Texture.h"
 #include "GameScene.h"
@@ -22,6 +21,7 @@ private:
 	LoadManager loadManager_;
 
 	std::unique_ptr<Bloom> bloom_;
+	std::unique_ptr<HighLumi> test_;
 	bool isPostEffect_;
 public:
 	virtual ~Framework() = default;

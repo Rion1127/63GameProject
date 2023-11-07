@@ -95,6 +95,7 @@ public:
 	AttackEditor();
 	void Update();
 	void Draw();
+	void DrawRenderTexture();
 	void DrawImGui();
 private:
 	void ImGuiDisplaySplitePoint();	//スプライン曲線の制御点を描画

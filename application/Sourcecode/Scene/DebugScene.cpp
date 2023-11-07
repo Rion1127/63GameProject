@@ -169,7 +169,7 @@ void DebugScene::Draw()
 	gameCamera_.DrawImGui();
 }
 
-void DebugScene::DrawPostEffect()
+void DebugScene::DrawRenderTexture()
 {
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();

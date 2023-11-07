@@ -40,6 +40,7 @@ void Framework::Init()
 	loadManager_.LoadAllResources();
 
 	bloom_ = std::make_unique<Bloom>();
+	test_ = std::make_unique<HighLumi>();
 	isPostEffect_ = true;
 }
 
@@ -98,12 +99,21 @@ void Framework::Run()
 
 void Framework::Draw()
 {
+	test_->PreDrawScene();
+	SceneManager::DrawPostEffect();
+	test_->PostDrawScene();
+
+
+
 	if(isPostEffect_) bloom_->PreDraw();
 	//描画コマンド
 	RDirectX::GetInstance()->PreDraw();
+	test_->Draw("HighLumi");
 	//ゲームシーン描画
 	if (isPostEffect_ == false)SceneManager::Draw();
 	if (isPostEffect_)bloom_->Draw();
+
+	
 	//imgui終了
 	ImGuiManager::Getinstance()->End();
 	//imgui描画

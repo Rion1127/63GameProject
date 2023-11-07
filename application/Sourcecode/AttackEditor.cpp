@@ -124,9 +124,15 @@ void AttackEditor::Draw()
 
 	swordObj_->Draw();
 
-	postureDisplay.Draw();
+	
 
 	spline_.DrawDebug();
+}
+
+void AttackEditor::DrawRenderTexture()
+{
+	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
+	postureDisplay.Draw();
 }
 
 void AttackEditor::DrawImGui()

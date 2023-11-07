@@ -111,7 +111,7 @@ void SceneManager::Draw()
 
 void SceneManager::DrawPostEffect()
 {
-	scurrentScene_->DrawPostEffect();
+	scurrentScene_->DrawRenderTexture();
 }
 
 void SceneManager::SceneChange()

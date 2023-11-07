@@ -43,7 +43,7 @@ public:
 
 	void Draw()override;
 
-	void DrawPostEffect()override;
+	void DrawRenderTexture()override;
 private:
 	void CameraUpdate();
 

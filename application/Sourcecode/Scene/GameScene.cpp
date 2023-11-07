@@ -173,7 +173,7 @@ void GameScene::Draw()
 	//ImGui::End();
 }
 
-void GameScene::DrawPostEffect()
+void GameScene::DrawRenderTexture()
 {
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
