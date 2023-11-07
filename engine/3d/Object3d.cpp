@@ -7,6 +7,7 @@
 
 Object3d::Object3d()
 {
+	billBoard = BillBoard::None;
 }
 
 Object3d::~Object3d()
@@ -17,10 +18,10 @@ void Object3d::Init()
 {
 }
 
-void Object3d::Update()
+void Object3d::Update(Camera* camera)
 {
 	model_->ShadowUpdate(WT_.position_);
-	WT_.Update();
+	WT_.Update(billBoard, camera);
 }
 
 void Object3d::Draw()

@@ -56,14 +56,14 @@ protected:
 	//パーティクルデータ
 	std::vector<Particle> particles_;
 
-	bool isBillBoard;
+	BillBoard billBoard;
 	std::string shaderName_;
 	PipeLineState state_;
 	IEmitter* emitter_;
 public:
 	IParticle(std::string shaderName = "Particle") {
 		shaderName_ = shaderName;
-		isBillBoard = false;
+		billBoard = BillBoard::None;
 		state_ = PipeLineState::Alpha;
 	};
 	virtual ~IParticle();

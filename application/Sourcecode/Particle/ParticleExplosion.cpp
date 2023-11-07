@@ -16,7 +16,7 @@ ParticleExplosion::ParticleExplosion() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Explosion_01");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 	state_ = PipeLineState::Alpha;
 
 	endRate_ = 0.8f;
@@ -111,7 +111,7 @@ ParticleSmallExplosion::ParticleSmallExplosion() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Explosion_02");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 	state_ = PipeLineState::Alpha;
 
 	endRate_ = 0.8f;

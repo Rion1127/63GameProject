@@ -6,6 +6,7 @@
 #include "DirectX.h"
 #include "Quaternion.h"
 #include "myMath.h"
+#include "Camera.h"
 
 /**
  * @file WorldTransform.h
@@ -17,6 +18,12 @@ struct ConstBufferDataTransform {
 	Matrix4 mat; //3D変換行列
 	Matrix4 viewProj;	//ビューとプロジェクション合成行列
 	Vector3 cameraPos;
+};
+
+enum class BillBoard {
+	None,
+	BillBoard,
+	AxisYBillBoard
 };
 
 enum class RotType {
@@ -50,7 +57,7 @@ public:
 	/// </summary>
 	/// <param name="viewProjection">カメラ</param>
 	/// <param name="isBillboard">0 = 無し; 1 = ビルボードあり; 2 = Y軸ビルボード</param>
-	void Update(uint32_t isBillboard = 0);
+	void Update(BillBoard isBillboard = BillBoard::None, Camera* camera = Camera::scurrent_);
 
 	Matrix4 GetMatWorld() { return matWorld_; }
 	Vector3 GetWorldPos() { return Vector3(matWorld_.m[3][0], matWorld_.m[3][1], matWorld_.m[3][2]); }

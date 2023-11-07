@@ -12,7 +12,7 @@ ParticleWallHit::ParticleWallHit() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Circle");
-	isBillBoard = false;
+	billBoard = BillBoard::None;
 }
 
 void ParticleWallHit::Add()

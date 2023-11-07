@@ -32,7 +32,10 @@ Model::Model(bool isShadowSet)
 
 Model::~Model()
 {
-	lightGroup_->SetCircleShadowActive(shadowNum_, false);
+	if (isShadowActive_)
+	{
+		lightGroup_->SetCircleShadowActive(shadowNum_, false);
+	}
 	materials_.clear();
 	vert_.clear();
 }

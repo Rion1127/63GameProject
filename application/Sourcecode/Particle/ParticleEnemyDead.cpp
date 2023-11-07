@@ -15,7 +15,7 @@ ParticleEnemyDead::ParticleEnemyDead() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Smoke");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleEnemyDead::Add()
@@ -110,7 +110,7 @@ ParticleHeart::ParticleHeart() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Heart");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleHeart::Add()

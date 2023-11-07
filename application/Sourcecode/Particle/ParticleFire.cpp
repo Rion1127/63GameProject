@@ -15,7 +15,7 @@ ParticleFire::ParticleFire() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Particle");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 	state_ = PipeLineState::Add;
 }
 
@@ -103,7 +103,7 @@ ParticleFireCircle::ParticleFireCircle() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("FireCircle");
-	isBillBoard = false;
+	billBoard = BillBoard::None;
 	state_ = PipeLineState::Add;
 }
 

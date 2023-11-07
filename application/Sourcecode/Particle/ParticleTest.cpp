@@ -14,7 +14,7 @@ ParticleTest::ParticleTest() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleTest::Add()

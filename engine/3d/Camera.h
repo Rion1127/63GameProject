@@ -4,7 +4,6 @@
 
 #include "DirectX.h"
 #include "myMath.h"
-#include "WorldTransform.h"
 
 /**
  * @file Camera.h
@@ -50,8 +49,6 @@ public:
 	Vector3 target_;
 	Vector3 up_;
 	Vector3 rot_;
-
-	WorldTransform WT_;
 
 	Matrix4 matView_{};
 	//透視投影行列の計算
