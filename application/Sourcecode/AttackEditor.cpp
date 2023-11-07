@@ -652,9 +652,10 @@ void AttackEditor::ImGuiQuaternion()
 	ImGui::SameLine();
 	if (ImGui::Button("Delete", ImVec2(50, 50)))
 	{
-		quaternions_[currentSwingNum_].emplace_back();
-		auto& q = quaternions_[currentSwingNum_].back();
-		q.q = IdentityQuaternion();
+		if (quaternions_[currentSwingNum_].size() > 1)
+		{
+			quaternions_[currentSwingNum_].erase(quaternions_[currentSwingNum_].begin() + (quaternions_[currentSwingNum_].size() - 1));
+		}
 	}
 	if (ImGui::CollapsingHeader("Quaternion"))
 	{
@@ -962,6 +963,9 @@ void AttackEditor::AttackPlay()
 	playerObj_->WT_.SetQuaternion(IdentityQuaternion());
 	playerObj_->Update();
 	currentquaternion_ = 0;
+
+	float time = (quaternions_[currentSwingNum_].at(currentquaternion_).frame - timer_.GetTimer());
+	slerpSpeed_ = 1.f / time;
 }
 
 void AttackEditor::SetSplinePos()

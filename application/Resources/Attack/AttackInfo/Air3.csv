@@ -37,7 +37,7 @@ SplinePos 0 0 2
 SplinePos 0 -2 0
 
 //--Quaternion--//
-flame 1
+flame 10
 Quaternion 0.38 0 0 1
 
 //--AtatckInfo--//
@@ -58,10 +58,14 @@ SplinePos 0 0 2
 SplinePos 2 0 0
 
 //--Quaternion--//
-flame 1
-Quaternion 0 -0.32 0 1
-flame 9
-Quaternion 0 0.43 0 1
+flame 3
+Quaternion 0 1.71 0 0.63
+flame 6
+Quaternion 0 1 0 -0.41
+flame 15
+Quaternion 0 0 0 1
+flame 18
+Quaternion 0 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 20

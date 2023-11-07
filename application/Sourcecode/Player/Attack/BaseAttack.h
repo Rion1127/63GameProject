@@ -31,6 +31,7 @@ private:
 	bool isAttaking_;	//攻撃中フラグ
 	float nextAttackFrame_;
 	float slerpSpeed_;
+	float quaternionTimer_;
 
 	Quaternion resultQuaternion_;
 	Quaternion playerAxisY_;

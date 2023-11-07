@@ -54,6 +54,7 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 			q.q = selfActor_->GetAxisY() * q.q;
 		}
 	}
+	quaternionTimer_ = 0;
 }
 
 void BaseAttack::SetNextAttack()
@@ -198,10 +199,11 @@ void BaseAttack::ColUpdate()
 
 void BaseAttack::QuaternionUpdate()
 {
-	if (attackAllTime_.GetTimer() > attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame)
+	if (attackAllTime_.GetTimer() - quaternionTimer_ > attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame )
 	{
 		if (quaternionIndex_ < attackinput_.attackinfo[index_].quaternion.size() - 1)
 		{
+			quaternionTimer_ += attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame;
 			quaternionIndex_++;
 
 			float time = (attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());

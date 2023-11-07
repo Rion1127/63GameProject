@@ -17,8 +17,14 @@ SplinePos 0 2.3 0
 SplinePos 0 0 -1.9
 
 //--Quaternion--//
-flame 1
-Quaternion -0.19 0 0 1
+flame 5
+Quaternion -0.6 0 0 1
+flame 10
+Quaternion -0.91 0 0 -0.15
+flame 15
+Quaternion -0.14 0 0 -0.73
+flame 20
+Quaternion 0 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 20
