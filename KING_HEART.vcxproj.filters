@@ -256,6 +256,12 @@
     <Filter Include="application\ヘッダーファイル\MainSystem\Config">
       <UniqueIdentifier>{7c10a6c2-efa1-49b4-bec5-0d730618f086}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\AttackEditor">
+      <UniqueIdentifier>{64b49c5b-544e-417b-a4ff-9635519f5725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\AttackEditor">
+      <UniqueIdentifier>{b373e2d6-64c0-499c-871e-dca3129ec458}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -642,13 +648,16 @@
     <ClCompile Include="application\Sourcecode\Scene\AttackEditorScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Attack\BaseAttack.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
     <ClCompile Include="engine\3d\Line3D.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="PostureDisplay.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1040,13 +1049,16 @@
     <ClInclude Include="application\Sourcecode\Scene\AttackEditorScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttackEditor.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\BaseAttack.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Line3D.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\AttackEditor.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="PostureDisplay.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

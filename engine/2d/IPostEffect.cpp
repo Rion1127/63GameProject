@@ -66,6 +66,17 @@ void IPostEffect::Draw(const std::string& pipelineName)
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
+void IPostEffect::SetTexture() {
+	//SRVヒープの設定コマンド
+	std::vector<ID3D12DescriptorHeap*> heaps = { descHeapSRV_.Get() };
+	RDirectX::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, heaps.data());
+	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle;
+	srvGpuHandle = descHeapSRV_.Get()->GetGPUDescriptorHandleForHeapStart();
+	//SRVヒープの先頭にあるSRVをルートパラメータ0番に設定
+	RDirectX::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, srvGpuHandle);
+}
+
 void IPostEffect::PreDrawScene()
 {
 	ID3D12GraphicsCommandList& cmdList = *RDirectX::GetInstance()->GetCommandList();

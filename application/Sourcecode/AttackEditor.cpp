@@ -45,6 +45,7 @@ AttackEditor::AttackEditor()
 	spline_.SetParent(playerObj_->GetTransform());
 	//キー読み込み
 	AttackKeyLoad();
+	cullentQuaternion_ = IdentityQuaternion();
 }
 
 void AttackEditor::Update()
@@ -113,6 +114,8 @@ void AttackEditor::Update()
 	displayPlayerObj_->SetPos(playerObj_->GetPos());
 
 	displayPlayerObj_->Update();
+
+	postureDisplay.Update(cullentQuaternion_);
 }
 
 void AttackEditor::Draw()
@@ -121,11 +124,14 @@ void AttackEditor::Draw()
 
 	swordObj_->Draw();
 
+	postureDisplay.Draw();
+
 	spline_.DrawDebug();
 }
 
 void AttackEditor::DrawImGui()
 {
+	postureDisplay.DrawImGui();
 	//プレイヤー座標の変更を行う
 	ImGui::Begin("AttackEditor");
 	
@@ -650,6 +656,9 @@ void AttackEditor::ImGuiQuaternion()
 		std::string frameString;
 		std::string quaternionString;
 		uint32_t index = 0;
+
+		Quaternion preQuaternion;
+
 		for (auto& q : quaternions_[currentSwingNum_])
 		{
 			std::ostringstream num;
@@ -663,12 +672,19 @@ void AttackEditor::ImGuiQuaternion()
 			ImGui::Text(IndexNumString.c_str());
 			ImGui::DragFloat(frameString.c_str(), &q.frame, 1.f, 0, maxTime);
 
+			preQuaternion = q.q;
+
 			float quaternion[4] = { q.q.x, q.q.y, q.q.z, q.q.w };
 			ImGui::DragFloat4(quaternionString.c_str(), quaternion, 0.01f,-3.14f, 3.14f);
 			q.q.x = quaternion[0];
 			q.q.y = quaternion[1];
 			q.q.z = quaternion[2];
 			q.q.w = quaternion[3];
+
+			if ((preQuaternion == q.q) == false)
+			{
+				cullentQuaternion_ = q.q;
+			}
 
 			index++;
 		}

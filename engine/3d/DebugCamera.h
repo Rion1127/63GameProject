@@ -8,6 +8,11 @@
  * @brief デバッグ用のカメラを管理している
  */
 
+enum class DebugCameraMode {
+	Normal,
+	Trans_Zero
+};
+
 class DebugCamera
 {
 private:
@@ -25,6 +30,9 @@ private:
 	Vector3 upVec_{};
 
 	float frontdist_;
+
+	DebugCameraMode debugCameraMode_;
+
 public:
 	DebugCamera();
 
@@ -33,5 +41,7 @@ private:
 	void CameraMove();
 public:
 	Camera* GetCamera() { return &camera_; }
+public:
+	void SetDebugCameraMode(DebugCameraMode mode) { debugCameraMode_ = mode; }
 };
 

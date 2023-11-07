@@ -19,6 +19,8 @@ DebugCamera::DebugCamera()
 	sideVec_ = { 0,0,0 };
 
 	frontdist_ = 50;
+
+	debugCameraMode_ = DebugCameraMode::Normal;
 }
 
 void DebugCamera::Update()
@@ -55,12 +57,20 @@ void DebugCamera::CameraMove()
 
 	//平行移動
 	if (mInput_->IsMouseDown(MOUSE_WHEEL)) {
-		//マウスカーソルを左右に動かしたとき
-		cameraTrans_ -= sideVec_ * speed.x;
-		camera_.target_ -= sideVec_ * speed.x;
-		//上下に動かしたとき
-		cameraTrans_ -= upVec_ * speed.y;
-		camera_.target_ -= upVec_ * speed.y;
+		if (debugCameraMode_ == DebugCameraMode::Normal)
+		{
+			//マウスカーソルを左右に動かしたとき
+			cameraTrans_ -= sideVec_ * speed.x;
+			camera_.target_ -= sideVec_ * speed.x;
+			//上下に動かしたとき
+			cameraTrans_ -= upVec_ * speed.y;
+			camera_.target_ -= upVec_ * speed.y;
+		}
+		else if (debugCameraMode_ == DebugCameraMode::Trans_Zero)
+		{
+			cameraTrans_ = Vector3(0,0,0);
+		}
+		
 	}
 	//拡大縮小
 	else if (!mInput_->IsMouseDown(MOUSE_WHEEL)) {

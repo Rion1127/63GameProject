@@ -5,6 +5,7 @@
 #include "mInput.h"
 #include "Sword.h"
 #include "Timer.h"
+#include "PostureDisplay.h"
 #include <imgui.h>
 #include <vector>
 #include <map>
@@ -87,6 +88,9 @@ private:
 	//保存するファイルのディレクトリ名
 	std::string attackInfoDir_;
 	std::string attackKeyDir_;
+	//クォータニオンの姿勢確認
+	PostureDisplay postureDisplay;
+	Quaternion cullentQuaternion_;
 public:
 	AttackEditor();
 	void Update();

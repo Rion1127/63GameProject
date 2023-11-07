@@ -159,6 +159,19 @@ bool Quaternion::operator==(const Quaternion& other) const
 	return false;
 }
 
+bool Quaternion::operator!=(const Quaternion& other) const
+{
+	if (x != other.x &&
+		y != other.y &&
+		z != other.z &&
+		w != other.w)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 //任意軸回転を表すQuaternionの生成
 Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 {

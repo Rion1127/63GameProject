@@ -63,6 +63,8 @@ public:
 	void PreDrawScene();
 	//シーン描画後処理
 	void PostDrawScene();
+
+	void SetTexture();
 protected:
 	//継承先でoverrideする関数は下の二つだけ
 	//シェーダーへ値を渡す
