@@ -15,6 +15,9 @@ void AttackEditorScene::Ini()
 	stage_ = std::move(std::make_unique<Stage>());
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
+
+	lightManager_ = std::make_shared<LightManager>();
+	Model::SetLight(lightManager_->GetLightGroup());
 }
 
 void AttackEditorScene::Update()
@@ -24,6 +27,9 @@ void AttackEditorScene::Update()
 	Camera::scurrent_ = debugCamera_.GetCamera();
 
 	attackEditor_.Update();
+
+	//その他
+	lightManager_->DebugUpdate();
 
 	//当たり判定前更新
 	stage_->Update();

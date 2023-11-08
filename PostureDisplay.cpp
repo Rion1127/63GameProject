@@ -6,6 +6,7 @@ PostureDisplay::PostureDisplay()
 	obj_ = std::make_unique<Object3d>();
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
 	obj_->SetPos(Vector3(0, 0, 0));
+	obj_->SetShadowOffsetPos(Vector3(0, -1, 0));
 	obj_->WT_.SetRotType(RotType::Quaternion);
 	obj_->WT_.quaternion_ = IdentityQuaternion();
 

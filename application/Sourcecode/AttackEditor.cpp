@@ -13,13 +13,14 @@ AttackEditor::AttackEditor()
 	attackKeyDir_ = "application/Resources/Attack/AttackKey";
 
 	playerObj_ = std::make_unique<Object3d>();
-	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
 	playerObj_->SetPos(Vector3(0, 1, 0));
 	playerObj_->WT_.SetRotType(RotType::Quaternion);
 	playerObj_->WT_.quaternion_ = IdentityQuaternion();
 	
 	displayPlayerObj_ = std::make_unique<Object3d>();
 	displayPlayerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
+	displayPlayerObj_->SetShadowOffsetPos(Vector3(0,-1,0));
 	displayPlayerObj_->SetPos(Vector3(0, 1, 0));
 	displayPlayerObj_->WT_.SetRotType(RotType::Quaternion);
 	displayPlayerObj_->WT_.quaternion_ = IdentityQuaternion();
