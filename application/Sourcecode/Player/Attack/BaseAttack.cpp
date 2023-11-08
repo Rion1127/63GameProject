@@ -73,6 +73,7 @@ void BaseAttack::SetNextAttack()
 
 	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
 	quaternionIndex_ = 0;
+	oneSwingTimer_ = attackAllTime_.GetTimer();
 }
 
 void BaseAttack::Update()
@@ -199,7 +200,9 @@ void BaseAttack::ColUpdate()
 
 void BaseAttack::QuaternionUpdate()
 {
-	if (attackAllTime_.GetTimer() - quaternionTimer_ > attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame )
+	auto& frame = attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame;
+	auto timer = attackAllTime_.GetTimer() - oneSwingTimer_;
+	if (timer > frame)
 	{
 		if (quaternionIndex_ < attackinput_.attackinfo[index_].quaternion.size() - 1)
 		{

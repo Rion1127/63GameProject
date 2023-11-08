@@ -32,6 +32,7 @@ private:
 	float nextAttackFrame_;
 	float slerpSpeed_;
 	float quaternionTimer_;
+	float oneSwingTimer_;
 
 	Quaternion resultQuaternion_;
 	Quaternion playerAxisY_;
