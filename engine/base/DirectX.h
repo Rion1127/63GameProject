@@ -8,6 +8,12 @@
 #include <d3d12sdklayers.h>
 #include "WinAPI.h"
 #include <chrono>
+
+/**
+ * @file RDirectX.h
+ * @brief DirectX12の初期化や描画を管理しているクラス
+ */
+
 class RDirectX
 {
 private:

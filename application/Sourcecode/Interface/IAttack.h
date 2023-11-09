@@ -9,6 +9,12 @@
 #include "Timer.h"
 #include "GameSpeed.h"
 
+/**
+ * @file IAttack.h
+ * @brief インターフェースクラス
+ * @brief 近接攻撃を作る際に継承するクラス
+ */
+
 enum class AttackType {
 	Normal,
 	Finish
@@ -51,6 +57,7 @@ public:
 	virtual ~IAttack() {};
 	void Update();
 	void DrawCol();
+	void DrawSplinePoint();
 	//lockOnActorへのベクトルを計算する
 	Vector3 CalculateFrontVec();
 	//lockOnActorへ回転させる

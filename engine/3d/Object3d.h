@@ -2,6 +2,12 @@
 #include "REngine.h"
 #include "LightGroup.h"
 #include "Model.h"
+#include "Camera.h"
+
+/**
+ * @file Object3d.h
+ * @brief 読み込んだモデルを描画するクラス
+ */
 
 class Object3d
 {
@@ -10,6 +16,7 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	std::unique_ptr<Model> model_ = nullptr;
 	bool isVisible_ = true;
+	BillBoard billBoard;
 public:
 	WorldTransform WT_;
 public:
@@ -18,7 +25,7 @@ public:
 	//初期化
 	void Init();
 	//更新
-	void Update();
+	void Update(Camera* camera = Camera::scurrent_);
 	//描画
 	void Draw();
 
@@ -30,6 +37,9 @@ public:
 	void SetScale(const Vector3& scale) { WT_.scale_ = scale; }
 	void SetRot(const Vector3& rot) { WT_.rotation_ = rot; }
 	void SetIsVisible(bool flag) { isVisible_ = flag; }
+	void SetShadowOffsetPos(const Vector3& pos) { model_->SetShadowOffsetPos(pos); }
+	void SetShadowAtten(const Vector3& Atten) { model_->SetShadowAtten(Atten); }
+	void SetShadowFactorAngle(const Vector2& FactorAngle) { model_->SetShadowFactorAngle(FactorAngle); }
 public:
 	//ゲッター
 	WorldTransform* GetTransform() { return &WT_; }
