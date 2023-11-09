@@ -177,7 +177,7 @@ void CollisionManager::EnemyToFloor()
 				float dist = enemy->GetCol().center.y - floor->distance;
 				if (enemy->GetCol().radius <= dist)
 				{
-					Vector3 pushBackVec = floor->normal * dist * 0.1f;
+					Vector3 pushBackVec = floor->normal * dist;
 					enemy->GetWorldTransform()->position_ -= pushBackVec;
 				}
 				enemy->ColPosUpdate();
@@ -186,6 +186,7 @@ void CollisionManager::EnemyToFloor()
 				Vector3 pos = { 10,10,10 };
 				if (Sphere2PlaneCol(enemy->GetCol(), *floor, &pos))
 				{
+					pos.y += enemy->GetCol().radius;
 					enemy->GetGravity().SetGrabity({ 0,0,0 });
 					enemy->FloorColision(pos);
 					break;

@@ -242,11 +242,6 @@ void EnemyManager::LockOnSpriteUpdate()
 			lockOnWT.position_.z,
 		};
 
-		if (lockOnEnemy_->GetEnemyType() == EnemyType::Ground)
-		{
-			lockOnWT.position_.y += lockOnWT.scale_.y;
-		}
-
 		lockOnWT.Update();
 		Vector2 pos = GetScreenPos(lockOnWT, *Camera::scurrent_);
 		lockOnSprite_[i]->SetPos(pos);

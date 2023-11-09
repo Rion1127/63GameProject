@@ -66,13 +66,13 @@ void IEnemy::ColPosUpdate()
 
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
-		obj_->GetTransform()->position_.y + obj_->WT_.scale_.y,
+		obj_->GetTransform()->position_.y,
 		obj_->GetTransform()->position_.z,
 	};
 
 	col_.SetPos(colPos);
 
-	col_.radius = obj_->GetTransform()->scale_.x;
+	col_.radius = obj_->GetTransform()->scale_.y;
 }
 
 void IEnemy::Damage(const Vector3& knockVec, int32_t damageValue, float cooltime)
