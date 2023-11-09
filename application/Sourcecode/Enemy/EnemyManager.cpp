@@ -188,7 +188,7 @@ void EnemyManager::DebugUpdate()
 	}
 	if (ImGui::Button("POP_RedNocturne"))
 	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
+		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 4, 0), Vector3(0, Radian(180), 0))));
 	}
 
 	if (ImGui::Button("Reset"))
@@ -238,9 +238,15 @@ void EnemyManager::LockOnSpriteUpdate()
 		WorldTransform lockOnWT = *lockOnEnemy_->GetWorldTransform();
 		lockOnWT.position_ = {
 			lockOnWT.position_.x,
-			lockOnWT.position_.y + lockOnWT.scale_.y,
+			lockOnWT.position_.y,
 			lockOnWT.position_.z,
 		};
+
+		if (lockOnEnemy_->GetEnemyType() == EnemyType::Ground)
+		{
+			lockOnWT.position_.y += lockOnWT.scale_.y;
+		}
+
 		lockOnWT.Update();
 		Vector2 pos = GetScreenPos(lockOnWT, *Camera::scurrent_);
 		lockOnSprite_[i]->SetPos(pos);

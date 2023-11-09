@@ -73,6 +73,7 @@ public:
 	int32_t GetMaxHealth() { return maxHealth_; }
 	IAttack* GetAttack() { return attack_.get(); }
 	std::string GetName() { return name_; }
+	EnemyType GetEnemyType() { return enemyType_; }
 protected:
 	virtual void MoveUpdate() = 0;
 

@@ -20,6 +20,7 @@ EnemyRedNocturne::EnemyRedNocturne(const Vector3& pos, const Vector3& rot) :
 	name_ = "RedNocturne";
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true));
+	obj_->SetShadowOffsetPos(Vector3(0, -1, 0));
 	obj_->SetShadowAtten(Vector3(0.1f, 0.22f, 0));
 	obj_->SetShadowFactorAngle(Vector2(0.1f, 0.5f));
 	knockResist_ = { 1,0,1 };
@@ -212,6 +213,13 @@ void EnemyRedNocturne::KnockBack()
 {
 	//一定時間経てばノック状態からアイドル状態に戻る
 	attack_.reset();
+
+	Vector3 rot = obj_->GetTransform()->rotation_;
+
+	rot.x = Easing::Back::easeOut(0,Radian(-360), actionTimer_.GetTimeRate());
+
+	obj_->GetTransform()->SetRotation(rot);
+
 	if (actionTimer_.GetIsEnd())
 	{
 		state_ = State::Idle;
