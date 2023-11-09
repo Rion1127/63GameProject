@@ -3,13 +3,18 @@
 #include "RRandom.h"
 #include "Util.h"
 
+/**
+ * @file ParticleDash.cpp
+ * @brief 移動している時のパーティクルクラス
+ */
+
 ParticleDash::ParticleDash() :
 	IParticle("Fire"),
 	vertexCount(6)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("MoveSmoke");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 	state_ = PipeLineState::Alpha;
 
 	speed_ = 0.1f;

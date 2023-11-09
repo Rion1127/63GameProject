@@ -1,0 +1,21 @@
+//--AtatckInfo--//
+attackFrame = 15
+gapFrame = 3
+damege = 10
+gravityY = 0.1
+KnockVec 0 0 0
+addVec 0 0 0.1
+deceleration = 0.005
+
+//--SplinePos--//
+TimerType Easing
+EasingType Circ
+EasingTypeInOut In
+SplinePos 0 -1.4 0.2
+SplinePos 0 -0.4 2.2
+SplinePos 0 1.9 1.4
+
+//--Quaternion--//
+flame 18
+Quaternion -0.31 0 0 1
+

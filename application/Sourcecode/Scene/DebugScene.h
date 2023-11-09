@@ -20,6 +20,14 @@
 #include "Object3d.h"
 #include "AssimpObject3D.h"
 #include "AssimpLoader.h"
+
+#include "Line3D.h"
+
+/**
+ * @file DebugScene.h
+ * @brief デバッグ用のシーンクラス
+ */
+
 class DebugScene final :
 	public IScene
 {
@@ -43,8 +51,6 @@ private:
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
 	std::unique_ptr<PauseMenu> pauseMenu_;
 
-	std::shared_ptr<ContinuousEmitter> fireEmitter_;
-
 	AssimpObject3D obj_;
 public:
 	~DebugScene();
@@ -55,7 +61,8 @@ public:
 
 	void Draw()override;
 
-	void DrawPostEffect()override;
+	void DrawRenderTexture()override;
+	void DrawPostEffect() override;
 private:
 	void CameraUpdate();
 

@@ -1,8 +1,11 @@
-
 #include "Util.h"
 #include "Camera.h"
 #include "WorldTransform.h"
 
+/**
+ * @file WorldTransform.cpp
+ * @brief 座標・スケール・回転を管理しているクラス
+ */
 
 WorldTransform::WorldTransform()
 {
@@ -36,7 +39,7 @@ void WorldTransform::AddPosition(float x, float y, float z)
 	position_.z += z;
 }
 
-void WorldTransform::Update(uint32_t isBillboard)
+void WorldTransform::Update(BillBoard isBillboard, Camera* camera)
 {
 	Matrix4 matScale, matRot, matTrans;
 
@@ -71,13 +74,13 @@ void WorldTransform::Update(uint32_t isBillboard)
 	//ワールド行列の合成
 	matWorld_.UnitMatrix();//変形をリセット
 	//ビルボード
-	if (isBillboard == 1)
+	if (isBillboard == BillBoard::BillBoard)
 	{
-		matWorld_ *= Camera::scurrent_->matBillboard_;
+		matWorld_ *= camera->matBillboard_;
 	}
-	else if (isBillboard == 2)
+	else if (isBillboard == BillBoard::AxisYBillBoard)
 	{
-		matWorld_ *= Camera::scurrent_->matBillboardY_;
+		matWorld_ *= camera->matBillboardY_;
 	}
 
 	matWorld_ *= matScale;			//ワールド行列にスケーリングを反映
@@ -93,14 +96,14 @@ void WorldTransform::Update(uint32_t isBillboard)
 
 
 	//定数バッファへデータ転送
-	if (Camera::scurrent_ != nullptr)
+	if (camera != nullptr)
 	{
 		constMapTransform_->mat = matWorld_;
-		constMapTransform_->viewProj = Camera::scurrent_->GetMatView() * Camera::scurrent_->GetMatProjection();
+		constMapTransform_->viewProj = camera->GetMatView() * camera->GetMatProjection();
 		constMapTransform_->cameraPos = {
-			Camera::scurrent_->eye_.x,
-			Camera::scurrent_->eye_.y,
-			Camera::scurrent_->eye_.z
+			camera->eye_.x,
+			camera->eye_.y,
+			camera->eye_.z
 		};
 	}
 }

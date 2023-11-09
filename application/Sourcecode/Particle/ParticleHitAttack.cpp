@@ -4,6 +4,11 @@
 #include "Easing.h"
 #include "ParticleManager.h"
 
+/**
+ * @file ParticleHitAttack.cpp
+ * @brief 攻撃がヒットしたときのパーティクルクラス
+ */
+
 #pragma region ParticleHitAttack
 ParticleHitAttack::ParticleHitAttack() :
 	IParticle("Particle_Depth_False"),
@@ -11,7 +16,7 @@ ParticleHitAttack::ParticleHitAttack() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleHitAttack::Add()
@@ -137,7 +142,7 @@ ParticleHitCircle::ParticleHitCircle() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("HitCircle");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleHitCircle::Add()
@@ -218,7 +223,7 @@ ParticleHitTriangle::ParticleHitTriangle() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Triangle");
-	isBillBoard = false;
+	billBoard = BillBoard::None;
 }
 
 void ParticleHitTriangle::Add()

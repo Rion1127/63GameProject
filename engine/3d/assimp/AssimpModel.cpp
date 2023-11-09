@@ -2,6 +2,11 @@
 #include "Texture.h"
 #include "DirectX.h"
 
+/**
+ * @file AssimpModel.cpp
+ * @brief ボーンや頂点データを管理している
+ */
+
 AssimpModel::AssimpModel()
 {
 }

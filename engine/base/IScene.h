@@ -1,5 +1,11 @@
 #pragma once
 #include <stdint.h>
+
+/**
+ * @file IScene.h
+ * @brief シーンに継承するインターフェースクラス
+ */
+
 class IScene
 {
 public:
@@ -9,6 +15,7 @@ public:
 	virtual void Ini() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void DrawRenderTexture() = 0;
 	virtual void DrawPostEffect() = 0;
 
 	uint32_t GetIsNext() { return isNext_; }

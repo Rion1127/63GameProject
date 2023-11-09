@@ -10,6 +10,11 @@
 #include "AttackJumpShadow.h"
 #include "GameSpeed.h"
 
+/**
+ * @file EnemyShadow.cpp
+ * @brief 地上の敵（シャドウ）のクラス
+ */
+
 EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	IEnemy(EnemyType::Ground, true, 80)
 {
@@ -358,7 +363,7 @@ void EnemyShadow::WanderInit()
 	if (isWanderInit_)
 	{
 		//削除する
-		spline_.DleteAllPoint();
+		spline_.DeleteAllPoint();
 		spline_.Reset();
 		//初期地点を挿入
 		spline_.AddPosition(obj_->WT_.position_, PosState::Start);

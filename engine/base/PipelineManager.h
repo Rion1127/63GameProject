@@ -4,6 +4,11 @@
 #include <string>
 #include <map>
 
+/**
+ * @file PipelineManager.h
+ * @brief パイプラインを生成、管理しているマネージャークラス
+ */
+
 enum TopologyName {
 	POINTLIST = 1,
 	LINELIST = 2,

@@ -7,6 +7,11 @@
 #include "EnemyLoader.h"
 #include "JsonLoader.h"
 
+/**
+ * @file GameScene.cpp
+ * @brief メインのゲームシーンクラス
+ */
+
 GameScene::~GameScene()
 {
 }
@@ -166,6 +171,11 @@ void GameScene::Draw()
 	////GameSpeed::SetEnemySpeed(enemyspeed);
 
 	//ImGui::End();
+}
+
+void GameScene::DrawRenderTexture()
+{
+	
 }
 
 void GameScene::DrawPostEffect()

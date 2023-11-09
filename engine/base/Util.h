@@ -9,6 +9,11 @@
 #include <cassert>
 #include "Camera.h"
 
+/**
+ * @file Util.h
+ * @brief 便利な関数をまとめている
+ */
+
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
@@ -18,7 +23,7 @@ void ShaderCompileFromFile(
 //goalまで値を変化させていく
 void MoveTo(const Vector3& goal, float speed, Vector3& value);
 
-//定数バッファ
+//定数バッファ生成
 template <class MapClass>
 inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 {
@@ -77,3 +82,10 @@ inline std::unique_ptr<T> MakeUnique()
 {
 	return std::move(std::make_unique<T>());
 }
+/// <summary>
+/// 同ディレクトリ内のファイル名を読み込む
+/// </summary>
+/// <param name="dir">ディレクトリ名指定</param>
+/// <param name="extension">拡張子指定</param>
+/// <returns></returns>
+std::vector<std::string> FindFileNames(const std::string& dir, const std::string& extension,bool isExtension = true);

@@ -1,5 +1,11 @@
 #include "PlayerMove.h"
 
+/**
+ * @file PlayerMove.cpp
+ * @brief ステートマシン
+ * @brief プレイヤーの移動している状態
+ */
+
 void PlayerMove::SetUp()
 {
 }

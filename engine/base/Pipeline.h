@@ -6,6 +6,11 @@
 
 #include "DirectX.h"
 
+/**
+ * @file Pipeline.h
+ * @brief パイプラインを使いやすくまとめたクラス
+ */
+
 enum BlendNum {
 	ADD,
 	SUB,
@@ -87,6 +92,7 @@ public:
 	void Setshader(const std::string& fileName, const ShaderType& shadertype);
 
 	void AddrootParams(int32_t addNum);
+	void AddrootParamsNoneTexture(int32_t addNum);
 	void AddrootParamsMultiTexture(int32_t addTexnum, int32_t addNum);
 	void AddInputLayout(const char* semanticName, const DXGI_FORMAT& format, uint32_t index = 0);
 public:

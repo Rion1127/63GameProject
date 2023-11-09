@@ -39,7 +39,7 @@ public:
 
 private:
 	//方向
-	Vector3 dir_ = { 1,0,0 };
+	Vector3 dir_ = { 0,-1,0 };
 	//キャスターとライトの距離
 	float ditanveCasterLight_ = 100.f;
 	//キャスター座標（ワールド座標系）

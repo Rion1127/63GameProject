@@ -3,6 +3,11 @@
 #include "MultiTexture.h"
 #include "LineBlur.h"
 #include <array>
+
+/**
+ * @file CrossFilter.h
+ * @brief 十字に光のぼかしを掛けるポストエフェクト
+ */
 class CrossFilter
 {
 private:

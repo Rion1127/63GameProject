@@ -1,5 +1,10 @@
 #include "Color.h"
 
+/**
+ * @file Color.cpp
+ * @brief 色情報をまとめている
+ */
+
 Color::Color() : r(255), g(255), b(255), a(255)
 {
 }

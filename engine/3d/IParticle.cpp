@@ -2,6 +2,12 @@
 #include "DirectX.h"
 #include "Util.h"
 
+/**
+ * @file IParticle.cpp
+ * @brief インターフェースクラス
+ * @brief パーティクルクラスに継承するクラス
+ */
+
 IParticle::~IParticle() {
 
 }
@@ -43,7 +49,7 @@ void IParticle::Init(int32_t vertexCount)
 	vbView_.SizeInBytes = sizeVB;
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
 
-	isBillBoard = false;
+	billBoard = BillBoard::None;
 }
 
 void IParticle::Update()
@@ -101,7 +107,7 @@ void IParticle::TransferBuff()
 	// 繋がりを解除
 	vertBuff_->Unmap(0, nullptr);
 
-	transform_.Update(isBillBoard);
+	transform_.Update(billBoard);
 
 }
 

@@ -3,13 +3,18 @@
 #include "Easing.h"
 #include "Util.h"
 
+/**
+ * @file ParticleLanding.cpp
+ * @brief 着地時パーティクルクラス
+ */
+
 ParticleLanding::ParticleLanding() :
 	IParticle("Fire"),
 	vertexCount(6)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("MoveSmoke");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 	state_ = PipeLineState::Alpha;
 
 	speed_ = 0.1f;

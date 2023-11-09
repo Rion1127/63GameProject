@@ -2,6 +2,11 @@
 #include <WinUser.h>
 #include <imgui.h>
 
+/**
+ * @file DebugCamera.cpp
+ * @brief デバッグ用のカメラを管理している
+ */
+
 DebugCamera::DebugCamera()
 {
 	mInput_ = MouseInput::GetInstance();
@@ -14,6 +19,8 @@ DebugCamera::DebugCamera()
 	sideVec_ = { 0,0,0 };
 
 	frontdist_ = 50;
+
+	debugCameraMode_ = DebugCameraMode::Normal;
 }
 
 void DebugCamera::Update()
@@ -24,30 +31,6 @@ void DebugCamera::Update()
 		CameraMove();
 		camera_.Update(CameraMode::LookAT);
 	}
-	//ImGui::Begin("debugCamera");
-	//float pos[3] = {
-	//	camera_.up_.x,
-	//	camera_.up_.y,
-	//	camera_.up_.z,
-	//};
-	///*static float target[3] = {
-	//	viewProjection_.target_.x,
-	//	viewProjection_.target_.y,
-	//	viewProjection_.target_.z,
-	//};*/
-	//ImGui::SliderFloat3("up", pos, -200.f, 200.f);
-	///*ImGui::SliderFloat3("target", target, -200.f, 200.f);*/
-
-
-	//ImGui::End();
-
-	/*viewProjection_.eye_.x = pos[0];
-	viewProjection_.eye_.y = pos[1];
-	viewProjection_.eye_.z = pos[2];
-
-	viewProjection_.target_.x = target[0];
-	viewProjection_.target_.y = target[1];
-	viewProjection_.target_.z = target[2];*/
 }
 
 void DebugCamera::CameraMove()
@@ -74,12 +57,20 @@ void DebugCamera::CameraMove()
 
 	//平行移動
 	if (mInput_->IsMouseDown(MOUSE_WHEEL)) {
-		//マウスカーソルを左右に動かしたとき
-		cameraTrans_ -= sideVec_ * speed.x;
-		camera_.target_ -= sideVec_ * speed.x;
-		//上下に動かしたとき
-		cameraTrans_ -= upVec_ * speed.y;
-		camera_.target_ -= upVec_ * speed.y;
+		if (debugCameraMode_ == DebugCameraMode::Normal)
+		{
+			//マウスカーソルを左右に動かしたとき
+			cameraTrans_ -= sideVec_ * speed.x;
+			camera_.target_ -= sideVec_ * speed.x;
+			//上下に動かしたとき
+			cameraTrans_ -= upVec_ * speed.y;
+			camera_.target_ -= upVec_ * speed.y;
+		}
+		else if (debugCameraMode_ == DebugCameraMode::Trans_Zero)
+		{
+			cameraTrans_ = Vector3(0,0,0);
+		}
+		
 	}
 	//拡大縮小
 	else if (!mInput_->IsMouseDown(MOUSE_WHEEL)) {

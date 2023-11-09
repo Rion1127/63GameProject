@@ -1,5 +1,10 @@
 #include "AttackShadow.h"
 
+/**
+ * @file AttackShadow.cpp
+ * @brief シャドウの通常攻撃（前方向）
+ */
+
 AttackShadow::AttackShadow(IActor* selfActor) :
 	IAttack(selfActor, 1, 25, 5, 26)
 {

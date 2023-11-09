@@ -1,5 +1,11 @@
 #pragma once
 #include "IAttack.h"
+
+/**
+ * @file AttackShadow.h
+ * @brief シャドウの通常攻撃（前方向）
+ */
+
 class AttackShadow final :
 	public IAttack
 {

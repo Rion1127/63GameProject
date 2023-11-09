@@ -1,6 +1,12 @@
 #pragma once
 #include "Sprite.h"
 #include <vector>
+
+/**
+ * @file UIOperation.h
+ * @brief 操作UIを描画するクラス
+ */
+
 class UIOperation
 {
 private:

@@ -6,6 +6,11 @@
 #include "Timer.h"
 #include "MagicManager.h"
 
+/**
+ * @file PlayerCommand.h
+ * @brief プレイヤーのコマンドシステムを処理している
+ */
+
 struct CommandSprite
 {
 private:

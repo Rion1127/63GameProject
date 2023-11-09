@@ -1,6 +1,12 @@
 #pragma once
 #include "IParticle.h"
 #include "Timer.h"
+
+/**
+ * @file ParticleWallHit.h
+ * @brief 壁に当たった時のエフェクト
+ */
+
 class ParticleWallHit :
 	public IParticle
 {

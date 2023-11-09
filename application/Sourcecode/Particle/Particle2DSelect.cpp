@@ -1,6 +1,11 @@
 #include "Particle2DSelect.h"
 #include "Util.h"
 
+/**
+ * @file Particle2DSelect.cpp
+ * @brief メニューで現在選択しているカーソルをパーティクル
+ */
+
 Particle2DSelect::Particle2DSelect()
 {
 	sprite_ = std::make_unique<Sprite>();

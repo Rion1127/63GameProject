@@ -3,12 +3,18 @@
 #include "RRandom.h"
 #include "Util.h"
 #include <imgui.h>
+
+/**
+ * @file ParticleTest.cpp
+ * @brief テスト用エフェクトクラス
+ */
+
 ParticleTest::ParticleTest() :
 	vertexCount(16)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("StarParticle");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleTest::Add()

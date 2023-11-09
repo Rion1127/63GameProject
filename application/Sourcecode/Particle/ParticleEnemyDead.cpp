@@ -4,13 +4,18 @@
 #include "Easing.h"
 #include "Util.h"
 
+/**
+ * @file ParticleExplosion.cpp
+ * @brief 敵が死んだときのパーティクルクラス
+ */
+
 #pragma region 煙パーティクル
 ParticleEnemyDead::ParticleEnemyDead() :
 	vertexCount(64), IParticle("Smoke")
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Smoke");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleEnemyDead::Add()
@@ -105,7 +110,7 @@ ParticleHeart::ParticleHeart() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Heart");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 }
 
 void ParticleHeart::Add()

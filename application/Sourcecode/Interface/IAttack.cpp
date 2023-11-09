@@ -1,5 +1,10 @@
 #include "IAttack.h"
 
+/**
+ * @file IAttack.cpp
+ * @brief インターフェースクラス
+ * @brief 近接攻撃を作る際に継承するクラス
+ */
 
 IAttack::IAttack(IActor* selfActor, int32_t colNum,
 	float maxTime, int32_t damage, int32_t damageCoolTime, AttackType attackType) :
@@ -48,6 +53,11 @@ void IAttack::DrawCol()
 	{
 		col->colObj_.Draw();
 	}
+}
+
+void IAttack::DrawSplinePoint()
+{
+	spline_.DrawDebug();
 }
 
 Vector3 IAttack::CalculateFrontVec()

@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerMagic.h
+ * @brief ステートマシン
+ * @brief プレイヤーが攻撃（魔法）している状態
+ */
+
 class Player;
 
 class PlayerMagic :

@@ -1,6 +1,11 @@
 #include "PlayerGauge.h"
 #include "Easing.h"
 
+/**
+ * @file PlayerGauge.cpp
+ * @brief HP・MPゲージを描画するクラス
+ */
+
 #pragma region HPゲージ
 PlayerHPGauge::PlayerHPGauge() :
 	IGauge(Color(50.f, 205.f, 50.f, 255.f))

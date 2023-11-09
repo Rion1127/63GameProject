@@ -1,12 +1,17 @@
 #include "IBullet.h"
 
+/**
+ * @file IBullet.cpp
+ * @brief インターフェースクラス
+ * @brief 弾・遠距離魔法を作る際に継承するクラス
+ */
 
-IBullet::IBullet(IActor* selfActor, int32_t maxTime, int32_t damage, int32_t damageCoolTime, int32_t costMP) :
+IBullet::IBullet(IActor* selfActor, int32_t maxTime, int32_t damage, float damageCoolTime, int32_t costMP) :
 	selfActor_(selfActor)
 {
 
 	attackCol_ = std::move(std::make_unique<AttackCol>());
-	attackCol_->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false));
+	attackCol_->colObj_.SetModel(Model::CreateOBJ_uniptr("sphere", false,false));
 	attackCol_->colObj_.SetAmbient("sphere", { 1.0f, 0, 0 });
 	attackCol_->colObj_.SetIsVisible(false);
 	attackCol_->damageCoolTime = damageCoolTime;

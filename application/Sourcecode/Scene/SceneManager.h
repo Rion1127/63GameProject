@@ -8,12 +8,18 @@
 #include "Timer.h"
 #include "ParticleManager.h"
 
+/**
+ * @file SceneManager.cpp
+ * @brief シーンを管理するクラス
+ */
 
 enum class SceneName {
 	Title,
 	Game,
 	GameOver,
 	GameClear,
+	Debug,
+	AttackEditor,
 	None
 };
 
@@ -31,6 +37,7 @@ public:
 	static void Update();
 	static void Draw();
 	static void DrawPostEffect();
+	static void DrawRenderTexture();
 
 	template <class NextScene>
 	static inline void Transition() {
@@ -42,6 +49,7 @@ public:
 	static void SetChangeStart(const SceneName sceneName);
 public:
 	static bool GetIsSetNext() { return sisSetNext_; }
+	static SceneName GetSceneName() { return ssceneName_; }
 private:
 	static void SceneChange();
 };

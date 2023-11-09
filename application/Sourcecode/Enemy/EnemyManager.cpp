@@ -9,6 +9,11 @@
 #include "IBullet.h"
 #include "SoundVolume.h"
 
+/**
+ * @file EnemyManager.cpp
+ * @brief 全ての敵を管理するクラス
+ */
+
 EnemyManager::EnemyManager()
 {
 	lockOnobjTimer_.SetLimitTime(360);
@@ -29,41 +34,6 @@ void EnemyManager::PreUpdate()
 	lockOnEnemy_ = nullptr;
 #ifdef _DEBUG
 
-	ImGui::Begin("EnemyManager");
-
-	Vector3 popPos;
-
-	static float dragPos[3] = {};
-
-	ImGui::DragFloat3("popPos", dragPos, 0.1f, -30, 30);
-
-	popPos = { dragPos[0],dragPos[1],dragPos[2] };
-
-	if (ImGui::Button("POP_Dummy"))
-	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(popPos)));
-	}
-	if (ImGui::Button("AirDummy"))
-	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(0, 3, 0))));
-	}
-	if (ImGui::Button("POP_EnemyShadow"))
-	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
-	}
-	if (ImGui::Button("POP_RedNocturne"))
-	{
-		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
-	}
-
-	if (ImGui::Button("Reset"))
-	{
-		enemys_.clear();
-		lockOnEnemy_ = nullptr;
-		player_->SetLockOnEnemy(lockOnEnemy_);
-		player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
-	}
-	ImGui::End();
 #endif // _DEBUG
 
 	HitStopUpdate();
@@ -189,6 +159,46 @@ void EnemyManager::Reset()
 {
 	enemys_.clear();
 	lockOnEnemy_ = nullptr;
+}
+
+void EnemyManager::DebugUpdate()
+{
+
+	ImGui::Begin("EnemyManager");
+
+	Vector3 popPos;
+
+	static float dragPos[3] = {};
+
+	ImGui::DragFloat3("popPos", dragPos, 0.1f, -30, 30);
+
+	popPos = { dragPos[0],dragPos[1],dragPos[2] };
+
+	if (ImGui::Button("POP_Dummy"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyDummy>(popPos)));
+	}
+	if (ImGui::Button("AirDummy"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyAirDummy>(Vector3(0, 3, 0))));
+	}
+	if (ImGui::Button("POP_EnemyShadow"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyShadow>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
+	}
+	if (ImGui::Button("POP_RedNocturne"))
+	{
+		enemys_.emplace_back(std::move(std::make_unique<EnemyRedNocturne>(Vector3(0, 3, 0), Vector3(0, Radian(180), 0))));
+	}
+
+	if (ImGui::Button("Reset"))
+	{
+		enemys_.clear();
+		lockOnEnemy_ = nullptr;
+		player_->SetLockOnEnemy(lockOnEnemy_);
+		player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
+	}
+	ImGui::End();
 }
 
 void EnemyManager::LockOnSpriteUpdate()

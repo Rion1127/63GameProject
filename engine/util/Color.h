@@ -1,5 +1,11 @@
 #pragma once
 #include "Vector3.h"
+
+/**
+ * @file Color.h
+ * @brief 色情報をまとめている
+ */
+
 class Color
 {
 public:

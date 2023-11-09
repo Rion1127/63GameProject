@@ -4,6 +4,11 @@
 #include "RRandom.h"
 #include "ConfigMenu.h"
 
+/**
+ * @file GameCamera.cpp
+ * @brief メインカメラを管理するクラス
+ */
+
 GameCamera::GameCamera()
 {
 	camera_ = std::move(std::make_unique<Camera>());
@@ -100,26 +105,6 @@ void GameCamera::UpdateCameraPos()
 	float minGamecameraY = 2.5f;
 
 	camera_->eye_.y = Clamp(camera_->eye_.y, minGamecameraY, maxGamecameraY);
-
-#ifdef _DEBUG
-	ImGui::Begin("GameCamera");
-	/* ここに追加したいGUIを書く */
-	// Menu Bar
-	if (ImGui::CollapsingHeader("Posision"))
-	{
-		static float x = camera_->eye_.x;
-		static float y = camera_->eye_.y;
-		static float z = camera_->eye_.z;
-		ImGui::SliderFloat("pos.x", &camera_->eye_.x, 0.0f, 2000.0f, "x = %.3f");
-		ImGui::SliderFloat("pos.y", &camera_->eye_.y, 0.0f, 2000.0f, "y = %.3f");
-		ImGui::SliderFloat("pos.z", &camera_->eye_.z, 0.0f, 2000.0f, "z = %.3f");
-	}
-
-	ImGui::SliderFloat("moveDist.x", &moveDist.x, 0.0f, 2000.0f, "x = %.3f");
-	ImGui::SliderFloat("moveDist.y", &moveDist.y, 0.0f, 2000.0f, "y = %.3f");
-
-	ImGui::End();
-#endif // _DEBUG
 }
 
 void GameCamera::UpdateLookAT()
@@ -293,5 +278,26 @@ void GameCamera::Shake()
 		RRandom::RandF(-power, power),
 	};
 	
+}
+
+void GameCamera::DrawImGui()
+{
+	ImGui::Begin("GameCamera");
+	/* ここに追加したいGUIを書く */
+	// Menu Bar
+	if (ImGui::CollapsingHeader("Posision"))
+	{
+		static float x = camera_->eye_.x;
+		static float y = camera_->eye_.y;
+		static float z = camera_->eye_.z;
+		ImGui::SliderFloat("pos.x", &camera_->eye_.x, 0.0f, 2000.0f, "x = %.3f");
+		ImGui::SliderFloat("pos.y", &camera_->eye_.y, 0.0f, 2000.0f, "y = %.3f");
+		ImGui::SliderFloat("pos.z", &camera_->eye_.z, 0.0f, 2000.0f, "z = %.3f");
+	}
+
+	ImGui::SliderFloat("moveDist.x", &moveDist.x, 0.0f, 2000.0f, "x = %.3f");
+	ImGui::SliderFloat("moveDist.y", &moveDist.y, 0.0f, 2000.0f, "y = %.3f");
+
+	ImGui::End();
 }
 

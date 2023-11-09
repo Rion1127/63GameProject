@@ -2,6 +2,11 @@
 #include "IParticle.h"
 #include <vector>
 
+/**
+ * @file ParticleExplosion.h
+ * @brief フィニッシュ攻撃のパーティクルクラス
+ */
+
 class ParticleSmallExplosion :
 	public IParticle
 {

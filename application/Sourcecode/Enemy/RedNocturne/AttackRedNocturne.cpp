@@ -2,6 +2,11 @@
 #include "ParticleManager.h"
 #include "ParticleFire.h"
 
+/**
+ * @file AttackRedNocturne.cpp
+ * @brief レッドノクターンの遠距離攻撃（炎を飛ばす）
+ */
+
 AttackRedNocturne::AttackRedNocturne(IActor* selfActor) :
 	IBullet(selfActor,120, 5, 120)
 {

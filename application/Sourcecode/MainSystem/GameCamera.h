@@ -3,6 +3,11 @@
 #include  "Player.h"
 #include "ColosseumSystem.h"
 
+/**
+ * @file GameCamera.h
+ * @brief メインカメラを管理するクラス
+ */
+
 struct DeadZoneValue {
 	int32_t x;
 	int32_t y;
@@ -66,6 +71,7 @@ public:
 	void UpdateLookAT();
 	void Reset();
 	void Shake();
+	void DrawImGui();
 private:
 	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos, const Vector2& winSize, IEnemy* enemy);
 public:

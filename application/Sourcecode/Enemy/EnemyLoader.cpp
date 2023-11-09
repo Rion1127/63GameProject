@@ -5,6 +5,11 @@
 #include "EnemyShadow.h"
 #include "EnemyRedNocturne.h"
 
+/**
+ * @file EnemyLoader.cpp
+ * @brief csvファイルから敵の情報を読み込むクラス
+ */
+
 EnemyLoader* EnemyLoader::GetInstance()
 {
 	static EnemyLoader instance;

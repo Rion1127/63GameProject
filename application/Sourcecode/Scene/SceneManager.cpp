@@ -7,6 +7,12 @@
 #include "DebugScene.h"
 #include "TitleScene.h"
 #include "GameOverScene.h"
+#include "AttackEditorScene.h"
+
+/**
+ * @file SceneManager.cpp
+ * @brief シーンを管理するクラス
+ */
 
 std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
@@ -45,18 +51,27 @@ void SceneManager::Update()
 		if (Key::TriggerKey(DIK_1))
 		{
 			Transition<TitleScene>();
+			ssceneName_ = SceneName::Title;
 		}
 		if (Key::TriggerKey(DIK_2))
 		{
 			Transition<GameScene>();
+			ssceneName_ = SceneName::Game;
 		}
 		if (Key::TriggerKey(DIK_3))
 		{
 			Transition<GameOverScene>();
+			ssceneName_ = SceneName::GameOver;
 		}
 		if (Key::TriggerKey(DIK_0))
 		{
 			Transition<DebugScene>();
+			ssceneName_ = SceneName::Debug;
+		}
+		if (Key::TriggerKey(DIK_9))
+		{
+			Transition<AttackEditorScene>();
+			ssceneName_ = SceneName::AttackEditor;
 		}
 	}
 
@@ -102,6 +117,11 @@ void SceneManager::Draw()
 void SceneManager::DrawPostEffect()
 {
 	scurrentScene_->DrawPostEffect();
+}
+
+void SceneManager::DrawRenderTexture()
+{
+	scurrentScene_->DrawRenderTexture();
 }
 
 void SceneManager::SceneChange()

@@ -1,5 +1,11 @@
 #include "PlayerGuard.h"
 
+/**
+ * @file PlayerGuard.cpp
+ * @brief ステートマシン
+ * @brief プレイヤーが防御している状態
+ */
+
 void PlayerGuard::SetUp()
 {
 }

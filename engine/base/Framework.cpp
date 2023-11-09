@@ -3,6 +3,11 @@
 #include "LightGroup.h"
 #include "GameSpeed.h"
 
+/**
+ * @file Framework.ｃｐｐ
+ * @brief エンジン部分の処理の流れをまとめたクラス
+ */
+
 void Framework::Init()
 {
 	//winAPI初期化
@@ -30,10 +35,18 @@ void Framework::Init()
 
 	DirectionalLight::StaticInit();
 	LightGroup::StaticInit();
+	Spline::StaticInit();
 
 	loadManager_.LoadAllResources();
 
 	bloom_ = std::make_unique<Bloom>();
+	test_ = std::make_unique<HighLumi>();
+	test_->SetVerTex(IPostEffect::VertName::LB,Vector2(-1.0f,0.5f));
+	test_->SetVerTex(IPostEffect::VertName::LT,Vector2(-1.0f,1.0f));
+	test_->SetVerTex(IPostEffect::VertName::RB,Vector2(-0.5f,0.5f));
+	test_->SetVerTex(IPostEffect::VertName::RT,Vector2(-0.5f,1.0f));
+	isPostEffect_ = true;
+
 }
 
 void Framework::Finalize()
@@ -64,6 +77,10 @@ void Framework::Update()
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
 	//ImGui::ShowDemoWindow();
+	if (ImGui::Button("PostEffect"))
+	{
+		isPostEffect_ = (isPostEffect_ == true) ? false : true;
+	}
 #endif // DEBUG
 }
 
@@ -87,12 +104,28 @@ void Framework::Run()
 
 void Framework::Draw()
 {
-	bloom_->PreDraw();
+	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
+	{
+		test_->PreDrawScene();
+		SceneManager::DrawRenderTexture();
+		test_->PostDrawScene();
+	}
+
+	if(isPostEffect_) bloom_->PreDraw();
 	//描画コマンド
 	RDirectX::GetInstance()->PreDraw();
+
+	
 	//ゲームシーン描画
-	//SceneManager::Draw();
-	bloom_->Draw();
+	if (isPostEffect_ == false)SceneManager::Draw();
+	if (isPostEffect_)bloom_->Draw();
+
+	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
+	{
+		test_->DrawImGui();
+		test_->Draw("PostEffect");
+	}
+	
 	//imgui終了
 	ImGuiManager::Getinstance()->End();
 	//imgui描画

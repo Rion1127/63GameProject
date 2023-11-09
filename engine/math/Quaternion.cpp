@@ -1,8 +1,13 @@
 #include "Quaternion.h"
 #include <cmath>
 
+/**
+ * @file Quaternion.cpp
+ * @brief クォータニオンを使いやすいようにまとめたクラス
+ */
+
 //単位Quaternionを返す
-Quaternion Quaternion::IdentityQuaternion()
+Quaternion IdentityQuaternion()
 {
 	Quaternion identity = { 0,0,0,1 };
 
@@ -147,6 +152,19 @@ bool Quaternion::operator==(const Quaternion& other) const
 		y == other.y &&
 		z == other.z &&
 		w == other.w)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Quaternion::operator!=(const Quaternion& other) const
+{
+	if (x != other.x &&
+		y != other.y &&
+		z != other.z &&
+		w != other.w)
 	{
 		return true;
 	}

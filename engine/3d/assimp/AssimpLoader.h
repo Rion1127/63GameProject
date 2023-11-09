@@ -5,6 +5,11 @@
 #include <string>
 #include <assimp/matrix4x4.h>
 
+/**
+ * @file AssimpLoader.h
+ * @brief 'assimp'を用いてファイルを読み込むクラス
+ */
+
 struct aiMesh;
 struct aiMaterial;
 struct aiNode;

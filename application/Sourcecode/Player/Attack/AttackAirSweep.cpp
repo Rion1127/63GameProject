@@ -19,6 +19,10 @@ void AttackAirSweep::Init()
 	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
 	colRadius_ = 1.8f;
 	rotateSpeed_ = 1.7f;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
 
 void AttackAirSweep::MoveUpdate()

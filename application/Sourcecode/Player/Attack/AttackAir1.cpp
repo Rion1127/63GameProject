@@ -13,7 +13,7 @@ void AttackAir1::Init()
 		selfActor_->GetGravity()->SetGrabity({ 0,0.1f,0 });
 	}
 
-	spline_.SetLimitTime(attackInfo_.maxTime - 15);
+	spline_.SetLimitTime(attackInfo_.maxTime);
 	//スプライン曲線計算
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.5f);
@@ -33,19 +33,22 @@ void AttackAir1::Init()
 
 	Vector3 playerFrontPos =
 		selfActor_->GetWorldTransform()->position_ + frontVec.normalize() * 2.5f;
-	spline_.AddPosition(playerFrontPos, PosState::End);
 	attackVec.push_back(playerFrontPos);
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
 
 	attackCol_.at(0)->col_.SetPos(playerUpPos);
-	attackCol_.at(0)->col_.radius = 0.8f;
+	attackCol_.at(0)->col_.radius = 1.0f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
 	attackCol_.at(0)->knockPower = { 0.3f,0.3f,0.3f };
 	attackCol_.at(0)->knockVecY = 0.5f;
 	swordPos_ = attackCol_.at(0)->col_.center;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::InOut);
 }
 
 void AttackAir1::MoveUpdate()

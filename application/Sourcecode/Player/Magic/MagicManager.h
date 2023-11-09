@@ -5,6 +5,11 @@
 #include <unordered_map>
 #include "MagicFire.h"
 
+/**
+ * @file MagicManager.h
+ * @brief プレイヤーの魔法を管理している
+ */
+
 class Player;
 
 enum class MagicType {

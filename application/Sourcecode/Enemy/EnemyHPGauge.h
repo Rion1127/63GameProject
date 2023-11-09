@@ -1,6 +1,12 @@
 #pragma once
 #include "Sprite.h"
 #include "IEnemy.h"
+
+/**
+ * @file EnemyHPGauge.h
+ * @brief 敵のHPを表示するクラス
+ */
+
 class EnemyHPGauge
 {
 private:

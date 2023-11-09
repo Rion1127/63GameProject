@@ -1,6 +1,11 @@
 #pragma once
 #include "IPostEffect.h"
 
+/**
+ * @file LineBlur.h
+ * @brief ラインブラーを掛けるクラス
+ */
+
 class LineBlur final :
 	public IPostEffect
 {

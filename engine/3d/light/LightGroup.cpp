@@ -25,6 +25,7 @@ void LightGroup::Init()
 
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+
 	// リソース設定
 	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
@@ -215,41 +216,41 @@ void LightGroup::SetSpotLightFactorAngle(uint32_t index, const Vector2& lightFac
 #pragma region 丸影
 void LightGroup::SetCircleShadowActive(uint32_t index, bool active)
 {
-	assert(0 <= index && index < sSpotLightNum);
+	assert(0 <= index && index < sCircleShadowNum);
 
 	circleShadows_[index].SetActive(active);
 }
 void LightGroup::SetCircleShadowCasterPos(uint32_t index, const Vector3& casterPos)
 {
-	assert(0 <= index && index < sSpotLightNum);
+	assert(0 <= index && index < sCircleShadowNum);
 
 	circleShadows_[index].SetCasterPos(casterPos);
 	dirty_ = true;
 }
 void LightGroup::SetCircleShadowDir(uint32_t index, const Vector3& lightdir)
 {
-	assert(0 <= index && index < sSpotLightNum);
+	assert(0 <= index && index < sCircleShadowNum);
 
 	circleShadows_[index].SetDir(lightdir);
 	dirty_ = true;
 }
 void LightGroup::SetCircleShadowDistanceCasterLight(uint32_t index, float ditanceCasterLight)
 {
-	assert(0 <= index && index < sSpotLightNum);
+	assert(0 <= index && index < sCircleShadowNum);
 
 	circleShadows_[index].SetDistanceCasterLight(ditanceCasterLight);
 	dirty_ = true;
 }
 void LightGroup::SetCircleShadowAtten(uint32_t index, const Vector3& lightAtten)
 {
-	assert(0 <= index && index < sSpotLightNum);
+	assert(0 <= index && index < sCircleShadowNum);
 
 	circleShadows_[index].SetAtten(lightAtten);
 	dirty_ = true;
 }
 void LightGroup::SetCircleShadowFactorAngle(uint32_t index, const Vector2& lightFactorAngle)
 {
-	assert(0 <= index && index < sSpotLightNum);
+	assert(0 <= index && index < sCircleShadowNum);
 
 	circleShadows_[index].SetFactorAngle(lightFactorAngle);
 	dirty_ = true;
@@ -284,4 +285,14 @@ void LightGroup::Draw(UINT rootParameterIndex)
 	//定数バッファビューをセット
 	RDirectX::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
 		constBuff_->GetGPUVirtualAddress());
+}
+
+uint32_t LightGroup::GetIsNotAvtiveCircleShadow()
+{
+	for (uint32_t i = 0; i < sCircleShadowNum; i++) {
+		if (circleShadows_[i].GetActive() == false) {
+			return i;
+		}
+	}
+	return 0;
 }

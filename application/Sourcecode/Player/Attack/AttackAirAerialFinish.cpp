@@ -18,6 +18,10 @@ void AttackAirAerialFinish::Init()
 
 	FirstAttackInit();
 	index_ = 0;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Sine);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::InOut);
 }
 
 void AttackAirAerialFinish::MoveUpdate()
@@ -56,7 +60,7 @@ void AttackAirAerialFinish::MoveUpdate()
 		damegeCooltime_++;
 		swordPos_ = attackCol_.at(0)->col_.center;
 		attackCol_.at(0)->col_.center = spline_.GetNowPoint();
-		float limitTime = spline_.GetTimer().GetLimitTimer() * (float)(spline_.GetsplinePos().size());
+		float limitTime = spline_.GetMaxTime();
 		float nowTime = damegeCooltime_;
 		attackCol_.at(0)->damageCoolTime = (int32_t)(limitTime - nowTime);
 		selfActor_->GetGravity()->SetGrabity({ 0,0,0 });
@@ -69,6 +73,7 @@ void AttackAirAerialFinish::MoveUpdate()
 
 void AttackAirAerialFinish::FirstAttackInit()
 {
+	spline_.Reset();
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
@@ -115,7 +120,7 @@ void AttackAirAerialFinish::FirstAttackInit()
 	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime((float)splineTime);
+	spline_.SetMaxTime((float)splineTime * 3.f);
 
 	attackCol_.at(0)->col_.center = fourthPos;
 	swordPos_ = attackCol_.at(0)->col_.center;
@@ -127,6 +132,7 @@ void AttackAirAerialFinish::FirstAttackInit()
 
 void AttackAirAerialFinish::SecondAttackInit()
 {
+	spline_.Reset();
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
@@ -170,7 +176,7 @@ void AttackAirAerialFinish::SecondAttackInit()
 	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime((float)splineTime);
+	spline_.SetMaxTime((float)splineTime * 3.f);
 
 	swordPos_ = attackCol_.at(0)->col_.center;
 
@@ -181,6 +187,7 @@ void AttackAirAerialFinish::SecondAttackInit()
 
 void AttackAirAerialFinish::ThirdAttackInit()
 {
+	spline_.Reset();
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
@@ -212,7 +219,7 @@ void AttackAirAerialFinish::ThirdAttackInit()
 	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime((float)splineTime);
+	spline_.SetMaxTime((float)splineTime * 4.5f);
 
 	swordPos_ = attackCol_.at(0)->col_.center;
 
@@ -223,6 +230,7 @@ void AttackAirAerialFinish::ThirdAttackInit()
 
 void AttackAirAerialFinish::FourthAttackInit()
 {
+	spline_.Reset();
 	attackCol_.at(0)->col_.radius = 0.8f;
 	attackCol_.at(0)->damage = 10;
 	//ノックバック力
@@ -267,7 +275,7 @@ void AttackAirAerialFinish::FourthAttackInit()
 	int32_t splineTime = (int32_t)(attackInfo_.maxTime / 4);
 	int32_t splineSize = ((uint32_t)spline_.GetsplinePos().size() - 2);
 	splineTime /= splineSize;
-	spline_.SetLimitTime((float)splineTime);
+	spline_.SetMaxTime((float)splineTime * 5.f);
 
 	swordPos_ = attackCol_.at(0)->col_.center;
 

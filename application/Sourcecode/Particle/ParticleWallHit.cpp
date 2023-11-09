@@ -1,13 +1,18 @@
 #include "ParticleWallHit.h"
 #include "Easing.h"
 
+/**
+ * @file ParticleWallHit.cpp
+ * @brief 壁に当たった時のエフェクト
+ */
+
 ParticleWallHit::ParticleWallHit() :
 	IParticle(),
 	vertexCount(1)
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Circle");
-	isBillBoard = false;
+	billBoard = BillBoard::None;
 }
 
 void ParticleWallHit::Add()

@@ -9,6 +9,11 @@
 #include "Texture.h"
 #include "Color.h"
 
+/**
+ * @file ParticleTrail.h
+ * @brief 軌道エフェクトを作るクラス
+ */
+
 class ParticleTrail
 {
 private:
@@ -67,6 +72,7 @@ public:
 private:
 	//データ転送
 	void TransferBuff();
+	void CreateCurveVertex(std::vector<PosBuffer>& usedPosArray);
 public:
 	Color GetColor() { return color_; }
 };

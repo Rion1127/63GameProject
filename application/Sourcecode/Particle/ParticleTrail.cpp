@@ -5,6 +5,11 @@
 #include <imgui.h>
 #include "Util.h"
 
+/**
+ * @file ParticleTrail.cpp
+ * @brief 軌道エフェクトを作るクラス
+ */
+
 ParticleTrail::ParticleTrail(uint32_t vertSize) :
 	vertSize_(vertSize)
 {
@@ -162,4 +167,9 @@ void ParticleTrail::TransferBuff()
 	std::copy(vertex_.begin(), vertex_.end(), vertMap);
 
 	constMapColor_->color = color_ / 255.f;
+}
+
+void ParticleTrail::CreateCurveVertex(std::vector<PosBuffer>& usedPosArray)
+{
+	usedPosArray;
 }

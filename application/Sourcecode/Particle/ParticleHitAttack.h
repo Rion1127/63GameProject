@@ -1,6 +1,12 @@
 #pragma once
 #include "IParticle.h"
 #include "Timer.h"
+
+/**
+ * @file ParticleHitAttack.h
+ * @brief 攻撃がヒットしたときのパーティクルクラス
+ */
+
 class ParticleHitAttack final :
 	public IParticle
 {

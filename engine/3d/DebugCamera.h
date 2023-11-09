@@ -2,6 +2,17 @@
 #include "Vector3.h"
 #include "mInput.h"
 #include "Camera.h"
+
+/**
+ * @file DebugCamera.h
+ * @brief デバッグ用のカメラを管理している
+ */
+
+enum class DebugCameraMode {
+	Normal,
+	Trans_Zero
+};
+
 class DebugCamera
 {
 private:
@@ -19,6 +30,9 @@ private:
 	Vector3 upVec_{};
 
 	float frontdist_;
+
+	DebugCameraMode debugCameraMode_;
+
 public:
 	DebugCamera();
 
@@ -27,5 +41,8 @@ private:
 	void CameraMove();
 public:
 	Camera* GetCamera() { return &camera_; }
+public:
+	void SetDebugCameraMode(DebugCameraMode mode) { debugCameraMode_ = mode; }
+	void SetFrontDist(float value) { frontdist_ = value; }
 };
 

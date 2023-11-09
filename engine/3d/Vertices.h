@@ -9,6 +9,11 @@
 #include <array>
 #include "myMath.h"
 
+/**
+ * @file Vertices.h
+ * @brief 頂点データを管理しているクラス
+ */
+
 class Vertices
 {
 public:

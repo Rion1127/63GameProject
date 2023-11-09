@@ -1,6 +1,12 @@
 #pragma once
 #include "Sprite.h"
 #include "Timer.h"
+
+/**
+ * @file Particle2DSelect.h
+ * @brief メニューで現在選択しているカーソルをパーティクル
+ */
+
 class Particle2DSelect
 {
 private:

@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerMove.h
+ * @brief ステートマシン
+ * @brief プレイヤーの移動している状態
+ */
+
 class Player;
 
 class PlayerMove :

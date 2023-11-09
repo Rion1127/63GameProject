@@ -1,6 +1,12 @@
 #pragma once
 #include "IEnemy.h"
 #include "IParticle.h"
+
+/**
+ * @file EnemyRedNocturne.h
+ * @brief 空中の敵（レッドノクターン）のクラス
+ */
+
 class EnemyRedNocturne :
 	public IEnemy
 {

@@ -3,6 +3,11 @@
 #include "Easing.h"
 #include "Util.h"
 
+/**
+ * @file ParticleHitAttack.cpp
+ * @brief 火のパーティクルクラス
+ */
+
 #pragma region 炎エフェクト
 ParticleFire::ParticleFire() :
 	IParticle("Fire"),
@@ -10,7 +15,7 @@ ParticleFire::ParticleFire() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("Particle");
-	isBillBoard = true;
+	billBoard = BillBoard::BillBoard;
 	state_ = PipeLineState::Add;
 }
 
@@ -98,7 +103,7 @@ ParticleFireCircle::ParticleFireCircle() :
 {
 	Init(vertexCount);
 	texture = *TextureManager::GetInstance()->GetTexture("FireCircle");
-	isBillBoard = false;
+	billBoard = BillBoard::None;
 	state_ = PipeLineState::Add;
 }
 

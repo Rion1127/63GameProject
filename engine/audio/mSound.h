@@ -8,6 +8,11 @@
 #include <memory>
 #include <vector>
 
+/**
+ * @file mSound.h
+ * @brief サウンドの読み込み・再生の機能を持ったクラス
+ */
+
 typedef std::string SoundKey;
 
 struct ChunkHeader

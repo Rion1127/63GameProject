@@ -1,5 +1,11 @@
 #pragma once
 #include "IParticle.h"
+
+/**
+ * @file ParticleLanding.h
+ * @brief 着地時パーティクルクラス
+ */
+
 class ParticleLanding :
     public IParticle
 {

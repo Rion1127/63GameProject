@@ -4,6 +4,12 @@
 #include "SceneManager.h"
 #include "GameScene.h"
 #include "SoundVolume.h"
+
+/**
+ * @file GameOverScene.cpp
+ * @brief ゲームオーバーシーンクラス
+ */
+
 GameOverScene::~GameOverScene()
 {
 }
@@ -109,6 +115,10 @@ void GameOverScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 
+}
+
+void GameOverScene::DrawRenderTexture()
+{
 }
 
 void GameOverScene::DrawPostEffect()

@@ -1,10 +1,19 @@
 #include "DodgeRoll.h"
 #include "Util.h"
 
-void DodgeRoll::Begin(const Vector2& frontVec)
+/**
+ * @file DodgeRoll.cpp
+ * @brief プレイヤーの回避の処理をしている
+ */
+
+DodgeRoll::DodgeRoll()
 {
 	speed_ = 0.5f;
 	dodgetimer_.SetLimitTime(30);
+}
+
+void DodgeRoll::Begin(const Vector2& frontVec)
+{
 	dodgetimer_.Reset();
 	dodgeVec_ = {
 		frontVec.x * speed_,

@@ -1,5 +1,11 @@
 #pragma once
 #include "Vector2.h"
+
+/**
+ * @file Vector3.h
+ * @brief Vector3に関することをまとめたクラス
+ */
+
 class Vector3
 {
 public:
@@ -34,6 +40,8 @@ public:
 
 	Vector3& operator+=(const Vector2& v);
 	Vector3& operator-=(const Vector2& v);
+
+	bool operator!=(const Vector3& v);
 };
 
 //2項演算子オーバーロード

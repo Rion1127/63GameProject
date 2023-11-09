@@ -2,7 +2,11 @@
 #include "Game.h"
 #include "Framework.h"
 
-// Windowsアプリでのエントリーポイント(main関数)
+/**
+ * @file main.cpp
+ * @brief Windowsアプリでのエントリーポイント(main関数)
+ */
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	std::unique_ptr<Framework> game = std::make_unique<Game>();

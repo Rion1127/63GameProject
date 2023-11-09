@@ -4,6 +4,11 @@
 #include "MultiTexture.h"
 #include "HighLumi.h"
 
+/**
+ * @file Bloom.h
+ * @brief 画面の白い部分に光のフリンジを追加するポストエフェクト
+ */
+
 class Bloom {
 private:
 	std::unique_ptr<HighLumi> highLumi_;

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="application\Sourcecode\AttackEditor.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\HitStop.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp" />
@@ -60,6 +61,7 @@
     <ClCompile Include="application\Sourcecode\Player\Action\DodgeRoll.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Action\Guard.cpp" />
     <ClCompile Include="application\Sourcecode\Interface\IAttack.cpp" />
+    <ClCompile Include="application\Sourcecode\Player\Attack\BaseAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerAirAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerDogeRoll.cpp" />
@@ -77,6 +79,7 @@
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMagic.cpp" />
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMove.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\AttackEditorScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameOverScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp" />
@@ -89,9 +92,7 @@
     <ClCompile Include="application\Sourcecode\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
-    <ClCompile Include="application\Sourcecode\Stage\Floor.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
-    <ClCompile Include="application\Sourcecode\UI\UIMp.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="engine\3d\IParticle.cpp" />
     <ClCompile Include="engine\3d\light\CircleShadow.cpp" />
     <ClCompile Include="engine\3d\light\LightManager.cpp" />
+    <ClCompile Include="engine\3d\Line3D.cpp" />
     <ClCompile Include="engine\3d\Model.cpp" />
     <ClCompile Include="engine\math\Collision.cpp" />
     <ClCompile Include="engine\3d\DebugCamera.cpp" />
@@ -111,7 +113,7 @@
     <ClCompile Include="engine\base\IScene.cpp" />
     <ClCompile Include="engine\base\Framework.cpp" />
     <ClCompile Include="engine\base\Game.cpp" />
-    <ClCompile Include="engine\external\ImGuiManager.cpp" />
+    <ClCompile Include="engine\util\ImGuiManager.cpp" />
     <ClCompile Include="engine\3d\light\DirectionalLight.cpp" />
     <ClCompile Include="engine\3d\light\LightGroup.cpp" />
     <ClCompile Include="engine\input\mInput.cpp" />
@@ -125,7 +127,7 @@
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\3d\light\SpotLight.cpp" />
     <ClCompile Include="engine\3d\Object3d.cpp" />
-    <ClCompile Include="engine\external\Texture.cpp" />
+    <ClCompile Include="engine\util\Texture.cpp" />
     <ClCompile Include="engine\base\Util.cpp" />
     <ClCompile Include="engine\math\Spline.cpp" />
     <ClCompile Include="engine\math\Vector2.cpp" />
@@ -140,8 +142,10 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
+    <ClCompile Include="PostureDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\Sourcecode\AttackEditor.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h" />
@@ -191,6 +195,7 @@
     <ClInclude Include="application\Sourcecode\Player\Action\DodgeRoll.h" />
     <ClInclude Include="application\Sourcecode\Player\Action\Guard.h" />
     <ClInclude Include="application\Sourcecode\Interface\IAttack.h" />
+    <ClInclude Include="application\Sourcecode\Player\Attack\BaseAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerAirAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerAttack.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerDogeRoll.h" />
@@ -208,6 +213,7 @@
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMagic.h" />
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMove.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />
+    <ClInclude Include="application\Sourcecode\Scene\AttackEditorScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameOverScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameScene.h" />
@@ -220,9 +226,7 @@
     <ClInclude Include="application\Sourcecode\Shader\HighLumi.h" />
     <ClInclude Include="application\Sourcecode\Shader\LineBlur.h" />
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
-    <ClInclude Include="application\Sourcecode\Stage\Floor.h" />
     <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
-    <ClInclude Include="application\Sourcecode\UI\UIMp.h" />
     <ClInclude Include="application\Sourcecode\UI\UIOperation.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
@@ -234,6 +238,7 @@
     <ClInclude Include="engine\3d\IParticle.h" />
     <ClInclude Include="engine\3d\light\CircleShadow.h" />
     <ClInclude Include="engine\3d\light\LightManager.h" />
+    <ClInclude Include="engine\3d\Line3D.h" />
     <ClInclude Include="engine\3d\Model.h" />
     <ClInclude Include="engine\base\REngine.h" />
     <ClInclude Include="engine\math\Collision.h" />
@@ -243,7 +248,7 @@
     <ClInclude Include="engine\base\IScene.h" />
     <ClInclude Include="engine\base\Framework.h" />
     <ClInclude Include="engine\base\Game.h" />
-    <ClInclude Include="engine\external\ImGuiManager.h" />
+    <ClInclude Include="engine\util\ImGuiManager.h" />
     <ClInclude Include="engine\3d\light\DirectionalLight.h" />
     <ClInclude Include="engine\3d\light\LightGroup.h" />
     <ClInclude Include="engine\input\mInput.h" />
@@ -256,7 +261,7 @@
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\3d\light\SpotLight.h" />
     <ClInclude Include="engine\3d\Object3d.h" />
-    <ClInclude Include="engine\external\Texture.h" />
+    <ClInclude Include="engine\util\Texture.h" />
     <ClInclude Include="engine\base\Util.h" />
     <ClInclude Include="engine\math\Spline.h" />
     <ClInclude Include="engine\math\Vector2.h" />
@@ -271,6 +276,7 @@
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
+    <ClInclude Include="PostureDisplay.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +287,7 @@
     <None Include="application\Resources\shader\Fire.hlsli" />
     <None Include="application\Resources\shader\Gaussian.hlsli" />
     <None Include="application\Resources\shader\HighLumi.hlsli" />
+    <None Include="application\Resources\shader\Line3D.hlsli" />
     <None Include="application\Resources\shader\LineBlur.hlsli" />
     <None Include="application\Resources\shader\MultiRenderTexture.hlsli" />
     <None Include="application\Resources\shader\MultiTexture.hlsli" />
@@ -381,6 +388,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="application\Resources\shader\HighLumiVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Line3DPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Line3DVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>

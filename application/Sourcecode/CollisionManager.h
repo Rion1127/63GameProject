@@ -4,6 +4,12 @@
 #include "EnemyManager.h"
 #include "HitStop.h"
 #include "GameCamera.h"
+
+/**
+ * @file CollisionManager.h
+ * @brief 当たり判定をまとめているクラス
+ */
+
 class CollisionManager : public HitStop
 {
 private:
@@ -41,6 +47,8 @@ private:
 	void EnemyLockOn();
 	//プレイヤーと敵押し出し
 	void PlayerToEnemy();
+	//敵同士の押し出し
+	void EnemyToEnemy();
 	//プレイヤー攻撃と敵
 	void PlayerAttackToEnemy();
 	//敵攻撃とプレイヤー

@@ -1,0 +1,41 @@
+//--AtatckInfo--//
+attackFrame = 15
+gapFrame = 20
+damege = 0
+gravityY = 0
+KnockVec 0 0 0
+addVec 0 0 0.24
+deceleration = 0.02
+
+//--SplinePos--//
+TimerType Easing
+EasingType Circ
+EasingTypeInOut In
+SplinePos 0 2.4 0.8
+SplinePos 0 1.6 2
+SplinePos 0 0.3 2.1
+
+//--Quaternion--//
+flame 1
+Quaternion 3.14 0 0 1
+
+//--AtatckInfo--//
+attackFrame = 15
+gapFrame = 20
+damege = 0
+gravityY = 0
+KnockVec 0 0 0
+addVec 0 0 0.21
+deceleration = 0.031
+
+//--SplinePos--//
+TimerType Easing
+EasingType Circ
+EasingTypeInOut In
+SplinePos -2 0 0
+SplinePos 0 0 2
+SplinePos 2 0 0
+
+//--Quaternion--//
+flame 1
+Quaternion 3.14 0 0 1

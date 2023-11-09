@@ -1,5 +1,11 @@
 #include "PlayerAttack.h"
 
+/**
+ * @file PlayerAttack.cpp
+ * @brief ステートマシン
+ * @brief プレイヤーが攻撃（地上）している状態
+ */
+
 void PlayerAttack::SetUp()
 {
 }

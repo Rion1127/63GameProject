@@ -3,11 +3,16 @@
 #include "mInput.h"
 #include "Util.h"
 
+/**
+ * @file Guard.cpp
+ * @brief プレイヤーのガード処理をしている
+ */
+
 GuardClass::GuardClass()
 {
 	col_.radius = 0.7f;
 	colObj_ = MakeUnique<Object3d>();
-	colObj_->SetModel(Model::CreateOBJ_uniptr("sphere", false));
+	colObj_->SetModel(Model::CreateOBJ_uniptr("sphere", false,false));
 	colObj_->SetAmbient("sphere", { 0.0f, 0, 1.0f });
 
 	timer_.SetLimitTime(40);

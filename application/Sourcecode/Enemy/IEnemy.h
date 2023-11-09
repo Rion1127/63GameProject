@@ -7,6 +7,12 @@
 #include "IAttack.h"
 #include "IBullet.h"
 
+/**
+ * @file IEnemy.h
+ * @brief インターフェースクラス
+ * @brief 敵を作る際に継承するクラス
+ */
+
 enum class EnemyType {
 	Ground,
 	Air
@@ -50,7 +56,7 @@ public:
 	virtual void Draw();
 	void FloorColision(const Vector3& pos);
 	void ColPosUpdate();
-	void Damage(const Vector3& knockVec, int32_t damageValue, int32_t cooltime);
+	void Damage(const Vector3& knockVec, int32_t damageValue, float cooltime);
 
 	virtual void SetIsNock(bool flag) = 0;
 	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;
@@ -61,7 +67,7 @@ public:
 	bool GetIsHardLockOn() { return isHardLockOn_; }
 	bool GetIsDead() { return isDead_; }
 	bool GetIsBulletShot() { return isBulletShot_; }
-	Timer GetDamageCoolTime() { return damageCoolTime_; }
+	TimerFloat GetDamageCoolTime() { return damageCoolTime_; }
 	Vector3 GetKnockResist() { return knockResist_; }
 	int32_t GetHealth() { return health_; }
 	int32_t GetMaxHealth() { return maxHealth_; }

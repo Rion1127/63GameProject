@@ -4,6 +4,11 @@
 #include "Vector3.h"
 #include <atlcomcli.h>
 
+/**
+ * @file myMath.h
+ * @brief 数学に関するものをまとめたクラス
+ */
+
 struct FLOAT2 {
 	float x;
 	float y;

@@ -3,6 +3,11 @@
 #include <unordered_map>
 #include <memory>
 
+/**
+ * @file StateMachine.h
+ * @brief ステートマシンについてまとめたクラス
+ */
+
 template<typename T>
 class State
 {
@@ -146,5 +151,9 @@ public:
 		state_->Draw();
 	}
 public:
+	/// <summary>
+	/// 現在のステータスを返す
+	/// </summary>
+	/// <returns></returns>
 	std::shared_ptr<State<T>> GetNowState() { return state_; }
 };

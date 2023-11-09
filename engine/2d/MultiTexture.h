@@ -7,6 +7,11 @@
 #include <wrl.h>
 #include <d3dx12.h>
 
+/**
+ * @file MultiTexture.h
+ * @brief マルチテクスチャを管理するクラス
+ */
+
 class MultiTexture
 {
 private:

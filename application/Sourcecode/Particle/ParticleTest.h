@@ -1,5 +1,11 @@
 #pragma once
 #include "IParticle.h"
+
+/**
+ * @file ParticleTest.h
+ * @brief テスト用エフェクトクラス
+ */
+
 class ParticleTest final :
 	public IParticle
 {

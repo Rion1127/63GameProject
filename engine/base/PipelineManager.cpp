@@ -1,5 +1,10 @@
 #include "PipelineManager.h"
 
+/**
+ * @file PipelineManager.cpp
+ * @brief パイプラインを生成、管理しているマネージャークラス
+ */
+
 std::map<std::string, std::unique_ptr<PipelineObject>> PipelineManager::pipelineObjects_;
 
 void PipelineManager::Ini() {
@@ -77,6 +82,16 @@ void PipelineManager::ObjShaderIni()
 	GetPipelineObjects("SkySphere")->AddrootParams(4);
 
 	Create("SkySphere", BACK, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
+
+	AddPipeline("Line3D");
+	GetPipelineObjects("Line3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	
+	GetPipelineObjects("Line3D")->Setshader("Line3DVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("Line3D")->Setshader("Line3DPS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("Line3D")->AddrootParamsNoneTexture(2);
+
+	Create("Line3D", NONE, TOPOLOGY_LINE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
 }
 void PipelineManager::PostEffectIni()
 {

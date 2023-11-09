@@ -2,6 +2,11 @@
 #include "DirectX.h"
 #include "IPostEffect.h"
 
+/**
+ * @file GaussianBlur.h
+ * @brief 描画がぼやけるポストエフェクト
+ */
+
 class GaussianBlur final :
 	public IPostEffect {
 private:

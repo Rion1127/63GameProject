@@ -1,7 +1,7 @@
 #include "Attack1.h"
 
 Attack1::Attack1(IActor* selfActor) :
-	IAttack(selfActor, 1, 25, 10, 26)
+	IAttack(selfActor, 1, 30, 10, 26)
 {
 }
 
@@ -25,6 +25,10 @@ void Attack1::Init()
 	swordPos_ = attackCol_.at(0)->col_.center;
 
 	attackSpeed_ = 0.06f;
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
 }
 
 void Attack1::MoveUpdate()

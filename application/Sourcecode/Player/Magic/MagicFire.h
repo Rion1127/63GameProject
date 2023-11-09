@@ -1,5 +1,11 @@
 #pragma once
 #include "IBullet.h"
+
+/**
+ * @file MagicFire.h
+ * @brief プレイヤーの攻撃魔法
+ */
+
 class MagicFire :
 	public IBullet
 {

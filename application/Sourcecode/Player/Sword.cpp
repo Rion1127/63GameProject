@@ -5,12 +5,20 @@
 #include <imgui.h>
 #include "myMath.h"
 
+/**
+ * @file Sword.cpp
+ * @brief 剣の動きを管理するクラス
+ */
+
 Sword::Sword()
 {
 	obj_ = MakeUnique<Object3d>();
 	obj_->SetModel(Model::CreateOBJ_uniptr("sword"));
 	obj_->SetScale({ 0.5f,0.5f, 0.5f });
 	obj_->WT_.SetRotType(RotType::Quaternion);
+	obj_->SetShadowOffsetPos(Vector3(0, -0.7f, 0));
+	obj_->SetShadowAtten(Vector3(1, 1.5f, 0));
+	obj_->SetShadowFactorAngle(Vector2(0.05f, 0.25f));
 
 	floatingTimer_.SetLimitTime(120);
 	floatingTimer_.SetIsLoop(true);
@@ -20,7 +28,7 @@ Sword::Sword()
 	tailObj_.resize(2);
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i] = std::make_unique<Object3d>();
-		tailObj_[i]->SetModel(Model::CreateOBJ_uniptr("sphere"));
+		tailObj_[i]->SetModel(Model::CreateOBJ_uniptr("sphere",false,false));
 		tailObj_[i]->SetScale({ 0.5f,0.5f, 0.5f });
 		tailObj_[i]->WT_.parent_ = &obj_->WT_;
 		tailObj_[i]->SetIsVisible(false);
@@ -28,11 +36,15 @@ Sword::Sword()
 	trail_->SetColor(Color(255, 175, 60, 255));
 }
 
-void Sword::Update()
+void Sword::Update(const Vector3& swordPos)
 {
 	trail_->SetIsVisible(false);
 	//攻撃時の剣の動き
 	if (state_ == SwordState::Idle) {
+		//回転行列を親子関係にする
+		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
+		//回転の親子関係を解除
+		obj_->WT_.parent_ = nullptr;
 		//プレイヤーの背中に向かって徐々に移動する
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
@@ -60,14 +72,13 @@ void Sword::Update()
 
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 0.1f);
 	}
-	else if (state_ == SwordState::Attack &&
-		attackManager_->GetNowAttack() != nullptr)
+	else if (state_ == SwordState::Attack)
 	{
 		//回転の親子関係を解除
 		obj_->WT_.parentRotMat_ = nullptr;
 		//座標
-		Vector3 pos = attackManager_->GetNowAttack()->GetSwordPos();
-		localPos_ = pos - playerObj_->WT_.position_;
+		Vector3 pos = swordPos;
+		localPos_ = pos ;
 		obj_->SetPos(pos);
 		nowPos_ = pos;
 		//回転情報
@@ -82,6 +93,8 @@ void Sword::Update()
 	else if (state_ == SwordState::Guard) {
 		//回転行列を親子関係にする
 		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
+		//回転の親子関係を解除
+		obj_->WT_.parent_ = nullptr;
 		//座標
 		Vector3 pos = playerObj_->WT_.position_;
 		Vector3 frontVec = RotateVector(Vector3(0,0,1), playerObj_->WT_.quaternion_);
@@ -106,7 +119,66 @@ void Sword::Update()
 
 	obj_->Update();
 
+	trail_->Update();
+}
 
+void Sword::EditorUpdate(const Vector3& swordPos)
+{
+	trail_->SetIsVisible(false);
+
+	//攻撃時の剣の動き
+	if (state_ == SwordState::Idle) {
+		//回転行列を親子関係にする
+		obj_->WT_.parentRotMat_ = &playerObj_->WT_.rotMat_;
+		//回転の親子関係を解除
+		obj_->WT_.parent_ = nullptr;
+		//プレイヤーの背中に向かって徐々に移動する
+		Vector3 pos = playerObj_->WT_.position_;
+		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
+		frontVec = frontVec.normalize();
+		//座標移動
+		goalPos_ = pos - frontVec * 1.2f;
+		//上下に浮かばせる
+		floatingTimer_.AddTime(1 * GameSpeed::GetGameSpeed());
+		float roundTime = (float)floatingTimer_.GetLimitTimer();
+		float timer = (float)floatingTimer_.GetTimer();
+		float floatingPos = UpAndDown(roundTime, 0.3f, timer);
+		goalPos_.y += floatingPos;
+
+		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
+		nowPos_ += (nowToGoalVec * 0.1f) * GameSpeed::GetGameSpeed();
+		obj_->SetPos(nowPos_);
+		//回転処理
+		//常に回転させる
+		rot_ += 0.02f * GameSpeed::GetGameSpeed();
+		if (rot_ >= 3.14f) {
+			rot_ = -rot_;
+		}
+
+		Vector3 axisY = { 0, 1, 0 };
+
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 0.1f);
+	}
+	else if (state_ == SwordState::Attack)
+	{
+		//回転の親子関係を解除
+		obj_->WT_.parentRotMat_ = nullptr;
+		//座標
+		Vector3 pos = swordPos;
+		localPos_ = pos;
+		obj_->SetPos(pos);
+		nowPos_ = pos;
+		//回転情報
+		Vector3 PtoSVec = obj_->WT_.position_ - playerObj_->WT_.position_;
+		PtoSVec = PtoSVec.normalize();
+
+		obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 1, 0), PtoSVec);
+		trail_->SetIsVisible(true);
+
+		CalculateTrailPos();
+	}
+
+	obj_->Update();
 
 	trail_->Update();
 }
@@ -116,11 +188,16 @@ void Sword::Draw()
 	trail_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	obj_->Draw();
-
+	
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		tailObj_[i]->Draw();
 	}
-#ifdef _DEBUG
+
+	
+}
+
+void Sword::DrawImGui()
+{
 	ImGui::Begin("sword");
 
 	if (ImGui::Button("debugMode")) {
@@ -161,15 +238,13 @@ void Sword::Draw()
 		trail_->GetColor().g,
 		trail_->GetColor().b
 	};
-	//ImGui::DragFloat4("color", color, 0.1f);
-
+	
 	ImGui::ColorEdit3("color 1", color);
 
 	Color col = { color[0],color[1], color[2], 255 };
 	trail_->SetColor(col);
 
 	ImGui::End();
-#endif // _DEBUG
 }
 
 void Sword::CalculateTrailPos()

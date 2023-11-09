@@ -1,6 +1,12 @@
 #pragma once
 #include "WinAPI.h"
 #include "DirectX.h"
+
+/**
+ * @file ImGuiManager.h
+ * @brief 'ImGui'の機能を使いやすいようにまとめたクラス
+ */
+
 class ImGuiManager
 {
 private:

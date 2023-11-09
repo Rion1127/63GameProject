@@ -16,52 +16,62 @@
 
 #include "StateMachine.h"
 
+/**
+ * @file Player.h
+ * @brief プレイヤーの挙動全てを処理している
+ */
+
 class Player final :
 	public IActor, public StateMachine<PlayerState>
 {
 private:
-	std::unique_ptr<Object3d> displayObj_;
-	Quaternion systemQuaternion_;
 	//ベクトル
-	Vector3 frontVec_;
-	Vector3 playerFrontVec_;
-	Vector3 lockOnVec_;
-	Vector2 inputVec_;
-	Vector2 moveVec_;
-	// --入力-- //
-	float goalinputAngle_;
-	float inputAngle_;	//入力されている方向の角度
-	float walklimitValue_;	//入力
+	Vector3 cameraToPlayerVec_;	//カメラ→プレイヤーのベクトル
+	Vector3 playerFrontVec_;	//プレイヤーが向いているベクトル
+	Vector3 lockOnVec_;			//ロックオンしている敵へのベクトル
+	Vector2 inputVec_;			//入力している敵へのベクトル
+	Vector2 moveVec_;			//1フレームの移動ベクトル
+	float goalinputAngle_;		//入力したY軸の角度
+	float nowAngle_;			//現在プレイヤーが向いている角度
+	float walklimitValue_;		//歩きと走るが切り替わる値
+	float dashSpeed_;			//移動スピード
+	float walkSpeed_;			//移動スピード
 
-	float moveSpeed_;
+	bool isCanJump_;			//ジャンプ可能フラグ
+	bool isAlive_;				//生存フラグ
+	bool isCanInput_;			//入力可能フラグ
+	bool isDash_;			//入力可能フラグ
+	float maxjumptimer;			//ジャンプ可能なフレーム数
+	float jumpTime_;			//ジャンプしたフレーム数
+	float jumpSpeed_;			//ジャンプスピード
 
-	bool isCanJump_;
-	bool isAlive_;
-	bool isCanInput_;
-	float jumpTime_;
+	TimerFloat shakeTimer_;			//歩いているプレイヤーが横に揺れる動きを管理するタイマー
+	TimerFloat dashParticleTimer_;	//歩いているプレイヤーのパーティクル生成を管理するタイマー
 
-	TimerFloat shakeTimer_;
-	TimerFloat dashParticleTimer_;
+	PlayerCommand command_;			//コマンドの動きを管理する
+	GuardClass guard_;				//防御を管理する
+	DodgeRoll dodgeRoll_;			//ドッジロールを管理する
+	PlayerHPGauge hpGaugeUI_;		//HPゲージを管理する
+	PlayerMPGauge mpGaugeUI_;		//MPゲージを管理する
+	PlayerState state_;				//プレイヤーのステートを管理する
 
-	PlayerCommand command_;
-	GuardClass guard_;
-	DodgeRoll dodgeRoll_;
-	PlayerHPGauge hpGaugeUI_;
-	PlayerMPGauge mpGaugeUI_;
-	PlayerState state_;
+	int32_t maxHealth_;			//最大HP
+	int32_t health_;			//現在HP
 
-	int32_t maxHealth_;
-	int32_t health_;
+	int32_t maxMP_;				//最大MP
+	int32_t nowMP_;				//現在MP
+	Timer mpChargeTime_;		//MPチャージ時間
+	Timer mpChargeIntervalTimer_;	//MPを一定時間ごとに回復するタイマー
+	bool isMPCharge_;			//MPチャージ中フラグ
 
-	int32_t maxMP_;
-	int32_t nowMP_;
-	Timer mpChargeTime_;
-	Timer mpChargeIntervalTimer_;
-	bool isMPCharge_;
+	uint32_t landingTimer_;
 
-	Sphere damageCol_;
+	Sphere damageCol_;			//攻撃を受ける当たり判定
 
-	Sword sword_;
+	Sword sword_;				//剣オブジェ
+
+	
+	Quaternion playerQuaternion_;	//X,Y,Z軸の合成
 public:
 	Player();
 	void PreUpdate();
@@ -83,12 +93,14 @@ public:
 	void FreezeUpdate();
 	//移動
 	void InputVecUpdate();
+	void PlayerRotUpdate();
 private:
 	//重力
 	void GravityUpdate();
 	//ステータス更新
 	void StateUpdate();
 	void MPCharge();
+	
 public:
 	void Draw();
 
@@ -104,11 +116,13 @@ public:
 	bool GetIsCanGuard();
 	bool GetIsCanJump();
 	bool GetIsCanAttack();
+	bool GetIsMove();
 
 	void Damage(int32_t damage, const Vector3& knockVec);
 	void GuardHit(const Vector3& knockVec);
 	void Reset();
 public:
+	//セッター
 	void SetPos(const Vector3& pos) { obj_->GetTransform()->SetPosition(pos); }
 	void SetRot(const Vector3& rot) { obj_->GetTransform()->SetRotation(rot); }
 	void Setscale(const Vector3& scale) { obj_->GetTransform()->SetScale(scale); }
@@ -126,10 +140,10 @@ public:
 public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
 	MagicManager* GetMagicManager() { return command_.GetMagicManager(); }
-	Vector3 GetFrontVec() { return frontVec_; }
+	Vector3 GetcameraToPlayerVec() { return cameraToPlayerVec_; }
 	Vector3 GetPlayerFrontVec() { return playerFrontVec_; }
 	PlayerState GetState() { return state_; }
-	Timer* GetDamegeCoolTime() { return &damageCoolTime_; }
+	TimerFloat* GetDamegeCoolTime() { return &damageCoolTime_; }
 	Timer* GetFreezeTime() { return &freezeTimer_; }
 	bool GetIsAlive() { return isAlive_; }
 	bool GetIsMPCharge() { return isMPCharge_; }

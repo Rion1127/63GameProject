@@ -3,7 +3,7 @@
 #include "ParticleManager.h"
 
 AttackFinishBreak::AttackFinishBreak(IActor* selfActor) :
-	IAttack(selfActor, 3, 80, 20, 60,AttackType::Finish)
+	IAttack(selfActor, 3, 55, 20, 60,AttackType::Finish)
 {
 }
 
@@ -26,8 +26,13 @@ void AttackFinishBreak::Init()
 	attackVec_ = frontVec;
 
 	//スプライン曲線計算
-	splineTime_ = 6;
+	splineTime_ = 5;
 	SplineUpdate();
+
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingType_(Spline::EasingType::Circ);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::In);
+	spline_.SetMaxTime(attackInfo_.maxTime - 40/*4.f*/);
 
 	hitNum_ = 5;
 
@@ -55,14 +60,7 @@ void AttackFinishBreak::MoveUpdate()
 {
 	//回転情報から正面ベクトル(2D)を取得
 	attackVec_ = attackVec_.normalize();
-	//予備動作を遅く動かす
-	if (spline_.GetIndex() <= 1) {
-		splineTime_ = 15;
-	}
-	//振りかぶる時は速く動かす
-	else {
-		splineTime_ = 2;
-	}
+
 	spline_.Update(GameSpeed::GetPlayerSpeed());
 	//剣を振り終わったら攻撃の判定を有効にする
 	if (spline_.GetisEnd()) {
@@ -99,6 +97,7 @@ void AttackFinishBreak::MoveUpdate()
 				emitter_[i]->scale = 1.2f;
 				ParticleManager::GetInstance()->
 					AddParticle("Explosion", emitter_[i]);
+				
 			}
 			emitter_[i]->pos = attackCol_.at(i)->col_.center;
 		}
@@ -138,6 +137,4 @@ void AttackFinishBreak::SplineUpdate()
 	attackVec.push_back(playerFrontPos);
 
 	spline_.SetPositions(attackVec);
-
-	spline_.SetLimitTime(splineTime_);
 }

@@ -1,5 +1,9 @@
 #include "LoadManager.h"
 
+/**
+ * @file LoadManager.cpp
+ * @brief リソースを読み込みをまとめている
+ */
 
 void LoadManager::LoadAllResources()
 {

@@ -7,13 +7,35 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <imgui.h>
 #include "Util.h"
+
+/**
+ * @file Model.cpp
+ * @brief 読み込んだ頂点データ・マテリアルを管理している
+ */
+
 const std::string kBaseDirectory = "application/Resources/Object/";
 
 std::shared_ptr<LightGroup> Model::lightGroup_ = nullptr;
 
+Model::Model(bool isShadowSet)
+{
+	isShadowActive_ = isShadowSet;
+	if (isShadowActive_) {
+		shadowNum_ = lightGroup_->GetIsNotAvtiveCircleShadow();
+		lightGroup_->SetCircleShadowActive(shadowNum_,true);
+		shadowAtten_ = { 0.5f,0.6f,0.0f };
+		shadowFactorAngle_ = { 0.0f,0.5f };
+	}
+}
+
 Model::~Model()
 {
+	if (isShadowActive_)
+	{
+		lightGroup_->SetCircleShadowActive(shadowNum_, false);
+	}
 	materials_.clear();
 	vert_.clear();
 }
@@ -33,9 +55,9 @@ Model* Model::CreateOBJ(const std::string& modelname, bool smoothing)
 	return instance;
 }
 
-std::unique_ptr<Model> Model::CreateOBJ_uniptr(const std::string& modelname, bool smoothing)
+std::unique_ptr<Model> Model::CreateOBJ_uniptr(const std::string& modelname, bool smoothing, bool isShadow)
 {
-	std::unique_ptr<Model> instance = std::make_unique<Model>();
+	std::unique_ptr<Model> instance = std::make_unique<Model>(isShadow);
 	instance->ModelIni(modelname, smoothing);
 
 	return instance;
@@ -396,6 +418,17 @@ void Model::ModelIni(const std::string& modelname, bool smoothing)
 	}
 }
 
+void Model::ShadowUpdate(Vector3 pos)
+{
+	if (isShadowActive_) {
+		lightGroup_->SetCircleShadowActive(shadowNum_, true);
+		lightGroup_->SetCircleShadowCasterPos(shadowNum_, pos + shadowOffsetPos_);
+		lightGroup_->SetCircleShadowDir(shadowNum_, { 0,-1,0 });
+		lightGroup_->SetCircleShadowAtten(shadowNum_, shadowAtten_);
+		lightGroup_->SetCircleShadowFactorAngle(shadowNum_, shadowFactorAngle_);
+	}
+}
+
 void Model::DrawOBJ(const WorldTransform& worldTransform)
 {
 	lightGroup_->Draw(3);
@@ -417,6 +450,23 @@ void Model::DrawOBJ(const WorldTransform& worldTransform, uint32_t textureHandle
 	{
 		v->Draw(worldTransform);
 	}
+}
+
+void Model::DrawShadowInfo(const std::string& imguiName)
+{
+	ImGui::Begin(imguiName.c_str());
+
+	float atten[3] = { shadowAtten_.x,shadowAtten_.y, shadowAtten_.z};
+	ImGui::DragFloat3("Atten", atten,0.01f);
+
+	shadowAtten_ = { atten[0],atten[1] ,atten[2] };
+
+	float factorAngle[2] = { shadowFactorAngle_.x,shadowFactorAngle_.y};
+	ImGui::DragFloat2("FactorAngle", factorAngle, 0.01f);
+
+	shadowFactorAngle_ = { factorAngle[0],factorAngle[1]};
+	
+	ImGui::End();
 }
 
 void Model::AddSmoothData(unsigned short indexPositon, unsigned short indexVertex, uint32_t dataindex)

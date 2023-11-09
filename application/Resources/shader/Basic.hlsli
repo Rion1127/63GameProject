@@ -55,7 +55,7 @@ struct CircleShadow
 static const int DIRLIGHT_NUM = 3;
 static const int POINTLIGHT_NUM = 3;
 static const int SPOTLIGHT_NUM = 3;
-static const int CIRCLESHADOW_NUM = 1;
+static const int CIRCLESHADOW_NUM = 30;
 
 cbuffer Light : register(b2)
 {

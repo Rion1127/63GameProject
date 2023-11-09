@@ -2,6 +2,12 @@
 #include "IEnemy.h"
 #include "Vector2.h"
 #include "Sprite.h"
+
+/**
+ * @file EnemyDummy.h
+ * @brief デバッグ用の地上の敵のクラス
+ */
+
 class EnemyDummy final :
     public IEnemy
 {

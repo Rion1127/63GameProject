@@ -2,6 +2,12 @@
 #include "SceneManager.h"
 #include "GameScene.h"
 #include "SoundVolume.h"
+
+/**
+ * @file TitleScene.cpp
+ * @brief タイトルを管理するクラス
+ */
+
 TitleScene::~TitleScene()
 {
 }
@@ -75,6 +81,10 @@ void TitleScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 
+}
+
+void TitleScene::DrawRenderTexture()
+{
 }
 
 void TitleScene::DrawPostEffect()

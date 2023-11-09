@@ -7,6 +7,11 @@
 #include "Player.h"
 #include "SoundVolume.h"
 
+/**
+ * @file PlayerCommand.cpp
+ * @brief プレイヤーのコマンドシステムを処理している
+ */
+
 PlayerCommand::PlayerCommand()
 {
 	Color mainCommandColor = { 0,35,255,255 };

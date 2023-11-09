@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerAirAttack.h
+ * @brief ステートマシン
+ * @brief プレイヤーが攻撃（空中）している状態
+ */
+
 class Player;
 
 class PlayerAirAttack :

@@ -19,6 +19,11 @@
 #include "Spline.h"
 #include "Object3d.h"
 
+/**
+ * @file GameScene.h
+ * @brief メインのゲームシーンクラス
+ */
+
 class GameScene final :
 	public IScene
 {
@@ -52,7 +57,8 @@ public:
 	void Update()override;
 
 	void Draw()override;
-	void DrawPostEffect()override;
+	void DrawRenderTexture()override;
+	void DrawPostEffect() override;
 
 private:
 	void CameraUpdate();

@@ -3,6 +3,12 @@
 #include "StateMachine.h"
 #include "Player.h"
 
+/**
+ * @file PlayerGuard.h
+ * @brief ステートマシン
+ * @brief プレイヤーが防御している状態
+ */
+
 class Player;
 
 class PlayerGuard :

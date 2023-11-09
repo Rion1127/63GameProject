@@ -7,6 +7,11 @@
 #include "Sprite.h"
 #include "Particle2DSelect.h"
 
+/**
+ * @file ColosseumSystem.h
+ * @brief ゲームのメインシステム（コロシアム）を管理しているクラス
+ */
+
 class ClearSprite {
 private:
 	std::unique_ptr<Sprite> sprite_;

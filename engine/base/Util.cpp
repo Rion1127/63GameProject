@@ -6,6 +6,11 @@ using namespace Microsoft::WRL;
 #include "DirectX.h"
 #include <filesystem>
 
+/**
+ * @file Util.cpp
+ * @brief 便利な関数をまとめている
+ */
+
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
@@ -73,7 +78,7 @@ std::wstring ToWideString(const std::string& str)
 	wstr.resize(num1);
 
 	auto num2 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, &wstr[0], num1);
-
+	num2;
 	assert(num1 == num2);
 	return wstr;
 }
@@ -103,6 +108,7 @@ std::string WStringToString(std::wstring oWString)
 
 void MoveTo(const Vector3& goal, float speed, Vector3& value)
 {
+	
 	Vector3 dir = goal - value;
 	float dirLength = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
 	if (dirLength < speed * speed)
@@ -133,6 +139,55 @@ Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera)
 	pos = Vec4MulMat4(pos, viewPort);
 
 	result = { pos.x ,pos.y };
+
+	return result;
+}
+
+std::vector<std::string> FindFileNames(const std::string& dir, const std::string& extension, bool isExtension)
+{
+	std::vector<std::string> result;
+
+	HANDLE hFind;
+	//defined at Windwos.h
+	WIN32_FIND_DATA win32fd;
+
+	//探すファイル名指定　ワイルドカードを使用
+	std::string search_name = dir + "*" + extension;
+
+	std::wstring wsearch_name = ToWideString(search_name);
+	//ファイル検索
+	hFind = FindFirstFile(wsearch_name.c_str(), &win32fd);
+
+	//見つからなかった場合
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return result;
+	}
+
+	//次のファイルがある限り読み込み続ける
+	do
+	{
+		//ディレクトリなら無視
+		if (win32fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {}
+		else
+		{
+			//ファイル名をパス付で取得
+			std::wstring wfileName = win32fd.cFileName;
+			std::string fileName = WStringToString(wfileName);
+			
+			result.push_back(fileName);
+		}
+	} while (FindNextFile(hFind, &win32fd));
+	//閉じる
+	FindClose(hFind);
+
+	//拡張子を消す
+	if (isExtension == false) {
+		for (auto& fileName : result) {
+			size_t num = fileName.find(".");
+			fileName = fileName.substr(0, num);
+		}
+	}
 
 	return result;
 }

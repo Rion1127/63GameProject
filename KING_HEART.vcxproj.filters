@@ -256,6 +256,12 @@
     <Filter Include="application\ヘッダーファイル\MainSystem\Config">
       <UniqueIdentifier>{7c10a6c2-efa1-49b4-bec5-0d730618f086}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\AttackEditor">
+      <UniqueIdentifier>{64b49c5b-544e-417b-a4ff-9635519f5725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\AttackEditor">
+      <UniqueIdentifier>{b373e2d6-64c0-499c-871e-dca3129ec458}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -294,7 +300,7 @@
     <ClCompile Include="engine\base\DirectX.cpp">
       <Filter>engine\ソース ファイル\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="engine\external\Texture.cpp">
+    <ClCompile Include="engine\util\Texture.cpp">
       <Filter>engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="engine\base\Util.cpp">
@@ -318,7 +324,7 @@
     <ClCompile Include="engine\base\Pipeline.cpp">
       <Filter>engine\ソース ファイル\DirectX\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="engine\external\ImGuiManager.cpp">
+    <ClCompile Include="engine\util\ImGuiManager.cpp">
       <Filter>engine\ソース ファイル\Util\imgui</Filter>
     </ClCompile>
     <ClCompile Include="engine\math\Quaternion.cpp">
@@ -474,9 +480,6 @@
     <ClCompile Include="application\Sourcecode\Scene\TitleScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Stage\Floor.cpp">
-      <Filter>application\ソースファイル\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp">
       <Filter>application\ソースファイル\Stage</Filter>
     </ClCompile>
@@ -561,9 +564,6 @@
     <ClCompile Include="application\Sourcecode\Player\State\PlayerAirAttack.cpp">
       <Filter>application\ソースファイル\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\UI\UIMp.cpp">
-      <Filter>application\ソースファイル\UI</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerGauge.cpp">
       <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
@@ -645,6 +645,21 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleDash.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\AttackEditorScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Attack\BaseAttack.cpp">
+      <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\3d\Line3D.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="PostureDisplay.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -680,7 +695,7 @@
     <ClInclude Include="engine\base\DirectX.h">
       <Filter>engine\ヘッダー ファイル\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="engine\external\Texture.h">
+    <ClInclude Include="engine\util\Texture.h">
       <Filter>engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\base\Util.h">
@@ -704,7 +719,7 @@
     <ClInclude Include="engine\base\Pipeline.h">
       <Filter>engine\ヘッダー ファイル\DirectX\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="engine\external\ImGuiManager.h">
+    <ClInclude Include="engine\util\ImGuiManager.h">
       <Filter>engine\ヘッダー ファイル\Util\imgui</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Quaternion.h">
@@ -863,9 +878,6 @@
     <ClInclude Include="application\Sourcecode\Stage\Stage.h">
       <Filter>application\ヘッダーファイル\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Stage\Floor.h">
-      <Filter>application\ヘッダーファイル\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\CollisionManager.h">
       <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
@@ -953,9 +965,6 @@
     <ClInclude Include="application\Sourcecode\Player\State\PlayerAirAttack.h">
       <Filter>application\ヘッダーファイル\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\UI\UIMp.h">
-      <Filter>application\ヘッダーファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerGauge.h">
       <Filter>application\ヘッダーファイル\UI</Filter>
     </ClInclude>
@@ -1037,6 +1046,21 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleDash.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\AttackEditorScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Attack\BaseAttack.h">
+      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\3d\Line3D.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\AttackEditor.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="PostureDisplay.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1096,6 +1120,9 @@
     </None>
     <None Include="application\Resources\shader\SkySphere.hlsli">
       <Filter>シェーダーファイル\application</Filter>
+    </None>
+    <None Include="application\Resources\shader\Line3D.hlsli">
+      <Filter>シェーダーファイル\Engine</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1221,6 +1248,12 @@
     </FxCompile>
     <FxCompile Include="application\Resources\shader\SkySphereVS.hlsl">
       <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Line3DVS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Line3DPS.hlsl">
+      <Filter>シェーダーファイル\Engine</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file Vector2.h
+ * @brief Vector2に関することをまとめたクラス
+ */
+
 class Vector2
 {
 public:

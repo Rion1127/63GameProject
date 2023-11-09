@@ -1,5 +1,10 @@
 #include "AttackJumpShadow.h"
 
+/**
+ * @file AttackJumpShadow.cpp
+ * @brief シャドウのジャンプ攻撃攻撃
+ */
+
 AttackJumpShadow::AttackJumpShadow(IActor* selfActor) :
 	IAttack(selfActor, 1, 50, 10, 55)
 {

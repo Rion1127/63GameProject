@@ -4,6 +4,11 @@
 #include "mSound.h"
 #include "SoundVolume.h"
 
+/**
+ * @file MagicManager.cpp
+ * @brief プレイヤーの魔法を管理している
+ */
+
 MagicManager::MagicManager()
 {
 	magicList_.insert(std::make_pair(MagicType::Fire, std::make_unique<MagicFire>(nullptr)));

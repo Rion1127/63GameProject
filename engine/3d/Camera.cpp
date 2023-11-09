@@ -4,6 +4,11 @@
 #include "Camera.h"
 #include <imgui.h>
 
+/**
+ * @file Camera.cpp
+ * @brief カメラのトランスフォームを管理している
+ */
+
 Camera* Camera::scurrent_ = nullptr;
 
 Camera::Camera()
@@ -15,9 +20,6 @@ Camera::Camera()
 	up_ = { 0,1,0 };
 
 	UpdateLookAt();
-
-	WT_.SetRotation(rot_);
-	WT_.Update();
 }
 
 void Camera::SetEyePos(float x, float y, float z)
@@ -204,12 +206,16 @@ void Camera::UpdateLookAt()
 
 void Camera::UpdateLookTo()
 {
-	WT_.SetRotation(rot_);
-	WT_.Update();
+	Matrix4 rotMat;
+
+	rotMat *= ConvertRotationYAxisMat(rot_.z);
+	rotMat *= ConvertRotationZAxisMat(rot_.x);
+	rotMat *= ConvertRotationXAxisMat(rot_.y);
+	
 	//カメラ座標とY軸、Z軸を取得
 	Vector3 pos = eye_;
-	Vector3 axisY = WT_.GetMatWorld().GetAxisY();
-	Vector3 axisZ = WT_.GetMatWorld().GetAxisZ();
+	Vector3 axisY = rotMat.GetAxisY();
+	Vector3 axisZ = rotMat.GetAxisZ();
 	//単位行列に初期化
 	matView_.UnitMatrix();
 	//Z軸とY軸を取得
