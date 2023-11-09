@@ -19,14 +19,24 @@ EnemyRedNocturne::EnemyRedNocturne(const Vector3& pos, const Vector3& rot) :
 {
 	name_ = "RedNocturne";
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true));
+	obj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true, false));
 	obj_->SetShadowOffsetPos(Vector3(0, -1, 0));
 	obj_->SetShadowAtten(Vector3(0.1f, 0.22f, 0));
 	obj_->SetShadowFactorAngle(Vector2(0.1f, 0.5f));
+
+	displayObj_ = std::move(std::make_unique<Object3d>());
+	displayObj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true));
+	displayObj_->SetShadowOffsetPos(Vector3(0, -1, 0));
+	displayObj_->SetShadowAtten(Vector3(0.1f, 0.22f, 0));
+	displayObj_->SetShadowFactorAngle(Vector2(0.1f, 0.5f));
+
 	knockResist_ = { 1,0,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
 	obj_->GetTransform()->SetRotation(rot);
+	displayObj_->GetTransform()->SetPosition(pos);
+	displayObj_->GetTransform()->SetRotation(rot);
+
 	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 

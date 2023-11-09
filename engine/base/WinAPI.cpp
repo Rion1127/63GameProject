@@ -38,7 +38,7 @@ void WinAPI::Ini()
 {
 	w_.cbSize = sizeof(WNDCLASSEX);
 	w_.lpfnWndProc = (WNDPROC)WindowProcA;		// ウィンドウプロシージャを設定
-	w_.lpszClassName = L"DirectXGame";			// ウィンドウクラス名
+	w_.lpszClassName = L"KING HEART";			// ウィンドウクラス名
 	w_.hInstance = GetModuleHandle(nullptr);		// ウィンドウハンドル
 	w_.hCursor = LoadCursor(NULL, IDC_ARROW);	// カーソル指定
 	// ウィンドウクラスをOSに登録する
@@ -48,7 +48,7 @@ void WinAPI::Ini()
 	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 
 	hwnd_ = CreateWindow(w_.lpszClassName,	// クラス名
-		L"DirectXGame",						// タイトルバーの文字
+		L"KING HEART",						// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,				// 標準的なウィンドウスタイル
 		CW_USEDEFAULT,						// 表示X座標(OSに任せる)
 		CW_USEDEFAULT,						// 表示Y座標(OSに任せる)

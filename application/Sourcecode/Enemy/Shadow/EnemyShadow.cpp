@@ -20,11 +20,15 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 {
 	name_ = "Shadow";
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
+	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true,false));
+	displayObj_ = std::move(std::make_unique<Object3d>());
+	displayObj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
 	obj_->GetTransform()->SetRotation(rot);
+	displayObj_->GetTransform()->SetPosition(pos);
+	displayObj_->GetTransform()->SetRotation(rot);
 	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
 
@@ -74,7 +78,7 @@ void EnemyShadow::SetState(State state)
 
 void EnemyShadow::Draw()
 {
-	obj_->Draw();
+	displayObj_->Draw();
 	if (attack_ != nullptr)
 	{
 		attack_->DrawCol();
@@ -365,8 +369,10 @@ void EnemyShadow::WanderInit()
 		//削除する
 		spline_.DeleteAllPoint();
 		spline_.Reset();
+		auto pos = obj_->WT_.position_;
+		pos.y = 0.1f;
 		//初期地点を挿入
-		spline_.AddPosition(obj_->WT_.position_, PosState::Start);
+		spline_.AddPosition(pos, PosState::Start);
 
 		//移動するポイントを計算する
 		for (int32_t i = 0; i < 2; i++)

@@ -42,6 +42,11 @@ void IEnemy::PreUpdate()
 	ColPosUpdate();
 
 	MoveUpdate();
+	displayObj_->SetPos(obj_->GetPos());
+	displayObj_->SetRot(obj_->GetRot());
+	displayObj_->SetScale(obj_->GetScale());
+	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
+	displayObj_->Update();
 }
 
 void IEnemy::PostUpdate()
@@ -51,7 +56,7 @@ void IEnemy::PostUpdate()
 
 void IEnemy::Draw()
 {
-	obj_->Draw();
+	displayObj_->Draw();
 }
 
 void IEnemy::FloorColision(const Vector3& pos)
