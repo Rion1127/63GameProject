@@ -7,13 +7,6 @@
 #include <map>
 #include <unordered_map>
 #include "mInput.h"
-#include "Attack1.h"
-#include "Attack2.h"
-#include "Attack3.h"
-
-#include "AttackAir1.h"
-#include "AttackAir2.h"
-#include "AttackAir3.h"
 
 /**
  * @file AttackManager.h

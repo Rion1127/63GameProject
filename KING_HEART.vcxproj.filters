@@ -130,18 +130,6 @@
     <Filter Include="application\ヘッダーファイル\Player\Attack">
       <UniqueIdentifier>{58eaa20c-82ec-4e05-9c52-44040d287a3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="application\ソースファイル\Player\Attack\GroundAttack">
-      <UniqueIdentifier>{5bd00da9-8df1-495c-b110-035cd0905794}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ヘッダーファイル\Player\Attack\GroundAttack">
-      <UniqueIdentifier>{f6366b01-728c-40a4-8f3a-b6698adb5814}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ソースファイル\Player\Attack\AirAttack">
-      <UniqueIdentifier>{a8ac29e1-937c-407c-a209-ee686230474b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ヘッダーファイル\Player\Attack\AirAttack">
-      <UniqueIdentifier>{1f099e0c-248c-44d0-aff0-e238adaee1ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="application\ヘッダーファイル\Enemy">
       <UniqueIdentifier>{6d5d5fba-7c35-43dc-b42b-3f7639f33c20}</UniqueIdentifier>
     </Filter>
@@ -570,41 +558,11 @@
     <ClCompile Include="application\Sourcecode\Interface\IGauge.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\Attack2.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\Attack3.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\Attack1.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir2.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir3.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAir1.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Attack\AttackManager.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackSlide.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackFinishBreak.cpp">
-      <Filter>application\ソースファイル\Player\Attack\GroundAttack</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Attack\AttackAirSweep.cpp">
-      <Filter>application\ソースファイル\Player\Attack\AirAttack</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
@@ -971,41 +929,11 @@
     <ClInclude Include="application\Sourcecode\Interface\IGauge.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir1.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir2.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAir3.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\Attack3.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\Attack1.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\Attack2.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackSlide.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Attack\AttackManager.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackFinishBreak.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\GroundAttack</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirAerialFinish.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Attack\AttackAirSweep.h">
-      <Filter>application\ヘッダーファイル\Player\Attack\AirAttack</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
