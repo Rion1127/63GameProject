@@ -9,8 +9,8 @@
  * @brief プレイヤーの基本攻撃の動作をするクラス
  */
 
-BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lockOnActor) :
-	attackinput_(input),
+BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockOnActor) :
+	attackdata_(input),
 	selfActor_(selfActor),
 	lockOnActor_(lockOnActor)
 {
@@ -25,7 +25,7 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 
 	//攻撃に掛かる時間を計算する
 	float attackAllTime = 0;
-	for (auto& info : attackinput_.attackinfo) {
+	for (auto& info : attackdata_.attackinfo) {
 		attackAllTime += info.attackFrame + info.gapFrame;
 	}
 	attackAllTime_.SetLimitTime(attackAllTime);
@@ -36,18 +36,18 @@ BaseAttack::BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lock
 	//剣の座標をに当たり判定代入
 	col_.center = swordPos_;
 	col_.radius = 1.0f;
-	float& attackTime = attackinput_.attackinfo[index_].attackFrame;
+	float& attackTime = attackdata_.attackinfo[index_].attackFrame;
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
 
-	nextAttackFrame_ += attackinput_.attackinfo[index_].attackAllFrame;
+	nextAttackFrame_ += attackdata_.attackinfo[index_].attackAllFrame;
 
 	playerAxisY_ = selfActor_->GetAxisY();
 	
 
-	float time = (attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
+	float time = (attackdata_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
 	slerpSpeed_ = 1.f / time;
 
-	for (auto& info : attackinput_.attackinfo)
+	for (auto& info : attackdata_.attackinfo)
 	{
 		for (auto& q : info.quaternion)
 		{
@@ -61,17 +61,17 @@ void BaseAttack::SetNextAttack()
 {
 	spline_.AllClear();
 	spline_.SetIsStart(true);
-	spline_.SetTimerType_(attackinput_.attackinfo[index_].timerType);
-	spline_.SetEasingType_(attackinput_.attackinfo[index_].easingType);
-	spline_.SetEasingTypeInOut_(attackinput_.attackinfo[index_].inOutType);
-	spline_.SetMaxTime(attackinput_.attackinfo[index_].attackFrame);
+	spline_.SetTimerType_(attackdata_.attackinfo[index_].timerType);
+	spline_.SetEasingType_(attackdata_.attackinfo[index_].easingType);
+	spline_.SetEasingTypeInOut_(attackdata_.attackinfo[index_].inOutType);
+	spline_.SetMaxTime(attackdata_.attackinfo[index_].attackFrame);
 	SplinePosUpdate();
 
-	auto& addVec = attackinput_.attackinfo[index_].playerMoveVec;
+	auto& addVec = attackdata_.attackinfo[index_].playerMoveVec;
 
 	addVec = RotateVector(addVec, selfActor_->GetAxisY());
 
-	selfActor_->SetGravity(attackinput_.attackinfo[index_].gravity);
+	selfActor_->SetGravity(attackdata_.attackinfo[index_].gravity);
 	quaternionIndex_ = 0;
 	oneSwingTimer_ = attackAllTime_.GetTimer();
 }
@@ -83,9 +83,9 @@ void BaseAttack::Update()
 	//攻撃が終了したら
 	if (attackAllTime_.GetTimer() > nextAttackFrame_) {
 		//残りの攻撃がある場合は続ける
-		if (index_ < attackinput_.attackinfo.size() - 1) {
+		if (index_ < attackdata_.attackinfo.size() - 1) {
 			index_++;
-			nextAttackFrame_ += attackinput_.attackinfo[index_].attackAllFrame;
+			nextAttackFrame_ += attackdata_.attackinfo[index_].attackAllFrame;
 			SetNextAttack();
 
 			float picth = RRandom::RandF(0.7f, 1.5f);
@@ -100,7 +100,7 @@ void BaseAttack::Update()
 		isAttaking_ = true;
 	}
 	//ダメージクールタイム計算
-	float& attackTime = attackinput_.attackinfo[index_].attackFrame;
+	float& attackTime = attackdata_.attackinfo[index_].attackFrame;
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
 
 	//プレイヤーの移動
@@ -157,7 +157,7 @@ void BaseAttack::CalculateRotToLockOnActor()
 void BaseAttack::SplinePosUpdate()
 {
 	spline_.DeleteAllPoint();
-	auto& attackpoint = attackinput_.attackinfo[index_].splinePos;
+	auto& attackpoint = attackdata_.attackinfo[index_].splinePos;
 	for (int32_t i = 0; i < attackpoint.size(); i++)
 	{
 		Vector3 splinePos = attackpoint[i];
@@ -179,9 +179,9 @@ void BaseAttack::SplinePosUpdate()
 
 void BaseAttack::PlayerMove()
 {
-	selfActor_->AddaddVec(attackinput_.attackinfo[index_].playerMoveVec);
-	if (attackinput_.attackinfo[index_].playerMoveVec.length() != 0) {
-		MoveTo(Vector3(0, 0, 0), attackinput_.attackinfo[index_].deceleration, attackinput_.attackinfo[index_].playerMoveVec);
+	selfActor_->AddaddVec(attackdata_.attackinfo[index_].playerMoveVec);
+	if (attackdata_.attackinfo[index_].playerMoveVec.length() != 0) {
+		MoveTo(Vector3(0, 0, 0), attackdata_.attackinfo[index_].deceleration, attackdata_.attackinfo[index_].playerMoveVec);
 	}
 }
 
@@ -200,20 +200,20 @@ void BaseAttack::ColUpdate()
 
 void BaseAttack::QuaternionUpdate()
 {
-	auto& frame = attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame;
+	auto& frame = attackdata_.attackinfo[index_].quaternion[quaternionIndex_].frame;
 	auto timer = attackAllTime_.GetTimer() - oneSwingTimer_;
 	if (timer > frame)
 	{
-		if (quaternionIndex_ < attackinput_.attackinfo[index_].quaternion.size() - 1)
+		if (quaternionIndex_ < attackdata_.attackinfo[index_].quaternion.size() - 1)
 		{
-			quaternionTimer_ += attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame;
+			quaternionTimer_ += attackdata_.attackinfo[index_].quaternion[quaternionIndex_].frame;
 			quaternionIndex_++;
 
-			float time = (attackinput_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
+			float time = (attackdata_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
 			slerpSpeed_ = 1.f / time;
 		}
 	}
-	auto& currentQuaternion = attackinput_.attackinfo[index_].quaternion[quaternionIndex_].q;
+	auto& currentQuaternion = attackdata_.attackinfo[index_].quaternion[quaternionIndex_].q;
 
 	resultQuaternion_ = resultQuaternion_.Slerp(currentQuaternion, 0.3f);
 

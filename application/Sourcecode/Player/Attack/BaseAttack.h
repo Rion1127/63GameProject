@@ -14,7 +14,7 @@
 class BaseAttack
 {
 public:
-	struct AttackInput {
+	struct AttackData {
 		AttackType type_;		//通常攻撃かフィニッシュ技か
 		std::vector<AttackEditor::AttackInfo> attackinfo;	//攻撃の詳細
 	};
@@ -22,7 +22,7 @@ private:
 	IActor* selfActor_;
 	IActor* lockOnActor_;
 	float damageCoolTime_;		//無敵時間
-	AttackInput attackinput_;	//攻撃の詳細
+	AttackData attackdata_;	//攻撃の詳細
 	TimerFloat attackAllTime_;		//攻撃に掛かるフレーム
 	Spline spline_;
 	uint32_t index_;
@@ -43,7 +43,7 @@ private:
 
 	std::unique_ptr<Object3d> obj_;
 public:
-	BaseAttack(const AttackInput& input, IActor* selfActor, IActor* lockOnActor);
+	BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockOnActor);
 	//初期化
 	void SetNextAttack();
 	//更新
@@ -63,8 +63,8 @@ public:
 	Vector3 GetSwordPos() { return swordPos_; }
 	Sphere GetCol() { return col_; }
 	float GetDamageCoolTime() { return damageCoolTime_; }
-	int32_t GetDamage() { return attackinput_.attackinfo[index_].damage; }
-	AttackType GetAttackType() { return attackinput_.type_; }
-	Vector3 GetKnockVec() { return attackinput_.attackinfo[index_].knockVec; }
+	int32_t GetDamage() { return attackdata_.attackinfo[index_].damage; }
+	AttackType GetAttackType() { return attackdata_.type_; }
+	Vector3 GetKnockVec() { return attackdata_.attackinfo[index_].knockVec; }
 };
 

@@ -240,52 +240,7 @@ void AttackEditor::DrawImGui()
 
 	ImGuiSwingCount();
 
-	//スプラインポイントの変更・スプラインポイントの追加
-	ImGui::Begin("AttackInfo");
-
-	ImGui::Text("HELP ");
-	ImGui::SameLine();
-	ImGui::TextDisabled("(?)");
-
-	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
-	{
-		ImGui::BeginTooltip();
-		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-		ImGui::TextUnformatted("attackFrame         : スプライン曲線の時間");
-		ImGui::TextUnformatted("gapFrame            : 攻撃の後隙");
-		ImGui::TextUnformatted("Damage              : 敵に与えるダメージ");
-		ImGui::TextUnformatted("gravity             : 攻撃時の上方向の動き");
-		ImGui::TextUnformatted("playerMoveVec       : プレイヤーの前方向移動");
-		ImGui::TextUnformatted("deceleration        : playerMoveVecの減速速度");
-		ImGui::TextUnformatted("knockVec            : イージングのInOutの種類を変更する");
-		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
-		ImGui::PopTextWrapPos();
-		ImGui::EndTooltip();
-	}
-
-	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
-	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
-	ImGui::DragInt("Damage", &attackInfo_[currentSwingNum_].damage, 1, 0, 500);
-	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, 0.f, 500.f);
-
-	float playerMoveVec[3] = {
-		attackInfo_[currentSwingNum_].playerMoveVec.x,
-		attackInfo_[currentSwingNum_].playerMoveVec.y,
-		attackInfo_[currentSwingNum_].playerMoveVec.z,
-	};
-	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, -10.f, 500.f);
-	attackInfo_[currentSwingNum_].playerMoveVec = { playerMoveVec[0],playerMoveVec[1], playerMoveVec[2] };
-	ImGui::DragFloat("deceleration", &attackInfo_[currentSwingNum_].deceleration, 0.001f, 0.001f, 500.f);
-
-	float knockVec[3] = {
-		attackInfo_[currentSwingNum_].knockVec.x,
-		attackInfo_[currentSwingNum_].knockVec.y,
-		attackInfo_[currentSwingNum_].knockVec.z,
-	};
-	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
-	attackInfo_[currentSwingNum_].knockVec = { knockVec[0],knockVec[1], knockVec[2] };
-
-	ImGui::End();
+	ImGuiAttackInfo();
 
 	ImGuiSettingCombo();
 	//姿勢制御
@@ -486,6 +441,71 @@ void AttackEditor::ImGuiAllPlay()
 			AttackPlay();
 		}
 	}
+}
+
+void AttackEditor::ImGuiAttackInfo()
+{
+	//スプラインポイントの変更・スプラインポイントの追加
+	ImGui::Begin("AttackInfo");
+
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("attackFrame         : スプライン曲線の時間");
+		ImGui::TextUnformatted("gapFrame            : 攻撃の後隙");
+		ImGui::TextUnformatted("Damage              : 敵に与えるダメージ");
+		ImGui::TextUnformatted("gravity             : 攻撃時の上方向の動き");
+		ImGui::TextUnformatted("playerMoveVec       : プレイヤーの前方向移動");
+		ImGui::TextUnformatted("deceleration        : playerMoveVecの減速速度");
+		ImGui::TextUnformatted("knockVec            : イージングのInOutの種類を変更する");
+		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+
+	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
+	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
+	ImGui::DragInt("Damage", &attackInfo_[currentSwingNum_].damage, 1, 0, 500);
+	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, 0.f, 500.f);
+
+	float playerMoveVec[3] = {
+		attackInfo_[currentSwingNum_].playerMoveVec.x,
+		attackInfo_[currentSwingNum_].playerMoveVec.y,
+		attackInfo_[currentSwingNum_].playerMoveVec.z,
+	};
+	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, -10.f, 500.f);
+	attackInfo_[currentSwingNum_].playerMoveVec = { playerMoveVec[0],playerMoveVec[1], playerMoveVec[2] };
+	ImGui::DragFloat("deceleration", &attackInfo_[currentSwingNum_].deceleration, 0.001f, 0.001f, 500.f);
+
+	float knockVec[3] = {
+		attackInfo_[currentSwingNum_].knockVec.x,
+		attackInfo_[currentSwingNum_].knockVec.y,
+		attackInfo_[currentSwingNum_].knockVec.z,
+	};
+	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
+	attackInfo_[currentSwingNum_].knockVec = { knockVec[0],knockVec[1], knockVec[2] };
+
+	if (ImGui::Button("AttackType"))
+	{
+		AttackType timerType;
+		bool flag = (attackInfo_[currentSwingNum_].attackType == AttackType::Normal);
+
+		timerType = flag ? AttackType::Finish : AttackType::Normal;
+
+		attackInfo_[currentSwingNum_].attackType = timerType;
+	}
+	std::string attackType;
+	if (attackInfo_[currentSwingNum_].attackType == AttackType::Finish) attackType = "Finish";
+	else attackType = "Normal";
+	ImGui::SameLine();
+	ImGui::Text(attackType.c_str());
+
+	ImGui::End();
 }
 
 void AttackEditor::ImGuiSwingCount()
@@ -730,6 +750,11 @@ void AttackEditor::AttackSave(const std::string& string)
 		writing_file << writing_text << " " << addVec.x << " " << addVec.y << " " << addVec.z << std::endl;
 		writing_text = "deceleration";
 		writing_file << writing_text << " = " << attackinfo.deceleration << std::endl;
+		writing_text = "attackType";
+		std::string attackType;
+		if (attackinfo.attackType == AttackType::Normal)attackType = "Normal";
+		else attackType = "Finish";
+		writing_file << writing_text << " " << attackType << std::endl;
 		writing_file << std::endl;
 
 		writing_text = "//--SplinePos--//";
@@ -855,6 +880,16 @@ void AttackEditor::AttackLoad(const std::string& string)
 		{
 			line_stream.ignore(1, '=');
 			line_stream >> attackinfo->deceleration;
+		}
+		else if (key == "attackType")
+		{
+			std::string attackType;
+			line_stream >> attackType;
+
+			AttackType timerType;
+			if (attackType == "Normal")timerType = AttackType::Normal;
+			else timerType = AttackType::Finish;
+			attackinfo->attackType = timerType;
 		}
 
 		if (key == "//--SplinePos--//")

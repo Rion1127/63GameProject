@@ -247,7 +247,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
 	std::string line;
 
-	BaseAttack::AttackInput newinput;
+	BaseAttack::AttackData newinput;
 
 	AttackEditor::AttackInfo* info = nullptr;
 	AttackEditor::QuaternionControl* quaternionControl = nullptr;
@@ -308,6 +308,18 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream.ignore(1, '=');
 			line_stream >> info->deceleration;
 		}
+
+		if (key == "attackType")
+		{
+			std::string attackType;
+			line_stream >> attackType;
+
+			AttackType timerType;
+			if (attackType == "Normal")timerType = AttackType::Normal;
+			else timerType = AttackType::Finish;
+			newinput.type_ = timerType;
+		}
+
 		//タイマー制御方法読み込み
 		if (key == "TimerType")
 		{

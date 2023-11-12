@@ -6,6 +6,7 @@ gravityY = 0.25
 KnockVec 0 0 0
 addVec 0 0 0
 deceleration = 0.1
+attackType Normal
 
 //--SplinePos--//
 TimerType Easing

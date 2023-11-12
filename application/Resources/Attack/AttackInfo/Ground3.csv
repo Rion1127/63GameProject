@@ -6,6 +6,7 @@ gravityY = 0
 KnockVec 0 0 0
 addVec 0 0 0.1
 deceleration = 0.007
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
@@ -18,3 +19,4 @@ SplinePos 2 0 0.2
 //--Quaternion--//
 flame 1
 Quaternion 3.14 0 0 1
+

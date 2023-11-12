@@ -41,6 +41,7 @@ public:
 
 		std::vector<Vector3> splinePos;
 		std::vector<QuaternionControl> quaternion;
+		AttackType attackType = AttackType::Normal;
 	};
 	struct SplinePos {
 		Vector3 splinePointPos_;
@@ -106,6 +107,7 @@ private:
 	void ImGuiLoad();				//ロードImGui表示
 	void ImGuiPlay();				//セーブImGui表示
 	void ImGuiAllPlay();			//オールプレイImGui表示
+	void ImGuiAttackInfo();
 	void ImGuiSwingCount();
 	void ImGuiSettingCombo();
 	void ImGuiQuaternion();

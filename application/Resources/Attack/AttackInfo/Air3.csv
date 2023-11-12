@@ -6,6 +6,7 @@ gravityY = 0.1
 KnockVec 0 0 0
 addVec 0 0 0.05
 deceleration = 0.003
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
@@ -27,6 +28,7 @@ gravityY = 0.05
 KnockVec 0 0 0
 addVec 0 0 0.05
 deceleration = 0.003
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
@@ -48,6 +50,7 @@ gravityY = 0.1
 KnockVec 0 0 0
 addVec 0 0 0.05
 deceleration = 0.003
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
@@ -75,6 +78,7 @@ gravityY = 0.05
 KnockVec 0 0 0
 addVec 0 0 0.05
 deceleration = 0.003
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
