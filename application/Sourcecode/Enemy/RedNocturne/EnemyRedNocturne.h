@@ -38,6 +38,8 @@ private:
 	std::shared_ptr<ContinuousEmitter> fireEmitter_;
 	std::shared_ptr<OneceEmitter> fireCircleEmitter_;
 	Vector3 fireCirclePos_;
+	//上下に揺れるタイマー
+	Timer floatTimer_;
 public:
 	EnemyRedNocturne(const Vector3& pos, const Vector3& rot);
 	~EnemyRedNocturne();

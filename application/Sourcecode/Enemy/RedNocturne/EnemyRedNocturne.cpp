@@ -55,6 +55,8 @@ EnemyRedNocturne::EnemyRedNocturne(const Vector3& pos, const Vector3& rot) :
 	stateInit = true;
 
 	InitFireParticle();
+
+	floatTimer_.SetLimitTime(40);
 }
 
 EnemyRedNocturne::~EnemyRedNocturne()
@@ -123,19 +125,28 @@ void EnemyRedNocturne::MoveUpdate()
 	if (actionTimer_.GetIsEnd())
 	{
 		SortPriority();
+
+		floatTimer_.Reset();
+		floatTimer_.SetLimitTime(RRandom::Rand(40,70));
 	}
 #ifdef _DEBUG
+
+	/*floatTimer_.AddTime(1);
+	float floatposY = UpAndDown((float)floatTimer_.GetLimitTimer(),0.1f,(float)floatTimer_.GetTimer());
+	obj_->GetTransform()->AddPosition(Vector3(0,floatposY,0));*/
 
 	ImGui::Begin("RedNocturne");
 
 	std::string text = "State : ";
-	if (state_ == State::Idle)		text += "Idle";
-	if (state_ == State::KnockBack)		text += "KnockBack";
-	if (state_ == State::FireAttack)			text += "FireAttack";
-	if (state_ == State::Wander)		text += "Wander";
-	if (state_ == State::Wander_FireAttack)		text += "Wander_FireAttack";
+	if (state_ == State::Idle)				text += "Idle";
+	if (state_ == State::KnockBack)			text += "KnockBack";
+	if (state_ == State::FireAttack)		text += "FireAttack";
+	if (state_ == State::Wander)			text += "Wander";
+	if (state_ == State::Wander_FireAttack)	text += "Wander_FireAttack";
 
 	ImGui::Text(text.c_str());
+	float pos[3] = { obj_->GetTransform()->position_.x,obj_->GetTransform()->position_.y, obj_->GetTransform()->position_.z, };
+	ImGui::DragFloat3("pos", pos,0.1f,-100.f,100.f);
 
 	ImGui::End();
 #endif // _DEBUG
@@ -175,18 +186,32 @@ void EnemyRedNocturne::Wander()
 		wanderStartPos_ = obj_->WT_.position_;
 		wanderEndPos_ = (IEnemy::splayer_->GetWorldTransform()->position_ - wanderStartPos_) + offsetPos;
 
+		float max = 1.f;
+		float min = -1.f;
+
+		if (wanderStartPos_.y > 5.f)
+		{
+			max = 0.1f;
+			min = -1.0f;
+		}
+		else if (wanderStartPos_.y < 3.f)
+		{
+			max = 1.0f;
+			min = -0.1f;
+		}
+		wanderEndPos_.y = RRandom::RandF(min, max);
 		pos_ = wanderStartPos_;
 	}
 
 	addVec_ = {
 		pos_.x - obj_->WT_.position_.x ,
-		0,
+		pos_.y - obj_->WT_.position_.y ,
 		pos_.z - obj_->WT_.position_.z ,
 	};
 	float rate = actionTimer_.GetTimeRate();
 	pos_ = {
 		Easing::Cubic::easeInOut(rate, wanderStartPos_.x, wanderEndPos_.x, 1.0f),
-		0.f,
+		Easing::Cubic::easeInOut(rate, wanderStartPos_.y, wanderEndPos_.y, 1.0f),
 		Easing::Cubic::easeInOut(rate, wanderStartPos_.z, wanderEndPos_.z, 1.0f),
 	};
 
