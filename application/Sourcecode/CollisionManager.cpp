@@ -19,7 +19,7 @@ CollisionManager::CollisionManager()
 	wallHitTimer_.SetTime(wallHitTimer_.GetLimitTimer());
 
 	isHitStop_ = true;
-	hitStopTimer_ = 1;
+	hitStopTimer_ = 3;
 
 	shakePower_ = 0.3f;
 	shakeTimer_ = 15;
@@ -388,12 +388,14 @@ void CollisionManager::PlayerAttackToEnemy()
 				//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
 				if (attackCol->GetAttackType() == AttackType::Normal)
 				{
+					hitStopTimer_ = 2;
 					shakePower_ = 0.3f;
 					shakeTimer_ = 15;
 					gameCamera_->SetCameraShake(shakeTimer_, shakePower_);
 				}
 				else
 				{
+					hitStopTimer_ = 4;
 					shakePower_ = 0.8f;
 					shakeTimer_ = 25;
 					gameCamera_->SetCameraShake(shakeTimer_, shakePower_);

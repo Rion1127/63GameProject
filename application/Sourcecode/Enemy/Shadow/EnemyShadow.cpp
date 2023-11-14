@@ -23,6 +23,7 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true,false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
+	displayObj_->WT_.SetRotType(RotType::Quaternion);
 	knockResist_ = { 1,1,1 };
 
 	obj_->GetTransform()->SetPosition(pos);
@@ -132,6 +133,11 @@ void EnemyShadow::DrawSprite()
 
 }
 
+void EnemyShadow::DamageUpdate()
+{
+	obj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
+}
+
 void EnemyShadow::Idle()
 {
 	stateName_ = "Idle";
@@ -146,13 +152,7 @@ void EnemyShadow::Following()
 	float length = EtoPVec_.length();
 	addVec_ = EtoPVec_.normalize() * moveSpeed;
 
-	Vector2 dir = {
-			EtoPVec_.x,
-			EtoPVec_.z
-	};
-	//進行方向に回転
-	float rotY = Vec2Angle(dir);
-	obj_->WT_.rotation_.y = Radian(rotY);
+	obj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
 	//一定距離まで近づいたらOR一定時間追いかけたら
 	if (length < followLength || actionTimer_.GetIsEnd())
 	{
@@ -186,13 +186,8 @@ void EnemyShadow::Wander()
 				sinkTimer_.Reset();
 			}
 		}
-		Vector2 dir = {
-			spline_.GetHeadingVec().x,
-			spline_.GetHeadingVec().z
-		};
 		//進行方向に回転
-		float rotY = Vec2Angle(dir);
-		obj_->WT_.rotation_.y = Radian(rotY);
+		obj_->WT_.SetQuaternion(VecToDir(spline_.GetHeadingVec()));
 	}
 	//移動が終わったら別のパターンへ
 	else
@@ -259,9 +254,9 @@ void EnemyShadow::KnockBack()
 
 	slimeTimer_.AddTime(1);
 	Vector3 scale = {
-		1.f + UpAndDown(slimeTimer_.GetLimitTimer(),0.1f,slimeTimer_.GetTimer(),false),
-		1.f + UpAndDown(slimeTimer_.GetLimitTimer(),0.1f,slimeTimer_.GetTimer(),true),
-		1.f + UpAndDown(slimeTimer_.GetLimitTimer(),0.1f,slimeTimer_.GetTimer(),false),
+		1.f + UpAndDown(actionTimer_.GetLimitTimer(),0.1f,actionTimer_.GetTimer(),false),
+		1.f + UpAndDown(actionTimer_.GetLimitTimer(),0.1f,actionTimer_.GetTimer(),true),
+		1.f + UpAndDown(actionTimer_.GetLimitTimer(),0.1f,actionTimer_.GetTimer(),false),
 	};
 	if (slimeTimer_.GetIsEnd())
 	{

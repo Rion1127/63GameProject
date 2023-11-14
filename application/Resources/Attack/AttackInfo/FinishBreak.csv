@@ -3,8 +3,8 @@ attackFrame = 25
 gapFrame = 8
 damege = 10
 gravityY = 0.12
-KnockVec 0.1 0.1 0.1
-KnockYVec = 0.2
+KnockVec 0.1 0.7 0.1
+KnockYVec = 1.5
 addVec 0 0 -0.1
 deceleration = 0.005
 attackType Finish

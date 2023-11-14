@@ -17,5 +17,6 @@ public:
 private:
     void MoveUpdate() override;
     void DrawSprite() override;
+    void DamageUpdate() override {};
 };
 

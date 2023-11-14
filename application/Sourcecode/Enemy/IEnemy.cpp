@@ -96,7 +96,7 @@ void IEnemy::Damage(const Vector3& knockVec, int32_t damageValue, float cooltime
 		damageCoolTime_.Reset();
 		health_ -= damageValue;
 	}
-
+	DamageUpdate();
 }
 
 void IEnemy::UpdateEtoPVec()

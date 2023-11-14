@@ -58,6 +58,8 @@ public:
 	void ColPosUpdate();
 	void Damage(const Vector3& knockVec, int32_t damageValue, float cooltime);
 
+	//ダメージを受けた時の反応（継承先固有の動き）
+	virtual void DamageUpdate() = 0;
 	virtual void SetIsNock(bool flag) = 0;
 	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;
 	virtual void DrawSprite() = 0;
