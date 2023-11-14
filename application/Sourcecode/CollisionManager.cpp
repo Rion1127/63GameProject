@@ -72,7 +72,7 @@ void CollisionManager::DrawImGui()
 	ImGui::Text(flagstring.c_str());
 
 
-	ImGui::SliderFloat("hitStopTime", &hitStopTimer_, 0.f, 100.f, "x = %.3f");
+	ImGui::DragFloat("hitStopTime", &hitStopTimer_, 1.f,0, 100.f);
 
 	ImGui::DragFloat("shakePower", &shakePower_, 0.1f, 0.1f, 5.f);
 	ImGui::DragFloat("shakeTimer", &shakeTimer_, 1.f, 1, 100.f);
@@ -361,6 +361,7 @@ void CollisionManager::PlayerAttackToEnemy()
 			{
 				//プレイヤーの反対方向にノックバックする
 				Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
+				knockVec.y = attackCol->GetKnockYVec();
 				knockVec = knockVec.normalize() * attackCol->GetKnockVec();
 				//敵のノックバック抵抗力を掛ける
 				knockVec = knockVec * enemy->GetKnockResist();
@@ -398,6 +399,7 @@ void CollisionManager::PlayerAttackToEnemy()
 					gameCamera_->SetCameraShake(shakeTimer_, shakePower_);
 				}
 				if (isHitStop_ == false)continue;
+				if (player_->GetIsHitStopping()) continue;
 				player_->SetHitStopTimer(hitStopTimer_);
 				enemy->SetHitStopTimer(hitStopTimer_);
 				ParticleManager::GetInstance()->SetHitStopTimer(hitStopTimer_);

@@ -4,6 +4,7 @@ gapFrame = 8
 damege = 10
 gravityY = 0.12
 KnockVec 0.1 0.1 0.1
+KnockYVec = 0.2
 addVec 0 0 -0.1
 deceleration = 0.005
 attackType Finish
@@ -33,6 +34,7 @@ gapFrame = 5
 damege = 20
 gravityY = 0
 KnockVec 0.5 1 0.5
+KnockYVec = 1.5
 addVec 0 0 0.6
 deceleration = 0.035
 attackType Finish

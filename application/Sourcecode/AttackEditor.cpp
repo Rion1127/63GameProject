@@ -343,20 +343,30 @@ void AttackEditor::ImGuiSave()
 {
 	static std::string saveName;		//書き出すファイルの名前
 	static bool isProofSave = false;	//セーブの確認
+	static bool isProofQuickSave = false;	//セーブの確認
 	ImGui::InputText("SaveName", saveName.data(), 15);
 	//セーブするか確認
-	if (isProofSave)
+	if (isProofSave || isProofQuickSave)
 	{
 		ImGui::Text("Do you want to save?");
 		if (ImGui::Button("No", ImVec2(50, 50)))
 		{
 			isProofSave = false;
+			isProofQuickSave = false;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Yes", ImVec2(50, 50)))
 		{
-			isProofSave = false;
-			AttackSave(saveName);
+			if (isProofSave)
+			{
+				isProofSave = false;
+				AttackSave(saveName);
+			}
+			else
+			{
+				isProofQuickSave = false;
+				AttackSave(loadFileName_);
+			}
 		}
 
 	}
@@ -365,26 +375,29 @@ void AttackEditor::ImGuiSave()
 		if (ImGui::Button("Save", ImVec2(50, 50)))
 		{
 			isProofSave = true;
-
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("QuickSave", ImVec2(70, 50)))
+		{
+			isProofQuickSave = true;
 		}
 	}
 }
 
 void AttackEditor::ImGuiLoad()
 {
-	static std::string LoadName;		//読み込むファイルの名前
 	static bool isProofLoad = false;	//ロードの確認
 
 	//プルダウンメニューでイージングタイプを選択できるようにする
-	if (ImGui::BeginCombo("LoadFileName", LoadName.c_str()))
+	if (ImGui::BeginCombo("LoadFileName", loadFileName_.c_str()))
 	{
 		for (uint32_t i = 0; i < allAttackFileNames.size(); ++i)
 		{
 			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
-			const bool is_selected = (LoadName == allAttackFileNames[i]);
+			const bool is_selected = (loadFileName_ == allAttackFileNames[i]);
 			if (ImGui::Selectable(allAttackFileNames[i].c_str(), is_selected))
 			{
-				LoadName = allAttackFileNames[i].c_str();
+				loadFileName_ = allAttackFileNames[i].c_str();
 				spline_.SetEasingType_((Spline::EasingType)i);
 			}
 			if (is_selected)
@@ -406,7 +419,7 @@ void AttackEditor::ImGuiLoad()
 		if (ImGui::Button("Yes", ImVec2(50, 50)))
 		{
 			isProofLoad = false;
-			AttackLoad(LoadName);
+			AttackLoad(loadFileName_);
 		}
 	}
 	else
@@ -489,6 +502,8 @@ void AttackEditor::ImGuiAttackInfo()
 	};
 	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
 	attackInfo_[currentSwingNum_].knockVec = { knockVec[0],knockVec[1], knockVec[2] };
+
+	ImGui::DragFloat("knockYVec", &attackInfo_[currentSwingNum_].knockYVec, 0.01f, -10.f, 10.f);
 
 	if (ImGui::Button("AttackType"))
 	{
@@ -745,6 +760,8 @@ void AttackEditor::AttackSave(const std::string& string)
 		Vector3& knockVec = attackinfo.knockVec;
 		writing_text = "KnockVec";
 		writing_file << writing_text << " " << knockVec.x << " " << knockVec.y << " " << knockVec.z << std::endl;
+		writing_text = "KnockYVec";
+		writing_file << writing_text << " = " << attackinfo.knockYVec << std::endl;
 		Vector3& addVec = attackinfo.playerMoveVec;
 		writing_text = "addVec";
 		writing_file << writing_text << " " << addVec.x << " " << addVec.y << " " << addVec.z << std::endl;
@@ -869,6 +886,11 @@ void AttackEditor::AttackLoad(const std::string& string)
 			line_stream >> attackinfo->knockVec.x;
 			line_stream >> attackinfo->knockVec.y;
 			line_stream >> attackinfo->knockVec.z;
+		}
+		else if (key == "KnockYVec")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> attackinfo->knockYVec;
 		}
 		else if (key == "addVec")
 		{

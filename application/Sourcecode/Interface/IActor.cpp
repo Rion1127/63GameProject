@@ -33,6 +33,6 @@ void IActor::ObjUpdate()
 
 IActor::IActor(ActorType type)
 {
-	knockDecreaseValue = 0.03f;
+	knockDecreaseValue = 0.04f;
 	type_ = type;
 }

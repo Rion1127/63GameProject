@@ -297,6 +297,11 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> info->knockVec.y;
 			line_stream >> info->knockVec.z;
 		}
+		else if (key == "KnockYVec")
+		{
+			line_stream.ignore(1, '=');
+			line_stream >> info->knockYVec;
+		}
 		else if (key == "addVec")
 		{
 			line_stream >> info->playerMoveVec.x;

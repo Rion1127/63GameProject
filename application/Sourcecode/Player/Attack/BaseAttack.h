@@ -66,5 +66,6 @@ public:
 	int32_t GetDamage() { return attackdata_.attackinfo[index_].damage; }
 	AttackType GetAttackType() { return attackdata_.type_; }
 	Vector3 GetKnockVec() { return attackdata_.attackinfo[index_].knockVec; }
+	float GetKnockYVec() { return attackdata_.attackinfo[index_].knockYVec; }
 };
 

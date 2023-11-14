@@ -32,6 +32,7 @@ public:
 		int32_t damage;			//ダメージ
 
 		Vector3 knockVec;		//ノックバック方向
+		float knockYVec;
 		Vector3 playerMoveVec;		//プレイヤーが動く方向
 		float deceleration = 0.1f;			//プレイヤーの速度減速値
 
@@ -89,6 +90,7 @@ private:
 	//保存するファイルのディレクトリ名
 	std::string attackInfoDir_;
 	std::string attackKeyDir_;
+	std::string loadFileName_;
 	//クォータニオンの姿勢確認
 	PostureDisplay postureDisplay;
 	Quaternion cullentQuaternion_;
