@@ -33,7 +33,10 @@ protected:
 	bool isHardLockOn_;
 	bool isGravityImpact_;	//重力を有効にする
 	bool isDead_;
+	//軽い攻撃を受けた時のフラグ
 	bool isKnock_;
+	//フィニッシュ技をくらった時のフラグ
+	bool isDown_;
 	bool isBulletShot_;
 
 	Vector3 EtoPVec_;
@@ -61,6 +64,7 @@ public:
 	//ダメージを受けた時の反応（継承先固有の動き）
 	virtual void DamageUpdate() = 0;
 	virtual void SetIsNock(bool flag) = 0;
+	virtual void SetIsDown(bool flag) = 0;
 	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;
 	virtual void DrawSprite() = 0;
 public:

@@ -22,6 +22,7 @@ public:
 		Attack,
 		JumpAttack,
 		KnockBack,
+		Down,
 		None
 	};
 private:
@@ -50,6 +51,7 @@ private:
 public:
 	EnemyShadow(const Vector3& pos,const Vector3& rot);
 	void SetIsNock(bool flag) override;
+	void SetIsDown(bool flag) override;
 	void SetState(State state);
 	void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override { bullets; };
 	void Draw()override;

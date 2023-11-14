@@ -368,7 +368,7 @@ void CollisionManager::PlayerAttackToEnemy()
 				enemy->Damage(knockVec,
 					(int32_t) attackCol->GetDamage(),
 					attackCol->GetDamageCoolTime());
-				enemy->SetIsNock(true);
+				
 				//HPゲージ反映
 				enemyManager_->Damage();
 
@@ -388,6 +388,8 @@ void CollisionManager::PlayerAttackToEnemy()
 				//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
 				if (attackCol->GetAttackType() == AttackType::Normal)
 				{
+					
+					enemy->SetIsNock(true);
 					hitStopTimer_ = 2;
 					shakePower_ = 0.3f;
 					shakeTimer_ = 15;
@@ -395,6 +397,8 @@ void CollisionManager::PlayerAttackToEnemy()
 				}
 				else
 				{
+					//フィニッシュ業をくらったらダウンする
+					enemy->SetIsDown(true);
 					hitStopTimer_ = 4;
 					shakePower_ = 0.8f;
 					shakeTimer_ = 25;

@@ -62,6 +62,11 @@ void EnemyShadow::SetIsNock(bool flag)
 	actionTimer_.Reset();
 }
 
+void EnemyShadow::SetIsDown(bool flag)
+{
+	isKnock_ = flag;
+}
+
 void EnemyShadow::SetState(State state)
 {
 	state_ = state;
@@ -107,6 +112,10 @@ void EnemyShadow::MoveUpdate()
 	if (isKnock_)
 	{
 		state_ = State::KnockBack;
+	}
+	if (isDown_)
+	{
+		state_ = State::Down;
 	}
 
 	UpdateEtoPVec();
