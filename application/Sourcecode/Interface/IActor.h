@@ -33,7 +33,7 @@ protected:
 	Timer freezeTimer_;
 	float objAngle_;
 	bool isFloorCollision_ = false;
-	float knockDecreaseValue = 0.05f;
+	float knockDecreaseValue;
 	bool isCanMove_ = true;
 	Quaternion axisX_;				//プレイヤーX軸回転
 	Quaternion axisY_;				//プレイヤーY軸回転
