@@ -17,6 +17,7 @@ EnemyDummy::EnemyDummy(const Vector3& pos) : IEnemy(EnemyType::Ground, true, 100
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("dummyEnemy", true));
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
+	displayObj_->SetShadowOffsetPos(Vector3(0,-1,0));
 	//obj_->SetAmbient("cube", { 0,0,1.0f });
 	knockResist_ = { 1,1,1 };
 
@@ -46,13 +47,13 @@ void EnemyDummy::MoveUpdate()
 
 	obj_->WT_.SetQuaternion(target);
 
-	Vector3 colPos = {
+	/*Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
 		obj_->GetTransform()->position_.y,
 		obj_->GetTransform()->position_.z,
 	};
 
-	col_.SetPos(colPos);
+	col_.SetPos(colPos);*/
 
 	col_.radius = obj_->GetTransform()->scale_.y;
 

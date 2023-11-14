@@ -22,7 +22,7 @@ CollisionManager::CollisionManager()
 	hitStopTimer_ = 1;
 
 	shakePower_ = 0.3f;
-	shakeTimer_ = 10;
+	shakeTimer_ = 15;
 }
 
 void CollisionManager::Update()
@@ -186,7 +186,6 @@ void CollisionManager::EnemyToFloor()
 				Vector3 pos = { 10,10,10 };
 				if (Sphere2PlaneCol(enemy->GetCol(), *floor, &pos))
 				{
-					pos.y += enemy->GetCol().radius;
 					enemy->GetGravity().SetGrabity({ 0,0,0 });
 					enemy->FloorColision(pos);
 					break;
@@ -386,8 +385,18 @@ void CollisionManager::PlayerAttackToEnemy()
 				SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 
 				//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
-				if (attackCol->GetAttackType() != AttackType::Finish)continue;
-				gameCamera_->SetCameraShake(shakeTimer_, shakePower_);
+				if (attackCol->GetAttackType() == AttackType::Normal)
+				{
+					shakePower_ = 0.3f;
+					shakeTimer_ = 15;
+					gameCamera_->SetCameraShake(shakeTimer_, shakePower_);
+				}
+				else
+				{
+					shakePower_ = 0.8f;
+					shakeTimer_ = 25;
+					gameCamera_->SetCameraShake(shakeTimer_, shakePower_);
+				}
 				if (isHitStop_ == false)continue;
 				player_->SetHitStopTimer(hitStopTimer_);
 				enemy->SetHitStopTimer(hitStopTimer_);

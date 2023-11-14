@@ -42,7 +42,14 @@ void IEnemy::PreUpdate()
 	ColPosUpdate();
 
 	MoveUpdate();
-	displayObj_->SetPos(obj_->GetPos());
+
+	Vector3 displayPos = {
+		obj_->GetPos().x,
+		obj_->GetPos().y + obj_->GetScale().y,
+		obj_->GetPos().z,
+	};
+
+	displayObj_->SetPos(displayPos);
 	displayObj_->SetRot(obj_->GetRot());
 	displayObj_->SetScale(obj_->GetScale());
 	displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
@@ -61,7 +68,7 @@ void IEnemy::Draw()
 
 void IEnemy::FloorColision(const Vector3& pos)
 {
-	//addVec_ = { 0,0,0 };
+	
 	gravity_.SetGrabity({ 0,0.f,0 });
 	obj_->WT_.SetPosition(pos);
 }
@@ -71,7 +78,7 @@ void IEnemy::ColPosUpdate()
 
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
-		obj_->GetTransform()->position_.y,
+		obj_->GetTransform()->position_.y + obj_->GetTransform()->scale_.y,
 		obj_->GetTransform()->position_.z,
 	};
 

@@ -178,7 +178,7 @@ void Player::ColPosUpdate()
 	//モデルの原点を下にしているためその分ずらす
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
-		obj_->GetTransform()->position_.y + obj_->WT_.scale_.y,
+		obj_->GetTransform()->position_.y + obj_->GetTransform()->scale_.y,
 		obj_->GetTransform()->position_.z,
 	};
 
