@@ -42,6 +42,8 @@ private:
 	TimerFloat slimeTimer_;
 
 	std::unordered_map<State, int32_t> priority_;
+	Quaternion EToPQuaternion_;
+	Quaternion knockQuaternion_;
 private:
 	//デバッグ
 	std::string stateName_;

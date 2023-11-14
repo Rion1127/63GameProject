@@ -58,7 +58,7 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 void EnemyShadow::SetIsNock(bool flag)
 {
 	isKnock_ = flag;
-	actionTimer_.SetLimitTime(100);
+	actionTimer_.SetLimitTime(40);
 	actionTimer_.Reset();
 }
 
@@ -135,7 +135,14 @@ void EnemyShadow::DrawSprite()
 
 void EnemyShadow::DamageUpdate()
 {
-	obj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
+	EToPQuaternion_ = VecToDir(EtoPVec_);
+	knockQuaternion_ = {
+		RRandom::RandF(-0.7f,-0.3f),
+		RRandom::RandF(-0.4f, 0.4f),
+		0,
+		1.0f
+	};
+	obj_->WT_.SetQuaternion(EToPQuaternion_);
 }
 
 void EnemyShadow::Idle()
@@ -252,18 +259,15 @@ void EnemyShadow::KnockBack()
 {
 	stateName_ = "KnockBack";
 
-	slimeTimer_.AddTime(1);
-	Vector3 scale = {
-		1.f + UpAndDown(actionTimer_.GetLimitTimer(),0.1f,actionTimer_.GetTimer(),false),
-		1.f + UpAndDown(actionTimer_.GetLimitTimer(),0.1f,actionTimer_.GetTimer(),true),
-		1.f + UpAndDown(actionTimer_.GetLimitTimer(),0.1f,actionTimer_.GetTimer(),false),
-	};
-	if (slimeTimer_.GetIsEnd())
+	auto resultQ = EToPQuaternion_ * knockQuaternion_;
+	if (actionTimer_.GetTimeRate() <= 0.4f)
 	{
-		slimeTimer_.Reset();
+		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
 	}
-
-	obj_->SetScale(scale);
+	else
+	{
+		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(EToPQuaternion_, 0.15f));
+	}
 
 	//一定時間経てばノック状態からアイドル状態に戻る
 	attack_.reset();
