@@ -59,11 +59,14 @@ private:
 	void MoveUpdate() override;
 	void DrawSprite() override;
 	void DamageUpdate() override;
+	//地面に当たった時の処理
+	void FloorCollisionDerived() override;
 
 	void Idle();
 	void Following();
 	void Wander();
 	void HideMove();
+	void Down();
 	void Attack();
 	void JumpAttack();
 	void KnockBack();

@@ -7,7 +7,7 @@ KnockVec 0.1 0.7 0.1
 KnockYVec = 1.5
 addVec 0 0 -0.1
 deceleration = 0.005
-attackType Finish
+attackType Normal
 
 //--SplinePos--//
 TimerType Easing

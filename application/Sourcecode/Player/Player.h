@@ -134,7 +134,7 @@ public:
 	void AddaddVec(const Vector3& pos) { addVec_ += pos; }
 	void SetAddPos(const Vector3& pos) { addVec_ = pos; }
 	void SetLockOnEnemy(IEnemy* enemy) { command_.SetLockOnEnemy(enemy); }
-	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
+	
 
 	void SubMP(int32_t costMp) { nowMP_ -= costMp; }
 public:

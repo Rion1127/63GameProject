@@ -177,7 +177,7 @@ void CollisionManager::EnemyToFloor()
 				float dist = enemy->GetCol().center.y - floor->distance;
 				if (enemy->GetCol().radius <= dist)
 				{
-					Vector3 pushBackVec = floor->normal * dist;
+					Vector3 pushBackVec = (floor->normal * dist) * enemy->GetCol().radius;
 					enemy->GetWorldTransform()->position_ -= pushBackVec;
 				}
 				enemy->ColPosUpdate();
@@ -191,6 +191,10 @@ void CollisionManager::EnemyToFloor()
 					break;
 				}
 			}
+		}
+		else
+		{
+			enemy->SetIsFloorCollision(false);
 		}
 	}
 }

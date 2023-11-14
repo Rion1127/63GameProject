@@ -20,7 +20,7 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 {
 	name_ = "Shadow";
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true,false));
+	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true, false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
@@ -64,7 +64,9 @@ void EnemyShadow::SetIsNock(bool flag)
 
 void EnemyShadow::SetIsDown(bool flag)
 {
-	isKnock_ = flag;
+	isDown_ = flag;
+	actionTimer_.SetLimitTime(40);
+	actionTimer_.Reset();
 }
 
 void EnemyShadow::SetState(State state)
@@ -93,10 +95,6 @@ void EnemyShadow::Draw()
 
 void EnemyShadow::MoveUpdate()
 {
-	if (health_ < 100)
-	{
-		//health_ += 5;
-	}
 	//ステータスごとの動きを追加
 	void (EnemyShadow:: * Action[]) () =
 	{
@@ -106,18 +104,18 @@ void EnemyShadow::MoveUpdate()
 		&EnemyShadow::HideMove,
 		&EnemyShadow::Attack,
 		&EnemyShadow::JumpAttack,
-		&EnemyShadow::KnockBack
+		&EnemyShadow::KnockBack,
+		&EnemyShadow::Down,
 	};
 
 	if (isKnock_)
 	{
-		state_ = State::KnockBack;
+		//ダウン状態の時はノック状態にしない
+		if (state_ != State::Down) {
+			state_ = State::KnockBack;
+		}
 	}
-	if (isDown_)
-	{
-		state_ = State::Down;
-	}
-
+	//プレイヤーへのベクトル更新
 	UpdateEtoPVec();
 
 	actionTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
@@ -152,6 +150,29 @@ void EnemyShadow::DamageUpdate()
 		1.0f
 	};
 	obj_->WT_.SetQuaternion(EToPQuaternion_);
+
+	obj_->SetScale(Vector3(1, 1, 1));
+
+	state_ = State::KnockBack;
+}
+
+void EnemyShadow::FloorCollisionDerived()
+{
+	//前フレームで地面に接していなかったとき
+	if (isFloorCollision_ == false)
+	{
+		//フィニッシュ技を食らってダウンする
+		if (isDown_) {
+			isKnock_ = false;
+			isDown_ = false;
+			state_ = State::Down;
+			actionTimer_.Reset();
+			actionTimer_.SetLimitTime(160);
+
+			slimeTimer_.SetLimitTime(30);
+			slimeTimer_.Reset();
+		}
+	}
 }
 
 void EnemyShadow::Idle()
@@ -204,6 +225,8 @@ void EnemyShadow::Wander()
 		}
 		//進行方向に回転
 		obj_->WT_.SetQuaternion(VecToDir(spline_.GetHeadingVec()));
+
+		
 	}
 	//移動が終わったら別のパターンへ
 	else
@@ -223,12 +246,50 @@ void EnemyShadow::Wander()
 			col_.isActive = true;
 		}
 	}
+
+	col_.radius = obj_->WT_.scale_.y;
 }
 
 void EnemyShadow::HideMove()
 {
 	stateName_ = "HideMove";
 
+}
+
+void EnemyShadow::Down()
+{
+	slimeTimer_.AddTime(1);
+
+	float scaleZ = 0;
+	if (actionTimer_.GetTimeRate() <= 0.2f) {
+		scaleZ = Easing::Bounce::easeOut(actionTimer_.GetTimeRate(), 1.f, -0.6f, 0.2f);
+	}
+	else {
+		float maxRate = 0.6f;
+		float rate = actionTimer_.GetTimeRate() - 0.2f;
+		rate = Min(maxRate, rate);
+		scaleZ = Easing::Bounce::easeOut(rate, 0.4f, 0.6f, maxRate);
+	}
+	col_.radius = scaleZ;
+
+	obj_->SetScale(Vector3(1,1, scaleZ));
+	if (actionTimer_.GetTimeRate() >= 0.6f) {
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(EToPQuaternion_, 0.2f);
+	}
+	else {
+		auto resultQ = EToPQuaternion_ * Quaternion(-1,0,0,1);
+		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
+	}
+	if (actionTimer_.GetIsEnd())
+	{
+		slimeTimer_.Reset();
+		obj_->SetScale(Vector3(1, 1, 1));
+		col_.radius = 1;
+		state_ = State::Idle;
+		actionTimer_.Reset();
+		actionTimer_.SetLimitTime(70);
+		attack_.reset();
+	}
 }
 
 void EnemyShadow::Attack()
@@ -268,14 +329,16 @@ void EnemyShadow::KnockBack()
 {
 	stateName_ = "KnockBack";
 
-	auto resultQ = EToPQuaternion_ * knockQuaternion_;
-	if (actionTimer_.GetTimeRate() <= 0.4f)
-	{
-		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
-	}
-	else
-	{
-		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(EToPQuaternion_, 0.15f));
+	if (isDown_ == false) {
+		auto resultQ = EToPQuaternion_ * knockQuaternion_;
+		if (actionTimer_.GetTimeRate() <= 0.4f)
+		{
+			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
+		}
+		else
+		{
+			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(EToPQuaternion_, 0.15f));
+		}
 	}
 
 	//一定時間経てばノック状態からアイドル状態に戻る
@@ -287,7 +350,6 @@ void EnemyShadow::KnockBack()
 		actionTimer_.Reset();
 
 		obj_->SetScale(Vector3(1, 1, 1));
-		slimeTimer_.Reset();
 	}
 }
 

@@ -45,7 +45,7 @@ void IEnemy::PreUpdate()
 
 	Vector3 displayPos = {
 		obj_->GetPos().x,
-		obj_->GetPos().y + obj_->GetScale().y,
+		obj_->GetPos().y + col_.radius,
 		obj_->GetPos().z,
 	};
 
@@ -68,7 +68,8 @@ void IEnemy::Draw()
 
 void IEnemy::FloorColision(const Vector3& pos)
 {
-	
+	FloorCollisionDerived();
+	isFloorCollision_ = true;
 	gravity_.SetGrabity({ 0,0.f,0 });
 	obj_->WT_.SetPosition(pos);
 }
@@ -78,13 +79,13 @@ void IEnemy::ColPosUpdate()
 
 	Vector3 colPos = {
 		obj_->GetTransform()->position_.x,
-		obj_->GetTransform()->position_.y + obj_->GetTransform()->scale_.y,
+		obj_->GetTransform()->position_.y + col_.radius,
 		obj_->GetTransform()->position_.z,
 	};
 
 	col_.SetPos(colPos);
 
-	col_.radius = obj_->GetTransform()->scale_.y;
+	//col_.radius = obj_->GetTransform()->scale_.y;
 }
 
 void IEnemy::Damage(const Vector3& knockVec, int32_t damageValue, float cooltime)

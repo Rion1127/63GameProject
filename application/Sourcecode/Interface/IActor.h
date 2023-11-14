@@ -63,5 +63,6 @@ public:
 	void SetFreezeTime(uint32_t time) { freezeTimer_.SetLimitTime(time); freezeTimer_.Reset(); }
 	void SetObjAngle(float angle) { objAngle_ = angle; }
 	void SetAxisY(Quaternion q) { axisY_ = q; }
+	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
 };
 

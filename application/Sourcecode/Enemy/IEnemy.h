@@ -65,6 +65,7 @@ public:
 	virtual void DamageUpdate() = 0;
 	virtual void SetIsNock(bool flag) = 0;
 	virtual void SetIsDown(bool flag) = 0;
+	virtual void FloorCollisionDerived() = 0;
 	virtual void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) = 0;
 	virtual void DrawSprite() = 0;
 public:

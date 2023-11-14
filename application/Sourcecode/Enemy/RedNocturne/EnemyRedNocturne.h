@@ -51,6 +51,7 @@ private:
 	void MoveUpdate() override;
 	void DrawSprite() override {};
 	void DamageUpdate() override {};
+	void FloorCollisionDerived() override {};
 
 	void Idle();
 	void Wander();
