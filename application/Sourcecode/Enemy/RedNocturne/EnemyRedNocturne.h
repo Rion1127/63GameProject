@@ -44,7 +44,7 @@ public:
 	EnemyRedNocturne(const Vector3& pos, const Vector3& rot);
 	~EnemyRedNocturne();
 	void SetIsNock(bool flag) override;
-	void SetIsDown(bool flag) override { isKnock_ = flag; };
+	void SetIsDown(bool flag) override;
 	void BulletShot(std::list<std::unique_ptr<IBullet>>* bullets) override;
 	void Draw()override;
 private:

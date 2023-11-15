@@ -73,6 +73,13 @@ void EnemyRedNocturne::SetIsNock(bool flag)
 	actionTimer_.Reset();
 }
 
+void EnemyRedNocturne::SetIsDown(bool flag)
+{
+	isDown_ = flag;
+	actionTimer_.SetLimitTime(40);
+	actionTimer_.Reset();
+}
+
 void EnemyRedNocturne::Draw()
 {
 	displayObj_->Draw();
@@ -94,7 +101,7 @@ void EnemyRedNocturne::MoveUpdate()
 		&EnemyRedNocturne::KnockBack
 	};
 
-	if (isKnock_)
+	if (isKnock_ || isDown_)
 	{
 		state_ = State::KnockBack;
 	}
@@ -259,6 +266,7 @@ void EnemyRedNocturne::KnockBack()
 	{
 		state_ = State::Idle;
 		isKnock_ = false;
+		isDown_ = false;
 		actionTimer_.Reset();
 	}
 	fireEmitter_->isActive = false;
