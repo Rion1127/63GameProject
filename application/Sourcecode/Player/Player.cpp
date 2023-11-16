@@ -480,9 +480,11 @@ void Player::Jump()
 {
 	if (Controller::GetTriggerButtons(PAD::INPUT_A))
 	{
-		//ジャンプしたらジャンプ可能フラグをfalseにする
-		isCanJump_ = false;
-		GoToState(PlayerState::Jump);
+		if (isCanInput_) {
+			//ジャンプしたらジャンプ可能フラグをfalseにする
+			isCanJump_ = false;
+			GoToState(PlayerState::Jump);
+		}
 	}
 }
 
@@ -756,4 +758,9 @@ void Player::Reset()
 	command_.SetLockOnEnemy(nullptr);
 	nowAngle_ = 0;
 	obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
+	objAngle_ = 0;
+	obj_->WT_.quaternion_ = IdentityQuaternion();
+	state_ = PlayerState::Idle;
+	moveVec_ = { 0,0 };
+	inputVec_ = { 0,0 };
 }

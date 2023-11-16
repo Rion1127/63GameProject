@@ -174,6 +174,8 @@ void ColosseumSystem::Reset()
 	clearSprite_.Reset();
 	readyGoSprite_.Reset();
 
+	player_->Reset();
+
 	GameSpeed::SetGameSpeed(1.f);
 }
 
