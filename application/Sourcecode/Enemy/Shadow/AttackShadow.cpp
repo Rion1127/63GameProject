@@ -6,7 +6,7 @@
  */
 
 AttackShadow::AttackShadow(IActor* selfActor) :
-	IAttack(selfActor, 1, 55, 5, 56)
+	IAttack(selfActor, 1, 35, 5, 36)
 {
 }
 
@@ -69,7 +69,7 @@ void AttackShadow::MoveUpdate()
 
 void AttackShadow::SplineInit()
 {
-	spline_.SetLimitTime(attackInfo_.maxTime - 40);
+	spline_.SetLimitTime(attackInfo_.maxTime - 20);
 
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.f);
