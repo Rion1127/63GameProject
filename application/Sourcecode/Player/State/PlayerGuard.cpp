@@ -13,6 +13,7 @@ void PlayerGuard::SetUp()
 void PlayerGuard::Update()
 {
 	player_->GuardUpdate();
+	player_->PlayerRotUpdate();
 }
 
 void PlayerGuard::Draw()

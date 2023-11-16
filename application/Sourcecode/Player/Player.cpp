@@ -333,11 +333,13 @@ void Player::PlayerRotUpdate()
 		axisZ_ = IdentityQuaternion();
 	}
 	//スティック入力している間は入力ベクトルを更新する
-	if (GetIsMove())
-	{
-		nowAngle_ = Vec2Angle(moveVec_);
-		objAngle_ = nowAngle_;
-		obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
+	if (GetIsCanMove()) {
+		if (GetIsMove())
+		{
+			nowAngle_ = Vec2Angle(moveVec_);
+			objAngle_ = nowAngle_;
+			obj_->WT_.rotation_ = { 0,Radian(nowAngle_) ,0 };
+		}
 	}
 
 	if (state_ == PlayerState::Idle || state_ == PlayerState::Move ||

@@ -32,27 +32,15 @@ void GuardClass::Init()
 	if (enemy != nullptr) {
 		//敵をハードロックしているなら敵の方向に向く
 		if (enemy->GetIsHardLockOn()) {
-			frontVec = player_->GetWorldTransform()->position_;
-
-			lockOnVec = player_->GetLockOnVec();
-			//ロックオンしている敵へのベクトルをとる
-			frontVec2 = {
-				lockOnVec.x,
-				lockOnVec.z
-			};
-			float rotY = Radian(Vec2Angle(frontVec2));
-			player_->SetRot({ 0,rotY,0 });
-
-			//回転情報から正面ベクトル(2D)を取得
-			frontVec = {
-				sinf(player_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(player_->GetWorldTransform()->rotation_.y),
+			
+			Vector2 EToPVec = {
+				enemy->GetWorldTransform()->position_.x - player_->GetWorldTransform()->position_.x,
+				enemy->GetWorldTransform()->position_.z - player_->GetWorldTransform()->position_.z,
 			};
 
-			frontVec = frontVec.normalize();
-			frontVec = frontVec * frontDist_;
-			frontVec.y = 0;
+			float angle = Vec2Angle(EToPVec);
+
+			player_->SetObjAngle(angle);
 		}
 		else {
 			//回転情報から正面ベクトル(2D)を取得
