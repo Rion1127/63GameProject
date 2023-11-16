@@ -48,6 +48,8 @@ private:
 
 	std::unique_ptr<Object3d> handObj_;
 	Timer attackTimer_;
+	Quaternion handAxisX_;
+	Quaternion handResultQ_;
 private:
 	//デバッグ
 	std::string stateName_;

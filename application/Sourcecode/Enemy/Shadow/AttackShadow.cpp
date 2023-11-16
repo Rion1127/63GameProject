@@ -6,7 +6,7 @@
  */
 
 AttackShadow::AttackShadow(IActor* selfActor) :
-	IAttack(selfActor, 1, 35, 5, 36)
+	IAttack(selfActor, 1, 40, 5, 41)
 {
 }
 
@@ -53,8 +53,8 @@ void AttackShadow::MoveUpdate()
 	//回転情報から正面ベクトル(2D)を取得
 	attackVec_ = attackVec_.normalize();
 
-	Vector3 speed = attackVec_ * 0.06f;
-	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	Vector3 speed = attackVec_ * 0.1f;
+	float timerate = 1.f - (float)(attackInfo_.nowTime / 1.5f) / attackInfo_.maxTime;
 	timerate = Clamp(timerate,0.f,1.f);
 	speed *= timerate;
 

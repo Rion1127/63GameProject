@@ -52,6 +52,8 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	randRange_ = 30;
 	isWanderInit_ = false;
 
+	handAxisX_ = IdentityQuaternion();
+
 	//プライオリティに行動パターンを登録
 	priority_.insert(std::make_pair(State::Idle, 0));
 	priority_.insert(std::make_pair(State::Following, 0));
@@ -306,36 +308,16 @@ void EnemyShadow::Down()
 
 void EnemyShadow::Attack()
 {
-	attackTimer_.AddTime(1);
-
-	Vector3 startPos = GetWorldTransform()->position_;
-	startPos.y = GetWorldTransform()->scale_.y;
-	Vector3 up = Vector3(0, 1, 0) * (GetWorldTransform()->scale_.y * 2.f);
-	Vector3 endPos = startPos + up;
-
-	Vector3 handPos = {
-		Easing::Quint::easeOut(startPos.x,endPos.x,attackTimer_.GetTimeRate()),
-		Easing::Quint::easeOut(startPos.y,endPos.y,attackTimer_.GetTimeRate()),
-		Easing::Quint::easeOut(startPos.z,endPos.z,attackTimer_.GetTimeRate()),
-	};
-	Vector3 handscale = {
-		Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
-		Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
-		Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
-	};
-	float rot = Easing::Quint::easeOut(0,Radian(720), attackTimer_.GetTimeRate());
-
-	handObj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
-	handObj_->SetPos(handPos);
-	handObj_->SetScale(handscale);
-	auto resultQ = displayObj_->WT_.quaternion_ * MakeAxisAngle(Vector3(0, 1, 0), rot);
-	handObj_->WT_.quaternion_ = resultQ;
-
 	if (attackTimer_.GetIsEnd()) {
 		if (attack_->GetLockOnActor() == nullptr) {
 			
 		}
 		else {
+			handAxisX_ = handAxisX_.Slerp(Quaternion(1, 0, 0, 0.8f), 0.05f);
+			handResultQ_ = displayObj_->WT_.quaternion_;
+			handResultQ_ = handResultQ_ * handAxisX_;
+			handObj_->WT_.quaternion_ = handResultQ_;
+
 			stateName_ = "Attack";
 			attack_->Update();
 			attack_->SetNowTime(actionTimer_.GetTimer());
@@ -350,7 +332,36 @@ void EnemyShadow::Attack()
 			actionTimer_.SetLimitTime(120);
 			attack_.reset();
 			attackTimer_.Reset();
+			handAxisX_ = IdentityQuaternion();
 		}
+	}
+	else {
+		attackTimer_.AddTime(1);
+
+		Vector3 startPos = GetWorldTransform()->position_;
+		startPos.y = GetWorldTransform()->scale_.y;
+		Vector3 up = Vector3(0, 1, 0) * (GetWorldTransform()->scale_.y * 2.f);
+		Vector3 endPos = startPos + up;
+
+		Vector3 handPos = {
+			Easing::Quint::easeOut(startPos.x,endPos.x,attackTimer_.GetTimeRate()),
+			Easing::Quint::easeOut(startPos.y,endPos.y,attackTimer_.GetTimeRate()),
+			Easing::Quint::easeOut(startPos.z,endPos.z,attackTimer_.GetTimeRate()),
+		};
+		Vector3 handscale = {
+			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
+			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
+			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
+		};
+		float handRot = Easing::Quint::easeOut(0, Radian(720), attackTimer_.GetTimeRate());
+
+		handObj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
+
+		handObj_->SetPos(handPos);
+		handObj_->SetScale(handscale);
+		handResultQ_ = displayObj_->WT_.quaternion_ * MakeAxisAngle(Vector3(0, 1, 0), handRot);
+		handResultQ_ = handResultQ_ * handAxisX_;
+		handObj_->WT_.quaternion_ = handResultQ_;
 	}
 }
 
