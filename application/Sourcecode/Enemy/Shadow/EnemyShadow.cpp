@@ -362,6 +362,10 @@ void EnemyShadow::Attack()
 		handResultQ_ = displayObj_->WT_.quaternion_ * MakeAxisAngle(Vector3(0, 1, 0), handRot);
 		handResultQ_ = handResultQ_ * handAxisX_;
 		handObj_->WT_.quaternion_ = handResultQ_;
+
+		if (attackTimer_.GetTimeRate() < 0.6f) {
+			addVec_ = -EtoPVec_.normalize() * 0.05f;
+		}
 	}
 }
 

@@ -45,15 +45,17 @@ void AttackShadow::Init()
 	attackVec_ = frontVec;
 
 	SplineInit();
+
+	spline_.SetParent(selfActor_->GetDisplayWorldTransform());
 }
 
 void AttackShadow::MoveUpdate()
 {
-	spline_.Update();
+	spline_.Update(GameSpeed::GetEnemySpeed());
 	//回転情報から正面ベクトル(2D)を取得
 	attackVec_ = attackVec_.normalize();
 
-	Vector3 speed = attackVec_ * 0.1f;
+	Vector3 speed = attackVec_ * 0.5f;
 	float timerate = 1.f - (float)(attackInfo_.nowTime / 1.5f) / attackInfo_.maxTime;
 	timerate = Clamp(timerate,0.f,1.f);
 	speed *= timerate;
@@ -73,23 +75,20 @@ void AttackShadow::SplineInit()
 
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.f);
-	Vector3 playerUpPos =
-		selfActor_->GetWorldTransform()->position_ + up;
+	Vector3 playerUpPos = up;
 	attackVec.push_back(playerUpPos);
 	attackVec.push_back(playerUpPos);
 
 	up = {
-		CalculateFrontVec().normalize().x,
-		CalculateFrontVec().normalize().y + selfActor_->GetWorldTransform()->scale_.y * 2.f,
-		CalculateFrontVec().normalize().z,
+		0.f,
+		0.f + selfActor_->GetWorldTransform()->scale_.y * 2.f,
+		0.5f,
 	};
-	Vector3 playermiddlePos =
-		selfActor_->GetWorldTransform()->position_ + up;
+	Vector3 playermiddlePos = up;
 	attackVec.push_back(playermiddlePos);
 
-	Vector3 playerFrontPos =
-		selfActor_->GetWorldTransform()->position_ + CalculateFrontVec().normalize() * 3.f;
-	playerFrontPos.y += 0.2f;
+	Vector3 playerFrontPos(0,-1.0f,2.5f);
+	//playerFrontPos.y += 0.2f;
 	attackVec.push_back(playerFrontPos);
 	attackVec.push_back(playerFrontPos);
 
