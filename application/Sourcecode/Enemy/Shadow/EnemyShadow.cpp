@@ -23,8 +23,15 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true, false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
+	displayObj_->SetShadowOffsetPos(Vector3(0,-1,0));
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 	knockResist_ = { 1,1,1 };
+
+
+	handObj_ = std::move(std::make_unique<Object3d>());
+	handObj_->SetModel(Model::CreateOBJ_uniptr("shadowHand", true,false));
+	handObj_->WT_.SetRotType(RotType::Quaternion);
+	handObj_->SetScale(Vector3(0, 0, 0));
 
 	obj_->GetTransform()->SetPosition(pos);
 	obj_->GetTransform()->SetRotation(rot);
@@ -87,9 +94,10 @@ void EnemyShadow::SetState(State state)
 void EnemyShadow::Draw()
 {
 	displayObj_->Draw();
+	handObj_->Draw();
 	if (attack_ != nullptr)
 	{
-		attack_->DrawCol();
+		//attack_->DrawCol();
 	}
 }
 
@@ -126,6 +134,8 @@ void EnemyShadow::MoveUpdate()
 	{
 		SortPriority();
 	}
+
+	handObj_->Update();
 #ifdef _DEBUG
 	ImGui::Begin("Enemy");
 
@@ -154,6 +164,8 @@ void EnemyShadow::DamageUpdate()
 	obj_->SetScale(Vector3(1, 1, 1));
 
 	state_ = State::KnockBack;
+
+	handObj_->SetScale(Vector3(0,0,0));
 }
 
 void EnemyShadow::FloorCollisionDerived()
@@ -226,7 +238,7 @@ void EnemyShadow::Wander()
 		//進行方向に回転
 		obj_->WT_.SetQuaternion(VecToDir(spline_.GetHeadingVec()));
 
-		
+
 	}
 	//移動が終わったら別のパターンへ
 	else
@@ -272,12 +284,12 @@ void EnemyShadow::Down()
 	}
 	col_.radius = scaleZ;
 
-	obj_->SetScale(Vector3(1,1, scaleZ));
+	obj_->SetScale(Vector3(1, 1, scaleZ));
 	if (actionTimer_.GetTimeRate() >= 0.6f) {
 		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(EToPQuaternion_, 0.2f);
 	}
 	else {
-		auto resultQ = EToPQuaternion_ * Quaternion(-1,0,0,1);
+		auto resultQ = EToPQuaternion_ * Quaternion(-1, 0, 0, 1);
 		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
 	}
 	if (actionTimer_.GetIsEnd())
@@ -294,17 +306,51 @@ void EnemyShadow::Down()
 
 void EnemyShadow::Attack()
 {
-	stateName_ = "Attack";
-	attack_->Update();
-	attack_->SetNowTime(actionTimer_.GetTimer());
-	actionTimer_.SetLimitTime(attack_->GetInfo().maxTime);
+	attackTimer_.AddTime(1);
 
-	if (actionTimer_.GetIsEnd())
-	{
-		state_ = State::Idle;
-		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(120);
-		attack_.reset();
+	Vector3 startPos = GetWorldTransform()->position_;
+	startPos.y = GetWorldTransform()->scale_.y;
+	Vector3 up = Vector3(0, 1, 0) * (GetWorldTransform()->scale_.y * 2.f);
+	Vector3 endPos = startPos + up;
+
+	Vector3 handPos = {
+		Easing::Quint::easeOut(startPos.x,endPos.x,attackTimer_.GetTimeRate()),
+		Easing::Quint::easeOut(startPos.y,endPos.y,attackTimer_.GetTimeRate()),
+		Easing::Quint::easeOut(startPos.z,endPos.z,attackTimer_.GetTimeRate()),
+	};
+	Vector3 handscale = {
+		Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
+		Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
+		Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
+	};
+	float rot = Easing::Quint::easeOut(0,Radian(720), attackTimer_.GetTimeRate());
+
+	handObj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
+	handObj_->SetPos(handPos);
+	handObj_->SetScale(handscale);
+	auto resultQ = displayObj_->WT_.quaternion_ * MakeAxisAngle(Vector3(0, 1, 0), rot);
+	handObj_->WT_.quaternion_ = resultQ;
+
+	if (attackTimer_.GetIsEnd()) {
+		if (attack_->GetLockOnActor() == nullptr) {
+			
+		}
+		else {
+			stateName_ = "Attack";
+			attack_->Update();
+			attack_->SetNowTime(actionTimer_.GetTimer());
+			actionTimer_.SetLimitTime(attack_->GetInfo().maxTime + attackTimer_.GetLimitTimer());
+			handObj_->SetPos(attack_->GetAttackCol()->at(0)->col_.center);
+		}
+
+		if (actionTimer_.GetIsEnd())
+		{
+			state_ = State::Idle;
+			actionTimer_.Reset();
+			actionTimer_.SetLimitTime(120);
+			attack_.reset();
+			attackTimer_.Reset();
+		}
 	}
 }
 
@@ -427,7 +473,7 @@ void EnemyShadow::SortPriority()
 			nowPriolityValue >= rand)
 		{
 			//ステートを代入
-			StateUpdate(arr[i].first);
+			StateUpdate(State::Attack/*arr[i].first*/);
 		}
 	}
 }
@@ -512,6 +558,9 @@ void EnemyShadow::StateUpdate(State state)
 	else if (state == State::Attack)
 	{
 		actionTimer_.SetLimitTime(70);
+		attackTimer_.SetLimitTime(30);
+
+		obj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
 		attack_.reset();
 		attack_ = std::move(std::make_unique<AttackShadow>(this));
 		attack_->SetLockOnActor(splayer_);

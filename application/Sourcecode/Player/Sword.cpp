@@ -70,7 +70,7 @@ void Sword::Update(const Vector3& swordPos)
 
 		Vector3 axisY = { 0, 1, 0 };
 
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 0.1f);
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(MakeAxisAngle(axisY, rot_), 1.0f);
 	}
 	else if (state_ == SwordState::Attack)
 	{

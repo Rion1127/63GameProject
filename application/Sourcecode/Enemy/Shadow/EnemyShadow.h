@@ -45,6 +45,9 @@ private:
 	std::unordered_map<State, int32_t> priority_;
 	Quaternion EToPQuaternion_;
 	Quaternion knockQuaternion_;
+
+	std::unique_ptr<Object3d> handObj_;
+	Timer attackTimer_;
 private:
 	//デバッグ
 	std::string stateName_;

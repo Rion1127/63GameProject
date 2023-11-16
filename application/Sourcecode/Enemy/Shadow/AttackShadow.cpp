@@ -6,7 +6,7 @@
  */
 
 AttackShadow::AttackShadow(IActor* selfActor) :
-	IAttack(selfActor, 1, 65, 5, 66)
+	IAttack(selfActor, 1, 55, 5, 56)
 {
 }
 
@@ -34,7 +34,7 @@ void AttackShadow::Init()
 		frontDist.y = 0;
 		colPos = selfActor_->GetWorldTransform()->position_ + frontDist;
 		colPos.y += 1;
-		attackCol_.at(0)->col_.center = colPos;
+		attackCol_.at(0)->col_.center = {0,10,0};
 		attackCol_.at(0)->col_.radius = 0.6f;
 		attackCol_.at(0)->damage = 10;
 		//ノックバック力
@@ -55,6 +55,7 @@ void AttackShadow::MoveUpdate()
 
 	Vector3 speed = attackVec_ * 0.06f;
 	float timerate = 1.f - (float)attackInfo_.nowTime / attackInfo_.maxTime;
+	timerate = Clamp(timerate,0.f,1.f);
 	speed *= timerate;
 
 	selfActor_->AddaddVec(speed);
@@ -71,7 +72,7 @@ void AttackShadow::SplineInit()
 	spline_.SetLimitTime(attackInfo_.maxTime - 40);
 
 	std::vector<Vector3>attackVec;
-	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 3.f);
+	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.f);
 	Vector3 playerUpPos =
 		selfActor_->GetWorldTransform()->position_ + up;
 	attackVec.push_back(playerUpPos);
@@ -79,7 +80,7 @@ void AttackShadow::SplineInit()
 
 	up = {
 		CalculateFrontVec().normalize().x,
-		CalculateFrontVec().normalize().y + selfActor_->GetWorldTransform()->scale_.y * 3.f,
+		CalculateFrontVec().normalize().y + selfActor_->GetWorldTransform()->scale_.y * 2.f,
 		CalculateFrontVec().normalize().z,
 	};
 	Vector3 playermiddlePos =

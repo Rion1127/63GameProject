@@ -70,6 +70,7 @@ public:
 	AttackInfo GetInfo() { return attackInfo_; }
 	std::vector<std::unique_ptr<AttackCol>>* GetAttackCol() { return &attackCol_; }
 	IActor* GetSelfActor() { return selfActor_; }
+	IActor* GetLockOnActor() { return lockOnActor_; }
 	TimerFloat GetTimer() { return timer_; }
 	Vector3 GetSwordPos() { return swordPos_; }
 	AttackType GetAttackType() { return attackType_; }
