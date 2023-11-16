@@ -370,7 +370,7 @@ void EnemyShadow::SortPriority()
 	if (length <= compareShortlength)
 	{
 		priority_.at(State::Attack) += 70;
-		priority_.at(State::JumpAttack) += 20;
+		//priority_.at(State::JumpAttack) += 20;
 		priority_.at(State::Wander) += 10;
 		priority_.at(State::Idle) += 20;
 	}
@@ -378,7 +378,7 @@ void EnemyShadow::SortPriority()
 	else if (length > compareShortlength &&
 		length < compareLonglength)
 	{
-		priority_.at(State::JumpAttack) += 70;
+		//priority_.at(State::JumpAttack) += 70;
 		priority_.at(State::Attack) += 30;
 		priority_.at(State::Wander) += 10;
 		priority_.at(State::Following) += 2;

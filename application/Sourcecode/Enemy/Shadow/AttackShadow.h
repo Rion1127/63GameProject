@@ -17,5 +17,7 @@ private:
 	void Init() override;
 	void MoveUpdate() override;
 
+	void SplineInit();
+
 };
 
