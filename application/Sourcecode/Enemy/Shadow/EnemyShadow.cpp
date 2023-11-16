@@ -313,7 +313,7 @@ void EnemyShadow::Attack()
 			
 		}
 		else {
-			handAxisX_ = handAxisX_.Slerp(Quaternion(1, 0, 0, 0.8f), 0.05f);
+			handAxisX_ = handAxisX_.Slerp(Quaternion(1, 0, 0, 0.8f), 0.35f);
 			handResultQ_ = displayObj_->WT_.quaternion_;
 			handResultQ_ = handResultQ_ * handAxisX_;
 			handObj_->WT_.quaternion_ = handResultQ_;

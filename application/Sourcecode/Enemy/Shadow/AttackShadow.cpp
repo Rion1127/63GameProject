@@ -46,6 +46,9 @@ void AttackShadow::Init()
 
 	SplineInit();
 
+	spline_.SetEasingType_(Spline::EasingType::Quint);
+	spline_.SetTimerType_(Spline::TimerType::Easing);
+	spline_.SetEasingTypeInOut_(Spline::EasingTypeInOut::Out);
 	spline_.SetParent(selfActor_->GetDisplayWorldTransform());
 }
 
@@ -71,7 +74,7 @@ void AttackShadow::MoveUpdate()
 
 void AttackShadow::SplineInit()
 {
-	spline_.SetLimitTime(attackInfo_.maxTime - 20);
+	spline_.SetLimitTime(attackInfo_.maxTime);
 
 	std::vector<Vector3>attackVec;
 	Vector3 up = Vector3(0, 1, 0) * (selfActor_->GetWorldTransform()->scale_.y * 2.f);
