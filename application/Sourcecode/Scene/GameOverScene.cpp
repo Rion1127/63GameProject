@@ -23,6 +23,9 @@ void GameOverScene::Ini()
 	backSprite_ = std::move(std::make_unique<Sprite>());
 
 	playerObj_ = std::move(std::make_unique<Object3d>());
+	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true, false));
+	playerObj_->SetShadowOffsetPos(Vector3(0,-1,0));
+	playerObj_->WT_.SetRotType(RotType::Quaternion);
 
 	titleSprite_->Ini();
 	continueSprite_->Ini();
@@ -44,15 +47,17 @@ void GameOverScene::Ini()
 	backSprite_->SetAnchor({ 0,0 });
 	backSprite_->SetColor(Color(0, 0, 0, 255));
 
-	playerObj_->SetModel(Model::CreateOBJ_uniptr("Player"));
-
 	selectType_ = SelectType::Continue;
+
+	Camera::scurrent_ = &camera_;
+
+	floatTimer_.SetLimitTime(160);
+	floatTimer_.SetIsLoop(true);
 }
 
 void GameOverScene::Update()
 {
-	CameraUpdate();
-
+	
 	//メニュー選択
 	if (Controller::GetTriggerButtons(PAD::INPUT_DOWN) ||
 		Controller::GetTriggerButtons(PAD::INPUT_UP))
@@ -91,6 +96,20 @@ void GameOverScene::Update()
 			SceneManager::SetChangeStart(SceneName::Title);
 		}
 	}
+
+	Camera::scurrent_->eye_ = Vector3(0, 5, -10);
+	CameraUpdate();
+
+	auto resultQ = Quaternion(0, 1, 0, 1)* Quaternion(-1, 0, 0, 1);
+	playerObj_->WT_.quaternion_ = resultQ;
+
+
+	float posY = UpAndDown(floatTimer_.GetLimitTimer(),0.3f, floatTimer_.GetTimer());
+	floatTimer_.AddTime(1);
+
+	playerObj_->SetPos(Vector3(0,2 + posY,0));
+	playerObj_->Update();
+
 	backSprite_->Update();
 	continueSprite_->Update();
 	titleSprite_->Update();
@@ -104,7 +123,7 @@ void GameOverScene::Draw()
 	titleSprite_->Draw();
 
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
-
+	playerObj_->Draw();
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
@@ -127,8 +146,6 @@ void GameOverScene::DrawPostEffect()
 
 void GameOverScene::CameraUpdate()
 {
-
-	Camera::scurrent_ = debugCamera_.GetCamera();
 
 	Camera::scurrent_->Update(CameraMode::LookAT);
 }

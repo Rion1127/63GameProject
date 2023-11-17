@@ -7,6 +7,7 @@
 #include "IScene.h"
 #include "LightManager.h"
 #include "Object3d.h"
+#include "Timer.h"
 
 /**
  * @file GameOverScene.h
@@ -33,6 +34,8 @@ private:
 	std::unique_ptr<Sprite> backSprite_;
 
 	SelectType selectType_;
+	Camera camera_;
+	TimerFloat floatTimer_;
 public:
 	~GameOverScene();
 
