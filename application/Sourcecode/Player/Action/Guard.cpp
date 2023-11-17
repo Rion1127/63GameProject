@@ -11,6 +11,7 @@
 GuardClass::GuardClass()
 {
 	col_.radius = 0.7f;
+	col_.isActive = false;
 	colObj_ = MakeUnique<Object3d>();
 	colObj_->SetModel(Model::CreateOBJ_uniptr("sphere", false,false));
 	colObj_->SetAmbient("sphere", { 0.0f, 0, 1.0f });

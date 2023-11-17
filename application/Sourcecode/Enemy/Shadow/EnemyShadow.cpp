@@ -488,7 +488,7 @@ void EnemyShadow::SortPriority()
 			nowPriolityValue >= rand)
 		{
 			//ステートを代入
-			StateUpdate(State::Attack/*arr[i].first*/);
+			StateUpdate(arr[i].first);
 		}
 	}
 }
