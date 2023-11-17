@@ -41,7 +41,10 @@ void TitleScene::Ini()
 	pos = { 0,0 };
 	backSprite_->SetAnchor({ 0,0 });
 	backSprite_->SetPos(pos);
-	backSprite_->SetColor({ 200,200,200,255 });
+	backSprite_->SetColor({ 150,150,150,255 });
+
+	pressATimer_.SetLimitTime(120);
+	pressATimer_.SetIsLoop(true);
 }
 
 void TitleScene::Update()
@@ -56,6 +59,15 @@ void TitleScene::Update()
 		}
 		SceneManager::SetChangeStart(SceneName::Game);
 	}
+
+	float pressASpriteAlpha = 122 + UpAndDown(pressATimer_.GetLimitTimer(), 122, pressATimer_.GetTimer());
+
+	pressATimer_.AddTime(1);
+
+	auto color = pressASprite_->GetColor();
+	color.a = pressASpriteAlpha;
+
+	pressASprite_->SetColor(color);
 
 	pressASprite_->Update();
 	titleSprite_->Update();

@@ -78,6 +78,8 @@ Player::Player() :
 	obj_->WT_.SetRotType(RotType::Quaternion);
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 	displayObj_->SetShadowOffsetPos(Vector3(0,-1,0));
+	obj_->WT_.quaternion_ = Quaternion(0, 0, 0, 1);
+	displayObj_->WT_.quaternion_ = Quaternion(0,0,0,1);
 
 	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
 	shakeTimer_.SetLimitTime(40);
@@ -86,6 +88,7 @@ Player::Player() :
 	landingTimer_ = 7;
 
 	Model::lightGroup_->SetCircleShadowActive(0, true);
+	isFloorCollision_ = true;
 }
 
 void Player::PreUpdate()

@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "IScene.h"
 #include "LightManager.h"
+#include "Timer.h"
 
 /**
  * @file TitleScene.h
@@ -25,6 +26,7 @@ private:
 
 	std::unique_ptr<Sprite> pressASprite_;
 
+	TimerFloat pressATimer_;
 public:
 	~TitleScene();
 
