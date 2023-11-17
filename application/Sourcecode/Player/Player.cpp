@@ -55,7 +55,7 @@ Player::Player() :
 	mpChargeTime_.SetLimitTime(600);
 	mpChargeIntervalTimer_.SetLimitTime(mpChargeTime_.GetLimitTimer() / 20);
 
-	maxHealth_ = 100;
+	maxHealth_ = 150;
 	health_ = maxHealth_;
 
 	maxMP_ = 100;
@@ -766,4 +766,6 @@ void Player::Reset()
 	state_ = PlayerState::Idle;
 	moveVec_ = { 0,0 };
 	inputVec_ = { 0,0 };
+	nowMP_ = maxMP_;
+	health_ = maxHealth_;
 }

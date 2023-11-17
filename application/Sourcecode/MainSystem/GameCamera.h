@@ -55,6 +55,7 @@ private:
 private:
 	//クリア時のカメラワークに使用する変数
 	float frontDist_;
+	Vector3 frontVec_;
 	Timer timer_;
 	Vector3 offsetPos_;
 	Vector3 randOffsetPos_;

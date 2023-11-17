@@ -47,6 +47,8 @@ void GameCamera::Update(CameraMode cameraMode)
 				RRandom::RandF(-1.f, 4.f),
 				0
 			};
+
+			frontVec_ = player_->GetPlayerFrontVec() * frontDist_;
 		}
 	}
 	else {
@@ -182,8 +184,6 @@ void GameCamera::UpdateLookAT()
 
 
 		frontDist_ = Easing::Sine::easeInOut(rate, 15.f, -5.f, 1.0f);
-		//プレイヤーの前方ベクトル * 距離を計算
-		Vector3 frontVec = player_->GetPlayerFrontVec() * frontDist_;
 
 		offsetPos_ = {
 			Easing::Sine::easeInOut(rate,0.f,randOffsetPos_.x,1.0f),
@@ -192,9 +192,9 @@ void GameCamera::UpdateLookAT()
 		};
 
 		Vector3 eyepos = {
-			player_->GetWorldTransform()->position_.x + frontVec.x,
+			player_->GetWorldTransform()->position_.x + frontVec_.x,
 			player_->GetWorldTransform()->position_.y + player_->GetWorldTransform()->scale_.y,
-			player_->GetWorldTransform()->position_.z + frontVec.z
+			player_->GetWorldTransform()->position_.z + frontVec_.z
 		};
 		eyepos += offsetPos_;
 
