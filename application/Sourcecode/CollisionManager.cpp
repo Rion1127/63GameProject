@@ -391,7 +391,7 @@ void CollisionManager::PlayerAttackToEnemy()
 					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
 
 					//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
-					if (attackCol->GetAttackType() == AttackType::Normal)
+					if (attackCol->GetNowSwingAttackType() == AttackType::Normal)
 					{
 
 						enemy->SetIsNock(true);

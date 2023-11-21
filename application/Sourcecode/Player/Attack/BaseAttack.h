@@ -65,6 +65,7 @@ public:
 	float GetDamageCoolTime() { return damageCoolTime_; }
 	int32_t GetDamage() { return attackdata_.attackinfo[index_].damage; }
 	AttackType GetAttackType() { return attackdata_.type_; }
+	AttackType GetNowSwingAttackType() { return attackdata_.attackinfo[index_].attackType; }
 	Vector3 GetKnockVec() { return attackdata_.attackinfo[index_].knockVec; }
 	float GetKnockYVec() { return attackdata_.attackinfo[index_].knockYVec; }
 };
