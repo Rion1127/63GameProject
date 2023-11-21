@@ -17,6 +17,9 @@ void PlayerIdle::Update()
 	{
 		player_->GoToState(PlayerState::Move);
 	}
+	//プレイヤーを正面に向かせる
+	player_->SetObjAngleX(0);
+	player_->SetObjAngleZ(0);
 
 	player_->Guard();
 	player_->Jump();

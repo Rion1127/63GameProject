@@ -41,7 +41,7 @@ void GuardClass::Init()
 
 			float angle = Vec2Angle(EToPVec);
 
-			player_->SetObjAngle(angle);
+			player_->SetObjAngleY(angle);
 		}
 		else {
 			//回転情報から正面ベクトル(2D)を取得

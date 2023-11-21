@@ -16,6 +16,11 @@ void PlayerMagic::Update()
 	if (player_->GetFreezeTime()->GetIsEnd()) {
 		player_->GoToState(PlayerState::Idle);
 	}
+
+	player_->SetObjAngleX(0);
+	player_->SetObjAngleZ(0);
+
+	player_->PlayerRotUpdate();
 }
 
 void PlayerMagic::Draw()

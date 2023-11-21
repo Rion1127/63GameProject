@@ -418,14 +418,12 @@ void CollisionManager::PlayerAttackToEnemy()
 			}
 		}
 
-
 		auto& bullets = *player_->GetMagicManager()->GetBullet();
 
 		if (bullets.size() == 0)continue;
 		//魔法攻撃
 		for (auto& bullet : bullets)
 		{
-
 			if (enemy->GetDamageCoolTime().GetIsEnd())
 			{
 				if (BallCollision(bullet->GetAttackCol()->get()->col_, enemy->GetCol()))

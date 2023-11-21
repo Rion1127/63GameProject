@@ -150,7 +150,7 @@ void BaseAttack::CalculateRotToLockOnActor()
 		frontVec.x,
 		frontVec.z
 	};
-	selfActor_->SetObjAngle(Vec2Angle(angleVec2));
+	selfActor_->SetObjAngleY(Vec2Angle(angleVec2));
 	selfActor_->GetWorldTransform()->quaternion_ = axisY;
 }
 

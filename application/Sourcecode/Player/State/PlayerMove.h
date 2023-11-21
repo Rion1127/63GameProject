@@ -2,6 +2,7 @@
 #include "PlayerInfo.h"
 #include "StateMachine.h"
 #include "Player.h"
+#include "Timer.h"
 
 /**
  * @file PlayerMove.h
@@ -17,6 +18,8 @@ class PlayerMove :
 private:
     Player* player_;
 
+    TimerFloat shakeTimer_;
+    TimerFloat dashParticleTimer_;
 public:
     PlayerMove(Player* player) :State<PlayerState>(PlayerState::Move), player_(player) {}
 
