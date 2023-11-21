@@ -768,4 +768,5 @@ void Player::Reset()
 	inputVec_ = { 0,0 };
 	nowMP_ = maxMP_;
 	health_ = maxHealth_;
+	sword_.Reset();
 }

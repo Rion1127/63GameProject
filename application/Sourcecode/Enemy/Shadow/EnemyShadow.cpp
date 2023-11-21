@@ -168,6 +168,7 @@ void EnemyShadow::DamageUpdate()
 	state_ = State::KnockBack;
 
 	handObj_->SetScale(Vector3(0,0,0));
+	handObj_->SetIsVisible(false);
 }
 
 void EnemyShadow::FloorCollisionDerived()
@@ -308,6 +309,7 @@ void EnemyShadow::Down()
 
 void EnemyShadow::Attack()
 {
+	handObj_->SetIsVisible(true);
 	if (attackTimer_.GetIsEnd()) {
 		if (attack_->GetLockOnActor() == nullptr) {
 			
@@ -333,6 +335,7 @@ void EnemyShadow::Attack()
 			attack_.reset();
 			attackTimer_.Reset();
 			handAxisX_ = IdentityQuaternion();
+			handObj_->SetIsVisible(false);
 		}
 	}
 	else {

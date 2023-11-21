@@ -41,6 +41,7 @@ public:
 	void EditorUpdate(const Vector3& swordPos = { 0,0,0 });
 	void Draw();
 	void DrawImGui();
+	void Reset();
 private:
 	void CalculateTrailPos();
 public:

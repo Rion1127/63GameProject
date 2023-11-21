@@ -209,6 +209,10 @@ void GameCamera::UpdateLookAT()
 
 void GameCamera::Reset()
 {
+	if (player_ != nullptr)
+	{
+		camera_->eye_ = player_->GetWorldTransform()->position_;
+	}
 	moveDist = { 0,0.4f,0 };
 }
 

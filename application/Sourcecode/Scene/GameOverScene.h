@@ -28,9 +28,13 @@ private:
 
 	std::unique_ptr<Object3d> playerObj_;
 
-
+	//タイトルへ戻る
 	std::unique_ptr<Sprite> titleSprite_;
+	std::unique_ptr<Sprite> titleBackSprite_;
+	//リトライ
 	std::unique_ptr<Sprite> continueSprite_;
+	std::unique_ptr<Sprite> continueBackSprite_;
+	//黒背景
 	std::unique_ptr<Sprite> backSprite_;
 
 	SelectType selectType_;
@@ -48,4 +52,5 @@ public:
 	void DrawPostEffect() override;
 private:
 	void CameraUpdate();
+	void SpriteInit();
 };
