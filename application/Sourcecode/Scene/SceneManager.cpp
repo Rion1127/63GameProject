@@ -8,6 +8,7 @@
 #include "TitleScene.h"
 #include "GameOverScene.h"
 #include "AttackEditorScene.h"
+#include "Framework.h"
 
 /**
  * @file SceneManager.cpp
@@ -73,6 +74,29 @@ void SceneManager::Update()
 			Transition<AttackEditorScene>();
 			ssceneName_ = SceneName::AttackEditor;
 		}
+	}
+
+	if (Framework::isImguiDisplay_) {
+		ImGui::Begin("SceneChange");
+
+		if (ImGui::Button("Title")) {
+			Transition<TitleScene>();
+			ssceneName_ = SceneName::Title;
+		}
+		if (ImGui::Button("Game")) {
+			Transition<GameScene>();
+			ssceneName_ = SceneName::Game;
+		}
+		if (ImGui::Button("Debug")) {
+			Transition<DebugScene>();
+			ssceneName_ = SceneName::Debug;
+		}
+		if (ImGui::Button("Editor")) {
+			Transition<AttackEditorScene>();
+			ssceneName_ = SceneName::AttackEditor;
+		}
+
+		ImGui::End();
 	}
 
 #endif // _DEBUG

@@ -13,7 +13,6 @@
 #include "CollisionManager.h"
 #include "EnemyManager.h"
 #include "UIOperation.h"
-#include "ColosseumSystem.h"
 #include "PauseMenu.h"
 
 #include "Spline.h"
@@ -48,7 +47,6 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager_;
 
 	std::unique_ptr<UIOperation> operationUI_;
-	std::unique_ptr<ColosseumSystem> colosseumSystem_;
 	std::unique_ptr<PauseMenu> pauseMenu_;
 
 	AssimpObject3D obj_;

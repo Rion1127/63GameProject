@@ -29,7 +29,7 @@ void AttackEditorScene::Update()
 	attackEditor_.Update();
 
 	//その他
-	lightManager_->DebugUpdate();
+	lightManager_->Update();
 
 	//当たり判定前更新
 	stage_->Update();

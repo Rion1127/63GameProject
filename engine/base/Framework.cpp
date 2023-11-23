@@ -8,6 +8,8 @@
  * @brief エンジン部分の処理の流れをまとめたクラス
  */
 
+bool Framework::isImguiDisplay_ = false;
+
 void Framework::Init()
 {
 	//winAPI初期化
@@ -40,13 +42,19 @@ void Framework::Init()
 	loadManager_.LoadAllResources();
 
 	bloom_ = std::make_unique<Bloom>();
-	test_ = std::make_unique<HighLumi>();
-	test_->SetVerTex(IPostEffect::VertName::LB,Vector2(-1.0f,0.5f));
-	test_->SetVerTex(IPostEffect::VertName::LT,Vector2(-1.0f,1.0f));
-	test_->SetVerTex(IPostEffect::VertName::RB,Vector2(-0.5f,0.5f));
-	test_->SetVerTex(IPostEffect::VertName::RT,Vector2(-0.5f,1.0f));
+	previwe_ = std::make_unique<HighLumi>();
+	previwe_->SetVerTex(IPostEffect::VertName::LB,Vector2(-1.0f,0.5f));
+	previwe_->SetVerTex(IPostEffect::VertName::LT,Vector2(-1.0f,1.0f));
+	previwe_->SetVerTex(IPostEffect::VertName::RB,Vector2(-0.5f,0.5f));
+	previwe_->SetVerTex(IPostEffect::VertName::RT,Vector2(-0.5f,1.0f));
 	isPostEffect_ = true;
 
+
+#ifdef _DEBUG
+	Framework::isImguiDisplay_ = true;
+#else
+	Framework::isImguiDisplay_ = false;
+#endif // _DEBUG
 }
 
 void Framework::Finalize()
@@ -77,10 +85,29 @@ void Framework::Update()
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
 	//ImGui::ShowDemoWindow();
+	if (Framework::isImguiDisplay_) {
+		if (ImGui::Button("PostEffect"))
+		{
+			isPostEffect_ = (isPostEffect_ == true) ? false : true;
+		}
+	}
+
+	ImGui::Begin("ImGuiDisplay");
+
+	ImGui::Text("他のImGuiを表示にします。このウィンドウは残ります。");
 	if (ImGui::Button("PostEffect"))
 	{
-		isPostEffect_ = (isPostEffect_ == true) ? false : true;
+		Framework::isImguiDisplay_ = (Framework::isImguiDisplay_ == true) ? false : true;
 	}
+	ImGui::SameLine();
+	std::string flagName;
+
+	if (Framework::isImguiDisplay_)flagName = "true";
+	else flagName = "false";
+
+	ImGui::Text(flagName.c_str());
+
+	ImGui::End();
 #endif // DEBUG
 }
 
@@ -106,9 +133,9 @@ void Framework::Draw()
 {
 	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
 	{
-		test_->PreDrawScene();
+		previwe_->PreDrawScene();
 		SceneManager::DrawRenderTexture();
-		test_->PostDrawScene();
+		previwe_->PostDrawScene();
 	}
 
 	if(isPostEffect_) bloom_->PreDraw();
@@ -122,8 +149,8 @@ void Framework::Draw()
 
 	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
 	{
-		test_->DrawImGui();
-		test_->Draw("PostEffect");
+		previwe_->DrawImGui();
+		previwe_->Draw("PostEffect");
 	}
 	
 	//imgui終了

@@ -6,6 +6,7 @@
 #include "ParticleManager.h"
 #include "Camera.h"
 #include "EnemyLoader.h"
+#include "Framework.h"
 
 #include "JsonLoader.h"
 #include <imgui.h>
@@ -33,14 +34,12 @@ void DebugScene::Ini()
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
 	operationUI_ = std::make_unique<UIOperation>();
-	colosseumSystem_ = std::make_unique<ColosseumSystem>();
 	pauseMenu_ = std::make_unique<PauseMenu>();
 
 	stage_ = std::move(std::make_unique<Stage>());
 
 	player_ = std::move(std::make_unique<Player>());
 	gameCamera_.SetPlayer(player_.get());
-	gameCamera_.SetColosseumSystem(colosseumSystem_.get());
 	IEnemy::SetPlayer(player_.get());
 	colManager_->SetPlayer(player_.get());
 	colManager_->SetFloor(stage_.get());
@@ -48,24 +47,15 @@ void DebugScene::Ini()
 	colManager_->SetCamera(&gameCamera_);
 	AttackManager::SetPlayer(player_.get());
 	enemyManager_->SetPlayer(player_.get());
-	colosseumSystem_->SetPlayer(player_.get());
-	colosseumSystem_->SetEnemy(enemyManager_.get());
-
 
 	JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 	JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
-	//EnemyLoader::GetInstance()->SetEnemy(enemyManager_->GetEnemy(), "Debug", 1);
-
-	uint32_t maxRoundNum = (uint32_t)EnemyLoader::GetInstance()->GetEnemyData("Debug").size();
-	colosseumSystem_->SetMaxRoundNum(maxRoundNum);
 
 	std::unique_ptr<AssimpModel> model_;
 
 	std::string fileName = "application/Resources/Object/boneTest.fbx";
 
 	model_ = AssimpLoader::GetInstance()->Load(fileName);
-
-	//obj_.SetModel(std::move(model_));
 }
 
 void DebugScene::Update()
@@ -86,25 +76,23 @@ void DebugScene::Update()
 #endif // _DEBUG
 
 	if (pauseMenu_->GetIsPause() == false) {
-		//colosseumSystem_->Update();
 		CameraUpdate();
 
 		//当たり判定前更新
 		stage_->Update();
 		player_->PreUpdate();
-		enemyManager_->DebugUpdate();
+		if (Framework::isImguiDisplay_) enemyManager_->DebugUpdate();
 		enemyManager_->PreUpdate();
 
-#ifdef _DEBUG
-		LoadEnemyImGui();
-#endif // _DEBUG
+		if (Framework::isImguiDisplay_)LoadEnemyImGui();
+
 		//当たり判定
 		colManager_->Update();
 		//当たり判定後更新
 		enemyManager_->PostUpdate();
 		player_->PostUpdate();
 		//その他
-		lightManager_->DebugUpdate();
+		lightManager_->Update();
 		ParticleManager::GetInstance()->Update();
 		//UI更新
 		operationUI_->Update();
@@ -113,7 +101,6 @@ void DebugScene::Update()
 		{
 			SceneManager::SetChangeStart(SceneName::GameOver);
 		}
-
 	}
 	pauseMenu_->Update();
 }
@@ -149,24 +136,26 @@ void DebugScene::Draw()
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
 
-	ImGui::Begin("GameSpeed");
+	if (Framework::isImguiDisplay_) {
+		ImGui::Begin("GameSpeed");
 
-	static float gamespeed = 1;
-	ImGui::DragFloat("GameSpeed", &gamespeed, 0.1f);
-	GameSpeed::SetGameSpeed(gamespeed);
-	static float playerspeed = 1;
-	ImGui::DragFloat("PlayerSpeed", &playerspeed, 0.1f);
-	GameSpeed::SetPlayerSpeed(playerspeed);
-	static float enemyspeed = 1;
-	ImGui::DragFloat("EnemySpeed", &enemyspeed, 0.1f);
-	GameSpeed::SetEnemySpeed(enemyspeed);
+		static float gamespeed = 1;
+		ImGui::DragFloat("GameSpeed", &gamespeed, 0.1f);
+		GameSpeed::SetGameSpeed(gamespeed);
+		static float playerspeed = 1;
+		ImGui::DragFloat("PlayerSpeed", &playerspeed, 0.1f);
+		GameSpeed::SetPlayerSpeed(playerspeed);
+		static float enemyspeed = 1;
+		ImGui::DragFloat("EnemySpeed", &enemyspeed, 0.1f);
+		GameSpeed::SetEnemySpeed(enemyspeed);
 
-	ImGui::End();
+		ImGui::End();
 
-	ConfigMenu::GetInstance()->DrawImGui();
-	colManager_->DrawImGui();
-	player_->DrawImGui();
-	gameCamera_.DrawImGui();
+		ConfigMenu::GetInstance()->DrawImGui();
+		colManager_->DrawImGui();
+		player_->DrawImGui();
+		gameCamera_.DrawImGui();
+	}
 }
 
 void DebugScene::DrawRenderTexture()

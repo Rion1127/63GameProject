@@ -55,6 +55,7 @@ void AttackEditor::Update()
 	{
 		isPointErase_ = false;
 		splinePointPos_[currentSwingNum_].erase(splinePointPos_[currentSwingNum_].begin() + (splinePointPos_[currentSwingNum_].size() - 1));
+		SetSplinePos();
 	}
 	//選択している一振りだけ再生
 	if (isPlay_)
@@ -470,13 +471,13 @@ void AttackEditor::ImGuiAttackInfo()
 		ImGui::BeginTooltip();
 		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
 		ImGui::TextUnformatted("attackFrame         : スプライン曲線の時間");
-		ImGui::TextUnformatted("gapFrame            : 攻撃の後隙");
+		ImGui::TextUnformatted("gapFrame            : 攻撃後の後隙");
 		ImGui::TextUnformatted("Damage              : 敵に与えるダメージ");
-		ImGui::TextUnformatted("gravity             : 攻撃時の上方向の動き");
-		ImGui::TextUnformatted("playerMoveVec       : プレイヤーの前方向移動");
+		ImGui::TextUnformatted("gravity             : 攻撃時のY座標の動き");
+		ImGui::TextUnformatted("playerMoveVec       : プレイヤーの移動方向");
 		ImGui::TextUnformatted("deceleration        : playerMoveVecの減速速度");
-		ImGui::TextUnformatted("knockVec            : イージングのInOutの種類を変更する");
-		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
+		ImGui::TextUnformatted("knockVec            : 敵のノックバックする方向");
+		ImGui::TextUnformatted("knockVecY           : 上方向のノックバック");
 		ImGui::PopTextWrapPos();
 		ImGui::EndTooltip();
 	}

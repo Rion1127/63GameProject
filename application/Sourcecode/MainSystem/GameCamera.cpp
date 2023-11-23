@@ -34,26 +34,29 @@ GameCamera::GameCamera()
 
 void GameCamera::Update(CameraMode cameraMode)
 {
-
+	
 	if (gameCameraMode_ == GameCameraMode::NORMAL) {
 		UpdateCameraPos();
+		if (clsumSystem_ != nullptr) {
+			if (clsumSystem_->GetIsClearCamera()) {
+				gameCameraMode_ = GameCameraMode::CLEAR;
 
-		if (clsumSystem_->GetIsClearCamera()) {
-			gameCameraMode_ = GameCameraMode::CLEAR;
+				frontDist_ = RRandom::RandF(15.f, 20.f);
+				randOffsetPos_ = {
+					RRandom::RandF(-3.f, 3.f),
+					RRandom::RandF(-1.f, 4.f),
+					0
+				};
 
-			frontDist_ = RRandom::RandF(15.f, 20.f);
-			randOffsetPos_ = {
-				RRandom::RandF(-3.f, 3.f),
-				RRandom::RandF(-1.f, 4.f),
-				0
-			};
-
-			frontVec_ = player_->GetPlayerFrontVec() * frontDist_;
+				frontVec_ = player_->GetPlayerFrontVec() * frontDist_;
+			}
 		}
 	}
 	else {
-		if (clsumSystem_->GetIsClearCamera() == false) {
-			gameCameraMode_ = GameCameraMode::NORMAL;
+		if (clsumSystem_ != nullptr) {
+			if (clsumSystem_->GetIsClearCamera() == false) {
+				gameCameraMode_ = GameCameraMode::NORMAL;
+			}
 		}
 	}
 

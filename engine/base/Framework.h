@@ -21,8 +21,10 @@ private:
 	LoadManager loadManager_;
 
 	std::unique_ptr<Bloom> bloom_;
-	std::unique_ptr<HighLumi> test_;
+	std::unique_ptr<HighLumi> previwe_;
 	bool isPostEffect_;
+public:
+	static bool isImguiDisplay_;
 public:
 	virtual ~Framework() = default;
 

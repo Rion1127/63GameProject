@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "EnemyLoader.h"
 #include "JsonLoader.h"
+#include "Framework.h"
 
 /**
  * @file GameScene.cpp
@@ -158,19 +159,21 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();
 
-	//ImGui::Begin("GameSpeed");
+	if (Framework::isImguiDisplay_) {
+		ImGui::Begin("GameSpeed");
 
-	//static float gamespeed = 1;
-	//ImGui::DragFloat("GameSpeed", &gamespeed, 0.1f);
-	////GameSpeed::SetGameSpeed(gamespeed);
-	//static float playerspeed = 1;
-	//ImGui::DragFloat("PlayerSpeed", &playerspeed, 0.1f);
-	////GameSpeed::SetPlayerSpeed(playerspeed);
-	//static float enemyspeed = 1;
-	//ImGui::DragFloat("EnemySpeed", &enemyspeed, 0.1f);
-	////GameSpeed::SetEnemySpeed(enemyspeed);
+		static float gamespeed = 1;
+		ImGui::DragFloat("GameSpeed", &gamespeed, 0.1f);
+		//GameSpeed::SetGameSpeed(gamespeed);
+		static float playerspeed = 1;
+		ImGui::DragFloat("PlayerSpeed", &playerspeed, 0.1f);
+		//GameSpeed::SetPlayerSpeed(playerspeed);
+		static float enemyspeed = 1;
+		ImGui::DragFloat("EnemySpeed", &enemyspeed, 0.1f);
+		//GameSpeed::SetEnemySpeed(enemyspeed);
 
-	//ImGui::End();
+		ImGui::End();
+	}
 }
 
 void GameScene::DrawRenderTexture()
