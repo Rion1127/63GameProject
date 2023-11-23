@@ -129,6 +129,7 @@ public:
 	void SetKnockVec(const Vector3& vec) override { knockVec_ = vec; }
 	void SetState(PlayerState state) { state_ = state; }
 	void SetIsCanInput(bool flag) { isCanInput_ = flag; }
+	void SetIsDash(bool flag) { isDash_ = flag; }
 
 
 	void AddaddVec(const Vector3& pos) { addVec_ += pos; }
@@ -149,6 +150,7 @@ public:
 	bool GetIsMPCharge() { return isMPCharge_; }
 	bool GetIsCanInput() { return isCanInput_; }
 	bool GetIsFloorCollision() { return isFloorCollision_; }
+	bool GetIsDash() { return isDash_; }
 
 	Vector3 GetLockOnVec() { return lockOnVec_; }
 	GuardClass* GetGuard() { return &guard_; }

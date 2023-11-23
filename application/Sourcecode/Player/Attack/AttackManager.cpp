@@ -323,6 +323,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			if (attackType == "Normal")timerType = AttackType::Normal;
 			else timerType = AttackType::Finish;
 			newinput.type_ = timerType;
+			info->attackType = timerType;
 		}
 
 		//タイマー制御方法読み込み

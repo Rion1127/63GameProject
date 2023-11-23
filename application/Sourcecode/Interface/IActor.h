@@ -31,10 +31,14 @@ protected:
 	Vector3 knockResist_;
 	TimerFloat damageCoolTime_;
 	Timer freezeTimer_;
-	float objAngle_;
+	
 	bool isFloorCollision_ = false;
 	float knockDecreaseValue;
 	bool isCanMove_ = true;
+	//軸の角度
+	float objAngleX_;
+	float objAngleY_;
+	float objAngleZ_;
 	Quaternion axisX_;				//プレイヤーX軸回転
 	Quaternion axisY_;				//プレイヤーY軸回転
 	Quaternion axisZ_;				//プレイヤーZ軸回転
@@ -49,7 +53,9 @@ public:
 		return addVec_;
 	}
 	Gravity* GetGravity() { return &gravity_; }
-	float GetObjAngle() { return objAngle_; }
+	float GetObjAngleX() { return objAngleX_; }
+	float GetObjAngleY() { return objAngleY_; }
+	float GetObjAngleZ() { return objAngleZ_; }
 
 	Quaternion GetAxisY() {
 		return axisY_;
@@ -61,7 +67,9 @@ public:
 	virtual void SetKnockVec(const Vector3& vec) { knockVec_ = vec; }
 	void SetIsCanMove(bool flag) { isCanMove_ = flag; }
 	void SetFreezeTime(uint32_t time) { freezeTimer_.SetLimitTime(time); freezeTimer_.Reset(); }
-	void SetObjAngle(float angle) { objAngle_ = angle; }
+	void SetObjAngleX(float angle) { objAngleX_ = angle; }
+	void SetObjAngleY(float angle) { objAngleY_ = angle; }
+	void SetObjAngleZ(float angle) { objAngleZ_ = angle; }
 	void SetAxisY(Quaternion q) { axisY_ = q; }
 	void SetIsFloorCollision(bool flag) { isFloorCollision_ = flag; }
 };

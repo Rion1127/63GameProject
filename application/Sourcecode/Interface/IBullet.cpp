@@ -52,9 +52,9 @@ void IBullet::DrawCol()
 Vector3 IBullet::CalculateFrontVec()
 {
 	Vector3 frontVec = { 0,0,0 };
-	if (IBullet::lockOnActor_ != nullptr)
+	if (lockOnActor_ != nullptr)
 	{
-		Vector3& lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
+		Vector3& lockOnPos = lockOnActor_->GetWorldTransform()->position_;
 		//ロックオンしている敵へのベクトルをとる
 		frontVec = {
 			lockOnPos.x - selfActor_->GetWorldTransform()->position_.x,
@@ -64,13 +64,9 @@ Vector3 IBullet::CalculateFrontVec()
 	}
 	else
 	{
-		frontVec = {
-				sinf(selfActor_->GetWorldTransform()->rotation_.y),
-				0,
-				cosf(selfActor_->GetWorldTransform()->rotation_.y),
-		};
+		frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetAxisY());
 	}
-	return frontVec;
+	return frontVec.normalize();
 }
 
 void IBullet::CalculateRotToLockOnActor(const Vector3& frontVec)

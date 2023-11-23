@@ -4,9 +4,10 @@ gapFrame = 3
 damege = 5
 gravityY = 0.1
 KnockVec 0.1 0.2 0.1
+KnockYVec = 0
 addVec 0 0 0.05
 deceleration = 0.003
-attackType Finish
+attackType Normal
 
 //--SplinePos--//
 TimerType Easing
@@ -26,9 +27,10 @@ gapFrame = 3
 damege = 5
 gravityY = 0.05
 KnockVec 0.1 0.2 0.1
+KnockYVec = 0
 addVec 0 0 0.05
 deceleration = 0.003
-attackType Finish
+attackType Normal
 
 //--SplinePos--//
 TimerType Easing
@@ -48,9 +50,10 @@ gapFrame = 15
 damege = 5
 gravityY = 0.1
 KnockVec 0.1 0.2 0.1
+KnockYVec = 0
 addVec 0 0 0.05
 deceleration = 0.003
-attackType Finish
+attackType Normal
 
 //--SplinePos--//
 TimerType Easing
@@ -76,6 +79,7 @@ gapFrame = 20
 damege = 10
 gravityY = 0.05
 KnockVec 0.4 0.1 0.4
+KnockYVec = 0
 addVec 0 0 0.05
 deceleration = 0.003
 attackType Finish

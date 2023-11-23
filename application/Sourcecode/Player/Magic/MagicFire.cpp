@@ -46,6 +46,20 @@ void MagicFire::Init()
 		frontVec = frontVec.normalize();
 		attackVec_ = frontVec;
 		attackCol_->colObj_.SetIsVisible(false);
+
+		Vector2 vec = { CalculateFrontVec().x,CalculateFrontVec().z };
+		float rot = Vec2Angle(vec);
+		Vector3 vecY = { 0, 1, 0 };
+		auto axisY = MakeAxisAngle(vecY, Radian(rot));
+		selfActor_->SetAxisY(axisY);
+		frontVec = RotateVector(Vector3(0, 0, 1), selfActor_->GetAxisY());
+		frontVec.y = 0;
+		Vector2 angleVec2 = {
+			frontVec.x,
+			frontVec.z
+		};
+		selfActor_->SetObjAngleY(Vec2Angle(angleVec2));
+		selfActor_->GetWorldTransform()->quaternion_ = axisY;
 	}
 	else {
 		attackVec_ = CalculateFrontVec() * bulletSpeed_;
@@ -85,8 +99,8 @@ void MagicFire::MoveUpdate()
 		Vector3 frontVec = lockOnPos - attackCol_->col_.center;
 		frontVec.y = 0;
 		frontVec = frontVec.normalize();
-		//足していくベクトルを徐々にプレイヤーの方向に変えていく
-		MoveTo(frontVec, 0.015f, attackVec_);
+		//足していくベクトルを徐々にロックオンの方向に変えていく
+		MoveTo(frontVec, 0.01f, attackVec_);
 	}
 
 	attackCol_->col_.center += attackVec_ * bulletSpeed_;

@@ -247,6 +247,17 @@ void Sword::DrawImGui()
 	ImGui::End();
 }
 
+void Sword::Reset()
+{
+	//プレイヤーの背中に向かって徐々に移動する
+	Vector3 pos = playerObj_->WT_.position_;
+	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
+	frontVec = frontVec.normalize();
+	//座標移動
+	goalPos_ = pos - frontVec * 1.2f;
+	nowPos_ = goalPos_;
+}
+
 void Sword::CalculateTrailPos()
 {
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
