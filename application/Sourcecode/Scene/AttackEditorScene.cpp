@@ -41,6 +41,27 @@ void AttackEditorScene::Draw()
 	stage_->Draw();
 	attackEditor_.DrawImGui();
 	attackEditor_.Draw();
+
+	ImGui::Begin("AttackEditorInfo");
+
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("Ctrl + mouseLeft :        MoveCameraPos");
+		ImGui::TextUnformatted("Ctrl + mouseWheelButton : MoveCameraPos");
+		ImGui::TextUnformatted("Ctrl + mouseWheel :       MoveDistance");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+
+	
+
+	ImGui::End();
 }
 
 void AttackEditorScene::DrawRenderTexture()

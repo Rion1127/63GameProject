@@ -67,9 +67,9 @@ void IPostEffect::Draw(const std::string& pipelineName)
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
-void IPostEffect::DrawImGui()
+void IPostEffect::DrawImGui(const std::string& imguiName)
 {
-	ImGui::Begin("IPostEffect");
+	ImGui::Begin(imguiName.c_str());
 
 	// color変更
 	float Ld[2] = { vertices_.at(0).pos.x,vertices_.at(0).pos.y };

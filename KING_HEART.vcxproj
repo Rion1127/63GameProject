@@ -132,7 +132,7 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="PostureDisplay.cpp" />
+    <ClCompile Include="application\Sourcecode\PostureDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\AttackEditor.h" />
@@ -256,7 +256,7 @@
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
-    <ClInclude Include="PostureDisplay.h" />
+    <ClInclude Include="application\Sourcecode\PostureDisplay.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

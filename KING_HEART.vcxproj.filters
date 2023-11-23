@@ -615,7 +615,7 @@
     <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
-    <ClCompile Include="PostureDisplay.cpp">
+    <ClCompile Include="application\Sourcecode\PostureDisplay.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -986,7 +986,7 @@
     <ClInclude Include="application\Sourcecode\AttackEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
-    <ClInclude Include="PostureDisplay.h">
+    <ClInclude Include="application\Sourcecode\PostureDisplay.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

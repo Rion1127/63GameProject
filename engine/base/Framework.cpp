@@ -149,7 +149,7 @@ void Framework::Draw()
 
 	if (SceneManager::GetSceneName() == SceneName::AttackEditor)
 	{
-		previwe_->DrawImGui();
+		previwe_->DrawImGui("EditorPreview");
 		previwe_->Draw("PostEffect");
 	}
 	

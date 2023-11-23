@@ -68,7 +68,7 @@ public:
 	void PUpdate();
 
 	void Draw(const std::string& pipelineName);
-	void DrawImGui();
+	void DrawImGui(const std::string& imguiName = "IPostEffect");
 	//シーン前処理
 	void PreDrawScene();
 	//シーン描画後処理
