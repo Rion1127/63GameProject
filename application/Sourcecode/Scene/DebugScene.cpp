@@ -151,7 +151,6 @@ void DebugScene::Draw()
 
 		ImGui::End();
 
-		ConfigMenu::GetInstance()->DrawImGui();
 		colManager_->DrawImGui();
 		player_->DrawImGui();
 		gameCamera_.DrawImGui();

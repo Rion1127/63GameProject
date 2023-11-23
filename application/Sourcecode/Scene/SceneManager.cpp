@@ -79,19 +79,21 @@ void SceneManager::Update()
 	if (Framework::isImguiDisplay_) {
 		ImGui::Begin("SceneChange");
 
-		if (ImGui::Button("Title")) {
+		if (ImGui::Button("Title",ImVec2(50,50))) {
 			Transition<TitleScene>();
 			ssceneName_ = SceneName::Title;
 		}
-		if (ImGui::Button("Game")) {
+		ImGui::SameLine();
+		if (ImGui::Button("Game", ImVec2(50, 50))) {
 			Transition<GameScene>();
 			ssceneName_ = SceneName::Game;
 		}
-		if (ImGui::Button("Debug")) {
+		if (ImGui::Button("Debug", ImVec2(50, 50))) {
 			Transition<DebugScene>();
 			ssceneName_ = SceneName::Debug;
 		}
-		if (ImGui::Button("Editor")) {
+		ImGui::SameLine();
+		if (ImGui::Button("Editor", ImVec2(50, 50))) {
 			Transition<AttackEditorScene>();
 			ssceneName_ = SceneName::AttackEditor;
 		}

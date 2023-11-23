@@ -557,8 +557,6 @@ void Player::DrawImGui()
 	ImGui::End();
 
 	command_.GetAttackManager()->DrawDebug();
-
-	sword_.DrawImGui();
 }
 
 void Player::DrawSprite()
