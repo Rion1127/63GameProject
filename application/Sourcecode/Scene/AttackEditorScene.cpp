@@ -28,7 +28,6 @@ void AttackEditorScene::Update()
 
 	attackEditor_.Update();
 
-	//その他
 	lightManager_->Update();
 
 	//当たり判定前更新
@@ -58,8 +57,6 @@ void AttackEditorScene::Draw()
 		ImGui::PopTextWrapPos();
 		ImGui::EndTooltip();
 	}
-
-	
 
 	ImGui::End();
 }

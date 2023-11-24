@@ -5,7 +5,7 @@ Stage::Stage()
 
 	for (int32_t i = 0; i < walls_.size(); i++) {
 		walls_[i] = MakeUnique<Plane>();
-
+		//透明な壁
 		if (Col(i) == Col::Back) {
 			walls_[i]->distance = -30;
 			walls_[i]->normal = { 0,0,1 };

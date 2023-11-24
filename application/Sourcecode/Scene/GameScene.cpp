@@ -69,7 +69,7 @@ void GameScene::Update()
 	}
 #endif // _DEBUG
 
-	if (GetIsGameStop()) {
+	if (pauseMenu_->GetIsPause() == false) {
 		CameraUpdate();
 		stage_->Update();
 		player_->PreUpdate();
@@ -87,16 +87,13 @@ void GameScene::Update()
 		ParticleManager::GetInstance()->Update();
 
 		operationUI_->Update();
-
+		//プレイヤーが死んだらゲームオーバーへ
 		if (player_->GetIsAlive() == false)
 		{
 			SceneManager::SetChangeStart(SceneName::GameOver);
 		}
 
-		if (Key::TriggerKey(DIK_P)) {
-
-		}
-
+		//全ての敵を倒したらリセット
 		if (colosseumSystem_->GetIsReset())
 		{
 			player_->Reset();
@@ -205,16 +202,4 @@ void GameScene::CameraUpdate()
 		Camera::scurrent_ = debugCamera_.GetCamera();
 	}
 	Camera::scurrent_->Update(CameraMode::LookAT);
-
-
-}
-
-bool GameScene::GetIsGameStop()
-{
-	if (pauseMenu_->GetIsPause() == false/* &&
-		colosseumSystem_->GetIsClear() == false*/)
-	{
-		return true;
-	}
-	return false;
 }

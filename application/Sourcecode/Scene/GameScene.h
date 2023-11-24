@@ -62,7 +62,5 @@ public:
 
 private:
 	void CameraUpdate();
-
-	bool GetIsGameStop();
 };
 
