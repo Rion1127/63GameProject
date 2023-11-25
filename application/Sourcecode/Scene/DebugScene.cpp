@@ -61,12 +61,14 @@ void DebugScene::Ini()
 void DebugScene::Update()
 {
 #ifdef _DEBUG
+	//ステージオブジェホットリロード
 	if (Key::TriggerKey(DIK_R))
 	{
 		ParticleManager::GetInstance()->AllClear();
 		JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
 		JsonLoader::GetInstance()->SetObjects(stage_->GetObjects(), "Stage");
 	}
+	//敵情報ホットリロード
 	if (Key::TriggerKey(DIK_E))
 	{
 		std::string path = "application/Resources/EnemyPOP/";
@@ -81,11 +83,10 @@ void DebugScene::Update()
 		//当たり判定前更新
 		stage_->Update();
 		player_->PreColUpdate();
+		//デバッグ用
 		if (Framework::isImguiDisplay_) enemyManager_->DebugUpdate();
-		enemyManager_->PreColUpdate();
-
 		if (Framework::isImguiDisplay_)LoadEnemyImGui();
-
+		enemyManager_->PreColUpdate();
 		//当たり判定
 		colManager_->Update();
 		//当たり判定後更新

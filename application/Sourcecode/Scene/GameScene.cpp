@@ -73,13 +73,14 @@ void GameScene::Update()
 	if (pauseMenu_->GetIsPause() == false) {
 		CameraUpdate();
 		stage_->Update();
-
+		//当たり判定前処理
 		player_->PreColUpdate();
 		enemyManager_->PreColUpdate();
+		//当たり判定
 		colManager_->Update();
+		//当たり判定後処理
 		enemyManager_->PostUpdate();
 		player_->PostUpdate();
-
 
 		lightManager_->GetLightGroup()->SetDirLightColor(0, lightColor_);
 
@@ -87,12 +88,7 @@ void GameScene::Update()
 		ParticleManager::GetInstance()->Update();
 
 		operationUI_->Update();
-		//プレイヤーが死んだらゲームオーバーへ
-		if (player_->GetIsAlive() == false)
-		{
-			SceneManager::SetChangeStart(SceneName::GameOver);
-		}
-
+		
 		//全ての敵を倒したらリセット
 		if (colosseumSystem_->GetIsReset())
 		{

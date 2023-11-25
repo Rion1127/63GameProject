@@ -22,6 +22,8 @@ private:
 
 	float shakePower_;
 	float shakeTimer_;
+
+	int32_t lockOnEnemyIndex_;
 private:
 	//パーティクル用
 	Timer wallHitTimer_;

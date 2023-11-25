@@ -132,6 +132,12 @@ void ColosseumSystem::Update()
 				}
 			}
 		}
+
+		//プレイヤーが死んだらゲームオーバーへ
+		if (player_->GetIsAlive() == false)
+		{
+			SceneManager::SetChangeStart(SceneName::GameOver);
+		}
 	}
 	else
 	{

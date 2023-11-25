@@ -72,7 +72,7 @@ void CollisionManager::DrawImGui()
 	ImGui::Text(flagstring.c_str());
 
 
-	ImGui::DragFloat("hitStopTime", &hitStopTimer_, 1.f,0, 100.f);
+	ImGui::DragFloat("hitStopTime", &hitStopTimer_, 1.f, 0, 100.f);
 
 	ImGui::DragFloat("shakePower", &shakePower_, 0.1f, 0.1f, 5.f);
 	ImGui::DragFloat("shakeTimer", &shakeTimer_, 1.f, 1, 100.f);
@@ -233,17 +233,14 @@ void CollisionManager::EnemyLockOn()
 	//攻撃をしていない、又は、ロックオンしている敵がいない時にロックオン対象を探す
 	if (player_->GetAttackManager()->GetIsAttacking() == false ||
 		enemyManager_->GetLockOnEnemy() == nullptr) {
+		int32_t index = 0;
 		for (auto& enemy : *enemyManager_->GetEnemy())
 		{
-			if (enemy->GetIsSoftLockOn() == false)
-			{
-				enemy->SetHardIsLockOn(false);
-			}
 			//一体でもハードロックをしていたらフラグをtrueにする
 			if (enemy->GetIsHardLockOn())
 			{
 				isHardLockOn = true;
-				break;
+				lockOnEnemyIndex_ = index;
 			}
 			//ロックオン用の大きい当たり判定
 			enemy->SetSoftIsLockOn(false);
@@ -254,7 +251,9 @@ void CollisionManager::EnemyLockOn()
 				//ロックオン圏内にいる敵を追加していく
 				lockOnEnemys_.push_back(enemy.get());
 			}
+			index++;
 		}
+		//ソフトロックの場合は常に計算する
 		if (isHardLockOn == false)
 		{
 			//仮の大きい値を入れておく
@@ -281,6 +280,42 @@ void CollisionManager::EnemyLockOn()
 				lockOnEnemy->SetSoftIsLockOn(true);
 			}
 			player_->SetLockOnEnemy(lockOnEnemy);
+		}
+		else {
+			IEnemy* otherLockOnEnemy = nullptr;
+			if (Controller::GetTriggerButtons(PAD::INPUT_LEFT_SHOULDER)) {
+				//仮の大きい値を入れておく
+				float dist2d = 5000.f;
+				index = 0;
+				for (auto& enemy : lockOnEnemys_)
+				{
+					//スクリーン座標を取得して画面の中央に近い敵をロックオンする
+					Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
+
+					Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
+
+					Vector2 dist = halfWindowSize - ScreenPos;
+					float length = dist.length();
+					//比較して短かったら敵を代入する
+					if (dist2d > length)
+					{
+						if (index != lockOnEnemyIndex_) {
+							dist2d = length;
+							otherLockOnEnemy = enemy;
+						}
+					}
+					index++;
+				}
+
+				if (otherLockOnEnemy != nullptr) {
+					
+					SoundManager::Play("lockOnSE", false, SoundVolume::GetValumeSE());
+					enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(false);
+					otherLockOnEnemy->SetHardIsLockOn(true);
+					otherLockOnEnemy->SetSoftIsLockOn(true);
+				}
+				player_->SetLockOnEnemy(otherLockOnEnemy);
+			}
 		}
 	}
 
