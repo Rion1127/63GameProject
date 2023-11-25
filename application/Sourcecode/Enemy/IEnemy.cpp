@@ -21,6 +21,8 @@ IEnemy::IEnemy(EnemyType type, bool isGravityImpact, int32_t health)
 	isHardLockOn_ = false;
 	isKnock_ = false;
 	isBulletShot_ = false;
+
+	gravity_.SetAddValue({ 0,-0.01f,0 });
 }
 
 void IEnemy::PreUpdate()
@@ -29,7 +31,6 @@ void IEnemy::PreUpdate()
 	addVec_ = { 0,0,0 };
 	if (isGravityImpact_ == true)
 	{
-		gravity_.SetAddValue({ 0,-0.01f,0 });
 		gravity_.Update();
 	}
 	damageCoolTime_.AddTime(1);

@@ -33,9 +33,10 @@ private:
 	float moveSpeed;
 	int32_t randRange_;
 
-	float endRot_;
-	float nowRot_;
-
+	TimerFloat knockRotTimer_;
+	//吹き飛ばされたときの回転量
+	float knockEndRot_;
+	
 	Spline spline_;
 	bool isWanderInit_;
 	TimerFloat sinkTimer_;
@@ -66,7 +67,7 @@ private:
 	void DamageUpdate() override;
 	//地面に当たった時の処理
 	void FloorCollisionDerived() override;
-
+	//それぞれのステートの関数
 	void Idle();
 	void Following();
 	void Wander();
@@ -81,5 +82,7 @@ private:
 	void WanderInit();
 
 	void StateUpdate(State state);
+	//フィニッシュ攻撃を食らった時の回転処理
+	void KnockRotate();
 };
 

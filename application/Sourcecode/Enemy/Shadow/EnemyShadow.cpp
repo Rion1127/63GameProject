@@ -47,6 +47,9 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 
 	slimeTimer_.SetLimitTime(7);
 
+	knockRotTimer_.SetLimitTime(60);
+	knockEndRot_ = -810.f;
+
 	followLength = 5.f;
 	moveSpeed = 0.1f;
 	randRange_ = 30;
@@ -62,6 +65,8 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	priority_.insert(std::make_pair(State::Attack, 0));
 	priority_.insert(std::make_pair(State::JumpAttack, 0));
 	priority_.insert(std::make_pair(State::KnockBack, 0));
+
+	gravity_.SetAddValue(Vector3(0,-0.005f,0));
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -124,6 +129,10 @@ void EnemyShadow::MoveUpdate()
 		if (state_ != State::Down) {
 			state_ = State::KnockBack;
 		}
+	}
+	if (isDown_) {
+		//フィニッシュで飛ばされたときの動き
+		KnockRotate();
 	}
 	//プレイヤーへのベクトル更新
 	UpdateEtoPVec();
@@ -276,9 +285,11 @@ void EnemyShadow::Down()
 	slimeTimer_.AddTime(1);
 
 	float scaleZ = 0;
+	//地面に潰れる
 	if (actionTimer_.GetTimeRate() <= 0.2f) {
 		scaleZ = Easing::Bounce::easeOut(actionTimer_.GetTimeRate(), 1.f, -0.6f, 0.2f);
 	}
+	//潰れたスケールが元に戻る
 	else {
 		float maxRate = 0.6f;
 		float rate = actionTimer_.GetTimeRate() - 0.2f;
@@ -297,6 +308,7 @@ void EnemyShadow::Down()
 	}
 	if (actionTimer_.GetIsEnd())
 	{
+		knockRotTimer_.Reset();
 		slimeTimer_.Reset();
 		obj_->SetScale(Vector3(1, 1, 1));
 		col_.radius = 1;
@@ -394,6 +406,7 @@ void EnemyShadow::KnockBack()
 	stateName_ = "KnockBack";
 
 	if (isDown_ == false) {
+		//プレイヤーの方に向く姿勢と後ろにのけぞる姿勢を掛ける
 		auto resultQ = EToPQuaternion_ * knockQuaternion_;
 		if (actionTimer_.GetTimeRate() <= 0.4f)
 		{
@@ -592,4 +605,16 @@ void EnemyShadow::StateUpdate(State state)
 		attack_->SetLockOnActor(splayer_);
 		attack_->Init();
 	}
+}
+
+void EnemyShadow::KnockRotate()
+{
+	//プレイヤーの方に向く姿勢と回転する姿勢を掛ける
+	auto resultQ = EToPQuaternion_ * MakeAxisAngle({ 1, 0, 0 }, Radian(objAngleX_));
+
+	knockRotTimer_.AddTime(1);
+
+	objAngleX_ = Easing::Quint::easeOut(0, knockEndRot_, knockRotTimer_.GetTimeRate());
+
+	obj_->WT_.quaternion_ = resultQ;
 }
