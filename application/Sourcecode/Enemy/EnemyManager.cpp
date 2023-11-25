@@ -29,7 +29,7 @@ EnemyManager::EnemyManager()
 	lockOnSprite_[1]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn2"));
 }
 
-void EnemyManager::PreUpdate()
+void EnemyManager::PreColUpdate()
 {
 	lockOnEnemy_ = nullptr;
 #ifdef _DEBUG

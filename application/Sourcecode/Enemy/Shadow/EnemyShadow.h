@@ -33,6 +33,7 @@ private:
 	float moveSpeed;
 	int32_t randRange_;
 
+	//吹き飛ばされたときの回転の時間
 	TimerFloat knockRotTimer_;
 	//吹き飛ばされたときの回転量
 	float knockEndRot_;

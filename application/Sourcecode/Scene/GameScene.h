@@ -48,6 +48,7 @@ private:
 
 	std::unique_ptr<ColosseumSystem> colosseumSystem_;
 	std::unique_ptr<PauseMenu> pauseMenu_;
+	//敵を読み込むためのファイル名
 	std::string cupName_;
 public:
 	~GameScene();

@@ -91,7 +91,7 @@ Player::Player() :
 	isFloorCollision_ = true;
 }
 
-void Player::PreUpdate()
+void Player::PreColUpdate()
 {
 	if (GetIsHitStopping())return;
 	addVec_ = { 0,0,0 };

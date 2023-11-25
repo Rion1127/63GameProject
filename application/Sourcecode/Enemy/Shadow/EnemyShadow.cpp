@@ -66,7 +66,7 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	priority_.insert(std::make_pair(State::JumpAttack, 0));
 	priority_.insert(std::make_pair(State::KnockBack, 0));
 
-	gravity_.SetAddValue(Vector3(0,-0.005f,0));
+	gravity_.SetAddValue(Vector3(0,-0.007f,0));
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -137,7 +137,7 @@ void EnemyShadow::MoveUpdate()
 	//プレイヤーへのベクトル更新
 	UpdateEtoPVec();
 
-	actionTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
+	actionTimer_.AddTime(GameSpeed::GetEnemySpeed());
 	//実行
 	(this->*Action[(int32_t)state_])();
 

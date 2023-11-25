@@ -62,6 +62,7 @@ void GameScene::Ini()
 void GameScene::Update()
 {
 #ifdef _DEBUG
+	//ステージオブジェホットリロード
 	if (Key::TriggerKey(DIK_R))
 	{
 		JsonLoader::GetInstance()->LoadFile("stage.json", "Stage");
@@ -72,11 +73,10 @@ void GameScene::Update()
 	if (pauseMenu_->GetIsPause() == false) {
 		CameraUpdate();
 		stage_->Update();
-		player_->PreUpdate();
-		enemyManager_->PreUpdate();
 
+		player_->PreColUpdate();
+		enemyManager_->PreColUpdate();
 		colManager_->Update();
-
 		enemyManager_->PostUpdate();
 		player_->PostUpdate();
 

@@ -30,7 +30,7 @@ private:
 	std::array<std::unique_ptr<Sprite>, 2> lockOnSprite_;
 public:
 	EnemyManager();
-	void PreUpdate();
+	void PreColUpdate();
 	void PostUpdate();
 	void Draw();
 	void SpriteDraw();

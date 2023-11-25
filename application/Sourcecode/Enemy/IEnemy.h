@@ -27,8 +27,6 @@ protected:
 
 	std::string name_;
 	EnemyType enemyType_;
-	//モデル
-
 	bool isSoftLockOn_;
 	bool isHardLockOn_;
 	bool isGravityImpact_;	//重力を有効にする
@@ -38,7 +36,7 @@ protected:
 	//フィニッシュ技をくらった時のフラグ
 	bool isDown_;
 	bool isBulletShot_;
-
+	//プレイヤーへのベクトル
 	Vector3 EtoPVec_;
 
 	//体力

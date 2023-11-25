@@ -80,9 +80,9 @@ void DebugScene::Update()
 
 		//当たり判定前更新
 		stage_->Update();
-		player_->PreUpdate();
+		player_->PreColUpdate();
 		if (Framework::isImguiDisplay_) enemyManager_->DebugUpdate();
-		enemyManager_->PreUpdate();
+		enemyManager_->PreColUpdate();
 
 		if (Framework::isImguiDisplay_)LoadEnemyImGui();
 

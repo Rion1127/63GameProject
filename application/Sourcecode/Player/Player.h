@@ -74,7 +74,7 @@ private:
 	Quaternion playerQuaternion_;	//X,Y,Z軸の合成
 public:
 	Player();
-	void PreUpdate();
+	void PreColUpdate();
 	void PostUpdate();
 
 	void ColPosUpdate();
