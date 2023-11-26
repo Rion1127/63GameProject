@@ -116,8 +116,12 @@ void DebugScene::Draw()
 	////////////////
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	stage_->Draw();
-	player_->Draw();
 	enemyManager_->Draw();
+	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	enemyManager_->SpriteBackDraw();
+	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
+	player_->Draw();
+	
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
 

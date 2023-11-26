@@ -484,3 +484,15 @@ Vector3 getEulerAnglesFromVector(const Vector3& vec) {
 	};
 	return result;
 }
+
+// 2次元ベクトルを任意の角度回転させる関数
+Vector2 RotateVector(const Vector2& vec, float angleDegrees) {
+	float angleRadians = Radian(angleDegrees);
+	float cosTheta = cos(angleRadians);
+	float sinTheta = sin(angleRadians);
+
+	float newX = vec.x * cosTheta - vec.y * sinTheta;
+	float newY = vec.x * sinTheta + vec.y * cosTheta;
+
+	return Vector2(newX, newY);
+}

@@ -101,8 +101,8 @@ void EnemyManager::PreColUpdate()
 
 	//hpゲージにロックオン中の敵をセット
 	hpGauge_.SetLockOnEnemy(lockOnEnemy_);
-
 	hpGauge_.Update();
+	rockOnParticle_.Update();
 }
 
 void EnemyManager::PostUpdate()
@@ -132,6 +132,11 @@ void EnemyManager::SpriteDraw()
 		lockOnSprite->Draw();
 	}
 	hpGauge_.Draw();
+}
+
+void EnemyManager::SpriteBackDraw()
+{
+	rockOnParticle_.Draw();
 }
 
 void EnemyManager::Damage()
@@ -211,6 +216,14 @@ void EnemyManager::LockOnSpriteUpdate()
 	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 	{
 		addRot = 10.f;
+		if (isHardLockOn == false)
+		{
+			rockOnParticle_.Reset();
+			rockOnParticle_.SetIsStart(true);
+		}
+		else {
+			rockOnParticle_.Reset();
+		}
 	}
 	addRot -= 0.2f;
 	addRot = Max(0.f, addRot);
@@ -250,5 +263,23 @@ void EnemyManager::LockOnSpriteUpdate()
 		Vector2 pos = GetScreenPos(lockOnWT, *Camera::scurrent_);
 		lockOnSprite_[i]->SetPos(pos);
 		lockOnSprite_[i]->Update();
+	}
+
+	if (isHardLockOn)
+	{
+		if (Controller::GetTriggerButtons(PAD::INPUT_LEFT_SHOULDER))
+		{
+			rockOnParticle_.Reset();
+			rockOnParticle_.SetIsStart(true);
+		}
+	}
+	if (rockOnParticle_.GetIsStaert()) {
+		//スクリーン座標を取得して画面の中央に近い敵をロックオンする
+		WorldTransform wt = *player_->GetWorldTransform();
+		wt.position_.y += wt.scale_.y;
+		wt.Update();
+		Vector2 ScreenPos = GetScreenPos(wt, *Camera::scurrent_);
+		rockOnParticle_.SetStartPos(ScreenPos);
+		rockOnParticle_.SetEndPos(lockOnSprite_[0]->GetPos());
 	}
 }

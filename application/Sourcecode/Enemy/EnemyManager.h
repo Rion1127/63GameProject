@@ -5,6 +5,7 @@
 #include <array>
 #include "Timer.h"
 #include "EnemyHPGauge.h"
+#include "Particle2DRockOn.h"
 #include "mInput.h"
 #include "Player.h"
 #include "IBullet.h"
@@ -29,12 +30,14 @@ private:
 	float addRot;
 	EnemyHPGauge hpGauge_;
 	std::array<std::unique_ptr<Sprite>, 2> lockOnSprite_;
+	Particle2DRockOn rockOnParticle_;
 public:
 	EnemyManager();
 	void PreColUpdate();
 	void PostUpdate();
 	void Draw();
 	void SpriteDraw();
+	void SpriteBackDraw();
 	void Damage();
 
 	void BulletUpdate();

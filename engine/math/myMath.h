@@ -143,3 +143,6 @@ Matrix4 CalculateWorldMat(const Vector3& pos, const Vector3& scale, const Vector
 Vector4 Vec4MulMat4(const Vector4& v,const Matrix4& m);
 
 Vector3 getEulerAnglesFromVector(const Vector3& vec);
+
+// 2次元ベクトルを任意の角度回転させる関数
+Vector2 RotateVector(const Vector2& vec, float radian);

@@ -29,5 +29,17 @@ public:
 	void Damage();
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
+public:
+	Vector2 GetPos() { return pos_; }
+	Vector2 GetLeftUpPos() {
+		Vector2 result = pos_;
+
+		result -= {
+			hpBar_->GetTexture().size_.x* hpBar_->GetScale().x,
+			hpBar_->GetTexture().size_.y* hpBar_->GetScale().y,
+		};
+
+		return result;
+	}
 };
 

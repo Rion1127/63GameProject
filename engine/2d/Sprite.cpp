@@ -353,8 +353,11 @@ void Sprite::DrawTest() {
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
-void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float LdY, float RdX, float RdY, UINT descriptorSize)
+void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float LdY, float RdX, float RdY)
 {
+	if (isInvisible_) {
+		return;
+	}
 #pragma region 画像の頂点データを更新
 	vertices_.at(0).pos = { LdX,LdY,0 };//左下
 	vertices_.at(1).pos = { LuX,LuY,0 };//左上
@@ -363,21 +366,11 @@ void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float L
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);
 
-	// ワールド行列の更新
-	matWorld_.UnitMatrix();
-	matWorld_ *= ConvertScalingMat({ Scale_.x, Scale_.y, 0 });
-	matWorld_ *= ConvertRotationZAxisMat(rot_);
-	matWorld_ *= ConvertTranslationMat({ pos_.x, pos_.y, 0.0f });
-
-	// 定数バッファにデータ転送
-	constMapMaterial_->color = color_;
-	constMapTransform_->mat = matProjection_; // 行列の合成
-
 #pragma endregion
-	TextureManager::GetInstance()->SetGraphicsDescriptorTable(descriptorSize);
+	TextureManager::GetInstance()->SetGraphicsDescriptorTable(texture_.textureHandle);
 	//定数バッファビュー(CBV)の設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->
-		SetGraphicsRootConstantBufferView(0, constBuffMaterial_->GetGPUVirtualAddress());
+		SetGraphicsRootConstantBufferView(1, constBuffMaterial_->GetGPUVirtualAddress());
 	// 頂点バッファビューの設定コマンド
 	RDirectX::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 	//インデックスバッファビューの設定コマンド
@@ -389,6 +382,11 @@ void Sprite::Draw(float LuX, float LuY, float RuX, float RuY, float LdX, float L
 	//描画コマンド
 	RDirectX::GetInstance()->GetCommandList()->
 		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
+}
+
+void Sprite::Draw(Vector2 LU, Vector2 RU, Vector2 LD, Vector2 RD)
+{
+	Draw(LU.x, LU.y, RU.x, RU.y, LD.x, LD.y, RD.x, RD.y);
 }
 
 void Sprite::TransferVertex()
