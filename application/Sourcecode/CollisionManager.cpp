@@ -28,8 +28,8 @@ CollisionManager::CollisionManager()
 void CollisionManager::Update()
 {
 	//ヒットストップ中に更新しないようにする;
-	HitStopUpdate();
-	if (GetIsHitStopping())return;
+	hitstop_.HitStopUpdate();
+	if (hitstop_.GetIsHitStopping())return;
 	//床とプレイヤー
 	PlayerToFloor();
 	PlayerToWall();
@@ -245,7 +245,7 @@ void CollisionManager::EnemyLockOn()
 			//ロックオン用の大きい当たり判定
 			enemy->SetSoftIsLockOn(false);
 			Sphere serchCol = player_->GetCol();
-			serchCol.radius *= 20.f;
+			serchCol.radius = 20.f;
 			if (BallCollision(serchCol, enemy->GetCol()))
 			{
 				//ロックオン圏内にいる敵を追加していく
@@ -282,13 +282,13 @@ void CollisionManager::EnemyLockOn()
 			player_->SetLockOnEnemy(lockOnEnemy);
 		}
 		else {
-			//ロックオン範囲内に敵が1体以下なら計算をしない
-			if (lockOnEnemys_.size() < 1)return;
-			//ロックオンしている敵が1体でその敵がハードロックされている場合計算をしない
-			if (lockOnEnemys_.size() == 1 && 
-				lockOnEnemys_[0]->GetIsHardLockOn())return;
 			IEnemy* otherLockOnEnemy = nullptr;
 			if (Controller::GetTriggerButtons(PAD::INPUT_LEFT_SHOULDER)) {
+				//ロックオン範囲内に敵が1体以下なら計算をしない
+				if (lockOnEnemys_.size() < 1)return;
+				//ロックオンしている敵が1体でその敵がハードロックされている場合計算をしない
+				if (lockOnEnemys_.size() == 1 &&
+					lockOnEnemys_[0]->GetIsHardLockOn())return;
 				//次の敵にロックオンを映す
 				lockOnEnemyIndex_++;
 				//配列一番後ろの敵を選択していたら先頭のインデックスにする

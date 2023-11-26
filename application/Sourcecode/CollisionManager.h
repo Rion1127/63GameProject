@@ -10,7 +10,7 @@
  * @brief 当たり判定をまとめているクラス
  */
 
-class CollisionManager : public HitStop
+class CollisionManager
 {
 private:
 	Player* player_;
@@ -22,6 +22,8 @@ private:
 
 	float shakePower_;
 	float shakeTimer_;
+
+	HitStop hitstop_;
 
 	int32_t lockOnEnemyIndex_;
 private:
