@@ -8,7 +8,7 @@ Particle2DRockOn::Particle2DRockOn()
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White"));
 	//sprite_->SetScale(Vector2(0.15f, 0.15f));
 
-	upLength_ = 2;
+	upLength_ = 5;
 	downLength_ = 2;
 
 	startPosTimer_.SetLimitTime(20);
@@ -31,12 +31,14 @@ void Particle2DRockOn::Reset()
 void Particle2DRockOn::Update()
 {
 	if (isStart_) {
+		//先頭の位置を変化させる
 		startPosTimer_.AddTime(1);
 		delayTimer_.AddTime(1);
+		//delayTimerの分送らせて終点を移動させる
 		if (delayTimer_.GetIsEnd()) {
 			endPosTimer_.AddTime(1);
 		}
-
+		//イージングでスプライトの頂点を動かす
 		Vector2 nowStartPos = {
 			Easing::Quint::easeOut(startPos_.x,endPos_.x,startPosTimer_.GetTimeRate()),
 			Easing::Quint::easeOut(startPos_.y,endPos_.y,startPosTimer_.GetTimeRate()),
