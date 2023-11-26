@@ -298,6 +298,7 @@ void CollisionManager::EnemyLockOn()
 				index = 0;
 				for (auto& enemy : lockOnEnemys_)
 				{
+					//条件にあった敵をロックオンする
 					if (index == lockOnEnemyIndex_) {
 						otherLockOnEnemy = enemy;
 						break;
@@ -306,7 +307,6 @@ void CollisionManager::EnemyLockOn()
 				}
 
 				if (otherLockOnEnemy != nullptr) {
-
 					SoundManager::Play("lockOnSE", false, SoundVolume::GetValumeSE());
 					enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(false);
 					otherLockOnEnemy->SetHardIsLockOn(true);

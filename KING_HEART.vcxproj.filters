@@ -618,6 +618,9 @@
     <ClCompile Include="application\Sourcecode\PostureDisplay.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -987,6 +990,9 @@
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\PostureDisplay.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,6 +34,7 @@
     <ClCompile Include="application\Sourcecode\Interface\IGauge.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\SoundVolume.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\Particle2DSelect.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleDash.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="application\Sourcecode\Interface\IGauge.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\SoundVolume.h" />
+    <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h" />
     <ClInclude Include="application\Sourcecode\Particle\Particle2DSelect.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleDash.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />

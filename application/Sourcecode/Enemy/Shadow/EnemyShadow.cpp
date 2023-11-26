@@ -23,7 +23,7 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true, false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
-	displayObj_->SetShadowOffsetPos(Vector3(0,-1,0));
+	displayObj_->SetShadowOffsetPos(Vector3(0,-0.8f,0));
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 	knockResist_ = { 1,1,1 };
 
@@ -146,6 +146,9 @@ void EnemyShadow::MoveUpdate()
 		SortPriority();
 	}
 
+	float offsetPos = displayObj_->GetScale().y * 0.8f;
+	displayObj_->SetShadowOffsetPos(Vector3(0, -offsetPos, 0));
+
 	handObj_->Update();
 #ifdef _DEBUG
 	ImGui::Begin("Enemy");
@@ -248,9 +251,15 @@ void EnemyShadow::Wander()
 			}
 		}
 		//進行方向に回転
-		obj_->WT_.SetQuaternion(VecToDir(spline_.GetHeadingVec()));
 
+		Vector2 moveVec = {
+			spline_.GetHeadingVec().x,
+			spline_.GetHeadingVec().z
+		};
 
+		float angle = Vec2Angle(moveVec.normalize());
+
+		obj_->WT_.SetQuaternion(MakeAxisAngle(Vector3(0,1,0), Radian(angle)));
 	}
 	//移動が終わったら別のパターンへ
 	else
