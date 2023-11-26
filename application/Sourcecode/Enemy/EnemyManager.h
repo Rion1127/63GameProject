@@ -15,9 +15,10 @@
  * @brief 全ての敵を管理するクラス
  */
 
-class EnemyManager : public HitStop
+class EnemyManager
 {
 private:
+	HitStop hitStop_;
 	std::list<std::unique_ptr<IEnemy>> enemys_;
 	std::list<std::unique_ptr<IBullet>> bullets_;
 

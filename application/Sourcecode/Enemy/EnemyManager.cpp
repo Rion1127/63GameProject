@@ -36,8 +36,8 @@ void EnemyManager::PreColUpdate()
 
 #endif // _DEBUG
 
-	HitStopUpdate();
-	if (GetIsHitStopping())return;
+	hitStop_.HitStopUpdate();
+	if (hitStop_.GetIsHitStopping())return;
 
 	std::list<std::unique_ptr<IEnemy>>::iterator itr;
 	for (itr = enemys_.begin(); itr != enemys_.end();)

@@ -298,8 +298,9 @@ void CollisionManager::EnemyLockOn()
 				index = 0;
 				for (auto& enemy : lockOnEnemys_)
 				{
-					if (index <= lockOnEnemyIndex_) {
+					if (index == lockOnEnemyIndex_) {
 						otherLockOnEnemy = enemy;
+						break;
 					}
 					index++;
 				}
