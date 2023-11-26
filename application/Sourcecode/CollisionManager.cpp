@@ -282,33 +282,30 @@ void CollisionManager::EnemyLockOn()
 			player_->SetLockOnEnemy(lockOnEnemy);
 		}
 		else {
+			//ロックオン範囲内に敵が1体以下なら計算をしない
+			if (lockOnEnemys_.size() < 1)return;
+			//ロックオンしている敵が1体でその敵がハードロックされている場合計算をしない
+			if (lockOnEnemys_.size() == 1 && 
+				lockOnEnemys_[0]->GetIsHardLockOn())return;
 			IEnemy* otherLockOnEnemy = nullptr;
 			if (Controller::GetTriggerButtons(PAD::INPUT_LEFT_SHOULDER)) {
-				//仮の大きい値を入れておく
-				float dist2d = 5000.f;
+				//次の敵にロックオンを映す
+				lockOnEnemyIndex_++;
+				//配列一番後ろの敵を選択していたら先頭のインデックスにする
+				if (lockOnEnemyIndex_ >= lockOnEnemys_.size()) {
+					lockOnEnemyIndex_ = 0;
+				}
 				index = 0;
 				for (auto& enemy : lockOnEnemys_)
 				{
-					//スクリーン座標を取得して画面の中央に近い敵をロックオンする
-					Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-
-					Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
-
-					Vector2 dist = halfWindowSize - ScreenPos;
-					float length = dist.length();
-					//比較して短かったら敵を代入する
-					if (dist2d > length)
-					{
-						if (index != lockOnEnemyIndex_) {
-							dist2d = length;
-							otherLockOnEnemy = enemy;
-						}
+					if (index <= lockOnEnemyIndex_) {
+						otherLockOnEnemy = enemy;
 					}
 					index++;
 				}
 
 				if (otherLockOnEnemy != nullptr) {
-					
+
 					SoundManager::Play("lockOnSE", false, SoundVolume::GetValumeSE());
 					enemyManager_->GetLockOnEnemy()->SetHardIsLockOn(false);
 					otherLockOnEnemy->SetHardIsLockOn(true);
