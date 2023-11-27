@@ -82,6 +82,7 @@ public:
 	void SetEasingType_(EasingType easingType) { easingType_ = easingType; }
 	void SetEasingTypeInOut_(EasingTypeInOut easeTypeInOut) { easeTypeInOut_ = easeTypeInOut; }
 	void SetParent(WorldTransform* parent);
+	void SetIsLineDisplay(bool flag) { isLineDisplay_ = flag; }
 public:
 	Vector3 GetNowPoint() { return nowPos_; }
 	Vector3 GetHeadingVec() { return headingVec_; }

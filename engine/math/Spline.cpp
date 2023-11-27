@@ -44,31 +44,33 @@ void Spline::Update(float speedRate)
 			EasingUpdate(speedRate);
 		}
 	}
-	Line3DUpdate();
-	line3D_->Update();
+	if (isLineDisplay_) {
+		Line3DUpdate();
+		line3D_->Update();
 
-	for (int32_t i = 0; i < splineObj_.size(); i++) {
-		splineObj_[i]->Update();
-	}
-	for (int32_t i = 0; i < splineObj_.size(); i++) {
-		
-		Vector3 nextVec;
-		Quaternion q;
-		//次のオブジェがある時
-		if (i <= splineObj_.size() - 2) {
-			nextVec = splineObj_[i + 1]->WT_.GetWorldPos() - splineObj_[i]->WT_.GetWorldPos();
-			nextVec = nextVec.normalize();
-			q = DirectionToDirection(Vector3(0, 1, 0), nextVec);
+		for (int32_t i = 0; i < splineObj_.size(); i++) {
+			splineObj_[i]->Update();
 		}
-		//最後のオブジェの時
-		else {
-			nextVec = splineObj_[i]->WT_.GetWorldPos() - splineObj_[i - 1]->WT_.GetWorldPos();
-			nextVec = nextVec.normalize();
-			q = DirectionToDirection(Vector3(0, 1, 0), nextVec);
-		}
-		splineObj_[i]->WT_.quaternion_ = q;
+		for (int32_t i = 0; i < splineObj_.size(); i++) {
 
-		splineObj_[i]->Update();
+			Vector3 nextVec;
+			Quaternion q;
+			//次のオブジェがある時
+			if (i <= splineObj_.size() - 2) {
+				nextVec = splineObj_[i + 1]->WT_.GetWorldPos() - splineObj_[i]->WT_.GetWorldPos();
+				nextVec = nextVec.normalize();
+				q = DirectionToDirection(Vector3(0, 1, 0), nextVec);
+			}
+			//最後のオブジェの時
+			else {
+				nextVec = splineObj_[i]->WT_.GetWorldPos() - splineObj_[i - 1]->WT_.GetWorldPos();
+				nextVec = nextVec.normalize();
+				q = DirectionToDirection(Vector3(0, 1, 0), nextVec);
+			}
+			splineObj_[i]->WT_.quaternion_ = q;
+
+			splineObj_[i]->Update();
+		}
 	}
 }
 

@@ -4,6 +4,7 @@
 #include "PipelineManager.h"
 #include <imgui.h>
 #include "Util.h"
+#include "Spline.h"
 
 /**
  * @file ParticleTrail.cpp
@@ -58,6 +59,7 @@ ParticleTrail::ParticleTrail(uint32_t vertSize) :
 
 void ParticleTrail::Update()
 {
+	
 	if (isStop_) {
 		//先頭の値を配列の後ろへ代入していく
 		for (size_t i = posArray_.size() - 1; i > 0; --i)
@@ -84,7 +86,6 @@ void ParticleTrail::SetPos(const Vector3& head, const Vector3& tail)
 {
 	tempPos.head = head;
 	tempPos.tail = tail;
-
 }
 
 void ParticleTrail::Draw()

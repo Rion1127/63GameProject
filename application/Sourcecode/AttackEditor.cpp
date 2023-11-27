@@ -47,6 +47,8 @@ AttackEditor::AttackEditor()
 	//キー読み込み
 	AttackKeyLoad();
 	cullentQuaternion_ = IdentityQuaternion();
+
+	spline_.SetIsLineDisplay(true);
 }
 
 void AttackEditor::Update()
