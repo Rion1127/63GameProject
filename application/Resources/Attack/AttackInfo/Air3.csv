@@ -5,7 +5,7 @@ damege = 5
 gravityY = 0.1
 KnockVec 0.1 0.2 0.1
 KnockYVec = 0
-addVec 0 0 0.05
+addVec 0 0 0.1
 deceleration = 0.003
 attackType Normal
 
@@ -28,7 +28,7 @@ damege = 5
 gravityY = 0.05
 KnockVec 0.1 0.2 0.1
 KnockYVec = 0
-addVec 0 0 0.05
+addVec 0 0 0.1
 deceleration = 0.003
 attackType Normal
 
@@ -51,7 +51,7 @@ damege = 5
 gravityY = 0.1
 KnockVec 0.1 0.2 0.1
 KnockYVec = 0
-addVec 0 0 0.05
+addVec 0 0 0.1
 deceleration = 0.003
 attackType Normal
 
@@ -80,7 +80,7 @@ damege = 10
 gravityY = 0.05
 KnockVec 0.4 0.1 0.4
 KnockYVec = 0
-addVec 0 0 0.05
+addVec 0 0 0.1
 deceleration = 0.003
 attackType Finish
 
