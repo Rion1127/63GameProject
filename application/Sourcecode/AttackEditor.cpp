@@ -107,16 +107,10 @@ void AttackEditor::Update()
 	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
 	playerObj_->SetPos(playerPos);
 
-	
-
 	swordObj_->EditorUpdate(spline_.GetNowPoint());
-
 	playerObj_->Update();
-
 	displayPlayerObj_->SetPos(playerObj_->GetPos());
-
 	displayPlayerObj_->Update();
-
 	postureDisplay.Update(cullentQuaternion_);
 }
 
@@ -141,7 +135,20 @@ void AttackEditor::DrawImGui()
 {
 	//postureDisplay.DrawImGui();
 	//プレイヤー座標の変更を行う
-	ImGui::Begin("AttackEditor");
+
+	ImGui::Begin("PlayerPos");
+	static float playerpos[3] = { 0,1,0 };
+
+	ImGui::DragFloat3("pos", playerpos, 0.1f, 100.f, 100.f);
+
+	if (ImGui::Button("PlayerPosReset"))
+	{
+		playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
+		displayPlayerObj_->WT_.SetQuaternion(IdentityQuaternion());
+	}
+	ImGui::End();
+
+	ImGui::Begin("File_Load,Save");
 	
 	ImGui::Text("HELP ");
 	ImGui::SameLine();
@@ -160,17 +167,6 @@ void AttackEditor::DrawImGui()
 		ImGui::EndTooltip();
 	}
 
-	static float playerpos[3] = { 0,1,0 };
-
-	ImGui::DragFloat3("pos", playerpos, 0.1f, 100.f, 100.f);
-	//playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
-
-	if (ImGui::Button("PlayerPosReset"))
-	{
-		playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
-		displayPlayerObj_->WT_.SetQuaternion(IdentityQuaternion());
-	}
-
 	ImGuiSave();
 	ImGuiLoad();
 
@@ -181,63 +177,7 @@ void AttackEditor::DrawImGui()
 
 	ImGui::End();
 
-	//スプラインポイントの変更・スプラインポイントの追加
-	ImGui::Begin("AttackSpline");
-
-	ImGui::Text("HELP ");
-	ImGui::SameLine();
-	ImGui::TextDisabled("(?)");
-
-	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
-	{
-		ImGui::BeginTooltip();
-		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-		ImGui::TextUnformatted("Play                : 現在選択しているスプライン曲線を再生する");
-		ImGui::TextUnformatted("AllPlay             : SwingCount分のスプライン曲線を再生する");
-		ImGui::TextUnformatted("AddSplinePoint      : 制御点を追加する");
-		ImGui::TextUnformatted("DeleteSplinePoint   : 制御点を削除する");
-		ImGui::TextUnformatted("SplineTimerType     : スプラインの進み方を変更する(Normal or Easing)");
-		ImGui::TextUnformatted("EasingType          : イージングの種類を変更する");
-		ImGui::TextUnformatted("InOut               : イージングのInOutの種類を変更する");
-		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
-		ImGui::PopTextWrapPos();
-		ImGui::EndTooltip();
-	}
-
-	ImGuiPlay();
-	ImGui::SameLine();
-	ImGuiAllPlay();
-	if (ImGui::Button("AddSplinePoint"))
-	{
-		ImGuiADDSplinePos(Vector3(0,0,0),currentSwingNum_);
-	}
-	if (ImGui::Button("DeleteSplinePoint"))
-	{
-		if (splinePointPos_.size() > 0)
-		{
-			isPointErase_ = true;
-		}
-	}
-	if (ImGui::Button("SplineTimerType"))
-	{
-		Spline::TimerType timerType;
-		bool flag = (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing);
-
-		timerType = flag ? Spline::TimerType::Normal : Spline::TimerType::Easing;
-
-		attackInfo_[currentSwingNum_].timerType = timerType;
-	}
-	std::string timerType;
-	if (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing) timerType = "Easing";
-	else timerType = "Normal";
-	ImGui::SameLine();
-	ImGui::Text(timerType.c_str());
-
-	ImGuiSetEasingType();
-	ImGuiSetEasingTypeInOut();
-	ImGuiDisplaySplitePoint();
-
-	ImGui::End();
+	ImGuiSplineEditor();
 
 	ImGuiSwingCount();
 
@@ -455,6 +395,67 @@ void AttackEditor::ImGuiAllPlay()
 			AttackPlay();
 		}
 	}
+}
+
+void AttackEditor::ImGuiSplineEditor()
+{
+	//スプラインポイントの変更・スプラインポイントの追加
+	ImGui::Begin("AttackSpline");
+
+	ImGui::Text("HELP ");
+	ImGui::SameLine();
+	ImGui::TextDisabled("(?)");
+
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted("Play                : 現在選択しているスプライン曲線を再生する");
+		ImGui::TextUnformatted("AllPlay             : SwingCount分のスプライン曲線を再生する");
+		ImGui::TextUnformatted("AddSplinePoint      : 制御点を追加する");
+		ImGui::TextUnformatted("DeleteSplinePoint   : 制御点を削除する");
+		ImGui::TextUnformatted("SplineTimerType     : スプラインの進み方を変更する(Normal or Easing)");
+		ImGui::TextUnformatted("EasingType          : イージングの種類を変更する");
+		ImGui::TextUnformatted("InOut               : イージングのInOutの種類を変更する");
+		ImGui::TextUnformatted("SplinePointPosition : 制御点を移動させる");
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+
+	ImGuiPlay();
+	ImGui::SameLine();
+	ImGuiAllPlay();
+	if (ImGui::Button("AddSplinePoint"))
+	{
+		ImGuiADDSplinePos(Vector3(0, 0, 0), currentSwingNum_);
+	}
+	if (ImGui::Button("DeleteSplinePoint"))
+	{
+		if (splinePointPos_.size() > 0)
+		{
+			isPointErase_ = true;
+		}
+	}
+	if (ImGui::Button("SplineTimerType"))
+	{
+		Spline::TimerType timerType;
+		bool flag = (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing);
+
+		timerType = flag ? Spline::TimerType::Normal : Spline::TimerType::Easing;
+
+		attackInfo_[currentSwingNum_].timerType = timerType;
+	}
+	std::string timerType;
+	if (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing) timerType = "Easing";
+	else timerType = "Normal";
+	ImGui::SameLine();
+	ImGui::Text(timerType.c_str());
+
+	ImGuiSetEasingType();
+	ImGuiSetEasingTypeInOut();
+	ImGuiDisplaySplitePoint();
+
+	ImGui::End();
 }
 
 void AttackEditor::ImGuiAttackInfo()

@@ -109,6 +109,7 @@ private:
 	void ImGuiLoad();				//ロードImGui表示
 	void ImGuiPlay();				//セーブImGui表示
 	void ImGuiAllPlay();			//オールプレイImGui表示
+	void ImGuiSplineEditor();
 	void ImGuiAttackInfo();
 	void ImGuiSwingCount();
 	void ImGuiSettingCombo();
