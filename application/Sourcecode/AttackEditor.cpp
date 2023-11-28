@@ -59,6 +59,16 @@ void AttackEditor::Update()
 		splinePointPos_[currentSwingNum_].erase(splinePointPos_[currentSwingNum_].begin() + (splinePointPos_[currentSwingNum_].size() - 1));
 		SetSplinePos();
 	}
+
+	if (isColPointErase_)
+	{
+		isColPointErase_ = false;
+		auto& spline = colSpline_.GetsplinePos();
+		//spline.
+			
+		SetSplinePos();
+	}
+
 	//選択している一振りだけ再生
 	if (isPlay_)
 	{
@@ -757,6 +767,18 @@ void AttackEditor::ImGuiColSpline()
 {
 	//スプラインポイントの変更・スプラインポイントの追加
 	ImGui::Begin("ColSpline");
+
+	if (ImGui::Button("AddColSplinePoint"))
+	{
+		
+	}
+	if (ImGui::Button("DeleteColSplinePoint"))
+	{
+		if (colSpline_.GetsplinePos().size() > 0)
+		{
+			isColPointErase_ = true;
+		}
+	}
 
 	ImGui::End();
 }

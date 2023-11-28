@@ -49,6 +49,18 @@ public:
 		std::vector<QuaternionControl> quaternion;
 		AttackType attackType = AttackType::Normal;
 	};
+	struct SeparateAttackInfo {
+		float attackFrame = 10;	//攻撃に掛かるフレーム
+		int32_t damage;			//ダメージ
+		float radian;			//半径
+
+		Spline::TimerType timerType;		//通常かイージングか
+		Spline::EasingType easingType;		//イージングの種類
+		Spline::EasingTypeInOut inOutType;	//イージングの動き方
+		std::vector<Vector3> splinePos;
+	};
+
+
 	struct SplinePos {
 		Vector3 splinePointPos_;
 	};
@@ -56,6 +68,7 @@ public:
 private:
 	//一振り分の詳細
 	std::vector<AttackInfo> attackInfo_;
+	std::vector<SeparateAttackInfo> separateAttackInfo_;
 	//プレイヤー
 	std::unique_ptr<Object3d> playerObj_;
 	std::unique_ptr<Object3d> displayPlayerObj_;
@@ -77,10 +90,13 @@ private:
 	bool isAllPlay_;
 	//制御点を消す
 	bool isPointErase_;
+	bool isColPointErase_;
 	//制御点の座標を更新したフラグ
 	bool isValueChange_;
 	//現在選択している一振り
 	int32_t currentSwingNum_;
+	//現在選択している当たり判定
+	int32_t currentColNum_;
 	int32_t currentquaternion_;
 	float slerpSpeed_;
 	//プレイヤーが動くベクトル
