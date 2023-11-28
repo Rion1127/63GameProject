@@ -33,7 +33,7 @@ attackFrame = 20
 gapFrame = 5
 damege = 20
 gravityY = 0
-KnockVec 0.5 1 0.5
+KnockVec 0.6 1.1 0.6
 KnockYVec = 1.5
 addVec 0 0 0.6
 deceleration = 0.035
