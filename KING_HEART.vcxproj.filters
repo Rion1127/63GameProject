@@ -621,6 +621,9 @@
     <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\AttacColSpline.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -994,6 +997,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\AttacColSpline.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

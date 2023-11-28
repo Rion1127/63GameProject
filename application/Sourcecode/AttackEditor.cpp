@@ -60,15 +60,6 @@ void AttackEditor::Update()
 		SetSplinePos();
 	}
 
-	if (isColPointErase_)
-	{
-		isColPointErase_ = false;
-		auto& spline = colSpline_.GetsplinePos();
-		//spline.
-			
-		SetSplinePos();
-	}
-
 	//選択している一振りだけ再生
 	if (isPlay_)
 	{
@@ -181,11 +172,6 @@ void AttackEditor::DrawImGui()
 
 	ImGuiSave();
 	ImGuiLoad();
-
-	if (colType_ == ColType::Separate)
-	{
-		ImGuiColSpline();
-	}
 
 	if (ImGui::Button("FileReload"))
 	{
@@ -483,18 +469,6 @@ void AttackEditor::ImGuiAttackInfo()
 	ImGui::Text("HELP ");
 	ImGui::SameLine();
 	ImGui::TextDisabled("(?)");
-	//当たり判定の種類（剣と当たり判定が一緒 or 剣と当たり判定が分離）
-	if (ImGui::Button("ColType"))
-	{
-		bool flag = (colType_ == ColType::Normal);
-
-		colType_ = flag ? ColType::Separate : ColType::Normal;
-	}
-	std::string ColType;
-	if (colType_ == ColType::Separate) ColType = "Separate";
-	else ColType = "Normal";
-	ImGui::SameLine();
-	ImGui::Text(ColType.c_str());
 
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
 	{
@@ -760,26 +734,6 @@ void AttackEditor::ImGuiQuaternion()
 			index++;
 		}
 	}
-	ImGui::End();
-}
-
-void AttackEditor::ImGuiColSpline()
-{
-	//スプラインポイントの変更・スプラインポイントの追加
-	ImGui::Begin("ColSpline");
-
-	if (ImGui::Button("AddColSplinePoint"))
-	{
-		
-	}
-	if (ImGui::Button("DeleteColSplinePoint"))
-	{
-		if (colSpline_.GetsplinePos().size() > 0)
-		{
-			isColPointErase_ = true;
-		}
-	}
-
 	ImGui::End();
 }
 

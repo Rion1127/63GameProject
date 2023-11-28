@@ -15,11 +15,6 @@
  * @brief 攻撃を制作するエディタークラス
  */
 
-enum class ColType {
-	Normal,		//剣と当たり判定が一緒
-	Separate	//剣と当たり判定が別別に動く
-};
-
 class AttackEditor
 {
 public:
@@ -49,26 +44,12 @@ public:
 		std::vector<QuaternionControl> quaternion;
 		AttackType attackType = AttackType::Normal;
 	};
-	struct SeparateAttackInfo {
-		float attackFrame = 10;	//攻撃に掛かるフレーム
-		int32_t damage;			//ダメージ
-		float radian;			//半径
-
-		Spline::TimerType timerType;		//通常かイージングか
-		Spline::EasingType easingType;		//イージングの種類
-		Spline::EasingTypeInOut inOutType;	//イージングの動き方
-		std::vector<Vector3> splinePos;
-	};
-
-
 	struct SplinePos {
 		Vector3 splinePointPos_;
 	};
-	
 private:
 	//一振り分の詳細
 	std::vector<AttackInfo> attackInfo_;
-	std::vector<SeparateAttackInfo> separateAttackInfo_;
 	//プレイヤー
 	std::unique_ptr<Object3d> playerObj_;
 	std::unique_ptr<Object3d> displayPlayerObj_;
@@ -90,13 +71,11 @@ private:
 	bool isAllPlay_;
 	//制御点を消す
 	bool isPointErase_;
-	bool isColPointErase_;
 	//制御点の座標を更新したフラグ
 	bool isValueChange_;
 	//現在選択している一振り
 	int32_t currentSwingNum_;
 	//現在選択している当たり判定
-	int32_t currentColNum_;
 	int32_t currentquaternion_;
 	float slerpSpeed_;
 	//プレイヤーが動くベクトル
@@ -115,9 +94,6 @@ private:
 	//クォータニオンの姿勢確認
 	PostureDisplay postureDisplay;
 	Quaternion cullentQuaternion_;
-	//当たり判定の種類
-	ColType colType_;
-	Spline colSpline_;
 public:
 	AttackEditor();
 	void Update();
@@ -138,7 +114,6 @@ private:
 	void ImGuiSwingCount();			//多段攻撃
 	void ImGuiSettingCombo();		//攻撃組み替え
 	void ImGuiQuaternion();			//姿勢制御
-	void ImGuiColSpline();			//当たり判定の動き
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む

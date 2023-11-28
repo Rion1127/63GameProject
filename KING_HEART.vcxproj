@@ -85,6 +85,7 @@
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
+    <ClCompile Include="application\Sourcecode\AttacColSpline.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="application\Sourcecode\PostureDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\Sourcecode\AttacColSpline.h" />
     <ClInclude Include="application\Sourcecode\AttackEditor.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
