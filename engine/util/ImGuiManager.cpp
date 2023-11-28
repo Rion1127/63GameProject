@@ -1,6 +1,6 @@
-#include <imgui.h>
-#include <imgui_impl_win32.h>
-#include <imgui_impl_dx12.h>
+#include <ImGui/imgui.h>
+#include <ImGui/imgui_impl_win32.h>
+#include <ImGui/imgui_impl_dx12.h>
 #include "ImGuiManager.h"
 #include <cassert>
 
@@ -53,6 +53,7 @@ void ImGuiManager::Init()
 	io.Fonts->AddFontDefault();
 	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, &config, io.Fonts->GetGlyphRangesJapanese());
 	//examples/example_win32_directx12/main.cppに呼び出し例がある
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 }
 
 void ImGuiManager::Finalize()
