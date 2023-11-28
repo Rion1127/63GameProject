@@ -15,6 +15,11 @@
  * @brief 攻撃を制作するエディタークラス
  */
 
+enum class ColType {
+	Normal,		//剣と当たり判定が一緒
+	Separate	//剣と当たり判定が別別に動く
+};
+
 class AttackEditor
 {
 public:
@@ -94,6 +99,9 @@ private:
 	//クォータニオンの姿勢確認
 	PostureDisplay postureDisplay;
 	Quaternion cullentQuaternion_;
+	//当たり判定の種類
+	ColType colType_;
+	Spline colSpline_;
 public:
 	AttackEditor();
 	void Update();
@@ -109,11 +117,12 @@ private:
 	void ImGuiLoad();				//ロードImGui表示
 	void ImGuiPlay();				//セーブImGui表示
 	void ImGuiAllPlay();			//オールプレイImGui表示
-	void ImGuiSplineEditor();
-	void ImGuiAttackInfo();
-	void ImGuiSwingCount();
-	void ImGuiSettingCombo();
-	void ImGuiQuaternion();
+	void ImGuiSplineEditor();		//剣の軌道
+	void ImGuiAttackInfo();			//攻撃のステータス
+	void ImGuiSwingCount();			//多段攻撃
+	void ImGuiSettingCombo();		//攻撃組み替え
+	void ImGuiQuaternion();			//姿勢制御
+	void ImGuiColSpline();			//当たり判定の動き
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む

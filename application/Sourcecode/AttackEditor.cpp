@@ -172,6 +172,11 @@ void AttackEditor::DrawImGui()
 	ImGuiSave();
 	ImGuiLoad();
 
+	if (colType_ == ColType::Separate)
+	{
+		ImGuiColSpline();
+	}
+
 	if (ImGui::Button("FileReload"))
 	{
 		FindAttackFile();
@@ -468,6 +473,18 @@ void AttackEditor::ImGuiAttackInfo()
 	ImGui::Text("HELP ");
 	ImGui::SameLine();
 	ImGui::TextDisabled("(?)");
+	//当たり判定の種類（剣と当たり判定が一緒 or 剣と当たり判定が分離）
+	if (ImGui::Button("ColType"))
+	{
+		bool flag = (colType_ == ColType::Normal);
+
+		colType_ = flag ? ColType::Separate : ColType::Normal;
+	}
+	std::string ColType;
+	if (colType_ == ColType::Separate) ColType = "Separate";
+	else ColType = "Normal";
+	ImGui::SameLine();
+	ImGui::Text(ColType.c_str());
 
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort))
 	{
@@ -484,12 +501,11 @@ void AttackEditor::ImGuiAttackInfo()
 		ImGui::PopTextWrapPos();
 		ImGui::EndTooltip();
 	}
-
+	//攻撃のステータス
 	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragInt("Damage", &attackInfo_[currentSwingNum_].damage, 1, 0, 500);
 	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, 0.f, 500.f);
-
 	float playerMoveVec[3] = {
 		attackInfo_[currentSwingNum_].playerMoveVec.x,
 		attackInfo_[currentSwingNum_].playerMoveVec.y,
@@ -498,7 +514,6 @@ void AttackEditor::ImGuiAttackInfo()
 	ImGui::DragFloat3("playerMoveVec", playerMoveVec, 0.01f, -10.f, 500.f);
 	attackInfo_[currentSwingNum_].playerMoveVec = { playerMoveVec[0],playerMoveVec[1], playerMoveVec[2] };
 	ImGui::DragFloat("deceleration", &attackInfo_[currentSwingNum_].deceleration, 0.001f, 0.001f, 500.f);
-
 	float knockVec[3] = {
 		attackInfo_[currentSwingNum_].knockVec.x,
 		attackInfo_[currentSwingNum_].knockVec.y,
@@ -506,9 +521,8 @@ void AttackEditor::ImGuiAttackInfo()
 	};
 	ImGui::DragFloat3("knockVec", knockVec, 0.01f, 0.f, 500.f);
 	attackInfo_[currentSwingNum_].knockVec = { knockVec[0],knockVec[1], knockVec[2] };
-
 	ImGui::DragFloat("knockYVec", &attackInfo_[currentSwingNum_].knockYVec, 0.01f, -10.f, 10.f);
-
+	//攻撃の種類（フィニッシュ攻撃かノーマル攻撃か）
 	if (ImGui::Button("AttackType"))
 	{
 		AttackType timerType;
@@ -736,6 +750,14 @@ void AttackEditor::ImGuiQuaternion()
 			index++;
 		}
 	}
+	ImGui::End();
+}
+
+void AttackEditor::ImGuiColSpline()
+{
+	//スプラインポイントの変更・スプラインポイントの追加
+	ImGui::Begin("ColSpline");
+
 	ImGui::End();
 }
 
