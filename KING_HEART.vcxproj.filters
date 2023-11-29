@@ -621,8 +621,11 @@
     <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttacColSpline.cpp">
+    <ClCompile Include="application\Sourcecode\AttackColSpline.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -998,8 +1001,11 @@
     <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttacColSpline.h">
+    <ClInclude Include="application\Sourcecode\AttackColSpline.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

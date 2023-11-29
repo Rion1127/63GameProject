@@ -60,6 +60,7 @@ void AttackEditor::Update()
 		SetSplinePos();
 	}
 
+	colSpline_.Update();
 	//選択している一振りだけ再生
 	if (isPlay_)
 	{
@@ -123,9 +124,9 @@ void AttackEditor::Draw()
 
 	swordObj_->Draw();
 
-	
-
 	spline_.DrawDebug();
+
+	colSpline_.Draw();
 }
 
 void AttackEditor::DrawRenderTexture()
@@ -136,7 +137,6 @@ void AttackEditor::DrawRenderTexture()
 
 void AttackEditor::DrawImGui()
 {
-	//postureDisplay.DrawImGui();
 	//プレイヤー座標の変更を行う
 
 	ImGui::Begin("PlayerPos");
@@ -189,6 +189,8 @@ void AttackEditor::DrawImGui()
 	ImGuiSettingCombo();
 	//姿勢制御
 	ImGuiQuaternion();
+
+	colSpline_.DrawImGui();
 }
 
 void AttackEditor::ImGuiDisplaySplitePoint()

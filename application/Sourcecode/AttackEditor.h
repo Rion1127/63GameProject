@@ -6,6 +6,7 @@
 #include "Sword.h"
 #include "Timer.h"
 #include "PostureDisplay.h"
+#include "AttackColSpline.h"
 #include <ImGui/imgui.h>
 #include <vector>
 #include <map>
@@ -94,6 +95,8 @@ private:
 	//クォータニオンの姿勢確認
 	PostureDisplay postureDisplay;
 	Quaternion cullentQuaternion_;
+
+	ColSpline colSpline_;
 public:
 	AttackEditor();
 	void Update();
