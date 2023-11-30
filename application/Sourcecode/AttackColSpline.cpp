@@ -3,17 +3,16 @@
 
 ColSpline::ColSpline()
 {
-	attackInfo_.emplace_back();
-	spline_.emplace_back();
-	spline_.back().SetIsLineDisplay(true);
-	spline_.back().SetColor(Color(255,0,0,255));
+	
+	spline_.SetIsLineDisplay(true);
+	spline_.SetColor(Color(255,0,0,255));
 }
 
 void ColSpline::Update()
 {
 	if (isErase_) {
 		isErase_ = false;
-		auto& pos = attackInfo_[currentNum_].splinePos;
+		auto& pos = attackInfo_.splinePos;
 		if (pos.size() > 0) {
 			pos.erase(pos.begin() + (pos.size() - 1));
 			SetSplinePoint();
@@ -23,14 +22,14 @@ void ColSpline::Update()
 		SetSplinePoint();
 	}
 
-	if (spline_[currentNum_].GetsplinePos().size()) {
-		spline_[currentNum_].Update();
+	if (spline_.GetsplinePos().size()) {
+		spline_.Update();
 	}
 }
 
 void ColSpline::Draw()
 {
-	spline_[currentNum_].DrawDebug();
+	spline_.DrawDebug();
 }
 
 void ColSpline::DrawImGui()
@@ -46,7 +45,7 @@ void ColSpline::ImGuiColSplineEditor()
 	//制御点追加
 	if (ImGui::Button("AddPoint"))
 	{
-		attackInfo_[currentNum_].splinePos.emplace_back();
+		attackInfo_.splinePos.emplace_back();
 		SetSplinePoint();
 	}
 	//制御点削除
@@ -58,7 +57,7 @@ void ColSpline::ImGuiColSplineEditor()
 
 void ColSpline::ImGuiDisplaySplinePos()
 {
-	auto& pos = attackInfo_[currentNum_].splinePos;
+	auto& pos = attackInfo_.splinePos;
 	if (ImGui::CollapsingHeader("ColSplinePointPosision"))
 	{
 		int32_t splinePosIndex = 0;
@@ -87,14 +86,14 @@ void ColSpline::ImGuiDisplaySplinePos()
 
 void ColSpline::SetSplinePoint()
 {
-	auto& spline = spline_[currentNum_];
-	auto& splinePos = attackInfo_[currentNum_].splinePos;
+	auto& spline = spline_;
+	auto& splinePos = attackInfo_.splinePos;
 	spline.AllClear();
-	spline.SetMaxTime(attackInfo_[currentNum_].attackFrame);
-	spline.SetTimerType_(attackInfo_[currentNum_].timerType);
-	spline.SetEasingType_(attackInfo_[currentNum_].easingType);
-	spline.SetEasingTypeInOut_(attackInfo_[currentNum_].inOutType);
-	for (int32_t i = 0; i < attackInfo_[currentNum_].splinePos.size(); i++)
+	spline.SetMaxTime(attackInfo_.attackFrame);
+	spline.SetTimerType_(attackInfo_.timerType);
+	spline.SetEasingType_(attackInfo_.easingType);
+	spline.SetEasingTypeInOut_(attackInfo_.inOutType);
+	for (int32_t i = 0; i < attackInfo_.splinePos.size(); i++)
 	{
 		if (i == 0)
 		{

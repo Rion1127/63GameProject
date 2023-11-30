@@ -45,9 +45,6 @@ public:
 		std::vector<QuaternionControl> quaternion;
 		AttackType attackType = AttackType::Normal;
 	};
-	struct SplinePos {
-		Vector3 splinePointPos_;
-	};
 private:
 	//一振り分の詳細
 	std::vector<AttackInfo> attackInfo_;
@@ -57,7 +54,7 @@ private:
 	//剣
 	std::unique_ptr<Sword> swordObj_;
 	//スプラインの制御点
-	std::vector<std::vector<std::unique_ptr<SplinePos>>> splinePointPos_;
+	std::vector<std::vector<std::unique_ptr<Vector3>>> splinePointPos_;
 	//姿勢制御
 	std::vector<std::vector<QuaternionControl>> quaternions_;
 	//イージングタイプ

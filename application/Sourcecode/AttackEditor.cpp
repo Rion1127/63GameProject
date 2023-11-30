@@ -202,20 +202,20 @@ void AttackEditor::ImGuiDisplaySplitePoint()
 		Vector3 prePos;
 		for (auto& spline : splinePointPos_[currentSwingNum_])
 		{
-			prePos = spline->splinePointPos_;
+			prePos = *spline;
 			std::ostringstream num;
 
 			num << splinePosIndex;
 			splinePosName = "Sprine" + num.str();
 
 			float splinePos[3] = {
-				spline->splinePointPos_.x,
-				spline->splinePointPos_.y,
-				spline->splinePointPos_.z,
+				spline->x,
+				spline->y,
+				spline->z,
 			};
 			ImGui::DragFloat3(splinePosName.c_str(), splinePos, 0.1f, 100.f, 100.f,"%.3f");
-			spline->splinePointPos_ = { splinePos[0], splinePos[1],  splinePos[2] };
-			if (prePos != spline->splinePointPos_)isValueChange_ = true;
+			*spline = { splinePos[0], splinePos[1],  splinePos[2] };
+			if (prePos != *spline)isValueChange_ = true;
 			splinePosIndex++;
 		}
 	}
@@ -279,8 +279,8 @@ void AttackEditor::ImGuiSetEasingTypeInOut()
 
 void AttackEditor::ImGuiADDSplinePos(const Vector3& pos, uint32_t index)
 {
-	std::unique_ptr<SplinePos> newObj = std::make_unique<SplinePos>();
-	newObj->splinePointPos_ = pos;
+	std::unique_ptr<Vector3> newObj = std::make_unique<Vector3>();
+	*newObj = pos;
 	splinePointPos_[index].emplace_back(std::move(newObj));
 	SetSplinePos();
 }
@@ -807,7 +807,7 @@ void AttackEditor::AttackSave(const std::string& string)
 		//スプライトの座標を出力する
 		for (auto& spline : splinePointPos_[index])
 		{
-			Vector3& pos = spline->splinePointPos_;
+			Vector3& pos = *spline;
 			writing_text = "SplinePos";
 			writing_file << writing_text << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
 		}
@@ -843,7 +843,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 	std::string line;
 
 	AttackInfo* attackinfo = nullptr;
-	std::vector<std::unique_ptr<SplinePos>>* splinePos = nullptr;
+	std::vector<std::unique_ptr<Vector3>>* splinePos = nullptr;
 	std::vector<QuaternionControl>* quaternionColtrol = nullptr;
 	currentSwingNum_ = -1;
 	int32_t quaternionIndex = -1;
@@ -1041,15 +1041,15 @@ void AttackEditor::SetSplinePos()
 	{
 		if (i == 0)
 		{
-			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Start);
+			spline_.AddPosition(*splinePointPos_[currentSwingNum_][i], PosState::Start);
 		}
 		else if (i == splinePointPos_[currentSwingNum_].size() - 1)
 		{
-			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::End);
+			spline_.AddPosition(*splinePointPos_[currentSwingNum_][i], PosState::End);
 		}
 		else
 		{
-			spline_.AddPosition(splinePointPos_[currentSwingNum_][i]->splinePointPos_, PosState::Middle);
+			spline_.AddPosition(*splinePointPos_[currentSwingNum_][i], PosState::Middle);
 		}
 	}
 }

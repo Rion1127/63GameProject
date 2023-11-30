@@ -15,8 +15,8 @@ private:
 		std::vector<Vector3> splinePos;
 	};
 private:
-	std::vector<SeparateAttackInfo> attackInfo_;
-	std::vector<Spline> spline_;
+	SeparateAttackInfo attackInfo_;
+	Spline spline_;
 	int32_t currentNum_;
 
 	bool isErase_;
