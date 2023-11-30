@@ -547,7 +547,7 @@
     <ProjectReference Include="engine\external\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
-    <ProjectReference Include="ImGui\ImGui.vcxproj">
+    <ProjectReference Include="engine\external\ImGui\ImGui.vcxproj">
       <Project>{de68b936-1462-448a-928a-3251bee32f5b}</Project>
     </ProjectReference>
   </ItemGroup>
@@ -637,7 +637,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;$(ProjectDir)application\Sourcecode\Player\Attack;$(ProjectDir)application\Sourcecode\Interface;$(ProjectDir)application\Sourcecode\MainSystem;$(ProjectDir)application\Sourcecode\Player\Action;$(ProjectDir)application\Sourcecode\Player\Magic;$(ProjectDir)application\Sourcecode\Player\State;$(ProjectDir)ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)engine;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\light;$(ProjectDir)engine\audio;$(ProjectDir)engine\input;$(ProjectDir)engine\math;$(ProjectDir)engine\base;$(ProjectDir)engine\external;$(ProjectDir)engine\\util;$(ProjectDir)engine\3d\assimp;$(ProjectDir)application;$(ProjectDir)application\Sourcecode;$(ProjectDir)application\Sourcecode\Scene;$(ProjectDir)application\Sourcecode\Particle;$(ProjectDir)application\Sourcecode\Shader;$(ProjectDir)application\Sourcecode\Player;$(ProjectDir)application\Sourcecode\Enemy;$(ProjectDir)application\Sourcecode\Stage;$(ProjectDir)application\Sourcecode\Enemy\Dummy;$(ProjectDir)application\Sourcecode\Enemy\Shadow;$(ProjectDir)application\Sourcecode\UI;$(ProjectDir)application\Sourcecode\Enemy\RedNocturne;$(ProjectDir)application\Sourcecode\Player\Attack;$(ProjectDir)application\Sourcecode\Interface;$(ProjectDir)application\Sourcecode\MainSystem;$(ProjectDir)application\Sourcecode\Player\Action;$(ProjectDir)application\Sourcecode\Player\Magic;$(ProjectDir)application\Sourcecode\Player\State;$(ProjectDir)engine\external\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
