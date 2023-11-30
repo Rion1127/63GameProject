@@ -58,7 +58,8 @@ private:
 
 	std::vector<std::unique_ptr<Object3d>> splineObj_;
 	std::unique_ptr<Line3D> line3D_;
-	std::vector<Vector3> preSplinePos_;
+	std::vector<Vector3> parentSplinePos_;
+	std::vector<Vector3> line3DPos_;
 private:
 	static std::vector<std::string> sEaseTypeName_;
 public:
@@ -106,7 +107,7 @@ private:
 	void EasingUpdate(float speedRate);
 	void EaseUpdate();
 	void ObjInit();		//スプラインポイントに配置するオブジェ初期化
-	void ParentUpdate(std::vector<Vector3>& pos);
+	void ParentUpdate();
 	void Line3DUpdate();
 };
 

@@ -21,7 +21,8 @@ Spline::Spline()
 	easeTypeInOut_ = EasingTypeInOut::In;
 	isLineDisplay_ = false;
 
-	line3D_ = std::make_unique<Line3D>(50);
+	line3D_ = std::make_unique<Line3D>(20);
+	line3DPos_.resize(line3D_->GetVertSize());
 }
 
 void Spline::StaticInit()
@@ -214,12 +215,11 @@ void Spline::NormalUpdate(float speedRate)
 	}
 	worldTransform_.Update();
 	if (worldTransform_.parent_ != nullptr) {
-		std::vector<Vector3> splinePos;
-		ParentUpdate(splinePos);
-		nowPos_ = SplinePosition(splinePos, index_, t);
+		ParentUpdate();
+		nowPos_ = SplinePosition(parentSplinePos_, index_, t);
 		t += 0.01f;
 		if (t <= 1.f) {
-			headingVec_ = SplinePosition(splinePos, index_, t) - nowPos_;
+			headingVec_ = SplinePosition(parentSplinePos_, index_, t) - nowPos_;
 		}
 	}
 	else {
@@ -254,12 +254,11 @@ void Spline::EasingUpdate(float speedRate)
 	float splineRate = (nowTime_ - testTime_) / offsetTime;
 
 	if (worldTransform_.parent_ != nullptr) {
-		std::vector<Vector3> splinePos;
-		ParentUpdate(splinePos);
-		nowPos_ = SplinePosition(splinePos, index_, splineRate);
+		ParentUpdate();
+		nowPos_ = SplinePosition(parentSplinePos_, index_, splineRate);
 		splineRate += 0.01f;
 		if (splineRate <= 1.f) {
-			headingVec_ = SplinePosition(splinePos, index_, splineRate) - nowPos_;
+			headingVec_ = SplinePosition(parentSplinePos_, index_, splineRate) - nowPos_;
 		}
 	}
 	else {
@@ -362,45 +361,50 @@ void Spline::ObjInit()
 	}
 }
 
-void Spline::ParentUpdate(std::vector<Vector3>& pos)
+void Spline::ParentUpdate()
 {
+	if (parentSplinePos_.size() != splinePos_.size())
+	{
+		parentSplinePos_.clear();
+		parentSplinePos_.resize(splinePos_.size());
+	}
 	for (int32_t i = 0; i < splinePos_.size(); i++) {
 		worldTransform_.position_ = splinePos_[i];
 		worldTransform_.Update();
 
-		pos.emplace_back(worldTransform_.GetWorldPos());
+		parentSplinePos_[i] = worldTransform_.GetWorldPos();
 	}
 }
 
 void Spline::Line3DUpdate()
 {
 	if (splinePos_.size() == 0)return;
-	std::vector<Vector3> pos;
-
+	
 	float t = 0;
 	float addRate = 1.f / line3D_->GetVertSize() * (splinePos_.size() - 2);
 	int32_t index = 1;
 
-	std::vector<Vector3> splinePos;
 	if (worldTransform_.parent_ != nullptr) {
-		ParentUpdate(splinePos);
+		ParentUpdate();
 	}
 	else {
-		splinePos = splinePos_;
+		parentSplinePos_ = splinePos_;
 	}
 
-	while (index < splinePos.size() - 2) {
+	int32_t line3DPosIndex = 0;
+	while (index < parentSplinePos_.size() - 2) {
 		//次の制御点がある場合
 		if (t >= 1.0f) {
 			index++;
 			t = 0;
 		}
 
-		pos.emplace_back(SplinePosition(splinePos, index, t));
+		line3DPos_[line3DPosIndex] = SplinePosition(parentSplinePos_, index, t);
 		t += addRate;
+		line3DPosIndex++;
 	}
 	if (splinePos_.size() > 2)
 	{
-		line3D_->SetVertPos(pos);
+		line3D_->SetVertPos(line3DPos_);
 	}
 }
