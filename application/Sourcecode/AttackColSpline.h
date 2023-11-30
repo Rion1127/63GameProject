@@ -21,6 +21,8 @@ private:
 
 	bool isErase_;
 	bool isPosChange_;
+
+	Vector3 prePos_;
 public:
 	ColSpline();
 

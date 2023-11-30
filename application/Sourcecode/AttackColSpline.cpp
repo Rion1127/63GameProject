@@ -19,6 +19,7 @@ void ColSpline::Update()
 		}
 	}
 	if (isPosChange_) {
+		isPosChange_ = false;
 		SetSplinePoint();
 	}
 

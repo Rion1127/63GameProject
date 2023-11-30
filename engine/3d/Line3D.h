@@ -41,7 +41,7 @@ public:
 	uint32_t GetVertSize() { return vertSize_; }
 	Color GetColor() { return color_; }
 public:
-	void SetVertPos(std::vector<Vector3> pos);
+	void SetVertPos(const std::vector<Vector3>& pos);
 	void SetColor(Color col) { color_ = col; }
 };
 

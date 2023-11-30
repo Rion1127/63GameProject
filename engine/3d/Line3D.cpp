@@ -76,10 +76,10 @@ void Line3D::Draw()
 	cmdList.SetGraphicsRootConstantBufferView(
 		1, constBuffColor_->GetGPUVirtualAddress());
 
-	cmdList.DrawInstanced((UINT)std::distance(vertex_.begin(), vertex_.end()), 1, 0, 0);
+	cmdList.DrawInstanced((UINT)vertex_.size(), 1, 0, 0);
 }
 
-void Line3D::SetVertPos(std::vector<Vector3> pos)
+void Line3D::SetVertPos(const std::vector<Vector3>& pos)
 {
 	for (uint32_t i = 0; i < vertex_.size();i++) {
 		if (pos.size() <= i) {

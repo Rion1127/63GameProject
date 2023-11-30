@@ -48,14 +48,10 @@ void Spline::Update(float speedRate)
 	if (isLineDisplay_) {
 		Line3DUpdate();
 		line3D_->Update();
-
 		for (int32_t i = 0; i < splineObj_.size(); i++) {
 			splineObj_[i]->Update();
-			const auto& color = line3D_->GetColor();
-			splineObj_[i]->SetAmbient("cone",Vector3(color.r, color.g, color.b));
 		}
 		for (int32_t i = 0; i < splineObj_.size(); i++) {
-
 			Vector3 nextVec;
 			Quaternion q;
 			//次のオブジェがある時
@@ -72,6 +68,8 @@ void Spline::Update(float speedRate)
 			}
 			splineObj_[i]->WT_.quaternion_ = q;
 
+			const auto& color = line3D_->GetColor();
+			splineObj_[i]->SetAmbient("cone", Vector3(color.r, color.g, color.b));
 			splineObj_[i]->Update();
 		}
 	}
@@ -379,10 +377,6 @@ void Spline::ParentUpdate()
 void Spline::Line3DUpdate()
 {
 	if (splinePos_.size() == 0)return;
-	
-	float t = 0;
-	float addRate = 1.f / line3D_->GetVertSize() * (splinePos_.size() - 2);
-	int32_t index = 1;
 
 	if (worldTransform_.parent_ != nullptr) {
 		ParentUpdate();
@@ -391,14 +385,19 @@ void Spline::Line3DUpdate()
 		parentSplinePos_ = splinePos_;
 	}
 
+	int32_t activeNum = (int32_t)parentSplinePos_.size() - 2;
+	float t = 0;
+	float addRate = (1.f * activeNum) / (line3D_->GetVertSize() - 1);
+	int32_t index = 1;
 	int32_t line3DPosIndex = 0;
-	while (index < parentSplinePos_.size() - 2) {
+	while (index <= activeNum) {
+		if (line3DPos_.size() <= line3DPosIndex)break;
 		//次の制御点がある場合
 		if (t >= 1.0f) {
 			index++;
-			t = 0;
+			t -= 1.f;
 		}
-
+		if (index >= activeNum)t = 0;
 		line3DPos_[line3DPosIndex] = SplinePosition(parentSplinePos_, index, t);
 		t += addRate;
 		line3DPosIndex++;
