@@ -71,6 +71,7 @@
     <ClCompile Include="application\Sourcecode\Player\State\PlayerMove.cpp" />
     <ClCompile Include="application\Sourcecode\Player\Sword.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\AttackEditorScene.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameOverScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp" />
@@ -85,7 +86,7 @@
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
-    <ClCompile Include="application\Sourcecode\AttacColSpline.cpp" />
+    <ClCompile Include="application\Sourcecode\AttackColSpline.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -137,7 +138,7 @@
     <ClCompile Include="application\Sourcecode\PostureDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application\Sourcecode\AttacColSpline.h" />
+    <ClInclude Include="application\Sourcecode\AttackColSpline.h" />
     <ClInclude Include="application\Sourcecode\AttackEditor.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="application\Sourcecode\Player\State\PlayerMove.h" />
     <ClInclude Include="application\Sourcecode\Player\Sword.h" />
     <ClInclude Include="application\Sourcecode\Scene\AttackEditorScene.h" />
+    <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameOverScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameScene.h" />
@@ -545,7 +547,7 @@
     <ProjectReference Include="engine\external\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
-    <ProjectReference Include="ImGui\ImGui.vcxproj">
+    <ProjectReference Include="engine\external\ImGui\ImGui.vcxproj">
       <Project>{1ad17a38-ae58-4a72-a2c4-b2b03d0e1f59}</Project>
     </ProjectReference>
   </ItemGroup>

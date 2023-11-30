@@ -49,12 +49,10 @@ struct Ray {
 
 bool RayCollision(const WorldTransform& ray, const WorldTransform& obj);
 
-bool BallCollision(const WorldTransform& a, const WorldTransform& b);
-
-bool BallCollision(const Vector3& a, const float& aSize, const Vector3& b, const float& bSize);
-
 //球と球
 bool BallCollision(const Sphere& a, const Sphere& b);
+//上下制限あり球と球
+bool BallCollision(const Sphere& a,float heightA, const Sphere& b, float heightB);
 //平面と球
 bool Sphere2PlaneCol(const Sphere& sphere, const Plane& plane,
 	Vector3* inter = nullptr);

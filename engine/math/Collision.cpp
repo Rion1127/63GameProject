@@ -91,42 +91,6 @@ bool RayCollision(const WorldTransform& ray, const WorldTransform& obj)
 #pragma endregion
 }
 //球と球
-bool BallCollision(const WorldTransform& a, const WorldTransform& b) {
-	float x, y, z;
-	float r;
-
-	x = (float)pow(b.position_.x - a.position_.x, 2);
-	y = (float)pow(b.position_.y - a.position_.y, 2);
-	z = (float)pow(b.position_.z - a.position_.z, 2);
-
-	float pos = x + y + z;
-
-	r = (float)pow(a.scale_.x + b.scale_.x, 2);
-	if (pos <= r)
-	{
-		return true;
-	}
-	return false;
-}
-//球と球
-bool BallCollision(const Vector3& a, const float& aSize, const Vector3& b, const float& bSize) {
-	float x, y, z;
-	float r;
-
-	x = (float)pow(b.x - a.x, 2);
-	y = (float)pow(b.y - a.y, 2);
-	z = (float)pow(b.z - a.z, 2);
-
-	float pos = x + y + z;
-
-	r = (float)pow(aSize + bSize, 2);
-	if (pos <= r)
-	{
-		return true;
-	}
-	return false;
-}
-//球と球
 bool BallCollision(const Sphere& a, const Sphere& b)
 {
 	if (a.isActive == false ||
@@ -134,6 +98,40 @@ bool BallCollision(const Sphere& a, const Sphere& b)
 	{
 		return false;
 	}
+	float x, y, z;
+	float r;
+
+	x = (float)pow(b.center.x - a.center.x, 2);
+	y = (float)pow(b.center.y - a.center.y, 2);
+	z = (float)pow(b.center.z - a.center.z, 2);
+
+	float pos = x + y + z;
+
+	r = (float)pow(a.radius + b.radius, 2);
+	if (pos <= r)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool BallCollision(const Sphere& a, float heightA, const Sphere& b, float heightB)
+{
+	if (a.isActive == false ||
+		b.isActive == false)
+	{
+		return false;
+	}
+
+	float posAY = a.center.y;
+	float posBY = b.center.y;
+
+	float distancePos = fabs(posAY - posBY);
+	float distanceLength = fabs(heightA + heightB);
+	if (distancePos >= distanceLength) {
+		return false;
+	}
+
 	float x, y, z;
 	float r;
 

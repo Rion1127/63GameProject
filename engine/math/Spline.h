@@ -83,6 +83,7 @@ public:
 	void SetEasingTypeInOut_(EasingTypeInOut easeTypeInOut) { easeTypeInOut_ = easeTypeInOut; }
 	void SetParent(WorldTransform* parent);
 	void SetIsLineDisplay(bool flag) { isLineDisplay_ = flag; }
+	void SetColor(Color col) { line3D_->SetColor(col); }
 public:
 	Vector3 GetNowPoint() { return nowPos_; }
 	Vector3 GetHeadingVec() { return headingVec_; }

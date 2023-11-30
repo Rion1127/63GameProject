@@ -50,6 +50,8 @@ void Spline::Update(float speedRate)
 
 		for (int32_t i = 0; i < splineObj_.size(); i++) {
 			splineObj_[i]->Update();
+			const auto& color = line3D_->GetColor();
+			splineObj_[i]->SetAmbient("cone",Vector3(color.r, color.g, color.b));
 		}
 		for (int32_t i = 0; i < splineObj_.size(); i++) {
 
