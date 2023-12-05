@@ -1,9 +1,11 @@
 #pragma once
+#include "AttackEditorConfigCommon.h"
 #include "Spline.h"
+#include "Object3d.h"
 #include <vector>
 
 class ColSpline {
-private:
+public:
 	struct SeparateAttackInfo {
 		float attackFrame = 10;	//攻撃に掛かるフレーム
 		int32_t damage;			//ダメージ
@@ -15,13 +17,16 @@ private:
 		std::vector<Vector3> splinePos;
 	};
 private:
+	std::unique_ptr<Object3d> colObj_;
 	SeparateAttackInfo attackInfo_;
 	Spline spline_;
 	int32_t currentNum_;
 
+	AttackEditorConfigCommon configCommon_;
+
 	bool isErase_;
 	bool isPosChange_;
-
+	
 	Vector3 prePos_;
 public:
 	ColSpline();
@@ -32,8 +37,10 @@ public:
 private:
 	void ImGuiColSplineEditor();
 	void ImGuiDisplaySplinePos();
-
+	void ImGuiColInfo();
 
 	void SetSplinePoint();
+public:
+	void PlaySpline();
 };
 

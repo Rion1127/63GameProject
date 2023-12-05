@@ -627,6 +627,9 @@
     <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\AttackEditorConfigCommon.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -1006,6 +1009,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\AttackEditorConfigCommon.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

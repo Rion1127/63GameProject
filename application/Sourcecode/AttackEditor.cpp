@@ -40,6 +40,7 @@ AttackEditor::AttackEditor()
 
 	splinePointPos_.emplace_back();
 	quaternions_.emplace_back();
+	quaternions_[currentSwingNum_].emplace_back();
 
 	swordObj_->SetParent(displayPlayerObj_.get());
 
@@ -221,62 +222,6 @@ void AttackEditor::ImGuiDisplaySplitePoint()
 	}
 }
 
-void AttackEditor::ImGuiSetEasingType()
-{
-	easingTypeNames.emplace_back("Back");
-	easingTypeNames.emplace_back("Bounce");
-	easingTypeNames.emplace_back("Circ");
-	easingTypeNames.emplace_back("Quint");
-	easingTypeNames.emplace_back("Cubic");
-	easingTypeNames.emplace_back("Sine");
-	//プルダウンメニューでイージングタイプを選択できるようにする
-	if (ImGui::BeginCombo("EasingType", easingType_.c_str()))
-	{
-		for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; ++i)
-		{
-			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
-			const bool is_selected = (easingType_ == Spline::GetEaseTypeNames()[i]);
-			if (ImGui::Selectable(Spline::GetEaseTypeNames()[i].c_str(), is_selected))
-			{
-				easingType_ = Spline::GetEaseTypeNames()[i].c_str();
-				attackInfo_[currentSwingNum_].easingType = ((Spline::EasingType)i);
-			}
-			if (is_selected)
-			{
-				ImGui::SetItemDefaultFocus();
-			}
-		}
-		ImGui::EndCombo();
-	}
-}
-
-void AttackEditor::ImGuiSetEasingTypeInOut()
-{
-	std::vector<std::string> easingTypenames;
-	easingTypenames.emplace_back("In");
-	easingTypenames.emplace_back("Out");
-	easingTypenames.emplace_back("InOut");
-	//プルダウンメニューでイージングタイプインアウトを選択できるようにする
-	if (ImGui::BeginCombo("InOut", easingTypeInOut_.c_str()))
-	{
-		for (uint32_t i = 0; i < (uint32_t)Spline::EasingTypeInOut::EasingTypeInOutEnd; ++i)
-		{
-			//選択したものとハッシュ値が一致したらs_currentItemにハッシュ値を代入
-			const bool is_selected = (easingTypeInOut_ == easingTypenames[i]);
-			if (ImGui::Selectable(easingTypenames[i].c_str(), is_selected))
-			{
-				easingTypeInOut_ = easingTypenames[i].c_str();
-				attackInfo_[currentSwingNum_].inOutType = ((Spline::EasingTypeInOut)i);
-			}
-			if (is_selected)
-			{
-				ImGui::SetItemDefaultFocus();
-			}
-		}
-		ImGui::EndCombo();
-	}
-}
-
 void AttackEditor::ImGuiADDSplinePos(const Vector3& pos, uint32_t index)
 {
 	std::unique_ptr<Vector3> newObj = std::make_unique<Vector3>();
@@ -385,6 +330,7 @@ void AttackEditor::ImGuiPlay()
 		{
 			isPlay_ = true;
 			AttackPlay();
+			colSpline_.PlaySpline();
 		}
 	}
 }
@@ -441,23 +387,11 @@ void AttackEditor::ImGuiSplineEditor()
 			isPointErase_ = true;
 		}
 	}
-	if (ImGui::Button("SplineTimerType"))
-	{
-		Spline::TimerType timerType;
-		bool flag = (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing);
 
-		timerType = flag ? Spline::TimerType::Normal : Spline::TimerType::Easing;
+	configCommon_.SetTimerType(attackInfo_[currentSwingNum_].timerType);
+	configCommon_.SetEasingType(attackInfo_[currentSwingNum_].easingType);
+	configCommon_.SetEasingTypeInOut(attackInfo_[currentSwingNum_].inOutType);
 
-		attackInfo_[currentSwingNum_].timerType = timerType;
-	}
-	std::string timerType;
-	if (attackInfo_[currentSwingNum_].timerType == Spline::TimerType::Easing) timerType = "Easing";
-	else timerType = "Normal";
-	ImGui::SameLine();
-	ImGui::Text(timerType.c_str());
-
-	ImGuiSetEasingType();
-	ImGuiSetEasingTypeInOut();
 	ImGuiDisplaySplitePoint();
 
 	ImGui::End();
@@ -584,7 +518,7 @@ void AttackEditor::ImGuiSwingCount()
 		{
 			if (currentInfo.easingType == Spline::EasingType(i))
 			{
-				easingType_ = Spline::GetEaseTypeNames()[i];
+				configCommon_.SetEasingTypeName(Spline::GetEaseTypeNames()[i]);
 				break;
 			}
 		}
@@ -594,7 +528,7 @@ void AttackEditor::ImGuiSwingCount()
 		else if (currentInfo.inOutType == Spline::EasingTypeInOut::Out)inoutString = "Out";
 		else inoutString = "InOut";
 		
-		easingTypeInOut_ = inoutString;
+		configCommon_.SetEasingTypeInOutName(inoutString);
 		SetSplinePos();
 	}
 
@@ -796,12 +730,12 @@ void AttackEditor::AttackSave(const std::string& string)
 			writing_file << writing_text << timerType << std::endl;
 
 			writing_text = "EasingType ";
-			easingType = easingType_;
+			easingType = configCommon_.GetEasingType();
 			writing_file << writing_text << easingType << std::endl;
 
 			writing_text = "EasingTypeInOut ";
-			easingType = easingTypeInOut_;
-			writing_file << writing_text << easingTypeInOut_ << std::endl;
+			easingType = configCommon_.GetEasingInOutType();
+			writing_file << writing_text << easingType << std::endl;
 		}
 
 		//スプライトの座標を出力する
@@ -938,11 +872,13 @@ void AttackEditor::AttackLoad(const std::string& string)
 		//イージングの種類読み込み
 		if (key == "EasingType")
 		{
-			line_stream >> easingType_;
+			std::string easingType;
+			line_stream >> easingType;
+			configCommon_.SetEasingTypeName(easingType);
 
 			for (uint32_t i = 0; i < (uint32_t)Spline::EasingType::EasingTypeEnd; i++)
 			{
-				if (easingType_ == Spline::GetEaseTypeNames()[i])
+				if (easingType == Spline::GetEaseTypeNames()[i])
 				{
 					attackinfo->easingType = ((Spline::EasingType)i);
 					break;
@@ -952,11 +888,13 @@ void AttackEditor::AttackLoad(const std::string& string)
 		//イージング・インアウト読み込み
 		if (key == "EasingTypeInOut")
 		{
+			std::string easingTypeInOut;
 			Spline::EasingTypeInOut typeInout;
-			line_stream >> easingTypeInOut_;
+			line_stream >> easingTypeInOut;
+			configCommon_.SetEasingTypeInOutName(easingTypeInOut);
 
-			if (easingTypeInOut_ == "In")typeInout = Spline::EasingTypeInOut::In;
-			else if (easingTypeInOut_ == "Out")typeInout = Spline::EasingTypeInOut::Out;
+			if (easingTypeInOut == "In")typeInout = Spline::EasingTypeInOut::In;
+			else if (easingTypeInOut == "Out")typeInout = Spline::EasingTypeInOut::Out;
 			else typeInout = Spline::EasingTypeInOut::InOut;
 
 			attackinfo->inOutType = typeInout;

@@ -3,9 +3,14 @@
 
 ColSpline::ColSpline()
 {
-	
+	colObj_ = std::move(std::make_unique<Object3d>());
+	colObj_->SetModel(Model::CreateOBJ_uniptr("sphere", false, false));
+
 	spline_.SetIsLineDisplay(true);
 	spline_.SetColor(Color(255,0,0,255));
+
+	attackInfo_.radian = 1.f;
+	attackInfo_.damage = 10;
 }
 
 void ColSpline::Update()
@@ -26,15 +31,33 @@ void ColSpline::Update()
 	if (spline_.GetsplinePos().size()) {
 		spline_.Update();
 	}
+
+	if (!spline_.GetisEnd())
+	{
+		colObj_->SetPos(spline_.GetNowPoint());
+	}
+	else
+	{
+		spline_.SetIsStart(false);
+	}
+	
+	auto radius = attackInfo_.radian;
+	colObj_->SetScale(Vector3(radius, radius, radius));
+	colObj_->Update();
 }
 
 void ColSpline::Draw()
 {
+	colObj_->Draw();
 	spline_.DrawDebug();
 }
 
 void ColSpline::DrawImGui()
 {
+	ImGui::Begin("ColInfo");
+	ImGuiColInfo();
+	ImGui::End();
+
 	ImGui::Begin("ColSplineEditor");
 	ImGuiColSplineEditor();
 	ImGuiDisplaySplinePos();
@@ -85,6 +108,13 @@ void ColSpline::ImGuiDisplaySplinePos()
 	}
 }
 
+void ColSpline::ImGuiColInfo()
+{
+	ImGui::DragFloat("Radian", &attackInfo_.radian, 0.1f, 0.1f, 50.f);
+	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 50);
+	ImGui::DragFloat("Frame",&attackInfo_.attackFrame, 0.1f, 0.1f, 50.f);
+}
+
 void ColSpline::SetSplinePoint()
 {
 	auto& spline = spline_;
@@ -109,4 +139,10 @@ void ColSpline::SetSplinePoint()
 			spline.AddPosition(splinePos[i], PosState::Middle);
 		}
 	}
+}
+
+void ColSpline::PlaySpline()
+{
+	spline_.Reset();
+	spline_.SetIsStart(true);
 }
