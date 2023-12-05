@@ -621,7 +621,7 @@
     <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttackColSpline.cpp">
+    <ClCompile Include="application\Sourcecode\AttackColEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp">
@@ -1004,7 +1004,7 @@
     <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttackColSpline.h">
+    <ClInclude Include="application\Sourcecode\AttackColEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h">

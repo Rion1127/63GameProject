@@ -1,4 +1,4 @@
-#include "AttackColSpline.h"
+#include "AttackColEditor.h"
 #include <imgui.h>
 
 ColSpline::ColSpline()
@@ -11,6 +11,9 @@ ColSpline::ColSpline()
 
 	attackInfo_.radian = 1.f;
 	attackInfo_.damage = 10;
+	currentColScaleNum_ = 0;
+
+	attackInfo_.colScales.emplace_back();
 }
 
 void ColSpline::Update()
@@ -31,7 +34,7 @@ void ColSpline::Update()
 	if (spline_.GetsplinePos().size()) {
 		spline_.Update();
 	}
-
+	//スプラインが再生されていたら座標を代入し続ける
 	if (!spline_.GetisEnd())
 	{
 		colObj_->SetPos(spline_.GetNowPoint());
@@ -62,6 +65,8 @@ void ColSpline::DrawImGui()
 	ImGuiColSplineEditor();
 	ImGuiDisplaySplinePos();
 	ImGui::End();
+
+	ImGuiColScaleTransition();
 }
 
 void ColSpline::ImGuiColSplineEditor()
@@ -113,6 +118,16 @@ void ColSpline::ImGuiColInfo()
 	ImGui::DragFloat("Radian", &attackInfo_.radian, 0.1f, 0.1f, 50.f);
 	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 50);
 	ImGui::DragFloat("Frame",&attackInfo_.attackFrame, 0.1f, 0.1f, 50.f);
+}
+
+void ColSpline::ImGuiColScaleTransition()
+{
+	ImGui::Begin("ColScaleTransition");
+
+	ImGui::DragFloat("frame", &attackInfo_.colScales[currentColScaleNum_].frame, 1.f, 1.f, 1000.f);
+	ImGui::DragFloat("scale", &attackInfo_.colScales[currentColScaleNum_].scale,0.1f,0.1f,100.f);
+
+	ImGui::End();
 }
 
 void ColSpline::SetSplinePoint()

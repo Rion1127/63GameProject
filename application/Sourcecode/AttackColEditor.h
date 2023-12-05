@@ -6,6 +6,11 @@
 
 class ColSpline {
 public:
+	struct ColScale
+	{
+		float frame;
+		float scale;
+	};
 	struct SeparateAttackInfo {
 		float attackFrame = 10;	//攻撃に掛かるフレーム
 		int32_t damage;			//ダメージ
@@ -15,12 +20,15 @@ public:
 		Spline::EasingType easingType;		//イージングの種類
 		Spline::EasingTypeInOut inOutType;	//イージングの動き方
 		std::vector<Vector3> splinePos;
+		std::vector<ColScale> colScales;
 	};
 private:
 	std::unique_ptr<Object3d> colObj_;
 	SeparateAttackInfo attackInfo_;
 	Spline spline_;
 	int32_t currentNum_;
+	int32_t currentColScaleNum_;
+
 
 	AttackEditorConfigCommon configCommon_;
 
@@ -38,6 +46,7 @@ private:
 	void ImGuiColSplineEditor();
 	void ImGuiDisplaySplinePos();
 	void ImGuiColInfo();
+	void ImGuiColScaleTransition();
 
 	void SetSplinePoint();
 public:
