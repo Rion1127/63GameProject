@@ -17,6 +17,11 @@
  * @brief 攻撃を制作するエディタークラス
  */
 
+enum class ColType {
+	Normal,
+	Separate
+};
+
 class AttackEditor
 {
 public:
@@ -46,6 +51,7 @@ public:
 		std::vector<QuaternionControl> quaternion;	//プレイヤーの姿勢
 		AttackType attackType = AttackType::Normal;	//攻撃のタイプ通常かフィニッシュ
 		ColSpline::SeparateAttackInfo colInfo;		//当たり判定の詳細
+		ColType colType_ = ColType::Normal;//当たり判定の種類
 	};
 private:
 	//一振り分の詳細
@@ -93,6 +99,8 @@ private:
 	Quaternion cullentQuaternion_;
 
 	ColSpline colSpline_;
+	//当たり判定の種類
+	ColType colType_;
 public:
 	AttackEditor();
 	void Update();

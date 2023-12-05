@@ -50,6 +50,9 @@ AttackEditor::AttackEditor()
 	cullentQuaternion_ = IdentityQuaternion();
 
 	spline_.SetIsLineDisplay(true);
+
+	colType_ = ColType::Normal;
+	loadFileName_ = "Air1";
 }
 
 void AttackEditor::Update()
@@ -127,7 +130,9 @@ void AttackEditor::Draw()
 
 	spline_.DrawDebug();
 
-	colSpline_.Draw();
+	if (attackInfo_[currentSwingNum_].colType_ == ColType::Separate) {
+		colSpline_.Draw();
+	}
 }
 
 void AttackEditor::DrawRenderTexture()
@@ -190,8 +195,9 @@ void AttackEditor::DrawImGui()
 	ImGuiSettingCombo();
 	//姿勢制御
 	ImGuiQuaternion();
-
-	colSpline_.DrawImGui();
+	if (attackInfo_[currentSwingNum_].colType_ == ColType::Separate) {
+		colSpline_.DrawImGui();
+	}
 }
 
 void AttackEditor::ImGuiDisplaySplitePoint()
@@ -426,7 +432,7 @@ void AttackEditor::ImGuiAttackInfo()
 	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragInt("Damage", &attackInfo_[currentSwingNum_].damage, 1, 0, 500);
-	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, 0.f, 500.f);
+	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, -10.f, 500.f);
 	float playerMoveVec[3] = {
 		attackInfo_[currentSwingNum_].playerMoveVec.x,
 		attackInfo_[currentSwingNum_].playerMoveVec.y,
@@ -455,6 +461,21 @@ void AttackEditor::ImGuiAttackInfo()
 	}
 	std::string attackType;
 	if (attackInfo_[currentSwingNum_].attackType == AttackType::Finish) attackType = "Finish";
+	else attackType = "Normal";
+	ImGui::SameLine();
+	ImGui::Text(attackType.c_str());
+
+	if (ImGui::Button("ColType"))
+	{
+		ColType timerType;
+		bool flag = (attackInfo_[currentSwingNum_].colType_ == ColType::Normal);
+
+		timerType = flag ? ColType::Separate : ColType::Normal;
+
+		attackInfo_[currentSwingNum_].colType_ = timerType;
+	}
+	std::string colType;
+	if (attackInfo_[currentSwingNum_].colType_ == ColType::Separate) attackType = "Separate";
 	else attackType = "Normal";
 	ImGui::SameLine();
 	ImGui::Text(attackType.c_str());
@@ -756,6 +777,10 @@ void AttackEditor::AttackSave(const std::string& string)
 			writing_file << writing_text << " " << q.frame << std::endl;
 			writing_text = "Quaternion";
 			writing_file << writing_text << " " << q.q.x << " " << q.q.y << " " << q.q.z << " " << q.q.w <<  std::endl;
+		}
+		//当たり判定を分けている場合
+		if (attackinfo.colType_ == ColType::Separate) {
+
 		}
 		index++;
 		writing_file << std::endl;

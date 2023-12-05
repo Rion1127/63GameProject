@@ -174,8 +174,9 @@ std::vector<std::string> FindFileNames(const std::string& dir, const std::string
 			//ファイル名をパス付で取得
 			std::wstring wfileName = win32fd.cFileName;
 			std::string fileName = WStringToString(wfileName);
-			
-			result.push_back(fileName);
+			if (fileName != ".csv") {
+				result.push_back(fileName);
+			}
 		}
 	} while (FindNextFile(hFind, &win32fd));
 	//閉じる
