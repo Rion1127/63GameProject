@@ -344,6 +344,7 @@ void AttackEditor::ImGuiAllPlay()
 		{
 			isAllPlay_ = true;
 			AttackPlay();
+			colSpline_.PlaySpline();
 		}
 	}
 }

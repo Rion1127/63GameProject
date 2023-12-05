@@ -14,6 +14,10 @@ ColSpline::ColSpline()
 	currentColScaleNum_ = 0;
 
 	attackInfo_.colScales.emplace_back();
+
+	attackInfo_.timerType = Spline::TimerType::Easing;
+	attackInfo_.easingType = Spline::EasingType::Sine;
+	attackInfo_.inOutType = Spline::EasingTypeInOut::In;
 }
 
 void ColSpline::Update()
@@ -71,6 +75,11 @@ void ColSpline::DrawImGui()
 
 void ColSpline::ImGuiColSplineEditor()
 {
+	ImGui::DragFloat("Frame", &attackInfo_.attackFrame, 1.f, 0.1f, 50.f);
+
+	configCommon_.SetTimerType(attackInfo_.timerType);
+	configCommon_.SetEasingType(attackInfo_.easingType);
+	configCommon_.SetEasingTypeInOut(attackInfo_.inOutType);
 	//制御点追加
 	if (ImGui::Button("AddPoint"))
 	{
@@ -117,7 +126,6 @@ void ColSpline::ImGuiColInfo()
 {
 	ImGui::DragFloat("Radian", &attackInfo_.radian, 0.1f, 0.1f, 50.f);
 	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 50);
-	ImGui::DragFloat("Frame",&attackInfo_.attackFrame, 0.1f, 0.1f, 50.f);
 }
 
 void ColSpline::ImGuiColScaleTransition()
@@ -160,4 +168,8 @@ void ColSpline::PlaySpline()
 {
 	spline_.Reset();
 	spline_.SetIsStart(true);
+	spline_.SetMaxTime(attackInfo_.attackFrame);
+	spline_.SetTimerType_(attackInfo_.timerType);
+	spline_.SetEasingType_(attackInfo_.easingType);
+	spline_.SetEasingTypeInOut_(attackInfo_.inOutType);
 }
