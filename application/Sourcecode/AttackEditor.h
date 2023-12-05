@@ -6,7 +6,7 @@
 #include "Sword.h"
 #include "Timer.h"
 #include "PostureDisplay.h"
-#include "AttackColSpline.h"
+#include "AttackColEditor.h"
 #include "AttackEditorConfigCommon.h"
 #include <ImGui/imgui.h>
 #include <vector>
