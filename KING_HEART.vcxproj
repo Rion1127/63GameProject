@@ -14,6 +14,7 @@
     <ClCompile Include="application\Sourcecode\AttackEditor.cpp" />
     <ClCompile Include="application\Sourcecode\AttackEditorConfigCommon.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
+    <ClCompile Include="application\Sourcecode\DebugActor.cpp" />
     <ClCompile Include="application\Sourcecode\HitStop.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="application\Sourcecode\AttackEditor.h" />
     <ClInclude Include="application\Sourcecode\AttackEditorConfigCommon.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
+    <ClInclude Include="application\Sourcecode\DebugActor.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h" />

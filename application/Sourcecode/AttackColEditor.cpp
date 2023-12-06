@@ -75,7 +75,7 @@ void ColSpline::DrawImGui()
 
 void ColSpline::ImGuiColSplineEditor()
 {
-	ImGui::DragFloat("Frame", &attackInfo_.attackFrame, 1.f, 0.1f, 50.f);
+	ImGui::DragFloat("Frame", &attackInfo_.attackFrame, 1.f, 1.0f, 50.f);
 
 	configCommon_.SetTimerType(attackInfo_.timerType);
 	configCommon_.SetEasingType(attackInfo_.easingType);
@@ -126,6 +126,7 @@ void ColSpline::ImGuiColInfo()
 {
 	ImGui::DragFloat("Radian", &attackInfo_.radian, 0.1f, 0.1f, 50.f);
 	ImGui::DragInt("Damage", &attackInfo_.damage, 1, 0, 50);
+	ImGui::DragFloat("ActiveFrame", &attackInfo_.activeFrame, 1.f, 0.1f, 50.f);
 }
 
 void ColSpline::ImGuiColScaleTransition()

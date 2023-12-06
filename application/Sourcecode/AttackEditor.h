@@ -8,6 +8,7 @@
 #include "PostureDisplay.h"
 #include "AttackColEditor.h"
 #include "AttackEditorConfigCommon.h"
+#include "DebugActor.h"
 #include <ImGui/imgui.h>
 #include <vector>
 #include <map>
@@ -57,8 +58,8 @@ private:
 	//一振り分の詳細
 	std::vector<AttackInfo> attackInfo_;
 	//プレイヤー
-	std::unique_ptr<Object3d> playerObj_;
-	std::unique_ptr<Object3d> displayPlayerObj_;
+	DebugActor debugAcrot_;
+	Gravity gravity_;
 	//剣
 	std::unique_ptr<Sword> swordObj_;
 	//スプラインの制御点

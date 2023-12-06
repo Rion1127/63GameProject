@@ -103,8 +103,6 @@ void Player::PreColUpdate()
 
 	ColPosUpdate();
 
-	
-
 	Update();
 
 	command_.Update();

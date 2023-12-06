@@ -12,19 +12,6 @@ AttackEditor::AttackEditor()
 	attackInfoDir_ = "application/Resources/Attack/AttackInfo/";
 	attackKeyDir_ = "application/Resources/Attack/AttackKey";
 
-	playerObj_ = std::make_unique<Object3d>();
-	playerObj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
-	playerObj_->SetPos(Vector3(0, 1, 0));
-	playerObj_->WT_.SetRotType(RotType::Quaternion);
-	playerObj_->WT_.quaternion_ = IdentityQuaternion();
-	
-	displayPlayerObj_ = std::make_unique<Object3d>();
-	displayPlayerObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
-	displayPlayerObj_->SetShadowOffsetPos(Vector3(0,-1,0));
-	displayPlayerObj_->SetPos(Vector3(0, 1, 0));
-	displayPlayerObj_->WT_.SetRotType(RotType::Quaternion);
-	displayPlayerObj_->WT_.quaternion_ = IdentityQuaternion();
-
 	swordObj_ = std::make_unique<Sword>();
 	
 	isPlay_ = false;
@@ -42,9 +29,9 @@ AttackEditor::AttackEditor()
 	quaternions_.emplace_back();
 	quaternions_[currentSwingNum_].emplace_back();
 
-	swordObj_->SetParent(displayPlayerObj_.get());
+	swordObj_->SetParent(debugAcrot_.GetDisplayObj());
 
-	spline_.SetParent(playerObj_->GetTransform());
+	spline_.SetParent(debugAcrot_.GetObj()->GetTransform());
 	//キー読み込み
 	AttackKeyLoad();
 	cullentQuaternion_ = IdentityQuaternion();
@@ -69,7 +56,7 @@ void AttackEditor::Update()
 	if (isPlay_)
 	{
 		timer_.AddTime(1);
-		Vector3 pos = spline_.GetNowPoint() - playerObj_->GetPos();
+		Vector3 pos = spline_.GetNowPoint() - debugAcrot_.GetObj()->GetPos();
 		swordObj_->SetPos(pos);
 		swordObj_->SetState(Sword::SwordState::Attack);
 
@@ -110,21 +97,19 @@ void AttackEditor::Update()
 	}
 	spline_.Update();
 
-	Vector3 playerPos = playerObj_->GetPos();
-	playerPos += moveVec_;
-	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
-	playerObj_->SetPos(playerPos);
-
+	debugAcrot_.SetaddVec(moveVec_);
+	debugAcrot_.PreUpdate();
+	//当たり判定
+	debugAcrot_.CollisionUpdate();
+	debugAcrot_.PostUpdate();
 	swordObj_->EditorUpdate(spline_.GetNowPoint());
-	playerObj_->Update();
-	displayPlayerObj_->SetPos(playerObj_->GetPos());
-	displayPlayerObj_->Update();
 	postureDisplay.Update(cullentQuaternion_);
+	MoveTo(Vector3(0, 0, 0), attackInfo_[currentSwingNum_].deceleration, moveVec_);
 }
 
 void AttackEditor::Draw()
 {
-	displayPlayerObj_->Draw();
+	debugAcrot_.Draw();
 
 	swordObj_->Draw();
 
@@ -152,8 +137,9 @@ void AttackEditor::DrawImGui()
 
 	if (ImGui::Button("PlayerPosReset"))
 	{
-		playerObj_->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
-		displayPlayerObj_->WT_.SetQuaternion(IdentityQuaternion());
+		debugAcrot_.GetObj()->SetPos(Vector3(playerpos[0], playerpos[1], playerpos[2]));
+		debugAcrot_.GetObj()->WT_.SetQuaternion(IdentityQuaternion());
+		debugAcrot_.GetDisplayObj()->WT_.SetQuaternion(IdentityQuaternion());
 	}
 	ImGui::End();
 
@@ -985,9 +971,9 @@ void AttackEditor::AttackPlay()
 	spline_.SetIsStart(true);
 	SetSplinePos();
 	moveVec_ = attackInfo_[currentSwingNum_].playerMoveVec;
-
-	playerObj_->WT_.SetQuaternion(IdentityQuaternion());
-	playerObj_->Update();
+	debugAcrot_.SetGravity(attackInfo_[currentSwingNum_].gravity);
+	debugAcrot_.GetObj()->WT_.SetQuaternion(IdentityQuaternion());
+	debugAcrot_.GetObj()->Update();
 	currentquaternion_ = 0;
 
 	float time = (quaternions_[currentSwingNum_].at(currentquaternion_).frame - timer_.GetTimer());
@@ -1060,7 +1046,7 @@ void AttackEditor::AttackKeyLoad()
 
 void AttackEditor::QuaternionUpdate()
 {
-	Quaternion result = displayPlayerObj_->WT_.quaternion_;
+	Quaternion result = debugAcrot_.GetDisplayObj()->WT_.quaternion_;
 	if (timer_.GetTimer() > quaternions_[currentSwingNum_].at(currentquaternion_).frame)
 	{
 		if (currentquaternion_ < quaternions_[currentSwingNum_].size() - 1)
@@ -1075,5 +1061,5 @@ void AttackEditor::QuaternionUpdate()
 
 	result = result.Slerp(currentQuaternion, slerpSpeed_);
 
-	displayPlayerObj_->WT_.SetQuaternion(result);
+	debugAcrot_.GetDisplayObj()->WT_.quaternion_ = result;
 }

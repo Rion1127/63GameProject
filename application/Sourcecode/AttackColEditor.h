@@ -12,6 +12,7 @@ public:
 		float scale;
 	};
 	struct SeparateAttackInfo {
+		float activeFrame;
 		float attackFrame = 10;	//攻撃に掛かるフレーム
 		int32_t damage;			//ダメージ
 		float radian;			//半径
