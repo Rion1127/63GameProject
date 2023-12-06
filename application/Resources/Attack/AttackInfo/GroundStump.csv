@@ -1,6 +1,6 @@
 //--AtatckInfo--//
-attackFrame = 23
-gapFrame = 15
+attackFrame = 15
+gapFrame = 20
 damege = 10
 gravityY = 0.4
 KnockVec 0.3 0.3 0.3
@@ -36,7 +36,7 @@ Quaternion 0 0 0 1
 attackFrame = 12
 gapFrame = 25
 damege = 0
-gravityY = -0.7
+gravityY = -0.8
 KnockVec 0 0 0
 KnockYVec = 0
 addVec 0 0 0
@@ -49,7 +49,7 @@ EasingType Cubic
 EasingTypeInOut In
 SplinePos 0 2 0.2
 SplinePos 0 1.2 1.5
-SplinePos 0 0 1.9
+SplinePos 0 -0.4 1.7
 
 //--Quaternion--//
 flame 5

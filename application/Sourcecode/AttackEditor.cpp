@@ -79,6 +79,7 @@ void AttackEditor::Update()
 			if (currentSwingNum_ < attackInfo_.size() - 1) {
 				currentSwingNum_++;
 				AttackPlay();
+				colSpline_.PlaySpline();
 			}
 			else {
 				isAllPlay_ = false;
@@ -766,7 +767,8 @@ void AttackEditor::AttackSave(const std::string& string)
 		}
 		//当たり判定を分けている場合
 		if (attackinfo.colType_ == ColType::Separate) {
-
+			writing_file << std::endl;
+			colSpline_.OutPutStatus(writing_file);
 		}
 		index++;
 		writing_file << std::endl;
@@ -950,7 +952,11 @@ void AttackEditor::AttackLoad(const std::string& string)
 			quaternionColtrol->back().q = q;
 		}
 
-
+		if (key == "//--SeparateCol--//")
+		{
+			attackinfo->colType_ = ColType::Separate;
+		}
+		colSpline_.InPutStatus(key, line_stream);
 	}
 	currentSwingNum_ = 0;
 	SetSplinePos();

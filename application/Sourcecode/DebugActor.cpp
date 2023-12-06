@@ -52,6 +52,7 @@ void DebugActor::CollisionUpdate()
 	//床とプレイヤー
 	if (Sphere2PlaneCol(col, floor))
 	{
+		int16_t whileCount = 0;
 		//地面にめり込まないよう処理
 		while (true)
 		{
@@ -71,6 +72,13 @@ void DebugActor::CollisionUpdate()
 			col_.SetPos(colPos);
 			col_.radius = 1.f;
 
+			if (whileCount >= 50) {
+				Vector3 pos = obj_->WT_.position_;
+				pos.y = 1.0f;
+				obj_->WT_.SetPosition(pos);
+				break;
+			}
+
 			Vector3 pos = { 10,10,10 };
 			if (Sphere2PlaneCol(col_, floor, &pos))
 			{
@@ -79,6 +87,7 @@ void DebugActor::CollisionUpdate()
 				obj_->WT_.SetPosition(pos);
 				break;
 			}
+			whileCount++;
 		}
 	}
 }
