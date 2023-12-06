@@ -633,6 +633,9 @@
     <ClCompile Include="application\Sourcecode\DebugActor.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="AttackDataPools.cpp">
+      <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -1018,6 +1021,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\DebugActor.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackDataPools.h">
+      <Filter>application\ヘッダーファイル\Player\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

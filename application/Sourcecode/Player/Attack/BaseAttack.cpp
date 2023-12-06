@@ -59,15 +59,15 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 
 void BaseAttack::SetNextAttack()
 {
-	spline_.AllClear();
-	spline_.SetIsStart(true);
-	spline_.SetTimerType_(attackdata_.attackinfo[index_].timerType);
-	spline_.SetEasingType_(attackdata_.attackinfo[index_].easingType);
-	spline_.SetEasingTypeInOut_(attackdata_.attackinfo[index_].inOutType);
-	spline_.SetMaxTime(attackdata_.attackinfo[index_].attackFrame);
-	SplinePosUpdate();
+	auto& attackInfo = attackdata_.attackinfo[index_];
+	//剣の軌道初期化
+	NormalSplinePosInit();
+	//当たり判定が分離していたら別途計算する
+	if (attackInfo.colType_ == ColType::Separate) {
+		SeparateSplinePosInit();
+	}
 
-	auto& addVec = attackdata_.attackinfo[index_].playerMoveVec;
+	auto& addVec = attackInfo.playerMoveVec;
 
 	addVec = RotateVector(addVec, selfActor_->GetAxisY());
 
@@ -154,9 +154,14 @@ void BaseAttack::CalculateRotToLockOnActor()
 	selfActor_->GetWorldTransform()->quaternion_ = axisY;
 }
 
-void BaseAttack::SplinePosUpdate()
+void BaseAttack::NormalSplinePosInit()
 {
-	spline_.DeleteAllPoint();
+	spline_.AllClear();
+	spline_.SetIsStart(true);
+	spline_.SetTimerType_(attackdata_.attackinfo[index_].timerType);
+	spline_.SetEasingType_(attackdata_.attackinfo[index_].easingType);
+	spline_.SetEasingTypeInOut_(attackdata_.attackinfo[index_].inOutType);
+	spline_.SetMaxTime(attackdata_.attackinfo[index_].attackFrame);
 	auto& attackpoint = attackdata_.attackinfo[index_].splinePos;
 	for (int32_t i = 0; i < attackpoint.size(); i++)
 	{
@@ -173,6 +178,35 @@ void BaseAttack::SplinePosUpdate()
 		else
 		{
 			spline_.AddPosition(splinePos, PosState::Middle);
+		}
+	}
+}
+
+void BaseAttack::SeparateSplinePosInit()
+{
+	auto& colInfo = attackdata_.attackinfo[index_].colInfo;
+	colSpline_.AllClear();
+	colSpline_.SetIsStart(true);
+	colSpline_.SetTimerType_(colInfo.timerType);
+	colSpline_.SetEasingType_(colInfo.easingType);
+	colSpline_.SetEasingTypeInOut_(colInfo.inOutType);
+	colSpline_.SetMaxTime(colInfo.attackFrame);
+	auto& colAttackpoint = colInfo.splinePos;
+	for (int32_t i = 0; i < colAttackpoint.size(); i++)
+	{
+		Vector3 splinePos = colAttackpoint[i];
+		splinePos.y += selfActor_->GetWorldTransform()->scale_.y;
+		if (i == 0)
+		{
+			colSpline_.AddPosition(splinePos, PosState::Start);
+		}
+		else if (i == colAttackpoint.size() - 1)
+		{
+			colSpline_.AddPosition(splinePos, PosState::End);
+		}
+		else
+		{
+			colSpline_.AddPosition(splinePos, PosState::Middle);
 		}
 	}
 }

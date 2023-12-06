@@ -25,6 +25,7 @@ private:
 	AttackData attackdata_;	//攻撃の詳細
 	TimerFloat attackAllTime_;		//攻撃に掛かるフレーム
 	Spline spline_;
+	Spline colSpline_;
 	uint32_t index_;
 	uint32_t quaternionIndex_;
 
@@ -53,7 +54,8 @@ public:
 private:
 	Vector3 CalculateFrontVec();	//正面ベクトルを計算
 	void CalculateRotToLockOnActor();//ロックオンしている方向にプレイヤーを向ける
-	void SplinePosUpdate();
+	void NormalSplinePosInit();
+	void SeparateSplinePosInit();
 	void PlayerMove();	//攻撃中のプレイヤーの動き
 	void ColUpdate();	//当たり判定更新
 	void QuaternionUpdate();

@@ -89,6 +89,7 @@
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
     <ClCompile Include="application\Sourcecode\AttackColEditor.cpp" />
+    <ClCompile Include="AttackDataPools.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
     <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
     <ClInclude Include="application\Sourcecode\UI\UIOperation.h" />
+    <ClInclude Include="AttackDataPools.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />
