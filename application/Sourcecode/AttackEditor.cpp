@@ -454,7 +454,7 @@ void AttackEditor::ImGuiAttackInfo()
 	ImGui::SameLine();
 	ImGui::Text(attackType.c_str());
 
-	if (ImGui::Button("ColType"))
+	if (ImGui::Button("CollisionType"))
 	{
 		ColType timerType;
 		bool flag = (attackInfo_[currentSwingNum_].colType_ == ColType::Normal);

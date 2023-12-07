@@ -37,11 +37,11 @@ attackFrame = 12
 gapFrame = 25
 damege = 0
 gravityY = -0.8
-KnockVec 0 0 0
-KnockYVec = 0
+KnockVec 0.7 1 0.7
+KnockYVec = 1.5
 addVec 0 0 0
 deceleration = 0.1
-attackType Normal
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
