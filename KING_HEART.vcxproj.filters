@@ -612,7 +612,7 @@
     <ClCompile Include="engine\3d\Line3D.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttackEditor.cpp">
+    <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\PostureDisplay.cpp">
@@ -621,20 +621,20 @@
     <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttackColEditor.cpp">
+    <ClCompile Include="application\Sourcecode\AttackEditor\AttackColEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttackEditorConfigCommon.cpp">
+    <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\DebugActor.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="AttackDataPools.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\DebugActor.cpp">
-      <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1001,7 +1001,7 @@
     <ClInclude Include="engine\3d\Line3D.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttackEditor.h">
+    <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\PostureDisplay.h">
@@ -1010,20 +1010,20 @@
     <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttackColEditor.h">
+    <ClInclude Include="application\Sourcecode\AttackEditor\AttackColEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttackEditorConfigCommon.h">
+    <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\DebugActor.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="AttackDataPools.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\DebugActor.h">
-      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
