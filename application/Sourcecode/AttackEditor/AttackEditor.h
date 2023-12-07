@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "PostureDisplay.h"
 #include "AttackColEditor.h"
+#include "AttackEffectEditor.h"
 #include "AttackEditorConfigCommon.h"
 #include "DebugActor.h"
 #include <ImGui/imgui.h>
@@ -102,6 +103,8 @@ private:
 	ColSpline colSpline_;
 	//当たり判定の種類
 	ColType colType_;
+
+	AttackEffectEditor effectEditor_;
 public:
 	AttackEditor();
 	void Update();

@@ -627,14 +627,17 @@
     <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\DebugActor.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="AttackDataPools.cpp">
+    <ClCompile Include="application\Sourcecode\AttackDataPools.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\AttackEditor\AttackEffectEditor.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1016,14 +1019,17 @@
     <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\DebugActor.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="AttackDataPools.h">
+    <ClInclude Include="application\Sourcecode\AttackDataPools.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\AttackEditor\AttackEffectEditor.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

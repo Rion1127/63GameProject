@@ -89,3 +89,11 @@ inline std::unique_ptr<T> MakeUnique()
 /// <param name="extension">拡張子指定</param>
 /// <returns></returns>
 std::vector<std::string> FindFileNames(const std::string& dir, const std::string& extension,bool isExtension = true);
+//数字を文字列に変換する
+template <class Number>
+std::string NumberToString(Number num) {
+	std::ostringstream numstring;
+
+	numstring << num;
+	return numstring.str();
+}

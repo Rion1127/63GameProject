@@ -5,7 +5,7 @@ using namespace Microsoft::WRL;
 #include "Util.h"
 #include "DirectX.h"
 #include <filesystem>
-
+#include <iostream>
 /**
  * @file Util.cpp
  * @brief 便利な関数をまとめている
@@ -192,4 +192,5 @@ std::vector<std::string> FindFileNames(const std::string& dir, const std::string
 
 	return result;
 }
+
 

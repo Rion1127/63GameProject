@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditor.cpp" />
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.cpp" />
+    <ClCompile Include="application\Sourcecode\AttackEditor\AttackEffectEditor.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\DebugActor.cpp" />
     <ClCompile Include="application\Sourcecode\HitStop.cpp" />
@@ -89,7 +90,7 @@
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
     <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackColEditor.cpp" />
-    <ClCompile Include="AttackDataPools.cpp" />
+    <ClCompile Include="application\Sourcecode\AttackDataPools.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackColEditor.h" />
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditor.h" />
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditorConfigCommon.h" />
+    <ClInclude Include="application\Sourcecode\AttackEditor\AttackEffectEditor.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\DebugActor.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
@@ -219,7 +221,7 @@
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
     <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
     <ClInclude Include="application\Sourcecode\UI\UIOperation.h" />
-    <ClInclude Include="AttackDataPools.h" />
+    <ClInclude Include="application\Sourcecode\AttackDataPools.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />

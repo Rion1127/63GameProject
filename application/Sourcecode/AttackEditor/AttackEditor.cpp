@@ -199,10 +199,8 @@ void AttackEditor::ImGuiDisplaySplitePoint()
 		for (auto& spline : splinePointPos_[currentSwingNum_])
 		{
 			prePos = *spline;
-			std::ostringstream num;
-
-			num << splinePosIndex;
-			splinePosName = "Sprine" + num.str();
+			
+			splinePosName = "Sprine" + NumberToString(splinePosIndex);
 
 			float splinePos[3] = {
 				spline->x,
@@ -493,10 +491,8 @@ void AttackEditor::ImGuiSwingCount()
 	}
 
 	std::string swingCountStr;
-	std::ostringstream num;
-
-	num << attackInfo_.size();
-	swingCountStr = "SwingCount = " + num.str();
+	
+	swingCountStr = "SwingCount = " + NumberToString(attackInfo_.size());
 	ImGui::Text(swingCountStr.c_str());
 
 	if (ImGui::Button("Add",ImVec2(50,50))) {
@@ -653,12 +649,10 @@ void AttackEditor::ImGuiQuaternion()
 
 		for (auto& q : quaternions_[currentSwingNum_])
 		{
-			std::ostringstream num;
-
-			num << index;
-			IndexNumString = "Num : " + num.str();
-			frameString = "Frame" + num.str();
-			quaternionString = "Quaternion" + num.str();
+			
+			IndexNumString = "Num : " + NumberToString(index);
+			frameString = "Frame" + NumberToString(index);
+			quaternionString = "Quaternion" + NumberToString(index);
 
 			float maxTime = attackInfo_[currentSwingNum_].attackFrame + attackInfo_[currentSwingNum_].gapFrame;
 			ImGui::Text(IndexNumString.c_str());
