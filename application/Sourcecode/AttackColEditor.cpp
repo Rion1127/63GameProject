@@ -49,7 +49,7 @@ void ColSpline::Update()
 		spline_.SetIsStart(false);
 	}
 	
-	
+	colObj_->SetAmbient("sphere",Vector3(255,0,0));
 	colObj_->SetScale(Vector3(colRadius_, colRadius_, colRadius_));
 	colObj_->Update();
 }

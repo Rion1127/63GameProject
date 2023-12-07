@@ -24,10 +24,12 @@ private:
 	float damageCoolTime_;		//無敵時間
 	AttackData attackdata_;	//攻撃の詳細
 	TimerFloat attackAllTime_;		//攻撃に掛かるフレーム
-	Spline spline_;
-	Spline colSpline_;
+	Spline spline_;			//剣の座標曲線
+	Spline colSpline_;		//当たり判定曲線（coltype_ = Separateの場合もに使用）
 	uint32_t index_;
 	uint32_t quaternionIndex_;
+
+	int32_t damage_;
 
 	bool isAttaking_;	//攻撃中フラグ
 	float nextAttackFrame_;
@@ -39,6 +41,7 @@ private:
 	Quaternion playerAxisY_;
 
 	Vector3 swordPos_;	//剣の座標
+	Vector3 colPos_;	//当たり判定の座標
 
 	Sphere col_;
 
@@ -59,13 +62,14 @@ private:
 	void PlayerMove();	//攻撃中のプレイヤーの動き
 	void ColUpdate();	//当たり判定更新
 	void QuaternionUpdate();
+	void DamageCoolTimerUpdate();
 public:
 	//ゲッター
 	bool GetIsAttaking() { return isAttaking_; }
 	Vector3 GetSwordPos() { return swordPos_; }
 	Sphere GetCol() { return col_; }
 	float GetDamageCoolTime() { return damageCoolTime_; }
-	int32_t GetDamage() { return attackdata_.attackinfo[index_].damage; }
+	int32_t GetDamage() { return damage_; }
 	AttackType GetAttackType() { return attackdata_.type_; }
 	AttackType GetNowSwingAttackType() { return attackdata_.attackinfo[index_].attackType; }
 	Vector3 GetKnockVec() { return attackdata_.attackinfo[index_].knockVec; }

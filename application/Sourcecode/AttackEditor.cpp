@@ -117,7 +117,9 @@ void AttackEditor::Draw()
 	spline_.DrawDebug();
 
 	if (attackInfo_[currentSwingNum_].colType_ == ColType::Separate) {
+		PipelineManager::PreDraw("Object3DWireFrame", LINESTRIP);
 		colSpline_.Draw();
+		PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	}
 }
 
@@ -419,7 +421,7 @@ void AttackEditor::ImGuiAttackInfo()
 	ImGui::DragFloat("attackFrame", &attackInfo_[currentSwingNum_].attackFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragFloat("gapFrame", &attackInfo_[currentSwingNum_].gapFrame, 1.0f, 0.f, 500.f);
 	ImGui::DragInt("Damage", &attackInfo_[currentSwingNum_].damage, 1, 0, 500);
-	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 1.0f, -10.f, 500.f);
+	ImGui::DragFloat("gravity", &attackInfo_[currentSwingNum_].gravity.y, 0.1f, -10.f, 500.f);
 	float playerMoveVec[3] = {
 		attackInfo_[currentSwingNum_].playerMoveVec.x,
 		attackInfo_[currentSwingNum_].playerMoveVec.y,

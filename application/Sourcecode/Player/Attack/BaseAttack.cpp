@@ -14,7 +14,10 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 	selfActor_(selfActor),
 	lockOnActor_(lockOnActor)
 {
+	obj_ = std::move(std::make_unique<Object3d>());
+	obj_->SetModel(Model::CreateOBJ_uniptr("sphere", false, false));
 	spline_.SetParent(selfActor_->GetWorldTransform());
+	colSpline_.SetParent(selfActor_->GetWorldTransform());
 	index_ = 0;
 
 	resultQuaternion_ = selfActor_->GetWorldTransform()->quaternion_;
@@ -65,6 +68,7 @@ void BaseAttack::SetNextAttack()
 	//当たり判定が分離していたら別途計算する
 	if (attackInfo.colType_ == ColType::Separate) {
 		SeparateSplinePosInit();
+		col_.radius = attackInfo.colInfo.firstRadius;
 	}
 
 	auto& addVec = attackInfo.playerMoveVec;
@@ -99,22 +103,37 @@ void BaseAttack::Update()
 	else {
 		isAttaking_ = true;
 	}
-	//ダメージクールタイム計算
-	float& attackTime = attackdata_.attackinfo[index_].attackFrame;
-	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
-
-	//プレイヤーの移動
+	if (attackdata_.attackinfo[index_].colType_ == ColType::Normal)
+	{
+		damage_ = attackdata_.attackinfo[index_].damage;
+	}
+	else
+	{
+		damage_ = attackdata_.attackinfo[index_].colInfo.damage;
+	}
+	DamageCoolTimerUpdate();
+	//プレイヤーの移動処理
 	PlayerMove();
+	//プレイヤーの姿勢更新
 	QuaternionUpdate();
 
 	swordPos_ = spline_.GetNowPoint();
 	//当たり判定更新
 	ColUpdate();
+
+	Vector3 scale = Vector3(col_.radius, col_.radius, col_.radius);
+	obj_->SetScale(scale);
+	obj_->Update();
 }
 
 void BaseAttack::Draw()
 {
-	obj_->Draw();
+	if (col_.isActive)
+	{
+		PipelineManager::PreDraw("Object3DWireFrame", LINESTRIP);
+		obj_->Draw();
+		PipelineManager::PreDraw("Object3D", TRIANGLELIST);
+	}
 }
 
 Vector3 BaseAttack::CalculateFrontVec()
@@ -221,15 +240,41 @@ void BaseAttack::PlayerMove()
 
 void BaseAttack::ColUpdate()
 {
-	//剣の座標をに当たり判定代入
-	col_.center = swordPos_;
-	//当たり判定は剣を振っている間だけ
-	if (damageCoolTime_ == 0) {
-		col_.isActive = false;
+	auto& info = attackdata_.attackinfo[index_];
+	//剣と当たり判定が同一の場合
+	if (info.colType_ == ColType::Normal)
+	{
+		//剣の座標をに当たり判定代入
+		colPos_ = swordPos_;
+		//当たり判定は剣を振っている間だけ
+		if (damageCoolTime_ == 0)
+		{
+			col_.isActive = false;
+		}
+		else
+		{
+			col_.isActive = true;
+		}
 	}
-	else {
-		col_.isActive = true;
+	//剣と当たり判定が分離している場合
+	else
+	{
+		colSpline_.Update();
+		//当たり判定有効フレームより小さければ無効
+		if (info.colInfo.activeFrame > colSpline_.GetTimer().GetTimer())
+		{
+			col_.isActive = false;
+		}
+		else
+		{
+			col_.isActive = true;
+			col_.radius += info.colInfo.addRadiusValue;
+			colPos_ = colSpline_.GetNowPoint();
+		}
 	}
+	col_.center = colPos_;
+
+	obj_->SetPos(colPos_);
 }
 
 void BaseAttack::QuaternionUpdate()
@@ -252,4 +297,21 @@ void BaseAttack::QuaternionUpdate()
 	resultQuaternion_ = resultQuaternion_.Slerp(currentQuaternion, 0.3f);
 
 	selfActor_->GetDisplayWorldTransform()->SetQuaternion(resultQuaternion_);
+}
+
+void BaseAttack::DamageCoolTimerUpdate()
+{
+	auto& attackInfo = attackdata_.attackinfo[index_];
+	if (attackInfo.colType_ == ColType::Normal)
+	{
+		//ダメージクールタイム計算
+		float& attackTime = attackInfo.attackFrame;
+		damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
+	}
+	else
+	{
+		float maxTime = attackInfo.attackAllFrame;
+		float nowTime = colSpline_.GetTimer().GetTimer();
+		damageCoolTime_ = maxTime - nowTime;
+	}
 }

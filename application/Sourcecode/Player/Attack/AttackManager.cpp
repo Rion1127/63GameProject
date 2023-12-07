@@ -67,7 +67,7 @@ void AttackManager::DrawDebug()
 	{
 		if (nowAttack_ != nullptr)
 		{
-			//nowAttack_->DrawCol();
+			nowAttack_->Draw();
 		}
 	}
 

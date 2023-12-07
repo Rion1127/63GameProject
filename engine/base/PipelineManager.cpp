@@ -30,6 +30,7 @@ void PipelineManager::ObjShaderIni()
 	GetPipelineObjects("Object3D")->AddrootParams(4);
 
 	Create("Object3D", BACK, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
+
 	//スプライト
 	AddPipeline("Sprite");
 	GetPipelineObjects("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -82,6 +83,19 @@ void PipelineManager::ObjShaderIni()
 	GetPipelineObjects("SkySphere")->AddrootParams(4);
 
 	Create("SkySphere", BACK, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
+
+	//天球用
+	AddPipeline("Object3DWireFrame");
+	GetPipelineObjects("Object3DWireFrame")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Object3DWireFrame")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Object3DWireFrame")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+
+	GetPipelineObjects("Object3DWireFrame")->Setshader("SkySphereVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("Object3DWireFrame")->Setshader("SkySpherePS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("Object3DWireFrame")->AddrootParams(4);
+
+	Create("Object3DWireFrame", BACK, TOPOLOGY_LINE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
 
 	AddPipeline("Line3D");
 	GetPipelineObjects("Line3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
