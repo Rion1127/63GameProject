@@ -95,7 +95,7 @@ void Framework::Update()
 	ImGui::Begin("ImGuiDisplay");
 
 	ImGui::Text("他のImGuiを表示にします。このウィンドウは残ります。");
-	if (ImGui::Button("PostEffect"))
+	if (ImGui::Button("ImGui"))
 	{
 		Framework::isImguiDisplay_ = (Framework::isImguiDisplay_ == true) ? false : true;
 	}
