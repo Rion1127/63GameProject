@@ -1,9 +1,10 @@
 //--AtatckInfo--//
 attackFrame = 20
 gapFrame = 5
-damege = 0
+damege = 10
 gravityY = 0
 KnockVec 0 0 0
+KnockYVec = 0
 addVec 0 0 0.7
 deceleration = 0.02
 attackType Normal

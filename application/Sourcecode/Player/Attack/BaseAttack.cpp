@@ -58,6 +58,15 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 		}
 	}
 	quaternionTimer_ = 0;
+
+	if (attackdata_.attackinfo[index_].colType_ == ColType::Normal)
+	{
+		damage_ = attackdata_.attackinfo[index_].damage;
+	}
+	else
+	{
+		damage_ = attackdata_.attackinfo[index_].colInfo.damage;
+	}
 }
 
 void BaseAttack::SetNextAttack()
@@ -103,14 +112,7 @@ void BaseAttack::Update()
 	else {
 		isAttaking_ = true;
 	}
-	if (attackdata_.attackinfo[index_].colType_ == ColType::Normal)
-	{
-		damage_ = attackdata_.attackinfo[index_].damage;
-	}
-	else
-	{
-		damage_ = attackdata_.attackinfo[index_].colInfo.damage;
-	}
+	
 	DamageCoolTimerUpdate();
 	//プレイヤーの移動処理
 	PlayerMove();
