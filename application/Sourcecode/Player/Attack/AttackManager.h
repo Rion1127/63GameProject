@@ -46,6 +46,7 @@ public:
 private:
 	void CalculatePtoELength();
 	void FirstAttackUpdate();	//1コンボ目更新
+	void NextComboUpdate();		//2コンボ目以降更新
 	void SwitchAttack();
 
 	bool GetIsNextAttack();

@@ -31,6 +31,7 @@ void AttackManager::Attack()
 			if (comboNum < MAX_COMBO)
 			{
 				isNextAttack_ = true;
+				isNextSpecialAttack_ = false;
 			}
 			else {
 				isNextAttack_ = false;
@@ -50,13 +51,18 @@ void AttackManager::Attack()
 void AttackManager::Update()
 {
 	//最初の攻撃
-	if (isNextAttack_ || isNextSpecialAttack_) {
+	if (GetIsNextAttack()) {
 		FirstAttackUpdate();
 	}
 
 	if (nowAttack_ != nullptr) {
 		isAttacking = true;
 		nowAttack_->Update();
+		//入力があった場合次の攻撃を用意する
+		if (GetIsNextAttack()) {
+			NextComboUpdate();
+		}
+		//攻撃が終わったら次の攻撃に切り替える
 		if (nowAttack_->GetIsAttaking() == false) {
 			SwitchAttack();
 		}
@@ -144,7 +150,7 @@ void AttackManager::FirstAttackUpdate()
 	{
 		std::string keyName;
 		isNextAttack_ = false;
-		
+
 		if (player_->GetNowState()->GetId() == PlayerState::Idle ||
 			player_->GetNowState()->GetId() == PlayerState::Move)
 		{
@@ -176,8 +182,10 @@ void AttackManager::FirstAttackUpdate()
 	}
 }
 
-void AttackManager::SwitchAttack()
+void AttackManager::NextComboUpdate()
 {
+	//現在の攻撃が終わるまで処理を通さない
+	if (nowAttack_->GetIsAttaking() != false)return;
 	//ロックオンしている敵との高さの距離
 	float diffPosY = 0;
 	if (lockOnEnemy_ != nullptr) {
@@ -188,49 +196,58 @@ void AttackManager::SwitchAttack()
 	}
 	diffPosY = fabs(diffPosY);
 	//2コンボ以降の処理
-	if (GetIsNextAttack()) {
-		if (nextAttack_ == nullptr)
-		{
-			std::string keyName;
-			if (isNextAttack_) {
-				isNextAttack_ = false;
-				if (player_->GetNowState()->GetId() == PlayerState::Attack)
-				{
-					//すでに攻撃している場合は次の攻撃を入れる
-					if (comboNum == 1) {
-						//遠くの敵にスライドして攻撃
-						if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
-						//ジャンプして攻撃
-						else if (diffPosY > 1.5f)keyName = datapool_.GetKeyName()["JumpAttack"];
-						//通常攻撃
-						else keyName = datapool_.GetKeyName()["Ground2"];
-					}
-					//フィニッシュ攻撃（エクスプロージョン）
-					if (comboNum == 2)keyName = datapool_.GetKeyName()["Ground3"];
+	if (nextAttack_ == nullptr)
+	{
+		std::string keyName;
+		//通常攻撃の場合
+		if (isNextAttack_) {
+			isNextAttack_ = false;
+			if (player_->GetNowState()->GetId() == PlayerState::Attack)
+			{
+				//すでに攻撃している場合は次の攻撃を入れる
+				if (comboNum == 1) {
+					//遠くの敵にスライドして攻撃
+					if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
+					//ジャンプして攻撃
+					else if (diffPosY > 1.5f)keyName = datapool_.GetKeyName()["JumpAttack"];
+					//通常攻撃
+					else keyName = datapool_.GetKeyName()["Ground2"];
 				}
-				else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
-				{
-					//空中2コンボ目
-					if (comboNum == 1)keyName = datapool_.GetKeyName()["Air2"];
-					//空中フィニッシュ
-					if (comboNum == 2)keyName = datapool_.GetKeyName()["Air3"];
-				}
+				//フィニッシュ攻撃（エクスプロージョン）
+				if (comboNum == 2)keyName = datapool_.GetKeyName()["Ground3"];
 			}
-
-			if (isNextSpecialAttack_) {
-				keyName = datapool_.GetKeyName()["Special1"];
-				isNextSpecialAttack_ = false;
+			else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
+			{
+				//空中2コンボ目
+				if (comboNum == 1)keyName = datapool_.GetKeyName()["Air2"];
+				//空中フィニッシュ
+				if (comboNum == 2)keyName = datapool_.GetKeyName()["Air3"];
 			}
-			//条件に合ったキーで攻撃を生成
-			nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()[keyName], player_, lockOnEnemy_);
 		}
-	}
+		//特殊攻撃の場合
+		if (isNextSpecialAttack_) {
+			isNextSpecialAttack_ = false;
+			//現在のコンボ数でキーネームを変更する
+			std::string specialKeyName = "Special";
+			std::string comboSring = NumberToString(comboNum);
+			specialKeyName = specialKeyName + comboSring;
 
+			keyName = datapool_.GetKeyName()[specialKeyName];
+		}
+		if (keyName == "")return;
+		//条件に合ったキーで攻撃を生成
+		nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()[keyName], player_, lockOnEnemy_);
+	}
+}
+
+void AttackManager::SwitchAttack()
+{
 	nowAttack_.swap(nextAttack_);
 	//攻撃初期化
 	if (nowAttack_ != nullptr) {
 		float picth = RRandom::RandF(0.7f, 1.5f);
 		SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
+		comboNum++;
 	}
 	else {
 		isAttacking = false;
@@ -238,7 +255,6 @@ void AttackManager::SwitchAttack()
 	//nextAttack_を解放する
 	nextAttack_.reset();
 	nextAttack_ = nullptr;
-	comboNum++;
 }
 
 bool AttackManager::GetIsNextAttack()
