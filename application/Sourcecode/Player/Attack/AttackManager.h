@@ -35,6 +35,7 @@ private:
 	float PtoELength_;
 
 	bool isNextAttack_;
+	bool isNextSpecialAttack_;
 public:
 	AttackManager();
 
@@ -46,6 +47,8 @@ private:
 	void CalculatePtoELength();
 	void FirstAttackUpdate();	//1コンボ目更新
 	void SwitchAttack();
+
+	bool GetIsNextAttack();
 public:
 	bool GetIsAttacking() { return isAttacking; }
 public:

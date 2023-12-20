@@ -36,13 +36,21 @@ void AttackManager::Attack()
 				isNextAttack_ = false;
 			}
 		}
+		if (Controller::GetTriggerButtons(PAD::INPUT_Y))
+		{
+			//敵と自分の距離を計算
+			CalculatePtoELength();
+			//MAX_COMBOよりcomboNumが小さければ攻撃できる
+			isNextSpecialAttack_ = true;
+			isNextAttack_ = false;
+		}
 	}
 }
 
 void AttackManager::Update()
 {
 	//最初の攻撃
-	if (isNextAttack_) {
+	if (isNextAttack_ || isNextSpecialAttack_) {
 		FirstAttackUpdate();
 	}
 
@@ -136,6 +144,7 @@ void AttackManager::FirstAttackUpdate()
 	{
 		std::string keyName;
 		isNextAttack_ = false;
+		
 		if (player_->GetNowState()->GetId() == PlayerState::Idle ||
 			player_->GetNowState()->GetId() == PlayerState::Move)
 		{
@@ -150,6 +159,10 @@ void AttackManager::FirstAttackUpdate()
 		{
 			//空中攻撃
 			keyName = datapool_.GetKeyName()["Air1"];
+		}
+		if (isNextSpecialAttack_) {
+			isNextSpecialAttack_ = false;
+			keyName = datapool_.GetKeyName()["Special1"];
 		}
 		if (keyName == "")return;
 		//条件に合ったキーで攻撃を生成
@@ -175,33 +188,39 @@ void AttackManager::SwitchAttack()
 	}
 	diffPosY = fabs(diffPosY);
 	//2コンボ以降の処理
-	if (isNextAttack_) {
+	if (GetIsNextAttack()) {
 		if (nextAttack_ == nullptr)
 		{
 			std::string keyName;
-			isNextAttack_ = false;
-			if (player_->GetNowState()->GetId() == PlayerState::Attack)
-			{
-				//すでに攻撃している場合は次の攻撃を入れる
-				if (comboNum == 1) {
-					//遠くの敵にスライドして攻撃
-					if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
-					//ジャンプして攻撃
-					else if (diffPosY > 1.5f)keyName = datapool_.GetKeyName()["JumpAttack"];
-					//通常攻撃
-					else keyName = datapool_.GetKeyName()["Ground2"];
+			if (isNextAttack_) {
+				isNextAttack_ = false;
+				if (player_->GetNowState()->GetId() == PlayerState::Attack)
+				{
+					//すでに攻撃している場合は次の攻撃を入れる
+					if (comboNum == 1) {
+						//遠くの敵にスライドして攻撃
+						if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
+						//ジャンプして攻撃
+						else if (diffPosY > 1.5f)keyName = datapool_.GetKeyName()["JumpAttack"];
+						//通常攻撃
+						else keyName = datapool_.GetKeyName()["Ground2"];
+					}
+					//フィニッシュ攻撃（エクスプロージョン）
+					if (comboNum == 2)keyName = datapool_.GetKeyName()["Ground3"];
 				}
-				//フィニッシュ攻撃（エクスプロージョン）
-				if (comboNum == 2)keyName = datapool_.GetKeyName()["Ground3"];
+				else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
+				{
+					//空中2コンボ目
+					if (comboNum == 1)keyName = datapool_.GetKeyName()["Air2"];
+					//空中フィニッシュ
+					if (comboNum == 2)keyName = datapool_.GetKeyName()["Air3"];
+				}
 			}
-			else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
-			{
-				//空中2コンボ目
-				if (comboNum == 1)keyName = datapool_.GetKeyName()["Air2"];
-				//空中フィニッシュ
-				if (comboNum == 2)keyName = datapool_.GetKeyName()["Air3"];
+
+			if (isNextSpecialAttack_) {
+				keyName = datapool_.GetKeyName()["Special1"];
+				isNextSpecialAttack_ = false;
 			}
-			if (keyName == "")return;
 			//条件に合ったキーで攻撃を生成
 			nextAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()[keyName], player_, lockOnEnemy_);
 		}
@@ -220,4 +239,9 @@ void AttackManager::SwitchAttack()
 	nextAttack_.reset();
 	nextAttack_ = nullptr;
 	comboNum++;
+}
+
+bool AttackManager::GetIsNextAttack()
+{
+	return (isNextAttack_ || isNextSpecialAttack_);
 }
