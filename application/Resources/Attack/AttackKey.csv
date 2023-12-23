@@ -5,7 +5,8 @@ Ground1 Ground1
 Ground2 Ground2
 Ground3 FinishBreak
 JumpAttack AirSweep
-Special1 GroundStump
+Special0 Upper
+Special1 MultiAttack
 Special2 GroundStump
 Special3 GroundStump
 distant Slide

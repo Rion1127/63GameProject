@@ -499,6 +499,7 @@ void AttackEditor::ImGuiSwingCount()
 		attackInfo_.emplace_back();
 		splinePointPos_.emplace_back();
 		quaternions_.emplace_back();
+		quaternions_.back().emplace_back();
 	}
 	ImGui::SameLine();
 	//要素の削除

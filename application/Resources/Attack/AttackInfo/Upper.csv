@@ -1,0 +1,38 @@
+//--AtatckInfo--//
+attackFrame = 30
+gapFrame = 0
+damege = 5
+gravityY = 0
+KnockVec 0 1 0
+KnockYVec = 1.5
+addVec 0 0 0
+deceleration = 0.1
+attackType Normal
+
+//--SplinePos--//
+TimerType Easing
+EasingType Quint
+EasingTypeInOut In
+SplinePos 1 -0.4 0.6
+SplinePos 0.6 0 2.2
+SplinePos 0 3.1 2.1
+
+//--Quaternion--//
+flame 0
+Quaternion 0 0 0 1
+
+//--SeparateCol--//
+colattackFrame = 30
+colactiveFrame = 20
+coldamage = 5
+colfirstRadius = 3
+coladdRadiusValue = 0
+colTimerType Easing
+colEasingType Quint
+colEasingTypeInOut In
+
+//--ColSplinePos--//
+ColSplinePos 1 0.6 0.6
+ColSplinePos 0.6 1 2.2
+ColSplinePos 0 4.1 2.1
+

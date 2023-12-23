@@ -31,11 +31,11 @@ void AttackManager::Attack()
 			if (comboNum < MAX_COMBO)
 			{
 				isNextAttack_ = true;
-				isNextSpecialAttack_ = false;
 			}
 			else {
 				isNextAttack_ = false;
 			}
+			isNextSpecialAttack_ = false;
 		}
 		if (Controller::GetTriggerButtons(PAD::INPUT_Y))
 		{
@@ -168,7 +168,7 @@ void AttackManager::FirstAttackUpdate()
 		}
 		if (isNextSpecialAttack_) {
 			isNextSpecialAttack_ = false;
-			keyName = datapool_.GetKeyName()["Special1"];
+			keyName = datapool_.GetKeyName()["Special0"];
 		}
 		if (keyName == "")return;
 		//条件に合ったキーで攻撃を生成

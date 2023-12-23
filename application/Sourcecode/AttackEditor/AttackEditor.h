@@ -29,7 +29,7 @@ class AttackEditor
 public:
 	struct QuaternionControl {
 		float frame;
-		Quaternion q;
+		Quaternion q = IdentityQuaternion();
 	};
 	//一振り分の攻撃
 	struct AttackInfo {
