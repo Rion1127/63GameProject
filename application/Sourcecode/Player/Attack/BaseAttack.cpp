@@ -38,7 +38,12 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 
 	//剣の座標をに当たり判定代入
 	col_.center = swordPos_;
-	col_.radius = 1.0f;
+	if (attackdata_.attackinfo[index_].colType_ == ColType::Normal) {
+		col_.radius = 1.0f;
+	}
+	else {
+		col_.radius = attackdata_.attackinfo[index_].colInfo.firstRadius;
+	}
 	float& attackTime = attackdata_.attackinfo[index_].attackFrame;
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
 

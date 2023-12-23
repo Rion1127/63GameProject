@@ -7,7 +7,7 @@ KnockVec 0 1 0
 KnockYVec = 1.5
 addVec 0 0 0
 deceleration = 0.1
-attackType Normal
+attackType Finish
 
 //--SplinePos--//
 TimerType Easing
@@ -25,7 +25,7 @@ Quaternion 0 0 0 1
 colattackFrame = 30
 colactiveFrame = 20
 coldamage = 5
-colfirstRadius = 3
+colfirstRadius = 2
 coladdRadiusValue = 0
 colTimerType Easing
 colEasingType Quint

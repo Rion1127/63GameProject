@@ -27,7 +27,6 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 	knockResist_ = { 1,1,1 };
 
-
 	handObj_ = std::move(std::make_unique<Object3d>());
 	handObj_->SetModel(Model::CreateOBJ_uniptr("shadowHand", true,false));
 	handObj_->WT_.SetRotType(RotType::Quaternion);
@@ -181,6 +180,7 @@ void EnemyShadow::DamageUpdate()
 
 	handObj_->SetScale(Vector3(0,0,0));
 	handObj_->SetIsVisible(false);
+	knockRotTimer_.Reset();
 }
 
 void EnemyShadow::FloorCollisionDerived()
