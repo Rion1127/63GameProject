@@ -97,6 +97,7 @@ void IEnemy::Damage(const Vector3& knockVec, int32_t damageValue, float cooltime
 		damageCoolTime_.SetLimitTime(cooltime);
 		damageCoolTime_.Reset();
 		health_ -= damageValue;
+		gravity_.SetGrabity(Vector3(0,0,0));
 	}
 	DamageUpdate();
 }
