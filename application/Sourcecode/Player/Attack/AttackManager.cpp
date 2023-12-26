@@ -133,7 +133,7 @@ void AttackManager::CalculatePtoELength()
 	if (lockOnEnemy_ != nullptr) {
 		Vector3 PtoEVec =
 			player_->GetWorldTransform()->position_ - lockOnEnemy_->GetWorldTransform()->position_;
-
+		PtoEVec.y = 0;
 		PtoELength_ = PtoEVec.length();
 	}
 }

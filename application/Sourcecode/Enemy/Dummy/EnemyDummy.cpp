@@ -25,7 +25,7 @@ EnemyDummy::EnemyDummy(const Vector3& pos) : IEnemy(EnemyType::Ground, true, 100
 	displayObj_->GetTransform()->SetPosition(pos);
 	damageCoolTime_.SetLimitTime(30);
 	ColPosUpdate();
-
+	gravity_.SetAddValue(Vector3(0,-0.007f,0));
 }
 
 void EnemyDummy::MoveUpdate()
