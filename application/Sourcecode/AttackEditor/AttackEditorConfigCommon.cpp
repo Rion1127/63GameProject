@@ -1,5 +1,11 @@
 #include "AttackEditorConfigCommon.h"
 #include <imgui.h>
+
+/**
+ * @file AttackEditorConfigCommon.cpp
+ * @brief アタックエディターに共通する設定をまとめたクラス
+ */
+
 void AttackEditorConfigCommon::SetTimerType(Spline::TimerType& timerType)
 {
 	if (ImGui::Button("SplineTimerType"))

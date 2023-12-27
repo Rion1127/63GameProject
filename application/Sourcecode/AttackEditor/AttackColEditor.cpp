@@ -3,6 +3,11 @@
 #include <fstream>
 #include <iostream>
 
+/**
+ * @file ColSpline.cpp
+ * @brief アタックエディターの当たり判定に関するクラス
+ */
+
 ColSpline::ColSpline()
 {
 	colObj_ = std::move(std::make_unique<Object3d>());
@@ -13,8 +18,7 @@ ColSpline::ColSpline()
 
 	attackInfo_.firstRadius = 1.f;
 	attackInfo_.damage = 10;
-	currentColScaleNum_ = 0;
-
+	
 	attackInfo_.timerType = Spline::TimerType::Easing;
 	attackInfo_.easingType = Spline::EasingType::Sine;
 	attackInfo_.inOutType = Spline::EasingTypeInOut::In;

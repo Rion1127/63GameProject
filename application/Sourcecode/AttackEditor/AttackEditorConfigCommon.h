@@ -1,6 +1,12 @@
 #pragma once
 #include "Spline.h"
 #include <string>
+
+/**
+ * @file AttackEditorConfigCommon.h
+ * @brief アタックエディターに共通する設定をまとめたクラス
+ */
+
 class AttackEditorConfigCommon
 {
 private:
@@ -8,8 +14,11 @@ private:
 	std::string easingType_;
 	std::string easingInOutType_;
 public:
+	//Spline::TimerTypeをセットする
 	void SetTimerType(Spline::TimerType& timerType);
+	//Spline::EasingTypeをセットする
 	void SetEasingType(Spline::EasingType& easingType);
+	//Spline::EasingTypeInOutをセットする
 	void SetEasingTypeInOut(Spline::EasingTypeInOut& timerTypeInOut);
 public:
 	std::string GetTimerType() { return timerType_; }

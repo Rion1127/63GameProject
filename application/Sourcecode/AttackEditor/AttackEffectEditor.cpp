@@ -2,6 +2,11 @@
 #include <imgui.h>
 #include "Util.h"
 
+/**
+ * @file AttackEffectEditor.cpp
+ * @brief アタックエディターの演出に関連する設定をするクラス
+ */
+
 AttackEffectEditor::AttackEffectEditor()
 {
 	effectInfo_.emplace_back();

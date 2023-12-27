@@ -107,10 +107,10 @@ private:
 	AttackEffectEditor effectEditor_;
 public:
 	AttackEditor();
-	void Update();
-	void Draw();
-	void DrawRenderTexture();
-	void DrawImGui();
+	void Update();	//更新
+	void Draw();	//モデルを描画する
+	void DrawRenderTexture();	//プレビューのモデルを描画する
+	void DrawImGui();//ImGuiを描画する
 private:
 	void ImGuiDisplaySplitePoint();	//スプライン曲線の制御点を描画
 	void ImGuiADDSplinePos(const Vector3& pos = {0,0,0},uint32_t index = 0);	//イージングのタイプ(InOut)を選択する
@@ -126,9 +126,9 @@ private:
 	void AttackSave(const std::string& string);
 	void AttackLoad(const std::string& string);
 	void FindAttackFile();		//ディレクトリ内にある攻撃ファイルを読み込む
-	void AttackPlay();
-	void SetSplinePos();
-	void AttackKeySave();
-	void AttackKeyLoad();
-	void QuaternionUpdate();
+	void AttackPlay();			//攻撃の動きを再生する
+	void SetSplinePos();		//スプライン曲線の制御点をセットする
+	void AttackKeySave();		//攻撃のコンボに使うキーを保存する
+	void AttackKeyLoad();		//攻撃のコンボに使うキーを読み込む
+	void QuaternionUpdate();	//プレビューの姿勢を更新する
 };

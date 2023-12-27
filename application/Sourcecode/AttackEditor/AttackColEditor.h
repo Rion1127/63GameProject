@@ -4,6 +4,11 @@
 #include "Object3d.h"
 #include <vector>
 
+/**
+ * @file AttackColEditor.h
+ * @brief アタックエディターの当たり判定に関するクラス
+ */
+
 class ColSpline {
 public:
 	struct SeparateAttackInfo {
@@ -23,7 +28,6 @@ private:
 	SeparateAttackInfo attackInfo_;
 	Spline spline_;
 	int32_t currentNum_;
-	int32_t currentColScaleNum_;
 	float colRadius_;
 
 	AttackEditorConfigCommon configCommon_;
@@ -34,17 +38,23 @@ private:
 	Vector3 prePos_;
 public:
 	ColSpline();
-
+	//更新
 	void Update();
+	//描画
 	void Draw();
+	//ImGui描画
 	void DrawImGui();
 private:
+	//ImGuiでスプライン関連の数値を変更する
 	void ImGuiColSplineEditor();
+	//ImGuiでスプラインの制御点を変更する
 	void ImGuiDisplaySplinePos();
+	//ImGuiで当たり判定の詳細を変更する
 	void ImGuiColInfo();
-	
+	//スプライン曲線の制御点をセットする
 	void SetSplinePoint();
 public:
+	//スプライン曲線の動きを再生する
 	void PlaySpline();
 	//ファイル出力
 	void OutPutStatus(std::ofstream& writing_file);
