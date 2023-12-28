@@ -26,6 +26,7 @@ class Player final :
 {
 private:
 	//ベクトル
+	Vector3 normalGravity_;
 	Vector3 cameraToPlayerVec_;	//カメラ→プレイヤーのベクトル
 	Vector3 playerFrontVec_;	//プレイヤーが向いているベクトル
 	Vector3 lockOnVec_;			//ロックオンしている敵へのベクトル
@@ -36,7 +37,6 @@ private:
 	float walklimitValue_;		//歩きと走るが切り替わる値
 	float dashSpeed_;			//移動スピード
 	float walkSpeed_;			//移動スピード
-
 	bool isCanJump_;			//ジャンプ可能フラグ
 	bool isAlive_;				//生存フラグ
 	bool isCanInput_;			//入力可能フラグ
@@ -44,34 +44,29 @@ private:
 	float maxjumptimer;			//ジャンプ可能なフレーム数
 	float jumpTime_;			//ジャンプしたフレーム数
 	float jumpSpeed_;			//ジャンプスピード
-
 	TimerFloat shakeTimer_;			//歩いているプレイヤーが横に揺れる動きを管理するタイマー
 	TimerFloat dashParticleTimer_;	//歩いているプレイヤーのパーティクル生成を管理するタイマー
-
 	PlayerCommand command_;			//コマンドの動きを管理する
 	GuardClass guard_;				//防御を管理する
 	DodgeRoll dodgeRoll_;			//ドッジロールを管理する
 	PlayerHPGauge hpGaugeUI_;		//HPゲージを管理する
 	PlayerMPGauge mpGaugeUI_;		//MPゲージを管理する
 	PlayerState state_;				//プレイヤーのステートを管理する
-
 	int32_t maxHealth_;			//最大HP
 	int32_t health_;			//現在HP
-
 	int32_t maxMP_;				//最大MP
 	int32_t nowMP_;				//現在MP
 	Timer mpChargeTime_;		//MPチャージ時間
 	Timer mpChargeIntervalTimer_;	//MPを一定時間ごとに回復するタイマー
 	bool isMPCharge_;			//MPチャージ中フラグ
-
 	uint32_t landingTimer_;
-
 	Sphere damageCol_;			//攻撃を受ける当たり判定
-
 	Sword sword_;				//剣オブジェ
-
-	
 	Quaternion playerQuaternion_;	//X,Y,Z軸の合成
+private:
+	int32_t particleAddNum_;
+	float particleTimer_;
+	float particleScale_;
 public:
 	Player();
 	void PreColUpdate();

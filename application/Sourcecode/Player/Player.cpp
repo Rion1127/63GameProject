@@ -27,68 +27,53 @@
 Player::Player() :
 	IActor(ActorType::Player)
 {
-
 	gravity_.SetAddValue({ 0,-0.01f,0 });
-
 	// 入力されている方向の角度
 	nowAngle_ = 0.0f;
-
 	//移動速度
 	dashSpeed_ = 0.2f;
 	walkSpeed_ = 0.1f;
 	walklimitValue_ = 0.7f;
-
 	jumpSpeed_ = 0.2f;
 	maxjumptimer = 10;
-
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("player", true));
 	//着地硬直時間
 	freezeTimer_.SetLimitTime(7);
-
 	col_.radius = obj_->GetTransform()->scale_.x;
 	damageCol_.radius = obj_->GetTransform()->scale_.x;
-
 	damageCoolTime_.SetLimitTime(50);
 	mpChargeTime_.SetLimitTime(600);
 	mpChargeIntervalTimer_.SetLimitTime(mpChargeTime_.GetLimitTimer() / 20);
-
 	maxHealth_ = 150;
 	health_ = maxHealth_;
-
 	maxMP_ = 100;
 	nowMP_ = maxMP_;
-
 	isAlive_ = true;
 	isMPCharge_ = false;
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
-
 	sword_.SetParent(displayObj_.get());
-
 	command_.SetPlayer(this);
-
 	InitStateMachine();
 	GoToState(PlayerState::Idle);
-
 	isCanInput_ = true;
-
 	obj_->WT_.SetRotType(RotType::Quaternion);
 	displayObj_->WT_.SetRotType(RotType::Quaternion);
 	displayObj_->SetShadowOffsetPos(Vector3(0,-1,0));
 	obj_->WT_.quaternion_ = Quaternion(0, 0, 0, 1);
 	displayObj_->WT_.quaternion_ = Quaternion(0,0,0,1);
-
 	obj_->WT_.quaternion_ = DirectionToDirection(Vector3(0, 0, 0), Vector3(0, 0, 1));
-	
-	
-
 	landingTimer_ = 7;
-
 	Model::lightGroup_->SetCircleShadowActive(0, true);
 	isFloorCollision_ = true;
+	normalGravity_ = { 0,-0.01f,0 };
+
+	particleAddNum_ = 6;
+	particleTimer_ = 20;
+	particleScale_ = 0.7f;
 }
 
 void Player::PreColUpdate()
@@ -97,38 +82,35 @@ void Player::PreColUpdate()
 	addVec_ = { 0,0,0 };
 	//プレイヤーの状態更新
 	StateUpdate();
-
 	////重力
 	GravityUpdate();
-
+	//当たり判定更新
 	ColPosUpdate();
-
+	//ステートごとの更新
 	Update();
-
+	//コマンドの更新
 	command_.Update();
-
+	//MPが無くなった時の更新
 	MPCharge();
-
 	damageCoolTime_.AddTime(1);
 	hpGaugeUI_.Update(maxHealth_, health_);
 	mpGaugeUI_.Update(maxMP_, nowMP_);
-
 	playerFrontVec_ = RotateVector(Vector3(0, 0, 1), displayObj_->WT_.quaternion_);
 }
 
 void Player::PostUpdate()
 {
+	//描画モデルの更新
 	ObjUpdate();
 
 	Vector3 swordPos;
-
 	if (command_.GetAttackManager()->GetNowAttack() != nullptr) {
 		swordPos = command_.GetAttackManager()->GetNowAttack()->GetSwordPos();
 	}
 	else {
 		swordPos = sword_.GetNowPos();
 	}
-
+	//剣の更新
 	sword_.Update(swordPos);
 
 	if (command_.GetLockOnEnemy() != nullptr)
@@ -141,14 +123,9 @@ void Player::PostUpdate()
 		obj_->GetPos().y + obj_->GetScale().y,
 		obj_->GetPos().z,
 	};
-	Vector3 displayrot = {
-		obj_->GetRot().x,
-		obj_->GetRot().y,
-		obj_->GetRot().z,
-	};
+	Vector3 displayrot = obj_->GetRot();
 	displayObj_->SetPos(displayPos);
 	displayObj_->SetRot(displayrot);
-	//displayObj_->WT_.SetQuaternion(obj_->WT_.quaternion_);
 	
 	obj_->Update();
 	displayObj_->Update();
@@ -160,17 +137,11 @@ void Player::PostUpdate()
 	Vector3 shadowPos = displayObj_->WT_.position_;
 
 	shadowPos.y -= displayObj_->WT_.scale_.y;
-
-	//Model::lightGroup_->SetCircleShadowCasterPos(0, shadowPos);
 }
 
 void Player::GravityUpdate()
 {
-	Vector3 gravity = {
-		0,
-		-0.01f * GameSpeed::GetPlayerSpeed(),
-		0
-	};
+	Vector3 gravity = normalGravity_ * GameSpeed::GetPlayerSpeed();
 	gravity_.SetAddValue(gravity);
 	gravity_.Update();
 }
@@ -231,21 +202,15 @@ void Player::InputVecUpdate()
 			if (inputlength <= walklimitValue_)
 			{
 				isDash_ = false;
+				inputVec_ = inputVec_.normalize();
+				speed = walkSpeed_;
 			}
+			//大きければ走る
 			else
 			{
 				isDash_ = true;
-			}
-
-			if (isDash_)
-			{
 				inputVec_ = inputVec_.normalize();
 				speed = dashSpeed_;
-			}
-			else
-			{
-				inputVec_ = inputVec_.normalize();
-				speed = walkSpeed_;
 			}
 		}
 		else
@@ -261,7 +226,6 @@ void Player::InputVecUpdate()
 		moveVec_ *= speed;
 
 		addVec_ += {moveVec_.x, 0, moveVec_.y};
-
 	}
 	PlayerRotUpdate();
 }
@@ -345,9 +309,11 @@ void Player::PlayerRotUpdate()
 	}
 
 	Vector3 vecY = { 0, 1, 0 };
-	axisY_ = MakeAxisAngle({ 0, 1, 0 }, Radian(objAngleY_));
-	axisX_ = MakeAxisAngle({ 1, 0, 0 }, Radian(objAngleX_));
-	axisZ_ = MakeAxisAngle({ 0, 0, 1 }, Radian(objAngleZ_));
+	Vector3 vecX = { 1, 0, 0 };
+	Vector3 vecZ = { 0, 0, 1 };
+	axisY_ = MakeAxisAngle(vecY, Radian(objAngleY_));
+	axisX_ = MakeAxisAngle(vecX, Radian(objAngleX_));
+	axisZ_ = MakeAxisAngle(vecZ, Radian(objAngleZ_));
 	playerQuaternion_ = axisY_ * axisX_ * axisZ_;
 	//プレイヤーのY軸だけの情報を格納
 	obj_->WT_.quaternion_ = axisY_;
@@ -404,7 +370,6 @@ void Player::Guard()
 void Player::GuardUpdate()
 {
 	guard_.Update();
-
 	if (guard_.GetIsGurdNow())
 	{
 		sword_.SetState(Sword::SwordState::Guard);
@@ -435,11 +400,8 @@ void Player::JumpUpdate()
 		if (jumpTime_ < maxjumptimer)
 		{
 			jumpTime_ += GameSpeed::GetPlayerSpeed();
-
 			gravity_.SetGrabity({ 0, jumpSpeed_ ,0 });
-
 			float rate = jumpTime_ / maxjumptimer;
-
 			float rot = 6.28f * rate;
 			objAngleX_ = Angle(rot);
 			objAngleZ_ = 0;
@@ -573,10 +535,10 @@ void Player::FloorColision(const Vector3& pos)
 
 		std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
 		hitEmitter_->particle = std::make_unique<ParticleLanding>();
-		hitEmitter_->addNum = 6;
-		hitEmitter_->time = 20;
+		hitEmitter_->addNum = particleAddNum_;
+		hitEmitter_->time = particleTimer_;
 		hitEmitter_->pos = pos;
-		hitEmitter_->scale = 0.7f;
+		hitEmitter_->scale = particleScale_;
 		ParticleManager::GetInstance()->
 			AddParticle("Landing", hitEmitter_);
 	}
