@@ -266,7 +266,7 @@ void BaseAttack::ColUpdate()
 	//剣と当たり判定が分離している場合
 	else
 	{
-		colSpline_.Update();
+		colSpline_.Update(GameSpeed::GetPlayerSpeed());
 		//当たり判定有効フレームより小さければ無効
 		if (info.colInfo.activeFrame > colSpline_.GetTimer().GetTimer())
 		{
@@ -301,7 +301,7 @@ void BaseAttack::QuaternionUpdate()
 	}
 	auto& currentQuaternion = attackdata_.attackinfo[index_].quaternion[quaternionIndex_].q;
 
-	resultQuaternion_ = resultQuaternion_.Slerp(currentQuaternion, 0.3f);
+	resultQuaternion_ = resultQuaternion_.Slerp(currentQuaternion, 0.3f * GameSpeed::GetPlayerSpeed());
 
 	selfActor_->GetDisplayWorldTransform()->SetQuaternion(resultQuaternion_);
 }
