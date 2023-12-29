@@ -88,7 +88,6 @@
     <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
     <ClCompile Include="application\Sourcecode\Stage\Stage.cpp" />
-    <ClCompile Include="application\Sourcecode\UI\UIOperation.cpp" />
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackColEditor.cpp" />
     <ClCompile Include="application\Sourcecode\AttackDataPools.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
@@ -220,7 +219,6 @@
     <ClInclude Include="application\Sourcecode\Shader\LineBlur.h" />
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
     <ClInclude Include="application\Sourcecode\Stage\Stage.h" />
-    <ClInclude Include="application\Sourcecode\UI\UIOperation.h" />
     <ClInclude Include="application\Sourcecode\AttackDataPools.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />

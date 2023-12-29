@@ -135,7 +135,6 @@ public:
 	void SubMP(int32_t costMp) { nowMP_ -= costMp; }
 public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
-	MagicManager* GetMagicManager() { return command_.GetMagicManager(); }
 	Vector3 GetcameraToPlayerVec() { return cameraToPlayerVec_; }
 	Vector3 GetPlayerFrontVec() { return playerFrontVec_; }
 	PlayerState GetState() { return state_; }

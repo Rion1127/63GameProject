@@ -610,8 +610,7 @@ bool Player::GetIsCanJump()
 		state_ != PlayerState::AirAttack &&
 		state_ != PlayerState::Knock &&
 		state_ != PlayerState::Guard &&
-		state_ != PlayerState::DodgeRoll &&
-		command_.GetIsMagicMenu() == false)
+		state_ != PlayerState::DodgeRoll)
 	{
 		return true;
 	}

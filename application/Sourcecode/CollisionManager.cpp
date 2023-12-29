@@ -450,47 +450,6 @@ void CollisionManager::PlayerAttackToEnemy()
 				}
 			}
 		}
-
-		auto& bullets = *player_->GetMagicManager()->GetBullet();
-
-		if (bullets.size() == 0)continue;
-		//魔法攻撃
-		for (auto& bullet : bullets)
-		{
-			if (enemy->GetDamageCoolTime().GetIsEnd())
-			{
-				if (BallCollision(bullet->GetAttackCol()->get()->col_, enemy->GetCol()))
-				{
-					//プレイヤーの反対方向にノックバックする
-					Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;
-					knockVec.y = bullet->GetAttackCol()->get()->knockVecY;
-					knockVec = knockVec.normalize();
-					knockVec = knockVec * bullet->GetAttackCol()->get()->knockPower;
-					//敵のノックバック抵抗力を掛ける
-					knockVec = knockVec * enemy->GetKnockResist();
-					enemy->Damage(knockVec,
-						bullet->GetAttackCol()->get()->damage,
-						bullet->GetAttackCol()->get()->damageCoolTime);
-					enemy->SetIsNock(true);
-					//HPゲージ反映
-					enemyManager_->Damage();
-
-					bullet->SetIsDead(true);
-
-					Vector3 addVec = { 0.05f,0.05f,0.05f };
-					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-					hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-					hitEmitter_->addNum = 3;
-					hitEmitter_->time = 40;
-					hitEmitter_->pos = enemy->GetCol().center;
-					hitEmitter_->addVec = addVec;
-					hitEmitter_->scale = 1.0f;
-					ParticleManager::GetInstance()->
-						AddParticle("HitAttack", hitEmitter_);
-					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
-				}
-			}
-		}
 	}
 }
 

@@ -25,7 +25,6 @@ void GameScene::Ini()
 	colManager_ = std::make_unique<CollisionManager>();
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
-	operationUI_ = std::make_unique<UIOperation>();
 	colosseumSystem_ = std::make_unique<ColosseumSystem>();
 	pauseMenu_ = std::make_unique<PauseMenu>();
 
@@ -87,8 +86,6 @@ void GameScene::Update()
 		lightManager_->Update();
 		ParticleManager::GetInstance()->Update();
 
-		operationUI_->Update();
-		
 		//全ての敵を倒したらリセット
 		if (colosseumSystem_->GetIsReset())
 		{
@@ -148,7 +145,6 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
-	operationUI_->Draw();
 	colosseumSystem_->DrawSprite();
 	pauseMenu_->Draw();
 

@@ -57,6 +57,7 @@ public:
 public:
 	BaseAttack* GetNowAttack() { return nowAttack_.get(); }
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
+	int32_t GetComboNum() { return comboNum; }
 	static void SetPlayer(Player* player) { player_ = player; }
 };
 

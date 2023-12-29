@@ -14,99 +14,23 @@
 
 PlayerCommand::PlayerCommand()
 {
-	Color mainCommandColor = { 0,35,255,255 };
-	mainCommandSprite_ = std::make_unique<CommandSprite>(mainCommandColor, Vector2(120, 550), 2);
-	mainCommandSprite_->SetTitleTex(TextureManager::GetInstance()->GetTexture("CommandTitle"));
-	mainCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
-	mainCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandTex"));
-	Color magicCommandColor = { 140,130,230,255 };
-	magicCommandSprite_ = std::make_unique<CommandSprite>(magicCommandColor, Vector2(150, 550), 1);
-	magicCommandSprite_->SetTitleTex(TextureManager::GetInstance()->GetTexture("CommandMagicTitle"));
-	magicCommandSprite_->SetFrameTex(TextureManager::GetInstance()->GetTexture("CommandFrame"));
-	magicCommandSprite_->SetCharaTex(TextureManager::GetInstance()->GetTexture("CommandMagicTex"));
-	magicCommandSprite_->SetIsVisible(false);
-	//選択していないコマンドを透けないようにする
-	magicCommandSprite_->SetTranslucent(false);
-	magicType_ = MagicType::Fire;
-	magicNum_ = 0;
+	mainCommandSprite_ = std::make_unique<CommandSprite>();
 	commandNum_ = 0;
 }
 
 void PlayerCommand::Update()
 {
-
 	attackManager_.SetLockOnEnemy(lockOnEnemy_);
-	magicManager_.SetEnemy(lockOnEnemy_);
 	if (player_->GetIsCanInput()) {
-		//魔法を選択
-		if (isMagicMenu_) {
-			magicCommandSprite_->SetIsVisible(true);
-
-			//キャンセル（魔法コマンドを閉じる）
-			if (Controller::GetTriggerButtons(PAD::INPUT_A))
-			{
-				isMagicMenu_ = false;
-				magicCommandSprite_->ResetEase();
-				commandNum_ = 0;
-			}
-			//MPがある時
-			if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-				if (player_->GetIsMPCharge() == false) {
-					isMagicMenu_ = false;
-					magicCommandSprite_->ResetEase();
-					commandNum_ = 0;
-					//選択した魔法を撃つ
-					if (MagicType::Fire == (MagicType)magicNum_) {
-						magicManager_.ShotMagic(MagicType::Fire);
-					}
-				}
-				//MPチャージ中の時
-				else {
-
-				}
-			}
-		}
-		else {
-			magicCommandSprite_->SetIsVisible(false);
-			//上下でコマンド選択
-			if (Controller::GetTriggerButtons(PAD::INPUT_UP)) {
-				commandNum_--;
-				if (commandNum_ < 0) {
-					commandNum_ = (uint16_t)Command::END - 1;
-				}
-				mainCommandSprite_->ResetEase();
-				SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE(), 0.5f);
-			}
-			if (Controller::GetTriggerButtons(PAD::INPUT_DOWN)) {
-				commandNum_++;
-				if (commandNum_ >= (uint16_t)Command::END) {
-					commandNum_ = 0;
-				}
-				mainCommandSprite_->ResetEase();
-				SoundManager::Play("SelectSE", false, SoundVolume::GetValumeSE(), 0.5f);
-			}
-			//通常攻撃
-			if (selectCommand_ == Command::Attack) {
-				attackManager_.Attack();
-			}
-			//魔法コマンド選択
-			else if (selectCommand_ == Command::Magic) {
-				if (Controller::GetTriggerButtons(PAD::INPUT_B)) {
-					isMagicMenu_ = true;
-					magicCommandSprite_->ResetEase();
-				}
-			}
+		//通常攻撃
+		if (selectCommand_ == Command::Attack) {
+			attackManager_.Attack();
 		}
 	}
 	selectCommand_ = (Command)commandNum_;
 
 	attackManager_.Update();
-	magicManager_.Update();
-
-	mainCommandSprite_->SetCurrentNum(commandNum_);
-	mainCommandSprite_->SpriteUpdate();
-	magicCommandSprite_->SetCurrentNum(magicNum_);
-	magicCommandSprite_->SpriteUpdate();
+	mainCommandSprite_->Update(player_->GetState(), attackManager_.GetComboNum());
 }
 
 void PlayerCommand::Draw()
@@ -119,131 +43,124 @@ void PlayerCommand::Draw()
 	ImGui::Text(commandState.c_str());
 
 	ImGui::End();
-
-	magicManager_.Draw();
 }
 
 void PlayerCommand::DrawSprite()
 {
 	mainCommandSprite_->DrawSprite();
-	magicCommandSprite_->DrawSprite();
 }
 
 #pragma region CommandSprite
-CommandSprite::CommandSprite(const Color& color, const Vector2& basePos, uint32_t menuNum)
+CommandSprite::CommandSprite()
 {
-	isVisible_ = true;
-	basePos_.resize(menuNum);
-	frame_.resize(menuNum);
-	commandTex_.resize(menuNum);
-	baseColor_.resize(menuNum);
-	for (uint32_t i = 0; i < menuNum; i++) {
-		basePos_[i] = basePos;
-		basePos_[i] = {
-			basePos_[i].x,
-			basePos_[i].y + i * (32.f * 1.2f)
-		};
-
-		frame_[i] = std::make_unique<Sprite>();
-		frame_[i]->Ini("");
-		frame_[i]->SetPos(basePos_[i]);
-		frame_[i]->SetScale(Vector2(0.5f, 0.6f));
-		frame_[i]->SetColor(color);
-		baseColor_[i] = color;
-
-		commandTex_[i] = std::make_unique<Sprite>();
-		commandTex_[i]->Ini("");
-		commandTex_[i]->SetPos(basePos_[i]);
-		commandTex_[i]->SetTex_LeftTop(Vector2(i * 160.f, 1));
-		commandTex_[i]->SetTex_Size(Vector2(160.f, 36));
-		commandTex_[i]->SetScale(Vector2(0.3f, 0.6f));
-		commandTex_[i]->SetAnchor(Vector2(0.8f, 0.5f));
-		commandTex_[i]->SetColor(Color(255, 255, 255, 255));
-	}
-
+	Color selectColor = { 0,35,255,255 };
+	basePos_ = { 120,500 };
 	commandTitle_ = std::make_unique<Sprite>();
-	commandTitle_->Ini("");
-	Vector2 titlePos = basePos_[0];
-	titlePos.y -= (30.f * 1.2f);
-	commandTitle_->SetPos(titlePos);
-	commandTitle_->SetScale(Vector2(0.5f, 0.6f));
-	commandTitle_->SetColor(color);
-	Color col = commandTitle_->GetColor();
-	col.a = 255.f;
-	commandTitle_->SetColor(col);
-	commandTitle_->SetTex_LeftTop(Vector2(0, 5));
+	commandTitle_->Ini();
+	commandTitle_->SetTexture(TextureManager::GetInstance()->GetTexture("CommandTitle"));
+	commandTitle_->SetPos(basePos_);
+	commandTitle_->SetColor(selectColor);
+	commandTitle_->SetAnchor(Vector2(0, 0));
+	//コマンドスプライトを初期化
+	for (int32_t i = 0; i < buttonCommand_.size(); i++) {
+		buttonCommand_[i] = std::make_unique<ButtonCommand>();
+		buttonCommand_[i]->buttonName_ = ButtonName(i);
+		buttonCommand_[i]->commandButton_.Ini();
+		buttonCommand_[i]->commandFrame_.Ini();
+		buttonCommand_[i]->commandTex_.Ini();
 
-	easeTimer_.SetLimitTime(5);
-}
+		auto& commandButton = buttonCommand_[i]->commandButton_;
+		auto& commandFrame = buttonCommand_[i]->commandFrame_;
+		auto& commandTex = buttonCommand_[i]->commandTex_;
+		
+		Vector2 framePos = basePos_;
+		//それぞれのボタンのUIの初期化
+		if (i == ButtonName::Abutton) {
+			//framePos.x += 100;
+			framePos.y += 150;
+			commandTex.SetTex_LeftTop(Vector2(0, 25.f));
+		}
+		else if (i == ButtonName::Bbutton) {
+			framePos.x += 110;
+			framePos.y += 100;
+		}
+		else if (i == ButtonName::Xbutton) {
+			framePos.x -= 110;
+			framePos.y += 100;
+			commandTex.SetTex_LeftTop(Vector2(0, 50.f));
+		}
+		else if (i == ButtonName::Ybutton) {
+			//framePos.x += 100;
+			framePos.y += 50;
+		}
+		Vector2 buttonPos = framePos;
+		Vector2 texPos = framePos;
 
-void CommandSprite::SpriteUpdate()
-{
-	easeTimer_.AddTime(1);
+		buttonPos.x += 17;
+		buttonPos.y += 16;
+		texPos.x += 40;
+		texPos.y += 5;
 
-	float startPos = basePos_[currentNum_].x;
-	float endPos = basePos_[currentNum_].x + 20.f;
-
-	Vector2 easePos = {
-		Easing::Back::easeOut(startPos,endPos,easeTimer_.GetTimeRate()),
-		basePos_[currentNum_].y,
-	};
-
-	for (uint32_t i = 0; i < frame_.size(); i++) {
-		if (i == currentNum_) {
-			frame_[i]->SetPos(easePos);
-			frame_[i]->
-				SetTexture(TextureManager::GetInstance()->
-					GetTexture("CommandSelect"));
-			frame_[i]->SetColor(baseColor_[i]);
-			commandTex_[i]->SetPos(easePos);
+		commandButton.SetTex_LeftTop(Vector2(25.f * i,0));
+		commandButton.SetTex_Size(Vector2(25.f,25.f));
+		commandButton.SetScale(Vector2(0.7f / 4, 0.7f));
+		commandButton.SetPos(buttonPos);
+		//commandButton.SetAnchor(Vector2(0, 0));
+		commandButton.SetTexture(TextureManager::GetInstance()->GetTexture("Button"));
+		commandFrame.SetPos(framePos);
+		commandFrame.SetColor(selectColor);
+		commandFrame.SetAnchor(Vector2(0, 0));
+		commandFrame.SetTexture(TextureManager::GetInstance()->GetTexture("CommandFrame"));
+		if (i != ButtonName::Ybutton) {
+			commandTex.SetTexture(TextureManager::GetInstance()->GetTexture("CommandTex"));
+			commandTex.SetTex_Size(Vector2(150.f, 25.f));
 		}
 		else {
-			frame_[i]->SetPos(basePos_[i]);
-			frame_[i]->
-				SetTexture(TextureManager::GetInstance()->
-					GetTexture("CommandFrame"));
-			Color col = baseColor_[i];
-			if (isTranslucent_) {
-				col.a = 200;
-			}
-			frame_[i]->SetColor(col);
-			commandTex_[i]->SetPos(basePos_[i]);
+			commandTex.SetTexture(TextureManager::GetInstance()->GetTexture("CommandSpecialTex"));
+			commandTex.SetTex_Size(Vector2(200.f, 25.f));
+			framePos.x += 25;
 		}
+		commandTex.SetScale(Vector2(0.8f, 0.8f / 4));
+		commandTex.SetPos(texPos);
+		commandTex.SetAnchor(Vector2(0, 0));
 	}
+}
 
-	for (uint32_t i = 0; i < frame_.size(); i++) {
-		frame_[i]->Update();
-		commandTex_[i]->Update();
-	}
+void CommandSprite::Update(PlayerState state, int32_t commbo)
+{
 	commandTitle_->Update();
+	for (int32_t i = 0; i < buttonCommand_.size(); i++) {
+		//動いている時は「ガード」を「ドッジロール」に変更
+		if (state == PlayerState::Move) {
+			buttonCommand_[ButtonName::Xbutton]->commandTex_.SetTex_LeftTop(Vector2(0,75.f));
+		}
+		else {
+			buttonCommand_[ButtonName::Xbutton]->commandTex_.SetTex_LeftTop(Vector2(0, 50.f));
+		}
+		Vector2 texPos = {
+			0,
+			commbo * 25.f
+		};
+		buttonCommand_[ButtonName::Ybutton]->commandTex_.SetTex_LeftTop(texPos);
+
+		buttonCommand_[i]->commandButton_.Update();
+		buttonCommand_[i]->commandFrame_.Update();
+		buttonCommand_[i]->commandTex_.Update();
+	}
 }
 
 void CommandSprite::DrawSprite()
 {
-	if (isVisible_ == false) return;
-	for (uint32_t i = 0; i < frame_.size(); i++) {
-		frame_[i]->Draw();
-		commandTex_[i]->Draw();
-	}
 	commandTitle_->Draw();
+	for (auto& sprite : buttonCommand_) {
+		sprite->commandFrame_.Draw();
+		sprite->commandButton_.Draw();
+		sprite->commandTex_.Draw();
+	}
 }
 
 void CommandSprite::ResetEase()
 {
-	easeTimer_.Reset();
-}
-
-void CommandSprite::SetFrameTex(Texture* texture)
-{
-	for (auto& sprite : frame_) {
-		sprite->SetTexture(texture);
-	}
-}
-
-void CommandSprite::SetCharaTex(Texture* texture)
-{
-	for (auto& sprite : commandTex_) {
-		sprite->SetTexture(texture);
-	}
+	
 }
 #pragma endregion

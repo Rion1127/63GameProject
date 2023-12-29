@@ -57,21 +57,17 @@ void LoadManager::LoadTexture()
 	LoadGraph("bgmSeTex.png", "BgmSeTex");
 	LoadGraph("soundFrame.png", "SoundFrame");
 
-
 	LoadGraph("commandTitle.png", "CommandTitle");
 	LoadGraph("commandFrame.png", "CommandFrame");
-	LoadGraph("commandSelect.png", "CommandSelect");
 	LoadGraph("commandTex.png", "CommandTex");
-	LoadGraph("CommandmagicTex.png", "CommandMagicTex");
-	LoadGraph("CommandmagicTitle.png", "CommandMagicTitle");
-
+	LoadGraph("commandSpecialTex.png", "CommandSpecialTex");
+	
 	//ボタンUI
 	LoadGraph("pressA.png", "PressA");
 	LoadGraph("OperationUI.png", "OperationUI");
+	LoadGraph("button.png", "Button");
 	//ゲームオーバーUI
-	LoadGraph("continueTex.png", "Continue");
 	LoadGraph("TitleTex.png", "TitleTex");
-
 }
 
 void LoadManager::LoadSound()

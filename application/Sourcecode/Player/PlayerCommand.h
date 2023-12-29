@@ -5,6 +5,7 @@
 #include "PlayerInfo.h"
 #include "Timer.h"
 #include "MagicManager.h"
+#include <array>
 
 /**
  * @file PlayerCommand.h
@@ -14,34 +15,31 @@
 struct CommandSprite
 {
 private:
+	enum ButtonName {
+		Abutton,
+		Bbutton,
+		Xbutton,
+		Ybutton,
+	};
+	struct ButtonCommand{
+		ButtonName buttonName_;
+		Sprite commandFrame_;
+		Sprite commandButton_;
+		Sprite commandTex_;
+	};
+private:
 	std::unique_ptr<Sprite> commandTitle_;
-	std::vector<std::unique_ptr<Sprite>> frame_;
-	std::vector<std::unique_ptr<Sprite>> commandTex_;
-
-	std::vector<Vector2> basePos_;
-	std::vector<Color> baseColor_;
-
-	Timer easeTimer_;
-	Timer magicMenuEaseTimer_;
-
-	uint16_t currentNum_;
-
-	bool isVisible_;
-	bool isTranslucent_;//半透明フラグ
+	std::array<std::unique_ptr<ButtonCommand>,4> buttonCommand_;
+	Vector2 basePos_;
 public:
-	CommandSprite(const Color& color, const Vector2& basePos, uint32_t menuNum);
-	void SpriteUpdate();
+	CommandSprite();
+	void Update(PlayerState state,int32_t commbo);
 
 	void DrawSprite();
 
 	void ResetEase();
 public:
-	void SetTitleTex(Texture* texture) { commandTitle_->SetTexture(texture); };
-	void SetFrameTex(Texture* texture);	//フレームテクスチャ
-	void SetCharaTex(Texture* texture);	//文字テクスチャ
-	void SetCurrentNum(uint16_t num) { currentNum_ = num; }
-	void SetIsVisible(bool flag) { isVisible_ = flag; }
-	void SetTranslucent(bool flag) { isTranslucent_ = flag; }
+	
 };
 
 class Player;
@@ -56,20 +54,12 @@ private:
 	};
 private:
 	std::unique_ptr<CommandSprite> mainCommandSprite_;
-	std::unique_ptr<CommandSprite> magicCommandSprite_;
-private:
 	IEnemy* lockOnEnemy_;
 	Player* player_;
 
 	AttackManager attackManager_;
-	MagicManager magicManager_;
-
 	Command selectCommand_;
 	int16_t commandNum_;
-
-	bool isMagicMenu_;
-	MagicType magicType_;
-	int16_t magicNum_;
 public:
 	PlayerCommand();
 
@@ -77,18 +67,11 @@ public:
 
 	void Draw();
 	void DrawSprite();
-
 public:
 	void SetLockOnEnemy(IEnemy* enemy) { lockOnEnemy_ = enemy; }
-	void SetPlayer(Player* player) {
-		player_ = player;
-		magicManager_.SetPlayer(player);
-	}
+	void SetPlayer(Player* player) {player_ = player;}
 public:
 	AttackManager* GetAttackManager() { return &attackManager_; }
-	MagicManager* GetMagicManager() { return &magicManager_; }
 	IEnemy* GetLockOnEnemy() { return lockOnEnemy_; }
-	bool GetIsMagicMenu() { return isMagicMenu_; }
-
 };
 

@@ -33,7 +33,6 @@ void DebugScene::Ini()
 	colManager_ = std::make_unique<CollisionManager>();
 	enemyManager_ = std::make_unique<EnemyManager>();
 	Model::SetLight(lightManager_->GetLightGroup());
-	operationUI_ = std::make_unique<UIOperation>();
 	pauseMenu_ = std::make_unique<PauseMenu>();
 
 	stage_ = std::move(std::make_unique<Stage>());
@@ -95,8 +94,6 @@ void DebugScene::Update()
 		//その他
 		lightManager_->Update();
 		ParticleManager::GetInstance()->Update();
-		//UI更新
-		operationUI_->Update();
 		//プレイヤーが死んだらシーン変更
 		if (player_->GetIsAlive() == false)
 		{
@@ -134,8 +131,6 @@ void DebugScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
-	operationUI_->Draw();
-	//colosseumSystem_->DrawSprite();
 	pauseMenu_->Draw();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
