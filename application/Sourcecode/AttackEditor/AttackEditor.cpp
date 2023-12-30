@@ -52,6 +52,7 @@ void AttackEditor::Update()
 	}
 
 	colSpline_.Update();
+	effectEditor_.Update();
 	//選択している一振りだけ再生
 	if (isPlay_)
 	{
@@ -187,6 +188,7 @@ void AttackEditor::DrawImGui()
 	if (attackInfo_[currentSwingNum_].colType_ == ColType::Separate) {
 		colSpline_.DrawImGui();
 	}
+	effectEditor_.DrawImGui();
 }
 
 void AttackEditor::ImGuiDisplaySplitePoint()

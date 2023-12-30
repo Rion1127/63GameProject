@@ -77,7 +77,6 @@ void ColSpline::DrawImGui()
 	ImGuiColSplineEditor();
 	ImGuiDisplaySplinePos();
 	ImGui::End();
-
 }
 
 void ColSpline::ImGuiColSplineEditor()
