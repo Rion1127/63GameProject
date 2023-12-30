@@ -5,8 +5,8 @@ damege = 3
 gravityY = 0
 KnockVec 0 0 0
 KnockYVec = 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.1
+deceleration = 0.005
 attackType Normal
 
 //--SplinePos--//
@@ -18,8 +18,8 @@ SplinePos 0.8 0 2
 SplinePos 0.8 0 3
 
 //--Quaternion--//
-flame 0
-Quaternion 0 0 0 1
+flame 2
+Quaternion 0.15 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 8
@@ -28,8 +28,8 @@ damege = 3
 gravityY = 0
 KnockVec 0 0 0
 KnockYVec = 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.1
+deceleration = 0.005
 attackType Normal
 
 //--SplinePos--//
@@ -41,8 +41,8 @@ SplinePos -0.8 0.5 2
 SplinePos -0.8 0.5 3
 
 //--Quaternion--//
-flame 0
-Quaternion 0 0 0 1
+flame 2
+Quaternion 0.15 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 8
@@ -51,8 +51,8 @@ damege = 3
 gravityY = 0
 KnockVec 0 0 0
 KnockYVec = 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.1
+deceleration = 0.005
 attackType Normal
 
 //--SplinePos--//
@@ -64,8 +64,8 @@ SplinePos 1 0.8 2.5
 SplinePos 1 0.8 4
 
 //--Quaternion--//
-flame 0
-Quaternion 0 0 0 1
+flame 2
+Quaternion 0.15 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 8
@@ -74,8 +74,8 @@ damege = 3
 gravityY = 0
 KnockVec 0 0 0
 KnockYVec = 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.1
+deceleration = 0.005
 attackType Normal
 
 //--SplinePos--//
@@ -87,8 +87,8 @@ SplinePos 0.3 0.7 2.6
 SplinePos 0.3 0.7 3.7
 
 //--Quaternion--//
-flame 0
-Quaternion 0 0 0 1
+flame 2
+Quaternion 0.15 0 0 1
 
 //--AtatckInfo--//
 attackFrame = 8
@@ -97,8 +97,8 @@ damege = 3
 gravityY = 0
 KnockVec 0 0 0
 KnockYVec = 0
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.1
+deceleration = 0.005
 attackType Normal
 
 //--SplinePos--//
@@ -110,6 +110,6 @@ SplinePos -0.3 -0.4 2
 SplinePos -0.3 -0.4 3.2
 
 //--Quaternion--//
-flame 0
-Quaternion 0 0 0 1
+flame 2
+Quaternion 0.15 0 0 1
 

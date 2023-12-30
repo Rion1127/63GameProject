@@ -5,8 +5,8 @@ damege = 5
 gravityY = 0
 KnockVec 0 1 0
 KnockYVec = 1.5
-addVec 0 0 0
-deceleration = 0.1
+addVec 0 0 0.05
+deceleration = 0.003
 attackType Finish
 
 //--SplinePos--//
