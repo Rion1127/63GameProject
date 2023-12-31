@@ -46,27 +46,16 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			info = &newinput.attackinfo.back();
 		}
 		if (info == nullptr)continue;
-		if (key == "attackFrame")
+		LoadFileString(line_stream, key, "attackFrame", info->attackFrame, true, 1, '=');
+		LoadFileString(line_stream, key, "gapFrame", info->gapFrame, true, 1, '=');
+		LoadFileString(line_stream, key, "damege", info->damage, true, 1, '=');
+		LoadFileString(line_stream, key, "gravityY", info->gravity.y, true, 1, '=');
+		LoadFileString(line_stream, key, "KnockYVec", info->knockYVec, true, 1, '=');
+		LoadFileString(line_stream, key, "deceleration", info->deceleration, true, 1, '=');
+		
+		if (key == "gapFrame")
 		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->attackFrame;
-		}
-		else if (key == "gapFrame")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->gapFrame;
-
 			info->attackAllFrame = info->attackFrame + info->gapFrame;
-		}
-		else if (key == "damege")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->damage;
-		}
-		else if (key == "gravityY")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->gravity.y;
 		}
 		else if (key == "KnockVec")
 		{
@@ -74,21 +63,11 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> info->knockVec.y;
 			line_stream >> info->knockVec.z;
 		}
-		else if (key == "KnockYVec")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->knockYVec;
-		}
 		else if (key == "addVec")
 		{
 			line_stream >> info->playerMoveVec.x;
 			line_stream >> info->playerMoveVec.y;
 			line_stream >> info->playerMoveVec.z;
-		}
-		else if (key == "deceleration")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->deceleration;
 		}
 
 		if (key == "attackType")
@@ -102,7 +81,6 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			newinput.type_ = timerType;
 			info->attackType = timerType;
 		}
-
 		//タイマー制御方法読み込み
 		if (key == "TimerType")
 		{
@@ -153,11 +131,6 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> splinePos.z;
 		}
 
-		if (key == "//--Quaternion--//")
-		{
-
-		}
-		//if (quaternionControl == nullptr) continue;
 		//スプライン曲線読み込み
 		if (key == "flame")
 		{
@@ -180,38 +153,16 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 
 			quaternionControl->q = q;
 		}
-
 		if (key == "//--SeparateCol--//")
 		{
 			info->colType_ = ColType::Separate;
 		}
-
 		//各パラメータ読み込み
-		if (key == "colattackFrame")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->colInfo.attackFrame;
-		}
-		else if (key == "colactiveFrame")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->colInfo.activeFrame;
-		}
-		else if (key == "coldamage")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->colInfo.damage;
-		}
-		else if (key == "colfirstRadius")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->colInfo.firstRadius;
-		}
-		else if (key == "coladdRadiusValue")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> info->colInfo.addRadiusValue;
-		}
+		LoadFileString(line_stream, key, "colattackFrame", info->colInfo.attackFrame, true, 1, '=');
+		LoadFileString(line_stream, key, "colactiveFrame", info->colInfo.activeFrame, true, 1, '=');
+		LoadFileString(line_stream, key, "coldamage", info->colInfo.damage, true, 1, '=');
+		LoadFileString(line_stream, key, "colfirstRadius", info->colInfo.firstRadius, true, 1, '=');
+		LoadFileString(line_stream, key, "coladdRadiusValue", info->colInfo.addRadiusValue, true, 1, '=');
 		if (key == "colTimerType")
 		{
 			std::string timerTypeName;

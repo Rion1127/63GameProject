@@ -53,7 +53,8 @@ public:
 		std::vector<QuaternionControl> quaternion;	//プレイヤーの姿勢
 		AttackType attackType = AttackType::Normal;	//攻撃のタイプ通常かフィニッシュ
 		ColSpline::SeparateAttackInfo colInfo;		//当たり判定の詳細
-		ColType colType_ = ColType::Normal;//当たり判定の種類
+		ColType colType_ = ColType::Normal;			//当たり判定の種類
+		AttackEffectEditor::EffectInfo effectInfo;	//演出関連
 	};
 private:
 	//一振り分の詳細

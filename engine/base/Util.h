@@ -97,3 +97,23 @@ std::string NumberToString(Number num) {
 	numstring << num;
 	return numstring.str();
 }
+/// <summary>
+/// ファイルから読み込んだ情報を格納する
+/// </summary>
+/// <typeparam name="T">読み込んだ文字列を格納する変数</typeparam>
+/// <param name="line_stream">読み込んだファイルの一行</param>
+/// <param name="key">項目の名前</param>
+/// <param name="findName">項目の名前</param>
+/// <param name="t">読み込んだ文字列を格納する変数</param>
+/// <param name="isIgnore">除外する文字があるかどうか</param>
+/// <param name="stringSize">除外する文字数</param>
+/// <param name="ignoreChar">除外する文字</param>
+template<class T>
+void LoadFileString(std::stringstream& line_stream, const std::string& key, const std::string& findName, T& t, bool isIgnore = false, int32_t stringSize = 1, int ignoreChar = ' ') {
+
+	if (key == findName)
+	{
+		if (isIgnore) line_stream.ignore(stringSize, ignoreChar);
+		line_stream >> t;
+	}
+}

@@ -192,5 +192,3 @@ std::vector<std::string> FindFileNames(const std::string& dir, const std::string
 
 	return result;
 }
-
-

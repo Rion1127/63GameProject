@@ -769,6 +769,7 @@ void AttackEditor::AttackSave(const std::string& string)
 			writing_file << std::endl;
 			colSpline_.OutPutStatus(writing_file);
 		}
+		effectEditor_.OutPutStatus(writing_file);
 		index++;
 		writing_file << std::endl;
 	}
@@ -812,36 +813,18 @@ void AttackEditor::AttackLoad(const std::string& string)
 		}
 		if (attackinfo == nullptr) continue;
 		//各パラメータ読み込み
-		if (key == "attackFrame")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> attackinfo->attackFrame;
-		}
-		else if (key == "gapFrame")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> attackinfo->gapFrame;
-		}
-		else if (key == "damege")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> attackinfo->damage;
-		}
-		else if (key == "gravityY")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> attackinfo->gravity.y;
-		}
-		else if (key == "KnockVec")
+		LoadFileString(line_stream, key, "attackFrame", attackinfo->attackFrame, true, 1, '=');
+		LoadFileString(line_stream, key, "gapFrame", attackinfo->gapFrame, true, 1, '=');
+		LoadFileString(line_stream, key, "damege", attackinfo->damage, true, 1, '=');
+		LoadFileString(line_stream, key, "gravityY", attackinfo->gravity.y, true, 1, '=');
+		LoadFileString(line_stream, key, "KnockYVec", attackinfo->knockYVec, true, 1, '=');
+		LoadFileString(line_stream, key, "deceleration", attackinfo->deceleration, true, 1, '=');
+		
+		if (key == "KnockVec")
 		{
 			line_stream >> attackinfo->knockVec.x;
 			line_stream >> attackinfo->knockVec.y;
 			line_stream >> attackinfo->knockVec.z;
-		}
-		else if (key == "KnockYVec")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> attackinfo->knockYVec;
 		}
 		else if (key == "addVec")
 		{
@@ -849,16 +832,10 @@ void AttackEditor::AttackLoad(const std::string& string)
 			line_stream >> attackinfo->playerMoveVec.y;
 			line_stream >> attackinfo->playerMoveVec.z;
 		}
-		else if (key == "deceleration")
-		{
-			line_stream.ignore(1, '=');
-			line_stream >> attackinfo->deceleration;
-		}
 		else if (key == "attackType")
 		{
 			std::string attackType;
 			line_stream >> attackType;
-
 			AttackType timerType;
 			if (attackType == "Normal")timerType = AttackType::Normal;
 			else timerType = AttackType::Finish;
@@ -956,6 +933,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 			attackinfo->colType_ = ColType::Separate;
 		}
 		colSpline_.InPutStatus(key, line_stream);
+		effectEditor_.InPutStatus(key, line_stream);
 	}
 	currentSwingNum_ = 0;
 	SetSplinePos();

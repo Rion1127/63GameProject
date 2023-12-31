@@ -32,6 +32,8 @@ public:
 	void DrawImGui();
 	//ファイル出力
 	void OutPutStatus(std::ofstream& writing_file);
+	//ファイル読み込み
+	void InPutStatus(const std::string& key, std::stringstream& line_stream);
 private:
 	//演出に関する項目をImGuiで変更する
 	void ImGuiInfoEdit();
