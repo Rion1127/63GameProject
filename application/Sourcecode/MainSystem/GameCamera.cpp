@@ -72,22 +72,26 @@ void GameCamera::Update(CameraMode cameraMode)
 
 void GameCamera::UpdateCameraPos()
 {
+	if (player_->GetAttackManager()->GetNowAttack() != nullptr) {
+		const auto& nowAttack = player_->GetAttackManager()->GetNowAttack();
+		if (nowAttack->GetIsCameraShake()) {
+			const auto& effectInfo = nowAttack->GetEffectInfo();
+			nowAttack->SetIsCameraShake(false);
+			SetCameraShake(effectInfo.cameraShakeTime, effectInfo.cameraShakePower);
+		}
+	}
+
 	if (cameraShakeTimer_.GetIsEnd() == false)
 	{
 		Shake();
 	}
 
-	Vector3 cameraTrans = {
-		player_->GetWorldTransform()->position_.x,
-		player_->GetWorldTransform()->position_.y,
-		player_->GetWorldTransform()->position_.z
-	};
+	Vector3 cameraTrans = player_->GetWorldTransform()->position_;
 
 	float frontdist = 15;
-
+	//カメラの上下左右の向き
 	bool isCameraInvX = ConfigMenu::GetInstance()->GetInvX();
 	bool isCameraInvY = ConfigMenu::GetInstance()->GetInvY();
-
 	int32_t cameraInvX = (isCameraInvX == false) ? 1 : -1;
 	int32_t cameraInvY = (isCameraInvY == false) ? 1 : -1;
 
@@ -95,7 +99,6 @@ void GameCamera::UpdateCameraPos()
 		Controller::GetRStick(deadZone_.x).x * cameraInvX,
 		Controller::GetRStick(deadZone_.y).y * cameraInvY
 	};
-
 	moveDist.x -= inputVec.x * transSpeed_.x;
 	moveDist.y += inputVec.y * transSpeed_.y;
 	//カメラがどのくらいプレイヤーに近づくかClampをする

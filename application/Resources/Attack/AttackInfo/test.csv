@@ -15,9 +15,10 @@ TimerType Normal
 //--Quaternion--//
 flame 0
 Quaternion 0 0 0 1
+
 //--EffectInfo--//
-Frame 8
-cameraShakeTime 14
-cameraShakePower 14
-particleName Testaaaaaaaa
+effectFrame 16
+effectcameraShakeTime 31
+effectcameraShakePower 10
+effectparticleName Testaaaaa
 

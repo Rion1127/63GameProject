@@ -32,6 +32,12 @@ Quaternion -0.27 0 0 0.79
 flame 15
 Quaternion 0 0 0 1
 
+//--EffectInfo--//
+effectFrame 50
+effectcameraShakeTime 50
+effectcameraShakePower 0.5
+effectparticleName 
+
 //--AtatckInfo--//
 attackFrame = 12
 gapFrame = 25
@@ -68,4 +74,10 @@ colEasingTypeInOut In
 //--ColSplinePos--//
 ColSplinePos 0 0 1.7
 ColSplinePos 0 0 1.7
+
+//--EffectInfo--//
+effectFrame 50
+effectcameraShakeTime 50
+effectcameraShakePower 0.5
+effectparticleName 
 

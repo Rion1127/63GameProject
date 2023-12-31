@@ -117,6 +117,10 @@ void BaseAttack::Update()
 	else {
 		isAttaking_ = true;
 	}
+
+	if (attackdata_.attackinfo[index_].effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
+		isCameraShake_ = true;
+	}
 	
 	DamageCoolTimerUpdate();
 	//プレイヤーの移動処理

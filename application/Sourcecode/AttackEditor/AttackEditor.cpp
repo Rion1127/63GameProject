@@ -769,6 +769,7 @@ void AttackEditor::AttackSave(const std::string& string)
 			writing_file << std::endl;
 			colSpline_.OutPutStatus(writing_file);
 		}
+		writing_file << std::endl;
 		effectEditor_.OutPutStatus(writing_file);
 		index++;
 		writing_file << std::endl;

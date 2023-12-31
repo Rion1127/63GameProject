@@ -69,7 +69,6 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> info->playerMoveVec.y;
 			line_stream >> info->playerMoveVec.z;
 		}
-
 		if (key == "attackType")
 		{
 			std::string attackType;
@@ -214,6 +213,12 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 			line_stream >> pos.z;
 			info->colInfo.splinePos.emplace_back(pos);
 		}
+
+		//演出関連のステータス読み込み
+		LoadFileString(line_stream, key, "effectFrame", info->effectInfo.frame);
+		LoadFileString(line_stream, key, "effectcameraShakeTime", info->effectInfo.cameraShakeTime);
+		LoadFileString(line_stream, key, "effectcameraShakePower", info->effectInfo.cameraShakePower);
+		LoadFileString(line_stream, key, "effectparticleName", info->effectInfo.particleName);
 	}
 
 	attacks_.insert(std::make_pair(fileName, newinput));

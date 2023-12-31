@@ -32,6 +32,7 @@ private:
 	int32_t damage_;
 
 	bool isAttaking_;	//攻撃中フラグ
+	bool isCameraShake_;//カメラを揺らすフラグ
 	float nextAttackFrame_;
 	float slerpSpeed_;
 	float quaternionTimer_;
@@ -55,10 +56,10 @@ public:
 	//スプライン曲線・当たり判定追加
 	void Draw();
 private:
-	Vector3 CalculateFrontVec();	//正面ベクトルを計算
-	void CalculateRotToLockOnActor();//ロックオンしている方向にプレイヤーを向ける
-	void NormalSplinePosInit();
-	void SeparateSplinePosInit();
+	Vector3 CalculateFrontVec();		//正面ベクトルを計算
+	void CalculateRotToLockOnActor();	//ロックオンしている方向にプレイヤーを向ける
+	void NormalSplinePosInit();			//通常の当たり当たり判定
+	void SeparateSplinePosInit();		//当たり判定は分裂している
 	void PlayerMove();	//攻撃中のプレイヤーの動き
 	void ColUpdate();	//当たり判定更新
 	void QuaternionUpdate();
@@ -74,5 +75,9 @@ public:
 	AttackType GetNowSwingAttackType() { return attackdata_.attackinfo[index_].attackType; }
 	Vector3 GetKnockVec() { return attackdata_.attackinfo[index_].knockVec; }
 	float GetKnockYVec() { return attackdata_.attackinfo[index_].knockYVec; }
+	AttackEffectEditor::EffectInfo GetEffectInfo() { return attackdata_.attackinfo[index_].effectInfo; }
+	bool GetIsCameraShake() { return isCameraShake_; }
+public:
+	void SetIsCameraShake(bool flag) { isCameraShake_ = flag; }
 };
 
