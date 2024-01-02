@@ -43,9 +43,11 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleGroundStump.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleLanding.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleObjDataPool.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleTest.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleTrail.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleWallHit.cpp" />
@@ -174,9 +176,11 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleGroundStump.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleLanding.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleManager.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleObjDataPool.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleTest.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleTrail.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleWallHit.h" />

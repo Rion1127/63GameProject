@@ -39,6 +39,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("triangle.png", "Triangle");
 	LoadGraph("selectParticle.png", "SelectParticle");
 	LoadGraph("moveSmoke.png", "MoveSmoke");
+	LoadGraph("groundCrack.png", "GroundCrack");
 	//UI
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");
@@ -85,6 +86,7 @@ void LoadManager::LoadSound()
 	LoadWave("fireSE.wav", "FireSE");
 	LoadWave("roundClearSE.wav", "RoundClearSE");
 	LoadWave("cancelSE.wav", "CancelSE");
+	LoadWave("groundStumpSE.wav", "GroundStumpSE");
 }
 
 void LoadManager::LoadEnemyPopData()

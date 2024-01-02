@@ -636,6 +636,12 @@
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackEffectEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleGroundStump.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleObjDataPool.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -1024,6 +1030,12 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackEffectEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleGroundStump.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\ParticleObjDataPool.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

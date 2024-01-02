@@ -74,6 +74,13 @@ void DebugScene::Update()
 		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "DebugEnemy.csv", "Debug");
 		EnemyLoader::GetInstance()->LoadEnemyPopFile(path + "HadesCup.csv", "HadesCup");
 	}
+	if (Key::TriggerKey(DIK_G))
+	{
+		std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+		hitEmitter_->pos = {0,0.01f,0};
+		ParticleManager::GetInstance()->
+			AddParticle("groundStump", hitEmitter_);
+	}
 #endif // _DEBUG
 
 	if (pauseMenu_->GetIsPause() == false) {

@@ -5,6 +5,7 @@
 #include "ParticleEnemyDead.h"
 #include "ParticleWallHit.h"
 #include "ParticleFire.h"
+#include "ParticleGroundStump.h"
 
 /**
  * @file ParticleManager.cpp
@@ -76,6 +77,13 @@ void ParticleManager::InitParticle(const std::string& name)
 		emitter->addNum = 2;
 		emitter->time = 180;
 		emitter->scale = 1.0f;
+	}
+	else if (name == "groundStump") {
+		emitter->particle = std::make_unique<ParticleGroundStump>();
+		emitter->addVec = { 0.0f,0.0f, 0.0f, };
+		emitter->addNum = 6;
+		emitter->time = 180;
+		emitter->scale = 13.0f;
 	}
 }
 

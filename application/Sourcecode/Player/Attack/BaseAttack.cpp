@@ -119,10 +119,6 @@ void BaseAttack::Update()
 		isAttaking_ = true;
 	}
 
-	if (attackdata_.attackinfo[index_].effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
-		isCameraShake_ = true;
-	}
-	
 	DamageCoolTimerUpdate();
 	//プレイヤーの移動処理
 	PlayerMove();
@@ -132,6 +128,18 @@ void BaseAttack::Update()
 	swordPos_ = spline_.GetNowPoint();
 	//当たり判定更新
 	ColUpdate();
+
+	if (attackdata_.attackinfo[index_].effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
+		isCameraShake_ = true;
+		std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
+		hitEmitter_->pos = {
+			colPos_.x,
+			0.01f,
+			colPos_.z
+		};
+		ParticleManager::GetInstance()->
+			AddParticle(attackdata_.attackinfo[index_].effectInfo.particleName, hitEmitter_);
+	}
 
 	Vector3 scale = Vector3(col_.radius, col_.radius, col_.radius);
 	obj_->SetScale(scale);
