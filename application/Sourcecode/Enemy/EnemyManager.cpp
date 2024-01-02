@@ -53,13 +53,7 @@ void EnemyManager::PreColUpdate()
 			player_->SetLockOnEnemy(lockOnEnemy_);
 			player_->GetAttackManager()->SetLockOnEnemy(lockOnEnemy_);
 			std::shared_ptr<OneceEmitter> deadEmitter_ = std::make_shared<OneceEmitter>();
-			deadEmitter_->particle = std::make_unique<ParticleEnemyDead>();
-			deadEmitter_->addNum = 32;
-			deadEmitter_->time = 80;
 			deadEmitter_->pos = pos;
-			deadEmitter_->addVec = { 0.8f,0.8f, 0.8f };
-			deadEmitter_->scale = 1.0f;
-
 			ParticleManager::GetInstance()->
 				AddParticle("EnemyDead", deadEmitter_);
 			SoundManager::Play("DeathSE", false, SoundVolume::GetValumeSE(), 0.6f);

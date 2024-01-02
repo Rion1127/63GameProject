@@ -3,6 +3,7 @@
 #include "RRandom.h"
 #include "mSound.h"
 #include "SoundVolume.h"
+#include "ParticleManager.h"
 
 /**
  * @file BaseAttack.cpp

@@ -48,21 +48,14 @@ void AttackRedNocturne::Init()
 	timer.SetTime(timer.GetLimitTimer());
 
 	fireEmitter_ = std::make_shared<ContinuousEmitter>();
-	fireEmitter_->particle = std::make_unique<ParticleFire>();
-	fireEmitter_->addVec = { 0.2f,0.2f, 0.2f, };
-	fireEmitter_->addNum = 5;
-	fireEmitter_->isActive = true;
 	fireEmitter_->popCoolTime_ = timer;
-	fireEmitter_->time = 20;
 	fireEmitter_->pos = attackCol_->col_.center;
-	fireEmitter_->scale = 1.f;
-	fireEmitter_->particle->SetEmitter(fireEmitter_.get());
 	ParticleManager::GetInstance()->AddParticle("fireBall", fireEmitter_);
+	CalculateRotToLockOnActor(CalculateFrontVec());
 }
 
 void AttackRedNocturne::MoveUpdate()
 {
-	CalculateRotToLockOnActor(CalculateFrontVec());
 	//回転情報からプレイヤーへのベクトルを取得
 	Vector3 lockOnPos = IBullet::lockOnActor_->GetWorldTransform()->position_;
 	lockOnPos.y += IBullet::lockOnActor_->GetWorldTransform()->scale_.y;

@@ -4,6 +4,7 @@
 #include "ParticleHitAttack.h"
 #include "ParticleEnemyDead.h"
 #include "ParticleWallHit.h"
+#include "ParticleFire.h"
 
 /**
  * @file ParticleManager.cpp
@@ -28,6 +29,54 @@ void ParticleManager::AllReset()
 
 ParticleManager::ParticleManager()
 {
+}
+
+void ParticleManager::InitParticle(const std::string& name)
+{
+	auto& emitter = emitters_.back();
+	if (name == "WallHit") {
+		emitter->particle = std::make_unique<ParticleWallHit>();
+		emitter->addNum = 1;
+		emitter->time = 60;
+		emitter->scale = 1.0f;
+	}
+	else if (name == "HitAttack") {
+		emitter->particle = std::make_unique<ParticleHitAttack>();
+		emitter->addNum = 3;
+		emitter->time = 40;
+		emitter->scale = 1.0f;
+		Vector3 addVec = { 0.05f,0.05f,0.05f };
+		emitter->addVec = addVec;
+	}
+	else if (name == "EnemyDead") {
+		emitter->particle = std::make_unique<ParticleEnemyDead>();
+		emitter->addNum = 32;
+		emitter->time = 80;
+		emitter->addVec = { 0.8f,0.8f, 0.8f };
+		emitter->scale = 1.0f;
+	}
+	else if (name == "fireBall") {
+		emitter->particle = std::make_unique<ParticleFire>();
+		emitter->addVec = { 0.2f,0.2f, 0.2f, };
+		emitter->addNum = 5;
+		emitter->isActive = true;
+		emitter->time = 20;
+		emitter->scale = 1.f;
+	}
+	else if (name == "fireCharge") {
+		emitter->particle = std::make_unique<ParticleFire>();
+		emitter->addVec = { 0.25f,0.3f, 0.25f, };
+		emitter->addNum = 4;
+		emitter->time = 30;
+		emitter->scale = 0.3f;
+	}
+	else if (name == "fireCircle") {
+		emitter->particle = std::make_unique<ParticleFireCircle>();
+		emitter->addVec = { 0.0f,0.0f, 0.0f, };
+		emitter->addNum = 2;
+		emitter->time = 180;
+		emitter->scale = 1.0f;
+	}
 }
 
 void ParticleManager::Update()
@@ -77,7 +126,7 @@ void ParticleManager::AddParticle(const std::string& name, const std::shared_ptr
 {
 	emitters_.emplace_back();
 	emitters_.back() = emitter;
+	InitParticle(name);
 	emitters_.back()->particle->SetEmitter(emitter.get());
 	emitters_.back()->particle->Add();
-	name;
 }

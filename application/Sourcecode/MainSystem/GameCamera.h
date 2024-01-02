@@ -71,7 +71,7 @@ public:
 	void UpdateCameraPos();
 	void UpdateLookAT();
 	void Reset();
-	void Shake();
+	void CameraShake();
 	void DrawImGui();
 private:
 	GetOutEnemy GetOutScreenEnemy(const Vector2& screenPos, const Vector2& winSize, IEnemy* enemy);

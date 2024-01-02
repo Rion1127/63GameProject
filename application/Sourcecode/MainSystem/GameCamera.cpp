@@ -83,7 +83,7 @@ void GameCamera::UpdateCameraPos()
 
 	if (cameraShakeTimer_.GetIsEnd() == false)
 	{
-		Shake();
+		CameraShake();
 	}
 
 	Vector3 cameraTrans = player_->GetWorldTransform()->position_;
@@ -276,7 +276,7 @@ void GameCamera::SetCameraShake(float time, float power)
 	shakePower_ = power;
 }
 
-void GameCamera::Shake()
+void GameCamera::CameraShake()
 {
 	cameraShakeTimer_.AddTime(1);
 

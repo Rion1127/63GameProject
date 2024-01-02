@@ -388,24 +388,14 @@ void EnemyRedNocturne::InitFireParticle()
 	Vector3 pos = obj_->GetPos();
 	pos.y += obj_->GetScale().y * 2.f;
 	fireEmitter_ = std::make_shared<ContinuousEmitter>();
-	fireEmitter_->particle = std::make_unique<ParticleFire>();
-	fireEmitter_->addVec = { 0.25f,0.3f, 0.25f, };
-	fireEmitter_->addNum = 4;
 	fireEmitter_->popCoolTime_ = timer;
-	fireEmitter_->time = 30;
 	fireEmitter_->pos = pos;
-	fireEmitter_->scale = 0.3f;
 
 	fireCirclePos_ = obj_->GetPos();
 	fireCirclePos_.y += obj_->GetScale().y;
 	fireCircleEmitter_ = std::make_shared<OneceEmitter>();
-	fireCircleEmitter_->particle = std::make_unique<ParticleFireCircle>();
-	fireCircleEmitter_->addVec = { 0.0f,0.0f, 0.0f, };
-	fireCircleEmitter_->addNum = 2;
-	fireCircleEmitter_->time = 180;
 	fireCircleEmitter_->parentPos = &fireCirclePos_;
 	fireCircleEmitter_->pos = fireCirclePos_;
-	fireCircleEmitter_->scale = 1.0f;
 }
 
 void EnemyRedNocturne::AddFireParticle()

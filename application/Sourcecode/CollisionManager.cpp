@@ -146,13 +146,8 @@ void CollisionManager::PlayerToWall()
 					rot = { 0,Radian(90),0 };
 				}
 				std::shared_ptr<OneceEmitter> emitter = std::make_shared<OneceEmitter>();
-				emitter->particle = std::make_unique<ParticleWallHit>();
-				emitter->addNum = 1;
-				emitter->time = 60;
 				emitter->pos = interPos + (itr->get()->normal * -0.01f);
 				emitter->addVec = rot;
-				emitter->scale = 1.0f;
-
 				ParticleManager::GetInstance()->
 					AddParticle("WallHit", emitter);
 				wallHitTimer_.Reset();
@@ -410,15 +405,9 @@ void CollisionManager::PlayerAttackToEnemy()
 					//HPゲージ反映
 					enemyManager_->Damage();
 
-					Vector3 addVec = { 0.05f,0.05f,0.05f };
 					//ヒットパーティクル生成
 					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-					hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-					hitEmitter_->addNum = 3;
-					hitEmitter_->time = 40;
 					hitEmitter_->pos = enemy->GetCol().center;
-					hitEmitter_->addVec = addVec;
-					hitEmitter_->scale = 1.0f;
 					ParticleManager::GetInstance()->
 						AddParticle("HitAttack", hitEmitter_);
 					SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
@@ -492,15 +481,8 @@ void CollisionManager::EnemyAttackToPlayer()
 
 						player_->Damage(col->damage, knockVec);
 
-						Vector3 addVec = { 0.15f,0.15f,0.15f };
-
 						std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-						hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-						hitEmitter_->addNum = 3;
-						hitEmitter_->time = 40;
 						hitEmitter_->pos = enemy->GetCol().center;
-						hitEmitter_->addVec = addVec;
-						hitEmitter_->scale = 1.0f;
 						ParticleManager::GetInstance()->
 							AddParticle("HitAttack", hitEmitter_);
 						SoundManager::Play("HitSE", false, SoundVolume::GetValumeSE());
@@ -552,12 +534,7 @@ void CollisionManager::EnemyBulletToPlayer()
 			bullet->SetIsDead(true);
 
 			std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-			hitEmitter_->particle = std::make_unique<ParticleHitAttack>();
-			hitEmitter_->addNum = 3;
-			hitEmitter_->time = 40;
 			hitEmitter_->pos = player_->GetCol().center;
-			hitEmitter_->addVec = { 0.15f,0.15f,0.15f };;
-			hitEmitter_->scale = 1.0f;
 			ParticleManager::GetInstance()->
 				AddParticle("HitAttack", hitEmitter_);
 		}
