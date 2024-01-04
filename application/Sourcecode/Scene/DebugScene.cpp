@@ -125,13 +125,9 @@ void DebugScene::Draw()
 	enemyManager_->SpriteBackDraw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	player_->Draw();
-	
 
-	PipelineManager::PreDraw("Toon", TRIANGLELIST);
-
-
-	PipelineManager::PreDraw("assimp", TRIANGLELIST);
-	//obj_.Draw();
+	PipelineManager::PreDraw("Particle", POINTLIST);
+	ParticleManager::GetInstance()->Draw();
 	////////////
 	//スプライト//
 	////////////
@@ -140,8 +136,6 @@ void DebugScene::Draw()
 	player_->DrawSprite();
 	pauseMenu_->Draw();
 
-	PipelineManager::PreDraw("Particle", POINTLIST);
-	ParticleManager::GetInstance()->Draw();
 
 	if (Framework::isImguiDisplay_) {
 		ImGui::Begin("GameSpeed");

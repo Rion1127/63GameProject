@@ -22,9 +22,9 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 	index_ = 0;
 
 	resultQuaternion_ = selfActor_->GetWorldTransform()->quaternion_;
-
+	//プレイヤーの姿勢を敵の方向に向ける
 	CalculateRotToLockOnActor();
-
+	//こうげきのステータスをセットする
 	SetNextAttack();
 
 	//攻撃に掛かる時間を計算する
@@ -33,7 +33,7 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 		attackAllTime += info.attackFrame + info.gapFrame;
 	}
 	attackAllTime_.SetLimitTime(attackAllTime);
-
+	//剣の座標を代入する
 	spline_.Update();
 	swordPos_ = spline_.GetNowPoint();
 
@@ -45,17 +45,15 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 	else {
 		col_.radius = attackdata_.attackinfo[index_].colInfo.firstRadius;
 	}
+	//ダメージのクールタイムを計算する
+	//（攻撃の全てのフレーム数 - 現在の攻撃のフレーム数）
 	float& attackTime = attackdata_.attackinfo[index_].attackFrame;
 	damageCoolTime_ = (attackTime - spline_.GetTimer().GetTimer());
-
+	//次のこうげきまでの時間を計算する
 	nextAttackFrame_ += attackdata_.attackinfo[index_].attackAllFrame;
-
-	playerAxisY_ = selfActor_->GetAxisY();
-	
-
+	//姿勢の線形補間の時間を計算する
 	float time = (attackdata_.attackinfo[index_].quaternion[quaternionIndex_].frame - attackAllTime_.GetTimer());
 	slerpSpeed_ = 1.f / time;
-
 	for (auto& info : attackdata_.attackinfo)
 	{
 		for (auto& q : info.quaternion)
@@ -64,7 +62,7 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 		}
 	}
 	quaternionTimer_ = 0;
-
+	//ダメージを代入
 	if (attackdata_.attackinfo[index_].colType_ == ColType::Normal)
 	{
 		damage_ = attackdata_.attackinfo[index_].damage;
@@ -72,6 +70,13 @@ BaseAttack::BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockO
 	else
 	{
 		damage_ = attackdata_.attackinfo[index_].colInfo.damage;
+	}
+}
+
+BaseAttack::~BaseAttack()
+{
+	if (emitter_ != nullptr) {
+		emitter_->isActive = false;
 	}
 }
 
@@ -118,7 +123,8 @@ void BaseAttack::Update()
 	else {
 		isAttaking_ = true;
 	}
-
+	//ダメージのクールタイムを計算する
+	//（攻撃の全てのフレーム数 - 現在の攻撃のフレーム数）
 	DamageCoolTimerUpdate();
 	//プレイヤーの移動処理
 	PlayerMove();
@@ -130,15 +136,24 @@ void BaseAttack::Update()
 	ColUpdate();
 
 	if (attackdata_.attackinfo[index_].effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
-		isCameraShake_ = true;
-		std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
-		hitEmitter_->pos = {
+		if (attackdata_.attackinfo[index_].effectInfo.cameraShakePower != 0) {
+			isCameraShake_ = true;
+		}
+		emitter_ = std::make_shared<OneceEmitter>();
+		emitter_->pos = {
 			colPos_.x,
-			0.01f,
+			/*colPos_.y*/ 0.1f,
 			colPos_.z
 		};
 		ParticleManager::GetInstance()->
-			AddParticle(attackdata_.attackinfo[index_].effectInfo.particleName, hitEmitter_);
+			AddParticle(attackdata_.attackinfo[index_].effectInfo.particleName, emitter_);
+	}
+	if (emitter_ != nullptr) {
+		emitter_->pos = {
+			colPos_.x,
+			colPos_.y,
+			colPos_.z
+		};
 	}
 
 	Vector3 scale = Vector3(col_.radius, col_.radius, col_.radius);

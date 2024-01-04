@@ -28,27 +28,22 @@ private:
 	Spline colSpline_;		//当たり判定曲線（coltype_ = Separateの場合もに使用）
 	uint32_t index_;
 	uint32_t quaternionIndex_;
-
 	int32_t damage_;
-
 	bool isAttaking_;	//攻撃中フラグ
 	bool isCameraShake_;//カメラを揺らすフラグ
 	float nextAttackFrame_;
 	float slerpSpeed_;
 	float quaternionTimer_;
 	float oneSwingTimer_;
-
 	Quaternion resultQuaternion_;
-	Quaternion playerAxisY_;
-
 	Vector3 swordPos_;	//剣の座標
 	Vector3 colPos_;	//当たり判定の座標
-
 	Sphere col_;
-
 	std::unique_ptr<Object3d> obj_;
+	std::shared_ptr<IEmitter> emitter_;
 public:
 	BaseAttack(const AttackData& input, IActor* selfActor, IActor* lockOnActor);
+	~BaseAttack();
 	//初期化
 	void SetNextAttack();
 	//更新
