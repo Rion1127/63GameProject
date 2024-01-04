@@ -33,10 +33,10 @@ flame 15
 Quaternion 0 0 0 1
 
 //--EffectInfo--//
-effectFrame 50
-effectcameraShakeTime 50
-effectcameraShakePower 0.5
-effectparticleName groundStump
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
 
 //--AtatckInfo--//
 attackFrame = 12

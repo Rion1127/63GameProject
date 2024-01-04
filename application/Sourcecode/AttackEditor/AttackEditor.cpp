@@ -188,7 +188,7 @@ void AttackEditor::DrawImGui()
 	if (attackInfo_[currentSwingNum_].colType_ == ColType::Separate) {
 		colSpline_.DrawImGui();
 	}
-	effectEditor_.DrawImGui();
+	effectEditor_.DrawImGui(attackInfo_[currentSwingNum_].effectInfo);
 }
 
 void AttackEditor::ImGuiDisplaySplitePoint()
@@ -770,7 +770,7 @@ void AttackEditor::AttackSave(const std::string& string)
 			colSpline_.OutPutStatus(writing_file);
 		}
 		writing_file << std::endl;
-		effectEditor_.OutPutStatus(writing_file);
+		effectEditor_.OutPutStatus(writing_file, attackinfo.effectInfo);
 		index++;
 		writing_file << std::endl;
 	}
@@ -934,7 +934,7 @@ void AttackEditor::AttackLoad(const std::string& string)
 			attackinfo->colType_ = ColType::Separate;
 		}
 		colSpline_.InPutStatus(key, line_stream);
-		effectEditor_.InPutStatus(key, line_stream);
+		effectEditor_.InPutStatus(key, line_stream, attackinfo->effectInfo);
 	}
 	currentSwingNum_ = 0;
 	SetSplinePos();

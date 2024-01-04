@@ -29,14 +29,14 @@ public:
 	//描画
 	void Draw();
 	//ImGui描画
-	void DrawImGui();
+	void DrawImGui(EffectInfo& info);
 	//ファイル出力
-	void OutPutStatus(std::ofstream& writing_file);
+	void OutPutStatus(std::ofstream& writing_file, const EffectInfo& info);
 	//ファイル読み込み
-	void InPutStatus(const std::string& key, std::stringstream& line_stream);
+	void InPutStatus(const std::string& key, std::stringstream& line_stream, EffectInfo& info);
 private:
 	//演出に関する項目をImGuiで変更する
-	void ImGuiInfoEdit();
+	void ImGuiInfoEdit(EffectInfo& info);
 	//effectInfo_を追加する
 	void ImGuiAddInfo();
 	//effectInfo_を削除する
