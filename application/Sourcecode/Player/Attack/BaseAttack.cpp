@@ -95,7 +95,7 @@ void BaseAttack::SetNextAttack()
 
 	addVec = RotateVector(addVec, selfActor_->GetAxisY());
 
-	selfActor_->SetGravity(attackdata_.attackinfo[index_].gravity);
+	selfActor_->SetGravity(attackInfo.gravity);
 	quaternionIndex_ = 0;
 	oneSwingTimer_ = attackAllTime_.GetTimer();
 }
@@ -130,31 +130,11 @@ void BaseAttack::Update()
 	PlayerMove();
 	//プレイヤーの姿勢更新
 	QuaternionUpdate();
-
 	swordPos_ = spline_.GetNowPoint();
 	//当たり判定更新
 	ColUpdate();
-
-	if (attackdata_.attackinfo[index_].effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
-		if (attackdata_.attackinfo[index_].effectInfo.cameraShakePower != 0) {
-			isCameraShake_ = true;
-		}
-		emitter_ = std::make_shared<OneceEmitter>();
-		emitter_->pos = {
-			colPos_.x,
-			/*colPos_.y*/ 0.1f,
-			colPos_.z
-		};
-		ParticleManager::GetInstance()->
-			AddParticle(attackdata_.attackinfo[index_].effectInfo.particleName, emitter_);
-	}
-	if (emitter_ != nullptr) {
-		emitter_->pos = {
-			colPos_.x,
-			colPos_.y,
-			colPos_.z
-		};
-	}
+	//カメラシェイク・エフェクトを発生させる
+	EffectPopUpdate();
 
 	Vector3 scale = Vector3(col_.radius, col_.radius, col_.radius);
 	obj_->SetScale(scale);
@@ -348,5 +328,42 @@ void BaseAttack::DamageCoolTimerUpdate()
 		float maxTime = attackInfo.attackAllFrame;
 		float nowTime = colSpline_.GetTimer().GetTimer();
 		damageCoolTime_ = maxTime - nowTime;
+	}
+}
+
+void BaseAttack::EffectPopUpdate()
+{
+	auto& effectInfo = attackdata_.attackinfo[index_].effectInfo;
+	//カメラシェイク・エフェクトを発生させる
+	if (effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
+		//パーティクルの発生位置を親子関係にして計算しなおす
+		if (effectInfo.isSeparateParticlePos) {
+			WorldTransform paritcleTransform;
+			paritcleTransform.parent_ = selfActor_->GetWorldTransform();
+			paritcleTransform.position_ = effectInfo.separatePos;
+			paritcleTransform.Update();
+
+			effectInfo.separatePos = paritcleTransform.GetWorldPos();
+		}
+
+		//カメラをシェイクさせる
+		if (effectInfo.cameraShakePower != 0) {
+			isCameraShake_ = true;
+		}
+		emitter_ = std::make_shared<OneceEmitter>();
+		//パーティクルの座標代入
+		if (effectInfo.isSeparateParticlePos) {
+			emitter_->pos = effectInfo.separatePos;
+		}
+		else {
+			emitter_->pos = colPos_;
+		}
+		
+		ParticleManager::GetInstance()->
+			AddParticle(attackdata_.attackinfo[index_].effectInfo.particleName, emitter_);
+	}
+
+	if (emitter_ != nullptr) {
+		emitter_->pos = colPos_;
 	}
 }

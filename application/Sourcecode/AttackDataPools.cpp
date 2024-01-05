@@ -219,6 +219,13 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 		LoadFileString(line_stream, key, "effectcameraShakeTime", info->effectInfo.cameraShakeTime);
 		LoadFileString(line_stream, key, "effectcameraShakePower", info->effectInfo.cameraShakePower);
 		LoadFileString(line_stream, key, "effectparticleName", info->effectInfo.particleName);
+		if (key == "effectparticlePos")
+		{
+			info->effectInfo.isSeparateParticlePos = true;
+			line_stream >> info->effectInfo.separatePos.x;
+			line_stream >> info->effectInfo.separatePos.y;
+			line_stream >> info->effectInfo.separatePos.z;
+		}
 	}
 
 	attacks_.insert(std::make_pair(fileName, newinput));

@@ -80,4 +80,5 @@ effectFrame 50
 effectcameraShakeTime 50
 effectcameraShakePower 0.5
 effectparticleName groundStump
+effectparticlePos 0 -0.7 1.7
 

@@ -59,6 +59,7 @@ private:
 	void ColUpdate();	//当たり判定更新
 	void QuaternionUpdate();
 	void DamageCoolTimerUpdate();
+	void EffectPopUpdate();
 public:
 	//ゲッター
 	bool GetIsAttaking() { return isAttaking_; }

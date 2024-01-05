@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Vector3.h"
 
 /**
  * @file AttackEffectEditor.h
@@ -14,7 +15,8 @@ public:
 		int32_t frame;
 
 		std::string particleName;
-		bool isSeparateParticlePos_;	//パーティクルを剣の軌道に出すか別の座標に出すか
+		bool isSeparateParticlePos;	//パーティクルを剣の軌道に出すか別の座標に出すか
+		Vector3 separatePos;
 		float cameraShakePower;
 		float cameraShakeTime;
 	};
