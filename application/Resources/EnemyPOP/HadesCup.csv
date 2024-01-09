@@ -3,21 +3,25 @@
 //Dummy,Shadow,RedNocturne
 
 ROUND1
-SET,0,3,5,0,180,0,RedNocturne
-SET,0.01,0,3,0,180,0,Shadow
-SET,-5,0,5,0,180,0,Shadow
-SET,5,0,5,0,180,0,Shadow
+SET,0.01,0,5,0,180,0,Shadow
+SET,-5,0,7,0,180,0,Shadow
+SET,5,0,7,0,180,0,Shadow
 
 ROUND2
-SET,-3,3,5,0,180,0,RedNocturne
-SET,0,3,5,0,180,0,RedNocturne
-SET,3,3,5,0,180,0,RedNocturne
+SET,5,0,5,0,180,0,Shadow
+SET,-5,0,7,0,180,0,Shadow
+SET,0,3,7,0,180,0,RedNocturne
 
 ROUND3
 SET,-3,3,5,0,180,0,RedNocturne
 SET,3,3,5,0,180,0,RedNocturne
-SET,-8,0,2,0,180,0,Shadow
-SET,-4,0,3,0,180,0,Shadow
-SET,0.01,0,5,0,180,0,Shadow
-SET,4,0,3,0,180,0,Shadow
-SET,8,0,2,0,180,0,Shadow
+SET,-8,0,4,0,180,0,Shadow
+SET,-4,0,5,0,180,0,Shadow
+SET,0.01,0,6,0,180,0,Shadow
+SET,4,0,5,0,180,0,Shadow
+SET,8,0,4,0,180,0,Shadow
+SET,-8,0,8,0,180,0,Shadow
+SET,-4,0,9,0,180,0,Shadow
+SET,0.01,0,10,0,180,0,Shadow
+SET,4,0,9,0,180,0,Shadow
+SET,8,0,8,0,180,0,Shadow
