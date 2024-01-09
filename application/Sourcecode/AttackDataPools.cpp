@@ -219,12 +219,24 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 		LoadFileString(line_stream, key, "effectcameraShakeTime", info->effectInfo.cameraShakeTime);
 		LoadFileString(line_stream, key, "effectcameraShakePower", info->effectInfo.cameraShakePower);
 		LoadFileString(line_stream, key, "effectparticleName", info->effectInfo.particleName);
-		if (key == "effectparticlePos")
+		if (key == "effectparticlePosName")
 		{
-			info->effectInfo.isSeparateParticlePos = true;
-			line_stream >> info->effectInfo.separatePos.x;
-			line_stream >> info->effectInfo.separatePos.y;
-			line_stream >> info->effectInfo.separatePos.z;
+			std::string attackType;
+			line_stream >> attackType;
+			EmitterPos emitterposType;
+			if (attackType == "Player")emitterposType = EmitterPos::Player;
+			else if (attackType == "Sword")emitterposType = EmitterPos::Sword;
+			else emitterposType = EmitterPos::Separate;
+			info->effectInfo.emitterPosType = emitterposType;
+		}
+		if (key == "effectParticlePos")
+		{
+			if (info->effectInfo.emitterPosType == EmitterPos::Separate)
+			{
+				line_stream >> info->effectInfo.separatePos.x;
+				line_stream >> info->effectInfo.separatePos.y;
+				line_stream >> info->effectInfo.separatePos.z;
+			}
 		}
 	}
 

@@ -132,6 +132,7 @@ void DebugScene::Draw()
 	enemyManager_->SpriteBackDraw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	player_->Draw();
+	PipelineManager::PreDraw("Wave", TRIANGLELIST);
 	testObj_->Draw();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);

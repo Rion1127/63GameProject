@@ -37,6 +37,7 @@ effectFrame 0
 effectcameraShakeTime 0
 effectcameraShakePower 0
 effectparticleName 
+effectparticlePosName Player
 
 //--AtatckInfo--//
 attackFrame = 12
@@ -80,5 +81,6 @@ effectFrame 50
 effectcameraShakeTime 50
 effectcameraShakePower 0.5
 effectparticleName groundStump
-effectparticlePos 0 -0.7 1.7
+effectparticlePosName Separate
+effectParticlePos 0 -0.7 1.7
 

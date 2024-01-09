@@ -8,6 +8,13 @@
  * @brief アタックエディターの演出に関連する設定をするクラス
  */
 
+enum class EmitterPos
+{
+	Player,
+	Sword,
+	Separate,
+	END
+};
 class AttackEffectEditor
 {
 public:
@@ -15,7 +22,7 @@ public:
 		int32_t frame;
 
 		std::string particleName;
-		bool isSeparateParticlePos;	//パーティクルを剣の軌道に出すか別の座標に出すか
+		EmitterPos emitterPosType;	//パーティクルを剣の軌道に出すか別の座標に出すか
 		Vector3 separatePos;
 		float cameraShakePower;
 		float cameraShakeTime;
@@ -24,6 +31,8 @@ private:
 	std::vector<EffectInfo> effectInfo_;
 
 	bool isDelete_;
+
+	std::string emitterPosTypeName;
 public:
 	AttackEffectEditor();
 	//更新
@@ -36,6 +45,8 @@ public:
 	void OutPutStatus(std::ofstream& writing_file, const EffectInfo& info);
 	//ファイル読み込み
 	void InPutStatus(const std::string& key, std::stringstream& line_stream, EffectInfo& info);
+
+	void ChangeUpdate(const EffectInfo& info);
 private:
 	//演出に関する項目をImGuiで変更する
 	void ImGuiInfoEdit(EffectInfo& info);

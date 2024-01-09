@@ -6,6 +6,7 @@
 #include "ParticleWallHit.h"
 #include "ParticleFire.h"
 #include "ParticleGroundStump.h"
+#include "ParticleFinishBreak.h"
 
 /**
  * @file ParticleManager.cpp
@@ -84,6 +85,14 @@ void ParticleManager::InitParticle(const std::string& name)
 		emitter->addNum = 6;
 		emitter->time = 180;
 		emitter->scale = 13.0f;
+	}
+	else if (name == "wave")
+	{
+		emitter->particle = std::make_unique<ParticleFinishBreak>();
+		emitter->addNum = 1;
+		emitter->popCoolTime_.SetLimitTime(7);
+		emitter->time = 25;
+		emitter->scale = 6.f;
 	}
 }
 

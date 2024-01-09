@@ -337,7 +337,7 @@ void BaseAttack::EffectPopUpdate()
 	//カメラシェイク・エフェクトを発生させる
 	if (effectInfo.frame == (int32_t)attackAllTime_.GetTimer()) {
 		//パーティクルの発生位置を親子関係にして計算しなおす
-		if (effectInfo.isSeparateParticlePos) {
+		if (effectInfo.emitterPosType == EmitterPos::Separate) {
 			WorldTransform paritcleTransform;
 			paritcleTransform.parent_ = selfActor_->GetWorldTransform();
 			paritcleTransform.position_ = effectInfo.separatePos;
@@ -350,20 +350,40 @@ void BaseAttack::EffectPopUpdate()
 		if (effectInfo.cameraShakePower != 0) {
 			isCameraShake_ = true;
 		}
-		emitter_ = std::make_shared<OneceEmitter>();
+		//emitter_ = std::make_shared<OneceEmitter>();
+		emitter_ = std::make_unique<ContinuousEmitter>();
 		//パーティクルの座標代入
-		if (effectInfo.isSeparateParticlePos) {
-			emitter_->pos = effectInfo.separatePos;
+		if (effectInfo.emitterPosType == EmitterPos::Player)
+		{
+			emitter_->pos = selfActor_->GetWorldTransform()->position_;
 		}
-		else {
+		else if (effectInfo.emitterPosType == EmitterPos::Sword) {
 			emitter_->pos = colPos_;
 		}
-		
-		ParticleManager::GetInstance()->
-			AddParticle(attackdata_.attackinfo[index_].effectInfo.particleName, emitter_);
+		else {
+			emitter_->pos = effectInfo.separatePos;
+		}
+		emitter_->addVec = attackdata_.attackinfo[index_].playerMoveVec;
+		if (effectInfo.particleName != "")
+		{
+			ParticleManager::GetInstance()->
+				AddParticle(effectInfo.particleName, emitter_);
+		}
 	}
 
 	if (emitter_ != nullptr) {
-		emitter_->pos = colPos_;
+		//パーティクルの座標代入
+		if (effectInfo.emitterPosType == EmitterPos::Player)
+		{
+			emitter_->pos = selfActor_->GetWorldTransform()->position_;
+		}
+		else if (effectInfo.emitterPosType == EmitterPos::Sword)
+		{
+			emitter_->pos = colPos_;
+		}
+		else
+		{
+			emitter_->pos = effectInfo.separatePos;
+		}
 	}
 }

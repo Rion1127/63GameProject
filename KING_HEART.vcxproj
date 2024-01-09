@@ -42,6 +42,7 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleDash.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleEnemyDead.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleExplosion.cpp" />
+    <ClCompile Include="application\Sourcecode\Particle\ParticleFinishBreak.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleGroundStump.cpp" />
     <ClCompile Include="application\Sourcecode\Particle\ParticleHitAttack.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleDash.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleEnemyDead.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleExplosion.h" />
+    <ClInclude Include="application\Sourcecode\Particle\ParticleFinishBreak.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleFire.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleGroundStump.h" />
     <ClInclude Include="application\Sourcecode\Particle\ParticleHitAttack.h" />

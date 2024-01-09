@@ -539,6 +539,7 @@ void AttackEditor::ImGuiSwingCount()
 		else inoutString = "InOut";
 		
 		configCommon_.SetEasingTypeInOutName(inoutString);
+		effectEditor_.ChangeUpdate(currentInfo.effectInfo);
 		SetSplinePos();
 	}
 

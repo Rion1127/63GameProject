@@ -28,6 +28,13 @@ Quaternion -0.14 0 0 -0.73
 flame 20
 Quaternion 0 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
 //--AtatckInfo--//
 attackFrame = 20
 gapFrame = 5
@@ -49,4 +56,11 @@ SplinePos 0 0 3.5
 //--Quaternion--//
 flame 12
 Quaternion 0.17 0 0 1
+
+//--EffectInfo--//
+effectFrame 40
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 

@@ -84,7 +84,7 @@ void PipelineManager::ObjShaderIni()
 
 	Create("SkySphere", BACK, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
 
-	//天球用
+	//線3D描画用
 	AddPipeline("Object3DWireFrame");
 	GetPipelineObjects("Object3DWireFrame")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	GetPipelineObjects("Object3DWireFrame")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -106,6 +106,19 @@ void PipelineManager::ObjShaderIni()
 	GetPipelineObjects("Line3D")->AddrootParamsNoneTexture(2);
 
 	Create("Line3D", NONE, TOPOLOGY_LINE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
+
+	//天球用
+	AddPipeline("Wave");
+	GetPipelineObjects("Wave")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Wave")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	GetPipelineObjects("Wave")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+
+	GetPipelineObjects("Wave")->Setshader("Particle3DVS.hlsl", ShaderType::VS);
+	GetPipelineObjects("Wave")->Setshader("Particle3DPS.hlsl", ShaderType::PS);
+
+	GetPipelineObjects("Wave")->AddrootParams(4);
+
+	Create("Wave", NONE, TOPOLOGY_TRIANGLE, DEPTH_WRITE_MASK_ALL, MODE_WRAP);
 }
 void PipelineManager::PostEffectIni()
 {
