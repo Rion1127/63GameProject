@@ -6,7 +6,6 @@
 #include "PlayerInfo.h"
 #include "Gravity.h"
 #include "AttackManager.h"
-#include "MagicManager.h"
 #include "IActor.h"
 #include "PlayerGauge.h"
 #include "Guard.h"
@@ -50,15 +49,9 @@ private:
 	GuardClass guard_;				//防御を管理する
 	DodgeRoll dodgeRoll_;			//ドッジロールを管理する
 	PlayerHPGauge hpGaugeUI_;		//HPゲージを管理する
-	PlayerMPGauge mpGaugeUI_;		//MPゲージを管理する
 	PlayerState state_;				//プレイヤーのステートを管理する
 	int32_t maxHealth_;			//最大HP
 	int32_t health_;			//現在HP
-	int32_t maxMP_;				//最大MP
-	int32_t nowMP_;				//現在MP
-	Timer mpChargeTime_;		//MPチャージ時間
-	Timer mpChargeIntervalTimer_;	//MPを一定時間ごとに回復するタイマー
-	bool isMPCharge_;			//MPチャージ中フラグ
 	uint32_t landingTimer_;
 	Sphere damageCol_;			//攻撃を受ける当たり判定
 	Sword sword_;				//剣オブジェ
@@ -94,7 +87,6 @@ private:
 	void GravityUpdate();
 	//ステータス更新
 	void StateUpdate();
-	void MPCharge();
 	
 public:
 	void Draw();
@@ -132,7 +124,6 @@ public:
 	void SetLockOnEnemy(IEnemy* enemy) { command_.SetLockOnEnemy(enemy); }
 	
 
-	void SubMP(int32_t costMp) { nowMP_ -= costMp; }
 public:
 	AttackManager* GetAttackManager() { return command_.GetAttackManager(); }
 	Vector3 GetcameraToPlayerVec() { return cameraToPlayerVec_; }
@@ -141,7 +132,6 @@ public:
 	TimerFloat* GetDamegeCoolTime() { return &damageCoolTime_; }
 	Timer* GetFreezeTime() { return &freezeTimer_; }
 	bool GetIsAlive() { return isAlive_; }
-	bool GetIsMPCharge() { return isMPCharge_; }
 	bool GetIsCanInput() { return isCanInput_; }
 	bool GetIsFloorCollision() { return isFloorCollision_; }
 	bool GetIsDash() { return isDash_; }

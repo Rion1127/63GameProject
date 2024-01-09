@@ -4,7 +4,6 @@
 #include "IEnemy.h"
 #include "PlayerInfo.h"
 #include "Timer.h"
-#include "MagicManager.h"
 #include <array>
 
 /**

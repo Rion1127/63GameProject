@@ -507,14 +507,8 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleFire.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Magic\MagicManager.cpp">
-      <Filter>application\ソースファイル\Player\Magic</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Interface\IBullet.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Magic\MagicFire.cpp">
-      <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\PlayerCommand.cpp">
       <Filter>application\ソースファイル\Player</Filter>
@@ -578,9 +572,6 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\SwordTrail.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\State\PlayerMagic.cpp">
-      <Filter>application\ソースファイル\Player\Magic</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
       <Filter>application\ソースファイル\MainSystem\Config</Filter>
@@ -902,14 +893,8 @@
     <ClInclude Include="application\Sourcecode\Player\Player.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Magic\MagicManager.h">
-      <Filter>application\ヘッダーファイル\Player\Magic</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Interface\IBullet.h">
       <Filter>application\ヘッダーファイル\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\Magic\MagicFire.h">
-      <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\PlayerCommand.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
@@ -973,9 +958,6 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\SwordTrail.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Player\State\PlayerMagic.h">
-      <Filter>application\ヘッダーファイル\Player\Magic</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\GameSpeed.h">
       <Filter>application\ヘッダーファイル\MainSystem\Config</Filter>

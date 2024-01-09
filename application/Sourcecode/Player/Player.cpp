@@ -12,7 +12,6 @@
 #include "PlayerKnock.h"
 #include "PlayerAttack.h"
 #include "PlayerAirAttack.h"
-#include "PlayerMagic.h"
 #include "GameSpeed.h"
 #include "SoundVolume.h"
 #include "ParticleDash.h"
@@ -45,14 +44,9 @@ Player::Player() :
 	col_.radius = obj_->GetTransform()->scale_.x;
 	damageCol_.radius = obj_->GetTransform()->scale_.x;
 	damageCoolTime_.SetLimitTime(50);
-	mpChargeTime_.SetLimitTime(600);
-	mpChargeIntervalTimer_.SetLimitTime(mpChargeTime_.GetLimitTimer() / 20);
 	maxHealth_ = 150;
 	health_ = maxHealth_;
-	maxMP_ = 100;
-	nowMP_ = maxMP_;
 	isAlive_ = true;
-	isMPCharge_ = false;
 	guard_.SetPlayer(this);
 	knockDecreaseValue = 0.005f;
 	sword_.SetParent(displayObj_.get());
@@ -90,11 +84,8 @@ void Player::PreColUpdate()
 	Update();
 	//コマンドの更新
 	command_.Update();
-	//MPが無くなった時の更新
-	MPCharge();
 	damageCoolTime_.AddTime(1);
 	hpGaugeUI_.Update(maxHealth_, health_);
-	mpGaugeUI_.Update(maxMP_, nowMP_);
 	playerFrontVec_ = RotateVector(Vector3(0, 0, 1), displayObj_->WT_.quaternion_);
 }
 
@@ -169,7 +160,6 @@ void Player::InitStateMachine()
 	AddState(std::make_shared<PlayerKnock>(this));
 	AddState(std::make_shared<PlayerAttack>(this));
 	AddState(std::make_shared<PlayerAirAttack>(this));
-	AddState(std::make_shared<PlayerMagic>(this));
 }
 
 void Player::InputVecUpdate()
@@ -258,41 +248,6 @@ void Player::StateUpdate()
 	if (guard_.GetIsGurdNow())
 	{
 		sword_.SetState(Sword::SwordState::Guard);
-	}
-}
-
-void Player::MPCharge()
-{
-	//MPが空になったら
-	if (nowMP_ < 0 || nowMP_ == 0)
-	{
-		nowMP_ = 0;
-		if (isMPCharge_ == false)
-		{
-			isMPCharge_ = true;
-			mpGaugeUI_.SetIsCharge(isMPCharge_);
-
-		}
-	}
-	//MPをチャージする
-	if (isMPCharge_ == true)
-	{
-		mpChargeTime_.AddTime(1);
-		mpChargeIntervalTimer_.AddTime(1);
-
-		if (mpChargeIntervalTimer_.GetIsEnd())
-		{
-			nowMP_ = (uint32_t)(maxMP_ * mpChargeTime_.GetTimeRate());
-			mpChargeIntervalTimer_.Reset();
-		}
-
-		if (mpChargeTime_.GetIsEnd())
-		{
-			mpChargeTime_.Reset();
-			isMPCharge_ = false;
-			mpGaugeUI_.SetIsCharge(isMPCharge_);
-			nowMP_ = maxMP_;
-		}
 	}
 }
 
@@ -478,8 +433,7 @@ void Player::DrawImGui()
 	if (GetNowState()->GetId() == PlayerState::Knock)		text += "Knock";
 	if (GetNowState()->GetId() == PlayerState::Guard)		text += "Guard";
 	if (GetNowState()->GetId() == PlayerState::DodgeRoll)	text += "DodgeRoll";
-	if (GetNowState()->GetId() == PlayerState::Magic)	text += "Magic";
-
+	
 	ImGui::Text(text.c_str());
 	float addvec[3] = { addVec_.x,addVec_.y, addVec_.z };
 	ImGui::SliderFloat3("addvec", addvec, 0.f, 1.f, "x = %.3f");
@@ -522,7 +476,6 @@ void Player::DrawImGui()
 void Player::DrawSprite()
 {
 	hpGaugeUI_.Draw();
-	mpGaugeUI_.Draw();
 	command_.DrawSprite();
 }
 
@@ -664,7 +617,6 @@ void Player::Reset()
 	state_ = PlayerState::Idle;
 	moveVec_ = { 0,0 };
 	inputVec_ = { 0,0 };
-	nowMP_ = maxMP_;
 	health_ = maxHealth_;
 	sword_.Reset();
 }

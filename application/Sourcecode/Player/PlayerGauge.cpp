@@ -27,7 +27,7 @@ PlayerHPGauge::PlayerHPGauge() :
 
 	offsetRate_ = {
 		0.9875f,
-		0.945f,
+		0.93f,
 	};
 	pos_ = {
 		WinAPI::GetWindowSize().x * offsetRate_.x,
@@ -44,6 +44,8 @@ PlayerHPGauge::PlayerHPGauge() :
 
 	gaugeFrame_->SetColor({ 255.f,255.f,255.f,255.f });
 	gaugeFrame_->SetPos(pos_);
+
+	scale_ = { 1.0f,0.32f };
 	gaugeFrame_->SetScale(scale_);
 }
 
@@ -72,70 +74,3 @@ void PlayerHPGauge::Damage()
 	hpBarMiddle_->SetScale(gauge_->GetScale());
 }
 #pragma endregion
-
-#pragma region MPゲージ
-PlayerMPGauge::PlayerMPGauge() :
-	IGauge(Color(0.f, 80.f, 255.f, 255.f))
-{
-	gauge_->SetTexture(TextureManager::GetInstance()->GetTexture("Gauge"));
-	gaugeFrame_->SetTexture(TextureManager::GetInstance()->GetTexture("HpBarBack"));
-
-	offsetRate_ = {
-		0.9875f,
-		0.9f,
-	};
-	pos_ = {
-		WinAPI::GetWindowSize().x * offsetRate_.x,
-		WinAPI::GetWindowSize().y * offsetRate_.y
-	};
-	basePos_ = pos_;
-	easeStartPos_ = basePos_;
-	easeStartPos_.x = WinAPI::GetWindowSize().x * 1.5f;
-	scale_ = { 1.0f,0.2f };
-
-	gauge_->SetAnchor({ 1,0 });
-	gaugeFrame_->SetAnchor({ 1,0 });
-
-	gauge_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
-	gauge_->SetScale(scale_);
-
-	gaugeFrame_->SetColor({ 255.f,255.f,255.f,255.f });
-	gaugeFrame_->SetPos(pos_);
-	gaugeFrame_->SetScale(scale_);
-
-	easeTimer_.SetLimitTime(40);
-}
-
-void PlayerMPGauge::OriginalUpdate()
-{
-	easeTimer_.AddTime(1);
-
-	Vector2 pos = {
-			Easing::Back::easeOut(easeStartPos_.x,basePos_.x,easeTimer_.GetTimeRate()),
-			basePos_.y
-	};
-
-	pos_ = pos;
-
-	gauge_->SetPos({ pos_.x - 3.f,pos_.y + 1.5f });
-	gaugeFrame_->SetPos(pos_);
-
-	//MPチャージ中
-	if (isCharge_ == true) {
-		if (easeTimer_.GetIsEnd()) {
-
-		}
-		gauge_->SetColor(Color(200.f, 0.f, 170.f, 255.f));
-	}
-	//通常時
-	else {
-		gauge_->SetColor(Color(0.f, 80.f, 255.f, 255.f));
-	}
-}
-
-void PlayerMPGauge::OriginalFrontDraw()
-{
-	//gaugeFrame_->DrawImGui();
-	//gauge_->DrawImGui();
-}
-#pragma endregion 
