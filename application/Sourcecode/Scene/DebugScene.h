@@ -47,7 +47,7 @@ private:
 
 	std::unique_ptr<PauseMenu> pauseMenu_;
 
-	AssimpObject3D obj_;
+	std::unique_ptr<Object3d> testObj_;
 public:
 	~DebugScene();
 

@@ -55,6 +55,9 @@ void DebugScene::Ini()
 	std::string fileName = "application/Resources/Object/boneTest.fbx";
 
 	model_ = AssimpLoader::GetInstance()->Load(fileName);
+
+	testObj_ = std::move(std::make_unique<Object3d>());
+	testObj_->SetModel(Model::CreateOBJ_uniptr("wave", false, false));
 }
 
 void DebugScene::Update()
@@ -108,6 +111,10 @@ void DebugScene::Update()
 		}
 	}
 	pauseMenu_->Update();
+
+	testObj_->WT_.position_.y = 2;
+	testObj_->WT_.rotation_.x = Radian(90);
+	testObj_->Update();
 }
 
 void DebugScene::Draw()
@@ -125,6 +132,7 @@ void DebugScene::Draw()
 	enemyManager_->SpriteBackDraw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 	player_->Draw();
+	testObj_->Draw();
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 	ParticleManager::GetInstance()->Draw();

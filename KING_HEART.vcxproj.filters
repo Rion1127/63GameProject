@@ -1082,6 +1082,9 @@
     <None Include="application\Resources\shader\Line3D.hlsli">
       <Filter>シェーダーファイル\Engine</Filter>
     </None>
+    <None Include="application\Resources\shader\Particle3D.hlsli">
+      <Filter>シェーダーファイル\application</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="application\Resources\shader\ParticlePS.hlsl">
@@ -1212,6 +1215,12 @@
     </FxCompile>
     <FxCompile Include="application\Resources\shader\Line3DPS.hlsl">
       <Filter>シェーダーファイル\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Particle3DPS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
+    </FxCompile>
+    <FxCompile Include="application\Resources\shader\Particle3DVS.hlsl">
+      <Filter>シェーダーファイル\application</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
