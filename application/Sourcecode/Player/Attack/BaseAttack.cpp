@@ -350,8 +350,7 @@ void BaseAttack::EffectPopUpdate()
 		if (effectInfo.cameraShakePower != 0) {
 			isCameraShake_ = true;
 		}
-		//emitter_ = std::make_shared<OneceEmitter>();
-		emitter_ = std::make_unique<ContinuousEmitter>();
+		emitter_ = std::make_shared<OneceEmitter>();
 		//パーティクルの座標代入
 		if (effectInfo.emitterPosType == EmitterPos::Player)
 		{
