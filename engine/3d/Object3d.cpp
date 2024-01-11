@@ -31,3 +31,11 @@ void Object3d::Draw()
 		model_->DrawOBJ(WT_);
 	}
 }
+
+void Object3d::Draw(WorldTransform WT)
+{
+	if (isVisible_)
+	{
+		model_->DrawOBJ(WT);
+	}
+}

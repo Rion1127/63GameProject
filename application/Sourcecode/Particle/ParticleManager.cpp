@@ -5,7 +5,6 @@
 #include "ParticleEnemyDead.h"
 #include "ParticleWallHit.h"
 #include "ParticleFire.h"
-#include "ParticleGroundStump.h"
 #include "ParticleFinishBreak.h"
 
 /**
@@ -85,6 +84,8 @@ void ParticleManager::InitParticle(const std::string& name)
 		emitter->addNum = 6;
 		emitter->time = 180;
 		emitter->scale = 13.0f;
+
+		particleDebri_.emplace_back(std::make_unique<ParticleDebri>(objDataPool_.GetObj("debri"), 20, emitter->pos,120.f));
 	}
 	else if (name == "wave")
 	{
@@ -109,7 +110,6 @@ void ParticleManager::Update()
 				itr = emitters_.erase(itr);
 				continue;
 			}
-
 			if ((*itr)->isActive) {
 				//座標を更新
 				(*itr)->popCoolTime_.AddTime(1);
@@ -119,19 +119,30 @@ void ParticleManager::Update()
 					(*itr)->popCoolTime_.Reset();
 				}
 			}
-
 			(*itr)->particle->Update();
 		}
-
 		(*itr)->particle->TransferBuff();
 		itr++;
+	}
+
+	for (int32_t i = 0; i < particleDebri_.size();i++ )
+	{
+		particleDebri_[i]->Update();
+		if (particleDebri_[i]->isGetEnd())
+		{
+			particleDebri_.erase(particleDebri_.begin() + i);
+		}
 	}
 }
 
 void ParticleManager::Draw()
 {
+	for (int32_t i = 0; i < particleDebri_.size(); i++)
+	{
+		PipelineManager::PreDraw("Object3D", TRIANGLELIST);
+		particleDebri_[i]->Draw();
+	}
 	std::string shaderName = "Particle";
-
 	for (auto& emitter : emitters_)
 	{
 		PipelineManager::PreDraw(emitter->particle->GetShaderName(), POINTLIST, emitter->particle->GetPipelineState());

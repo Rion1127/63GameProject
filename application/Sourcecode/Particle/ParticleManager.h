@@ -3,7 +3,8 @@
 #include <unordered_map>
 #include <list>
 #include "HitStop.h"
-
+#include "ParticleObjDataPool.h"
+#include "ParticleGroundStump.h"
 /**
  * @file ParticleManager.h
  * @brief パーティクルを管理するクラス
@@ -13,6 +14,8 @@ class ParticleManager : public HitStop
 {
 private:
 	std::list<std::shared_ptr<IEmitter>> emitters_;
+	ParticleObjDataPool objDataPool_;
+	std::vector<std::unique_ptr<ParticleDebri>> particleDebri_;
 public:
 	static ParticleManager* GetInstance();
 	//更新

@@ -42,3 +42,24 @@ private:
 	int32_t vertexCount;
 	std::vector<StumpSmokeParticle> landingParticles_;
 };
+
+class ParticleDebri {
+private:
+	struct Debri {
+		Vector3 addVec;
+		Vector3 addRot;
+		Vector3 pos;
+		Gravity gravity;
+		Object3d* obj;
+		WorldTransform WT;
+	};
+private:
+	std::vector<Debri> debris_;
+	TimerFloat timer_;
+public:
+	ParticleDebri(Object3d* obj,int32_t addNum,Vector3 pos,float activeTime);
+	void Update();
+	void Draw();
+public:
+	bool isGetEnd() { return timer_.GetIsEnd(); }
+};

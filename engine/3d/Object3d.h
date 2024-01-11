@@ -15,6 +15,7 @@ private:
 	//エイリアステンプレート
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	std::unique_ptr<Model> model_ = nullptr;
+	Model* modelptr_ = nullptr;
 	bool isVisible_ = true;
 	BillBoard billBoard;
 public:
@@ -28,10 +29,12 @@ public:
 	void Update(Camera* camera = Camera::scurrent_);
 	//描画
 	void Draw();
+	void Draw(WorldTransform WT);
 
 public:
 	//セッター
 	void SetModel(std::unique_ptr<Model> model) { model_ = std::move(model); }
+	void SetModel(Model* model) { modelptr_ = model; }
 	void SetAmbient(const std::string& name, const Vector3& ambient) { model_->materials_.find(name)->second->SetAmbient(ambient); }
 	void SetPos(const Vector3& pos) { WT_.position_ = pos; }
 	void SetScale(const Vector3& scale) { WT_.scale_ = scale; }

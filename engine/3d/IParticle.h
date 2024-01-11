@@ -6,6 +6,7 @@
 #include "Timer.h"
 #include "PipelineManager.h"
 #include "GameSpeed.h"
+#include "Object3d.h"
 
 /**
  * @file IParticle.h
@@ -91,6 +92,7 @@ protected:
 };
 
 struct IEmitter {
+	Object3d* particleObj_;
 	std::unique_ptr<IParticle> particle;
 	int32_t addNum;	//同時発生数
 	float time;	//パーティクル生存時間

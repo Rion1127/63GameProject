@@ -50,7 +50,6 @@ void ParticleGroundStump::Add()
 	otherEmitter->particle = std::make_unique<ParticleStumpSmoke>();
 	otherEmitter->addNum = 10;
 	otherEmitter->time = emitter_->time;
-	//otherEmitter->parentPos = &emitter_->pos;
 	otherEmitter->pos = emitter_->pos;
 	otherEmitter->scale = 3.5f;
 	ParticleManager::GetInstance()->
@@ -165,3 +164,56 @@ void ParticleStumpSmoke::MoveUpdate()
 	}
 }
 #pragma endregion
+
+ParticleDebri::ParticleDebri(Object3d* obj, int32_t addNum, Vector3 pos, float activeTime)
+{
+	timer_.SetLimitTime(activeTime);
+	for (int32_t i = 0; i < addNum; i++)
+	{
+		debris_.emplace_back();
+		auto& obj_ = debris_.back();
+		obj_.obj = obj;
+
+		Vector3 randPos = { (float)RRandom::Rand(-3,3),0,(float)RRandom::Rand(-3,3) };
+		Vector3 randaddVec = { RRandom::RandF(-0.2f,0.2f),0,RRandom::RandF(-0.2f,0.2f) };
+		obj_.addVec = randaddVec;
+		obj_.pos = pos + randPos;
+		obj_.WT.position_ = obj_.pos;
+		obj_.WT.scale_ = { RRandom::RandF(0.3f,0.6f),RRandom::RandF(0.3f,0.6f),RRandom::RandF(0.3f,0.6f) };
+
+		obj_.addRot = {
+			RRandom::RandF(-0.1f,0.1f),
+			RRandom::RandF(-0.1f,0.1f),
+			RRandom::RandF(-0.1f,0.1f),
+		};
+		obj_.gravity.SetAddValue({ 0,-0.01f,0.0f });
+		obj_.gravity.SetGrabity({ 0,RRandom::RandF(0.2f,0.3f),0.0f });
+	}
+}
+
+void ParticleDebri::Update()
+{
+	timer_.AddTime(GameSpeed::GetGameSpeed());
+	for (auto& debri : debris_)
+	{
+		debri.gravity.Update();
+
+		Vector3 rot = debri.WT.rotation_;
+		rot += debri.addRot;
+		Vector3 pos = debri.WT.position_;
+		MoveTo({ 0,0,0 }, 0.005f, debri.addVec);
+		pos += debri.addVec + debri.gravity.GetGravityValue() * GameSpeed::GetGameSpeed();
+
+		debri.WT.position_ = pos;
+		debri.WT.rotation_ = rot;
+		debri.WT.Update();
+	}
+}
+
+void ParticleDebri::Draw()
+{
+	for (auto& debri : debris_)
+	{
+		debri.obj->Draw(debri.WT);
+	}
+}
