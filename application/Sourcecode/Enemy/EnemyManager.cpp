@@ -8,6 +8,7 @@
 #include "EnemyRedNocturne.h"
 #include "IBullet.h"
 #include "SoundVolume.h"
+#include "Easing.h"
 
 /**
  * @file EnemyManager.cpp
@@ -16,9 +17,8 @@
 
 EnemyManager::EnemyManager()
 {
-	lockOnobjTimer_.SetLimitTime(360);
-	lockOnobjTimer_.SetIsLoop(true);
-
+	lockOnobjTimer_.SetLimitTime(20);
+	
 	for (auto& lockOnSprite : lockOnSprite_)
 	{
 		lockOnSprite = std::move(std::make_unique<Sprite>());
@@ -27,6 +27,7 @@ EnemyManager::EnemyManager()
 	}
 	lockOnSprite_[0]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn1"));
 	lockOnSprite_[1]->SetTexture(TextureManager::GetInstance()->GetTexture("LockOn2"));
+	rockOnScaleTimer_.SetLimitTime(80);
 }
 
 void EnemyManager::PreColUpdate()
@@ -205,11 +206,11 @@ void EnemyManager::LockOnSpriteUpdate()
 	bool isHardLockOn = lockOnEnemy_->GetIsHardLockOn();
 	lockOnobjTimer_.AddTime(1);
 
-	lockOnobjRot++;
-
 	if (Controller::GetTriggerButtons(PAD::INPUT_RIGHT_SHOULDER))
 	{
+		lockOnobjTimer_.Reset();
 		addRot = 10.f;
+		rockOnScale_ = { 2.f,2.f };
 		if (isHardLockOn == false)
 		{
 			rockOnParticle_.Reset();
@@ -221,11 +222,18 @@ void EnemyManager::LockOnSpriteUpdate()
 	}
 	addRot -= 0.2f;
 	addRot = Max(0.f, addRot);
-
 	lockOnobjRot += addRot;
+	lockOnobjRot++;
+
+	rockOnScale_ = {
+		Easing::Circ::easeIn(0.6f,0.3f,lockOnobjTimer_.GetTimeRate()),
+		Easing::Circ::easeIn(0.6f,0.3f,lockOnobjTimer_.GetTimeRate())
+	};
 
 	lockOnSprite_[0]->SetRot(Radian(-lockOnobjRot));
 	lockOnSprite_[1]->SetRot(Radian(lockOnobjRot));
+	lockOnSprite_[0]->SetScale(rockOnScale_);
+	lockOnSprite_[1]->SetScale(rockOnScale_);
 	for (size_t i = 0; i < 2; i++)
 	{
 		//ハードロック
@@ -265,6 +273,7 @@ void EnemyManager::LockOnSpriteUpdate()
 		{
 			rockOnParticle_.Reset();
 			rockOnParticle_.SetIsStart(true);
+			lockOnobjTimer_.Reset();
 		}
 	}
 	if (rockOnParticle_.GetIsStaert()) {

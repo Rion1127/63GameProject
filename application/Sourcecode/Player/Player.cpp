@@ -164,12 +164,13 @@ void Player::InitStateMachine()
 
 void Player::InputVecUpdate()
 {
+	inputVec_ = { 0,0 };
 	if (GetIsCanMove() && isCanInput_)
 	{
 		Vector3 sideVec;
 		Vector3 upVec = { 0,1,0 };
 		moveVec_ = { 0,0 };
-		inputVec_ = { 0,0 };
+		
 
 		//プレイヤーの正面ベクトル（Y成分は0にする）
 		cameraToPlayerVec_ =

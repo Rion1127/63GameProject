@@ -136,27 +136,6 @@ void EnemyRedNocturne::MoveUpdate()
 		floatTimer_.Reset();
 		floatTimer_.SetLimitTime(RRandom::Rand(40,70));
 	}
-#ifdef _DEBUG
-
-	/*floatTimer_.AddTime(1);
-	float floatposY = UpAndDown((float)floatTimer_.GetLimitTimer(),0.1f,(float)floatTimer_.GetTimer());
-	obj_->GetTransform()->AddPosition(Vector3(0,floatposY,0));*/
-
-	ImGui::Begin("RedNocturne");
-
-	std::string text = "State : ";
-	if (state_ == State::Idle)				text += "Idle";
-	if (state_ == State::KnockBack)			text += "KnockBack";
-	if (state_ == State::FireAttack)		text += "FireAttack";
-	if (state_ == State::Wander)			text += "Wander";
-	if (state_ == State::Wander_FireAttack)	text += "Wander_FireAttack";
-
-	ImGui::Text(text.c_str());
-	float pos[3] = { obj_->GetTransform()->position_.x,obj_->GetTransform()->position_.y, obj_->GetTransform()->position_.z, };
-	ImGui::DragFloat3("pos", pos,0.1f,-100.f,100.f);
-
-	ImGui::End();
-#endif // _DEBUG
 }
 
 void EnemyRedNocturne::BulletShot(std::list<std::unique_ptr<IBullet>>* bullets)

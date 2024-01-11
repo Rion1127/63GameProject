@@ -120,7 +120,7 @@ CommandSprite::CommandSprite()
 			commandTex.SetTex_Size(Vector2(200.f, 25.f));
 			framePos.x += 25;
 		}
-		commandTex.SetScale(Vector2(0.8f, 0.8f / 4));
+		commandTex.SetScale(Vector2(0.8f, 0.8f / 3.7f));
 		commandTex.SetPos(texPos);
 		commandTex.SetAnchor(Vector2(0, 0));
 	}

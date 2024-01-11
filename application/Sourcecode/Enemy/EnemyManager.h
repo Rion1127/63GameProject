@@ -31,6 +31,8 @@ private:
 	EnemyHPGauge hpGauge_;
 	std::array<std::unique_ptr<Sprite>, 2> lockOnSprite_;
 	Particle2DRockOn rockOnParticle_;
+	Vector2 rockOnScale_;
+	Timer rockOnScaleTimer_;
 public:
 	EnemyManager();
 	void PreColUpdate();

@@ -40,7 +40,7 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	ColPosUpdate();
 
 	state_ = State::Idle;
-	actionTimer_.SetLimitTime(400);
+	actionTimer_.SetLimitTime(200);
 
 	sinkTimer_.SetLimitTime(40);
 
@@ -89,11 +89,11 @@ void EnemyShadow::SetState(State state)
 	float randRange = (float)RRandom::Rand(-randRange_, randRange_);
 	if (State::Idle == state_)
 	{
-		actionTimer_.SetLimitTime(100 + randRange);
+		actionTimer_.SetLimitTime(80 + randRange);
 	}
 	else if (State::Following == state_)
 	{
-		actionTimer_.SetLimitTime(150 + randRange);
+		actionTimer_.SetLimitTime(120 + randRange);
 	}
 }
 
@@ -149,13 +149,6 @@ void EnemyShadow::MoveUpdate()
 	displayObj_->SetShadowOffsetPos(Vector3(0, -offsetPos, 0));
 
 	handObj_->Update();
-#ifdef _DEBUG
-	ImGui::Begin("Enemy");
-
-	ImGui::Text(stateName_.c_str());
-
-	ImGui::End();
-#endif // _DEBUG
 }
 
 void EnemyShadow::DrawSprite()
@@ -275,7 +268,7 @@ void EnemyShadow::Wander()
 			sinkTimer_.Reset();
 			state_ = State::Idle;
 			actionTimer_.Reset();
-			actionTimer_.SetLimitTime(100);
+			actionTimer_.SetLimitTime(70);
 			col_.isActive = true;
 		}
 	}
@@ -352,7 +345,7 @@ void EnemyShadow::Attack()
 		{
 			state_ = State::Idle;
 			actionTimer_.Reset();
-			actionTimer_.SetLimitTime(120);
+			actionTimer_.SetLimitTime(100);
 			attack_.reset();
 			attackTimer_.Reset();
 			handAxisX_ = IdentityQuaternion();
@@ -579,7 +572,7 @@ void EnemyShadow::StateUpdate(State state)
 	actionTimer_.Reset();
 	if (state == State::Idle)
 	{
-		actionTimer_.SetLimitTime((float)RRandom::Rand(100, 300));
+		actionTimer_.SetLimitTime((float)RRandom::Rand(100, 200));
 	}
 	else if (state == State::Following)
 	{

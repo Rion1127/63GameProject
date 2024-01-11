@@ -48,16 +48,6 @@ ColosseumSystem::ColosseumSystem()
 
 void ColosseumSystem::Update()
 {
-#ifdef _DEBUG
-	ImGui::Begin("ColosseumSystem");
-
-	if (ImGui::Button("Reset"))
-	{
-		isStart_ = false;
-	}
-
-	ImGui::End();
-#endif // _DEBUG
 
 	//Ready表示
 	if (isStart_ == false)
