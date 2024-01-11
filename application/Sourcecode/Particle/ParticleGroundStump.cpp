@@ -179,7 +179,8 @@ ParticleDebri::ParticleDebri(Object3d* obj, int32_t addNum, Vector3 pos, float a
 		obj_.addVec = randaddVec;
 		obj_.pos = pos + randPos;
 		obj_.WT.position_ = obj_.pos;
-		obj_.WT.scale_ = { RRandom::RandF(0.3f,0.6f),RRandom::RandF(0.3f,0.6f),RRandom::RandF(0.3f,0.6f) };
+		float randScake = RRandom::RandF(0.2f, 0.6f);
+		obj_.WT.scale_ = { randScake,randScake,randScake };
 
 		obj_.addRot = {
 			RRandom::RandF(-0.1f,0.1f),
