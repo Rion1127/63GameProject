@@ -139,6 +139,8 @@ void GameScene::Draw()
 
 	PipelineManager::PreDraw("assimp", TRIANGLELIST);
 
+	PipelineManager::PreDraw("Particle", POINTLIST);
+	ParticleManager::GetInstance()->Draw();
 	////////////
 	//スプライト//
 	////////////
@@ -148,8 +150,7 @@ void GameScene::Draw()
 	colosseumSystem_->DrawSprite();
 	pauseMenu_->Draw();
 
-	PipelineManager::PreDraw("Particle", POINTLIST);
-	ParticleManager::GetInstance()->Draw();
+	
 
 	if (Framework::isImguiDisplay_) {
 		ImGui::Begin("GameSpeed");
