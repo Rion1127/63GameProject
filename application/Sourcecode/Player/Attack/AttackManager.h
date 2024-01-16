@@ -20,22 +20,20 @@ class AttackManager
 private:
 	static Player* player_;
 	IEnemy* lockOnEnemy_;
-
 	AttackDataPool datapool_;
-	
 	std::unique_ptr<BaseAttack> nowAttack_;	//現在処理している攻撃
 	std::unique_ptr<BaseAttack> nextAttack_;	//次に処理する攻撃
-
 	const int32_t MAX_COMBO = 3;
 	int32_t comboNum;
-
 	bool isAttacking;
 	bool isHardLock_;	//false 近い敵をロックオン, true ロックオンを固定
-
 	float PtoELength_;
-
 	bool isNextAttack_;
 	bool isNextSpecialAttack_;
+	float distLengthLimit_;
+	float distYaxisLimit_;
+	float soundpicthUp_;
+	float soundpicthDown_;
 public:
 	AttackManager();
 

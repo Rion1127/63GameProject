@@ -15,9 +15,11 @@ Player* AttackManager::player_ = nullptr;
 AttackManager::AttackManager()
 {
 	comboNum = 0;
-
 	isAttacking = false;
-
+	distLengthLimit_ = 4.f;
+	distYaxisLimit_ = 1.5f;
+	soundpicthUp_ = 1.5f;
+	soundpicthDown_ = 0.7f;
 }
 
 void AttackManager::Attack()
@@ -97,7 +99,6 @@ void AttackManager::DrawDebug()
 	int num = (int)comboNum;
 	ImGui::SliderInt("combo", &num, 0, 10, "%d");
 	int time = 0;
-	//if (nowAttack_ != nullptr) time = (int)nowAttack_->GetTimer().GetTimer();
 	ImGui::SliderInt("time", &time, 0, 120, "%d");
 	//当たり判定表示
 	if (ImGui::Button("colDisplay"))
@@ -155,9 +156,9 @@ void AttackManager::FirstAttackUpdate()
 			player_->GetNowState()->GetId() == PlayerState::Move)
 		{
 			//遠くの敵にスライドして攻撃
-			if (PtoELength_ >= 4.5f)keyName = datapool_.GetKeyName()["distant"];
+			if (PtoELength_ >= distLengthLimit_)keyName = datapool_.GetKeyName()["distant"];
 			//ジャンプして攻撃
-			else if (diffPosY > 1.5f)keyName = datapool_.GetKeyName()["JumpAttack"];
+			else if (diffPosY > distYaxisLimit_)keyName = datapool_.GetKeyName()["JumpAttack"];
 			//通常攻撃
 			else keyName = datapool_.GetKeyName()["Ground1"];
 		}
@@ -175,7 +176,7 @@ void AttackManager::FirstAttackUpdate()
 		nowAttack_ = std::make_unique<BaseAttack>(datapool_.GetAttacks()[keyName], player_, lockOnEnemy_);
 
 		if (nowAttack_ != nullptr) {
-			float picth = RRandom::RandF(0.7f, 1.5f);
+			float picth = RRandom::RandF(soundpicthDown_, soundpicthUp_);
 			SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		}
 		comboNum++;
@@ -207,9 +208,9 @@ void AttackManager::NextComboUpdate()
 				//すでに攻撃している場合は次の攻撃を入れる
 				if (comboNum == 1) {
 					//遠くの敵にスライドして攻撃
-					if (PtoELength_ >= 4.f)keyName = datapool_.GetKeyName()["distant"];
+					if (PtoELength_ >= distLengthLimit_)keyName = datapool_.GetKeyName()["distant"];
 					//ジャンプして攻撃
-					else if (diffPosY > 1.5f)keyName = datapool_.GetKeyName()["JumpAttack"];
+					else if (diffPosY > distYaxisLimit_)keyName = datapool_.GetKeyName()["JumpAttack"];
 					//通常攻撃
 					else keyName = datapool_.GetKeyName()["Ground2"];
 				}
@@ -245,7 +246,7 @@ void AttackManager::SwitchAttack()
 	nowAttack_.swap(nextAttack_);
 	//攻撃初期化
 	if (nowAttack_ != nullptr) {
-		float picth = RRandom::RandF(0.7f, 1.5f);
+		float picth = RRandom::RandF(soundpicthDown_, soundpicthUp_);
 		SoundManager::Play("SwingSE", false, SoundVolume::GetValumeSE(), picth);
 		comboNum++;
 	}
