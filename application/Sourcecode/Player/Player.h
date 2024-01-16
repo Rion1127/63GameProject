@@ -36,6 +36,8 @@ private:
 	float walklimitValue_;		//歩きと走るが切り替わる値
 	float dashSpeed_;			//移動スピード
 	float walkSpeed_;			//移動スピード
+	float slerpSpeed_;			//姿勢線形補完スピード
+	float rotangle_;			//姿勢線形補完スピード
 	bool isCanJump_;			//ジャンプ可能フラグ
 	bool isAlive_;				//生存フラグ
 	bool isCanInput_;			//入力可能フラグ
@@ -43,6 +45,8 @@ private:
 	float maxjumptimer;			//ジャンプ可能なフレーム数
 	float jumpTime_;			//ジャンプしたフレーム数
 	float jumpSpeed_;			//ジャンプスピード
+	float dodgeRollSpeed_;			//ドッジロールの回転スピード
+	float jumpRollSpeed_;			//ジャンプの回転スピード
 	TimerFloat shakeTimer_;			//歩いているプレイヤーが横に揺れる動きを管理するタイマー
 	TimerFloat dashParticleTimer_;	//歩いているプレイヤーのパーティクル生成を管理するタイマー
 	PlayerCommand command_;			//コマンドの動きを管理する

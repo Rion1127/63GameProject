@@ -34,7 +34,11 @@ Player::Player() :
 	walkSpeed_ = 0.1f;
 	walklimitValue_ = 0.7f;
 	jumpSpeed_ = 0.2f;
+	slerpSpeed_ = 0.3f;
 	maxjumptimer = 10;
+	rotangle_ = 400.f;
+	dodgeRollSpeed_ = 1.8f;
+	jumpRollSpeed_ = 6.28f;
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
@@ -273,7 +277,7 @@ void Player::PlayerRotUpdate()
 	playerQuaternion_ = axisY_ * axisX_ * axisZ_;
 	//プレイヤーのY軸だけの情報を格納
 	obj_->WT_.quaternion_ = axisY_;
-	displayObj_->WT_.quaternion_ = displayObj_->WT_.quaternion_.Slerp(playerQuaternion_, 0.3f);
+	displayObj_->WT_.quaternion_ = displayObj_->WT_.quaternion_.Slerp(playerQuaternion_, slerpSpeed_);
 }
 
 void Player::DogeRoll()
@@ -297,10 +301,9 @@ void Player::DogeRollUpdate()
 	addVec_ += dodgeRoll_.GetDodgeVec();
 	dodgeRoll_.Update();
 
-	float rate = dodgeRoll_.GetdodgeTimer().GetTimeRate() * 2.f;
+	float rate = dodgeRoll_.GetdodgeTimer().GetTimeRate() * dodgeRollSpeed_;
 	rate = Min(1.0f, rate);
-	Vector3 axisX = { 1,0,0 };
-	float rot = 400 * rate;
+	float rot = rotangle_ * rate;
 	objAngleX_ = rot;
 
 	if (dodgeRoll_.GetIsDodge() == false)
@@ -358,7 +361,7 @@ void Player::JumpUpdate()
 			jumpTime_ += GameSpeed::GetPlayerSpeed();
 			gravity_.SetGrabity({ 0, jumpSpeed_ ,0 });
 			float rate = jumpTime_ / maxjumptimer;
-			float rot = 6.28f * rate;
+			float rot = jumpRollSpeed_ * rate;
 			objAngleX_ = Angle(rot);
 			objAngleZ_ = 0;
 		}
