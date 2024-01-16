@@ -91,21 +91,21 @@ Vector3& Vector3::operator-=(const Vector3& v)
 	z -= v.z;
 	return *this;
 }
-Vector3& Vector3::operator+=(const float v)
+Vector3& Vector3::operator+=(float v)
 {
 	x += v;
 	y += v;
 	z += v;
 	return *this;
 }
-Vector3& Vector3::operator-=(const float v)
+Vector3& Vector3::operator-=(float v)
 {
 	x -= v;
 	y -= v;
 	z -= v;
 	return *this;
 }
-Vector3& Vector3::operator=(const float v)
+Vector3& Vector3::operator=(float v)
 {
 	x = v;
 	y = v;

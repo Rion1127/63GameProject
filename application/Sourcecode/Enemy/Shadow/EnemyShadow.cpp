@@ -74,6 +74,14 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	randKnockValueX_.y = -0.3f;
 	randKnockValueY_.x = -0.4f;
 	randKnockValueY_.y = 0.4f;
+	baseScale_ = 0.8f;
+	hideScale_ = 0.1f;
+	collapseScale_ = 0.4f;
+	collapseRateLimit_ = 0.2f;
+	slerpSpeed_ = 0.2f;
+	downRecoverRate_ = 0.6f;
+	handScale_ = 1.5f;
+	handRotLimit_ = 720.f;
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -153,7 +161,7 @@ void EnemyShadow::MoveUpdate()
 		SortPriority();
 	}
 
-	float offsetPos = displayObj_->GetScale().y * 0.8f;
+	float offsetPos = displayObj_->GetScale().y * baseScale_;
 	displayObj_->SetShadowOffsetPos(Vector3(0, -offsetPos, 0));
 
 	handObj_->Update();
@@ -236,7 +244,7 @@ void EnemyShadow::Wander()
 		if (sinkTimer_.GetIsEnd() == false)
 		{
 			float t = sinkTimer_.GetTimeRate();
-			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, 1.0f, -0.9f, 1.0f);
+			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, baseScale_, hideScale_ - baseScale_, 1.0f);
 			sinkTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 		}
 		else
@@ -265,7 +273,7 @@ void EnemyShadow::Wander()
 		if (sinkTimer_.GetIsEnd() == false)
 		{
 			float t = sinkTimer_.GetTimeRate();
-			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, 0.1f, 0.9f, 1.0f);
+			obj_->WT_.scale_.y = Easing::Sine::easeIn(t, hideScale_, 1.0f, 1.0f);
 			sinkTimer_.AddTime(1 * GameSpeed::GetEnemySpeed());
 		}
 		else
@@ -290,25 +298,25 @@ void EnemyShadow::Down()
 
 	float scaleZ = 0;
 	//地面に潰れる
-	if (actionTimer_.GetTimeRate() <= 0.2f) {
-		scaleZ = Easing::Bounce::easeOut(actionTimer_.GetTimeRate(), 1.f, -0.6f, 0.2f);
+	if (actionTimer_.GetTimeRate() <= collapseRateLimit_) {
+		scaleZ = Easing::Bounce::easeOut(actionTimer_.GetTimeRate(), 1.f, 1.f - collapseScale_, collapseRateLimit_);
 	}
 	//潰れたスケールが元に戻る
 	else {
-		float maxRate = 0.6f;
-		float rate = actionTimer_.GetTimeRate() - 0.2f;
+		float maxRate = downRecoverRate_;
+		float rate = actionTimer_.GetTimeRate() - collapseRateLimit_;
 		rate = Min(maxRate, rate);
-		scaleZ = Easing::Bounce::easeOut(rate, 0.4f, 0.6f, maxRate);
+		scaleZ = Easing::Bounce::easeOut(rate, collapseScale_, 1.f - collapseScale_, maxRate);
 	}
 	col_.radius = scaleZ;
 
 	obj_->SetScale(Vector3(1, 1, scaleZ));
-	if (actionTimer_.GetTimeRate() >= 0.6f) {
-		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(EToPQuaternion_, 0.2f);
+	if (actionTimer_.GetTimeRate() >= downRecoverRate_) {
+		obj_->WT_.quaternion_ = obj_->WT_.quaternion_.Slerp(EToPQuaternion_, slerpSpeed_);
 	}
 	else {
 		auto resultQ = EToPQuaternion_ * Quaternion(-1, 0, 0, 1);
-		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
+		obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, slerpSpeed_));
 	}
 	if (actionTimer_.GetIsEnd())
 	{
@@ -316,9 +324,7 @@ void EnemyShadow::Down()
 		slimeTimer_.Reset();
 		obj_->SetScale(Vector3(1, 1, 1));
 		col_.radius = 1;
-		state_ = State::Idle;
-		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(70);
+		SetState(State::Idle);
 		attack_.reset();
 	}
 }
@@ -331,7 +337,7 @@ void EnemyShadow::Attack()
 			
 		}
 		else {
-			handAxisX_ = handAxisX_.Slerp(Quaternion(1, 0, 0, 0.8f), 0.35f);
+			handAxisX_ = handAxisX_.Slerp(Quaternion(1, 0, 0, 0.8f), slerpSpeed_);
 			handResultQ_ = displayObj_->WT_.quaternion_;
 			handResultQ_ = handResultQ_ * handAxisX_;
 			handObj_->WT_.quaternion_ = handResultQ_;
@@ -360,15 +366,11 @@ void EnemyShadow::Attack()
 		Vector3 up = Vector3(0, 1, 0) * (GetWorldTransform()->scale_.y * 2.f);
 		Vector3 endPos = startPos + up;
 
-		float a = Easing::Quint::easeOut(startPos.z, endPos.z, attackTimer_.GetTimeRate());
-
-		Vector3 handPos = a;
-		Vector3 handscale = {
-			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
-			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
-			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
-		};
-		float handRot = Easing::Quint::easeOut(0, Radian(720), attackTimer_.GetTimeRate());
+		Vector3 handPos;
+		handPos = Easing::Quint::easeOut(startPos.z, endPos.z, attackTimer_.GetTimeRate());
+		Vector3 handscale;
+		handscale = Easing::Back::easeOut(0, handScale_, attackTimer_.GetTimeRate());
+		float handRot = Easing::Quint::easeOut(0, Radian(handRotLimit_), attackTimer_.GetTimeRate());
 
 		handObj_->WT_.SetQuaternion(VecToDir(EtoPVec_));
 
@@ -408,7 +410,7 @@ void EnemyShadow::KnockBack()
 		auto resultQ = EToPQuaternion_ * knockQuaternion_;
 		if (actionTimer_.GetTimeRate() <= 0.4f)
 		{
-			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, 0.2f));
+			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, slerpSpeed_));
 		}
 		else
 		{
