@@ -15,6 +15,14 @@
 
 class Player;
 
+enum ComboNum {
+	ZERO,
+	ONE,
+	TWO,
+	THREE,
+	FOUR
+};
+
 class AttackManager
 {
 private:
@@ -30,8 +38,8 @@ private:
 	float PtoELength_;
 	bool isNextAttack_;
 	bool isNextSpecialAttack_;
-	float distLengthLimit_;
-	float distYaxisLimit_;
+	const float distLengthLimit_ = 4.f;
+	const float distYaxisLimit_ = 1.5f;
 	float soundpicthUp_;
 	float soundpicthDown_;
 public:

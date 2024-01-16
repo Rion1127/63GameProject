@@ -14,12 +14,15 @@ Player* AttackManager::player_ = nullptr;
 
 AttackManager::AttackManager()
 {
+	lockOnEnemy_ = nullptr;
 	comboNum = 0;
 	isAttacking = false;
-	distLengthLimit_ = 4.f;
-	distYaxisLimit_ = 1.5f;
 	soundpicthUp_ = 1.5f;
 	soundpicthDown_ = 0.7f;
+	isHardLock_ = false;
+	 PtoELength_ = 0;
+	isNextAttack_ = false;
+	isNextSpecialAttack_ = false;
 }
 
 void AttackManager::Attack()
@@ -190,7 +193,9 @@ void AttackManager::NextComboUpdate()
 	//ロックオンしている敵との高さの距離
 	float diffPosY = 0;
 	if (lockOnEnemy_ != nullptr) {
-		diffPosY = player_->GetWorldTransform()->position_.y - lockOnEnemy_->GetWorldTransform()->position_.y;
+		auto& playerPos = player_->GetWorldTransform()->position_;
+		auto& enemyPos = lockOnEnemy_->GetWorldTransform()->position_;
+		diffPosY = playerPos.y - enemyPos.y;
 	}
 	else {
 		PtoELength_ = 0;
@@ -206,7 +211,7 @@ void AttackManager::NextComboUpdate()
 			if (player_->GetNowState()->GetId() == PlayerState::Attack)
 			{
 				//すでに攻撃している場合は次の攻撃を入れる
-				if (comboNum == 1) {
+				if (comboNum == ComboNum::ONE) {
 					//遠くの敵にスライドして攻撃
 					if (PtoELength_ >= distLengthLimit_)keyName = datapool_.GetKeyName()["distant"];
 					//ジャンプして攻撃
@@ -215,14 +220,14 @@ void AttackManager::NextComboUpdate()
 					else keyName = datapool_.GetKeyName()["Ground2"];
 				}
 				//フィニッシュ攻撃（エクスプロージョン）
-				if (comboNum == 2)keyName = datapool_.GetKeyName()["Ground3"];
+				else if (comboNum == ComboNum::TWO)keyName = datapool_.GetKeyName()["Ground3"];
 			}
 			else if (player_->GetNowState()->GetId() == PlayerState::AirAttack)
 			{
 				//空中2コンボ目
-				if (comboNum == 1)keyName = datapool_.GetKeyName()["Air2"];
+				if (comboNum == ComboNum::ONE)keyName = datapool_.GetKeyName()["Air2"];
 				//空中フィニッシュ
-				if (comboNum == 2)keyName = datapool_.GetKeyName()["Air3"];
+				else if (comboNum == ComboNum::TWO)keyName = datapool_.GetKeyName()["Air3"];
 			}
 		}
 		//特殊攻撃の場合

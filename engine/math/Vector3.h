@@ -35,6 +35,9 @@ public:
 	//代入演算子オーバーロード
 	Vector3& operator+=(const Vector3& v);
 	Vector3& operator-=(const Vector3& v);
+	Vector3& operator+=(const float v);
+	Vector3& operator-=(const float v);
+	Vector3& operator=(const float v);
 	Vector3& operator*=(float s);
 	Vector3& operator/=(float s);
 

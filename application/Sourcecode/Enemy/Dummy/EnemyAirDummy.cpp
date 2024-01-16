@@ -28,7 +28,7 @@ EnemyAirDummy::EnemyAirDummy(const Vector3& pos) : IEnemy(EnemyType::Air, false,
 
 void EnemyAirDummy::MoveUpdate()
 {
-	if (health_ < 100) {
+	if (health_ < maxHealth_) {
 		health_++;
 	}
 }

@@ -120,7 +120,7 @@ void ColSpline::ImGuiDisplaySplinePos()
 				spline.y,
 				spline.z,
 			};
-			ImGui::DragFloat3(splinePosName.c_str(), splinePos, 0.1f, 100.f, 100.f, "%.3f");
+			ImGui::DragFloat3(splinePosName.c_str(), splinePos, 0.1f, -100.f, 100.f, "%.3f");
 			spline = { splinePos[0], splinePos[1],  splinePos[2] };
 			if (prePos != spline)isPosChange_ = true;
 			splinePosIndex++;

@@ -52,6 +52,12 @@ private:
 	Timer attackTimer_;
 	Quaternion handAxisX_;
 	Quaternion handResultQ_;
+
+	float stateIdleTime_;
+	float stateFollowingTime_;
+	float stateDownTime_;
+	Vector2 randKnockValueX_;
+	Vector2 randKnockValueY_;
 private:
 	//デバッグ
 	std::string stateName_;

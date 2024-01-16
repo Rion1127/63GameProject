@@ -66,6 +66,14 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	priority_.insert(std::make_pair(State::KnockBack, 0));
 
 	gravity_.SetAddValue(Vector3(0,-0.007f,0));
+	stateIdleTime_ = 80;
+	stateFollowingTime_ = 120;
+	stateDownTime_ = 160;
+
+	randKnockValueX_.x = -0.7f;
+	randKnockValueX_.y = -0.3f;
+	randKnockValueY_.x = -0.4f;
+	randKnockValueY_.y = 0.4f;
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -89,11 +97,11 @@ void EnemyShadow::SetState(State state)
 	float randRange = (float)RRandom::Rand(-randRange_, randRange_);
 	if (State::Idle == state_)
 	{
-		actionTimer_.SetLimitTime(80 + randRange);
+		actionTimer_.SetLimitTime(stateIdleTime_ + randRange);
 	}
 	else if (State::Following == state_)
 	{
-		actionTimer_.SetLimitTime(120 + randRange);
+		actionTimer_.SetLimitTime(stateFollowingTime_ + randRange);
 	}
 }
 
@@ -159,12 +167,11 @@ void EnemyShadow::DrawSprite()
 void EnemyShadow::DamageUpdate()
 {
 	EToPQuaternion_ = VecToDir(EtoPVec_);
-	knockQuaternion_ = {
-		RRandom::RandF(-0.7f,-0.3f),
-		RRandom::RandF(-0.4f, 0.4f),
-		0,
-		1.0f
-	};
+	knockQuaternion_ = IdentityQuaternion();
+	//後ろへランダムな方向にのけぞる
+	knockQuaternion_.x = RRandom::RandF(randKnockValueX_.x, randKnockValueX_.y);
+	knockQuaternion_.y = RRandom::RandF(randKnockValueX_.x, randKnockValueX_.y);
+	
 	obj_->WT_.SetQuaternion(EToPQuaternion_);
 
 	obj_->SetScale(Vector3(1, 1, 1));
@@ -187,7 +194,7 @@ void EnemyShadow::FloorCollisionDerived()
 			isDown_ = false;
 			state_ = State::Down;
 			actionTimer_.Reset();
-			actionTimer_.SetLimitTime(160);
+			actionTimer_.SetLimitTime(stateDownTime_);
 
 			slimeTimer_.SetLimitTime(30);
 			slimeTimer_.Reset();
@@ -198,8 +205,6 @@ void EnemyShadow::FloorCollisionDerived()
 void EnemyShadow::Idle()
 {
 	stateName_ = "Idle";
-
-
 }
 
 void EnemyShadow::Following()
@@ -266,9 +271,7 @@ void EnemyShadow::Wander()
 		else
 		{
 			sinkTimer_.Reset();
-			state_ = State::Idle;
-			actionTimer_.Reset();
-			actionTimer_.SetLimitTime(70);
+			SetState(State::Idle);
 			col_.isActive = true;
 		}
 	}
@@ -279,7 +282,6 @@ void EnemyShadow::Wander()
 void EnemyShadow::HideMove()
 {
 	stateName_ = "HideMove";
-
 }
 
 void EnemyShadow::Down()
@@ -343,9 +345,7 @@ void EnemyShadow::Attack()
 
 		if (actionTimer_.GetIsEnd())
 		{
-			state_ = State::Idle;
-			actionTimer_.Reset();
-			actionTimer_.SetLimitTime(100);
+			SetState(State::Idle);
 			attack_.reset();
 			attackTimer_.Reset();
 			handAxisX_ = IdentityQuaternion();
@@ -360,11 +360,9 @@ void EnemyShadow::Attack()
 		Vector3 up = Vector3(0, 1, 0) * (GetWorldTransform()->scale_.y * 2.f);
 		Vector3 endPos = startPos + up;
 
-		Vector3 handPos = {
-			Easing::Quint::easeOut(startPos.x,endPos.x,attackTimer_.GetTimeRate()),
-			Easing::Quint::easeOut(startPos.y,endPos.y,attackTimer_.GetTimeRate()),
-			Easing::Quint::easeOut(startPos.z,endPos.z,attackTimer_.GetTimeRate()),
-		};
+		float a = Easing::Quint::easeOut(startPos.z, endPos.z, attackTimer_.GetTimeRate());
+
+		Vector3 handPos = a;
 		Vector3 handscale = {
 			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
 			Easing::Back::easeOut(0,1.5f,attackTimer_.GetTimeRate()),
@@ -396,9 +394,7 @@ void EnemyShadow::JumpAttack()
 
 	if (actionTimer_.GetIsEnd())
 	{
-		state_ = State::Idle;
-		actionTimer_.Reset();
-		actionTimer_.SetLimitTime(120);
+		SetState(State::Idle);
 		attack_.reset();
 	}
 }
@@ -449,7 +445,6 @@ void EnemyShadow::SortPriority()
 	if (length <= compareShortlength)
 	{
 		priority_.at(State::Attack) += 70;
-		//priority_.at(State::JumpAttack) += 20;
 		priority_.at(State::Wander) += 10;
 		priority_.at(State::Idle) += 20;
 	}
@@ -457,7 +452,6 @@ void EnemyShadow::SortPriority()
 	else if (length > compareShortlength &&
 		length < compareLonglength)
 	{
-		//priority_.at(State::JumpAttack) += 70;
 		priority_.at(State::Attack) += 30;
 		priority_.at(State::Wander) += 10;
 		priority_.at(State::Following) += 2;

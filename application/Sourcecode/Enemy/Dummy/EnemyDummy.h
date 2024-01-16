@@ -12,7 +12,7 @@ class EnemyDummy final :
     public IEnemy
 {
 private:
-    Vector2 pos2D;
+    Vector3 baseGravity_;
 public:
     EnemyDummy(const Vector3& pos);
     void SetIsNock(bool flag) override {isKnock_ = flag; };
