@@ -82,6 +82,10 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 	downRecoverRate_ = 0.6f;
 	handScale_ = 1.5f;
 	handRotLimit_ = 720.f;
+	leanBackRate_ = 0.4f;
+	wanderSplineRandPos_ = 2.f;
+	wanderSplinelengthMin_ = 3.f;
+	wanderSplinelengthMax_ = 7.f;
 }
 
 void EnemyShadow::SetIsNock(bool flag)
@@ -178,7 +182,7 @@ void EnemyShadow::DamageUpdate()
 	knockQuaternion_ = IdentityQuaternion();
 	//後ろへランダムな方向にのけぞる
 	knockQuaternion_.x = RRandom::RandF(randKnockValueX_.x, randKnockValueX_.y);
-	knockQuaternion_.y = RRandom::RandF(randKnockValueX_.x, randKnockValueX_.y);
+	knockQuaternion_.y = RRandom::RandF(randKnockValueY_.x, randKnockValueY_.y);
 	
 	obj_->WT_.SetQuaternion(EToPQuaternion_);
 
@@ -283,7 +287,6 @@ void EnemyShadow::Wander()
 			col_.isActive = true;
 		}
 	}
-
 	col_.radius = obj_->WT_.scale_.y;
 }
 
@@ -299,7 +302,7 @@ void EnemyShadow::Down()
 	float scaleZ = 0;
 	//地面に潰れる
 	if (actionTimer_.GetTimeRate() <= collapseRateLimit_) {
-		scaleZ = Easing::Bounce::easeOut(actionTimer_.GetTimeRate(), 1.f, 1.f - collapseScale_, collapseRateLimit_);
+		scaleZ = Easing::Bounce::easeOut(actionTimer_.GetTimeRate(), 1.f, -1.f + collapseScale_, collapseRateLimit_);
 	}
 	//潰れたスケールが元に戻る
 	else {
@@ -408,13 +411,13 @@ void EnemyShadow::KnockBack()
 	if (isDown_ == false) {
 		//プレイヤーの方に向く姿勢と後ろにのけぞる姿勢を掛ける
 		auto resultQ = EToPQuaternion_ * knockQuaternion_;
-		if (actionTimer_.GetTimeRate() <= 0.4f)
+		if (actionTimer_.GetTimeRate() <= leanBackRate_)
 		{
 			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(resultQ, slerpSpeed_));
 		}
 		else
 		{
-			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(EToPQuaternion_, 0.15f));
+			obj_->GetTransform()->SetQuaternion(obj_->GetTransform()->quaternion_.Slerp(EToPQuaternion_, slerpSpeed_));
 		}
 	}
 
@@ -527,21 +530,19 @@ void EnemyShadow::WanderInit()
 			//スプラインのポイントからtargetPosへのベクトルを計算
 			Vector3 targetPos = splayer_->GetWorldTransform()->position_;
 			targetPos += {
-				RRandom::RandF(-2.f, 2.f),
+				RRandom::RandF(-wanderSplineRandPos_, wanderSplineRandPos_),
 					0,
-					RRandom::RandF(-2.f, 2.f)
+					RRandom::RandF(-wanderSplineRandPos_, wanderSplineRandPos_)
 			};
 			Vector3 EtoPVec = targetPos - splinePos;
 			EtoPVec = EtoPVec.normalize();
 
 			EtoPVec = EtoPVec * Vector3(
-				RRandom::RandF(3.f, 7.f),
+				RRandom::RandF(wanderSplinelengthMin_, wanderSplinelengthMax_),
 				0,
-				RRandom::RandF(3.f, 7.f));
+				RRandom::RandF(wanderSplinelengthMin_, wanderSplinelengthMax_));
 			//乱数
-
 			splinePos += EtoPVec;
-
 			spline_.AddPosition(splinePos, PosState::Middle);
 		}
 
@@ -549,9 +550,9 @@ void EnemyShadow::WanderInit()
 		Vector3 splinePos = spline_.GetsplinePos().at(index);
 		//最終地点はプレイヤーの近くへ行く
 		Vector3 endPos = {
-			splinePos.x + RRandom::RandF(-3.f, 3.f),
+			splinePos.x + RRandom::RandF(-wanderSplineRandPos_, wanderSplineRandPos_),
 			0,
-			splinePos.z + RRandom::RandF(-3.f, 3.f),
+			splinePos.z + RRandom::RandF(-wanderSplineRandPos_, wanderSplineRandPos_),
 		};
 		//最終地点を代入
 		spline_.AddPosition(endPos, PosState::End);

@@ -60,6 +60,10 @@ private:
 	float downRecoverRate_;
 	float handScale_;
 	float handRotLimit_;
+	float leanBackRate_;
+	float wanderSplineRandPos_;
+	float wanderSplinelengthMin_;
+	float wanderSplinelengthMax_;
 private:
 	//デバッグ
 	std::string stateName_;
