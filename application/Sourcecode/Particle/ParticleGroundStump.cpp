@@ -156,7 +156,7 @@ void ParticleStumpSmoke::MoveUpdate()
 		p.frame += 1.f * GameSpeed::GetGameSpeed();
 
 		float f = (float)p.frame / p.end_frame;
-		p.position += p.addVec;
+		p.position += p.addVec * GameSpeed::GetGameSpeed();
 		p.color.a = Easing::Quint::easeIn(150.f, 0.f, f);
 		
 		particles_[i] = p;
@@ -200,7 +200,7 @@ void ParticleDebri::Update()
 		debri.gravity.Update();
 
 		Vector3 rot = debri.WT.rotation_;
-		rot += debri.addRot;
+		rot += debri.addRot * GameSpeed::GetGameSpeed();
 		Vector3 pos = debri.WT.position_;
 		MoveTo({ 0,0,0 }, 0.005f, debri.addVec);
 		pos += debri.addVec + debri.gravity.GetGravityValue() * GameSpeed::GetGameSpeed();
