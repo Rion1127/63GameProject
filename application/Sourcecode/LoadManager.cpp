@@ -43,7 +43,6 @@ void LoadManager::LoadTexture()
 	//UI
 	LoadGraph("LockOn1.png", "LockOn1");
 	LoadGraph("LockOn2.png", "LockOn2");
-	LoadGraph("UItex.png", "UItex");
 	LoadGraph("ready.png", "Ready");
 	LoadGraph("go.png", "Go");
 	LoadGraph("clear.png", "Clear");
@@ -67,8 +66,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("pressA.png", "PressA");
 	LoadGraph("OperationUI.png", "OperationUI");
 	LoadGraph("button.png", "Button");
-	//ゲームオーバーUI
-	LoadGraph("TitleTex.png", "TitleTex");
+
 }
 
 void LoadManager::LoadSound()

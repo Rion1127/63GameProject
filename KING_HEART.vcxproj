@@ -18,6 +18,7 @@
     <ClCompile Include="application\Sourcecode\DebugActor.cpp" />
     <ClCompile Include="application\Sourcecode\HitStop.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp" />
+    <ClCompile Include="application\Sourcecode\MainSystem\ComboCounter.cpp" />
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="application\Sourcecode\DebugActor.h" />
     <ClInclude Include="application\Sourcecode\HitStop.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ColosseumSystem.h" />
+    <ClInclude Include="application\Sourcecode\MainSystem\ComboCounter.h" />
     <ClInclude Include="application\Sourcecode\MainSystem\ConfigMenu.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyAirDummy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Dummy\EnemyDummy.h" />
