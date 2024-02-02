@@ -7,6 +7,7 @@
 #include <imgui.h>
 #include "ParticleManager.h"
 #include "SoundVolume.h"
+#include "ComboCounter.h"
 
 /**
  * @file CollisionManager.cpp
@@ -404,6 +405,8 @@ void CollisionManager::PlayerAttackToEnemy()
 
 					//HPゲージ反映
 					enemyManager_->Damage();
+					//コンボを加算する
+					ComboCounter::GetInstance()->AddCombo();
 
 					//ヒットパーティクル生成
 					std::shared_ptr<OneceEmitter> hitEmitter_ = std::make_shared<OneceEmitter>();
@@ -415,7 +418,6 @@ void CollisionManager::PlayerAttackToEnemy()
 					//ヒットストップのフラグがオフだった場合 or フィニッシュ技以外はヒットストップしない
 					if (attackCol->GetNowSwingAttackType() == AttackType::Normal)
 					{
-
 						enemy->SetIsNock(true);
 						hitStopTimer_ = 2;
 						shakePower_ = 0.3f;

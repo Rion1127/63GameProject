@@ -44,6 +44,16 @@ float Vector2::cross(const Vector2& v) const
 	return x * v.y - y * v.x;
 }
 
+Vector2 Vector2::SetLength(float l)
+{
+	float len2 = this->length();
+	float mul = l / len2;
+	x *= mul;
+	y *= mul;
+
+	return *this;
+}
+
 // 単項演算子オーバーロード
 //単項演算子+を使えるようにする
 Vector2 Vector2::operator+() const

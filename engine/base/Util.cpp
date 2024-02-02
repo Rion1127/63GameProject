@@ -106,11 +106,53 @@ std::string WStringToString(std::wstring oWString)
 	return(oRet);
 }
 
+std::vector<int32_t> GetDigitNum(int32_t num, int32_t digitNum)
+{
+	std::vector<int32_t> result;
+
+	for (int32_t i = digitNum; i > 0; i--) {
+		result.emplace_back(GetDigitNumber(num, i));
+	}
+
+	return result;
+}
+
+int32_t GetDigitNumber(int32_t number, int32_t digit)
+{
+	// digitの値が不正な場合、-1を返す
+	if (digit < 1 || digit >(int)std::log10(number) + 1)
+	{
+		return 0;
+	}
+
+	// numberをdigit桁目から1桁目まで順に取り出す
+	int num = number;
+	for (int i = 1; i < digit; i++)
+	{
+		num /= 10;
+	}
+
+	// digit桁目の数値を返す
+	return num % 10;
+}
+
 void MoveTo(const Vector3& goal, float speed, Vector3& value)
 {
-	
 	Vector3 dir = goal - value;
 	float dirLength = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+	if (dirLength < speed * speed)
+	{
+		value = goal;
+		return;
+	}
+	value =
+		value + dir.SetLength(speed);
+}
+
+void MoveTo(const Vector2& goal, float speed, Vector2& value)
+{
+	Vector2 dir = goal - value;
+	float dirLength = dir.x * dir.x + dir.y * dir.y;
 	if (dirLength < speed * speed)
 	{
 		value = goal;

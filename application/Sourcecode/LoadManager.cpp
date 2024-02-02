@@ -56,11 +56,15 @@ void LoadManager::LoadTexture()
 	LoadGraph("configCameraTex.png", "ConfigCameraTex");
 	LoadGraph("bgmSeTex.png", "BgmSeTex");
 	LoadGraph("soundFrame.png", "SoundFrame");
+	LoadGraph("soundFrame.png", "SoundFrame");
 
 	LoadGraph("commandTitle.png", "CommandTitle");
 	LoadGraph("commandFrame.png", "CommandFrame");
 	LoadGraph("commandTex.png", "CommandTex");
 	LoadGraph("commandSpecialTex.png", "CommandSpecialTex");
+	LoadGraph("number.png", "Number");
+	LoadGraph("comboGaugeFrame.png", "ComboGaugeFrame");
+	LoadGraph("comboGauge.png", "ComboGauge");
 	
 	//ボタンUI
 	LoadGraph("pressA.png", "PressA");

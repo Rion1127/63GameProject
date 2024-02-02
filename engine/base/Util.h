@@ -14,15 +14,14 @@
  * @brief 便利な関数をまとめている
  */
 
+namespace fs = std::filesystem;
 //シェーダー読み込み
 void ShaderCompileFromFile(
 	LPCWSTR fileName, LPCSTR entryPoint, LPCSTR target,
 	ID3DBlob** blob, ID3DBlob* errorBlob);
-
-
 //goalまで値を変化させていく
 void MoveTo(const Vector3& goal, float speed, Vector3& value);
-
+void MoveTo(const Vector2& goal, float speed, Vector2& value);
 //定数バッファ生成
 template <class MapClass>
 inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
@@ -63,8 +62,6 @@ inline Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuff(const MapClass& map)
 	return buff;
 }
 
-namespace fs = std::filesystem;
-
 std::wstring GetDirectoryPath(const std::wstring& origin);
 //拡張子を入れ替える
 std::wstring ReplaceExtension(const std::wstring& origin, const char* ext);
@@ -76,6 +73,11 @@ std::wstring ToWideString(const std::string& str);
 std::string WStringToString(std::wstring oWString);
 //3D座標から2D座標に変換する
 Vector2 GetScreenPos(const WorldTransform& WT, const Camera& camera);
+
+//int型数値を桁ごとに配列へ格納する
+std::vector<int32_t> GetDigitNum(int32_t num, int32_t digitNum);
+//digit桁目を取り出す
+int32_t GetDigitNumber(int32_t number, int32_t digit);
 
 template <class T>
 inline std::unique_ptr<T> MakeUnique()

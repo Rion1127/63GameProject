@@ -12,6 +12,7 @@
 #include <imgui.h>
 #include "GameSpeed.h"
 #include "ConfigMenu.h"
+#include "ComboCounter.h"
 
 #include <time.h>
 
@@ -109,12 +110,15 @@ void DebugScene::Update()
 		{
 			SceneManager::SetChangeStart(SceneName::GameOver);
 		}
+		ComboCounter::GetInstance()->Update();
 	}
 	pauseMenu_->Update();
+
 
 	testObj_->WT_.position_.y = 2;
 	testObj_->WT_.rotation_.x = Radian(90);
 	testObj_->Update();
+
 }
 
 void DebugScene::Draw()
@@ -141,6 +145,7 @@ void DebugScene::Draw()
 	//スプライト//
 	////////////
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	ComboCounter::GetInstance()->Draw();
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
 	pauseMenu_->Draw();

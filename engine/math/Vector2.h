@@ -22,6 +22,7 @@ public:
     Vector2 normalize();                   // 正規化
     float dot(const Vector2& v) const;      // 内積を求める
     float cross(const Vector2& v) const;    // 外積を求める
+    Vector2 SetLength(float l);
 
     // 単項演算子オーバーロード
     Vector2 operator+() const;
