@@ -1,4 +1,5 @@
 #include "ComboCounter.h"
+#include "GameSpeed.h"
 #include "Util.h"
 
 #pragma region
@@ -17,7 +18,7 @@ ComboCounter::ComboCounter() {
 void ComboCounter::Update()
 {
 	if (comboCount_ > 0) {
-		chainTimer_.AddTime(1);
+		chainTimer_.AddTime(GameSpeed::GetGameSpeed());
 		if (chainTimer_.GetIsEnd()) {
 			ResetCombo();
 		}
@@ -159,6 +160,7 @@ void ComboSprite::Draw()
 	gaugeSprite_.Draw();
 	gaugeFrameSprite_.Draw();
 }
+
 void ComboSprite::SetComboNum(int32_t num)
 {
 	comboNum_ = num;

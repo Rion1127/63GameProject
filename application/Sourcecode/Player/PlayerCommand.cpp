@@ -114,12 +114,12 @@ CommandSprite::CommandSprite()
 			commandTex.SetTex_Size(Vector2(150.f, 25.f));
 		}
 		else {
+			//YボタンのUIを変更
 			for (int j = 0; j < specialCommand_.size(); j++) {
 				specialCommand_[j] = std::make_unique<SpecialCommand>();
 				auto& cmdSprite = specialCommand_[j]->buttonCommand_;
 				Vector2 offsetPos = {50,0};
 				specialCommand_[j]->easeTimer_.SetLimitTime(10);
-				
 				cmdSprite.commandButton_.Ini();
 				cmdSprite.commandFrame_.Ini();
 				cmdSprite.commandTex_.Ini();
@@ -129,13 +129,11 @@ CommandSprite::CommandSprite()
 				cmdSprite.commandButton_.SetPos(buttonPos + (offsetPos * (float)(j + 1)));
 				cmdSprite.commandButton_.SetTexture(TextureManager::GetInstance()->GetTexture("Button"));
 				cmdSprite.commandButton_.SetInvisivle(true);
-
 				cmdSprite.commandFrame_.SetPos(framePos + (offsetPos * (float)(j + 1)));
 				cmdSprite.commandFrame_.SetColor(mainColor_);
 				cmdSprite.commandFrame_.SetAnchor(Vector2(0, 0));
 				cmdSprite.commandFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 				cmdSprite.commandFrame_.SetInvisivle(true);
-
 				cmdSprite.commandTex_.SetScale(Vector2(0.8f, 0.8f / 3.7f));
 				cmdSprite.commandTex_.SetPos(texPos + (offsetPos * (float)(j + 1)));
 				cmdSprite.commandTex_.SetAnchor(Vector2(0, 0));
@@ -147,7 +145,6 @@ CommandSprite::CommandSprite()
 				cmdSprite.commandTex_.SetTex_LeftTop(texLeftTopPos);
 				cmdSprite.commandTex_.SetTexture(TextureManager::GetInstance()->GetTexture("CommandSpecialTex"));
 				cmdSprite.commandTex_.SetInvisivle(true);
-
 				specialCommand_[j]->easeDist_ = 40;
 				specialCommand_[j]->easeStartButtonPosX_ = buttonPos.x + (offsetPos.x * (float)(j + 1)) + specialCommand_[j]->easeDist_;
 				specialCommand_[j]->easeEndButtonPosX_ = buttonPos.x + (offsetPos.x * (float)(j + 1));
@@ -156,7 +153,6 @@ CommandSprite::CommandSprite()
 				specialCommand_[j]->easeStartTexPosX_ = texPos.x + (offsetPos.x * (float)(j + 1)) + specialCommand_[j]->easeDist_;
 				specialCommand_[j]->easeEndTexPosX_ = texPos.x + (offsetPos.x * (float)(j + 1));
 			}
-
 			commandTex.SetTexture(TextureManager::GetInstance()->GetTexture("CommandSpecialTex"));
 			commandTex.SetTex_Size(Vector2(200.f, 25.f));
 			framePos.x += 25;

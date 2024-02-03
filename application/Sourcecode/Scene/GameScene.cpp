@@ -7,6 +7,7 @@
 #include "EnemyLoader.h"
 #include "JsonLoader.h"
 #include "Framework.h"
+#include "ComboCounter.h"
 
 /**
  * @file GameScene.cpp
@@ -105,8 +106,10 @@ void GameScene::Update()
 
 			auto& skySphere = stage_->GetObjects()->find("skySphere")->second;
 			skySphere->SetAmbient("skySphere", lightColor_);
+			ComboCounter::GetInstance()->ResetCombo();
 		}
 		colosseumSystem_->Update();
+		ComboCounter::GetInstance()->Update();
 	}
 	//クリアしていない時だけポーズ画面を開ける
 	if (colosseumSystem_->GetIsClear() == false) {
@@ -145,6 +148,7 @@ void GameScene::Draw()
 	//スプライト//
 	////////////
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	ComboCounter::GetInstance()->Draw();
 	enemyManager_->SpriteDraw();
 	player_->DrawSprite();
 	colosseumSystem_->DrawSprite();
