@@ -5,6 +5,8 @@
  * @brief 色情報をまとめている
  */
 
+const Color Color::white = Color(255,255,255,255);
+
 Color::Color() : r(255), g(255), b(255), a(255)
 {
 }

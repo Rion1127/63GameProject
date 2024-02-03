@@ -235,12 +235,6 @@
     <Filter Include="application\ヘッダーファイル\MainSystem">
       <UniqueIdentifier>{cb6b5ab9-6c42-493d-8e19-0deccf9d08ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="application\ソースファイル\MainSystem">
-      <UniqueIdentifier>{523e222f-9a2f-4b50-821e-ae68874c3a3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ソースファイル\MainSystem\Config">
-      <UniqueIdentifier>{707c2ce8-17e5-4f5a-acef-3eeea0f0eacb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="application\ヘッダーファイル\MainSystem\Config">
       <UniqueIdentifier>{7c10a6c2-efa1-49b4-bec5-0d730618f086}</UniqueIdentifier>
     </Filter>
@@ -249,6 +243,12 @@
     </Filter>
     <Filter Include="application\ヘッダーファイル\AttackEditor">
       <UniqueIdentifier>{b373e2d6-64c0-499c-871e-dca3129ec458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Particle\MainSystem">
+      <UniqueIdentifier>{523e222f-9a2f-4b50-821e-ae68874c3a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Particle\MainSystem\Config">
+      <UniqueIdentifier>{707c2ce8-17e5-4f5a-acef-3eeea0f0eacb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -559,13 +559,13 @@
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\ColosseumSystem.cpp">
-      <Filter>application\ソースファイル\MainSystem</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\GameCamera.cpp">
-      <Filter>application\ソースファイル\MainSystem</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\PauseMenu.cpp">
-      <Filter>application\ソースファイル\MainSystem</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleTrail.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
@@ -574,19 +574,19 @@
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\ConfigMenu.cpp">
-      <Filter>application\ソースファイル\MainSystem\Config</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem\Config</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\GameSpeed.cpp">
-      <Filter>application\ソースファイル\MainSystem\Config</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem\Config</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\SoundVolume.cpp">
-      <Filter>application\ソースファイル\MainSystem\Config</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem\Config</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleLanding.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\HitStop.cpp">
-      <Filter>application\ソースファイル\MainSystem</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleDash.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
@@ -604,9 +604,6 @@
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\PostureDisplay.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackColEditor.cpp">
@@ -633,11 +630,14 @@
     <ClCompile Include="application\Sourcecode\Particle\ParticleObjDataPool.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Particle\ParticleFinishBreak.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\MainSystem\ComboCounter.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Particle\MainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\Particle2DRockOn.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Particle\ParticleFinishBreak.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -998,9 +998,6 @@
     <ClInclude Include="application\Sourcecode\PostureDisplay.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackColEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
@@ -1025,11 +1022,14 @@
     <ClInclude Include="application\Sourcecode\Particle\ParticleObjDataPool.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\Particle\Particle2DRockOn.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
     <ClInclude Include="application\Sourcecode\Particle\ParticleFinishBreak.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\ComboCounter.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\MainSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

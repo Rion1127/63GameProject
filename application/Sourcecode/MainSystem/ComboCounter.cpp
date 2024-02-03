@@ -61,7 +61,7 @@ ComboSprite::ComboSprite()
 	basePos_ = Vector2(1100.f,130.f);
 	digitNum_ = 3;
 	mainColor_ = Color(255,255,255,0);
-	gaugeColor_ = Color(255, 255, 255, 255);
+	gaugeColor_ = Color::white;
 	gaugeInitColor_ = Color(255, 255, 255, 0);
 	int32_t index = 0;
 	for (auto& sprite : numSprite_) {
@@ -139,8 +139,8 @@ void ComboSprite::Update(float rate)
 		gaugeSprite_.SetColor(color);
 	}
 	else {
-		gaugeFrameSprite_.SetColor(Color(255, 255, 255, 255));
-		gaugeBackSprite_.SetColor(Color(255, 255, 255, 255));
+		gaugeFrameSprite_.SetColor(Color::white);
+		gaugeBackSprite_.SetColor(Color::white);
 		gaugeSprite_.SetColor(gaugeColor_);
 	}
 	//ゲージ

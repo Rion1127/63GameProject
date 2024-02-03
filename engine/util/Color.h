@@ -34,6 +34,8 @@ public:
 	Color& operator-=(const Color& v);
 	Color& operator*=(float s);
 	Color& operator/=(float s);
+public:
+	const static Color white;
 };
 
 const Color operator*(const Color& c, float s);

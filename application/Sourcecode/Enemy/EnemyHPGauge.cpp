@@ -56,10 +56,8 @@ void EnemyHPGauge::Update()
 	if (lockOnEnemy_ != nullptr)
 	{
 		float scaleRate = (float)lockOnEnemy_->GetHealth() / lockOnEnemy_->GetMaxHealth();
-
 		hpBar_->SetScale({ scaleRate,hpBar_->GetScale().y });
-
-		//スケールを現HPゲージと同じスケールにしていく
+		//減った分を表示するスケールを現HPゲージと同じにしていく
 		gaugeEaseTimer_.AddTime(1);
 		Vector2 scale = hpBar_->GetScale();
 		if (gaugeEaseTimer_.GetIsEnd() == false) {
@@ -67,7 +65,6 @@ void EnemyHPGauge::Update()
 			float end = hpBar_->GetScale().x;
 			scale.x = Easing::Cubic::easeIn(start, end, gaugeEaseTimer_.GetTimeRate());
 		}
-		
 		hpBarMiddle_->SetScale(scale);
 
 		hpBar_->Update();
@@ -92,6 +89,7 @@ void EnemyHPGauge::Damage()
 	color.a = 255.f;
 	hpBarMiddle_->SetColor(color);
 	hpBarMiddle_->SetScale(hpBar_->GetScale());
+	//ゲージが減りきっていたらタイマーをリセット
 	if (gaugeEaseTimer_.GetIsEnd()) {
 		prevScale_ = hpBar_->GetScale();
 		gaugeEaseTimer_.Reset();

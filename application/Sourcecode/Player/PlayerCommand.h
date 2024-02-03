@@ -5,6 +5,7 @@
 #include "PlayerInfo.h"
 #include "Timer.h"
 #include <array>
+#include "Timer.h"
 
 /**
  * @file PlayerCommand.h
@@ -26,10 +27,25 @@ private:
 		Sprite commandButton_;
 		Sprite commandTex_;
 	};
+	struct SpecialCommand {
+		ButtonCommand buttonCommand_;
+		TimerFloat easeTimer_;
+		bool isActive_;
+		float easeStartButtonPosX_;
+		float easeEndButtonPosX_;
+		float easeStartFramePosX_;
+		float easeEndFramePosX_;
+		float easeStartTexPosX_;
+		float easeEndTexPosX_;
+		float easeDist_;
+	};
 private:
 	std::unique_ptr<Sprite> commandTitle_;
-	std::array<std::unique_ptr<ButtonCommand>,4> buttonCommand_;
+	std::array<std::unique_ptr<ButtonCommand>, 4> buttonCommand_;
+	std::array<std::unique_ptr<SpecialCommand>, 3> specialCommand_;
 	Vector2 basePos_;
+	Color mainColor_;
+	float anSelectColRate_;
 public:
 	CommandSprite();
 	void Update(PlayerState state,int32_t commbo);
