@@ -1,5 +1,5 @@
 #include "EnemyHPGauge.h"
-
+#include "Easing.h"
 /**
  * @file EnemyHPGauge.cpp
  * @brief 敵のHPを表示するクラス
@@ -46,6 +46,9 @@ EnemyHPGauge::EnemyHPGauge()
 	hpBarBack_->SetColor({ 255.f,255.f,255.f,255.f });
 	hpBarBack_->SetPos(pos_);
 	hpBarBack_->SetScale(scale_);
+
+	gaugeEaseTimer_.SetLimitTime(80);
+	gaugeEaseTimer_.SetTime(gaugeEaseTimer_.GetLimitTimer());
 }
 
 void EnemyHPGauge::Update()
@@ -56,13 +59,16 @@ void EnemyHPGauge::Update()
 
 		hpBar_->SetScale({ scaleRate,hpBar_->GetScale().y });
 
-		Color color = hpBarMiddle_->GetColor();
-		color.a -= 1.5f;
-		if (color.a <= 0)
-		{
-			hpBarMiddle_->SetScale(hpBar_->GetScale());
+		//スケールを現HPゲージと同じスケールにしていく
+		gaugeEaseTimer_.AddTime(1);
+		Vector2 scale = hpBar_->GetScale();
+		if (gaugeEaseTimer_.GetIsEnd() == false) {
+			float start = prevScale_.x;
+			float end = hpBar_->GetScale().x;
+			scale.x = Easing::Cubic::easeIn(start, end, gaugeEaseTimer_.GetTimeRate());
 		}
-		hpBarMiddle_->SetColor(color);
+		
+		hpBarMiddle_->SetScale(scale);
 
 		hpBar_->Update();
 		hpBarBack_->Update();
@@ -86,4 +92,8 @@ void EnemyHPGauge::Damage()
 	color.a = 255.f;
 	hpBarMiddle_->SetColor(color);
 	hpBarMiddle_->SetScale(hpBar_->GetScale());
+	if (gaugeEaseTimer_.GetIsEnd()) {
+		prevScale_ = hpBar_->GetScale();
+		gaugeEaseTimer_.Reset();
+	}
 }

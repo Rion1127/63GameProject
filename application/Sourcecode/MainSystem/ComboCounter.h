@@ -20,6 +20,7 @@ private:
 	int32_t digitNum_;
 	Color mainColor_;
 	Color gaugeColor_;
+	Color gaugeInitColor_;
 public:
 	ComboSprite();
 	void Update(float rate);

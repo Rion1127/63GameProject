@@ -62,6 +62,7 @@ ComboSprite::ComboSprite()
 	digitNum_ = 3;
 	mainColor_ = Color(255,255,255,0);
 	gaugeColor_ = Color(255, 255, 255, 255);
+	gaugeInitColor_ = Color(255, 255, 255, 0);
 	int32_t index = 0;
 	for (auto& sprite : numSprite_) {
 		sprite.Ini();
@@ -85,15 +86,17 @@ ComboSprite::ComboSprite()
 	gaugeFrameSprite_.SetTex_Size(Vector2(192, 24));
 	gaugeFrameSprite_.SetScale(Vector2(0.5f, 1.f));
 	gaugeFrameSprite_.SetPos(gaugePos_);
+	gaugeFrameSprite_.SetColor(gaugeInitColor_);
 	gaugeBackSprite_.Ini();
 	gaugeBackSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("ComboGaugeFrame"));
 	gaugeBackSprite_.SetTex_Size(Vector2(192, 24));
 	gaugeBackSprite_.SetScale(Vector2(0.5f, 1.f));
 	gaugeBackSprite_.SetTex_LeftTop(Vector2(192, 0));
 	gaugeBackSprite_.SetPos(gaugePos_);
+	gaugeBackSprite_.SetColor(gaugeInitColor_);
 	gaugeSprite_.Ini();
 	gaugeSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("ComboGauge"));
-	gaugeSprite_.SetColor(Color(255,100,100,255));
+	gaugeSprite_.SetColor(gaugeInitColor_);
 	gaugeSprite_.SetAnchor(Vector2(0,0));
 	Vector2 gaugePos;
 	gaugePos = gaugePos_ - gaugeSprite_.GetTexture().size_ / 2;

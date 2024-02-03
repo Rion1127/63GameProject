@@ -18,9 +18,9 @@ public:
 	Timer();
 
 	//カウントアップ
-	void AddTime(int32_t addValue);
+	void AddTime(int32_t addValue = 1);
 	//カウントダウン
-	void SubTime(int32_t addValue);
+	void SubTime(int32_t addValue = 1);
 	//リセットする
 	void Reset();
 public:
@@ -49,9 +49,9 @@ public:
 	TimerFloat();
 
 	//カウントアップ
-	void AddTime(float addValue);
+	void AddTime(float addValue = 1);
 	//カウントダウン
-	void SubTime(float addValue);
+	void SubTime(float addValue = 1);
 	void Reset();
 public:
 	//セッター

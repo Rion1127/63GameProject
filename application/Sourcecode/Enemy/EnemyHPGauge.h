@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "IEnemy.h"
+#include "Timer.h"
 
 /**
  * @file EnemyHPGauge.h
@@ -18,6 +19,8 @@ private:
 	Vector2 offsetRate_;
 	Vector2 pos_;
 	Vector2 scale_;
+	Vector2 prevScale_;
+	TimerFloat gaugeEaseTimer_;
 
 	IEnemy* lockOnEnemy_;
 	int32_t maxHp_;
