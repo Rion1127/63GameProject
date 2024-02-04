@@ -33,6 +33,7 @@ public:
 	};
 	//一振り分の攻撃
 	struct AttackInfo {
+		std::string attackName_;//攻撃の名前
 		float attackAllFrame;	//一振りにかかる時間(後隙含む)
 		float attackFrame = 10;	//攻撃に掛かるフレーム
 		float gapFrame;			//後隙フレーム

@@ -1,3 +1,4 @@
+AttackName AirSweep
 //--AtatckInfo--//
 attackFrame = 30
 gapFrame = 0
@@ -44,4 +45,11 @@ flame 27
 Quaternion 0 -0.6 0 0.2
 flame 30
 Quaternion 0 0 0 1
+
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 

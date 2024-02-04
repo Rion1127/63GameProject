@@ -24,6 +24,7 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 	std::ifstream file(loadDir);  // 読み込むファイルのパスを指定
 	std::string line;
 
+	std::string attackName;
 	BaseAttack::AttackData newinput;
 
 	AttackEditor::AttackInfo* info = nullptr;
@@ -40,10 +41,14 @@ void AttackDataPool::LoadAttackFile(std::string fileName)
 		getline(line_stream, key, ' ');
 
 		//各パラメータ読み込み
+		if (key == "AttackName") {
+			line_stream >> attackName;
+		}
 		if (key == "//--AtatckInfo--//")
 		{
 			newinput.attackinfo.emplace_back();
 			info = &newinput.attackinfo.back();
+			info->attackName_ = attackName;
 		}
 		if (info == nullptr)continue;
 		LoadFileString(line_stream, key, "attackFrame", info->attackFrame, true, 1, '=');

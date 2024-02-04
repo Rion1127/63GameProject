@@ -694,7 +694,9 @@ void AttackEditor::AttackSave(const std::string& string)
 	uint16_t index = 0;
 
 	for (auto& attackinfo : attackInfo_) {
-		std::string writing_text = "//--AtatckInfo--//";
+		std::string writing_text = "AttackName";
+		writing_file << writing_text << " " << string.c_str() << std::endl;
+		writing_text = "//--AtatckInfo--//";
 		writing_file << writing_text << std::endl;
 		writing_text = "attackFrame";
 		writing_file << writing_text << " = " << attackinfo.attackFrame << std::endl;

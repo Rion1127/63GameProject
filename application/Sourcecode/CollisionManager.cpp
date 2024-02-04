@@ -391,7 +391,11 @@ void CollisionManager::PlayerAttackToEnemy()
 		{
 			if (attackCol != nullptr)
 			{
-				if (BallCollision(attackCol->GetCol(), enemy->GetCol()))
+				auto enemyCol = enemy->GetCol();
+				if (attackCol->GetAttackName() == "GroundStump") {
+					enemyCol.isActive = true;
+				}
+				if (BallCollision(attackCol->GetCol(), enemyCol))
 				{
 					//プレイヤーの反対方向にノックバックする
 					Vector3 knockVec = enemy->GetCol().center - player_->GetWorldTransform()->position_;

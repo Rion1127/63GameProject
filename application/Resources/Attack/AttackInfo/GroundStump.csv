@@ -1,3 +1,4 @@
+AttackName GroundStump
 //--AtatckInfo--//
 attackFrame = 15
 gapFrame = 20
@@ -39,6 +40,7 @@ effectcameraShakePower 0
 effectparticleName 
 effectparticlePosName Player
 
+AttackName GroundStump
 //--AtatckInfo--//
 attackFrame = 12
 gapFrame = 25

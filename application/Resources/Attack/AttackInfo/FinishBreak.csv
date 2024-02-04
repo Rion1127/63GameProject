@@ -1,3 +1,4 @@
+AttackName FinishBreak
 //--AtatckInfo--//
 attackFrame = 25
 gapFrame = 8
@@ -35,6 +36,7 @@ effectcameraShakePower 0
 effectparticleName 
 effectparticlePosName Player
 
+AttackName FinishBreak
 //--AtatckInfo--//
 attackFrame = 20
 gapFrame = 5

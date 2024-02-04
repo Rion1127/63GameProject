@@ -1,9 +1,11 @@
+AttackName Ground3
 //--AtatckInfo--//
 attackFrame = 22
 gapFrame = 8
 damege = 20
 gravityY = 0
 KnockVec 0 0 0
+KnockYVec = 0
 addVec 0 0 0.1
 deceleration = 0.007
 attackType Finish
@@ -19,4 +21,11 @@ SplinePos 2 0 0.2
 //--Quaternion--//
 flame 1
 Quaternion 3.14 0 0 1
+
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 

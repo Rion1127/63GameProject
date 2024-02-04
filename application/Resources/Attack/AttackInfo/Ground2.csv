@@ -1,3 +1,4 @@
+AttackName Ground2
 //--AtatckInfo--//
 attackFrame = 15
 gapFrame = 3
@@ -19,4 +20,11 @@ SplinePos 0 0 2.9
 //--Quaternion--//
 flame 18
 Quaternion 0.3 0 0 1
+
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 

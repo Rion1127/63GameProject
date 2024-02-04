@@ -1,3 +1,4 @@
+AttackName Air2
 //--AtatckInfo--//
 attackFrame = 15
 gapFrame = 3
@@ -20,4 +21,11 @@ SplinePos 0 1.9 1.4
 //--Quaternion--//
 flame 18
 Quaternion -0.31 0 0 1
+
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 

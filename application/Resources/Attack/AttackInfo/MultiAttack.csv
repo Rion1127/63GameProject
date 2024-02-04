@@ -1,3 +1,4 @@
+AttackName MultiAttack
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 0
@@ -21,6 +22,14 @@ SplinePos 0.8 0 3
 flame 2
 Quaternion 0.15 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName MultiAttack
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 0
@@ -44,6 +53,14 @@ SplinePos -0.8 0.5 3
 flame 2
 Quaternion 0.15 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName MultiAttack
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 0
@@ -67,6 +84,14 @@ SplinePos 1 0.8 4
 flame 2
 Quaternion 0.15 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName MultiAttack
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 0
@@ -90,6 +115,14 @@ SplinePos 0.3 0.7 3.7
 flame 2
 Quaternion 0.15 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName MultiAttack
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 10
@@ -112,4 +145,11 @@ SplinePos -0.3 -0.4 3.2
 //--Quaternion--//
 flame 2
 Quaternion 0.15 0 0 1
+
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 

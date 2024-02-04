@@ -73,6 +73,7 @@ public:
 	float GetKnockYVec() { return attackdata_.attackinfo[index_].knockYVec; }
 	AttackEffectEditor::EffectInfo GetEffectInfo() { return attackdata_.attackinfo[index_].effectInfo; }
 	bool GetIsCameraShake() { return isCameraShake_; }
+	std::string GetAttackName() { return attackdata_.attackinfo[index_].attackName_; }
 public:
 	void SetIsCameraShake(bool flag) { isCameraShake_ = flag; }
 };

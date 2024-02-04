@@ -1,3 +1,4 @@
+AttackName Air3
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 3
@@ -21,6 +22,14 @@ SplinePos 0 2 0
 flame 11
 Quaternion -0.24 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName Air3
 //--AtatckInfo--//
 attackFrame = 8
 gapFrame = 3
@@ -44,6 +53,14 @@ SplinePos 0 -2 0
 flame 10
 Quaternion 0.38 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName Air3
 //--AtatckInfo--//
 attackFrame = 10
 gapFrame = 15
@@ -73,6 +90,14 @@ Quaternion 0 0 0 1
 flame 18
 Quaternion 0 0 0 1
 
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
+
+AttackName Air3
 //--AtatckInfo--//
 attackFrame = 20
 gapFrame = 20
@@ -95,4 +120,11 @@ SplinePos -2 0 0
 //--Quaternion--//
 flame 10
 Quaternion 0 -0.32 0 1
+
+//--EffectInfo--//
+effectFrame 0
+effectcameraShakeTime 0
+effectcameraShakePower 0
+effectparticleName 
+effectparticlePosName Player
 
