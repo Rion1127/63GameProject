@@ -37,7 +37,7 @@ Player::Player() :
 	slerpSpeed_ = 0.3f;
 	maxjumptimer = 10;
 	rotangle_ = 400.f;
-	dodgeRollSpeed_ = 1.8f;
+	dodgeRollSpeed_ = 2.f;
 	jumpRollSpeed_ = 6.28f;
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("player", true,false));
