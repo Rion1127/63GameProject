@@ -20,7 +20,6 @@ EnemyShadow::EnemyShadow(const Vector3& pos, const Vector3& rot) :
 {
 	name_ = "Shadow";
 	obj_ = std::move(std::make_unique<Object3d>());
-	obj_->SetModel(Model::CreateOBJ_uniptr("shadow", true, false));
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("shadow", true));
 	displayObj_->SetShadowOffsetPos(Vector3(0,-0.8f,0));

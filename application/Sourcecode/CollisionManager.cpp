@@ -258,9 +258,7 @@ void CollisionManager::EnemyLockOn()
 			{
 				//スクリーン座標を取得して画面の中央に近い敵をロックオンする
 				Vector2 ScreenPos = GetScreenPos(*enemy->GetWorldTransform(), *Camera::scurrent_);
-
 				Vector2 halfWindowSize = WinAPI::GetWindowSize() / 2.f;
-
 				Vector2 dist = halfWindowSize - ScreenPos;
 				float length = dist.length();
 				//比較して短かったら敵を代入する

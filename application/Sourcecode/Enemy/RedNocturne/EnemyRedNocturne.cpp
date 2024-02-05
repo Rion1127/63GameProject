@@ -54,7 +54,10 @@ EnemyRedNocturne::EnemyRedNocturne(const Vector3& pos, const Vector3& rot) :
 
 	stateInit = true;
 
+	fireEmitter_ = std::make_shared<ContinuousEmitter>();
+	fireCircleEmitter_ = std::make_shared<OneceEmitter>();
 	InitFireParticle();
+
 
 	floatTimer_.SetLimitTime(40);
 }
@@ -64,6 +67,7 @@ EnemyRedNocturne::~EnemyRedNocturne()
 	fireEmitter_->isActive = false;
 	fireCircleEmitter_->isActive = false;
 	fireCircleEmitter_->parentPos = nullptr;
+	fireEmitter_.reset();
 }
 
 void EnemyRedNocturne::SetIsNock(bool flag)
@@ -213,7 +217,7 @@ void EnemyRedNocturne::FireAttack()
 	}
 	fireCircleEmitter_->pos = obj_->GetPos();
 	fireCircleEmitter_->pos.y += obj_->GetScale().y;
-	if (shotTimer_.GetTimeRate() > 0.7f) {
+	if (shotTimer_.GetTimeRate() > 0.8f) {
 		fireEmitter_->isActive = false;
 	}
 
@@ -247,8 +251,8 @@ void EnemyRedNocturne::KnockBack()
 		isKnock_ = false;
 		isDown_ = false;
 		actionTimer_.Reset();
+		fireEmitter_->isActive = false;
 	}
-	fireEmitter_->isActive = false;
 }
 
 void EnemyRedNocturne::SortPriority()
@@ -366,13 +370,13 @@ void EnemyRedNocturne::InitFireParticle()
 	timer.SetTime(timer.GetLimitTimer());
 	Vector3 pos = obj_->GetPos();
 	pos.y += obj_->GetScale().y * 2.f;
-	fireEmitter_ = std::make_shared<ContinuousEmitter>();
+	
 	fireEmitter_->popCoolTime_ = timer;
 	fireEmitter_->pos = pos;
-
+	fireEmitter_->popCoolTime_.Reset();
+	fireEmitter_->isActive = true;
 	fireCirclePos_ = obj_->GetPos();
 	fireCirclePos_.y += obj_->GetScale().y;
-	fireCircleEmitter_ = std::make_shared<OneceEmitter>();
 	fireCircleEmitter_->parentPos = &fireCirclePos_;
 	fireCircleEmitter_->pos = fireCirclePos_;
 }

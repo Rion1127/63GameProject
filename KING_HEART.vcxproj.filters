@@ -220,12 +220,6 @@
     <Filter Include="application\ヘッダーファイル\Enemy\RedNocturne\Attack">
       <UniqueIdentifier>{18fd3fd5-7cde-460e-a274-28ea033a706d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="application\ソースファイル\Player\Magic">
-      <UniqueIdentifier>{c013d455-70dc-4c34-9286-1bf64a7b4747}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ヘッダーファイル\Player\Magic">
-      <UniqueIdentifier>{7afd0547-e89e-4102-b92e-6f55e37f4769}</UniqueIdentifier>
-    </Filter>
     <Filter Include="application\ソースファイル\Player\State">
       <UniqueIdentifier>{3227e121-0479-4756-b63c-69a332da9974}</UniqueIdentifier>
     </Filter>
@@ -603,17 +597,11 @@
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\PostureDisplay.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\AttackEditor\AttackColEditor.cpp">
       <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Scene\ColDebugScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\DebugActor.cpp">
-      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\AttackDataPools.cpp">
       <Filter>application\ソースファイル\Player\Attack</Filter>
@@ -638,6 +626,12 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Particle\ParticleFinishBreak.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\DebugActor.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\PostureDisplay.cpp">
+      <Filter>application\ソースファイル\AttackEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -995,17 +989,11 @@
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\PostureDisplay.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\AttackEditor\AttackColEditor.h">
       <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Scene\ColDebugScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\DebugActor.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\AttackDataPools.h">
       <Filter>application\ヘッダーファイル\Player\Attack</Filter>
@@ -1030,6 +1018,12 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainSystem\ComboCounter.h">
       <Filter>application\ヘッダーファイル\MainSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\DebugActor.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\PostureDisplay.h">
+      <Filter>application\ヘッダーファイル\AttackEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

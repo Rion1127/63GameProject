@@ -9,8 +9,6 @@ EnemyAirDummy::EnemyAirDummy(const Vector3& pos) : IEnemy(EnemyType::Air, false,
 {
 	obj_ = std::move(std::make_unique<Object3d>());
 	obj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true,false));
-	obj_->SetShadowAtten(Vector3(0.1f, 0.22f, 0));
-	obj_->SetShadowFactorAngle(Vector2(0.1f, 0.5f));
 
 	displayObj_ = std::move(std::make_unique<Object3d>());
 	displayObj_->SetModel(Model::CreateOBJ_uniptr("airEnemy", true));

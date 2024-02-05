@@ -20,7 +20,9 @@ void Object3d::Init()
 
 void Object3d::Update(Camera* camera)
 {
-	model_->ShadowUpdate(WT_.position_);
+	if (model_ != nullptr) {
+		model_->ShadowUpdate(WT_.position_);
+	}
 	WT_.Update(billBoard, camera);
 }
 
