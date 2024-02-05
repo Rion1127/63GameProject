@@ -45,6 +45,7 @@ private:
 	std::array<std::unique_ptr<SpecialCommand>, 3> specialCommand_;
 	Vector2 basePos_;
 	Color mainColor_;
+	Color specialFinishColor_;
 	float anSelectColRate_;
 public:
 	CommandSprite();

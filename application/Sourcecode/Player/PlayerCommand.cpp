@@ -54,6 +54,7 @@ void PlayerCommand::DrawSprite()
 CommandSprite::CommandSprite()
 {
 	mainColor_ = { 0,35,255,255 };
+	specialFinishColor_ = { 255,94,0,255 };
 	anSelectColRate_ = 0.3f;
 	basePos_ = { 120,500 };
 	commandTitle_ = std::make_unique<Sprite>();
@@ -130,7 +131,13 @@ CommandSprite::CommandSprite()
 				cmdSprite.commandButton_.SetTexture(TextureManager::GetInstance()->GetTexture("Button"));
 				cmdSprite.commandButton_.SetInvisivle(true);
 				cmdSprite.commandFrame_.SetPos(framePos + (offsetPos * (float)(j + 1)));
-				cmdSprite.commandFrame_.SetColor(mainColor_);
+				//グランドスタンプは別の色にする
+				if (j == specialCommand_.size() - 1) {
+					cmdSprite.commandFrame_.SetColor(specialFinishColor_);
+				}
+				else {
+					cmdSprite.commandFrame_.SetColor(mainColor_);
+				}
 				cmdSprite.commandFrame_.SetAnchor(Vector2(0, 0));
 				cmdSprite.commandFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("CommandFrame"));
 				cmdSprite.commandFrame_.SetInvisivle(true);
@@ -181,12 +188,16 @@ void CommandSprite::Update(PlayerState state, int32_t commbo)
 	}
 	Color anSelectTexCol = Color::white * anSelectColRate_;
 	Color anSelectCol = mainColor_ * anSelectColRate_;
+	Color anSelectSpecialCol = specialFinishColor_ * anSelectColRate_;
+	anSelectSpecialCol.a = 255;
 	anSelectCol.a = 255;
+	//一つ目のYボタンUIを暗くする
 	if (commbo > 0) {
 		buttonCommand_[ButtonName::Ybutton]->commandButton_.SetColor(anSelectTexCol);
 		buttonCommand_[ButtonName::Ybutton]->commandFrame_.SetColor(anSelectCol);
 		buttonCommand_[ButtonName::Ybutton]->commandTex_.SetColor(anSelectTexCol);
 	}
+	//一つ目のYボタンUIを元の色に戻す
 	else {
 		buttonCommand_[ButtonName::Ybutton]->commandButton_.SetColor(Color::white);
 		buttonCommand_[ButtonName::Ybutton]->commandFrame_.SetColor(mainColor_);
@@ -202,18 +213,20 @@ void CommandSprite::Update(PlayerState state, int32_t commbo)
 			cmdSprite.commandFrame_.SetColor(anSelectCol);
 			cmdSprite.commandTex_.SetColor(anSelectTexCol);
 		}
+		//出せる特殊技は明るくする
 		else {
 			cmdSprite.commandButton_.SetColor(Color::white);
 			cmdSprite.commandFrame_.SetColor(mainColor_);
 			cmdSprite.commandTex_.SetColor(Color::white);
 		}
-
+		//コンボが達していたら表示
 		if (i < commbo) {
 			cmdSprite.commandButton_.SetInvisivle(false);
 			cmdSprite.commandFrame_.SetInvisivle(false);
 			cmdSprite.commandTex_.SetInvisivle(false);
 			specialCmd->isActive_ = true;
 		}
+		//コンボが達していなかったら表示しない
 		else {
 			cmdSprite.commandButton_.SetInvisivle(true);
 			cmdSprite.commandFrame_.SetInvisivle(true);

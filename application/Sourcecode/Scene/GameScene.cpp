@@ -107,6 +107,7 @@ void GameScene::Update()
 			auto& skySphere = stage_->GetObjects()->find("skySphere")->second;
 			skySphere->SetAmbient("skySphere", lightColor_);
 			ComboCounter::GetInstance()->ResetCombo();
+			ParticleManager::GetInstance()->AllClear();
 		}
 		colosseumSystem_->Update();
 		ComboCounter::GetInstance()->Update();
