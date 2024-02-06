@@ -31,6 +31,12 @@ private:
 	Vector3 nowPos_;
 
 	float rot_;
+	float distaice_;
+	float floatRange_;
+	float rotSpeed_;
+
+	Vector3 trailHeadPos_;
+	Vector3 trailtailPos_;
 
 	std::vector<std::unique_ptr<Object3d>> tailObj_;
 	SwordTrail::PosBuffer tailPos_;

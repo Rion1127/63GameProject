@@ -16,11 +16,11 @@ AttackManager::AttackManager()
 {
 	lockOnEnemy_ = nullptr;
 	comboNum = 0;
-	isAttacking = false;
 	soundpicthUp_ = 1.5f;
 	soundpicthDown_ = 0.7f;
-	isHardLock_ = false;
 	 PtoELength_ = 0;
+	isHardLock_ = false;
+	isAttacking = false;
 	isNextAttack_ = false;
 	isNextSpecialAttack_ = false;
 }

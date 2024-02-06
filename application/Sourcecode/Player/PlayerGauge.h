@@ -13,6 +13,7 @@ class PlayerHPGauge :
 {
 private:
 	std::unique_ptr<Sprite> hpBarMiddle_;	//ダメージが減った分を赤く表示する
+	float scaleAtten_;
 public:
 	PlayerHPGauge();
 

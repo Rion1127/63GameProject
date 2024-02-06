@@ -1,6 +1,6 @@
 #include "Util.h"
 #include "myMath.h"
-#define PI 3.141592f
+
 
 /**
  * @file myMath.cpp

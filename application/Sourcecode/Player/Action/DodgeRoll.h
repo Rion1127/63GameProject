@@ -14,6 +14,7 @@ private:
 	float speed_;
 	TimerFloat dodgetimer_;
 	bool isDodge_;
+	float speedAttenValue_;
 public:
 	DodgeRoll();
 	void Begin(const Vector2& frontVec);

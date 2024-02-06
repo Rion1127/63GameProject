@@ -4,6 +4,8 @@
 #include "Vector3.h"
 #include <atlcomcli.h>
 
+#define PI 3.141592f
+
 /**
  * @file myMath.h
  * @brief 数学に関するものをまとめたクラス

@@ -34,6 +34,12 @@ Sword::Sword()
 		tailObj_[i]->SetIsVisible(false);
 	}
 	trail_->SetColor(Color(255, 175, 60, 255));
+	distaice_ = 1.2f;
+	floatRange_ = 0.3f;
+	rotSpeed_ = 0.02f;
+
+	trailHeadPos_ = Vector3(0, 3.7f, 0);
+	trailtailPos_ = Vector3(0, 1.f, 0);
 }
 
 void Sword::Update(const Vector3& swordPos)
@@ -50,12 +56,12 @@ void Sword::Update(const Vector3& swordPos)
 		Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
 		frontVec = frontVec.normalize();
 		//座標移動
-		goalPos_ = pos - frontVec * 1.2f;
+		goalPos_ = pos - frontVec * distaice_;
 		//上下に浮かばせる
-		floatingTimer_.AddTime(1 * GameSpeed::GetGameSpeed());
-		float roundTime = (float)floatingTimer_.GetLimitTimer();
-		float timer = (float)floatingTimer_.GetTimer();
-		float floatingPos = UpAndDown(roundTime, 0.3f, timer);
+		floatingTimer_.AddTime(GameSpeed::GetGameSpeed());
+		float roundTime = floatingTimer_.GetLimitTimer();
+		float timer = floatingTimer_.GetTimer();
+		float floatingPos = UpAndDown(roundTime, floatRange_, timer);
 		goalPos_.y += floatingPos;
 
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
@@ -63,8 +69,8 @@ void Sword::Update(const Vector3& swordPos)
 		obj_->SetPos(nowPos_);
 		//回転処理
 		//常に回転させる
-		rot_ += 0.02f * GameSpeed::GetGameSpeed();
-		if (rot_ >= 3.14f) {
+		rot_ += rotSpeed_ * GameSpeed::GetGameSpeed();
+		if (rot_ >= PI) {
 			rot_ = -rot_;
 		}
 
@@ -100,7 +106,7 @@ void Sword::Update(const Vector3& swordPos)
 		Vector3 frontVec = RotateVector(Vector3(0,0,1), playerObj_->WT_.quaternion_);
 		frontVec = frontVec.normalize();
 
-		goalPos_ = pos + frontVec * 1.1f;
+		goalPos_ = pos + frontVec * distaice_;
 		
 		Vector3 nowToGoalVec = goalPos_ - obj_->GetTransform()->position_;
 
@@ -254,7 +260,7 @@ void Sword::Reset()
 	Vector3 frontVec = RotateVector(Vector3(0, 0, 1), playerObj_->WT_.quaternion_);
 	frontVec = frontVec.normalize();
 	//座標移動
-	goalPos_ = pos - frontVec * 1.2f;
+	goalPos_ = pos - frontVec * distaice_;
 	nowPos_ = goalPos_;
 }
 
@@ -263,11 +269,11 @@ void Sword::CalculateTrailPos()
 	for (uint32_t i = 0; i < tailObj_.size(); i++) {
 		//head
 		if (i == 0) {
-			tailObj_[i]->SetPos(Vector3(0, 3.7f, 0));
+			tailObj_[i]->SetPos(trailHeadPos_);
 		}
 		//tail
 		else {
-			tailObj_[i]->SetPos(Vector3(0, 1.f, 0));
+			tailObj_[i]->SetPos(trailtailPos_);
 		}
 		tailObj_[i]->Update();
 	}

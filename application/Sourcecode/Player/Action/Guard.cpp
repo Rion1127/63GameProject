@@ -108,7 +108,7 @@ void GuardClass::Update()
 	col_.center.y += colObj_->GetTransform()->scale_.y;
 	colObj_->GetTransform()->SetPosition(col_.center);
 
-	timer_.AddTime(1);
+	timer_.AddTime();
 	if (timer_.GetIsEnd()) {
 		isGurdNow_ = false;
 	}

@@ -229,7 +229,7 @@ void Player::StateUpdate()
 {
 	state_ = GetNowState()->GetId();
 
-	freezeTimer_.AddTime(1);
+	freezeTimer_.AddTime();
 	if (freezeTimer_.GetIsEnd())
 	{
 
@@ -386,7 +386,7 @@ void Player::Freeze(uint32_t time)
 
 void Player::FreezeUpdate()
 {
-	freezeTimer_.AddTime(1);
+	freezeTimer_.AddTime();
 
 	if (freezeTimer_.GetIsEnd())
 	{

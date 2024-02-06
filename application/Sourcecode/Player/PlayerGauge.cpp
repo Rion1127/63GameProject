@@ -47,20 +47,13 @@ PlayerHPGauge::PlayerHPGauge() :
 
 	scale_ = { 1.0f,0.32f };
 	gaugeFrame_->SetScale(scale_);
+	scaleAtten_ = 0.001f;
 }
 
 void PlayerHPGauge::OriginalUpdate()
 {
-	/*Color color = hpBarMiddle_->GetColor();
-	color.a -= 1.5f;
-	if (color.a <= 0)
-	{
-		hpBarMiddle_->SetScale(gauge_->GetScale());
-	}
-	hpBarMiddle_->SetColor(color);*/
-
 	auto scale = hpBarMiddle_->GetScale();
-	scale.x -= 0.001f;
+	scale.x -= scaleAtten_;
 	scale.x = Max(scale.x,0.f);
 	hpBarMiddle_->SetScale(scale);
 
