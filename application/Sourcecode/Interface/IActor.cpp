@@ -28,6 +28,11 @@ void IActor::ObjUpdate()
 
 		obj_->WT_.position_ += addVec_;
 	}
+	//もし敵が地面の下へ言ったしまった場合
+	if (obj_->WT_.position_.y <= -10) {
+		obj_->WT_.position_.y = 1;
+	}
+
 	obj_->Update();
 }
 
